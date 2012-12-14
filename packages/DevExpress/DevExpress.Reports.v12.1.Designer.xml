@@ -1,0 +1,1310 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.Reports.v12.1.Designer</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.XtraReports.UserDesigner.ICommandHandler">
+
+            <summary>
+                <para>If implemented by a class, provides methods for handling commands.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraReports.UserDesigner.ICommandHandler.CanHandleCommand(DevExpress.XtraReports.UserDesigner.ReportCommand)">
+            <summary>
+                <para>Indicates whether or not the specified report command can be handled. 
+</para>
+            </summary>
+            <param name="command">
+		A <see cref="T:DevExpress.XtraReports.UserDesigner.ReportCommand"/> enumeration value that specifies the command. 
+
+            </param>
+            <returns><b>true</b> if the command can be handled; otherwise, <b>false</b>.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.XtraReports.UserDesigner.ICommandHandler.HandleCommand(DevExpress.XtraReports.UserDesigner.ReportCommand,System.Object[],System.Boolean@)">
+            <summary>
+                <para>Handles the specified Printing System command. 
+</para>
+            </summary>
+            <param name="command">
+		A <see cref="T:DevExpress.XtraReports.UserDesigner.ReportCommand"/> enumeration value that specifies the command. 
+
+            </param>
+            <param name="args">
+		A collection of <see cref="T:System.Object"/> objects representing the parameters to be passed to the handled command. 
+
+            </param>
+            <param name="handled">
+		<b>true</b> if the command has been handled; otherwise, <b>false</b>. 
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.XtraReports.UserDesigner.ReportCommand">
+
+            <summary>
+                <para>Specifies the commands which can be executed in the report's End-User Designer.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AddNewDataSource">
+            <summary>
+                <para><para>Invokes the <b>Datasource Wizard</b> which allows end-users to provide data for a report, as it has been invoked by the <b>Add New Datasource</b> verb available in the <b>XtraReport.DataSource</b> property editor. Note that if you hide this command, an end-user will be unable to create a new datasource for a report.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignBottom">
+            <summary>
+                <para><para>Aligns the bottoms of the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignHorizontalCenters">
+            <summary>
+                <para><para>Aligns the centers of the selected controls horizontally. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignLeft">
+            <summary>
+                <para><para> Aligns the selected controls to the left. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignRight">
+            <summary>
+                <para><para> Aligns the selected controls to the right. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignToGrid">
+            <summary>
+                <para><para>Aligns the positions of the selected controls to the grid. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignTop">
+            <summary>
+                <para><para>Aligns the tops of the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.AlignVerticalCenters">
+            <summary>
+                <para><para>Aligns the centers of the selected controls vertically. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BackColor">
+            <summary>
+                <para><para>Sets the background color of the selected control(s). This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BandMoveDown">
+            <summary>
+                <para>Identifies the <b>Move Down</b> item of the context menu. This menu is invoked if an end-user right-clicks a band  of either the <see cref="F:DevExpress.XtraReports.UI.BandKind.GroupHeader"/>, <see cref="F:DevExpress.XtraReports.UI.BandKind.GroupFooter"/> or <see cref="F:DevExpress.XtraReports.UI.BandKind.DetailReport"/> kind. If you hide this command, then the <b>Move Down</b> menu item will be hidden.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BandMoveUp">
+            <summary>
+                <para>Identifies the <b>Move Up</b> item of the context menu. This menu is invoked if an end-user right-clicks a band  of either the <see cref="F:DevExpress.XtraReports.UI.BandKind.GroupHeader"/>, <see cref="F:DevExpress.XtraReports.UI.BandKind.GroupFooter"/> or <see cref="F:DevExpress.XtraReports.UI.BandKind.DetailReport"/> kind. If you hide this command, then the <b>Move Up</b> menu item will be hidden.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRBarCode">
+            <summary>
+                <para><para>Identifies the <b>XRBarCode</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRBarCode menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRCheckBox">
+            <summary>
+                <para><para>Identifies the <b>XRCheckBox</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRCheckBox menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRLabel">
+            <summary>
+                <para><para>Identifies the <b>XRLabel</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRLabel menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRPictureBox">
+            <summary>
+                <para><para>Identifies the <b>XRPictureBox</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRPictureBox menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRRichText">
+            <summary>
+                <para><para>Identifies the <b>XRRichText</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRRichText menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BindFieldToXRZipCode">
+            <summary>
+                <para><para>Identifies the <b>XRZipCode</b> item of the context menu. This menu is invoked after drag-and-dropping any Field List item with the right mouse click. If you hide this command, then the XRZipCode menu item will be hidden. Note that if you execute this command, it does nothing.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.BringToFront">
+            <summary>
+                <para><para>Brings the selected control(s) to the front. This command is represented via the menu item, toolbar button and context menu item.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.CenterHorizontally">
+            <summary>
+                <para><para>Horizontally centers the selected controls within a band. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.CenterVertically">
+            <summary>
+                <para><para>Vertically centers the selected controls within a band. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Close">
+            <summary>
+                <para>Closes the active Design Panel in an MDI End-User Designer form.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Closing">
+            <summary>
+                <para><para>This command should be handled when overriding saving in the End-User Designer. Note that you don't need to either change its visibility or execute it, otherwise the result may be unpredictable.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Copy">
+            <summary>
+                <para><para>Copies the selected control(s) to the clipboard. This command is represented via the menu item, toolbar button and context menu item.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Cut">
+            <summary>
+                <para><para>Deletes the currently selected control(s) and copies it to the clipboard. This command is represented via the menu item, toolbar button and context menu item.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Delete">
+            <summary>
+                <para><para>Deletes the currently selected control(s). This command is represented via the menu item and context menu item.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Exit">
+            <summary>
+                <para><para>Closes the form containing the current <see cref="T:DevExpress.XtraReports.UserDesigner.XRDesignPanel"/> control which executes this command. Note that if you hide this command, then all menu items and toolbar buttons associated with it will become unavailable.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.FontBold">
+            <summary>
+                <para><para>Makes the font bold. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.FontItalic">
+            <summary>
+                <para><para>Makes the font italic. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.FontName">
+            <summary>
+                <para><para>Sets the specified font name to the <see cref="P:DevExpress.XtraReports.UI.XRControl.Font"/> property of the currently selected control(s), as it has been changed by the <b>Font Name</b> edit box which is shown in the Formatting Toolbar. Note that if you hide this command, then the Font Name edit box will be unavailable.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.FontSize">
+            <summary>
+                <para><para>Sets the specified font size to the <see cref="P:DevExpress.XtraReports.UI.XRControl.Font"/> property of the currently selected control(s), as it has been changed by the <b>Font Size</b> edit box which is shown in the Formatting Toolbar. Note that if you hide this command, then the Font Size edit box will be unavailable.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.FontUnderline">
+            <summary>
+                <para><para>Underlines the font. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ForeColor">
+            <summary>
+                <para><para>Sets the foreground color of the selected control(s). This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HorizSpaceConcatenate">
+            <summary>
+                <para><para>Removes the horizontal spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HorizSpaceDecrease">
+            <summary>
+                <para><para>Decreases the horizontal spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HorizSpaceIncrease">
+            <summary>
+                <para><para>Increases the horizontal spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HorizSpaceMakeEqual">
+            <summary>
+                <para><para>Makes the horizontal spacing between the selected controls equal. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HtmlBackward">
+            <summary>
+                <para>Moves the HTML browser backward to the previous page. This command is represented on the <b>HTML View</b> Ribbon page of the End-User Designer with a Ribbon only.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HtmlFind">
+            <summary>
+                <para>Finds the text on the HTML page. This command is represented on the <b>HTML View</b> Ribbon page of the End-User Designer with a Ribbon only.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HtmlForward">
+            <summary>
+                <para>Moves the HTML browser forward to the previous page. This command is represented on the <b>HTML View</b> Ribbon page of the End-User Designer with a Ribbon only.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HtmlHome">
+            <summary>
+                <para>Displays the Home page in the HTML browser. This command is represented on the <b>HTML View</b> Ribbon page of the End-User Designer with a Ribbon only.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.HtmlRefresh">
+            <summary>
+                <para>Refreshes the current page in the HTML browser. This command is represented on the <b>HTML View</b> Ribbon page of the End-User Designer with a Ribbon only.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertBottomMarginBand">
+            <summary>
+                <para><para>Inserts the <b>Bottom Margin</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertDetailBand">
+            <summary>
+                <para><para>Inserts the <b>Detail</b> band into a report. This command is represented via the context menu item only.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertDetailReport">
+            <summary>
+                <para><para>Inserts the <b>Detail Report</b> band into a report. This command is represented via the context menu item only.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertGroupFooterBand">
+            <summary>
+                <para><para>Inserts the <b>Group Footer</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertGroupHeaderBand">
+            <summary>
+                <para><para>Inserts the <b>Group Header</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertPageFooterBand">
+            <summary>
+                <para><para>Inserts the <b>Page Footer</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertPageHeaderBand">
+            <summary>
+                <para><para>Inserts the <b>Page Header</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertReportFooterBand">
+            <summary>
+                <para><para>Inserts the <b>Report Footer</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertReportHeaderBand">
+            <summary>
+                <para><para>Inserts the <b>Report Header</b> band into a report. This command is represented via the context menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.InsertTopMarginBand">
+            <summary>
+                <para><para>Inserts the <b>Top Margin</b> band into a report. This command is represented via the context menu item only.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.JustifyCenter">
+            <summary>
+                <para><para>Aligns the control's text to the center. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.JustifyJustify">
+            <summary>
+                <para><para>Justifies the control's text. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.JustifyLeft">
+            <summary>
+                <para><para>Aligns the control's text to the left. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.JustifyRight">
+            <summary>
+                <para><para>Aligns the control's text to the right. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyCancel">
+            <summary>
+                <para><para>Performs the Cancel action, the same as the one which should be performed if an end-user has pressed the <b>Cancel</b> key.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyDefaultAction">
+            <summary>
+                <para><para>Performs the Default action, the same as the one which should be performed if an end-user has pressed the <b>Enter</b> key.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyMoveDown">
+            <summary>
+                <para><para>Moves the selected control(s) to the bottom as they were moved by the <b>Down Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Down Arrow key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyMoveLeft">
+            <summary>
+                <para><para>Moves the selected control(s) to the left as they were moved by the <b>Left Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Left Arrow key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyMoveRight">
+            <summary>
+                <para><para>Moves the selected control(s) to the right as they were moved by the <b>Right Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Right Arrow key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyMoveUp">
+            <summary>
+                <para><para>Moves the selected control(s) to the top as they were moved by the <b>Up Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Up Arrow key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeDown">
+            <summary>
+                <para><para>Moves the selected control(s) to the bottom by one report unit as they have been moved using the <b>Ctrl+Down Arrow</b> keys. Note that if you hide this command, an end-user will still be able to move controls by the Ctrl+Down Arrow key.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeHeightDecrease">
+            <summary>
+                <para><para>Decreases the height of the selected control(s) by one report unit as it has been decreased using the <b>Ctrl+Shift+Up Arrow</b> keys. Note that if you hide this command, an end-user will still be able to decrease the controls height by the Ctrl+Shift+Up Arrow keys.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeHeightIncrease">
+            <summary>
+                <para><para>Increases the height of the selected control(s) by one report unit as it has been increased using the <b>Ctrl+Shift+Down Arrow</b> keys. Note that if you hide this command, an end-user will still be able to increase the controls height by the Ctrl+Shift+Down Arrow keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeLeft">
+            <summary>
+                <para><para>Moves the selected control(s) to the left by one report unit as they have been moved using the <b>Ctrl+Left Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Ctrl+Left Arrow key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeRight">
+            <summary>
+                <para><para>Moves the selected control(s) to the right by one report unit as they have been moved using the <b>Ctrl+Right Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Ctrl+Right Arrow key.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeUp">
+            <summary>
+                <para><para>Moves the selected control(s) to the top by one report unit as they have been moved using the <b>Ctrl+Up Arrow</b> key. Note that if you hide this command, an end-user will still be able to move controls by the Ctrl+Up Arrow key.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeWidthDecrease">
+            <summary>
+                <para><para>Decreases the width of the selected control(s) by one report unit as it has been decreased using the <b>Ctrl+Shift+Left Arrow</b> keys. Note that if you hide this command, an end-user will still be able to decrease the controls width by the Ctrl+Shift+Left Arrow keys.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeyNudgeWidthIncrease">
+            <summary>
+                <para><para>Increases the width of the selected control(s) by one report unit as it has been increased using the <b>Ctrl+Shift+Right Arrow</b> keys. Note that if you hide this command, an end-user will still be able to increase the controls width by the Ctrl+Shift+Right Arrow keys.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySelectNext">
+            <summary>
+                <para><para>Selects a control which is next to the currently selected control in the tab order, as it was selected by the <b>Tab</b> key. Note that if you hide this command, an end-user will still be able to move the controls selection by the Tab key.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySelectPrevious">
+            <summary>
+                <para><para>Selects a control which is previous to the currently selected control in the tab order, as it was selected by the <b>Shift+Tab</b> keys. Note that if you hide this command, an end-user will still be able to move the controls selection by the Shift+Tab keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySizeHeightDecrease">
+            <summary>
+                <para><para>Decreases the height of the selected control(s) by a step of a grid size as it has been decreased by the <b>Shift+Up Arrow</b> keys. Note that if you hide this command, an end-user will still be able to decrease the controls height by the Shift+Up Arrow keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySizeHeightIncrease">
+            <summary>
+                <para><para>Increases the height of the selected control(s) by a step of a grid size as it has been increased by the <b>Shift+Down Arrow</b> keys. Note that if you hide this command, an end-user will still be able to increase the controls height by the Shift+Down Arrow keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySizeWidthDecrease">
+            <summary>
+                <para><para>Decreases the width of the selected control(s) by a step of a grid size as it has been decreased by the <b>Shift+Left Arrow</b> keys. Note that if you hide this command, an end-user will still be able to decrease the controls width by the Shift+Left Arrow keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.KeySizeWidthIncrease">
+            <summary>
+                <para><para>Increases the width of the selected control(s) by a step of a grid size as it has been increased by the <b>Shift+Right Arrow</b> keys. Note that if you hide this command, an end-user will still be able to increase the controls width by the Shift+Right Arrow keys.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.MdiCascade">
+            <summary>
+                <para>When the window interface is enabled in an MDI End-User Designer form, arranges Design Panel windows in cascade.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.MdiTileHorizontal">
+            <summary>
+                <para>When the window interface is enabled in an MDI End-User Designer form, tiles Design Panel windows horizontally.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.MdiTileVertical">
+            <summary>
+                <para>When the window interface is enabled in an MDI End-User Designer form, tiles Design Panel windows vertically.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.NewReport">
+            <summary>
+                <para><para>Creates a new blank report. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.NewReportWizard">
+            <summary>
+                <para><para>Creates a new blank report and runs the XtraReports Wizard to customize it. This command is represented via the menu item only.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.None">
+            <summary>
+                <para>Doesn't identify any command. This member is intended for internal use only.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.OpenFile">
+            <summary>
+                <para><para>Opens a report. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Paste">
+            <summary>
+                <para><para>Adds the control(s) from the clipboard to the report. This command is represented via the menu item, toolbar button and context menu item.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.PropertiesWindow">
+            <summary>
+                <para><para>Invokes the <b>Properties</b> window for the the currently selected control(s). This command is represented via the context menu item only.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Redo">
+            <summary>
+                <para><para>Redoes the last operation which has been previously undone by the <b>Undo</b> command. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SaveAll">
+            <summary>
+                <para><para>Saves all existing reports (which are shown in all Design Panels) to files. This command is represented via both the menu item and toolbar button.</para>
+
+ 
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SaveFile">
+            <summary>
+                <para><para>Saves the report (which is shown in the currently active Design Panel) to a file. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SaveFileAs">
+            <summary>
+                <para><para>Invokes the <b>Save As</b> dialog to save a report with a new name. This command is represented via the menu item only.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SelectAll">
+            <summary>
+                <para><para>Selects all the controls in the report. This command is represented via the menu item only.</para>
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SendToBack">
+            <summary>
+                <para><para>Moves the selected control(s) to the back. This command is represented via the menu item, toolbar button and context menu item.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowDesignerTab">
+            <summary>
+                <para><para>Switches the <see cref="T:DevExpress.XtraReports.UserDesigner.XRDesignPanel"/> to its <b>Designer</b> tab, as it has been switched via the Designer button at the bottom of the design surface. Note that if you hide this command, this button will be unavailable.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowHTMLViewTab">
+            <summary>
+                <para><para>Switches the <see cref="T:DevExpress.XtraReports.UserDesigner.XRDesignPanel"/> to its <b>HTML View</b> tab, as it has been switched via the HTML View button at the bottom of the design surface. Note that if you hide this command, this button will be unavailable.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowPreviewTab">
+            <summary>
+                <para><para>Switches the <see cref="T:DevExpress.XtraReports.UserDesigner.XRDesignPanel"/> to its <b>Preview</b> tab, as it has been switched via the Preview button at the bottom of the design surface. Note that if you hide this command, this button will be unavailable.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab">
+            <summary>
+                <para><para>Switches the <see cref="T:DevExpress.XtraReports.UserDesigner.XRDesignPanel"/> to its <b>Scripts</b> tab, as it has been switched via the Designer button at the bottom of the design surface. Note that if you hide this command, this button will be unavailable.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowTabbedInterface">
+            <summary>
+                <para>Enables the tabbed interface for Design Panels in an MDI End-User Designer form.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ShowWindowInterface">
+            <summary>
+                <para>Enables the window interface for Design Panels in an MDI End-User Designer form.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SizeToControl">
+            <summary>
+                <para><para>Makes the selected controls to be of the same size. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SizeToControlHeight">
+            <summary>
+                <para><para>Makes the selected controls have the same height. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SizeToControlWidth">
+            <summary>
+                <para><para>Makes the selected controls have the same width. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.SizeToGrid">
+            <summary>
+                <para><para>Sizes the selected controls to the grid. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableDeleteCell">
+            <summary>
+                <para><para>Deletes the currently selected table cell as it was deleted by the <b>Delete / Cell</b> item of the context menu, which is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Delete / Cell menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableDeleteColumn">
+            <summary>
+                <para><para>Deletes the column which the currently selected table cell belongs to, as it was deleted by the <b>Delete / Column</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Delete / Column menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableDeleteRow">
+            <summary>
+                <para><para>Deletes the row which the currently selected table cell belongs to, as it was deleted by the <b>Delete / Row</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Delete / Row menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableInsertCell">
+            <summary>
+                <para><para>Inserts a table cell to the right of the currently selected cell, as it was inserted by the <b>Insert / Cell</b> item of the context menu, which is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Insert / Cell menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableInsertColumnToLeft">
+            <summary>
+                <para><para>Inserts a column to the left of the column which the currently selected table cell belongs to, as it was inserted by the <b>Insert / Column To Left</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Insert / Column To Left menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableInsertColumnToRight">
+            <summary>
+                <para><para>Inserts a column to the right of the column which the currently selected table cell belongs to, as it was inserted by the <b>Insert / Column To Right</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Insert / Column To Right menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableInsertRowAbove">
+            <summary>
+                <para><para>Inserts a new row above the row which the currently selected table cell belongs to, as it was inserted by the <b>Insert / Row Above</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Insert / Row Above menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.TableInsertRowBelow">
+            <summary>
+                <para><para>Inserts a new row below the row which the currently selected table cell belongs to, as it was inserted by the <b>Insert / Row Below</b> item of the context menu. This menu is invoked after right-clicking on the <see cref="T:DevExpress.XtraReports.UI.XRTable"/> control. Note that if you hide this command, then the Insert / Row Below menu item will be hidden.</para>
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Undo">
+            <summary>
+                <para><para>Undoes the last operation. This command is represented both via the menu item and toolbar button.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbEditBands">
+            <summary>
+                <para>Invokes the <b>Report Editor</b> dialog, as though it has been invoked by the "Edit and Reorder Bands" verb. Note that if you hide this command, then this verb will become unavailable.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbEditBindings">
+            <summary>
+                <para>Invokes the Edit Bindings dialog, as though it has been invoked by the "Edit Bindings..." verb. Note that if you hide this command, then this verb will become unavailable.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbEditText">
+            <summary>
+                <para>Invokes the in-place editor for the currently selected control, as though it has been invoked by the "Edit Text" verb. Note that if you hide this command, then this verb will become unavailable, but an end-user will still be able to invoke the in-place editor by double-clicking the control.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbLoadReportTemplate">
+            <summary>
+                <para>Invokes the Report Templates dialog, as though it has been invoked by the "Load Report Template..." verb. Note that if you hide this command, then this verb will become unavailable.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbPivotGridDesigner">
+            <summary>
+                <para>Invokes the Designer for the currently selected <see cref="T:DevExpress.XtraReports.UI.XRPivotGrid"/> control, as though it has been invoked by the "Run Designer..." verb. Note that if you hide this command, then this verb will become unavailable for all pivot grid controls.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbReportWizard">
+            <summary>
+                <para>Invokes the XtraReports Wizard for the current report, as though it has been invoked by the "Design in Report Wizard..." verb. Note that if you hide this command, then this verb will become unavailable.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbRtfClear">
+            <summary>
+                <para>Clears the RTF contents of the currently selected control (if it is the <see cref="T:DevExpress.XtraReports.UI.XRRichText"/> one), as though it has been cleared by the "Clear" verb. Note that if you hide this command, then this verb will become unavailable.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VerbRtfLoadFile">
+            <summary>
+                <para>Invokes the Open File dialog for the currently selected control (if it is the <see cref="T:DevExpress.XtraReports.UI.XRRichText"/> one) to load RTF contents, as though it has been invoked by the "Load File..." verb. Note that if you hide this command, then this verb will become unavailable.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VertSpaceConcatenate">
+            <summary>
+                <para><para>Removes the vertical spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VertSpaceDecrease">
+            <summary>
+                <para><para>Decreases the vertical spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VertSpaceIncrease">
+            <summary>
+                <para><para>Increases the vertical spacing between the selected controls. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.VertSpaceMakeEqual">
+            <summary>
+                <para><para>Makes the vertical spacing between the selected controls equal. This command is represented both via the menu item and toolbar button.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.Zoom">
+            <summary>
+                <para><para>Sets the specified zoom value and zooms the report's design surface in or out. The predefined zoom factors are: 50%, 100%, 150%, 200%, 300%, 400% and 800%. The maximum value is 800%.</para>
+
+<para>Note, if you hide this command, the Zoom edit box will be invisible.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ZoomIn">
+            <summary>
+                <para><para>Zooms the report's design surface in. Each time this command is performed, the preview gets zoomed in by 10%.</para>
+
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.ReportCommand.ZoomOut">
+            <summary>
+                <para><para>Zooms the report's design surface out. Each time this command is performed, the preview gets zoomed out by 10%.</para>
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.XtraReports.UserDesigner.CommandVisibility">
+
+            <summary>
+                <para>Specifies the visibility levels for the report commands in the End-User Designer.
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.CommandVisibility.All">
+            <summary>
+                <para>The command is visible wherever it can be available.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.CommandVisibility.ContextMenu">
+            <summary>
+                <para>The command is visible in the context menu only. If this command doesn't have an associated context menu item, the <b>SetCommandVisibility</b> method doesn't change its visibility.
+
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.CommandVisibility.None">
+            <summary>
+                <para>The command is inaccessible.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.CommandVisibility.Toolbar">
+            <summary>
+                <para>The command is visible in the toolbar and menu only. If this command doesn't have an associated bar or menu item, the <b>SetCommandVisibility</b> method doesn't change its visibility.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.XtraReports.UserDesigner.CommandVisibility.Verb">
+            <summary>
+                <para>The command is available as a verb only. If this command doesn't have an associated verb, the <b>SetCommandVisibility</b> method doesn't change its visibility.
+
+</para>
+            </summary>
+
+
+        </member>
+    </members>
+</doc>

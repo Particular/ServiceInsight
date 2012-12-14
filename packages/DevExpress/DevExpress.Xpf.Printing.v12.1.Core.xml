@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.Xpf.Printing.v12.1.Core</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.Xpf.Printing.XamlExport.XamlCompatibility">
+
+            <summary>
+                <para>Lists the values specifying the XAML compatibility modes.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.Xpf.Printing.XamlExport.XamlCompatibility.Silverlight">
+            <summary>
+                <para>XAML is Silverlight-compatible.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Printing.XamlExport.XamlCompatibility.WPF">
+            <summary>
+                <para>XAML is WPF-compatible.
+</para>
+            </summary>
+
+
+        </member>
+    </members>
+</doc>

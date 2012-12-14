@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.Xpf.Printing.v12.1.Service</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.Xpf.Printing.Service.ExportService">
+
+            <summary>
+                <para>Maintains WCF service and provides export functionality.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.#ctor">
+            <summary>
+                <para>Initializes a new instance of the ExportService class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.#ctor(System.IServiceProvider)">
+            <summary>
+                <para>Initializes a new instance of the ExportService class with the specified service provider.
+</para>
+            </summary>
+            <param name="serviceProvider">
+		An object implementing the <see cref="T:System.IServiceProvider"/> interface.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.AssembleDocument(DevExpress.Xpf.Printing.ServiceModel.DataContracts.UploadingResourceId)">
+            <summary>
+                <para>Translates the uploaded resources into a document that is ready to export. 
+
+</para>
+            </summary>
+            <param name="id">
+		An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.UploadingResourceId"/> object.
+
+            </param>
+            <returns>A <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.DocumentId"/> object.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.ClearDocument(DevExpress.Xpf.Printing.ServiceModel.DataContracts.DocumentId)">
+            <summary>
+                <para>Clears the content of the specified document.
+</para>
+            </summary>
+            <param name="documentId">
+		A <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.DocumentId"/> object, identifying the document.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.Dispose">
+            <summary>
+                <para>Disposes the ExportService object.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.GetExportedDocument(DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportId)">
+            <summary>
+                <para>Writes the exported document to the specified stream.
+</para>
+            </summary>
+            <param name="exportId">
+		An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportId"/> object.
+
+            </param>
+            <returns>A <see cref="T:System.IO.Stream"/> object.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.GetExportStatus(DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportId)">
+            <summary>
+                <para>Returns the current status of the exported document.
+</para>
+            </summary>
+            <param name="exportId">
+		An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportId"/> object.
+
+            </param>
+            <returns>An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportStatus"/> structure.
+</returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Printing.Service.ExportService.GetResourceUriTemplate">
+            <summary>
+                <para>For internal use.
+</para>
+            </summary>
+            <value>A <see cref="T:System.UriTemplate"/> object.
+</value>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.StartExport(DevExpress.Xpf.Printing.ServiceModel.DataContracts.DocumentId,DevExpress.XtraReports.ServiceModel.DataContracts.DocumentExportArgs)">
+            <summary>
+                <para>Starts exporting the specified document.
+</para>
+            </summary>
+            <param name="documentId">
+		A <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.DocumentId"/> object.
+
+            </param>
+            <param name="exportArgs">
+		A <see cref="T:DevExpress.XtraReports.ServiceModel.DataContracts.DocumentExportArgs"/> object.
+
+            </param>
+            <returns>An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.ExportId"/> object.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.StartUpload">
+            <summary>
+                <para>Starts uploading a document's resources onto the server.
+</para>
+            </summary>
+            <returns>An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.UploadingResourceId"/> object.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.StaticInitialize">
+            <summary>
+                <para>For internal use.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.UploadResourceChunk(DevExpress.Xpf.Printing.ServiceModel.DataContracts.UploadingResourceId,System.Byte[])">
+            <summary>
+                <para>Uploads a document's resources (by fragments) onto the server.
+</para>
+            </summary>
+            <param name="id">
+		An <see cref="T:DevExpress.Xpf.Printing.ServiceModel.DataContracts.UploadingResourceId"/> object.
+
+            </param>
+            <param name="data">
+		A <see cref="T:System.Byte"/> array.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.WebGetExportedDocument(System.String)">
+            <summary>
+                <para>Obtains the exported document on the Web.
+</para>
+            </summary>
+            <param name="exportIdValue">
+		A <see cref="T:System.String"/> value.
+
+            </param>
+            <returns>A <see cref="T:System.IO.Stream"/> object.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Printing.Service.ExportService.WebGetResource(System.String)">
+            <summary>
+                <para>Obtains a document's resources on the Web.
+</para>
+            </summary>
+            <param name="imageId">
+		A <see cref="T:System.String"/> value.
+
+            </param>
+            <returns>A <see cref="T:System.IO.Stream"/> object.
+</returns>
+
+
+        </member>
+    </members>
+</doc>

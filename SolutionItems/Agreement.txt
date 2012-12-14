@@ -1,0 +1,16 @@
+This agreement is made between Hightech.IR ("Hightech") and you ("User"), the person who makes use of NServiceBus Profiler application ("Application").
+
+User must agree all terms in this agreement in order to use Application legally. If User doesn't agree to all terms in this agreement, User should not use Application and delete all related files from User’s computer.
+
+1. OWNERSHIP: Application is fully owned by Hightech, this license agreement doesn't change the ownership.
+
+2. LICENSE: Hightech grants User the license to use the Application if User accepts all the conditions listed in this agreement. "Use" means loading the product to CPU, memory, and/or other storages of User’s computer and using its available functionality.
+
+3. CONDITIONS: To be licensed to use the Application, User must:
+   a) Not modify any part of the Application.
+   c) Release Hightech from all liabilities caused directly or indirectly by using the Application
+   d) Do not reverse-engineer, modify, redistribute, rent or sell Application to other parties.
+   
+4. REDISTRIBUTION: User may not redistribute the Application under any condition but user may redirect other users to the download page on Hightech website where they can download a registered version for their own use.
+
+5. LIABILITY: Hightech's liability is limited to replacement of the Application only if the software downloaded from the Hightech website is damaged.

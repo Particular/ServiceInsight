@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.Xpf.Controls.v12.1</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.Xpf.Controls.PageType">
+
+            <summary>
+                <para>Lists values that specify on which side of the book the first page is displayed.
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.PageType.Even">
+            <summary>
+                <para>The first page is displayed on the right side of the book.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.PageType.Odd">
+            <summary>
+                <para>The first page is displayed on the left side of the book.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Xpf.Controls.PageIndexChangingEventHandler">
+
+            <summary>
+                <para>Represents a method that will handle the <see cref="E:DevExpress.Xpf.Controls.Book.PageIndexChanging"/> event.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.PageIndexChangingEventHandler.Invoke(System.Object,DevExpress.Xpf.Controls.PageIndexChangingEventArgs)">
+            <summary>
+                <para>Represents a method that will handle the <see cref="E:DevExpress.Xpf.Controls.Book.PageIndexChanging"/> event.
+</para>
+            </summary>
+            <param name="sender">
+		An object representing the event source.
+
+            </param>
+            <param name="e">
+		A <see cref="T:DevExpress.Xpf.Controls.PageIndexChangingEventArgs"/> object that contains event data.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Xpf.Controls.PageIndexChangingEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.Xpf.Controls.Book.PageIndexChanging"/> event.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.PageIndexChangingEventArgs.#ctor(System.Int32,System.Int32)">
+            <summary>
+                <para>Initializes a new instance of the PageIndexChangingEventArgs class.
+</para>
+            </summary>
+            <param name="oldValue">
+		An integer value that specifies the index of the previous page. This value is assigned to the <see cref="P:DevExpress.Xpf.Controls.PageIndexChangingEventArgs.OldPageIndex"/> property.
+
+            </param>
+            <param name="newValue">
+		An integer value that specifies the index of the current page. This value is assigned to the <see cref="P:DevExpress.Xpf.Controls.PageIndexChangingEventArgs.NewPageIndex"/> property.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.PageIndexChangingEventArgs.NewPageIndex">
+            <summary>
+                <para>Gets or sets the index of the current page.
+</para>
+            </summary>
+            <value>An integer value that specifies the index of the current page.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.PageIndexChangingEventArgs.OldPageIndex">
+            <summary>
+                <para>Gets the index of the previous page.
+</para>
+            </summary>
+            <value>An integer value that specifies the index of the previous page.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Xpf.Controls.Book">
+
+            <summary>
+                <para>Represents a book control. 
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.#ctor">
+            <summary>
+                <para>Initializes a new instance of the Book class. 
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.ActiveAreaSize">
+            <summary>
+                <para>Gets or sets the size of the active area within a page. This is a dependency property. 
+</para>
+            </summary>
+            <value>A <see cref="T:System.Windows.Size"/> structure that represents the size of the active area within a page. 
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.ActiveAreaSizeProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.AddService(System.Type,System.Object,System.Boolean)">
+            <summary>
+                <para>Adds the specified service to the service container.
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to add.
+
+            </param>
+            <param name="serviceInstance">
+		An instance of the service type to add. This object must implement or inherit from the type indicated by the <i>serviceType</i> parameter.
+
+            </param>
+            <param name="promote">
+		<b>true</b> to promote this request to any parent service containers; otherwise, <b>false</b>.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
+            <summary>
+                <para>Adds the specified service to the service container. 
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to add. 
+
+            </param>
+            <param name="callback">
+		A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.
+
+            </param>
+            <param name="promote">
+		<b>true</b> to promote this request to any parent service containers; otherwise, <b>false</b>.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
+            <summary>
+                <para>Adds the specified service to the service container. 
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to add.
+
+            </param>
+            <param name="callback">
+		A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.AddService(System.Type,System.Object)">
+            <summary>
+                <para>Adds the specified service to the service container. 
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to add. 
+
+            </param>
+            <param name="serviceInstance">
+		An instance of the service type to add. This object must implement or inherit from the type indicated by the <i>serviceType</i> parameter.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.AnimationRate">
+            <summary>
+                <para>Gets or sets the animation rate. This is a dependency property.
+</para>
+            </summary>
+            <value>A <see cref="T:System.Double"/> value that specifies the animation rate. 
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.AnimationRateProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.AnimationSpeed">
+            <summary>
+                <para>Gets or sets the speed the page animation is played. This is a dependency property. 
+</para>
+            </summary>
+            <value>A <see cref="T:System.Double"/> value that specifies the speed the short animation is played, in pixels per second. 
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.AnimationSpeedProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.DataSource">
+            <summary>
+                <para>Gets or sets the Book control's data source. This is a dependency property.
+</para>
+            </summary>
+            <value>An object that contains data displayed within the Book control.
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.DataSourceProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.FirstPage">
+            <summary>
+                <para>Gets or sets whether the first page is displayed on the left side of the book.
+</para>
+            </summary>
+            <value>One of the <see cref="T:DevExpress.Xpf.Controls.PageType"/> enumeration members that specifies whether the first page is displayed on the left side of the book.
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.FirstPageProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.GetService(System.Type)">
+            <summary>
+                <para>Gets the service object of the specified type.
+</para>
+            </summary>
+            <param name="serviceType">
+		An object that specifies the type of service object to get.
+
+            </param>
+            <returns>A service object of the specified type. <b>null</b> (<b>Nothing</b> in Visual Basic) if there is no service object of this type. 
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.OnApplyTemplate">
+            <summary>
+                <para>Called after the template is completely generated, and attached to the visual tree. 
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.PageCount">
+            <summary>
+                <para>Gets the total number of pages within a book. 
+</para>
+            </summary>
+            <value>An integer value that specifies the total number of pages in a book. 
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.PageIndex">
+            <summary>
+                <para>Gets or sets the index of the page currently opened. This is a dependency property.
+</para>
+            </summary>
+            <value>An integer value that specifies the index of the current page. <b>-1</b> if the left page corresponds to a cover. 
+</value>
+
+
+        </member>
+        <member name="E:DevExpress.Xpf.Controls.Book.PageIndexChanged">
+            <summary>
+                <para>Occurs after a new page has been opened. 
+</para>
+            </summary>
+
+
+        </member>
+        <member name="E:DevExpress.Xpf.Controls.Book.PageIndexChanging">
+            <summary>
+                <para>Enables cancelling turning the current page. 
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.PageIndexProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.PageTemplate">
+            <summary>
+                <para>Gets or sets the template that defines the presentation of pages. This is a dependency property.
+</para>
+            </summary>
+            <value>A <see cref="T:System.Windows.DataTemplate"/> object that defines the presentation of pages. 
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.PageTemplateProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.PartialTurnEndPoint">
+            <summary>
+                <para>For internal use.
+</para>
+            </summary>
+            <value>@nbsp;
+</value>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.RemoveService(System.Type)">
+            <summary>
+                <para>Removes the service of the specified type from the service container. 
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to remove.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Xpf.Controls.Book.RemoveService(System.Type,System.Boolean)">
+            <summary>
+                <para>Removes the service of the specified type from the service container.
+</para>
+            </summary>
+            <param name="serviceType">
+		The type of service to remove.
+
+            </param>
+            <param name="promote">
+		<b>true</b> to promote this request to any parent service containers; otherwise, <b>false</b>. 
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Xpf.Controls.Book.ShortAnimationSpeed">
+            <summary>
+                <para>Gets or sets the speed the short animation is played. This is a dependency property.
+</para>
+            </summary>
+            <value>A <see cref="T:System.Double"/> value that specifies the speed the short animation is played, in pixels per second.
+</value>
+
+
+        </member>
+        <member name="F:DevExpress.Xpf.Controls.Book.ShortAnimationSpeedProperty">
+            <summary>
+                <para>Identifies the  dependency property.
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+    </members>
+</doc>

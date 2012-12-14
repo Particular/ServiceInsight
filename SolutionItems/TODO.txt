@@ -1,0 +1,23 @@
+
+
+Themes:
+-Exporting message(s) to file system
+-Opening exported files and putting them into the queue
+-Fixing the "return to source queue" feature
+-Displaying a tree list of the message object (as another view like binary, xml, etc.)
+-Supporting different encoding on the messages (UTF/ASCII/Binary?)
+-Allowing editing the message in the xml editor (at least), potentially all views (including binary view)
+-Bulk sending a message from file/clipboard. Probably can be NSB specific.
+-Connecting to multiple servers at once(?)
+-Localization of the messages/UI/Errors and strings
+
+Tasks:
+-Adding Select all context menu to message list
+-Adding message delete functionality to message list context menu
+-Adding message save/export functionality to message list context menu
+-Loading messages in a more efficient way (separate header and detail/body information). Also similarly get the message count in the queue (instead of loading messages and getting the count).
+-Revamp the plugin model and tab layouts, need to create tabs per functionality (Performance, Informational, Security, Body/Message View)
+
+
+Refactorings:
+-Makes more sense to have connection information (MachineName) in QueueManager and MSMQ abstraction layer should just work with passed in FullName of the queue (or address/queue name) instead.
