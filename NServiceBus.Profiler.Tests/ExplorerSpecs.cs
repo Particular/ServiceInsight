@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Machine.Specifications;
@@ -36,7 +37,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
 
-            QueueManager.GetQueues(Arg.Any<string>()).Returns(new[] { Queue, SubQueue });
+            QueueManager.GetQueues().ReturnsForAnyArgs(new[] { Queue, SubQueue });
 
             Explorer.AttachView(View, null);
             QueueNode = Explorer.MachineRoot.Children.OfType<QueueExplorerItem>().First();
@@ -186,5 +187,23 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Because of = () => Error = Catch.Exception(() => Explorer.ConnectTo("NonExistingMachine"));
 
         It should_throw_on_non_existing_machine_names = () => Error.ShouldNotBeNull();
+    }
+
+    public class when_system_queues_are_orphaned : with_the_explorer
+    {
+        protected static List<Queue> UnorderedQueueList;
+        protected static Exception Error;
+
+        Establish context = () =>
+        {
+            UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
+            QueueManager = Substitute.For<IQueueManager>();
+            QueueManager.GetQueues().ReturnsForAnyArgs(UnorderedQueueList);
+            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+        };
+
+        Because of = () => Error = Catch.Exception(() => Explorer.RefreshQueues());
+
+        It should_not_throw_an_exception = () => Error.ShouldBeNull();
     }
 }

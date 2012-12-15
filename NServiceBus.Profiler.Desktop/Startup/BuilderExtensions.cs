@@ -39,6 +39,12 @@ namespace NServiceBus.Profiler.Desktop.Startup
             Guard.NotNullOrEmpty(() => folder, folder);
             Guard.NotNullOrEmpty(() => filePattern, filePattern);
 
+            if (!Directory.Exists(folder))
+            {
+                Logger.WarnFormat("Plugin folders was not found at {0}", folder);
+                return;
+            }
+
             foreach (var fullPath in Directory.GetFiles(folder, filePattern))
             {
                 var assembly = LoadModuleAssembly(fullPath, Logger);

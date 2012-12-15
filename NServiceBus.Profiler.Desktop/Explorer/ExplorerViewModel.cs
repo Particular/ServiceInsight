@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         private IExplorerView _view;
 
         public ExplorerViewModel(
-            IQueueManager queueManager, 
+            IQueueManager queueManager,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager)
         {
@@ -63,7 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public virtual void DeleteSelectedQueue()
         {
-            if(SelectedQueue == null)
+            if (SelectedQueue == null)
                 return;
 
             var selectedItem = SelectedNode;
@@ -86,7 +86,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public virtual void RefreshMessageCount()
         {
-            if (MachineRoot == null) 
+            if (MachineRoot == null)
                 return;
 
             MachineRoot.Children.OfType<QueueExplorerItem>().ForEach(q =>
@@ -123,9 +123,12 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public void RefreshQueues()
         {
+            if (MachineRoot == null)
+                return;
+
             MachineRoot.Children.Clear();
 
-            var queues = _queueManager.GetQueues(ConnectedToComputer).OrderBy(x => x.Address);
+            var queues = _queueManager.GetQueues(ConnectedToComputer).OrderBy(x => x.Address).ToList();
 
             SetupQueueNodes(queues);
             RefreshMessageCount();
@@ -166,8 +169,14 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         private void SetupQueueNodes(IEnumerable<Queue> queues)
         {
+            if (MachineRoot == null)
+                return;
+
             foreach (var queue in queues)
             {
+                if (queue == null)
+                    continue;
+
                 QueueExplorerItem queueToAdd = null;
                 var parentTreeNode = MachineRoot;
                 var systemQueue = GetMatchesSystemQueuesName(queue);
@@ -175,7 +184,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
                 if (systemQueue != null)
                 {
                     var parentName = queue.Address.Queue.Replace(systemQueue, string.Empty);
-                    var parentNode = MachineRoot.Children.FirstOrDefault(q => q.Name == parentName);
+                    var parentNode = MachineRoot.Children.FirstOrDefault(q => q.Name != null && q.Name == parentName);
 
                     if (parentNode != null)
                     {
@@ -183,7 +192,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer
                         queueToAdd = new QueueExplorerItem(queue, systemQueue.Remove(0, 1));
                     }
                 }
-                else
+
+                if (queueToAdd == null)
                 {
                     queueToAdd = new QueueExplorerItem(queue);
                 }

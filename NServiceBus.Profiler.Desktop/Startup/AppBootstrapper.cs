@@ -51,7 +51,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
         private void ConfigLogger()
         {
             _logger = new LoggingConfig().GetLogger();
-            //LogManager.Initialize(type => _logger);
+            LogManager.Initialize(type => _logger);
         }
 
         private void TryDisplayUnhandledException(Exception exception)
