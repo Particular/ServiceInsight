@@ -29,7 +29,6 @@ param(
 	[string]$supportEmail = $(throw "file is a required parameter."),
 	[string]$supportWeb = $(throw "file is a required parameter.")
 )
-  $commit = Get-Git-Commit
   $asmInfo = "using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -44,7 +43,7 @@ using ExceptionHandler;
 [assembly: AssemblyProduct(""$product"")]
 [assembly: AssemblyCopyright(""$copyright"")]
 [assembly: AssemblyVersion(""$version"")]
-[assembly: AssemblyInformationalVersion(""$version / $commit"")]
+[assembly: AssemblyInformationalVersion(""$version"")]
 [assembly: AssemblyFileVersion(""$version"")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: SupportEmail(""$supportEmail"")]
