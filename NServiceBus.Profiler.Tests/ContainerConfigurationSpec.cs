@@ -25,7 +25,7 @@ namespace NServiceBus.Profiler.Tests.Container
         Because of = () => Shell = Container.Resolve<IShellViewModel>();
 
         It should_have_a_reference_to_the_shell = () => Shell.ShouldNotBeNull();
-        It should_have_populated_plugin_information = () => Shell.Plugins.Count.ShouldEqual(3);
+        It should_have_populated_plugin_information = () => Shell.Plugins.Count.ShouldEqual(5);
     }
 
     public class TestableAppBootstrapper : AppBootstrapper
