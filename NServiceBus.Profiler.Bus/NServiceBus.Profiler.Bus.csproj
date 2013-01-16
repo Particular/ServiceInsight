@@ -107,19 +107,24 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHeaderViewModel.cs" />
     <Compile Include="HeaderInfo.cs" />
-    <Compile Include="HeaderInfoViewModel.cs" />
     <Compile Include="HeaderInfoView.xaml.cs">
       <DependentUpon>HeaderInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HeaderInfoViewModelBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IHeaderInfoView.cs" />
     <Compile Include="IHeaderInfoViewModel.cs" />
+    <Compile Include="PerformanceHeaderViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="GeneralHeaderViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="HeaderInfoView.xaml">

@@ -12,5 +12,13 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
                 action(item);
             }
         }
+
+        public static void AddRange<T>(this IList<T> list, IList<T> collectionToAdd)
+        {
+            foreach (var item in collectionToAdd)
+            {
+                list.Add(item);
+            }
+        }
     }
 }

@@ -12,7 +12,5 @@ namespace NServiceBus.Profiler.Bus
         IHandle<SelectedMessageChangedEvent>
     {
         IObservableCollection<HeaderInfo> Items { get; }
-        bool CanReturnToSource();
-        void ReturnToSource();
     }
 }

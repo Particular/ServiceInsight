@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="view">
 
-    <dxg:GridControl x:Name="treeList" ItemsSource="{Binding Path=Items}">
+    <dxg:GridControl ItemsSource="{Binding Path=Items}">
         <dxg:GridControl.Columns>
             <dxg:GridColumn FieldName="Key" Header="Type" AllowEditing="False" ToolTip="{x:Null}">
                 <dxg:GridColumn.EditSettings>
@@ -24,8 +24,7 @@
             </dxg:GridColumn>
         </dxg:GridControl.Columns>
         <dxg:GridControl.View>
-            <dxg:TableView x:Name="gridView" 
-                           AutoWidth="True"
+            <dxg:TableView AutoWidth="True"
                            BestFitMode="AllRows"
                            ShowColumnHeaders="True"
                            ShowIndicator="False"

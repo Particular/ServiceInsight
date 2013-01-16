@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.Profiler.Bus
 {
-    public interface IHeaderInfoView// : IPluginDiscoverablePart
+    public interface IHeaderInfoView
     {
     }
 }
