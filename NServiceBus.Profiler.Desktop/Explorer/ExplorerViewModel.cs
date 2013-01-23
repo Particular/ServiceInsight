@@ -42,7 +42,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             ".distributor.storage",
             ".gateway",
             ".timeoutsdispatcher",
-            ".distributor.control"
+            ".distributor.control",
         };
 
         protected override void OnViewLoaded(object view)
@@ -204,7 +204,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         private string GetMatchesSystemQueuesName(Queue queue)
         {
-            return SubQueueNames.FirstOrDefault(q => queue.Address.Queue.Contains(q, StringComparison.InvariantCultureIgnoreCase));
+            return SubQueueNames.FirstOrDefault(q =>
+            {
+                return queue.Address.Queue.EndsWith(q, StringComparison.InvariantCultureIgnoreCase);
+            });
         }
 
         private bool IsConnected

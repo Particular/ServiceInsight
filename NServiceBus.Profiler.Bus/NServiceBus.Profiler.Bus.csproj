@@ -107,6 +107,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SagaHeaderViewModel.cs" />
+    <Compile Include="GatewayHeaderViewModel.cs" />
     <Compile Include="ErrorHeaderViewModel.cs" />
     <Compile Include="HeaderInfo.cs" />
     <Compile Include="HeaderInfoView.xaml.cs">

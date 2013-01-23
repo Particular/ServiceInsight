@@ -68,7 +68,8 @@ namespace NServiceBus.Profiler.Bus
         protected override bool IsMatchingHeader(HeaderInfo header)
         {
             return header.Key.StartsWith("NServiceBus.ExceptionInfo", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("FailedQ", StringComparison.OrdinalIgnoreCase);
+                   header.Key.EndsWith("FailedQ", StringComparison.OrdinalIgnoreCase)                     ||
+                   header.Key.EndsWith("TimeOfFailure", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

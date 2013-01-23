@@ -9,22 +9,24 @@ using NServiceBus.Profiler.Core.MessageDecoders;
 namespace NServiceBus.Profiler.Bus
 {
     [View(typeof(HeaderInfoView))]
-    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase
+    public class GatewayHeaderViewModel : HeaderInfoViewModelBase
     {
-        public PerformanceHeaderViewModel(
+        public GatewayHeaderViewModel(
             IEventAggregator eventAggregator, 
             IMessageDecoder<string> decoder, 
             IQueueManagerAsync queueManager, 
             IClipboard clipboard) : base(eventAggregator, decoder, queueManager, clipboard)
         {
-            DisplayName = "Performance";
+            DisplayName = "Gateway";
         }
 
         protected override bool IsMatchingHeader(HeaderInfo header)
         {
-            return header.Key.EndsWith("TimeSent", StringComparison.OrdinalIgnoreCase)          ||
-                   header.Key.EndsWith("ProcessingStarted", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("ProcessingEnded", StringComparison.OrdinalIgnoreCase);
+            return header.Key.EndsWith(".From", StringComparison.OrdinalIgnoreCase)             ||
+                   header.Key.EndsWith(".To", StringComparison.OrdinalIgnoreCase)               ||
+                   header.Key.EndsWith(".DestinationSites", StringComparison.OrdinalIgnoreCase) ||
+                   header.Key.EndsWith(".OriginatingSite", StringComparison.OrdinalIgnoreCase)  ||
+                   header.Key.EndsWith(".Header.RouteTo", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

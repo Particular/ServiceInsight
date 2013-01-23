@@ -1,5 +1,4 @@
 ﻿using System;
-using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Views;
 using ExceptionHandler;
@@ -23,9 +22,13 @@ namespace NServiceBus.Profiler.Bus
 
         protected override bool IsMatchingHeader(HeaderInfo header)
         {
-            return !header.Key.StartsWith("NServiceBus", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("EnclosedMessageTypes", StringComparison.OrdinalIgnoreCase);
+            return !header.Key.StartsWith("NServiceBus", StringComparison.OrdinalIgnoreCase)       ||
+                   header.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase)              ||
+                   header.Key.EndsWith("EnclosedMessageTypes", StringComparison.OrdinalIgnoreCase) ||
+                   header.Key.EndsWith("Retries", StringComparison.OrdinalIgnoreCase)              ||
+                   header.Key.EndsWith("RelatedTo", StringComparison.OrdinalIgnoreCase)            ||
+                   header.Key.EndsWith("ContentType", StringComparison.OrdinalIgnoreCase)          ||
+                   header.Key.EndsWith("IsDeferedMessage", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
