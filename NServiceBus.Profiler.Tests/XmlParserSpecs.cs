@@ -6,7 +6,7 @@ using NServiceBus.Profiler.Common.CodeParser;
 
 namespace NServiceBus.Profiler.Tests.Parsers
 {
-    [Subject("code parser")]
+    [Subject("xml code parser")]
     public abstract class with_a_xml_parser
     {
         protected static XmlParser Parser;
@@ -18,7 +18,6 @@ namespace NServiceBus.Profiler.Tests.Parsers
         };
     }
 
-    [Subject("code parser")]
     public class when_parsing_simple_xml_strings : with_a_xml_parser
     {
         protected static string SimpleXml = "<xml version=\"1.0\" encoding=\"utf-8\"><packages>test package</packages>";
@@ -46,7 +45,6 @@ namespace NServiceBus.Profiler.Tests.Parsers
         It should_parse_all_objects = () => Lexemes.Count(lx => lx.Type == LexemType.Object).ShouldEqual(3); // Followings are objects: xml and packages (2 of them)
     }
 
-    [Subject("code parser")]
     public class when_parsing_more_complex_xml_content : with_a_xml_parser
     {
         protected static string ComplexXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"+
@@ -75,7 +73,6 @@ namespace NServiceBus.Profiler.Tests.Parsers
         It shoud_parse_all_comments = () => Lexemes.Count(lx => lx.Type == LexemType.Comment).ShouldEqual(6);
     }
 
-    [Subject("code parser")]
     public class when_colorizing_xml_string : with_a_xml_parser
     {
         protected static string ComplexXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"+
@@ -109,7 +106,7 @@ namespace NServiceBus.Profiler.Tests.Parsers
         It should_color_objects_with_red = () => paragraph.Inlines.Count.ShouldEqual(136);
     }
 
-    [Subject("code parser")]
+    [Subject("xml code parser")]
     public class when_having_empty_lexem
     {
         protected static CodeLexem lexem;

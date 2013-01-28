@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace NServiceBus.Profiler.Common.CodeParser
 {
     public class BaseParser
     {
-        private readonly char[] _spaceChars = new[] {' ', '\t'};
+        protected readonly char[] SpaceChars = new[] {' ', '\t'};
+        protected readonly string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+
         protected char previousSimbol;
 
         protected string CutString(ref SourcePart text, int count)
@@ -24,7 +27,7 @@ namespace NServiceBus.Profiler.Common.CodeParser
         protected void TrySpace(List<CodeLexem> res, ref SourcePart text)
         {
             var stringBuilder = new StringBuilder();
-            while (_spaceChars.Contains(text[0]))
+            while (SpaceChars.Contains(text[0]))
             {
                 stringBuilder.Append(CutString(ref text, 1));
             }
@@ -35,9 +38,20 @@ namespace NServiceBus.Profiler.Common.CodeParser
             }
         }
 
+        protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex)
+        {
+            if (text.StartsWith(lex))
+            {
+                CutString(ref text, lex.Length);
+                return true;
+            }
+
+            return false;
+        }
+
         protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
         {
-            if (text.StartsWith(lex, StringComparison.Ordinal))
+            if (text.StartsWith(lex))
             {
                 res.Add(new CodeLexem(type, CutString(ref text, lex.Length)));
                 return true;
@@ -95,6 +109,20 @@ namespace NServiceBus.Profiler.Common.CodeParser
             var sourceString = text;
             LineBreaks(list, ref sourceString, sourceString.Length, LexemType.PlainText);
             return list;
+        }
+
+        protected static Run CreateRun(string text, Color color)
+        {
+            return new Run
+            {
+                Text = text,
+                Foreground = new SolidColorBrush(color)
+            };
+        }
+
+        public virtual Inline ToInline(CodeLexem codeLexem)
+        {
+            return new Run(codeLexem.Text);
         }
     }
 }

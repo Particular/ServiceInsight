@@ -15,6 +15,6 @@ namespace NServiceBus.Profiler.Common.CodeParser
         PlainText,
         String,
         KeyWord,
-        Quotes
+        Quotes,
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace NServiceBus.Profiler.Common.CodeParser
 {
+    [DebuggerDisplay("{Remaining}")]
     public class SourcePart
     {
         private string Source
@@ -12,6 +14,11 @@ namespace NServiceBus.Profiler.Common.CodeParser
         private int StartIndex
         {
             get; set;
+        }
+
+        private string Remaining
+        {
+            get { return Source.Substring(StartIndex); }
         }
 
         public int Length
@@ -79,9 +86,9 @@ namespace NServiceBus.Profiler.Common.CodeParser
             return new SourcePart(Source, StartIndex + startIndex);
         }
 
-        public bool StartsWith(string value, StringComparison comparisonType)
+        public bool StartsWith(string value, StringComparison comparisonType = StringComparison.Ordinal)
         {
-            return string.Compare(Source, StartIndex, value, 0, value.Length, comparisonType) == 0;
+            return String.Compare(Source, StartIndex, value, 0, value.Length, comparisonType) == 0;
         }
     }
 }

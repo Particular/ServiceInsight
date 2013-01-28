@@ -1,89 +1,126 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Windows.Documents;
+using System.Windows.Media;
 
-namespace NServiceBus.Profiler.Common.CodeParser {
+namespace NServiceBus.Profiler.Common.CodeParser
+{
+    public class JsonParser : BaseParser
+    {
+        protected static readonly char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
+        protected static readonly char[] JsonQuotes = new[] { '"' };
 
+        protected bool IsInsideBlock;
 
-  public class JsonParser : BaseParser {
+        protected override List<CodeLexem> Parse(SourcePart text)
+        {
+            var list = new List<CodeLexem>();
 
+            while (text.Length > 0)
+            {
+                var lenght = text.Length;
 
-    protected static readonly char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
-    protected static readonly char[] JsonQuotes = new[] { '"' };
+                TryExtract(list, ref text, ByteOrderMark);
+                TryExtract(list, ref text, "[", LexemType.Symbol);
+                TryExtract(list, ref text, "{", LexemType.Symbol);
 
-    protected override List<CodeLexem> Parse(SourcePart text) {
-      var list = new List<CodeLexem>();
+                if (TryExtract(list, ref text, "\"", LexemType.Quotes))
+                {
+                    ParseJsonPropertyName(list, ref text); // Extract Name
+                    TryExtract(list, ref text, "\"", LexemType.Quotes);
+                    TryExtract(list, ref text, ":", LexemType.Symbol);
+                    TrySpace(list, ref text);
+                    TryExtractValue(list, ref text); // Extract Value
+                }
 
-      while( text.Length > 0 ) {
+                ParseSymbol(list, ref text); // Parse extras
+                TrySpace(list, ref text);
+                TryExtract(list, ref text, "\r\n", LexemType.LineBreak);
+                TryExtract(list, ref text, "\n", LexemType.LineBreak);
+                TryExtract(list, ref text, "}", LexemType.Symbol);
+                TryExtract(list, ref text, "]", LexemType.Symbol);
 
-        // Extract Name
-        if( TryExtract(list, ref text, "\"", LexemType.Symbol) ) {
-          ParseJsonPropertyName(list, ref text);
-          TryExtract(list, ref text, "\":", LexemType.Symbol);
+                if (lenght == text.Length)
+                    break;
+            }
 
-          TrySpace(list, ref text);
-
-          // Extract Value
-          TryExtractValue(list, ref text);
+            return list;
         }
 
-        // Parse extras
-        ParseSymbol(list, ref text);
-        
-        TrySpace(list, ref text);
+        private void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
+        {
+            if (text[0] == '{')
+            {
+                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+            }
+            else if (text[0] == '[')
+            {
+                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+            }
+            else if (text[0] == '"')
+            {
+                res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
+                var end = text.IndexOf('"');
+                res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
+                res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
+            }
+            else
+            {
+                var end = text.IndexOfAny(new[] { ',', '}' });
+                res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
+                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+            }
+        }
 
-        TryExtract(list, ref text, "\n", LexemType.LineBreak);
+        private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        {
+            var index = text.IndexOfAny(JsonSymbol);
+            if (index != 0)
+                return;
 
-      }
+            res.Add(new CodeLexem(LexemType.Symbol, text.Substring(0, 1)));
+            text = text.Substring(1);
+        }
 
-      return list;
+        private void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
+        {
+            var index = text.IndexOf("\":");
+            if (index <= 0)
+                return;
+
+            res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
+        }
+
+        public override Inline ToInline(CodeLexem codeLexem)
+        {
+            switch (codeLexem.Type)
+            {
+                case LexemType.Error:
+                    return CreateRun(codeLexem.Text, Colors.LightGray);
+                case LexemType.Symbol:
+                case LexemType.Object:
+                case LexemType.Property:
+                    return CreateRun(codeLexem.Text, Colors.Blue);
+                case LexemType.Value:
+                case LexemType.Space:
+                    return CreateRun(codeLexem.Text, Colors.Black);
+                case LexemType.LineBreak:
+                    return new LineBreak();
+                case LexemType.Complex:
+                    return CreateRun(codeLexem.Text, Colors.LightGray);
+                case LexemType.Comment:
+                    return CreateRun(codeLexem.Text, Colors.Green);
+                case LexemType.PlainText:
+                    return CreateRun(codeLexem.Text, Colors.Black);
+                case LexemType.String:
+                    return CreateRun(codeLexem.Text, Colors.Brown);
+                case LexemType.KeyWord:
+                    return CreateRun(codeLexem.Text, Colors.Blue);
+                case LexemType.Quotes:
+                    return CreateRun(codeLexem.Text, Colors.Brown);
+            }
+
+            throw new NotImplementedException(string.Format("Lexem type {0} has no specific colors.", codeLexem.Type));
+        }
     }
-
-    private void TryExtractValue(List<CodeLexem> res, ref SourcePart text) {
-
-      if( text[0] == '{' ) {
-        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));      
-      
-      } else if( text[0] == '[' ) {
-        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));      
-      
-      } else if( text[0] == '"' ) {
-        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));      
-        
-        int end = text.IndexOf('"');
-        res.Add(new CodeLexem(LexemType.PlainText, CutString(ref text, end)));
-
-        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));      
-      
-      } else { 
-        int end = text.IndexOfAny( new char[] { ',', '}' });
-
-        res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
-
-        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));      
-      }
-
-      
-
-    }
-
-    private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text) {
-      int index = text.IndexOfAny(JsonSymbol);
-      if( index != 0 )
-        return;
-
-      res.Add(new CodeLexem(LexemType.Symbol, text.Substring(0, 1)));
-      text = text.Substring(1);
-    }
-
-    private void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text) {
-      var index = text.IndexOf("\":");
-      if( index <= 0 )
-        return;
-
-      res.Add(new CodeLexem(LexemType.Object, CutString(ref text, index)));
-    }
-
-  }
 }

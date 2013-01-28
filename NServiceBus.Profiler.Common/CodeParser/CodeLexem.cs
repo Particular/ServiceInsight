@@ -27,15 +27,6 @@ namespace NServiceBus.Profiler.Common.CodeParser
 
         public string Text { get; set; }
 
-        protected Run CreateRun(string text, Color color)
-        {
-            return new Run
-            {
-                Text = text,
-                Foreground = new SolidColorBrush(color)
-            };
-        }
-
         public List<CodeLexem> Parse(CodeLanguage lang)
         {
             switch (lang)
@@ -54,44 +45,24 @@ namespace NServiceBus.Profiler.Common.CodeParser
             }
         }
 
-        public Inline ToInline()
+        public Inline ToInline(CodeLanguage lang)
         {
-            switch (Type)
+            switch (lang)
             {
-                case LexemType.Error:
-                    return CreateRun(Text, Colors.LightGray);
-                case LexemType.Symbol:
-                    return CreateRun(Text, Colors.Blue);
-                case LexemType.Object:
-                    return CreateRun(Text, Colors.Brown);
-                case LexemType.Property:
-                    return CreateRun(Text, Colors.Red);
-                case LexemType.Value:
-                    return CreateRun(Text, Colors.Blue);
-                case LexemType.Space:
-                    return CreateRun(Text, Colors.Black);
-                case LexemType.LineBreak:
-                    return new LineBreak();
-                case LexemType.Complex:
-                    return CreateRun(Text, Colors.LightGray);
-                case LexemType.Comment:
-                    return CreateRun(Text, Colors.Green);
-                case LexemType.PlainText:
-                    return CreateRun(Text, Colors.Black);
-                case LexemType.String:
-                    return CreateRun(Text, Colors.Brown);
-                case LexemType.KeyWord:
-                    return CreateRun(Text, Colors.Blue);
-                case LexemType.Quotes:
-                    return CreateRun(Text, Colors.Blue);
+                case CodeLanguage.Xml:
+                    return new XmlParser().ToInline(this);
+                case CodeLanguage.Json:
+                    return new JsonParser().ToInline(this);
+                case CodeLanguage.Plain:
+                    return new BaseParser().ToInline(this);
+                default:
+                    throw new NotImplementedException(string.Format("Conversion from {0} language is not supported.", lang));
             }
-
-            throw new NotImplementedException(string.Format("Lexem type {0} has no specific colors.", Type));
         }
 
         public override string ToString()
         {
-            return string.Format("Text: {0}, Type: {1}", Text, Type);
+            return string.Format("Text: {0}  Type: {1}", Text, Type);
         }
     }
 }

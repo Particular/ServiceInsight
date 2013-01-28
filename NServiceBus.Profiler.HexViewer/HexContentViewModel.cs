@@ -12,8 +12,14 @@ namespace NServiceBus.Profiler.HexViewer
     public class HexContentViewModel : Screen, IHexContentViewModel
     {
         private IHexContentView _view;
+        private static readonly Encoding Encoding;
+        internal static Func<byte, string> ByteToStringConverter;
 
-        internal static Func<byte, string> ByteToStringConverter = byteValue => Encoding.Default.GetString(new[] { byteValue });
+        static HexContentViewModel()
+        {
+            Encoding = new UTF8Encoding(false);
+            ByteToStringConverter = byteValue => Encoding.GetString(new[] { byteValue });
+        }
 
         public HexContentViewModel()
         {

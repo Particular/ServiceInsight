@@ -7,7 +7,7 @@ namespace NServiceBus.Profiler.Core.MessageDecoders
         public string Decode(byte[] content)
         {
             if (content == null) return null;
-            return Encoding.UTF8.GetString(content);
+            return new UTF8Encoding(false).GetString(content);
         }
 
         object IMessageDecoder.Decode(byte[] content)

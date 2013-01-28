@@ -21,7 +21,7 @@ namespace NServiceBus.Profiler.Common.CodeParser
             var list = codeLexem.Parse(CodeLanguage);
             foreach (CodeLexem current in list)
             {
-                collection.Add(current.ToInline());
+                collection.Add(current.ToInline(CodeLanguage));
             }
         }
 

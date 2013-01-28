@@ -94,6 +94,8 @@
     <Compile Include="GuardSpecs.cs" />
     <Compile Include="Helpers\TestConductorScreen.cs" />
     <Compile Include="HexViewerSpecs.cs" />
+    <Compile Include="JsonParserSpecs.cs" />
+    <Compile Include="JsonViewerSpecs.cs" />
     <Compile Include="MessageListSpec.cs" />
     <Compile Include="MessageSpecs.cs" />
     <Compile Include="PluginSpecs.cs" />
@@ -102,7 +104,7 @@
     <Compile Include="QueueManagerSpecs.cs" />
     <Compile Include="QueueSpecs.cs" />
     <Compile Include="ShellSpecs.cs" />
-    <Compile Include="StringParserSpecs.cs" />
+    <Compile Include="XmlParserSpecs.cs" />
     <Compile Include="XmlViewerSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +131,10 @@
     <ProjectReference Include="..\NServiceBus.Profiler.Bus\NServiceBus.Profiler.Bus.csproj">
       <Project>{a73916d4-27fb-42ee-8798-fb600ab4e5e8}</Project>
       <Name>NServiceBus.Profiler.Bus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NServiceBus.Profiler.JsonViewer\NServiceBus.Profiler.JsonViewer.csproj">
+      <Project>{e1905c5f-8ece-41d7-81b9-e127139e306a}</Project>
+      <Name>NServiceBus.Profiler.JsonViewer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NServiceBus.Profiler.XmlViewer\NServiceBus.Profiler.XmlViewer.csproj">
       <Project>{a0b2bbf9-084a-4fae-9918-ef7d5af7eccd}</Project>
