@@ -95,27 +95,19 @@ namespace NServiceBus.Profiler.Common.CodeParser
         {
             switch (codeLexem.Type)
             {
-                case LexemType.Error:
-                    return CreateRun(codeLexem.Text, Colors.LightGray);
                 case LexemType.Symbol:
                 case LexemType.Object:
+                    return CreateRun(codeLexem.Text, Colors.LightGray);
                 case LexemType.Property:
                     return CreateRun(codeLexem.Text, Colors.Blue);
                 case LexemType.Value:
                 case LexemType.Space:
+                case LexemType.PlainText:
+                case LexemType.String:
                     return CreateRun(codeLexem.Text, Colors.Black);
                 case LexemType.LineBreak:
                     return new LineBreak();
                 case LexemType.Complex:
-                    return CreateRun(codeLexem.Text, Colors.LightGray);
-                case LexemType.Comment:
-                    return CreateRun(codeLexem.Text, Colors.Green);
-                case LexemType.PlainText:
-                    return CreateRun(codeLexem.Text, Colors.Black);
-                case LexemType.String:
-                    return CreateRun(codeLexem.Text, Colors.Brown);
-                case LexemType.KeyWord:
-                    return CreateRun(codeLexem.Text, Colors.Blue);
                 case LexemType.Quotes:
                     return CreateRun(codeLexem.Text, Colors.Brown);
             }
