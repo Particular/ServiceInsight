@@ -45,7 +45,10 @@ namespace NServiceBus.Profiler.Common.CodeParser
                 
                 case CodeLanguage.Xml:
                     return new XmlParser().Parse(Text);
-                
+
+                case CodeLanguage.Json:
+                    return new JsonParser().Parse(Text);
+
                 default:
                     throw new NotImplementedException(string.Format("Parser for {0} language is not implemented.", lang));
             }

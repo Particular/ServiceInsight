@@ -4,5 +4,6 @@
     {
         Plain,
         Xml,
+        Json
     }
 }
