@@ -93,19 +93,12 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>md "$(SolutionDir)/NServiceBus.Profiler.Desktop/bin/$(ConfigurationName)/Plugins/"
-md "$(SolutionDir)/NServiceBus.Profiler.Tests/bin/$(ConfigurationName)/Plugins/"
-
-xcopy "$(TargetPath)" "$(SolutionDir)/NServiceBus.Profiler.Desktop/bin/$(ConfigurationName)/Plugins/" /f /Y
-xcopy "$(TargetPath)" "$(SolutionDir)/NServiceBus.Profiler.Tests/bin/$(ConfigurationName)/Plugins/" /f /Y</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
+  <ItemGroup>
+	<OutputFolders Include="$(SolutionDir)NServiceBus.Profiler.Desktop\bin\$(ConfigurationName)\Plugins\;$(SolutionDir)NServiceBus.Profiler.Tests\bin\$(ConfigurationName)\Plugins\" />
+  </ItemGroup>
   <Target Name="AfterBuild">
+	<MakeDir Condition="!Exists('$(TestOutput)')" Directories="@(OutputFolders)" />
+	<Copy SourceFiles="$(TargetPath)" DestinationFolder="%(OutputFolders.FullPath)" />
   </Target>
-  -->
   <Import Project="$(SolutionDir)\Tools\Fody\Fody.targets" />
 </Project>
