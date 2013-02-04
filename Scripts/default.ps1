@@ -56,6 +56,7 @@ task CopyPlugins -depends Compile {
   copy-item $buildartifacts_dir\NServiceBus.Profiler.HexViewer.* $buildartifacts_dir\Plugins
   copy-item $buildartifacts_dir\NServiceBus.Profiler.Bus.* $buildartifacts_dir\Plugins
   copy-item $buildartifacts_dir\NServiceBus.Profiler.XmlViewer.* $buildartifacts_dir\Plugins
+  copy-item $buildartifacts_dir\NServiceBus.Profiler.JsonViewer.* $buildartifacts_dir\Plugins
   
   if($include_pdb_files -eq $false) {
      remove-item $buildartifacts_dir\*.pdb
