@@ -38,11 +38,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             get { return _displayName; }
         }
 
-        public override int? ParentId
-        {
-            get { return ServerExplorerItem.ServerNodeIdentifier; }
-        }
-
         public void UpdateMessageCount(int count)
         {
             _displayName = count > 0 ? string.Format("{0} ({1})", _queueName, count.ToString(CultureInfo.InvariantCulture)) : _queueName;

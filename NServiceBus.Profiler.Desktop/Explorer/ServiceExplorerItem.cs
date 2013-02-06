@@ -1,18 +1,18 @@
-using System.Drawing;
+﻿using System.Drawing;
 using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {
-    public class FileExplorerItem : ExplorerItem
+    public class ServiceExplorerItem : ExplorerItem
     {
-        public FileExplorerItem(string name)
+        public ServiceExplorerItem(string name)
             : base(name)
         {
         }
 
         public override Bitmap Image
         {
-            get { return Resources.TreeDocFile; }
+            get { return Resources.TreeMonitoring; }
         }
     }
 }

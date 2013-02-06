@@ -13,10 +13,5 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             get { return Resources.TreeDocFolder; }
         }
-
-        public override int? ParentId
-        {
-            get { return null; }
-        }
     }
 }

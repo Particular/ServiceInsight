@@ -141,7 +141,8 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
+    <Reference Include="RestSharp, Version=103.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.103.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -176,12 +177,19 @@
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="About\AboutViewModel.cs" />
+    <Compile Include="Explorer\AuditQueueExplorerItem.cs" />
+    <Compile Include="Explorer\ErrorQueueExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
     <Compile Include="Explorer\FolderExplorerItem.cs" />
     <Compile Include="Explorer\IExplorerView.cs" />
     <Compile Include="Explorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\ServerExplorerItem.cs" />
+    <Compile Include="Explorer\ServiceExplorerItem.cs" />
+    <Compile Include="ManagementService\ManagementConnectionView.xaml.cs">
+      <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManagementService\ManagementConnectionViewModel.cs" />
     <Compile Include="MessageList\DeletedMessageConverter.cs" />
     <Compile Include="MessageList\FileSizeFormatProvider.cs" />
     <Compile Include="MessageList\FileSizeValueConverter.cs" />
@@ -249,6 +257,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ManagementService\ManagementConnectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\ConnectToMachineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -294,6 +306,10 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <Resource Include="Images\AutoRefresh.png" />
+    <Resource Include="Images\ConnectService.png" />
+    <Resource Include="Images\Monitoring.png" />
+    <Resource Include="Images\AuditFolder.png" />
+    <Resource Include="Images\TreeAuditFolder.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -345,7 +361,7 @@
     <Resource Include="QueueMan.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Connect.png" />
+    <Resource Include="Images\ConnectQueue.png" />
     <Resource Include="Images\DeleteMessage.png" />
     <Resource Include="Images\DeleteQueue.png" />
     <Resource Include="Images\Refresh.png" />

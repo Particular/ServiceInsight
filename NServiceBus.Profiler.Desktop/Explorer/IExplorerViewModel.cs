@@ -20,7 +20,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         Queue SelectedQueue { get; }
         string ConnectedToComputer { get; }
         int SelectedRowHandle { get; set; }
-        void ConnectTo(string computerName);
+        void ConnectToQueue(string computerName);
+        void ConnectToService(string serviceUrl);
         void RefreshMessageCount();
         void RefreshQueues();
         void ExpandNodes();

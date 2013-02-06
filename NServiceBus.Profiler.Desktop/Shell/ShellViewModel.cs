@@ -12,6 +12,7 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.ManagementService;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
@@ -115,7 +116,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if(result.GetValueOrDefault(false))
             {
-                Explorer.ConnectTo(machineViewModel.ComputerName);
+                Explorer.ConnectToQueue(machineViewModel.ComputerName);
             }
         }
 
@@ -124,6 +125,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public void OnAutoRefreshQueuesChanged()
         {
             
+        }
+
+        [AutoCheckAvailability]
+        public virtual void ConnectToManagementService()
+        {
+            var connectionViewModel = _screenFactory.CreateScreen<ManagementConnectionViewModel>();
+            var result = _windowManager.ShowDialog(connectionViewModel);
+
+            if (result.GetValueOrDefault(false))
+            {
+                Explorer.ConnectToService(connectionViewModel.ServiceUrl);
+            }
         }
 
         [AutoCheckAvailability]
@@ -212,6 +225,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         public virtual bool CanConnectToMachine()
+        {
+            return !WorkInProgress;
+        }
+
+        public virtual bool CanConnectToManagementService()
         {
             return !WorkInProgress;
         }

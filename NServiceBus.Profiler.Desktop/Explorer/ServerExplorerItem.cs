@@ -5,8 +5,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 {
     public class ServerExplorerItem : ExplorerItem
     {
-        public const int ServerNodeIdentifier = int.MinValue;
-
         public ServerExplorerItem(string name) : base(name)
         {
         }
@@ -15,10 +13,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             get { return Resources.Computer; }
         }
-
-        public override int? ParentId
-        {
-            get { return null; }
-        }
     }
+
 }

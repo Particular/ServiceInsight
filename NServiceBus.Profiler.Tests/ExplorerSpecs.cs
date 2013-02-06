@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NSubstitute;
@@ -22,6 +22,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
         protected static IQueueManager QueueManager;
         protected static IEventAggregator EventAggregator;
         protected static IWindowManagerEx WindowManagerEx;
+        protected static IManagementService ManagementService;
         protected static Queue Queue;
         protected static Queue SubQueue;
         protected static QueueExplorerItem QueueNode;
@@ -32,7 +33,9 @@ namespace NServiceBus.Profiler.Tests.Explorer
             View = Substitute.For<IExplorerView>();
             EventAggregator = Substitute.For<IEventAggregator>();
             WindowManagerEx = Substitute.For<IWindowManagerEx>();
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            ManagementService = Substitute.For<IManagementService>();
+
+            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, ManagementService);
 
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
@@ -90,7 +93,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             Queues = new[] { Queue, AnotherQueue };
             QueueManager.GetQueues(Arg.Any<string>()).Returns(Queues);
 
-            Explorer.ConnectTo(Environment.MachineName);
+            Explorer.ConnectToQueue(Environment.MachineName);
         };
 
         Because of = () => Explorer.RefreshMessageCount();
@@ -135,7 +138,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             Queues = new[] {Queue};
             QueueManager.GetQueues(Arg.Any<string>()).Returns(Queues);
 
-            Explorer.ConnectTo(Environment.MachineName);
+            Explorer.ConnectToQueue(Environment.MachineName);
             Explorer.SelectedNode = new QueueExplorerItem(Queue);
         };
 
@@ -184,7 +187,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
     {
         protected static Exception Error;
 
-        Because of = () => Error = Catch.Exception(() => Explorer.ConnectTo("NonExistingMachine"));
+        Because of = () => Error = Catch.Exception(() => Explorer.ConnectToQueue("NonExistingMachine"));
 
         It should_throw_on_non_existing_machine_names = () => Error.ShouldNotBeNull();
     }
@@ -199,7 +202,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
             QueueManager = Substitute.For<IQueueManager>();
             QueueManager.GetQueues().ReturnsForAnyArgs(UnorderedQueueList);
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, ManagementService);
         };
 
         Because of = () => Error = Catch.Exception(() => Explorer.RefreshQueues());

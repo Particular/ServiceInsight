@@ -50,9 +50,12 @@
             <dxb:BarButtonItem Content="Help" x:Name="itemHelp" 
 				CategoryName="Help" Glyph="/Images/Help.png"
 				cal:Message.Attach="[Event ItemClick]=[Action ShowHelp]" />
-            <dxb:BarButtonItem Content="Connect To Machine" x:Name="itemConnect" 
-				CategoryName="Tools" Glyph="/Images/Connect.png"
+            <dxb:BarButtonItem Content="Connect To Machine" x:Name="itemConnectQueue" 
+				CategoryName="Tools" Glyph="/Images/ConnectQueue.png"
 				cal:Message.Attach="[Event ItemClick]=[Action ConnectToMachine]" />
+            <dxb:BarButtonItem Content="Connect To Management Service" x:Name="itemConnectService" 
+				CategoryName="Tools" Glyph="/Images/ConnectService.png"
+				cal:Message.Attach="[Event ItemClick]=[Action ConnectToManagementService]" />
             <dxb:BarButtonItem Content="Delete Message(s)" x:Name="itemDeleteMessage" 
 				CategoryName="Tools" Glyph="/Images/DeleteMessage.png"
 				cal:Message.Attach="[Event ItemClick]=[Action DeleteSelectedMessages]" />
@@ -90,7 +93,8 @@
             </dxb:BarSubItem>
 
             <dxb:BarSubItem x:Name="menuTools" CategoryName="Tools" Content="Tools">
-                <dxb:BarButtonItemLink BarItemName="itemConnect" />
+                <dxb:BarButtonItemLink BarItemName="itemConnectQueue" />
+                <dxb:BarButtonItemLink BarItemName="itemConnectService" />
                 <dxb:BarButtonItemLink BarItemName="itemRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItemLink BarItemName="itemCreateQueue" />
@@ -128,7 +132,8 @@
                 <dxb:BarSubItemLink BarItemName="menuHelp" />
             </dxb:Bar>
             <dxb:Bar UseWholeRow="True" Caption="Toolbar" AllowHide="True" AllowCollapse="True">
-                <dxb:BarButtonItemLink BarItemName="itemConnect" />
+                <dxb:BarButtonItemLink BarItemName="itemConnectQueue" />
+                <dxb:BarButtonItemLink BarItemName="itemConnectService" />
                 <dxb:BarButtonItemLink BarItemName="itemRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItemLink BarItemName="itemCreateQueue" />

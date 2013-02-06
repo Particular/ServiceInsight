@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
@@ -105,7 +103,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             windowManager.Received().ShowDialog(connectToViewModel);
         };
 
-        It should_connect_explorer_to_the_msmq_machine = () => explorer.Received().ConnectTo("NewMachine");
+        It should_connect_explorer_to_the_msmq_machine = () => explorer.Received().ConnectToQueue("NewMachine");
 
     }
 

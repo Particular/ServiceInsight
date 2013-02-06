@@ -1,6 +1,7 @@
 ﻿using System.Xml;
 using Autofac;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.MessageDecoders;
 
 namespace NServiceBus.Profiler.Desktop.Modules
@@ -15,6 +16,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<StringMessageDecoder>().As<IMessageDecoder<string>>();
             builder.RegisterType<XmlMessageDecoder>().As<IMessageDecoder<XmlDocument>>();
             builder.RegisterType<DefaultMapper>().As<IMapper>().SingleInstance();
+            builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
             builder.RegisterType<NetworkOperations>().As<INetworkOperations>().SingleInstance();
         }
     }

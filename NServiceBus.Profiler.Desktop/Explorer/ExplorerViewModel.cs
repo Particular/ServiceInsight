@@ -10,6 +10,7 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using System.Linq;
+using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using DevExpress.Xpf.Editors.Helpers;
 
@@ -20,16 +21,19 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         private readonly IQueueManager _queueManager;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
+        private readonly IManagementService _managementService;
         private IExplorerView _view;
 
         public ExplorerViewModel(
             IQueueManager queueManager,
             IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager)
+            IWindowManagerEx windowManager,
+            IManagementService managementService)
         {
             _queueManager = queueManager;
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
+            _managementService = managementService;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -37,10 +41,12 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             ".subscriptions",
             ".timeouts",
+            ".errors",
             ".retries",
             ".worker",
             ".distributor.storage",
             ".gateway",
+            ".notifications",
             ".timeoutsdispatcher",
             ".distributor.control",
         };
@@ -57,7 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             _view = view as IExplorerView;
             if (!IsConnected)
             {
-                ConnectTo(Environment.MachineName);
+                ConnectToQueue(Environment.MachineName);
             }
         }
 
@@ -101,6 +107,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             get { return Items.FirstOrDefault(x => x is FolderExplorerItem); }
         }
 
+        public virtual ExplorerItem ServiceRoot
+        {
+            get { return Items.FirstOrDefault(x => x is ServiceExplorerItem); }
+        }
+
         public virtual ExplorerItem MachineRoot
         {
             get { return Items.FirstOrDefault(x => x is ServerExplorerItem); }
@@ -108,11 +119,34 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public virtual ExplorerItem SelectedNode { get; set; }
 
-        public virtual void ConnectTo(string computerName)
+        public virtual void ConnectToService(string url)
+        {
+            Guard.NotNull(() => url, url);
+
+            ConnectedToService = url;
+            AddServiceNode();
+            RefreshServiceQueues();
+        }
+
+        private void AddServiceNode()
+        {
+            if (ServiceRoot == null)
+            {
+                Items.Add(new ServiceExplorerItem(ConnectedToService));
+            }
+
+            ServiceRoot.Children.Clear();
+            ServiceRoot.Children.Add(new AuditQueueExplorerItem("Audit"));
+            ServiceRoot.Children.Add(new ErrorQueueExplorerItem("Error"));
+
+            _view.ExpandNode(ServiceRoot);
+        }
+
+        public virtual void ConnectToQueue(string computerName)
         {
             Guard.NotNull(() => computerName, computerName);
 
-            //TODO: check ipv6 as well?
+            //NOTE: check ipv6 as well?
             var ipv4 = Address.GetIpAddressOrMachineName(computerName);
             Guard.NotNullOrEmpty(() => ipv4, ipv4);
 
@@ -134,7 +168,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             RefreshMessageCount();
         }
 
+        public void RefreshServiceQueues()
+        {
+            if(ServiceRoot == null)
+                return;
+
+            //ServiceRoot.Children.Clear();
+        }
+
         public virtual string ConnectedToComputer { get; private set; }
+
+        public virtual string ConnectedToService { get; private set; }
 
         public int SelectedRowHandle { get; set; }
 

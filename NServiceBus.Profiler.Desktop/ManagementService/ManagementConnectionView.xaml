@@ -1,0 +1,70 @@
+﻿<dxc:DXWindow x:Class="NServiceBus.Profiler.Desktop.ManagementService.ManagementConnectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             WindowStartupLocation="CenterScreen"
+             ShowInTaskbar="False"
+             ShowTitle="True"
+             ResizeMode="NoResize"
+             Icon="/Images/Computer.png"
+             Width="380" Height="180"
+             FocusManager.FocusedElement="{Binding ElementName=name}" 
+             Loaded="SelectText"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="3">
+            <Image Source="/Images/Information.png" Margin="5" VerticalAlignment="Center" Width="16" Height="16">
+                <Image.ToolTip>
+                    <TextBlock Text="Please enter management service url or IP address." />
+                </Image.ToolTip>
+            </Image>
+            <TextBlock Text="Service Url:" Grid.Row="0" Grid.Column="0" 
+                           HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
+        </StackPanel>
+        <dxe:TextEdit x:Name="name" 
+                      Text="{Binding ServiceUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Grid.Row="0" Grid.Column="1" Margin="5" />
+
+        <Grid VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" Visibility="{Binding IsAddressValid, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="/Images/Error.png" Margin="5" VerticalAlignment="Center" Width="16" Height="16" Grid.Column="0">
+                <Image.ToolTip>
+                    <TextBlock Text="Error" />
+                </Image.ToolTip>
+            </Image>
+
+            <TextBlock Grid.Column="1" 
+                           Text="There was an error connecting to management service. Either the address is not valid or the service is down."
+                           TextWrapping="Wrap" 
+                           TextAlignment="Left"
+                           Margin="5" />
+
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" 
+                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Button Width="80" Content="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" />
+            <Button Width="80" Content="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
+        </StackPanel>
+    </Grid>
+
+</dxc:DXWindow>

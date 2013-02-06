@@ -15,11 +15,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public abstract Bitmap Image { get; }
 
-        public abstract int? ParentId
-        {
-            get;
-        }
-
         public string Name { get; private set; }
 
         public virtual string DisplayName { get { return Name; } }
