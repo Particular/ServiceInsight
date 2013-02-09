@@ -6,20 +6,6 @@ namespace NServiceBus.Profiler.Common.Models
     [Serializable]
     public class Queue : PropertyChangedBase, IComparable<Queue>
     {
-        public static Queue Empty;
-
-        static Queue()
-        {
-            Empty = new Queue("", "")
-            {
-                CanRead = false,
-                FormatName = "",
-                Address = Address.Local,
-                IsTransactional = false,
-                QueueType = QueueTypes.Private
-            };
-        }
-
         public Queue(string queueName) : this(new Address(queueName))
         {
             Address = new Address(queueName);

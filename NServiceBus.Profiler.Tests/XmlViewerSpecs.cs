@@ -45,7 +45,7 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
             ViewModel.AttachView(View, null);
         };
 
-        Because of = () => ViewModel.SelectedMessage = new MessageBody {Content = Encoding.Default.GetBytes(TestMessage)};
+        Because of = () => ViewModel.SelectedMessage = new MessageBody {BodyRaw = Encoding.Default.GetBytes(TestMessage)};
 
         It should_display_the_message = () => View.Received(1).Display(Arg.Any<string>());
         It should_decode_the_message_to_xml_document = () => XmlDecoder.Received(1).Decode(Arg.Any<byte[]>());
@@ -57,7 +57,7 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
 
         Because of = () =>
         {
-            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody {Content = Encoding.Default.GetBytes(TestMessage)}));
+            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage)}));
             ViewModel.Handle(new SelectedMessageChangedEvent(null));
         };
 
@@ -68,7 +68,7 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
     {
         public static string TestMessage = "This is a test message content that is spread into four lines";
 
-        Because of = () => ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { Content = Encoding.Default.GetBytes(TestMessage) }));
+        Because of = () => ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
 
         It should_not_load_the_message = () => View.DidNotReceive().Display(Arg.Any<string>()); 
     }

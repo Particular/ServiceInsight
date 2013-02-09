@@ -9,7 +9,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     public interface IMessageListViewModel : IScreen, 
         IHandle<SelectedQueueChangedEvent>, 
         IHandle<MessageRemovedFromQueueEvent>,
-        IHandle<AutoRefreshBeatEvent>
+        IHandle<AutoRefreshBeatEvent>,
+        IHandle<AuditQueueSelectedEvent>,
+        IHandle<ErrorQueueSelectedEvent>
     {
         IObservableCollection<MessageInfo> Messages { get; }
         IObservableCollection<MessageInfo> SelectedMessages { get; }

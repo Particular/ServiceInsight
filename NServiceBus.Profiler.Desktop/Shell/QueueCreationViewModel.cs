@@ -67,7 +67,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private bool CreateQueue()
         {
             var queue = _queueManager.CreatePrivateQueue(new Queue(SelectedMachine, QueueName), IsTransactional);
-            return queue != null && queue != Queue.Empty;
+            return queue != null;
         }
     }
 }

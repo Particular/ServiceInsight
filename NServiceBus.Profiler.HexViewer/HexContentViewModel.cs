@@ -122,7 +122,7 @@ namespace NServiceBus.Profiler.HexViewer
             HexParts.Clear();
 
             CurrentContent = null;
-            CurrentContent = @event.Message.Content;
+            CurrentContent = @event.Message.BodyRaw;
         }
 
         public void Handle(SelectedMessageChangedEvent @event)

@@ -58,7 +58,7 @@ namespace NServiceBus.Profiler.XmlViewer
 
             if (SelectedMessage != null)
             {
-                var xml = _xmlDecoder.Decode(SelectedMessage.Content);
+                var xml = _xmlDecoder.Decode(SelectedMessage.BodyRaw);
                 _messageView.Display(xml.GetFormatted());
             }
         }
@@ -70,7 +70,7 @@ namespace NServiceBus.Profiler.XmlViewer
 
         public virtual void CopyMessageXml()
         {
-            var content = _stringDecoder.Decode(SelectedMessage.Content);
+            var content = _stringDecoder.Decode(SelectedMessage.BodyRaw);
             _clipboard.CopyTo(content);
         }
 

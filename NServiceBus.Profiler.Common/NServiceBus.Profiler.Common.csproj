@@ -13,6 +13,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +47,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.103.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -65,7 +70,9 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="Events\AuditQueueSelectedEvent.cs" />
     <Compile Include="Events\AutoRefreshBeatEvent.cs" />
+    <Compile Include="Events\ErrorQueueSelectedEvent.cs" />
     <Compile Include="Events\MessageBodyLoadedEvent.cs" />
     <Compile Include="Events\QueueMessageCountChanged.cs" />
     <Compile Include="Events\WorkFinishedEvent.cs" />
@@ -77,6 +84,7 @@
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
     <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
+    <Compile Include="ExtensionMethods\RestSharpExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
     <Compile Include="Models\AccessMode.cs" />
@@ -85,9 +93,11 @@
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\QueueTypes.cs" />
+    <Compile Include="Models\TransportMessage.cs" />
     <Compile Include="Plugins\PluginContextMenu.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -108,4 +119,5 @@
   <Target Name="AfterBuild">
     <Costura.EmbedTask DeleteReferences="false" MessageImportance="High" ExcludeAssemblies="@(NotEmbed)" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

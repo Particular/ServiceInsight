@@ -49,8 +49,8 @@ namespace NServiceBus.Profiler.Tests.Messages
 
         It should_get_message_payload = () =>
         {
-            FetchedMsg.Content.ShouldNotBeNull();
-            FetchedMsg.Content.Length.ShouldBeGreaterThan(0);
+            FetchedMsg.BodyRaw.ShouldNotBeNull();
+            FetchedMsg.BodyRaw.Length.ShouldBeGreaterThan(0);
         };
 
         It should_get_message_headers = () => { };

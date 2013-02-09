@@ -6,6 +6,7 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using System.Linq;
 
@@ -15,15 +16,18 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
+        private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
+            IManagementService managementService,
             IQueueManagerAsync asyncQueueManager)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
+            _managementService = managementService;
             _asyncQueueManager = asyncQueueManager;
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
@@ -44,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             if (FocusedMessage != null && SelectedQueue != null)
             {
                 var msg = _asyncQueueManager.GetMessageBody(SelectedQueue, FocusedMessage.Id);
-                if (msg == MessageBody.Empty)
+                if (msg == null)
                 {
                     FocusedMessage.IsDeleted = true;
                     NotifyOfPropertyChange(() => FocusedMessage);
@@ -155,6 +159,28 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 var message = messages.FirstOrDefault(m => m.Id == newMessagesId);
                 Messages.Add(message);
             }
+        }
+
+        public async void Handle(AuditQueueSelectedEvent message)
+        {
+            var messages = await _managementService.GetAuditMessages(message.Endpoint);
+            Messages.Clear();
+            if (messages != null)
+            {
+                var o = messages;
+                //Messages.AddRange();
+            }
+        }
+
+        public async void Handle(ErrorQueueSelectedEvent message)
+        {
+            var messages = await _managementService.GetErrorMessages(message.Endpoint);
+            Messages.Clear();
+            if (messages != null)
+            {
+                var o = messages;
+            }
+            //Messages.AddRange(messages);            
         }
     }
 }

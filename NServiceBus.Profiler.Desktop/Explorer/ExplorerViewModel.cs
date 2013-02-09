@@ -48,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             ".gateway",
             ".notifications",
             ".timeoutsdispatcher",
-            ".distributor.control",
+            ".distributor.control"
         };
 
         protected override void OnViewLoaded(object view)
@@ -112,6 +112,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             get { return Items.FirstOrDefault(x => x is ServiceExplorerItem); }
         }
 
+        public virtual ExplorerItem AuditRoot
+        {
+            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditQueueExplorerItem>().First() : null; }
+        }
+
+        public virtual ExplorerItem ErrorRoot
+        {
+            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorQueueExplorerItem>().First() : null; }
+        }
+
         public virtual ExplorerItem MachineRoot
         {
             get { return Items.FirstOrDefault(x => x is ServerExplorerItem); }
@@ -125,7 +135,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
             ConnectedToService = url;
             AddServiceNode();
-            RefreshServiceQueues();
         }
 
         private void AddServiceNode()
@@ -168,14 +177,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             RefreshMessageCount();
         }
 
-        public void RefreshServiceQueues()
-        {
-            if(ServiceRoot == null)
-                return;
-
-            //ServiceRoot.Children.Clear();
-        }
-
         public virtual string ConnectedToComputer { get; private set; }
 
         public virtual string ConnectedToService { get; private set; }
@@ -198,7 +199,24 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public virtual void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
+            if (SelectedNode is AuditQueueExplorerItem)
+            {
+                _eventAggregator.Publish(new AuditQueueSelectedEvent
+                {
+                    Endpoint = new Endpoint { Url = ConnectedToService }
+                });
+            }
+            else if(SelectedNode is ErrorQueueExplorerItem)
+            {
+                _eventAggregator.Publish(new ErrorQueueSelectedEvent
+                {
+                    Endpoint = new Endpoint { Url = ConnectedToService }
+                });
+            }
+            else
+            {
+                _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
+            }
         }
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }

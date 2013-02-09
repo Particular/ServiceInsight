@@ -34,7 +34,7 @@ namespace NServiceBus.Profiler.Tests.JsonViewer
             ViewModel.AttachView(View, null);
         };
 
-        Because of = () => ViewModel.SelectedMessage = new MessageBody { Content = Encoding.Default.GetBytes(TestMessage) };
+        Because of = () => ViewModel.SelectedMessage = new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) };
 
         It displays_the_message_as_json_object = () => View.Received(1).Display(Arg.Any<string>());
     }

@@ -70,6 +70,7 @@
     <Compile Include="IQueueOperations.cs" />
     <Compile Include="Management\DefaultManagementService.cs" />
     <Compile Include="Management\IManagementService.cs" />
+    <Compile Include="Management\JsonDeserializer.cs" />
     <Compile Include="Management\VersionInfo.cs" />
     <Compile Include="MessageDecoders\IMessageDecoder.cs" />
     <Compile Include="MessageDecoders\StringMessageDecoder.cs" />

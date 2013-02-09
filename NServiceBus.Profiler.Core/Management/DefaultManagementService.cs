@@ -1,22 +1,38 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using NServiceBus.Profiler.Common.Models;
 using RestSharp;
+using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Core.Management
 {
     public class DefaultManagementService : IManagementService
     {
-        public object GetAuditMessages()
+        public async Task<List<TransportMessage>> GetErrorMessages(Endpoint endpoint)
         {
-            return "Management message";
+            var client = new RestClient(endpoint.Url);
+            var request = new RestRequest("failedmessages");
+            var messages = await client.GetModelAsync<List<TransportMessage>>(request);
+
+            return messages;
         }
 
-        public bool IsAlive(string connectedToService)
+        public async Task<List<TransportMessage>> GetAuditMessages(Endpoint endpoint)
         {
-            var client = new RestSharp.RestClient(connectedToService);
-            var request = new RestRequest("ping");
-            var response = client.Execute<VersionInfo>(request);
+            var client = new RestClient(endpoint.Url);
+            var request = new RestRequest("auditmessages");
+            var messages = await client.GetModelAsync<List<TransportMessage>>(request);
 
-            return response.StatusCode == HttpStatusCode.OK && response.Data != null;
+            return messages;            
+        }
+
+        public async Task<bool> IsAlive(string connectedToService)
+        {
+            var client = new RestClient(connectedToService);
+            var request = new RestRequest("ping");
+            var version = await client.GetModelAsync<VersionInfo>(request);
+
+            return version != null;
         }
     }
 }

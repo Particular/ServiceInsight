@@ -1,4 +1,5 @@
-﻿using Caliburn.PresentationFramework.Filters;
+﻿using System.Threading.Tasks;
+using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Core.Management;
 
@@ -36,18 +37,18 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
         }
 
         [AutoCheckAvailability]
-        public virtual void Accept()
+        public async virtual void Accept()
         {
-            IsAddressValid = IsValidUrl(ServiceUrl);
+            IsAddressValid = await IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 TryClose(true);
             }
         }
 
-        private bool IsValidUrl(string serviceUrl)
+        private async Task<bool> IsValidUrl(string serviceUrl)
         {
-            return _managementService.IsAlive(serviceUrl);
+            return await _managementService.IsAlive(serviceUrl);
         }
     }
 }

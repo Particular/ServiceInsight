@@ -96,11 +96,9 @@ namespace NServiceBus.Profiler.Core
                 {
                     return _mapper.MapBody(q.PeekById(messageId));
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException) //message is removed from the queue (by another process)
                 {
-                    //Logger.ErrorFormat("Could not read the message Id {0} from the {1} queue", messageId, queue.FormatName);
-                    //TODO: Should return null, to be able to track removed messages by other processes?
-                    return MessageBody.Empty;
+                    return null;
                 }
             }
         }

@@ -41,7 +41,7 @@ namespace NServiceBus.Profiler.JsonViewer
 
             if (SelectedMessage != null)
             {
-                var json = _messageDecoder.Decode(SelectedMessage.Content);
+                var json = _messageDecoder.Decode(SelectedMessage.BodyRaw);
                 _messageView.Display(json);
             }
         }

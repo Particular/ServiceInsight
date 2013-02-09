@@ -56,7 +56,7 @@ namespace NServiceBus.Profiler.Tests.HexViewer
 
         Because of = () =>
         {
-            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { Content = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
             ViewModel.Handle(new SelectedMessageChangedEvent(null));
         };
 
@@ -76,7 +76,7 @@ namespace NServiceBus.Profiler.Tests.HexViewer
 
         Because of = () => ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody
         {
-            Content = Encoding.Default.GetBytes(TestMessage)
+            BodyRaw = Encoding.Default.GetBytes(TestMessage)
         }));
 
         It should_display_the_message = () => ViewModel.HexParts.ShouldNotBeEmpty();

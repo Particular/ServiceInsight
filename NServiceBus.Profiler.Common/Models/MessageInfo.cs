@@ -7,7 +7,7 @@ namespace NServiceBus.Profiler.Common.Models
     public class MessageInfo : PropertyChangedBase
     {
         private string _id;
-        private DateTime _sentAt;
+        private DateTime _timeSent;
         private bool _isDeleted;
         private string _label;
 
@@ -15,11 +15,11 @@ namespace NServiceBus.Profiler.Common.Models
         {
         }
 
-        public MessageInfo(string id, string label, DateTime sentAt)
+        public MessageInfo(string id, string label, DateTime timeSent)
         {
             _id = id;
             _label = label;
-            _sentAt = sentAt;
+            _timeSent = timeSent;
             _isDeleted = false;
         }
 
@@ -43,13 +43,13 @@ namespace NServiceBus.Profiler.Common.Models
             }
         }
 
-        public DateTime SentAt
+        public DateTime TimeSent
         {
-            get { return _sentAt; }
+            get { return _timeSent; }
             set
             {
-                _sentAt = value;
-                NotifyOfPropertyChange("SentAt");
+                _timeSent = value;
+                NotifyOfPropertyChange("TimeSent");
             }
         }
 

@@ -57,7 +57,7 @@ namespace NServiceBus.Profiler.Tests.Helpers
 
         public void SendMessage(Queue destination, object message)
         {
-            MessageQueue[destination].Add(new MessageInfo { Id = Guid.NewGuid().ToString(), Label = string.Empty, SentAt = DateTime.Now });
+            MessageQueue[destination].Add(new MessageInfo { Id = Guid.NewGuid().ToString(), Label = string.Empty, TimeSent = DateTime.Now });
         }
 
         public void DeleteQueue(Queue queue)

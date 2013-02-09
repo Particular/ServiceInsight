@@ -33,7 +33,7 @@ namespace NServiceBus.Profiler.Core
         {
             var m = new MessageBody(source.Id, source.Label, source.SentTime)
             {
-                Content = source.BodyStream.GetAsBytes(),
+                BodyRaw = source.BodyStream.GetAsBytes(),
                 Headers = source.Extension,
                 CorrelationId = source.CorrelationId,
                 TransactionId = source.TransactionId,
