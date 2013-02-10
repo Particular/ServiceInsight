@@ -13,10 +13,7 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
         public static Task<T> GetModelAsync<T>(this IRestClient client, IRestRequest request) 
             where T : class, new()
         {
-            return ExecuteAsync<T>(client, request, response =>
-            {
-                return response.Data;
-            });
+            return ExecuteAsync<T>(client, request, response => response.Data);
         }
 
         private static Task<T> ExecuteAsync<T>(this IRestClient client, IRestRequest request, Func<IRestResponse<T>, T> selector)

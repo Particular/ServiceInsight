@@ -8,20 +8,20 @@ namespace NServiceBus.Profiler.Core.Management
 {
     public class DefaultManagementService : IManagementService
     {
-        public async Task<List<TransportMessage>> GetErrorMessages(Endpoint endpoint)
+        public async Task<List<StoredMessage>> GetErrorMessages(Endpoint endpoint)
         {
             var client = new RestClient(endpoint.Url);
             var request = new RestRequest("failedmessages");
-            var messages = await client.GetModelAsync<List<TransportMessage>>(request);
+            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
             return messages;
         }
 
-        public async Task<List<TransportMessage>> GetAuditMessages(Endpoint endpoint)
+        public async Task<List<StoredMessage>> GetAuditMessages(Endpoint endpoint)
         {
             var client = new RestClient(endpoint.Url);
             var request = new RestRequest("auditmessages");
-            var messages = await client.GetModelAsync<List<TransportMessage>>(request);
+            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
             return messages;            
         }

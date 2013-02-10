@@ -47,14 +47,27 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             if (FocusedMessage != null && SelectedQueue != null)
             {
-                var msg = _asyncQueueManager.GetMessageBody(SelectedQueue, FocusedMessage.Id);
-                if (msg == null)
-                {
-                    FocusedMessage.IsDeleted = true;
-                    NotifyOfPropertyChange(() => FocusedMessage);
-                }
-                _eventAggregator.Publish(new MessageBodyLoadedEvent(msg));
+                LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
             }
+            else
+            {
+                var loadedMessage = FocusedMessage as StoredMessage;
+                if (loadedMessage != null)
+                {
+                    _eventAggregator.Publish(new MessageBodyLoadedEvent(loadedMessage));
+                }
+            }
+        }
+
+        private void LoadQueueMessage(Queue queue, string selectedMessageId)
+        {
+            var msg = _asyncQueueManager.GetMessageBody(queue, selectedMessageId);
+            if (msg == null)
+            {
+                FocusedMessage.IsDeleted = true;
+                NotifyOfPropertyChange(() => FocusedMessage);
+            }
+            _eventAggregator.Publish(new MessageBodyLoadedEvent(msg));
         }
 
         public virtual void OnSelectedQueueChanged()
@@ -134,6 +147,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 await RefreshQueueMessages(queue);
             }
+
+            //TODO: Refresh message count on error and audit queue
         }
 
         private async Task RefreshQueueMessages(Queue queue)
@@ -163,24 +178,30 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async void Handle(AuditQueueSelectedEvent message)
         {
+            _eventAggregator.Publish(new WorkStartedEvent("Loading audit messages..."));
+
             var messages = await _managementService.GetAuditMessages(message.Endpoint);
             Messages.Clear();
             if (messages != null)
             {
-                var o = messages;
-                //Messages.AddRange();
+                Messages.AddRange(messages);
             }
+
+            _eventAggregator.Publish(new WorkFinishedEvent());
         }
 
         public async void Handle(ErrorQueueSelectedEvent message)
         {
+            _eventAggregator.Publish(new WorkStartedEvent("Loading failed messages..."));
+
             var messages = await _managementService.GetErrorMessages(message.Endpoint);
             Messages.Clear();
             if (messages != null)
             {
-                var o = messages;
+                Messages.AddRange(messages);
             }
-            //Messages.AddRange(messages);            
+
+            _eventAggregator.Publish(new WorkFinishedEvent());
         }
     }
 }

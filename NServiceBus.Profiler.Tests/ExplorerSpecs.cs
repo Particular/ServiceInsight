@@ -22,7 +22,6 @@ namespace NServiceBus.Profiler.Tests.Explorer
         protected static IQueueManager QueueManager;
         protected static IEventAggregator EventAggregator;
         protected static IWindowManagerEx WindowManagerEx;
-        protected static IManagementService ManagementService;
         protected static Queue Queue;
         protected static Queue SubQueue;
         protected static QueueExplorerItem QueueNode;
@@ -33,9 +32,8 @@ namespace NServiceBus.Profiler.Tests.Explorer
             View = Substitute.For<IExplorerView>();
             EventAggregator = Substitute.For<IEventAggregator>();
             WindowManagerEx = Substitute.For<IWindowManagerEx>();
-            ManagementService = Substitute.For<IManagementService>();
 
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, ManagementService);
+            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
 
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
@@ -202,7 +200,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
             QueueManager = Substitute.For<IQueueManager>();
             QueueManager.GetQueues().ReturnsForAnyArgs(UnorderedQueueList);
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, ManagementService);
+            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
         };
 
         Because of = () => Error = Catch.Exception(() => Explorer.RefreshQueues());

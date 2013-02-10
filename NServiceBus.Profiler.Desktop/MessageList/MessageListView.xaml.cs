@@ -73,15 +73,5 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 }
             }
         }
-
-        public void BeginUpdate()
-        {
-            
-        }
-
-        public void EndUpdate()
-        {
-            
-        }
     }
 }

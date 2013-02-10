@@ -15,12 +15,11 @@ namespace NServiceBus.Profiler.Common.Models
         }
 
         public byte[] BodyRaw { get; set; }
+        public string Body { get; set; }
         public byte[] Headers { get; set; }
         public string CorrelationId { get; set; }
         public string TransactionId { get; set; }
         public Queue Destination { get; set; }
         public Queue Response { get; set; }
     }
-
-    
 }

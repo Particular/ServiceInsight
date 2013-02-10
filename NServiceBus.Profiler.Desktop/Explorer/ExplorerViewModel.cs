@@ -10,7 +10,6 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using System.Linq;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using DevExpress.Xpf.Editors.Helpers;
 
@@ -21,19 +20,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         private readonly IQueueManager _queueManager;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
-        private readonly IManagementService _managementService;
         private IExplorerView _view;
 
         public ExplorerViewModel(
             IQueueManager queueManager,
             IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager,
-            IManagementService managementService)
+            IWindowManagerEx windowManager)
         {
             _queueManager = queueManager;
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
-            _managementService = managementService;
             Items = new BindableCollection<ExplorerItem>();
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Core.Management;
@@ -48,7 +49,12 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
 
         private async Task<bool> IsValidUrl(string serviceUrl)
         {
-            return await _managementService.IsAlive(serviceUrl);
+            if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
+            {
+                return await _managementService.IsAlive(serviceUrl);   
+            }
+
+            return false;
         }
     }
 }
