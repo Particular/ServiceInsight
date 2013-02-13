@@ -157,7 +157,7 @@
         <Grid>
             <dxd:DockLayoutManager>
                 <dxd:LayoutGroup>
-                    <dxd:LayoutPanel Caption="Server Explorer" 
+                    <dxd:LayoutPanel Caption="Endpoint Explorer" 
 						AllowClose="False" 
 						ShowBorder="False" 
 						AllowDrag="False" 

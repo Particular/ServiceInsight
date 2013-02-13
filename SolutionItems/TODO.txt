@@ -21,3 +21,7 @@ Tasks:
 
 Refactorings:
 -Makes more sense to have connection information (MachineName) in QueueManager and MSMQ abstraction layer should just work with passed in FullName of the queue (or address/queue name) instead.
+
+
+Bugs:
+-When deleting a groupped set of queues (queue with related system queues) all of them should be removed.

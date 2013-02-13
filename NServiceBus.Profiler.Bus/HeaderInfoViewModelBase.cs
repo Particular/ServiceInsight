@@ -58,11 +58,14 @@ namespace NServiceBus.Profiler.Bus
 
             SelectedMessage = @event.Message;
 
-            var headers = SelectedMessage.Headers;
-            var decoded = _decoder.Decode(headers);
-            var items = Deserialize(decoded);
+            if (SelectedMessage != null)
+            {
+                var headers = SelectedMessage.Headers;
+                var decoded = _decoder.Decode(headers);
+                var items = Deserialize(decoded);
 
-            OnItemsLoaded(items);
+                OnItemsLoaded(items);
+            }
         }
 
         protected void OnItemsLoaded(IEnumerable<HeaderInfo> headers)

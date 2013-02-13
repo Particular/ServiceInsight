@@ -195,6 +195,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public virtual void OnSelectedNodeChanged()
         {
+            _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
+
             if (SelectedNode is AuditQueueExplorerItem)
             {
                 _eventAggregator.Publish(new AuditQueueSelectedEvent
@@ -208,10 +210,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
                 {
                     Endpoint = new Endpoint { Url = ConnectedToService }
                 });
-            }
-            else
-            {
-                _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
             }
         }
 
