@@ -10,9 +10,9 @@ namespace NServiceBus.Profiler.JsonViewer
     public class JsonMessageViewModel : Screen, IJsonMessageViewModel
     {
         private IJsonMessageView _messageView;
-        private readonly IMessageDecoder<string> _messageDecoder;
+        private readonly IContentDecoder<string> _messageDecoder;
 
-        public JsonMessageViewModel(IMessageDecoder<string> messageDecoder)
+        public JsonMessageViewModel(IContentDecoder<string> messageDecoder)
         {
             _messageDecoder = messageDecoder;
             ContextMenuItems = new List<PluginContextMenu>();
@@ -48,7 +48,10 @@ namespace NServiceBus.Profiler.JsonViewer
                 else
                 {
                     var json = _messageDecoder.Decode(SelectedMessage.BodyRaw);
-                    _messageView.Display(json);
+                    if (json.IsParsed)
+                    {
+                        _messageView.Display(json.Value);
+                    }
                 }
             }
         }

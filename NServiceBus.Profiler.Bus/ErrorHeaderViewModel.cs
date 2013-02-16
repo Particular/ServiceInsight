@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Views;
 using ExceptionHandler;
@@ -20,7 +20,7 @@ namespace NServiceBus.Profiler.Bus
     {
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IMessageDecoder<string> decoder, 
+            IContentDecoder<IList<HeaderInfo>> decoder, 
             IQueueManagerAsync queueManager, 
             IClipboard clipboard) 
             : base(eventAggregator, decoder, queueManager, clipboard)

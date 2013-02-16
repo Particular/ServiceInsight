@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -18,12 +16,12 @@ namespace NServiceBus.Profiler.Bus
 {
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
-        private readonly IMessageDecoder<string> _decoder;
         private readonly IClipboard _clipboard;
+        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
 
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 
-            IMessageDecoder<string> decoder, 
+            IContentDecoder<IList<HeaderInfo>> decoder, 
             IQueueManagerAsync queueManager,
             IClipboard clipboard)
         {
@@ -61,10 +59,12 @@ namespace NServiceBus.Profiler.Bus
             if (SelectedMessage != null)
             {
                 var headers = SelectedMessage.Headers;
-                var decoded = _decoder.Decode(headers);
-                var items = Deserialize(decoded);
+                var decodeResult = _decoder.Decode(headers);
 
-                OnItemsLoaded(items);
+                if (decodeResult.IsParsed)
+                {
+                    OnItemsLoaded(decodeResult.Value);
+                }
             }
         }
 
@@ -95,20 +95,6 @@ namespace NServiceBus.Profiler.Bus
                 serializer.Serialize(stream, headers.ToArray());
                 var content = stream.ReadString();
                 _clipboard.CopyTo(content);
-            }
-        }
-
-        private static IEnumerable<HeaderInfo> Deserialize(string content)
-        {
-            try
-            {
-                var serializer = new XmlSerializer(typeof (HeaderInfo[]));
-                var deserialized = (HeaderInfo[])serializer.Deserialize(new StringReader(content));
-                return deserialized;
-            }
-            catch (InvalidOperationException)
-            {
-                return Enumerable.Empty<HeaderInfo>();
             }
         }
 

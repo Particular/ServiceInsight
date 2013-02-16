@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Logging
 
         public void Error(string message, Exception exception)
         {
-            Trace.Write(exception.GetBaseException().ToString(), "Error");
+            Trace.Write(message + (exception != null ? exception.GetBaseException().ToString() : string.Empty), "Error");
         }
     }
 }

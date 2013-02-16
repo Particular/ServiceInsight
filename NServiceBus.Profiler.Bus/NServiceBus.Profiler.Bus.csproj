@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +92,9 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -110,7 +115,6 @@
     <Compile Include="SagaHeaderViewModel.cs" />
     <Compile Include="GatewayHeaderViewModel.cs" />
     <Compile Include="ErrorHeaderViewModel.cs" />
-    <Compile Include="HeaderInfo.cs" />
     <Compile Include="HeaderInfoView.xaml.cs">
       <DependentUpon>HeaderInfoView.xaml</DependentUpon>
     </Compile>
@@ -152,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\MessageReturn.png" />
@@ -164,11 +169,12 @@
   <Target Name="BeforeBuild">
   </Target>
   <ItemGroup>
-	<OutputFolders Include="$(SolutionDir)NServiceBus.Profiler.Desktop\bin\$(ConfigurationName)\Plugins\;$(SolutionDir)NServiceBus.Profiler.Tests\bin\$(ConfigurationName)\Plugins\" />
+    <OutputFolders Include="$(SolutionDir)NServiceBus.Profiler.Desktop\bin\$(ConfigurationName)\Plugins\;$(SolutionDir)NServiceBus.Profiler.Tests\bin\$(ConfigurationName)\Plugins\" />
   </ItemGroup>
   <Target Name="AfterBuild">
-	<MakeDir Condition="!Exists('$(TestOutput)')" Directories="@(OutputFolders)" />
-	<Copy SourceFiles="$(TargetPath)" DestinationFolder="%(OutputFolders.FullPath)" />
+    <MakeDir Condition="!Exists('$(TestOutput)')" Directories="@(OutputFolders)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="%(OutputFolders.FullPath)" />
   </Target>
   <Import Project="$(SolutionDir)\Tools\Fody\Fody.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

@@ -48,6 +48,9 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\NServiceBus.Profiler.Bus\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1-Custom\RestSharp.dll</HintPath>
@@ -72,9 +75,11 @@
     <Compile Include="Management\DefaultManagementService.cs" />
     <Compile Include="Management\IManagementService.cs" />
     <Compile Include="Management\VersionInfo.cs" />
-    <Compile Include="MessageDecoders\IMessageDecoder.cs" />
-    <Compile Include="MessageDecoders\StringMessageDecoder.cs" />
-    <Compile Include="MessageDecoders\XmlMessageDecoder.cs" />
+    <Compile Include="MessageDecoders\DecoderResult.cs" />
+    <Compile Include="MessageDecoders\HeaderContentDecoder.cs" />
+    <Compile Include="MessageDecoders\IContentDecoder.cs" />
+    <Compile Include="MessageDecoders\StringContentDecoder.cs" />
+    <Compile Include="MessageDecoders\XmlContentDecoder.cs" />
     <Compile Include="NetworkOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueManager.cs" />

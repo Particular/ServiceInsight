@@ -15,14 +15,14 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
     {
         protected static IXmlMessageViewModel ViewModel;
         protected static IXmlMessageView View;
-        protected static IMessageDecoder<string> StringDecoder;
-        protected static IMessageDecoder<XmlDocument> XmlDecoder;
+        protected static IContentDecoder<string> StringDecoder;
+        protected static IContentDecoder<XmlDocument> XmlDecoder;
         protected static IClipboard Clipboard;
 
         Establish context = () =>
         {
-            StringDecoder = Substitute.For<IMessageDecoder<string>>();
-            XmlDecoder = Substitute.For<IMessageDecoder<XmlDocument>>();
+            StringDecoder = Substitute.For<IContentDecoder<string>>();
+            XmlDecoder = Substitute.For<IContentDecoder<XmlDocument>>();
             Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
             ViewModel = new XmlMessageViewModel(XmlDecoder, StringDecoder, Clipboard);
@@ -30,7 +30,7 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
         };
     }
 
-    public class when_displaying_message_as_xml_in_a_loaded_view : with_xml_viewer
+    public abstract class with_decodable_message : with_xml_viewer
     {
         protected static string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
         protected static XmlDocument Document;
@@ -39,12 +39,15 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
         {
             Document = new XmlDocument();
             Document.LoadXml(TestMessage);
-            XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(Document);
-            StringDecoder.Decode(Arg.Any<byte[]>()).Returns(TestMessage);
+            XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(Document));
+            StringDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<string>(TestMessage));
 
             ViewModel.AttachView(View, null);
         };
+    }
 
+    public class when_displaying_message_as_xml_in_a_loaded_view : with_decodable_message
+    {
         Because of = () => ViewModel.SelectedMessage = new MessageBody {BodyRaw = Encoding.Default.GetBytes(TestMessage)};
 
         It should_display_the_message = () => View.Received(1).Display(Arg.Any<string>());
@@ -79,9 +82,12 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
         It should_be_possible_to_copy_the_selected_message = () => ViewModel.CanCopyMessageXml().ShouldBeTrue();
     }
 
-    public class when_copying_message : with_xml_viewer
+    public class when_copying_message : with_decodable_message
     {
-        Establish context = () => ViewModel.SelectedMessage = new MessageBody();
+        Establish context = () =>
+        {
+            ViewModel.SelectedMessage = new MessageBody();
+        };
 
         Because of = () => ViewModel.CopyMessageXml();
 

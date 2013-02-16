@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Views;
 using ExceptionHandler;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
 
@@ -12,7 +14,7 @@ namespace NServiceBus.Profiler.Bus
     {
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IMessageDecoder<string> decoder, 
+            IContentDecoder<IList<HeaderInfo>> decoder, 
             IQueueManagerAsync queueManager, 
             IClipboard clipboard) 
             : base(eventAggregator, decoder, queueManager, clipboard)

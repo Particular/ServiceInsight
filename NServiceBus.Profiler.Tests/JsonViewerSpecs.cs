@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.MessageDecoders;
 using NServiceBus.Profiler.JsonViewer;
@@ -12,13 +11,13 @@ namespace NServiceBus.Profiler.Tests.JsonViewer
     public abstract class with_json_viewer
     {
         protected static IJsonMessageViewModel ViewModel;
-        protected static IMessageDecoder<string> Decoder;
+        protected static IContentDecoder<string> Decoder;
         protected static IJsonMessageView View;
             
         Establish context = () =>
         {
             View = Substitute.For<IJsonMessageView>();
-            Decoder = Substitute.For<IMessageDecoder<string>>();
+            Decoder = Substitute.For<IContentDecoder<string>>();
             ViewModel = new JsonMessageViewModel(Decoder);
             ViewModel.Activate();
         };
@@ -30,7 +29,7 @@ namespace NServiceBus.Profiler.Tests.JsonViewer
 
         Establish context = () =>
         {
-            Decoder.Decode(Arg.Any<byte[]>()).Returns(TestMessage);
+            Decoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<string>(TestMessage));
             ViewModel.AttachView(View, null);
         };
 

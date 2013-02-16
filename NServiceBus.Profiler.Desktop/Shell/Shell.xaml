@@ -63,6 +63,7 @@
 				CategoryName="Tools" Glyph="/Images/PurgeQueue.png"
 				cal:Message.Attach="[Event ItemClick]=[Action PurgeCurrentQueue]" />
             <dxb:BarButtonItem Content="Delete Queue" x:Name="itemDeleteQueue" 
+                KeyGesture="ALT+DEL"
 				CategoryName="Tools" Glyph="/Images/DeleteQueue.png"
 				cal:Message.Attach="[Event ItemClick]=[Action DeleteCurrentQueue]" />
             <dxb:BarButtonItem Content="Refresh" x:Name="itemRefresh" 

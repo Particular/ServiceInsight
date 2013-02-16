@@ -1,6 +1,7 @@
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Common.Events;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Common.Plugins;
 
 namespace NServiceBus.Profiler.Bus

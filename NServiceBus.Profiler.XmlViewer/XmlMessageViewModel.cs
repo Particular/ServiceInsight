@@ -13,14 +13,14 @@ namespace NServiceBus.Profiler.XmlViewer
 {
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
-        private readonly IMessageDecoder<XmlDocument> _xmlDecoder;
-        private readonly IMessageDecoder<string> _stringDecoder;
+        private readonly IContentDecoder<XmlDocument> _xmlDecoder;
+        private readonly IContentDecoder<string> _stringDecoder;
         private readonly IClipboard _clipboard;
         private IXmlMessageView _messageView;
 
         public XmlMessageViewModel(
-            IMessageDecoder<XmlDocument> xmlDecoder,
-            IMessageDecoder<string> stringDecoder,
+            IContentDecoder<XmlDocument> xmlDecoder,
+            IContentDecoder<string> stringDecoder,
             IClipboard clipboard)
         {
             _xmlDecoder = xmlDecoder;
@@ -59,7 +59,10 @@ namespace NServiceBus.Profiler.XmlViewer
             if (SelectedMessage != null)
             {
                 var xml = _xmlDecoder.Decode(SelectedMessage.BodyRaw);
-                _messageView.Display(xml.GetFormatted());
+                if (xml.IsParsed)
+                {
+                    _messageView.Display(xml.Value.GetFormatted());
+                }
             }
         }
 
@@ -71,7 +74,10 @@ namespace NServiceBus.Profiler.XmlViewer
         public virtual void CopyMessageXml()
         {
             var content = _stringDecoder.Decode(SelectedMessage.BodyRaw);
-            _clipboard.CopyTo(content);
+            if (content.IsParsed)
+            {
+                _clipboard.CopyTo(content.Value);
+            }
         }
 
         public IList<PluginContextMenu> ContextMenuItems
