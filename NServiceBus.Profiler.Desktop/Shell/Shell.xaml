@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cal="http://www.caliburnproject.org"
-        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="NServiceBus.Profiler.Desktop.Shell.ShellView"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        x:Class="NServiceBus.Profiler.Desktop.Shell.ShellView"
         x:Uid="ShellWindow"
         mc:Ignorable="d" 
         MinWidth="500" MinHeight="300"
@@ -169,6 +170,15 @@
                         <ContentControl cal:View.Model="{Binding Explorer}" />
                     </dxd:LayoutPanel>
                     <dxd:LayoutGroup Orientation="Vertical" ItemWidth="3*">
+                        <dxd:LayoutPanel Caption="Messages" 
+							AllowClose="False"
+							AllowDrag="False"
+							AllowFloat="False"
+							AllowMove="False"
+							ShowBorder="False">
+                            <ContentControl cal:View.Model="{Binding Conversation}" />
+                        </dxd:LayoutPanel>
+
                         <dxd:LayoutPanel Caption="Messages" 
 							AllowClose="False"
 							AllowDrag="False"

@@ -7,6 +7,7 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
+using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -33,6 +34,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static AboutViewModel aboutViewModel;
         protected static ConnectToMachineViewModel connectToViewModel;
         protected static INetworkOperations networkOperations;
+        protected static IConversationViewModel conversation;
         protected static IEventAggregator eventAggregator;
         protected static IExceptionHandler exceptionHandler;
         protected static IStatusBarManager statusbarManager;
@@ -49,13 +51,14 @@ namespace NServiceBus.Profiler.Tests.Shell
             exceptionHandler = Substitute.For<IExceptionHandler>();
             statusbarManager = Substitute.For<IStatusBarManager>();
             eventAggregator = Substitute.For<IEventAggregator>();
+            conversation = Substitute.For<IConversationViewModel>();
             aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
             fakePlugin = Substitute.For<IPlugin>();
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
             plugins = new List<IPlugin>(new[] { fakePlugin });
-            shell = new ShellViewModel(screenFactory, windowManager, explorer, messageList, statusbarManager, eventAggregator, plugins);
+            shell = new ShellViewModel(screenFactory, windowManager, explorer, messageList, statusbarManager, eventAggregator, conversation, plugins);
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);

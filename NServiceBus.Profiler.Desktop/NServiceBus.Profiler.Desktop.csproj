@@ -144,6 +144,18 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PixelLab.Common, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BoT\PixelLab.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Core, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BoT\PixelLab.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Wpf, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BoT\PixelLab.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1-Custom\RestSharp.dll</HintPath>
@@ -180,6 +192,10 @@
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="About\AboutViewModel.cs" />
+    <Compile Include="Conversations\ConversationView.xaml.cs">
+      <DependentUpon>ConversationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Conversations\ConversationViewModel.cs" />
     <Compile Include="Explorer\AuditQueueExplorerItem.cs" />
     <Compile Include="Explorer\ErrorQueueExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
@@ -259,6 +275,10 @@
     <Page Include="About\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Conversations\ConversationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ManagementService\ManagementConnectionView.xaml">
       <SubType>Designer</SubType>

@@ -11,6 +11,7 @@ using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Desktop.About;
+using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.ManagementService;
 using NServiceBus.Profiler.Desktop.MessageList;
@@ -24,7 +25,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
         private DispatcherTimer _timer;
-
+        
         public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
 
         public ShellViewModel(
@@ -34,16 +35,19 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
+            IConversationViewModel conversation,
             IEnumerable<IPlugin> plugins)
         {
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
+            Conversation = conversation;
             StatusBarManager = statusBarManager;
             Explorer = explorer;
             Messages = messages;
             Plugins = new BindableCollection<IPlugin>(plugins.OrderByDescending(x => x.TabOrder));
 
+            Items.Add(conversation);
             Items.Add(explorer);
             Items.Add(messages);
             Items.AddRange(Plugins);
@@ -83,6 +87,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual IExplorerViewModel Explorer { get; private set; }
 
         public virtual IMessageListViewModel Messages { get; private set; }
+
+        public virtual IConversationViewModel Conversation { get; private set; }
 
         public virtual IStatusBarManager StatusBarManager { get; private set; }
 

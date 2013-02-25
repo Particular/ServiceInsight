@@ -9,7 +9,7 @@ properties {
   $version = "1.0.0.0"
   $humanReadableversion = "v1.0-BETA"
   $tools_dir = "$base_dir\Tools"
-  $mspec = "$lib_dir\Machine.Specifications.0.5.6.0\tools\mspec-x86-clr4.exe"
+  $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
   $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "NServiceBus.Profiler"
