@@ -18,8 +18,6 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0">
-            <Button Content="Switch To Next" cal:Message.Attach="[Event Click]=[Action SwitchToNext]"></Button>
-            <Button Content="Switch To Previous" cal:Message.Attach="[Event Click]=[Action SwitchToPrevious]"></Button>
         </StackPanel>
         
     </Grid>

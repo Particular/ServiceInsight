@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageViewers.HexViewer.HexContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageViewers.HexViewer"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type local:HexPart}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition MinWidth="350" Width="520" />
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding LineNumber, Mode=OneWay}" FontFamily="Courier New" Foreground="DarkCyan" Grid.Column="0"/>
+
+                <!--Hex display of the byte Representative of the Hex char-->
+                <ItemsControl ItemsSource="{Binding Numbers}" 
+                         Grid.Column="1" 
+                         Background="{x:Null}" 
+                         BorderThickness="0" 
+                         BorderBrush="{x:Null}" 
+                         IsHitTestVisible="False"
+                         ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5" Text="{Binding Hex}" FontFamily="Courier New" Foreground="Black" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!--Text display of the byte-->
+                <ItemsControl ItemsSource="{Binding Numbers}" Grid.Column="2" BorderBrush="{x:Null}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" Background="Transparent" Text="{Binding Text}" FontFamily="Courier New" Foreground="Gray" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <ScrollViewer>
+        <ItemsControl x:Name="listBox" 
+                      Background="White"
+                      ItemsSource="{Binding HexParts}"/>
+    </ScrollViewer>
+</UserControl>

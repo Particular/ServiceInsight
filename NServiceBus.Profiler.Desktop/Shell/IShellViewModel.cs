@@ -1,9 +1,9 @@
-using Caliburn.PresentationFramework;
+using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
-using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 
 namespace NServiceBus.Profiler.Desktop.Shell
@@ -17,8 +17,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IExplorerViewModel Explorer { get; }
         IMessageListViewModel Messages { get; }
         IStatusBarManager StatusBarManager { get; }
-        IObservableCollection<IPlugin> Plugins { get; }
-        IPlugin SelectedPlugin { get; }
+        IEnumerable<IHeaderInfoViewModel> Headers { get; }
         IShellView View { get; }
         void ExitApp();
         void ShowAbout();

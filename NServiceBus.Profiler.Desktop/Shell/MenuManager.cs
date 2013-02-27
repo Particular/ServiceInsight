@@ -1,7 +1,5 @@
 using System.Windows;
 using DevExpress.Xpf.Bars;
-using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Plugins;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -20,17 +18,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             BarManager.SetDXContextMenu(view, contextMenu);
 
             return contextMenu;
-        }
-
-        public BarItem CreateContextMenuItem(PluginContextMenu menu)
-        {
-            return new BarButtonItem
-            {
-                Name = menu.Name, 
-                Content = menu.DisplayName,
-                Glyph = menu.Image.ToBitmapImage(),
-                Command = menu.Command
-            };
         }
     }
 }

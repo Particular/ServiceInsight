@@ -41,11 +41,18 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
             if (!Directory.Exists(folder))
             {
-                Logger.WarnFormat("Plugin folders was not found at {0}", folder);
+                Logger.InfoFormat("Plugin folders was not found at {0}", folder);
                 return;
             }
 
-            foreach (var fullPath in Directory.GetFiles(folder, filePattern))
+            var plugins = Directory.GetFiles(folder, filePattern);
+            if (plugins.Length <= 0)
+            {
+                Logger.InfoFormat("No plugin was found at {0}", folder);
+                return;
+            }
+
+            foreach (var fullPath in plugins)
             {
                 var assembly = LoadModuleAssembly(fullPath, Logger);
                 if (assembly != null)

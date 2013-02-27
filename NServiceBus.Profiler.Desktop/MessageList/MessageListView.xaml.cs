@@ -38,14 +38,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _contextMenu.ItemLinks.Clear();
 
-            var menuItems = _shell.Plugins.SelectMany(plugin => plugin.ContextMenuItems)
-                                          .OrderBy(mi => mi.Order).ToList();
-
-            menuItems.ForEach(mi =>
-            {
-                var menu = _menuManager.CreateContextMenuItem(mi);
-                _contextMenu.ItemLinks.Add(menu);
-            });
+            //TODO: How to populate contextmenus
+//            var menuItems = _shell.Plugins.SelectMany(plugin => plugin.ContextMenuItems)
+//                                          .OrderBy(mi => mi.Order).ToList();
+//
+//            menuItems.ForEach(mi =>
+//            {
+//                var menu = _menuManager.CreateContextMenuItem(mi);
+//                _contextMenu.ItemLinks.Add(menu);
+//            });
         }
 
         private void OnFocusedMessageChanged(object sender, FocusedRowChangedEventArgs e)

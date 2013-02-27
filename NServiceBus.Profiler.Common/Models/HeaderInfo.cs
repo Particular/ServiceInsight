@@ -2,6 +2,7 @@
 {
     public class HeaderInfo
     {
+        private const string Null = "<Null>";
         public const string FailedQueueKey = "NServiceBus.FailedQ";
 
         public string Key { get; set; }
@@ -9,7 +10,20 @@
 
         public override string ToString()
         {
-            return string.Format("Key={0}, Value={1}", Key, Value ?? "<Null>");
+            return string.Format("{0}: {1}", GetDisplayKey(), GetDisplayValue());
+        }
+
+        private string GetDisplayValue()
+        {
+            return Value ?? Null;
+        }
+
+        private string GetDisplayKey()
+        {
+            if (Key == null)
+                return Null;
+
+            return Key.StartsWith("NServiceBus.") ? Key.Substring(12) : Key;
         }
     }
 }

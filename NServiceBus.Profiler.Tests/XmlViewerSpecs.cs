@@ -5,7 +5,7 @@ using Machine.Specifications;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using NServiceBus.Profiler.XmlViewer;
+using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
 using NSubstitute;
 
 namespace NServiceBus.Profiler.Tests.XmlViewer

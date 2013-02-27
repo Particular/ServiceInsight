@@ -7,6 +7,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
+        xmlns:messageHeaders="clr-namespace:NServiceBus.Profiler.Desktop.MessageHeaders"
         x:Class="NServiceBus.Profiler.Desktop.Shell.ShellView"
         x:Uid="ShellWindow"
         mc:Ignorable="d" 
@@ -69,7 +71,8 @@
 				cal:Message.Attach="[Event ItemClick]=[Action DeleteCurrentQueue]" />
             <dxb:BarButtonItem Content="Refresh" x:Name="itemRefresh" 
 				CategoryName="Tools" Glyph="/Images/Refresh.png"
-				cal:Message.Attach="[Event ItemClick]=[Action RefreshQueues]" />
+				cal:Message.Attach="[Event ItemClick]=[Action RefreshQueues]"
+                KeyGesture="F5" />
             <dxb:BarButtonItem Content="Create Queue" x:Name="itemCreateQueue" 
 				CategoryName="Tools" Glyph="/Images/CreateQueue.png"
 				cal:Message.Attach="[Event ItemClick]=[Action CreateQueue]" />
@@ -160,25 +163,16 @@
             <dxd:DockLayoutManager>
                 <dxd:LayoutGroup>
                     <dxd:LayoutPanel Caption="Endpoint Explorer" 
-						AllowClose="False" 
-						ShowBorder="False" 
-						AllowDrag="False" 
-						AllowFloat="False"
-						AllowMove="False"
-						ItemWidth="1*"
-						CaptionImage="/Images/ServerExplorer.png">
+						             AllowClose="False" 
+						             ShowBorder="False" 
+						             AllowDrag="False" 
+						             AllowFloat="False"
+						             AllowMove="False"
+						             ItemWidth="1*"
+						             CaptionImage="/Images/ServerExplorer.png">
                         <ContentControl cal:View.Model="{Binding Explorer}" />
                     </dxd:LayoutPanel>
-                    <dxd:LayoutGroup Orientation="Vertical" ItemWidth="3*">
-                        <dxd:LayoutPanel Caption="Messages" 
-							AllowClose="False"
-							AllowDrag="False"
-							AllowFloat="False"
-							AllowMove="False"
-							ShowBorder="False">
-                            <ContentControl cal:View.Model="{Binding Conversation}" />
-                        </dxd:LayoutPanel>
-
+                    <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
                         <dxd:LayoutPanel Caption="Messages" 
 							AllowClose="False"
 							AllowDrag="False"
@@ -188,10 +182,55 @@
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
-                        <dxd:DocumentGroup ItemHeight="2*" 
-							ClosePageButtonShowMode="NoWhere" 
-							ShowDropDownButton="False"
-							ItemsSource="{Binding Plugins}" />
+                        <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
+                            <dxd:TabbedGroup ItemWidth="3*"
+                                             AllowClose="False"
+							                 AllowDrag="False"
+							                 AllowFloat="False"
+							                 AllowMove="False" 
+                                             AllowDock="False"
+                                             GroupBorderStyle="Tabbed">
+                                
+                                <dxd:LayoutPanel Caption="Flow Diagram"  
+    							                 AllowClose="False"
+	  						                     AllowDrag="False"
+							                     AllowFloat="False"
+							                     AllowMove="False"
+							                     ShowBorder="False">
+                                    <ContentControl cal:View.Model="{Binding Conversation}" />
+                                </dxd:LayoutPanel>
+
+                                <dxd:LayoutPanel Caption="Body"  
+    							                 AllowClose="False"
+	  						                     AllowDrag="False"
+							                     AllowFloat="False"
+							                     AllowMove="False"
+							                     ShowBorder="False">
+                                    <ContentControl cal:View.Model="{Binding MessageBody}" />
+                                </dxd:LayoutPanel>
+
+                            </dxd:TabbedGroup>
+
+                            <dxd:LayoutPanel Caption="Message Properties" 
+                                             ItemWidth="1*"
+							                 AllowClose="False"
+							                 AllowDrag="False"
+							                 AllowFloat="False"
+							                 AllowMove="False"
+							                 ShowBorder="False">
+
+                                <dxn:NavBarControl ItemsSource="{Binding Path=Headers}">
+                                    <dxn:NavBarControl.View>
+                                        <dxn:SideBarView GroupAdding="OnGroupAdding">
+                                            <dxn:SideBarView.GroupImageSettings>
+                                                <dxn:ImageSettings Height="16" Width="16" />
+                                            </dxn:SideBarView.GroupImageSettings>
+                                        </dxn:SideBarView>
+                                    </dxn:NavBarControl.View>
+                                </dxn:NavBarControl>
+                                
+                            </dxd:LayoutPanel>
+                        </dxd:LayoutGroup>
 
                     </dxd:LayoutGroup>
                 </dxd:LayoutGroup>

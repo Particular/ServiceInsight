@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Linq;
 using System.Windows.Threading;
-using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.ManagementService;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
+using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.Shell
@@ -36,21 +35,23 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             IConversationViewModel conversation,
-            IEnumerable<IPlugin> plugins)
+            IMessageBodyViewModel messageBodyViewer,
+            IEnumerable<IHeaderInfoViewModel> headers)
         {
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
+            Headers = headers;
             Conversation = conversation;
             StatusBarManager = statusBarManager;
             Explorer = explorer;
+            MessageBody = messageBodyViewer;
             Messages = messages;
-            Plugins = new BindableCollection<IPlugin>(plugins.OrderByDescending(x => x.TabOrder));
 
+            Items.Add(messageBodyViewer);
             Items.Add(conversation);
             Items.Add(explorer);
             Items.Add(messages);
-            Items.AddRange(Plugins);
 
             InitializeAutoRefreshTimer();
         }
@@ -82,6 +83,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _timer.Stop();
         }
 
+        public IEnumerable<IHeaderInfoViewModel> Headers { get; private set; }
+
         public virtual IShellView View { get; private set; }
 
         public virtual IExplorerViewModel Explorer { get; private set; }
@@ -90,11 +93,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual IConversationViewModel Conversation { get; private set; }
 
+        public virtual IMessageBodyViewModel MessageBody { get; private set; }
+
         public virtual IStatusBarManager StatusBarManager { get; private set; }
-
-        public virtual IObservableCollection<IPlugin> Plugins { get; private set; }
-
-        public virtual IPlugin SelectedPlugin { get; set; }
 
         public virtual bool WorkInProgress { get; set; }
 
@@ -167,7 +168,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual void RefreshQueues()
         {
             Explorer.RefreshMessageCount();
-            Explorer.ExpandNodes();
         }
 
         [AutoCheckAvailability]

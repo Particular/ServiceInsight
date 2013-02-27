@@ -99,6 +99,14 @@
       <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Docking.v12.1.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v12.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.NavBar.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.NavBar.v12.1.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Printing.v12.1.Core, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -143,18 +151,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PixelLab.Common, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BoT\PixelLab.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PixelLab.Core, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BoT\PixelLab.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PixelLab.Wpf, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BoT\PixelLab.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -205,18 +201,49 @@
     <Compile Include="Explorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\ServerExplorerItem.cs" />
     <Compile Include="Explorer\ServiceExplorerItem.cs" />
+    <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
+      <DependentUpon>HexContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageViewers\HexViewer\HexContentViewModel.cs" />
+    <Compile Include="MessageViewers\HexViewer\HexNumber.cs" />
+    <Compile Include="MessageViewers\HexViewer\HexPart.cs" />
+    <Compile Include="MessageViewers\HexViewer\IHexContentView.cs" />
+    <Compile Include="MessageViewers\HexViewer\IHexContentViewModel.cs" />
+    <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
+    <Compile Include="MessageViewers\JsonViewer\IJsonMessageViewModel.cs" />
+    <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
+      <DependentUpon>JsonMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
     <Compile Include="ManagementService\ManagementConnectionView.xaml.cs">
       <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManagementService\ManagementConnectionViewModel.cs" />
+    <Compile Include="MessageHeaders\ErrorHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\GatewayHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\GeneralHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\HeaderInfoViewModelBase.cs" />
+    <Compile Include="MessageHeaders\IHeaderInfoView.cs" />
+    <Compile Include="MessageHeaders\IHeaderInfoViewModel.cs" />
+    <Compile Include="MessageHeaders\PerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\SagaHeaderViewModel.cs" />
     <Compile Include="MessageList\DeletedMessageConverter.cs" />
     <Compile Include="MessageList\FileSizeFormatProvider.cs" />
     <Compile Include="MessageList\FileSizeValueConverter.cs" />
     <Compile Include="Explorer\ExplorerNodeImageSelector.cs" />
+    <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
+      <DependentUpon>MessageBodyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
     <Compile Include="Modules\CaliburnModule.cs" />
     <Compile Include="Modules\EventAggregationAutoSubscriptionModule.cs" />
     <Compile Include="Modules\PluginModule.cs" />
     <Compile Include="Modules\SettingsSource.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ScreenManager\ChoiceCommand.cs" />
     <Compile Include="ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Shell\ConnectToMachineView.xaml.cs">
@@ -272,6 +299,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MessageViewers\XmlViewer\IXmlMessageView.cs" />
+    <Compile Include="MessageViewers\XmlViewer\IXmlMessageViewModel.cs" />
+    <Compile Include="MessageViewers\XmlViewer\XmlMessageView.xaml.cs">
+      <DependentUpon>XmlMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Page Include="About\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -280,7 +313,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MessageViewers\HexViewer\HexContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MessageViewers\JsonViewer\JsonMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ManagementService\ManagementConnectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageViewers\MessageBodyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,23 +353,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MessageViewers\XmlViewer\XmlMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Images\HeaderError.png" />
+    <None Include="Images\HeaderPerformance.png" />
+    <None Include="Images\HeaderGeneral.png" />
+    <None Include="Images\HeaderGateway.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -333,6 +382,8 @@
     <Resource Include="Images\Monitoring.png" />
     <Resource Include="Images\AuditFolder.png" />
     <Resource Include="Images\TreeAuditFolder.png" />
+    <Resource Include="Images\MessageReturn.png" />
+    <Resource Include="Images\HeaderSaga.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -451,6 +502,7 @@
     <Resource Include="Images\Msg_Info.png" />
     <Resource Include="Images\Msg_Warning.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

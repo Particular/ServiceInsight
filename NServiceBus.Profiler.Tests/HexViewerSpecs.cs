@@ -3,7 +3,7 @@ using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.HexViewer;
+using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NSubstitute;
 using System.Linq;
 
@@ -29,7 +29,7 @@ namespace NServiceBus.Profiler.Tests.HexViewer
         Establish context = () =>
         {
             ViewModel.AttachView(View, null);
-            ViewModel.Activate();
+            ((IActivate)ViewModel).Activate();
         };
 
         Because of = () => ViewModel.CurrentContent = Encoding.Default.GetBytes(TestMessage);

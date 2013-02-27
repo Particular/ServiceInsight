@@ -97,7 +97,6 @@
     <Compile Include="JsonViewerSpecs.cs" />
     <Compile Include="MessageListSpec.cs" />
     <Compile Include="MessageSpecs.cs" />
-    <Compile Include="PluginSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueCreationSpecs.cs" />
     <Compile Include="QueueManagerSpecs.cs" />
@@ -122,22 +121,6 @@
     <ProjectReference Include="..\NServiceBus.Profiler.Desktop\NServiceBus.Profiler.Desktop.csproj">
       <Project>{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}</Project>
       <Name>NServiceBus.Profiler.Desktop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.HexViewer\NServiceBus.Profiler.HexViewer.csproj">
-      <Project>{345cf4fa-7f2a-49a4-8040-ed75fa133470}</Project>
-      <Name>NServiceBus.Profiler.HexViewer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.Bus\NServiceBus.Profiler.Bus.csproj">
-      <Project>{a73916d4-27fb-42ee-8798-fb600ab4e5e8}</Project>
-      <Name>NServiceBus.Profiler.Bus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.JsonViewer\NServiceBus.Profiler.JsonViewer.csproj">
-      <Project>{e1905c5f-8ece-41d7-81b9-e127139e306a}</Project>
-      <Name>NServiceBus.Profiler.JsonViewer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.XmlViewer\NServiceBus.Profiler.XmlViewer.csproj">
-      <Project>{a0b2bbf9-084a-4fae-9918-ef7d5af7eccd}</Project>
-      <Name>NServiceBus.Profiler.XmlViewer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

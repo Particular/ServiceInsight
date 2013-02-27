@@ -2,7 +2,7 @@
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using NServiceBus.Profiler.JsonViewer;
+using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
 using NSubstitute;
 
 namespace NServiceBus.Profiler.Tests.JsonViewer

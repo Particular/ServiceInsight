@@ -4,25 +4,19 @@ using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Plugins;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
+using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Shell;
 using NSubstitute;
-using System.Linq;
 
 namespace NServiceBus.Profiler.Tests.Shell
 {
-    public class TestPlugin : Screen, IPlugin
-    {
-        public IList<PluginContextMenu> ContextMenuItems { get; set; }
-        public int TabOrder { get { return 1; } }
-    }
-
     [Subject("shell")]
     public class with_a_shell
     {
@@ -38,8 +32,8 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IEventAggregator eventAggregator;
         protected static IExceptionHandler exceptionHandler;
         protected static IStatusBarManager statusbarManager;
-        protected static IList<IPlugin> plugins;
-        protected static IPlugin fakePlugin;
+        protected static IMessageBodyViewModel messageBodyView;
+        protected static IEnumerable<IHeaderInfoViewModel> headerInfo;
             
         Establish context = () =>
         {
@@ -52,13 +46,13 @@ namespace NServiceBus.Profiler.Tests.Shell
             statusbarManager = Substitute.For<IStatusBarManager>();
             eventAggregator = Substitute.For<IEventAggregator>();
             conversation = Substitute.For<IConversationViewModel>();
+            messageBodyView = Substitute.For<IMessageBodyViewModel>();
+            headerInfo = new List<IHeaderInfoViewModel>(new[] { Substitute.For<IHeaderInfoViewModel>() });
             aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
-            fakePlugin = Substitute.For<IPlugin>();
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
-            plugins = new List<IPlugin>(new[] { fakePlugin });
-            shell = new ShellViewModel(screenFactory, windowManager, explorer, messageList, statusbarManager, eventAggregator, conversation, plugins);
+            shell = new ShellViewModel(screenFactory, windowManager, explorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, headerInfo);
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
@@ -114,9 +108,7 @@ namespace NServiceBus.Profiler.Tests.Shell
     {
         Because of = () => ((IScreen)shell).Activate();
 
-        It should_have_plugins_loaded = () => shell.Items.Count(x => x is IPlugin).ShouldEqual(1);
         It should_have_all_child_screens_ready = () => shell.Items.ForEach(x => x.Received().Activate());
-        It should_have_all_plugin_screens_loaded = () => shell.Plugins.ForEach(x => x.Received().Activate());
     }
 
     public class when_turning_off_auto_refresh : with_a_shell

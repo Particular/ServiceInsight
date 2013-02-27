@@ -1,5 +1,7 @@
 ﻿using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
+using DevExpress.Xpf.NavBar;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -22,6 +24,20 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public BarManager GetMenuManager()
         { 
             return BarManager;
+        }
+
+        private void OnGroupAdding(object sender, GroupAddingEventArgs e)
+        {
+            if (e.Group == null)
+                return;
+
+            var headerScreen = e.Group.DataContext as IHeaderInfoViewModel;
+            if(headerScreen == null)
+                return;
+
+            e.Group.Header = headerScreen.DisplayName;
+            e.Group.ImageSource = headerScreen.GroupImage;
+            e.Group.ItemsSource = headerScreen.Items;
         }
     }
 }
