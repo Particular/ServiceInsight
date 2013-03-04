@@ -26,6 +26,15 @@ namespace NServiceBus.Profiler.Core.Management
             return messages;            
         }
 
+        public async Task<List<StoredMessage>> GetConversationById(Endpoint endpoint, string conversationId)
+        {
+            var client = new RestClient(endpoint.Url);
+            var request = new RestRequest("conversations/" + conversationId);
+            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
+
+            return messages;
+        }
+
         public async Task<bool> IsAlive(string connectedToService)
         {
             var client = new RestClient(connectedToService);

@@ -75,7 +75,7 @@
                         <Setter Property="Padding" Value="4,0,0,0" />
                         <Setter Property="VerticalContentAlignment" Value="Center" />
                     </Style>
-
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
 
             builder.RegisterSource(new SettingsSource());
             builder.RegisterType<ExplorerView>().As<IExplorerView>().SingleInstance();
-            builder.RegisterType<ExplorerViewModel>().As<IExplorerViewModel>().SingleInstance();
+            builder.RegisterType<ExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance();
             builder.RegisterType<MenuManager>().As<IMenuManager>().SingleInstance();

@@ -1,4 +1,6 @@
-﻿namespace NServiceBus.Profiler.Desktop.Conversations
+﻿using WPFExtensions.Controls;
+
+namespace NServiceBus.Profiler.Desktop.Conversations
 {
     /// <summary>
     /// Interaction logic for ConversationView.xaml
@@ -9,9 +11,25 @@
         {
             InitializeComponent();
         }
-    }
 
-    public interface IConversationView
-    {
+        public void ZoomToDefault()
+        {
+            zoomBox.Mode = ZoomControlModes.Original;
+        }
+
+        public void ZoomToFill()
+        {
+            zoomBox.Mode = ZoomControlModes.Fill;
+        }
+
+        public void Redraw()
+        {
+            
+        }
+
+        public void Clear()
+        {
+            graphLayout.Children.Clear();
+        }
     }
 }

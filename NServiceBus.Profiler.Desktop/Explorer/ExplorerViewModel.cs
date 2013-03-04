@@ -82,7 +82,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             if (MachineRoot == null)
             {
-                Items.Add(new ServerExplorerItem(ConnectedToComputer));
+                Items.Add(new ServerExplorerItem(ConnectedToAddress));
             }
         }
 
@@ -129,7 +129,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             Guard.NotNull(() => url, url);
 
-            ConnectedToService = url;
+            ConnectedToUrl = new Endpoint {Url = url};
             AddServiceNode();
         }
 
@@ -137,7 +137,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         {
             if (ServiceRoot == null)
             {
-                Items.Add(new ServiceExplorerItem(ConnectedToService));
+                Items.Add(new ServiceExplorerItem(ConnectedToUrl.Url));
             }
 
             ServiceRoot.Children.Clear();
@@ -155,7 +155,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             var ipv4 = Address.GetIpAddressOrMachineName(computerName);
             Guard.NotNullOrEmpty(() => ipv4, ipv4);
 
-            ConnectedToComputer = ipv4;
+            ConnectedToAddress = ipv4;
             AddServerNode();
             RefreshQueues();
         }
@@ -167,15 +167,15 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
             MachineRoot.Children.Clear();
 
-            var queues = _queueManager.GetQueues(ConnectedToComputer).OrderBy(x => x.Address).ToList();
+            var queues = _queueManager.GetQueues(ConnectedToAddress).OrderBy(x => x.Address).ToList();
 
             SetupQueueNodes(queues);
             RefreshMessageCount();
         }
 
-        public virtual string ConnectedToComputer { get; private set; }
+        public virtual string ConnectedToAddress { get; private set; }
 
-        public virtual string ConnectedToService { get; private set; }
+        public virtual Endpoint ConnectedToUrl { get; private set; }
 
         public int SelectedRowHandle { get; set; }
 
@@ -201,14 +201,14 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             {
                 _eventAggregator.Publish(new AuditQueueSelectedEvent
                 {
-                    Endpoint = new Endpoint { Url = ConnectedToService }
+                    Endpoint = ConnectedToUrl
                 });
             }
             else if(SelectedNode is ErrorQueueExplorerItem)
             {
                 _eventAggregator.Publish(new ErrorQueueSelectedEvent
                 {
-                    Endpoint = new Endpoint { Url = ConnectedToService }
+                    Endpoint = ConnectedToUrl
                 });
             }
         }
@@ -268,7 +268,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         private bool IsConnected
         {
-            get { return !ConnectedToComputer.IsEmpty(); }
+            get { return !ConnectedToAddress.IsEmpty(); }
         }
 
         public void Handle(QueueMessageCountChanged message)

@@ -8,6 +8,7 @@ namespace NServiceBus.Profiler.Core.Management
     {
         Task<List<StoredMessage>> GetErrorMessages(Endpoint endpoint);
         Task<List<StoredMessage>> GetAuditMessages(Endpoint endpoint);
+        Task<List<StoredMessage>> GetConversationById(Endpoint endpoint, string conversationId);
         Task<bool> IsAlive(string connectedToService);
     }
 }

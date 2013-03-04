@@ -3,22 +3,80 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.Conversations"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:zoom="http://hightech.ir/controls"
+             xmlns:controls="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+             xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+             xmlns:tree="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-    </UserControl.Resources>
     
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="ConversationTemplate" DataType="{x:Type local:ConversationNode}">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Image x:Name="img" Source="/Images/Information.png" Width="20" Height="20" />
+                <TextBlock Text="{Binding Path=Title, Mode=OneWay}" Foreground="White" />
+            </StackPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsErrorMessage}" Value="True">
+                    <Setter TargetName="img" Property="Source" Value="/Images/Error.png" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <Style TargetType="{x:Type graph:VertexControl}">
+            <Setter Property="zoom:DragBehaviour.IsDragEnabled" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graph:VertexControl}">
+                        <Border BorderBrush="CornflowerBlue" 
+                                Background="SteelBlue"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                              ContentTemplate="{StaticResource ConversationTemplate}"/>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" Color="LightGray" Opacity="0.3" Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type graph:EdgeControl}">
+            <Style.Resources>
+                <ToolTip x:Key="ToolTipContent">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Text="Edge.ID"/>
+                        <TextBlock Text="{Binding MessageId}"/>
+                    </StackPanel>
+                </ToolTip>
+            </Style.Resources>
+            <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
+        </Style>
+
+    </UserControl.Resources>
         
-        <StackPanel Grid.Row="0">
-        </StackPanel>
-        
-    </Grid>
+        <zoom:ZoomControl ZoomBoxOpacity="0.3" 
+                              x:Name="zoomBox"
+                              Mode="Original" 
+                              MaxZoom="100"
+                              MinZoom="1">
+        <local:ConversationGraphLayout x:Name="graphLayout" Margin="10"
+                                           LayoutMode="Automatic"
+                                           Graph="{Binding Path=Graph}"
+                                           LayoutAlgorithmType="Tree"
+                                           OverlapRemovalAlgorithmType="FSA"
+                                           HighlightAlgorithmType="Simple">
+            <local:ConversationGraphLayout.LayoutParameters>
+                <tree:SimpleTreeLayoutParameters Direction="LeftToRight" LayerGap="20" VertexGap="20" SpanningTreeGeneration="DFS" />
+            </local:ConversationGraphLayout.LayoutParameters>
+        </local:ConversationGraphLayout>
+    </zoom:ZoomControl>
+
 </UserControl>

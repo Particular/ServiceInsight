@@ -41,7 +41,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             Machines.Clear();
             Machines.AddRange(_networkOperations.GetMachines());
-            SelectedMachine = _explorer.ConnectedToComputer;
+            SelectedMachine = _explorer.ConnectedToAddress;
         }
 
         public virtual void Close()

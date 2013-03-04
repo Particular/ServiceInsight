@@ -227,7 +227,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool CanCreateQueue()
         {
-            return !Explorer.ConnectedToComputer.IsEmpty() && !WorkInProgress;
+            return !Explorer.ConnectedToAddress.IsEmpty() && !WorkInProgress;
         }
 
         public virtual bool CanConnectToMachine()

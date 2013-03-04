@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Core.Management
+﻿namespace NServiceBus.Profiler.Common.Models
 {
     public class VersionInfo
     {

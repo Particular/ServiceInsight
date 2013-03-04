@@ -123,7 +123,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
 
         Because of = () => Explorer.Activate();
 
-        It should_automatically_connect_to_local_machine = () => Explorer.ConnectedToComputer.ShouldEqual(Environment.MachineName.ToLower());
+        It should_automatically_connect_to_local_machine = () => Explorer.ConnectedToAddress.ShouldEqual(Environment.MachineName.ToLower());
     }
 
     public class when_messages_are_loaded : with_the_explorer

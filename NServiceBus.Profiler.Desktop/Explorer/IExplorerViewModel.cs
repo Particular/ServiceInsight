@@ -7,9 +7,29 @@ using NServiceBus.Profiler.Common.Models;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {
+    public interface IEndpointConnectionProvider
+    {
+        Endpoint ConnectedToUrl { get; }
+    }
+
+    public interface IQueueConnectionProvider
+    {
+        string ConnectedToAddress { get; }
+    }
+
+    public interface IEndpointExplorerViewModel
+    {
+        ExplorerItem ServiceRoot { get; }
+        ExplorerItem AuditRoot { get; }
+        ExplorerItem ErrorRoot { get; }
+    }
+
     public interface IExplorerViewModel : 
         IScreen, 
         IViewAware,
+        IEndpointConnectionProvider,
+        IQueueConnectionProvider,
+        IEndpointExplorerViewModel,
         IHandle<QueueMessageCountChanged>,
         IHandle<AutoRefreshBeatEvent>
     {
@@ -18,7 +38,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         ExplorerItem FolderRoot { get; }
         ExplorerItem SelectedNode { get; set; }
         Queue SelectedQueue { get; }
-        string ConnectedToComputer { get; }
         int SelectedRowHandle { get; set; }
         void ConnectToQueue(string computerName);
         void ConnectToService(string serviceUrl);

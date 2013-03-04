@@ -146,11 +146,29 @@
     <Reference Include="ExceptionHandler.Wpf">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="GraphSharp">
+      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphSharp.Controls">
+      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Data">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Graphviz">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Serialization">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -178,6 +196,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <None Include="FodyWeavers.xml" />
+    <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFExtensions.1.0.0-Custom\WPFExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -188,10 +210,16 @@
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="About\AboutViewModel.cs" />
+    <Compile Include="Conversations\ConversationGraph.cs" />
+    <Compile Include="Conversations\ConversationGraphLayout.cs" />
     <Compile Include="Conversations\ConversationView.xaml.cs">
       <DependentUpon>ConversationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Conversations\ConversationViewModel.cs" />
+    <Compile Include="Conversations\IConversationView.cs" />
+    <Compile Include="Conversations\IConversationViewModel.cs" />
+    <Compile Include="Conversations\MessageEdge.cs" />
+    <Compile Include="Conversations\ConversationNode.cs" />
     <Compile Include="Explorer\AuditQueueExplorerItem.cs" />
     <Compile Include="Explorer\ErrorQueueExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
