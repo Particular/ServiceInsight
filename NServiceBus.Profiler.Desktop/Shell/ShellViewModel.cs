@@ -9,7 +9,8 @@ using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
-using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ManagementService;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
@@ -30,7 +31,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public ShellViewModel(
             IScreenFactory screenFactory,
             IWindowManagerEx windowManager,
-            IExplorerViewModel explorer, 
+            IQueueExplorerViewModel queueExplorer, 
+            IEndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
@@ -44,13 +46,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Headers = headers;
             Conversation = conversation;
             StatusBarManager = statusBarManager;
-            Explorer = explorer;
+            QueueExplorer = queueExplorer;
+            EndpointExplorer = endpointExplorer;
             MessageBody = messageBodyViewer;
             Messages = messages;
 
             Items.Add(messageBodyViewer);
             Items.Add(conversation);
-            Items.Add(explorer);
+            Items.Add(queueExplorer);
             Items.Add(messages);
 
             InitializeAutoRefreshTimer();
@@ -87,7 +90,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual IShellView View { get; private set; }
 
-        public virtual IExplorerViewModel Explorer { get; private set; }
+        public virtual IQueueExplorerViewModel QueueExplorer { get; private set; }
+
+        public virtual IEndpointExplorerViewModel EndpointExplorer { get; private set; }
 
         public virtual IMessageListViewModel Messages { get; private set; }
 
@@ -123,7 +128,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if(result.GetValueOrDefault(false))
             {
-                Explorer.ConnectToQueue(machineViewModel.ComputerName);
+                QueueExplorer.ConnectToQueue(machineViewModel.ComputerName);
             }
         }
 
@@ -142,7 +147,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if (result.GetValueOrDefault(false))
             {
-                Explorer.ConnectToService(connectionViewModel.ServiceUrl);
+                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
             }
         }
 
@@ -161,13 +166,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public virtual void DeleteCurrentQueue()
         {
-            Explorer.DeleteSelectedQueue();
+            QueueExplorer.DeleteSelectedQueue();
         }
 
         [AutoCheckAvailability]
         public virtual void RefreshQueues()
         {
-            Explorer.RefreshMessageCount();
+            QueueExplorer.FullRefresh();
         }
 
         [AutoCheckAvailability]
@@ -190,7 +195,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if(result.GetValueOrDefault(false))
             {
-                Explorer.RefreshQueues();
+                QueueExplorer.FullRefresh();
             }
         }
 
@@ -202,7 +207,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool CanCreateMessage()
         {
-            return Explorer.SelectedQueue != null && !WorkInProgress;
+            return QueueExplorer.SelectedQueue != null && !WorkInProgress;
         }
 
         public virtual bool CanRefreshQueues()
@@ -227,7 +232,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool CanCreateQueue()
         {
-            return !Explorer.ConnectedToAddress.IsEmpty() && !WorkInProgress;
+            return !QueueExplorer.ConnectedToAddress.IsEmpty() && !WorkInProgress;
         }
 
         public virtual bool CanConnectToMachine()

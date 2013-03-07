@@ -3,7 +3,7 @@ using System.Globalization;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
     public class QueueExplorerItem : ExplorerItem
     {

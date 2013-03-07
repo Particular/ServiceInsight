@@ -5,6 +5,5 @@
         void ZoomToDefault();
         void ZoomToFill();
         void Clear();
-        void Redraw();
     }
 }

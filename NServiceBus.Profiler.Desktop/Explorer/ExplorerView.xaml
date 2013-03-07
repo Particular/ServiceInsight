@@ -5,16 +5,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:exp="clr-namespace:NServiceBus.Profiler.Desktop.Explorer"
+             xmlns:tree="clr-namespace:NServiceBus.Profiler.Desktop.Explorer"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="exp:ExplorerItem" ItemsSource="{Binding Path=Children}">
+        <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="tree:ExplorerItem" ItemsSource="{Binding Path=Children}">
             <TextBlock Text="{Binding Name}" />
         </HierarchicalDataTemplate>
         
-        <exp:ExplorerNodeChildSelector x:Key="ChildSelector" />
-        <exp:ExplorerNodeImageSelector x:Key="ExplorerImageSelector" />
+        <tree:ExplorerNodeChildSelector x:Key="ChildSelector" />
+        <tree:ExplorerNodeImageSelector x:Key="ExplorerImageSelector" />
         
     </UserControl.Resources>
     

@@ -30,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected override bool IsMatchingHeader(HeaderInfo header)
         {
+            //TODO: Move general to the top
             return !header.Key.StartsWith("NServiceBus", StringComparison.OrdinalIgnoreCase)       ||
                    header.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase)              ||
                    header.Key.EndsWith("EnclosedMessageTypes", StringComparison.OrdinalIgnoreCase) ||

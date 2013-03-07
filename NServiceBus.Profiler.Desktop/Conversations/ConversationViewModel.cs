@@ -5,6 +5,7 @@ using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Explorer;
 using System.Linq;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
@@ -79,25 +80,19 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             }
         }
 
-        public void Redraw()
-        {
-            _view.Redraw();
-        }
-
         public async void Handle(MessageBodyLoadedEvent @event)
         {
             var storedMessage = @event.Message as StoredMessage;
             if (storedMessage != null)
             {
                 var conversationId = storedMessage.ConversationId;
-                var relatedMessagesTask = await _managementService.GetConversationById(_connection.ConnectedToUrl, conversationId);
+                var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
 
                 CreateConversationNodes(relatedMessagesTask);
                 LinkConversationNodes(relatedMessagesTask);
             }
 
             ZoomToDefault();
-            Redraw();
         }
 
         private void LinkConversationNodes(IEnumerable<StoredMessage> relatedMessagesTask)

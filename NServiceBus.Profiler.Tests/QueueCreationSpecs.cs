@@ -5,6 +5,7 @@ using Machine.Specifications;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
@@ -16,13 +17,13 @@ namespace NServiceBus.Profiler.Tests.QueueCreation
     {
         protected static QueueCreationViewModel Model;
         protected static IQueueManager QueueManager;
-        protected static IExplorerViewModel Explorer;
+        protected static IQueueExplorerViewModel Explorer;
         protected static INetworkOperations Network;
 
         Establish context = () =>
         {
             QueueManager = Substitute.For<IQueueManager>();
-            Explorer = Substitute.For<IExplorerViewModel>();
+            Explorer = Substitute.For<IQueueExplorerViewModel>();
             Network = Substitute.For<INetworkOperations>();
             Model = new QueueCreationViewModel(QueueManager, Explorer, Network);
             Network.GetMachines().Returns(new List<string> { Environment.MachineName, "AnotherMachine" });

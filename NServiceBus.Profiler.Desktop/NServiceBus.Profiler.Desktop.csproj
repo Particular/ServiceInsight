@@ -220,15 +220,20 @@
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
     <Compile Include="Conversations\ConversationNode.cs" />
-    <Compile Include="Explorer\AuditQueueExplorerItem.cs" />
-    <Compile Include="Explorer\ErrorQueueExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\AuditQueueExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
+    <Compile Include="Explorer\EndpointExplorer\ErrorQueueExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\IEndpointConnectionProvider.cs" />
+    <Compile Include="Explorer\IExplorerViewModel.cs" />
+    <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
     <Compile Include="Explorer\FolderExplorerItem.cs" />
+    <Compile Include="Explorer\QueueExplorer\IQueueExplorerViewModel.cs" />
     <Compile Include="Explorer\IExplorerView.cs" />
-    <Compile Include="Explorer\QueueExplorerItem.cs" />
-    <Compile Include="Explorer\ServerExplorerItem.cs" />
-    <Compile Include="Explorer\ServiceExplorerItem.cs" />
+    <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
+    <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
@@ -296,7 +301,7 @@
     <Compile Include="Shell\QueueCreationViewModel.cs" />
     <Compile Include="Shell\QueueExceptionHandler.cs" />
     <Compile Include="ScreenManager\ScreenFactory.cs" />
-    <Compile Include="Explorer\IExplorerViewModel.cs" />
+    <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
     <Compile Include="ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="Startup\AutofacAdapter.cs" />
@@ -311,7 +316,7 @@
     <Compile Include="Modules\CoreModule.cs" />
     <Compile Include="Modules\LoggerModule.cs" />
     <Compile Include="Modules\ShellModule.cs" />
-    <Compile Include="Explorer\ExplorerViewModel.cs" />
+    <Compile Include="Explorer\QueueExplorer\QueueExplorerViewModel.cs" />
     <Compile Include="Explorer\ExplorerView.xaml.cs">
       <DependentUpon>ExplorerView.xaml</DependentUpon>
     </Compile>

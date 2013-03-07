@@ -161,17 +161,33 @@
         <!--Dock Windows-->
         <Grid>
             <dxd:DockLayoutManager>
+                <dxd:DockLayoutManager.AutoHideGroups>
+
+                    <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200">
+                        <dxd:LayoutPanel Caption="Endpoint Explorer"
+						                 AllowClose="False" 
+						                 ShowBorder="False" 
+						                 AllowDrag="False" 
+						                 AllowFloat="False"
+						                 AllowMove="False"
+						                 CaptionImage="/Images/ServerExplorer.png">
+                            <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
+                        </dxd:LayoutPanel>
+                        <dxd:LayoutPanel Caption="Queue Explorer" 
+						                 AllowClose="False" 
+						                 ShowBorder="False" 
+						                 AllowDrag="False" 
+						                 AllowFloat="False"
+						                 AllowMove="False"
+						                 CaptionImage="/Images/ServerExplorer.png">
+                            <ContentControl cal:View.Model="{Binding QueueExplorer}" />
+                        </dxd:LayoutPanel>
+
+                    </dxd:AutoHideGroup>
+
+                </dxd:DockLayoutManager.AutoHideGroups>
+                
                 <dxd:LayoutGroup>
-                    <dxd:LayoutPanel Caption="Endpoint Explorer" 
-						             AllowClose="False" 
-						             ShowBorder="False" 
-						             AllowDrag="False" 
-						             AllowFloat="False"
-						             AllowMove="False"
-						             ItemWidth="1*"
-						             CaptionImage="/Images/ServerExplorer.png">
-                        <ContentControl cal:View.Model="{Binding Explorer}" />
-                    </dxd:LayoutPanel>
                     <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
                         <dxd:LayoutPanel Caption="Messages" 
 							AllowClose="False"

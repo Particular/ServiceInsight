@@ -4,6 +4,7 @@ using System.Windows;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
+using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
@@ -13,16 +14,18 @@ using System.Linq;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using DevExpress.Xpf.Editors.Helpers;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
-    public class ExplorerViewModel : Screen, IExplorerViewModel
+    [View(typeof(IExplorerView))]
+    public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
         private readonly IQueueManager _queueManager;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
+        private bool _isFirstActivation = true;
         private IExplorerView _view;
 
-        public ExplorerViewModel(
+        public QueueExplorerViewModel(
             IQueueManager queueManager,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager)
@@ -50,7 +53,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            _view.ExpandNode(MachineRoot);
+            if (_isFirstActivation)
+            {
+                _view.ExpandNode(MachineRoot);
+                _isFirstActivation = false;
+            }
         }
 
         public override void AttachView(object view, object context)
@@ -69,10 +76,22 @@ namespace NServiceBus.Profiler.Desktop.Explorer
                 return;
 
             var selectedItem = SelectedNode;
-            var confirmation = string.Format("The queue named {0} with all its messages will be removed. Continue?", SelectedQueue.Address);
+            var confirmation = string.Format("The queue named {0} with all its messages and its subqueues will be removed. Continue?", SelectedQueue.Address);
             var result = _windowManager.ShowMessageBox(confirmation, "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Question);
             if (result != MessageBoxResult.OK)
                 return;
+
+            var itemsToRemove = new List<ExplorerItem>();
+            foreach (var subqueue in selectedItem.Children.OfType<QueueExplorerItem>())
+            {
+                _queueManager.DeleteQueue(subqueue.Queue); 
+                itemsToRemove.Add(subqueue);
+            }
+
+            foreach (var toRemove in itemsToRemove)
+            {
+                selectedItem.Children.Remove(toRemove);
+            }
 
             _queueManager.DeleteQueue(SelectedQueue);
             MachineRoot.Children.Remove(selectedItem);
@@ -86,7 +105,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             }
         }
 
-        public virtual void RefreshMessageCount()
+        public virtual void PartialRefresh()
         {
             if (MachineRoot == null)
                 return;
@@ -103,49 +122,12 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             get { return Items.FirstOrDefault(x => x is FolderExplorerItem); }
         }
 
-        public virtual ExplorerItem ServiceRoot
-        {
-            get { return Items.FirstOrDefault(x => x is ServiceExplorerItem); }
-        }
-
-        public virtual ExplorerItem AuditRoot
-        {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditQueueExplorerItem>().First() : null; }
-        }
-
-        public virtual ExplorerItem ErrorRoot
-        {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorQueueExplorerItem>().First() : null; }
-        }
-
         public virtual ExplorerItem MachineRoot
         {
             get { return Items.FirstOrDefault(x => x is ServerExplorerItem); }
         }
 
         public virtual ExplorerItem SelectedNode { get; set; }
-
-        public virtual void ConnectToService(string url)
-        {
-            Guard.NotNull(() => url, url);
-
-            ConnectedToUrl = new Endpoint {Url = url};
-            AddServiceNode();
-        }
-
-        private void AddServiceNode()
-        {
-            if (ServiceRoot == null)
-            {
-                Items.Add(new ServiceExplorerItem(ConnectedToUrl.Url));
-            }
-
-            ServiceRoot.Children.Clear();
-            ServiceRoot.Children.Add(new AuditQueueExplorerItem("Audit"));
-            ServiceRoot.Children.Add(new ErrorQueueExplorerItem("Error"));
-
-            _view.ExpandNode(ServiceRoot);
-        }
 
         public virtual void ConnectToQueue(string computerName)
         {
@@ -157,10 +139,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
             ConnectedToAddress = ipv4;
             AddServerNode();
-            RefreshQueues();
+            FullRefresh();
         }
 
-        public void RefreshQueues()
+        public void FullRefresh()
         {
             if (MachineRoot == null)
                 return;
@@ -170,12 +152,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             var queues = _queueManager.GetQueues(ConnectedToAddress).OrderBy(x => x.Address).ToList();
 
             SetupQueueNodes(queues);
-            RefreshMessageCount();
+            PartialRefresh();
         }
 
         public virtual string ConnectedToAddress { get; private set; }
-
-        public virtual Endpoint ConnectedToUrl { get; private set; }
 
         public int SelectedRowHandle { get; set; }
 
@@ -196,21 +176,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         public virtual void OnSelectedNodeChanged()
         {
             _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
-
-            if (SelectedNode is AuditQueueExplorerItem)
-            {
-                _eventAggregator.Publish(new AuditQueueSelectedEvent
-                {
-                    Endpoint = ConnectedToUrl
-                });
-            }
-            else if(SelectedNode is ErrorQueueExplorerItem)
-            {
-                _eventAggregator.Publish(new ErrorQueueSelectedEvent
-                {
-                    Endpoint = ConnectedToUrl
-                });
-            }
         }
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
@@ -282,7 +247,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public void Handle(AutoRefreshBeatEvent message)
         {
-            RefreshMessageCount();
+            PartialRefresh();
         }
     }
 }

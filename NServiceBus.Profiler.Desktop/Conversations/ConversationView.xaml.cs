@@ -22,11 +22,6 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             zoomBox.Mode = ZoomControlModes.Fill;
         }
 
-        public void Redraw()
-        {
-            
-        }
-
         public void Clear()
         {
             graphLayout.Children.Clear();

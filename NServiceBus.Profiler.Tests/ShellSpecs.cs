@@ -8,6 +8,8 @@ using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
@@ -23,7 +25,8 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static ShellViewModel shell;
         protected static IScreenFactory screenFactory;
         protected static IWindowManagerEx windowManager;
-        protected static IExplorerViewModel explorer;
+        protected static IQueueExplorerViewModel queueExplorer;
+        protected static IEndpointExplorerViewModel endpointExplorer;
         protected static IMessageListViewModel messageList;
         protected static AboutViewModel aboutViewModel;
         protected static ConnectToMachineViewModel connectToViewModel;
@@ -39,7 +42,8 @@ namespace NServiceBus.Profiler.Tests.Shell
         {
             screenFactory = Substitute.For<IScreenFactory>();
             windowManager = Substitute.For<IWindowManagerEx>();
-            explorer = Substitute.For<IExplorerViewModel>();
+            queueExplorer = Substitute.For<IQueueExplorerViewModel>();
+            endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
             messageList = Substitute.For<IMessageListViewModel>();
             networkOperations = Substitute.For<INetworkOperations>();
             exceptionHandler = Substitute.For<IExceptionHandler>();
@@ -52,7 +56,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
-            shell = new ShellViewModel(screenFactory, windowManager, explorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, headerInfo);
+            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, headerInfo);
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
@@ -100,7 +104,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             windowManager.Received().ShowDialog(connectToViewModel);
         };
 
-        It should_connect_explorer_to_the_msmq_machine = () => explorer.Received().ConnectToQueue("NewMachine");
+        It should_connect_explorer_to_the_msmq_machine = () => queueExplorer.Received().ConnectToQueue("NewMachine");
 
     }
 
@@ -117,6 +121,6 @@ namespace NServiceBus.Profiler.Tests.Shell
 
         Because of = () => shell.OnAutoRefreshing();
 
-        It should_not_refresh_the_queues = () => explorer.DidNotReceive().RefreshMessageCount();
+        It should_not_refresh_the_queues = () => queueExplorer.DidNotReceive().PartialRefresh();
     }
 }

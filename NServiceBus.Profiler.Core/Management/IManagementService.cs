@@ -6,9 +6,10 @@ namespace NServiceBus.Profiler.Core.Management
 {
     public interface IManagementService
     {
-        Task<List<StoredMessage>> GetErrorMessages(Endpoint endpoint);
-        Task<List<StoredMessage>> GetAuditMessages(Endpoint endpoint);
-        Task<List<StoredMessage>> GetConversationById(Endpoint endpoint, string conversationId);
-        Task<bool> IsAlive(string connectedToService);
+        Task<List<StoredMessage>> GetErrorMessages(string serviceUrl);
+        Task<List<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint);
+        Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId);
+        Task<List<Endpoint>> GetEndpoints(string serviceUrl);
+        Task<bool> IsAlive(string serviceUrl);
     }
 }

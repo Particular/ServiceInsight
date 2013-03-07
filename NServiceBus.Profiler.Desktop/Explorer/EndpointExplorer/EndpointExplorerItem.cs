@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using NServiceBus.Profiler.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    public class ServiceExplorerItem : ExplorerItem
+    public class EndpointExplorerItem : ExplorerItem
     {
-        public ServiceExplorerItem(string name)
+        public EndpointExplorerItem(string name)
             : base(name)
         {
         }

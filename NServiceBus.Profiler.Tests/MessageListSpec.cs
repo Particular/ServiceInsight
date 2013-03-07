@@ -5,6 +5,7 @@ using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Tests.Helpers;
@@ -20,16 +21,18 @@ namespace NServiceBus.Profiler.Tests
         protected static IWindowManagerEx WindowManager;
         protected static IEventAggregator EventAggregator;
         protected static IManagementService ManagementService;
+        protected static IEndpointConnectionProvider EndpointConnectionProvider;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         
         Establish context = () =>
         {
             EventAggregator = Substitute.For<IEventAggregator>();
             ManagementService = Substitute.For<IManagementService>();
+            EndpointConnectionProvider = Substitute.For<IEndpointConnectionProvider>();
             MessageStore = new Dictionary<Queue, List<MessageInfo>>();
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager);
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider);
         };
     }
 

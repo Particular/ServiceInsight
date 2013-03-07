@@ -1,7 +1,7 @@
 using System.Drawing;
 using NServiceBus.Profiler.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
     public class ServerExplorerItem : ExplorerItem
     {

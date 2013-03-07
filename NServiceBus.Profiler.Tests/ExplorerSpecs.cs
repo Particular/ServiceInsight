@@ -6,18 +6,18 @@ using Machine.Specifications;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NSubstitute;
 using System.Linq;
 
 namespace NServiceBus.Profiler.Tests.Explorer
 {
-    [Subject("explorer")]
+    [Subject("queueExplorer")]
     public abstract class with_the_explorer
     {
-        protected static IExplorerViewModel Explorer;
+        protected static IQueueExplorerViewModel Explorer;
         protected static IExplorerView View;
         protected static IQueueManager QueueManager;
         protected static IEventAggregator EventAggregator;
@@ -33,7 +33,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             EventAggregator = Substitute.For<IEventAggregator>();
             WindowManagerEx = Substitute.For<IWindowManagerEx>();
 
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
 
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
@@ -94,7 +94,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             Explorer.ConnectToQueue(Environment.MachineName);
         };
 
-        Because of = () => Explorer.RefreshMessageCount();
+        Because of = () => Explorer.PartialRefresh();
 
         It should_display_connected_server = () => Explorer.Items[0].ShouldBeOfType<ServerExplorerItem>();
         It should_have_only_server_node = () => Explorer.Items.Count.ShouldEqual(1);
@@ -178,7 +178,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
 
     public class when_nservicebus_system_queues_are_present_display_them_as_subqueues : with_the_explorer
     {
-        Because of = () => Explorer.RefreshMessageCount();
+        Because of = () => Explorer.PartialRefresh();
     }
 
     public class when_connected_to_another_machine : with_the_explorer
@@ -200,10 +200,10 @@ namespace NServiceBus.Profiler.Tests.Explorer
             UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
             QueueManager = Substitute.For<IQueueManager>();
             QueueManager.GetQueues().ReturnsForAnyArgs(UnorderedQueueList);
-            Explorer = new ExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
         };
 
-        Because of = () => Error = Catch.Exception(() => Explorer.RefreshQueues());
+        Because of = () => Error = Catch.Exception(() => Explorer.FullRefresh());
 
         It should_not_throw_an_exception = () => Error.ShouldBeNull();
     }

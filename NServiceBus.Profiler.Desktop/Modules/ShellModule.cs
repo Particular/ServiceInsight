@@ -5,6 +5,8 @@ using ExceptionHandler.IssueReporter.BitBucket;
 using ExceptionHandler.Settings;
 using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
@@ -22,8 +24,9 @@ namespace NServiceBus.Profiler.Desktop.Modules
                    .AsSelf();
 
             builder.RegisterSource(new SettingsSource());
-            builder.RegisterType<ExplorerView>().As<IExplorerView>().SingleInstance();
-            builder.RegisterType<ExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();
+            builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance();
             builder.RegisterType<MenuManager>().As<IMenuManager>().SingleInstance();

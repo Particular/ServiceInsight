@@ -7,6 +7,7 @@ using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using System.Linq;
 
@@ -18,17 +19,20 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IWindowManagerEx _windowManager;
         private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
+        private readonly IEndpointConnectionProvider _endpointConnection;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
             IManagementService managementService,
-            IQueueManagerAsync asyncQueueManager)
+            IQueueManagerAsync asyncQueueManager,
+            IEndpointConnectionProvider endpointConnection)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
             _managementService = managementService;
             _asyncQueueManager = asyncQueueManager;
+            _endpointConnection = endpointConnection;
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
         }
@@ -45,17 +49,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new SelectedMessageChangedEvent(FocusedMessage));
 
-            if (FocusedMessage != null && SelectedQueue != null)
+            var loadedMessage = FocusedMessage as StoredMessage;
+            if (loadedMessage != null)
+            {
+                _eventAggregator.Publish(new MessageBodyLoadedEvent(loadedMessage));
+                return;
+            }
+
+            var queueMessage = FocusedMessage as MessageInfo;
+            if (queueMessage != null && SelectedQueue != null)
             {
                 LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
-            }
-            else
-            {
-                var loadedMessage = FocusedMessage as StoredMessage;
-                if (loadedMessage != null)
-                {
-                    _eventAggregator.Publish(new MessageBodyLoadedEvent(loadedMessage));
-                }
             }
         }
 
@@ -180,7 +184,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStartedEvent("Loading audit messages..."));
 
-            var messages = await _managementService.GetAuditMessages(message.Endpoint);
+            var messages = await _managementService.GetAuditMessages(_endpointConnection.ServiceUrl, message.Endpoint);
             Messages.Clear();
             if (messages != null)
             {
@@ -194,7 +198,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStartedEvent("Loading failed messages..."));
 
-            var messages = await _managementService.GetErrorMessages(message.Endpoint);
+            var messages = await _managementService.GetErrorMessages(_endpointConnection.ServiceUrl);
             Messages.Clear();
             if (messages != null)
             {

@@ -30,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected override bool IsMatchingHeader(HeaderInfo header)
         {
+            //TODO: Add a diff between processing started and ended
             return header.Key.EndsWith("TimeSent", StringComparison.OrdinalIgnoreCase)          ||
                    header.Key.EndsWith("ProcessingStarted", StringComparison.OrdinalIgnoreCase) ||
                    header.Key.EndsWith("ProcessingEnded", StringComparison.OrdinalIgnoreCase);

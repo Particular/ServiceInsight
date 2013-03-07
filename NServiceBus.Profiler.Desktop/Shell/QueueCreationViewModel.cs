@@ -5,18 +5,19 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
     public class QueueCreationViewModel : Screen
     {
         private readonly IQueueManager _queueManager;
-        private readonly IExplorerViewModel _explorer;
+        private readonly IQueueExplorerViewModel _explorer;
         private readonly INetworkOperations _networkOperations;
 
         public QueueCreationViewModel(
             IQueueManager queueManager, 
-            IExplorerViewModel explorer,
+            IQueueExplorerViewModel explorer,
             INetworkOperations networkOperations)
         {
             _queueManager = queueManager;
