@@ -16,5 +16,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         IObservableCollection<HeaderInfo> Items { get; }
 
         ImageSource GroupImage { get; }
+
+        TabPriority Order { get; }
     }
 }

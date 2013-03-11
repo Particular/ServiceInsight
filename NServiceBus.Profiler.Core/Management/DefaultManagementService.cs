@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Core.Management
             var request = new RestRequest("failedmessages");
             var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
-            return messages;
+            return messages ?? new List<StoredMessage>();
         }
 
         public async Task<List<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint)
@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Core.Management
             var request = new RestRequest("/endpoints/" + endpoint.Name + "/audit");
             var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
-            return messages;            
+            return messages ?? new List<StoredMessage>();
         }
 
         public async Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId)
@@ -32,7 +32,7 @@ namespace NServiceBus.Profiler.Core.Management
             var request = new RestRequest("conversations/" + conversationId);
             var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
-            return messages;
+            return messages ?? new List<StoredMessage>();
         }
 
         public async Task<List<Endpoint>> GetEndpoints(string serviceUrl)
@@ -41,7 +41,7 @@ namespace NServiceBus.Profiler.Core.Management
             var request = new RestRequest("endpoints");
             var messages = await client.GetModelAsync<List<Endpoint>>(request);
 
-            return messages;
+            return messages ?? new List<Endpoint>();
         }
 
         public async Task<bool> IsAlive(string serviceUrl)

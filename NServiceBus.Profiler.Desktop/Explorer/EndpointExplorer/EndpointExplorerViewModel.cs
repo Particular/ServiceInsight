@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
@@ -69,14 +70,25 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             }
         }
 
-        public override void AttachView(object view, object context)
+        public async override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
             _view = view as IExplorerView;
+
+            const string defaultAddress = "http://localhost:8888";
             if (!IsConnected)
             {
-                ConnectToService("http://localhost:8888"); //TODO: Connect to default API address
+                var available = await ServiceAvailable(defaultAddress);
+                if (available)
+                {
+                    ConnectToService(defaultAddress); //TODO: Connect to default API address
+                }
             }
+        }
+
+        private async Task<bool> ServiceAvailable(string defaultAddress)
+        {
+            return await _managementService.IsAlive(defaultAddress);
         }
 
         private async void AddServiceNode()
@@ -89,14 +101,14 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             ServiceRoot.Children.Clear();
 
             var endpoints = await _managementService.GetEndpoints(ServiceUrl);
+            
+            if(endpoints == null)
+                return;
 
             foreach (var endpoint in endpoints)
             {
                 ServiceRoot.Children.Add(new AuditQueueExplorerItem(endpoint));
             }
-
-            //ServiceRoot.Children.Add(new AuditQueueExplorerItem("Audit"));
-            //ServiceRoot.Children.Add(new ErrorQueueExplorerItem("Error"));
 
             _view.ExpandNode(ServiceRoot);
         }

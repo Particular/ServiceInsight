@@ -25,18 +25,6 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             DisplayName = "Errors";
 
             //TODO:Add back the context menu
-//            ContextMenuItems.AddRange(new[]
-//            {
-//                new PluginContextMenu("ReturnToSourceQueue", new RelayCommand(ReturnToSource, CanReturnToSource), 90)
-//                {
-//                    DisplayName = "Return To Source Queue",
-//                    Image = Resources.MessageReturn
-//                },
-//                new PluginContextMenu("CopyHeaderInfo", new RelayCommand(CopyHeaderInfo, CanCopyHeaderInfo))
-//                {
-//                    DisplayName = "Copy Header Info",
-//                }
-//            });
         }
 
         public virtual bool CanReturnToSource()

@@ -1,4 +1,8 @@
-﻿using WPFExtensions.Controls;
+﻿using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using WPFExtensions.Controls;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
@@ -14,17 +18,17 @@ namespace NServiceBus.Profiler.Desktop.Conversations
 
         public void ZoomToDefault()
         {
-            zoomBox.Mode = ZoomControlModes.Original;
+            ZoomViewer.Mode = ZoomControlModes.Original;
         }
 
         public void ZoomToFill()
         {
-            zoomBox.Mode = ZoomControlModes.Fill;
+            ZoomViewer.Mode = ZoomControlModes.Fill;
         }
 
         public void Clear()
         {
-            graphLayout.Children.Clear();
+            GraphLayout.Children.Clear();
         }
     }
 }

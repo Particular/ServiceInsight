@@ -4,43 +4,103 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.Conversations"
-             xmlns:cal="http://www.caliburnproject.org"
              xmlns:zoom="http://hightech.ir/controls"
-             xmlns:controls="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
              xmlns:tree="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
+             xmlns:models="clr-namespace:NServiceBus.Profiler.Common.Models;assembly=NServiceBus.Profiler.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
+        
+        <DataTemplate x:Key="ConversationTemplate" DataType="{x:Type models:StoredMessage}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0">
+                    <Image x:Name="img" Width="20" Height="20" Margin="5" />
+                    <TextBlock Text="{Binding Path=FriendlyMessageType, Mode=OneWay}" Foreground="{StaticResource DiagramNodeForegroundBrush}" Margin="5" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                    <TextBlock Text="Sent at " Foreground="{StaticResource DiagramNodeForegroundBrush}" />
+                    <TextBlock Text="{Binding Path=TimeSent}" Foreground="{StaticResource DiagramNodeForegroundBrush}" />
+                </StackPanel>
 
-        <DataTemplate x:Key="ConversationTemplate" DataType="{x:Type local:ConversationNode}">
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <Image x:Name="img" Source="/Images/Information.png" Width="20" Height="20" />
-                <TextBlock Text="{Binding Path=Title, Mode=OneWay}" Foreground="White" />
-            </StackPanel>
+                <TextBlock Text="Deferred"
+                           FontStyle="Italic"
+                           FontSize="8"
+                           Margin="5"
+                           Grid.Row="2" 
+                           Foreground="{StaticResource DiagramNodeForegroundBrush}" 
+                           Visibility="{Binding IsDeferredMessage, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+            </Grid>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding IsErrorMessage}" Value="True">
-                    <Setter TargetName="img" Property="Source" Value="/Images/Error.png" />
+                <DataTrigger Binding="{Binding Status}" Value="Failed">
+                    <Setter TargetName="img" Property="Source" Value="/Images/Msg_Warning.png" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Successfull">
+                    <Setter TargetName="img" Property="Source" Value="/Images/Msg_Info.png" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="RepeatedFailures">
+                    <Setter TargetName="img" Property="Source" Value="/Images/Msg_Error.png" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
 
+        <Style x:Key="DiagramTooltip" TargetType="ToolTip">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="HasDropShadow" Value="True"/>
+            <Setter Property="StaysOpen" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border CornerRadius="7" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top" 
+                                Padding="5" 
+                                BorderThickness="3"
+                                Background="{StaticResource DiagramTooltipBackgroundBrush}">
+
+                            <ContentControl Content="{TemplateBinding Content}" />
+                            
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="{x:Type graph:VertexControl}">
             <Setter Property="zoom:DragBehaviour.IsDragEnabled" Value="False" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="ToolTip"> 
+                <Setter.Value>
+                    <ToolTip Style="{StaticResource DiagramTooltip}">
+                        <TextBlock Grid.Row="0" Grid.Column="1" 
+                                           FontSize="13" 
+                                           Text="{Binding MessageType}" 
+                                           Foreground="{StaticResource DiagramTooltipForegroundBrush}" />
+
+                    </ToolTip>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graph:VertexControl}">
-                        <Border BorderBrush="CornflowerBlue" 
-                                Background="SteelBlue"
+                        <Border BorderBrush="{StaticResource DiagramNodeBorderBrush}"
+                                Background="{Binding Path=Status, Converter={StaticResource StatusToBrushConverter}}"
                                 BorderThickness="1"
                                 CornerRadius="10"
-                                Padding="{TemplateBinding Padding}">
+                                Margin="{TemplateBinding Margin}">
                             <ContentPresenter Content="{TemplateBinding Vertex}" 
-                                              ContentTemplate="{StaticResource ConversationTemplate}"/>
-
+                                              ContentTemplate="{StaticResource ConversationTemplate}" />
+                           
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="2" Color="LightGray" Opacity="0.3" Direction="315"/>
+                                <DropShadowEffect BlurRadius="2" Color="{StaticResource DiagramShadowColor}" Opacity="0.3" Direction="315"/>
                             </Border.Effect>
                         </Border>
                     </ControlTemplate>
@@ -50,33 +110,46 @@
 
         <Style TargetType="{x:Type graph:EdgeControl}">
             <Style.Resources>
-                <ToolTip x:Key="ToolTipContent">
-                    <StackPanel>
-                        <TextBlock FontWeight="Bold" Text="Edge.ID"/>
-                        <TextBlock Text="{Binding MessageId}"/>
+                <ToolTip x:Key="ToolTipContent" Style="{StaticResource DiagramTooltip}" Foreground="{StaticResource DiagramTooltipForegroundBrush}">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Originating "/>
+                            <TextBlock Text="{Binding Source.OriginatingEndpoint.Name}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Receiving "/>
+                            <TextBlock Text="{Binding Target.ReceivingEndpoint.Name}"/>
+                        </StackPanel>
                     </StackPanel>
                 </ToolTip>
             </Style.Resources>
+            <Setter Property="StrokeThickness" Value="4" />
             <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
+            <Setter Property="Foreground" Value="{StaticResource DiagramEdgeForegroundBrush}" />
         </Style>
 
     </UserControl.Resources>
         
-        <zoom:ZoomControl ZoomBoxOpacity="0.3" 
-                              x:Name="zoomBox"
-                              Mode="Original" 
-                              MaxZoom="100"
-                              MinZoom="1">
-        <local:ConversationGraphLayout x:Name="graphLayout" Margin="10"
+    <Grid Background="White">
+        
+        <zoom:ZoomControl x:Name="ZoomViewer" 
+                          MaxZoom="3"
+                          MinZoom="0.5"
+                          MaxZoomDelta="0.1"
+                          Style="{StaticResource ZoomControlStyle}">
+
+            <local:ConversationGraphLayout x:Name="GraphLayout" Margin="10"
                                            LayoutMode="Automatic"
                                            Graph="{Binding Path=Graph}"
                                            LayoutAlgorithmType="Tree"
                                            OverlapRemovalAlgorithmType="FSA"
                                            HighlightAlgorithmType="Simple">
-            <local:ConversationGraphLayout.LayoutParameters>
-                <tree:SimpleTreeLayoutParameters Direction="LeftToRight" LayerGap="20" VertexGap="20" SpanningTreeGeneration="DFS" />
-            </local:ConversationGraphLayout.LayoutParameters>
-        </local:ConversationGraphLayout>
-    </zoom:ZoomControl>
-
+                <local:ConversationGraphLayout.LayoutParameters>
+                    <tree:SimpleTreeLayoutParameters Direction="LeftToRight" LayerGap="20" VertexGap="20" SpanningTreeGeneration="DFS" />
+                </local:ConversationGraphLayout.LayoutParameters>
+            </local:ConversationGraphLayout>
+    
+        </zoom:ZoomControl>
+        
+    </Grid>
 </UserControl>

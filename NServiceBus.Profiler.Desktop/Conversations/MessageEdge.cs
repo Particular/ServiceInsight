@@ -1,10 +1,11 @@
-﻿using QuickGraph;
+﻿using NServiceBus.Profiler.Common.Models;
+using QuickGraph;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
-    public class MessageEdge : Edge<ConversationNode>
+    public class MessageEdge : Edge<StoredMessage>
     {
-        public MessageEdge(ConversationNode source, ConversationNode target) 
+        public MessageEdge(StoredMessage source, StoredMessage target) 
             : base(source, target)
         {
         }

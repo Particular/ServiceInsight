@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Caliburn.PresentationFramework;
 
 namespace NServiceBus.Profiler.Common.Models
@@ -6,61 +7,42 @@ namespace NServiceBus.Profiler.Common.Models
     [Serializable]
     public class MessageInfo : PropertyChangedBase
     {
-        private string _id;
-        private DateTime _timeSent;
-        private bool _isDeleted;
-        private string _label;
-
         public MessageInfo()
         {
         }
 
         public MessageInfo(string id, string label, DateTime timeSent)
         {
-            _id = id;
-            _label = label;
-            _timeSent = timeSent;
-            _isDeleted = false;
+            Id = id;
+            Label = label;
+            TimeSent = timeSent;
+            IsDeleted = false;
         }
 
-        public string Id
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-                NotifyOfPropertyChange("Id");
-            }
-        }
+        public string Id { get; set; }
 
-        public string Label
-        {
-            get { return _label; }
-            set
-            {
-                _label = value;
-                NotifyOfPropertyChange("Label");
-            }
-        }
+        public string Label { get; set; }
 
-        public DateTime TimeSent
-        {
-            get { return _timeSent; }
-            set
-            {
-                _timeSent = value;
-                NotifyOfPropertyChange("TimeSent");
-            }
-        }
+        public string MessageType { get; set; }
 
-        public bool IsDeleted
+        public DateTime TimeSent { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public string FriendlyMessageType { get; private set; }
+
+        public void OnMessageTypeChanged()
         {
-            get { return _isDeleted; }
-            set
-            {
-                _isDeleted = value;
-                NotifyOfPropertyChange("IsDeleted");
-            }
+            if (string.IsNullOrEmpty(MessageType))
+                return;
+
+            var clazz = MessageType.Split(',').First();
+            var objectName = clazz.Split('.').Last();
+
+            if (objectName.Contains("+"))
+                objectName = objectName.Split('+').Last();
+
+            FriendlyMessageType = objectName;
         }
     }
 }

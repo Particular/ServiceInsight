@@ -19,8 +19,13 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<XmlContentDecoder>().As<IContentDecoder<XmlDocument>>();
             builder.RegisterType<HeaderContentDecoder>().As<IContentDecoder<IList<HeaderInfo>>>();
             builder.RegisterType<DefaultMapper>().As<IMapper>().SingleInstance();
-            builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
             builder.RegisterType<NetworkOperations>().As<INetworkOperations>().SingleInstance();
+
+#if DEBUG
+            builder.RegisterType<TestManagementService>().As<IManagementService>().SingleInstance();
+#else
+            builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
+#endif
         }
     }
 }

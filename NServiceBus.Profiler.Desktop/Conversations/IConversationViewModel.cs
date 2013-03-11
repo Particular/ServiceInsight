@@ -10,6 +10,5 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         IHandle<SelectedMessageChangedEvent>
     {
         ConversationGraph Graph { get; set; }
-        void ZoomToDefault();
     }
 }

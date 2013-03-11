@@ -16,6 +16,7 @@ using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -43,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
-            Headers = headers;
+            Headers = headers.OrderBy(x => x.Order);
             Conversation = conversation;
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;

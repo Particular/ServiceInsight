@@ -3,8 +3,6 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
-using NServiceBus.Profiler.Desktop.Explorer;
-using System.Linq;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
@@ -13,46 +11,19 @@ namespace NServiceBus.Profiler.Desktop.Conversations
     {
         private readonly IManagementService _managementService;
         private readonly IEndpointConnectionProvider _connection;
-        private readonly Dictionary<string, ConversationNode> _nodeMap;
+        private readonly Dictionary<string, StoredMessage> _nodeMap;
         private IConversationView _view;
 
         public ConversationViewModel(IManagementService managementService, IEndpointConnectionProvider connection)
         {
             _managementService = managementService;
             _connection = connection;
-            _nodeMap = new Dictionary<string, ConversationNode>();
+            _nodeMap = new Dictionary<string, StoredMessage>();
 
             Graph = new ConversationGraph();
         }
 
-        private ConversationNode NewVertex(StoredMessage msg)
-        {
-            var vertex = new ConversationNode
-            {
-                OriginatingEndpoint = msg.OriginatingEndpoint.Name,
-                ReceivingEndpoint = msg.ReceivingEndpoint.Name,
-                Title = GetTypeFriendlyName(msg.MessageType),
-                MessageId = msg.Id,
-                IsErrorMessage = msg.FailureDetails != null,
-            };
-
-            Graph.AddVertex(vertex);
-
-            return vertex;
-        }
-
-        private string GetTypeFriendlyName(string messageType)
-        {
-            if (string.IsNullOrEmpty(messageType))
-                return string.Empty;
-
-            var clazz = messageType.Split(',').First();
-            var objectName = clazz.Split('.').Last();
-
-            return objectName;
-        }
-
-        private void NewGraphEdge(ConversationNode from, ConversationNode to)
+        private void NewGraphEdge(StoredMessage from, StoredMessage to)
         {
             var edge = new MessageEdge(from, to);
             Graph.AddEdge(edge);
@@ -66,20 +37,6 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             _view = (IConversationView)view;
         }
 
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            ZoomToDefault();
-        }
-
-        public void ZoomToDefault()
-        {
-            if (_view != null)
-            {
-                _view.ZoomToDefault();
-            }
-        }
-
         public async void Handle(MessageBodyLoadedEvent @event)
         {
             var storedMessage = @event.Message as StoredMessage;
@@ -91,22 +48,22 @@ namespace NServiceBus.Profiler.Desktop.Conversations
                 CreateConversationNodes(relatedMessagesTask);
                 LinkConversationNodes(relatedMessagesTask);
             }
-
-            ZoomToDefault();
         }
 
         private void LinkConversationNodes(IEnumerable<StoredMessage> relatedMessagesTask)
         {
             foreach (var msg in relatedMessagesTask)
             {
-                if (msg.RelatedToMessageId != null)
+                if (msg.RelatedToMessageId != null && 
+                    _nodeMap.ContainsKey(msg.Id) &&
+                    _nodeMap.ContainsKey(msg.RelatedToMessageId))
                 {
                     var source = _nodeMap[msg.Id];
                     var target = _nodeMap[msg.RelatedToMessageId];
 
                     if (source != null && target != null)
                     {
-                        NewGraphEdge(source, target);
+                        NewGraphEdge(target, source);
                     }
                 }
             }
@@ -116,8 +73,8 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         {
             foreach (var msg in relatedMessages)
             {
-                var vertex = NewVertex(msg);
-                _nodeMap.Add(msg.Id, vertex);
+                Graph.AddVertex(msg);
+                _nodeMap.Add(msg.Id, msg);
             }
         }
 

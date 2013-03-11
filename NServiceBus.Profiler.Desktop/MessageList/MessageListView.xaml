@@ -25,7 +25,14 @@
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="TimeSent" Header="Date">
+            <dxg:GridColumn FieldName="FriendlyMessageType" Header="Message Type">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="TimeSent" Header="Time Sent">
                 <dxg:GridColumn.EditSettings>
                     <dxe:DateEditSettings DisplayFormat="G" />
                 </dxg:GridColumn.EditSettings>

@@ -11,7 +11,6 @@ using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
 using DevExpress.Xpf.Core;
-using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
@@ -36,6 +35,11 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         public IObservableCollection<HeaderInfo> Items { get; private set; }
 
         public abstract ImageSource GroupImage { get; }
+
+        public virtual TabPriority Order
+        {
+            get { return TabPriority.Regular; }
+        }
 
         protected IQueueManagerAsync QueueManager { get; private set; }
 

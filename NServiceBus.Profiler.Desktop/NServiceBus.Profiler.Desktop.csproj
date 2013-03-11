@@ -219,7 +219,6 @@
     <Compile Include="Conversations\IConversationView.cs" />
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
-    <Compile Include="Conversations\ConversationNode.cs" />
     <Compile Include="Explorer\EndpointExplorer\AuditQueueExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
     <Compile Include="Explorer\EndpointExplorer\ErrorQueueExplorerItem.cs" />
@@ -234,6 +233,7 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
+    <Compile Include="MessageHeaders\TabPriority.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
@@ -338,6 +338,7 @@
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
+    <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Page Include="About\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -417,6 +418,8 @@
     <Resource Include="Images\TreeAuditFolder.png" />
     <Resource Include="Images\MessageReturn.png" />
     <Resource Include="Images\HeaderSaga.png" />
+    <Resource Include="Images\ZoomActual.png" />
+    <Resource Include="Images\ZoomFit.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

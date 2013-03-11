@@ -23,6 +23,11 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             DisplayName = "General";
         }
 
+        public override TabPriority Order
+        {
+            get { return TabPriority.High; }
+        }
+
         public override ImageSource GroupImage
         {
             get { return Resources.HeaderGeneral.ToBitmapImage(); }
