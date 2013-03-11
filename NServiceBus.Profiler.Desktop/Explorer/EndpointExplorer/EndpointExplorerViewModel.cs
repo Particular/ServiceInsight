@@ -75,7 +75,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             base.AttachView(view, context);
             _view = view as IExplorerView;
 
-            const string defaultAddress = "http://localhost:8888";
+            const string defaultAddress = "http://127.0.0.1:8888";
             if (!IsConnected)
             {
                 var available = await ServiceAvailable(defaultAddress);
