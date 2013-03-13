@@ -13,8 +13,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public interface IShellViewModel : 
         IConductor, 
-        IHandle<WorkStartedEvent>,
-        IHandle<WorkFinishedEvent>,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
         IWorkTracker
     {
         IQueueExplorerViewModel QueueExplorer { get; }

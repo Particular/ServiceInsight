@@ -136,9 +136,11 @@
                           MaxZoom="3"
                           MinZoom="0.5"
                           MaxZoomDelta="0.1"
+                          AnimationLength="0"
                           Style="{StaticResource ZoomControlStyle}">
 
             <local:ConversationGraphLayout x:Name="GraphLayout" Margin="10"
+                                           IsAnimationEnabled="False"
                                            LayoutMode="Automatic"
                                            Graph="{Binding Path=Graph}"
                                            LayoutAlgorithmType="Tree"

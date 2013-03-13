@@ -9,9 +9,9 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
     public interface IHeaderInfoViewModel : 
         IScreen,
-        IHandle<MessageBodyLoadedEvent>, 
-        IHandle<SelectedQueueChangedEvent>,
-        IHandle<SelectedMessageChangedEvent>
+        IHandle<MessageBodyLoaded>, 
+        IHandle<SelectedQueueChanged>,
+        IHandle<SelectedMessageChanged>
     {
         IObservableCollection<HeaderInfo> Items { get; }
 

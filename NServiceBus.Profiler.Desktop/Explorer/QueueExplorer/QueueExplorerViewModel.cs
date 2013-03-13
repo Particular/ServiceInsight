@@ -175,7 +175,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public virtual void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedQueueChangedEvent(SelectedQueue));
+            _eventAggregator.Publish(new SelectedQueueChanged(SelectedQueue));
         }
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
@@ -245,7 +245,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public void Handle(AutoRefreshBeatEvent message)
+        public void Handle(AutoRefreshBeat message)
         {
             PartialRefresh();
         }

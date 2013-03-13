@@ -10,6 +10,7 @@ using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using System.Linq;
+using NServiceBus.Profiler.Desktop.Search;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -26,13 +27,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             IWindowManagerEx windowManager,
             IManagementService managementService,
             IQueueManagerAsync asyncQueueManager,
-            IEndpointConnectionProvider endpointConnection)
+            IEndpointConnectionProvider endpointConnection,
+            ISearchBarViewModel searchBarViewModel)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
             _managementService = managementService;
             _asyncQueueManager = asyncQueueManager;
             _endpointConnection = endpointConnection;
+            SearchBar = searchBarViewModel;
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
         }
@@ -41,18 +44,21 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual IObservableCollection<MessageInfo> SelectedMessages { get; private set; }
 
+        public virtual ISearchBarViewModel SearchBar { get; private set; }
+
         public virtual MessageInfo FocusedMessage { get; set; }
 
         public virtual Queue SelectedQueue { get; set; }
 
-        public virtual void OnFocusedMessageChanged()
+        public virtual void OnFocusedMessageChanged() 
         {
-            _eventAggregator.Publish(new SelectedMessageChangedEvent(FocusedMessage));
+            //TODO: Block the view when loading the message content
+            _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
 
             var loadedMessage = FocusedMessage as StoredMessage;
             if (loadedMessage != null)
             {
-                _eventAggregator.Publish(new MessageBodyLoadedEvent(loadedMessage));
+                _eventAggregator.Publish(new MessageBodyLoaded(loadedMessage));
                 return;
             }
 
@@ -71,7 +77,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 FocusedMessage.IsDeleted = true;
                 NotifyOfPropertyChange(() => FocusedMessage);
             }
-            _eventAggregator.Publish(new MessageBodyLoadedEvent(msg));
+            _eventAggregator.Publish(new MessageBodyLoaded(msg));
         }
 
         public virtual void OnSelectedQueueChanged()
@@ -81,22 +87,27 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual async void RefreshMessages()
         {
+            //TODO: Support context specific refresh (e.g. refreshing endpoints or queues)
             var queue = SelectedQueue;
             if (queue == null)
                 return;
 
-            _eventAggregator.Publish(new WorkStartedEvent());
+            _eventAggregator.Publish(new WorkStarted());
 
             var messages = await _asyncQueueManager.GetMessages(queue);
+
             Messages.Clear();
             Messages.AddRange(messages);
 
-            _eventAggregator.Publish(new WorkFinishedEvent());
+            //TODO: Disable paging when loading queue messages
+            //SearchBar.SetupPaging(Messages);
+
+            _eventAggregator.Publish(new WorkFinished());
 
             _eventAggregator.Publish(new QueueMessageCountChanged(SelectedQueue, Messages.Count));
         }
 
-        public virtual void Handle(SelectedQueueChangedEvent @event)
+        public virtual void Handle(SelectedQueueChanged @event)
         {
             SelectedQueue = @event.SelectedQueue;
         }
@@ -136,7 +147,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             RefreshMessages();
         }
 
-        public void Handle(MessageRemovedFromQueueEvent @event)
+        public void Handle(MessageRemovedFromQueue @event)
         {
             if (Messages.Contains(@event.Message))
             {
@@ -144,7 +155,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        public async void Handle(AutoRefreshBeatEvent @event)
+        public async void Handle(AutoRefreshBeat @event)
         {
             var queue = SelectedQueue;
             if (queue != null)
@@ -180,32 +191,32 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        public async void Handle(AuditQueueSelectedEvent message)
+        public async void Handle(LoadAuditMessages @event)
         {
-            _eventAggregator.Publish(new WorkStartedEvent("Loading audit messages..."));
+            _eventAggregator.Publish(new WorkStarted("Loading audit messages..."));
 
-            var messages = await _managementService.GetAuditMessages(_endpointConnection.ServiceUrl, message.Endpoint);
+            var pagedResult = await _managementService.GetAuditMessages(_endpointConnection.ServiceUrl, 
+                                                                        @event.Endpoint, 
+                                                                        pageIndex: @event.PageIndex, 
+                                                                        searchQuery: @event.SearchQuery);
+ 
             Messages.Clear();
-            if (messages != null)
-            {
-                Messages.AddRange(messages);
-            }
-
-            _eventAggregator.Publish(new WorkFinishedEvent());
+            Messages.AddRange(pagedResult.Result);
+            SearchBar.SetupPaging(pagedResult);
+            
+            _eventAggregator.Publish(new WorkFinished());
         }
 
-        public async void Handle(ErrorQueueSelectedEvent message)
+        public async void Handle(ErrorQueueSelected message)
         {
-            _eventAggregator.Publish(new WorkStartedEvent("Loading failed messages..."));
+            _eventAggregator.Publish(new WorkStarted("Loading failed messages..."));
 
             var messages = await _managementService.GetErrorMessages(_endpointConnection.ServiceUrl);
-            Messages.Clear();
-            if (messages != null)
-            {
-                Messages.AddRange(messages);
-            }
 
-            _eventAggregator.Publish(new WorkFinishedEvent());
+            Messages.Clear();
+            Messages.AddRange(messages.Result);
+
+            _eventAggregator.Publish(new WorkFinished());
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Common.Events
 {
-    public class MessageRemovedFromQueueEvent
+    public class MessageRemovedFromQueue
     {
         public MessageInfo Message { get; set; }
     }

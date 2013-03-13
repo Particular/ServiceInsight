@@ -70,7 +70,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         internal void OnAutoRefreshing()
         {
             if(!AutoRefreshQueues || WorkInProgress) return;
-            _eventAggregator.Publish(new AutoRefreshBeatEvent());
+            _eventAggregator.Publish(new AutoRefreshBeat());
         }
 
         public override void AttachView(object view, object context)
@@ -256,12 +256,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             return !WorkInProgress;
         }
 
-        public virtual void Handle(WorkStartedEvent @event)
+        public virtual void Handle(WorkStarted @event)
         {
             WorkInProgress = true;
         }
 
-        public virtual void Handle(WorkFinishedEvent @event)
+        public virtual void Handle(WorkFinished @event)
         {
             WorkInProgress = false;
         }

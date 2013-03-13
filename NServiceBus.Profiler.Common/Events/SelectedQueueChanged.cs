@@ -2,9 +2,9 @@
 
 namespace NServiceBus.Profiler.Common.Events
 {
-    public class SelectedQueueChangedEvent
+    public class SelectedQueueChanged
     {
-        public SelectedQueueChangedEvent(Queue queue)
+        public SelectedQueueChanged(Queue queue)
         {
             SelectedQueue = queue;
         }

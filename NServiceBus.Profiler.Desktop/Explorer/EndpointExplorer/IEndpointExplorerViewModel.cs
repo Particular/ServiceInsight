@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         IScreen,
         IViewAware,
         IEndpointConnectionProvider,
-        IHandle<AutoRefreshBeatEvent>
+        IHandle<AutoRefreshBeat>
     {
         ExplorerItem ServiceRoot { get; }
         ExplorerItem AuditRoot { get; }

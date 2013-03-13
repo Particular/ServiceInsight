@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Common.Models;
 using System.Linq;
@@ -9,7 +8,7 @@ namespace NServiceBus.Profiler.Core.Management
 {
     public class TestManagementService : IManagementService
     {
-        private List<StoredMessage> audit;
+        private PagedResult<StoredMessage> audit;
         private List<StoredMessage> conversation;
 
         public TestManagementService()
@@ -40,29 +39,37 @@ namespace NServiceBus.Profiler.Core.Management
         {
             var conversationId = CreateConversation();
 
-            audit = new List<StoredMessage>(new[]
+            audit = new PagedResult<StoredMessage>
             {
-                new StoredMessage
+                TotalCount = 1,
+                Result = new List<StoredMessage>
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    Status = MessageStatus.Successfull,
-                    ConversationId = conversationId,
-                    MessageType = "Orders.OrderCreated, Messages",
-                    TimeSent = DateTime.Now.AddMinutes(-5),
+                    new StoredMessage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Status = MessageStatus.Successfull,
+                        ConversationId = conversationId,
+                        MessageType = "Orders.OrderCreated, Messages",
+                        TimeSent = DateTime.Now.AddMinutes(-5),
+                    }
                 }
-            });
+            };
         }
 
-        public Task<List<StoredMessage>> GetErrorMessages(string serviceUrl)
+        public Task<PagedResult<StoredMessage>> GetErrorMessages(string serviceUrl)
         {
-            return Task.Run(() => new List<StoredMessage>
+            return Task.Run(() => new PagedResult<StoredMessage>
             {
-                new StoredMessage(),
-                new StoredMessage()
+                Result = new List<StoredMessage>(new[]
+                {
+                    new StoredMessage(),
+                    new StoredMessage()
+                }),
+                TotalCount = 2
             });
         }
 
-        public Task<List<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint)
+        public Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1)
         {
             return Task.Run(() => audit);
         }

@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Common.Events
 {
-    public class AuditQueueSelectedEvent
+    public class ErrorQueueSelected
     {
         public Endpoint Endpoint { get; set; }
     }

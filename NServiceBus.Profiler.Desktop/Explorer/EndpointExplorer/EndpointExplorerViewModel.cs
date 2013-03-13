@@ -6,6 +6,7 @@ using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
 using NServiceBus.Profiler.Common.Events;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
@@ -35,17 +36,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public virtual ExplorerItem ServiceRoot
         {
-            get { return Items.FirstOrDefault(x => x is EndpointExplorerItem); }
+            get { return Items.FirstOrDefault(x => x is ServiceExplorerItem); }
         }
 
         public virtual ExplorerItem AuditRoot
         {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditQueueExplorerItem>().First() : null; }
+            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
         }
 
         public virtual ExplorerItem ErrorRoot
         {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorQueueExplorerItem>().First() : null; }
+            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
         }
 
         public int SelectedRowHandle { get; set; }
@@ -95,7 +96,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         {
             if (ServiceRoot == null)
             {
-                Items.Add(new EndpointExplorerItem(ServiceUrl));
+                Items.Add(new ServiceExplorerItem(ServiceUrl));
             }
 
             ServiceRoot.Children.Clear();
@@ -107,7 +108,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
             foreach (var endpoint in endpoints)
             {
-                ServiceRoot.Children.Add(new AuditQueueExplorerItem(endpoint));
+                ServiceRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
             }
 
             _view.ExpandNode(ServiceRoot);
@@ -115,22 +116,22 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public virtual void OnSelectedNodeChanged()
         {
-            var auditNode = SelectedNode as AuditQueueExplorerItem;
+            var auditNode = SelectedNode as AuditEndpointExplorerItem;
             if (auditNode != null)
             {
-                _eventAggregator.Publish(new AuditQueueSelectedEvent
-                {
-                    Endpoint = auditNode.Endpoint
-                });                
+                _eventAggregator.Publish(new LoadAuditMessages { Endpoint = auditNode.Endpoint });                
             }
 
-            var errorNode = SelectedNode as ErrorQueueExplorerItem;
+            var errorNode = SelectedNode as ErrorEndpointExplorerItem;
             if (errorNode != null)
             {
-                _eventAggregator.Publish(new ErrorQueueSelectedEvent
-                {
-                    Endpoint = errorNode.Endpoint
-                });
+                _eventAggregator.Publish(new ErrorQueueSelected { Endpoint = errorNode.Endpoint });
+            }
+
+            var node = SelectedNode as EndpointExplorerItem;
+            if (node != null)
+            {
+                _eventAggregator.Publish(new EndpointSelectionChanged(node.Endpoint));
             }
         }
 
@@ -151,7 +152,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         {
         }
 
-        public void Handle(AutoRefreshBeatEvent message)
+        public void Handle(AutoRefreshBeat message)
         {
             PartialRefresh();
         }

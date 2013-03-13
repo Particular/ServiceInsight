@@ -49,7 +49,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
     {
         Establish context = () => Explorer.SelectedNode = QueueNode;
 
-        It should_publish_the_message_that_queue_is_selected = () => EventAggregator.Received(1).Publish(Arg.Any<SelectedQueueChangedEvent>());
+        It should_publish_the_message_that_queue_is_selected = () => EventAggregator.Received(1).Publish(Arg.Any<SelectedQueueChanged>());
         It should_have_a_selected_queue = () => Explorer.SelectedQueue.ShouldNotBeNull();
         It should_have_the_same_queue_selected = () => Explorer.SelectedQueue.ShouldBeTheSameAs(Queue);
     }
@@ -154,7 +154,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Because of = () =>
         {
             QueueManager.ClearReceivedCalls();
-            Explorer.Handle(new AutoRefreshBeatEvent());
+            Explorer.Handle(new AutoRefreshBeat());
         };
 
         It should_get_new_message_count = () => QueueManager.Received(1).GetMessageCount(Arg.Any<Queue>()); 
@@ -170,7 +170,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Because of = () =>
         {
             QueueManager.ClearReceivedCalls();
-            Explorer.Handle(new AutoRefreshBeatEvent());
+            Explorer.Handle(new AutoRefreshBeat());
         };
 
         It should_not_refresh_any_message_count = () => QueueManager.DidNotReceive().GetMessageCount(Arg.Any<Queue>());

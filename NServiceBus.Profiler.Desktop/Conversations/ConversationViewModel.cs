@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
@@ -11,14 +12,15 @@ namespace NServiceBus.Profiler.Desktop.Conversations
     {
         private readonly IManagementService _managementService;
         private readonly IEndpointConnectionProvider _connection;
-        private readonly Dictionary<string, StoredMessage> _nodeMap;
+        private readonly ConcurrentDictionary<string, StoredMessage> _nodeMap;
         private IConversationView _view;
+        private object Locker = new object();
 
         public ConversationViewModel(IManagementService managementService, IEndpointConnectionProvider connection)
         {
             _managementService = managementService;
             _connection = connection;
-            _nodeMap = new Dictionary<string, StoredMessage>();
+            _nodeMap = new ConcurrentDictionary<string, StoredMessage>();
 
             Graph = new ConversationGraph();
         }
@@ -37,7 +39,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             _view = (IConversationView)view;
         }
 
-        public async void Handle(MessageBodyLoadedEvent @event)
+        public async void Handle(MessageBodyLoaded @event)
         {
             var storedMessage = @event.Message as StoredMessage;
             if (storedMessage != null)
@@ -74,11 +76,11 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             foreach (var msg in relatedMessages)
             {
                 Graph.AddVertex(msg);
-                _nodeMap.Add(msg.Id, msg);
+                _nodeMap.TryAdd(msg.Id, msg);
             }
         }
 
-        public void Handle(SelectedMessageChangedEvent message)
+        public void Handle(SelectedMessageChanged message)
         {
             _nodeMap.Clear();
             Graph.Clear();

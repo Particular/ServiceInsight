@@ -1,18 +1,14 @@
-﻿using System.Drawing;
-using NServiceBus.Profiler.Desktop.Properties;
+﻿using NServiceBus.Profiler.Common.Models;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    public class EndpointExplorerItem : ExplorerItem
+    public abstract class EndpointExplorerItem : ExplorerItem
     {
-        public EndpointExplorerItem(string name)
-            : base(name)
+        protected EndpointExplorerItem(Endpoint endpoint) : base(endpoint.Name)
         {
+            Endpoint = endpoint;
         }
 
-        public override Bitmap Image
-        {
-            get { return Resources.TreeMonitoring; }
-        }
+        public Endpoint Endpoint { get; private set; }
     }
 }

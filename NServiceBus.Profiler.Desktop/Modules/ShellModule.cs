@@ -8,6 +8,7 @@ using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
 
@@ -29,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance();
+            builder.RegisterType<SearchBar>().As<ISearchBarView>().SingleInstance();
             builder.RegisterType<MenuManager>().As<IMenuManager>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
             builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();

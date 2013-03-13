@@ -56,8 +56,8 @@ namespace NServiceBus.Profiler.Tests.HexViewer
 
         Because of = () =>
         {
-            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
-            ViewModel.Handle(new SelectedMessageChangedEvent(null));
+            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(null));
         };
 
         It should_clear_hex_view = () => ViewModel.HexParts.Count.ShouldEqual(0);
@@ -74,7 +74,7 @@ namespace NServiceBus.Profiler.Tests.HexViewer
             ((IActivate)ViewModel).Activate();
         };
 
-        Because of = () => ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody
+        Because of = () => ViewModel.Handle(new MessageBodyLoaded(new MessageBody
         {
             BodyRaw = Encoding.Default.GetBytes(TestMessage)
         }));

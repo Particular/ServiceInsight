@@ -6,8 +6,8 @@ namespace NServiceBus.Profiler.Desktop.Conversations
 {
     public interface IConversationViewModel : 
         IScreen, 
-        IHandle<MessageBodyLoadedEvent>,
-        IHandle<SelectedMessageChangedEvent>
+        IHandle<MessageBodyLoaded>,
+        IHandle<SelectedMessageChanged>
     {
         ConversationGraph Graph { get; set; }
     }

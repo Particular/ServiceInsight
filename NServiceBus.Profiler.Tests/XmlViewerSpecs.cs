@@ -60,8 +60,8 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
 
         Because of = () =>
         {
-            ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage)}));
-            ViewModel.Handle(new SelectedMessageChangedEvent(null));
+            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage)}));
+            ViewModel.Handle(new SelectedMessageChanged(null));
         };
 
         It should_clear_message_body = () => ViewModel.SelectedMessage.ShouldBeNull();
@@ -71,7 +71,7 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
     {
         public static string TestMessage = "This is a test message content that is spread into four lines";
 
-        Because of = () => ViewModel.Handle(new MessageBodyLoadedEvent(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+        Because of = () => ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
 
         It should_not_load_the_message = () => View.DidNotReceive().Display(Arg.Any<string>()); 
     }

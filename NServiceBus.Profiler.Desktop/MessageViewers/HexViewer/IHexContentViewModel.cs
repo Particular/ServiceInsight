@@ -9,8 +9,8 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
     public interface IHexContentViewModel : 
         IScreen,
         IViewAware,
-        IHandle<MessageBodyLoadedEvent>,
-        IHandle<SelectedMessageChangedEvent>
+        IHandle<MessageBodyLoaded>,
+        IHandle<SelectedMessageChanged>
     {
         byte[] CurrentContent { get; set; }
         IObservableCollection<HexPart> HexParts { get; }

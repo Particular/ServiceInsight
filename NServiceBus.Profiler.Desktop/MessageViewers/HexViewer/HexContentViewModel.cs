@@ -104,7 +104,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             get; private set;
         }
 
-        public void Handle(MessageBodyLoadedEvent @event)
+        public void Handle(MessageBodyLoaded @event)
         {
             HexParts.Clear();
 
@@ -112,7 +112,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             CurrentContent = @event.Message != null ? @event.Message.BodyRaw : null;
         }
 
-        public void Handle(SelectedMessageChangedEvent @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             if (@event.SelectedMessage == null)
             {

@@ -2,9 +2,9 @@
 
 namespace NServiceBus.Profiler.Common.Events
 {
-    public class SelectedMessageChangedEvent
+    public class SelectedMessageChanged
     {
-        public SelectedMessageChangedEvent(MessageInfo message)
+        public SelectedMessageChanged(MessageInfo message)
         {
             SelectedMessage = message;
         }

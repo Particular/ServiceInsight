@@ -8,22 +8,35 @@ namespace NServiceBus.Profiler.Core.Management
 {
     public class DefaultManagementService : IManagementService
     {
-        public async Task<List<StoredMessage>> GetErrorMessages(string serviceUrl)
+        public async Task<PagedResult<StoredMessage>> GetErrorMessages(string serviceUrl)
         {
             var client = new RestClient(serviceUrl);
             var request = new RestRequest("failedmessages");
-            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
-
-            return messages ?? new List<StoredMessage>();
+            var result = await client.GetPagedResult<StoredMessage>(request);
+            
+            return result;
         }
 
-        public async Task<List<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint)
+        public async Task<PagedResult<StoredMessage>> Search(string serviceUrl, string searchKeyword, int pageIndex = 1)
         {
             var client = new RestClient(serviceUrl);
-            var request = new RestRequest("/endpoints/" + endpoint.Name + "/audit");
-            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
+            var request = new RestRequest("/messages/search/" + searchKeyword + "?page=" + pageIndex);
+            var result = await client.GetPagedResult<StoredMessage>(request);
+            result.CurrentPage = pageIndex;
 
-            return messages ?? new List<StoredMessage>();
+            return result;
+        }
+
+        public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1)
+        {
+            var client = new RestClient(serviceUrl);
+            var query = searchQuery != null ? CreateSearchQuery(searchQuery, pageIndex) : 
+                                              CreateFetchQuery(endpoint.Name, pageIndex);
+            var request = new RestRequest(query);
+            var result = await client.GetPagedResult<StoredMessage>(request);
+            result.CurrentPage = pageIndex;
+
+            return result;
         }
 
         public async Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId)
@@ -51,6 +64,16 @@ namespace NServiceBus.Profiler.Core.Management
             var version = await client.GetModelAsync<VersionInfo>(request);
 
             return version != null;
+        }
+
+        private string CreateSearchQuery(string searchQuery, int pageIndex)
+        {
+            return string.Format("/messages/search/{0}?page={1}", searchQuery, pageIndex);
+        }
+
+        private string CreateFetchQuery(string endpointName, int pageIndex)
+        {
+            return string.Format("/endpoints/{0}/audit?page={1}", endpointName, pageIndex);
         }
     }
 }

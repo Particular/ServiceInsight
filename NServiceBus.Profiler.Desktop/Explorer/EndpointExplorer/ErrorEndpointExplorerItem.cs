@@ -4,18 +4,15 @@ using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    public class ErrorQueueExplorerItem : ExplorerItem
+    public class ErrorEndpointExplorerItem : EndpointExplorerItem
     {
-        public ErrorQueueExplorerItem(Endpoint endpoint) : base(endpoint.Name)
+        public ErrorEndpointExplorerItem(Endpoint endpoint) : base(endpoint)
         {
-            Endpoint = endpoint;
         }
 
         public override Bitmap Image
         {
             get { return Resources.TreeErrorQueue; }
         }
-
-        public Endpoint Endpoint { get; private set; }
     }
 }

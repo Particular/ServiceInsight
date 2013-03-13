@@ -48,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             if (destinationQueue != null)
             {
                 QueueManager.MoveMessage(SelectedQueue, destinationQueue, SelectedMessage.Id);
-                EventAggregator.Publish(new MessageRemovedFromQueueEvent { Message = SelectedMessage });
+                EventAggregator.Publish(new MessageRemovedFromQueue { Message = SelectedMessage });
             }
         }
 

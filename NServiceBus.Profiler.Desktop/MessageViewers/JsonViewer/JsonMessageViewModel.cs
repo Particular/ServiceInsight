@@ -53,7 +53,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
             }
         }
 
-        public void Handle(SelectedMessageChangedEvent @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             if (@event.SelectedMessage == null)
             {
@@ -61,7 +61,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
             }
         }
 
-        public void Handle(MessageBodyLoadedEvent @event)
+        public void Handle(MessageBodyLoaded @event)
         {
             SelectedMessage = @event.Message;
         }

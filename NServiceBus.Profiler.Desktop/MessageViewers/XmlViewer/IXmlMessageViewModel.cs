@@ -9,8 +9,8 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
     public interface IXmlMessageViewModel : 
         IScreen,
         IViewAware,
-        IHandle<MessageBodyLoadedEvent>,
-        IHandle<SelectedMessageChangedEvent>
+        IHandle<MessageBodyLoaded>,
+        IHandle<SelectedMessageChanged>
     {
         MessageBody SelectedMessage { get; set; }
         void CopyMessageXml();

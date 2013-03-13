@@ -48,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             }
         }
 
-        public void Handle(WorkStartedEvent message)
+        public void Handle(WorkStarted message)
         {
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -57,7 +57,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
             }));
         }
 
-        public void Handle(WorkFinishedEvent message)
+        public void Handle(WorkFinished message)
         {
             Dispatcher.BeginInvoke((Action)(() =>
             {

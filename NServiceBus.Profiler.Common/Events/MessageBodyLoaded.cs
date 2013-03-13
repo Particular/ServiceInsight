@@ -2,9 +2,9 @@
 
 namespace NServiceBus.Profiler.Common.Events
 {
-    public class MessageBodyLoadedEvent
+    public class MessageBodyLoaded
     {
-        public MessageBodyLoadedEvent(MessageBody message)
+        public MessageBodyLoaded(MessageBody message)
         {
             Message = message;
         }

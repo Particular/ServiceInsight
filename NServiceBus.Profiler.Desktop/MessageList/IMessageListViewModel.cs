@@ -7,11 +7,11 @@ using NServiceBus.Profiler.Common.Models;
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
     public interface IMessageListViewModel : IScreen, 
-        IHandle<SelectedQueueChangedEvent>, 
-        IHandle<MessageRemovedFromQueueEvent>,
-        IHandle<AutoRefreshBeatEvent>,
-        IHandle<AuditQueueSelectedEvent>,
-        IHandle<ErrorQueueSelectedEvent>
+        IHandle<SelectedQueueChanged>, 
+        IHandle<MessageRemovedFromQueue>,
+        IHandle<AutoRefreshBeat>,
+        IHandle<LoadAuditMessages>,
+        IHandle<ErrorQueueSelected>
     {
         IObservableCollection<MessageInfo> Messages { get; }
         IObservableCollection<MessageInfo> SelectedMessages { get; }

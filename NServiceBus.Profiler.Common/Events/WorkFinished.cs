@@ -1,13 +1,13 @@
 ﻿namespace NServiceBus.Profiler.Common.Events
 {
-    public class WorkStartedEvent
+    public class WorkFinished
     {
-        public WorkStartedEvent() 
-            : this("Wait...")
+        public WorkFinished()
+            : this("Done")
         {
         }
 
-        public WorkStartedEvent(string message)
+        public WorkFinished(string message)
         {
             Message = message;
         }

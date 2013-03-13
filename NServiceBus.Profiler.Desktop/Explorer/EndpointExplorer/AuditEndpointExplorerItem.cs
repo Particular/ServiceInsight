@@ -4,18 +4,15 @@ using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    public class AuditQueueExplorerItem : ExplorerItem
+    public class AuditEndpointExplorerItem : EndpointExplorerItem
     {
-        public AuditQueueExplorerItem(Endpoint endpoint) : base(endpoint.Name)
+        public AuditEndpointExplorerItem(Endpoint endpoint) : base(endpoint)
         {
-            Endpoint = endpoint;
         }
 
         public override Bitmap Image
         {
             get { return Resources.TreeAuditQueue; }
         }
-
-        public Endpoint Endpoint { get; private set; }
     }
 }

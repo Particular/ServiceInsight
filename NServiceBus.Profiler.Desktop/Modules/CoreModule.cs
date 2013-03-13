@@ -21,11 +21,11 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<DefaultMapper>().As<IMapper>().SingleInstance();
             builder.RegisterType<NetworkOperations>().As<INetworkOperations>().SingleInstance();
 
-#if DEBUG
-            builder.RegisterType<TestManagementService>().As<IManagementService>().SingleInstance();
-#else
+//#if DEBUG
+            //builder.RegisterType<TestManagementService>().As<IManagementService>().SingleInstance();
+//#else
             builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
-#endif
+//#endif
         }
     }
 }

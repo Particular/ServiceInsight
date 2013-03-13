@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.Profiler.Common.Events
 {
-    public class AutoRefreshBeatEvent
+    public class AutoRefreshBeat
     {
     }
 }

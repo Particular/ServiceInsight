@@ -49,12 +49,12 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected Queue SelectedQueue { get; private set; } 
 
-        public void Handle(SelectedQueueChangedEvent @event)
+        public void Handle(SelectedQueueChanged @event)
         {
             SelectedQueue = @event.SelectedQueue;
         }
 
-        public virtual void Handle(MessageBodyLoadedEvent @event)
+        public virtual void Handle(MessageBodyLoaded @event)
         {
             Items.Clear();
 
@@ -102,7 +102,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             }
         }
 
-        public virtual void Handle(SelectedMessageChangedEvent @event)
+        public virtual void Handle(SelectedMessageChanged @event)
         {
             if (@event.SelectedMessage == null)
             {

@@ -219,9 +219,10 @@
     <Compile Include="Conversations\IConversationView.cs" />
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
-    <Compile Include="Explorer\EndpointExplorer\AuditQueueExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\AuditEndpointExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
-    <Compile Include="Explorer\EndpointExplorer\ErrorQueueExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointConnectionProvider.cs" />
     <Compile Include="Explorer\IExplorerViewModel.cs" />
     <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
@@ -232,7 +233,7 @@
     <Compile Include="Explorer\IExplorerView.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
-    <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
     <Compile Include="MessageHeaders\TabPriority.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>
@@ -279,6 +280,11 @@
     </Compile>
     <Compile Include="ScreenManager\ChoiceCommand.cs" />
     <Compile Include="ScreenManager\IWindowManagerEx.cs" />
+    <Compile Include="Search\ISearchBarView.cs" />
+    <Compile Include="Search\SearchBar.xaml.cs">
+      <DependentUpon>SearchBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Search\SearchBarViewModel.cs" />
     <Compile Include="Shell\ConnectToMachineView.xaml.cs">
       <DependentUpon>ConnectToMachineView.xaml</DependentUpon>
     </Compile>
@@ -363,6 +369,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Search\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\ConnectToMachineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -420,6 +430,8 @@
     <Resource Include="Images\HeaderSaga.png" />
     <Resource Include="Images\ZoomActual.png" />
     <Resource Include="Images\ZoomFit.png" />
+    <Resource Include="Images\SearchRefresh.png" />
+    <Resource Include="Images\SearchSeparator.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

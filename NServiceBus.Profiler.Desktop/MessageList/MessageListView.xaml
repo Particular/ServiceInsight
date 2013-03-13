@@ -6,6 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
@@ -14,53 +15,64 @@
         <m:DeletedMessageConverter x:Key="conv"/>
     </UserControl.Resources>
     
-        <dxg:GridControl Name="grid" 
+    <Grid>
+    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl Grid.Row="0"
+                        cal:View.Model="{Binding SearchBar}" />
+    
+        <dxg:GridControl x:Name="grid"
+                         Grid.Row="1"
                          ItemsSource="{Binding Messages}">
 
-        <dxg:GridControl.Columns>
-            <dxg:GridColumn FieldName="Id" Header="Message ID">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
-            </dxg:GridColumn>
-            <dxg:GridColumn FieldName="FriendlyMessageType" Header="Message Type">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
-            </dxg:GridColumn>
-            <dxg:GridColumn FieldName="TimeSent" Header="Time Sent">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:DateEditSettings DisplayFormat="G" />
-                </dxg:GridColumn.EditSettings>
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
-            </dxg:GridColumn>
-        </dxg:GridControl.Columns>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Id" Header="Message ID">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="FriendlyMessageType" Header="Message Type">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="TimeSent" Header="Time Sent">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="G" />
+                    </dxg:GridColumn.EditSettings>
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
 
-        <dxg:GridControl.View>
-            <dxg:TableView x:Name="gridView" 
-                           FocusedRowChanged="OnFocusedMessageChanged"
-                           SelectionChanged="OnSelectedMessagesChanged"
-                           ShowIndicator="False"
-                           MultiSelectMode="Row"
-                           AllowCascadeUpdate="True" 
-                           AllowPerPixelScrolling="True" 
-                           AutoWidth="True" 
-                           AllowEditing="False" 
-                           AllowGrouping="True" 
-                           ShowGroupPanel="False"
-                           NavigationStyle="Row" 
-                           FadeSelectionOnLostFocus="False">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gridView" 
+                               FocusedRowChanged="OnFocusedMessageChanged"
+                               SelectionChanged="OnSelectedMessagesChanged"
+                               ShowIndicator="False"
+                               MultiSelectMode="Row"
+                               AllowCascadeUpdate="True" 
+                               AllowPerPixelScrolling="True" 
+                               AutoWidth="True" 
+                               AllowEditing="False" 
+                               AllowGrouping="True" 
+                               ShowGroupPanel="False"
+                               NavigationStyle="Row" 
+                               FadeSelectionOnLostFocus="False">
 
-            </dxg:TableView>
-        </dxg:GridControl.View>
-    </dxg:GridControl>
-    
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
 </UserControl>

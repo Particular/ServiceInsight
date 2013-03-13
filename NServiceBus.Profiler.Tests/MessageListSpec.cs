@@ -8,6 +8,7 @@ using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 
@@ -22,6 +23,7 @@ namespace NServiceBus.Profiler.Tests
         protected static IEventAggregator EventAggregator;
         protected static IManagementService ManagementService;
         protected static IEndpointConnectionProvider EndpointConnectionProvider;
+        protected static ISearchBarViewModel SearchBar;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         
         Establish context = () =>
@@ -32,7 +34,8 @@ namespace NServiceBus.Profiler.Tests
             MessageStore = new Dictionary<Queue, List<MessageInfo>>();
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider);
+            SearchBar = Substitute.For<ISearchBarViewModel>();
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar);
         };
     }
 
@@ -48,7 +51,7 @@ namespace NServiceBus.Profiler.Tests
 
         Because of = () => MessageList.SelectedQueue = SelectedQueue; //Should trigger refresh
 
-        It should_start_signaling_work_is_started = () => EventAggregator.Received(1).Publish(Arg.Any<WorkStartedEvent>());
+        It should_start_signaling_work_is_started = () => EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
         It should_load_the_messages_asynchronously = () => MessageList.Messages.Count.ShouldEqual(2);
     }
 }
