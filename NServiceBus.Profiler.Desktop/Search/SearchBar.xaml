@@ -19,7 +19,7 @@
         <Button Grid.Column="0" Margin="4" Padding="5" 
                 VerticalContentAlignment="Center" 
                 HorizontalContentAlignment="Center"
-                cal:Message.Attach="[Event Click]=[Action Search]">
+                cal:Message.Attach="[Event Click]=[Action RefreshResult]">
             <Image Source="/Images/SearchRefresh.png" Stretch="UniformToFill" Width="14" Height="14" />
         </Button>
         
@@ -52,7 +52,9 @@
             <Button Content=":" cal:Message.Attach="[Event Click]=[Action GoToLastPage]" />
         </StackPanel>
         
-        <dxe:ComboBoxEdit Grid.Column="3" Width="200" 
+        <dxe:ComboBoxEdit Grid.Column="3" 
+                          IsEnabled="{Binding SearchEnabled}"
+                          Width="200" 
                           Margin="5" 
                           AllowDefaultButton="False"
                           ShowNullTextForEmptyValue="True"

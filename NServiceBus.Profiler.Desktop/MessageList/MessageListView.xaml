@@ -27,7 +27,8 @@
     
         <dxg:GridControl x:Name="grid"
                          Grid.Row="1"
-                         ItemsSource="{Binding Messages}">
+                         ItemsSource="{Binding Messages}"
+                         CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
                 <dxg:GridColumn FieldName="Id" Header="Message ID">
@@ -51,6 +52,13 @@
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="CriticalTime" UnboundType="String" Header="Critical Time">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>

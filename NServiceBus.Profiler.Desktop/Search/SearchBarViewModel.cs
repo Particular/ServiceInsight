@@ -125,6 +125,8 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public virtual bool SearchInProgress { get; set; }
 
+        public virtual bool SearchEnabled { get; private set; }
+
         public virtual bool CanSearch()
         {
             return SelectedEndpoint != null &&
@@ -155,6 +157,20 @@ namespace NServiceBus.Profiler.Desktop.Search
             SearchInProgress = false;
         }
 
+        public bool CanRefreshResult
+        {
+            get
+            {
+                return SelectedEndpoint != null ||
+                       (SearchInProgress && SearchQuery != null);
+            }
+        }
+
+        public void RefreshResult()
+        {
+            
+        }
+
         public PagedResult<StoredMessage> Result
         {
             get; private set;
@@ -171,13 +187,21 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyOfPropertyChange(() => CanGoToLastPage);
             NotifyOfPropertyChange(() => CanGoToNextPage);
             NotifyOfPropertyChange(() => CanGoToPreviousPage);
+            NotifyOfPropertyChange(() => CanRefreshResult);
+            NotifyOfPropertyChange(() => SearchEnabled);
         }
 
         public virtual string SearchQuery { get; set; }
 
-        public virtual void Handle(EndpointSelectionChanged message)
+        public virtual void Handle(EndpointSelectionChanged @event)
         {
-            SelectedEndpoint = message.SelectedEndpoint;
+            SearchEnabled = true;
+            SelectedEndpoint = @event.SelectedEndpoint;
+        }
+
+        public virtual void Handle(SelectedQueueChanged @event)
+        {
+            SearchEnabled = false;
         }
     }
 

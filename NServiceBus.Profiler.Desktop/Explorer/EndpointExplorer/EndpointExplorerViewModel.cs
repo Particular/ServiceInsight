@@ -6,9 +6,7 @@ using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
 using NServiceBus.Profiler.Common.Events;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
-using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
@@ -16,18 +14,15 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IWindowManagerEx _windowManager;
         private readonly IManagementService _managementService;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
-            IWindowManagerEx windowManager,
             IManagementService managementService)
         {
             _eventAggregator = eventAggregator;
-            _windowManager = windowManager;
             _managementService = managementService;
             Items = new BindableCollection<ExplorerItem>();
         }
@@ -76,7 +71,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             base.AttachView(view, context);
             _view = view as IExplorerView;
 
-            const string defaultAddress = "http://127.0.0.1:8888";
+            const string defaultAddress = "http://127.0.0.1:8888/api";
             if (!IsConnected)
             {
                 var available = await ServiceAvailable(defaultAddress);

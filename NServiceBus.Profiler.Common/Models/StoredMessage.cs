@@ -11,6 +11,7 @@ namespace NServiceBus.Profiler.Common.Models
         public Endpoint OriginatingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
         //public SagaDetails OriginatingSaga { get; set; }
+        public MessageStatistics Statistics { get; set; }
         public bool IsDeferredMessage { get; set; }
         public string RelatedToMessageId { get; set; }
         public string ConversationId { get; set; }

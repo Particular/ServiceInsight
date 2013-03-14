@@ -74,5 +74,18 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 }
             }
         }
+
+        private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
+        {
+            var msg = Model.Messages[e.ListSourceRowIndex] as StoredMessage;
+
+            if (msg != null && e.IsGetData)
+            {
+                if (e.Column.FieldName == "CriticalTime")
+                {
+                    e.Value = Model.GetCriticalTime(msg);
+                }
+            }
+        }
     }
 }

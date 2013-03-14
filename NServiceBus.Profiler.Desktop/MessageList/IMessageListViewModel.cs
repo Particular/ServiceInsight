@@ -20,5 +20,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         void PurgeQueue();
         void DeleteSelectedMessages();
         void RefreshMessages();
+        string GetCriticalTime(StoredMessage msg);
     }
 }
