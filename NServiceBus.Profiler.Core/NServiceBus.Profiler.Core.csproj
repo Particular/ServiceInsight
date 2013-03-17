@@ -58,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -86,6 +87,13 @@
     <Compile Include="QueueManager.cs" />
     <Compile Include="MSMQueueOperations.cs" />
     <Compile Include="QueueManagerException.cs" />
+    <Compile Include="Settings\EnumHelper.cs" />
+    <Compile Include="Settings\ISettingsProvider.cs" />
+    <Compile Include="Settings\ISettingsStorage.cs" />
+    <Compile Include="Settings\IsolatedStorageSettingsStore.cs" />
+    <Compile Include="Settings\JsonSettingsStoreBase.cs" />
+    <Compile Include="Settings\RegistrySettingsStore.cs" />
+    <Compile Include="Settings\SettingsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

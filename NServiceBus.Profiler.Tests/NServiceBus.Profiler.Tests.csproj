@@ -101,6 +101,7 @@
     <Compile Include="QueueCreationSpecs.cs" />
     <Compile Include="QueueManagerSpecs.cs" />
     <Compile Include="QueueSpecs.cs" />
+    <Compile Include="SettingsSpecs.cs" />
     <Compile Include="ShellSpecs.cs" />
     <Compile Include="XmlParserSpecs.cs" />
     <Compile Include="XmlViewerSpecs.cs" />

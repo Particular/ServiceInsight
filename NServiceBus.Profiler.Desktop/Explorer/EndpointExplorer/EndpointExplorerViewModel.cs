@@ -6,7 +6,9 @@ using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
 using NServiceBus.Profiler.Common.Events;
+using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Core.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
@@ -14,15 +16,18 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly ISettingsProvider _settingsProvider;
         private readonly IManagementService _managementService;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
+            ISettingsProvider settingsProvider,
             IManagementService managementService)
         {
             _eventAggregator = eventAggregator;
+            _settingsProvider = settingsProvider;
             _managementService = managementService;
             Items = new BindableCollection<ExplorerItem>();
         }
@@ -71,15 +76,21 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             base.AttachView(view, context);
             _view = view as IExplorerView;
 
-            const string defaultAddress = "http://127.0.0.1:8888/api";
+            var configuredAddress = GetConfiguredAddress();
             if (!IsConnected)
             {
-                var available = await ServiceAvailable(defaultAddress);
+                var available = await ServiceAvailable(configuredAddress);
                 if (available)
                 {
-                    ConnectToService(defaultAddress); //TODO: Connect to default API address
+                    ConnectToService(configuredAddress);
                 }
             }
+        }
+
+        private string GetConfiguredAddress()
+        {
+            var managementConfig = _settingsProvider.GetSettings<Management>();
+            return string.Format("http://{0}:{1}/api", managementConfig.Hostname, managementConfig.Port);
         }
 
         private async Task<bool> ServiceAvailable(string defaultAddress)

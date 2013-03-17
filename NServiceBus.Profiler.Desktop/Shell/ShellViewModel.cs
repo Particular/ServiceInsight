@@ -77,6 +77,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             base.AttachView(view, context);
             View = (IShellView)view;
+
             DisplayName = "NServiceBus Profiler";
             StatusBarManager.Status = "Done";
         }

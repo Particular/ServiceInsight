@@ -7,7 +7,6 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
-using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageHeaders;

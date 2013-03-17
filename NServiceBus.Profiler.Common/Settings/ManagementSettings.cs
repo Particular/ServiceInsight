@@ -1,0 +1,20 @@
+﻿using System.ComponentModel;
+using System.Configuration;
+
+namespace NServiceBus.Profiler.Common.Settings
+{
+    [SettingsProvider("Registry")]
+    public class Management
+    {
+        [DefaultValue("localhost")]
+        public string Hostname { get; set; }
+
+        [DefaultValue("")]
+        [DisplayName("Virtual Directory")]
+        public string VirtualDirectory { get; set; }
+
+        [DefaultValue(8888)]
+        [DisplayName("Port")]
+        public int Port { get; set; }
+    }
+}
