@@ -1,8 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using System;
 using WPFExtensions.Controls;
-using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
@@ -14,6 +11,23 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         public ConversationView()
         {
             InitializeComponent();
+            GraphLayout.LayoutUpdateFinished += OnLayoutFinished;
+            GraphLayout.IsAnimationEnabled = false;
+            GraphLayout.DestructionTransition = null;
+            GraphLayout.AnimationLength = TimeSpan.FromMilliseconds(0);
+        }
+
+        private void OnLayoutFinished(object sender, EventArgs e)
+        {
+            if (Model != null)
+            {
+                Model.GraphLayoutUpdated();
+            }
+        }
+
+        private IConversationViewModel Model
+        {
+            get { return DataContext as IConversationViewModel; }
         }
 
         public void ZoomToDefault()

@@ -77,7 +77,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
             var selectedItem = SelectedNode;
             var confirmation = string.Format("The queue named {0} with all its messages and its subqueues will be removed. Continue?", SelectedQueue.Address);
-            var result = _windowManager.ShowMessageBox(confirmation, "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            var dialogTitle = string.Format("Delete Queue: {0}", selectedItem.Name);
+            var result = _windowManager.ShowMessageBox(confirmation, dialogTitle, MessageBoxButton.OKCancel, MessageBoxImage.Question);
             if (result != MessageBoxResult.OK)
                 return;
 

@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using DevExpress.Xpf.Bars;
+﻿using DevExpress.Xpf.Bars;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Shell;
@@ -11,6 +11,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     /// </summary>
     public partial class MessageListView 
     {
+        private static class AdvancedEndpointColumns
+        {
+            public const string CriticalTime = "CriticalTime";
+        }
+
         private readonly IShellViewModel _shell;
         private readonly IMenuManager _menuManager;
         private PopupMenu _contextMenu;
@@ -81,11 +86,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             if (msg != null && e.IsGetData)
             {
-                if (e.Column.FieldName == "CriticalTime")
+                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
                 {
                     e.Value = Model.GetCriticalTime(msg);
                 }
             }
+        }
+
+        private void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
+        {
+            e.Cancel = grid.ShowLoadingPanel;
         }
     }
 }

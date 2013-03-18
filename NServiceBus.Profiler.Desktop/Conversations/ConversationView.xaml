@@ -141,6 +141,8 @@
 
             <local:ConversationGraphLayout x:Name="GraphLayout" Margin="10"
                                            IsAnimationEnabled="False"
+                                           MoveAnimation="{x:Null}"
+                                           DestructionTransition="{x:Null}"
                                            LayoutMode="Automatic"
                                            Graph="{Binding Path=Graph}"
                                            LayoutAlgorithmType="Tree"

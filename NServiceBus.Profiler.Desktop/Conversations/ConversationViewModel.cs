@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
@@ -12,14 +13,18 @@ namespace NServiceBus.Profiler.Desktop.Conversations
     {
         private readonly IManagementService _managementService;
         private readonly IEndpointConnectionProvider _connection;
+        private readonly IEventAggregator _eventAggregator;
         private readonly ConcurrentDictionary<string, StoredMessage> _nodeMap;
         private IConversationView _view;
-        private object Locker = new object();
 
-        public ConversationViewModel(IManagementService managementService, IEndpointConnectionProvider connection)
+        public ConversationViewModel(
+            IManagementService managementService, 
+            IEndpointConnectionProvider connection,
+            IEventAggregator eventAggregator)
         {
             _managementService = managementService;
             _connection = connection;
+            _eventAggregator = eventAggregator;
             _nodeMap = new ConcurrentDictionary<string, StoredMessage>();
 
             Graph = new ConversationGraph();
@@ -33,6 +38,11 @@ namespace NServiceBus.Profiler.Desktop.Conversations
 
         public ConversationGraph Graph { get; set; }
 
+        public void GraphLayoutUpdated()
+        {
+            _eventAggregator.Publish(new WorkFinished());
+        }
+
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
@@ -44,6 +54,8 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             var storedMessage = @event.Message as StoredMessage;
             if (storedMessage != null)
             {
+                _eventAggregator.Publish(new WorkStarted());
+
                 var conversationId = storedMessage.ConversationId;
                 var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
 

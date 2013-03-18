@@ -7,14 +7,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
     
     <UserControl.Resources>
         <m:DeletedMessageConverter x:Key="conv"/>
     </UserControl.Resources>
-    
+
     <Grid>
     
         <Grid.RowDefinitions>
@@ -26,6 +25,8 @@
                         cal:View.Model="{Binding SearchBar}" />
     
         <dxg:GridControl x:Name="grid"
+                         ShowLoadingPanel="{Binding WorkInProgress}"
+                         IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
                          ItemsSource="{Binding Messages}"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
@@ -66,6 +67,7 @@
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" 
+                               BeforeLayoutRefresh="OnBeforeLayoutRefresh"
                                FocusedRowChanged="OnFocusedMessageChanged"
                                SelectionChanged="OnSelectedMessagesChanged"
                                ShowIndicator="False"

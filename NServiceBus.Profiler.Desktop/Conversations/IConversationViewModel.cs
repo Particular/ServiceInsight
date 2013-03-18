@@ -10,5 +10,6 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         IHandle<SelectedMessageChanged>
     {
         ConversationGraph Graph { get; set; }
+        void GraphLayoutUpdated();
     }
 }

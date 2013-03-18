@@ -18,6 +18,7 @@
                     <dx:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverterInverted" Invert="True" />
+                    <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
 
                     <!-- Colors and Brushes -->

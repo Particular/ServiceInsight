@@ -238,5 +238,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             _eventAggregator.Publish(new WorkFinished());
         }
+
+        public void Handle(WorkStarted message)
+        {
+            WorkInProgress = true;
+        }
+
+        public void Handle(WorkFinished message)
+        {
+            WorkInProgress = false;
+        }
+
+        public bool WorkInProgress { get; private set; }
     }
 }
