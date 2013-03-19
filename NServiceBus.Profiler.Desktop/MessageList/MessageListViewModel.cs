@@ -158,8 +158,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 return;
 
             var confirmation = string.Format("All the messages in {0} will be removed. Continue?", SelectedQueue.Address);
-            var result = _windowManager.ShowMessageBox(confirmation, "Warning", MessageBoxButton.OKCancel,
-                                                       MessageBoxImage.Question);
+            var dialogTitle = string.Format("Purge Queue: {0}", SelectedQueue.Address.Queue);
+            var result = _windowManager.ShowMessageBox(confirmation, dialogTitle, MessageBoxButton.OKCancel, MessageBoxImage.Question, defaultChoice: MessageChoice.Cancel);
+            
             if (result != MessageBoxResult.OK)
                 return;
 

@@ -10,14 +10,14 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
     {
         private Dialog _view;
 
-        internal static MessageChoice Show(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk)
+        internal static MessageChoice Show(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
             var window = new DialogViewModel();
-            window.ShowDialog(parent, icon, title, content, choices, help, enableDontAsk);
+            window.ShowDialog(parent, icon, title, content, choices, help, enableDontAsk, defaultChoice);
             return window.Result;
         }
 
-        private void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk)
+        private void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
                 throw new ArgumentException();
@@ -35,19 +35,19 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
                 HelpMessage = help;
 
             if (IsSet(choices, MessageChoice.Yes))
-                Choices.Add(new ChoiceCommand(CloseCommand, true, false, "Yes", MessageChoice.Yes));
+                Choices.Add(new ChoiceCommand(CloseCommand, defaultChoice == MessageChoice.Yes, false, "Yes", MessageChoice.Yes));
 
             if (IsSet(choices, MessageChoice.No))
-                Choices.Add(new ChoiceCommand(CloseCommand, false, !IsSet(choices, MessageChoice.Cancel), "No", MessageChoice.No));
+                Choices.Add(new ChoiceCommand(CloseCommand, defaultChoice == MessageChoice.No, !IsSet(choices, MessageChoice.Cancel), "No", MessageChoice.No));
 
             if (IsSet(choices, MessageChoice.OK))
-                Choices.Add(new ChoiceCommand(CloseCommand, true, !IsSet(choices, MessageChoice.Cancel), "OK", MessageChoice.OK));
+                Choices.Add(new ChoiceCommand(CloseCommand, choices == MessageChoice.OK || defaultChoice == MessageChoice.OK, !IsSet(choices, MessageChoice.Cancel), "OK", MessageChoice.OK));
 
             if (IsSet(choices, MessageChoice.Cancel))
-                Choices.Add(new ChoiceCommand(CloseCommand, choices == MessageChoice.Cancel, true, "Cancel", MessageChoice.Cancel));
+                Choices.Add(new ChoiceCommand(CloseCommand, choices == MessageChoice.Cancel || defaultChoice == MessageChoice.Cancel, true, "Cancel", MessageChoice.Cancel));
 
             if (IsSet(choices, MessageChoice.Help))
-                Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help, false, "Help", MessageChoice.Help));
+                Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
 
             _view.ShowDialog();
         }
@@ -59,7 +59,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
 
         private void HelpCommand(object target)
         {
-            Show(_view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false);
+            Show(_view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
         }
 
         private void CloseCommand(object target)

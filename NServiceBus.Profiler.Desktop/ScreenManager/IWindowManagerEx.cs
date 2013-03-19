@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.ViewModels;
 using Caliburn.PresentationFramework.Views;
@@ -7,68 +8,49 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
 {
     public interface IWindowManagerEx : IWindowManager
     {
-        MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "");
+        MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
     }
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx
     {
+        private static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
+        private static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
+
+        static WindowManagerEx()
+        {
+            MessageOptionsMaps = new Dictionary<MessageChoice, MessageBoxResult>
+            {
+                {MessageChoice.OK, MessageBoxResult.OK},
+                {MessageChoice.Cancel, MessageBoxResult.Cancel},
+                {MessageChoice.Yes, MessageBoxResult.Yes},
+                {MessageChoice.No, MessageBoxResult.No}
+            };
+            MessageIconsMaps = new Dictionary<MessageBoxImage, MessageIcon>
+            {
+                {MessageBoxImage.Exclamation, MessageIcon.Warning},
+                {MessageBoxImage.Asterisk, MessageIcon.Information},
+                {MessageBoxImage.Hand, MessageIcon.Error},
+                {MessageBoxImage.Question, MessageIcon.Question}
+            };
+        }
+
         public WindowManagerEx(
             IViewLocator viewLocator, 
             IViewModelBinder viewModelBinder) : base(viewLocator, viewModelBinder)
         {
         }
 
-        public MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "")
+        public MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK)
         {
             var parent = Dialog.ActiveModalWindow;
             var choices = GetMessageChoice(button);
-            var icon = GetMessageIcon(image);
-            var result = DialogViewModel.Show(parent, icon, caption, message, choices, help, enableDontAsk);
+            var icon = MessageIconsMaps[image];
+            var result = DialogViewModel.Show(parent, icon, caption, message, choices, help, enableDontAsk, defaultChoice);
 
-            switch (result)
-            {
-                case MessageChoice.OK:
-                    return MessageBoxResult.OK;
-
-                case MessageChoice.Cancel:
-                    return MessageBoxResult.Cancel;
-
-                case MessageChoice.Yes:
-                    return MessageBoxResult.Yes;
-
-                case MessageChoice.No:
-                    return MessageBoxResult.No;
-            }
+            if (MessageOptionsMaps.ContainsKey(result))
+                return MessageOptionsMaps[result];
 
             return MessageBoxResult.None;
-        }
-
-        private static MessageIcon GetMessageIcon(MessageBoxImage image)
-        {
-            MessageIcon icon;
-            switch (image)
-            {
-                case MessageBoxImage.Exclamation:
-                    icon = MessageIcon.Warning;
-                    break;
-
-                case MessageBoxImage.Asterisk:
-                    icon = MessageIcon.Information;
-                    break;
-
-                case MessageBoxImage.Hand:
-                    icon = MessageIcon.Error;
-                    break;
-
-                case MessageBoxImage.Question:
-                    icon = MessageIcon.Question;
-                    break;
-
-                default:
-                    icon = MessageIcon.None;
-                    break;
-            }
-            return icon;
         }
 
         private static MessageChoice GetMessageChoice(MessageBoxButton button)
