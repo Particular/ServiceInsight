@@ -54,13 +54,15 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             var storedMessage = @event.Message as StoredMessage;
             if (storedMessage != null)
             {
-                _eventAggregator.Publish(new WorkStarted());
+                _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var conversationId = storedMessage.ConversationId;
                 var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
 
                 CreateConversationNodes(relatedMessagesTask);
                 LinkConversationNodes(relatedMessagesTask);
+
+                _eventAggregator.Publish(new WorkFinished());
             }
         }
 

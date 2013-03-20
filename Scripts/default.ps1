@@ -29,6 +29,7 @@ task Clean {
 task Init -depends Clean { 
 	
 	$commit = Commit-Hash
+	Write-Host "Commit hash is $comit"
 	
 	Generate-Assembly-Info `
 		-file "$base_dir\NServiceBus.Profiler.Desktop\Properties\AssemblyInfo.cs" `

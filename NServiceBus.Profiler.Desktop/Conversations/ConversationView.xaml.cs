@@ -11,10 +11,6 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         public ConversationView()
         {
             InitializeComponent();
-            GraphLayout.LayoutUpdateFinished += OnLayoutFinished;
-            GraphLayout.IsAnimationEnabled = false;
-            GraphLayout.DestructionTransition = null;
-            GraphLayout.AnimationLength = TimeSpan.FromMilliseconds(0);
         }
 
         private void OnLayoutFinished(object sender, EventArgs e)

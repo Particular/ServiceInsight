@@ -140,9 +140,11 @@
                           Style="{StaticResource ZoomControlStyle}">
 
             <local:ConversationGraphLayout x:Name="GraphLayout" Margin="10"
+                                           LayoutUpdateFinished="OnLayoutFinished"
                                            IsAnimationEnabled="False"
                                            MoveAnimation="{x:Null}"
                                            DestructionTransition="{x:Null}"
+                                           AnimationLength="00:00:00"
                                            LayoutMode="Automatic"
                                            Graph="{Binding Path=Graph}"
                                            LayoutAlgorithmType="Tree"
