@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -78,8 +79,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
             base.AttachView(view, context);
             View = (IShellView)view;
 
-            DisplayName = "NServiceBus Profiler";
+            DisplayName = GetProductName();
             StatusBarManager.Status = "Done";
+        }
+
+        private string GetProductName()
+        {
+            var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
+            return productAttribute.Product;
         }
 
         protected override void OnDeactivate(bool close)

@@ -1,5 +1,7 @@
 include .\psake_extensions.ps1
 
+$teamcitybuildno = Get-Variable BUILD_VCS_NUMBER -valueOnly
+
 properties {
   $base_dir  = resolve-path ..
   $lib_dir = "$base_dir\packages"
@@ -7,7 +9,7 @@ properties {
   $buildartifacts_dir = "$build_dir\" 
   $sln_file = "$base_dir\NServiceBus.Profiler.sln" 
   $version = "1.0.0.0"
-  $humanReadableversion = "v1.0-BETA"
+  $humanReadableversion = "v1.0-BETA " + $teamcitybuildno
   $tools_dir = "$base_dir\Tools"
   $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
   $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
@@ -33,7 +35,7 @@ task Init -depends Clean {
 		-title "NServiceBus Profiler" `
 		-description "NServiceBus Profiler" `
 		-company "NServiceBus" `
-		-product "NServiceBus Profiler v$version" `
+		-product "NServiceBus Profiler $humanReadableversion" `
 		-version $version `
 		-clsCompliant "false" `
 		-copyright "Copyright © NServiceBus 2007-2011" `
