@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Core;
@@ -14,11 +16,13 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
         protected static ConnectToMachineViewModel ConnectTo;
         protected static INetworkOperations NetworkOperations;
         protected static TestConductorScreen Conductor;
+        protected static Task NetworkTask;
 
         Establish context = () =>
         {
+            NetworkTask = Task<IList<string>>.Factory.StartNew(() => new[] {"FirstServer", "SecondServer", Environment.MachineName});
             NetworkOperations = Substitute.For<INetworkOperations>();
-            NetworkOperations.GetMachines().Returns(new[] { "FirstServer", "SecondServer", Environment.MachineName });
+            NetworkOperations.GetMachines().Returns(NetworkTask);
             Conductor = new TestConductorScreen();
             ConnectTo = new ConnectToMachineViewModel(NetworkOperations) { Parent = Conductor };
         };
@@ -26,10 +30,14 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
 
     public class with_an_activated_dialog : with_a_connection_dialog
     {
-        Because of = () => ((IScreen)ConnectTo).Activate();
+        Because of = () =>
+        {
+            ((IScreen) ConnectTo).Activate();
+            NetworkTask.Await();
+        };
 
         It should_have_list_of_machines_on_the_network_prepopulated = () => ConnectTo.Machines.Count.ShouldBeGreaterThan(0);
-        It should_have_my_machine_name_in_the_list = () => ConnectTo.Machines.Contains(Environment.MachineName).ShouldBeTrue();        
+        It should_have_my_machine_name_in_the_list = () => ConnectTo.Machines.Contains(Environment.MachineName).ShouldBeTrue();
     }
 
     public class with_an_invalid_selection : with_a_connection_dialog
@@ -70,5 +78,15 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
         Because of = () => ConnectTo.Accept();
 
         It checks_if_a_valid_address_is_selected = () => ConnectTo.CanAccept().ShouldBeTrue();
+    }
+
+    public static class TestTestHelper
+    {
+        public static T WaitForResult<T>(this Task<T> task)
+        {
+            T result = default(T);
+            task.ContinueWith(t => result = task.Result).Wait();
+            return result;
+        }
     }
 }

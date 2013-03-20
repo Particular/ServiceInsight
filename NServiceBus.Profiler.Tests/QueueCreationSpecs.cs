@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
@@ -19,6 +19,7 @@ namespace NServiceBus.Profiler.Tests.QueueCreation
         protected static IQueueManager QueueManager;
         protected static IQueueExplorerViewModel Explorer;
         protected static INetworkOperations Network;
+        protected static Task NetworkTask;
 
         Establish context = () =>
         {
@@ -26,14 +27,21 @@ namespace NServiceBus.Profiler.Tests.QueueCreation
             Explorer = Substitute.For<IQueueExplorerViewModel>();
             Network = Substitute.For<INetworkOperations>();
             Model = new QueueCreationViewModel(QueueManager, Explorer, Network);
-            Network.GetMachines().Returns(new List<string> { Environment.MachineName, "AnotherMachine" });
+            NetworkTask = Task<IList<string>>.Factory.StartNew(() => new[] {Environment.MachineName, "AnotherMachine"});
+            Network.GetMachines().Returns(NetworkTask);
             ((IActivate)Model).Activate();
         };
 
         It creates_transactional_queues_by_default = () => Model.IsTransactional.ShouldBeTrue();
         It has_not_selected_the_machine_name_by_default = () => Model.SelectedMachine.ShouldBeEmpty();
+    }
+    
+    public class when_network_machines_are_fetched : with_queue_creation_view_model
+    {
+        Because of = () => NetworkTask.Await();
+
         It has_populated_list_of_available_machines = () => Model.Machines.Count.ShouldEqual(2);
-        It can_not_accept_the_dialog_by_default = () => Model.CanAccept().ShouldBeFalse();
+        It is_finished_fetching_network_machine_names = () => Model.WorkInProgress.ShouldBeFalse();
     }
 
     public class when_creating_a_queue : with_queue_creation_view_model
