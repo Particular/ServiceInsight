@@ -199,6 +199,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <None Include="FodyWeavers.xml" />
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.2\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
     <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WPFExtensions.1.0.0-Custom\WPFExtensions.dll</HintPath>
@@ -436,6 +439,7 @@
     <Resource Include="Images\ZoomFit.png" />
     <Resource Include="Images\SearchRefresh.png" />
     <Resource Include="Images\SearchSeparator.png" />
+    <Resource Include="Images\AsyncProcess.gif" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

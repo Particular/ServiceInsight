@@ -4,12 +4,11 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class QueueCreationViewModel : Screen
+    public class QueueCreationViewModel : Screen, IWorkTracker
     {
         private readonly IQueueManager _queueManager;
         private readonly IQueueExplorerViewModel _explorer;
@@ -36,13 +35,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual List<string> Machines { get; private set; }
 
-        protected override void OnActivate()
+        protected override async void OnActivate()
         {
             base.OnActivate();
 
+            WorkInProgress = true;
             Machines.Clear();
-            Machines.AddRange(_networkOperations.GetMachines());
             SelectedMachine = _explorer.ConnectedToAddress;
+            var machines = await _networkOperations.GetMachines();
+            Machines.AddRange(machines);
+            WorkInProgress = false;
         }
 
         public virtual void Close()
@@ -70,5 +72,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             var queue = _queueManager.CreatePrivateQueue(new Queue(SelectedMachine, QueueName), IsTransactional);
             return queue != null;
         }
+
+        public bool WorkInProgress { get; private set; }
     }
 }

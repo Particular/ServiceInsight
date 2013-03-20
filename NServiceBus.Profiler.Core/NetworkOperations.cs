@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Core
 {
     public class NetworkOperations : INetworkOperations
     {
-        public IList<string> GetMachines()
+        public Task<IList<string>> GetMachines()
         {
-            return NetworkBrowser.GetNetworkComputers();
+            return Task.Run(() => NetworkBrowser.GetNetworkComputers());
         }
 
         public void Browse(string productUrl)

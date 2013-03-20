@@ -6,6 +6,7 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              Width="380" Height="180"
              WindowStartupLocation="CenterScreen"
@@ -36,10 +37,6 @@
         <TextBlock Text="Transactional:" Grid.Row="2" Grid.Column="0" 
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
       
-<!--        <TextBox Text="{Binding MachineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" -->
-<!--                 Grid.Row="0" Grid.Column="1" Margin="5,7,5,3"-->
-<!--                 KeyboardNavigation.TabIndex="0"/>-->
-
         <dxe:ComboBoxEdit x:Name="name" 
                           AutoComplete="True" 
                           ItemsSource="{Binding Path=Machines}"
@@ -61,6 +58,12 @@
         <StackPanel Orientation="Horizontal" 
                     Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Image gif:ImageBehavior.AnimatedSource="/Images/AsyncProcess.gif"
+                   gif:ImageBehavior.RepeatBehavior="Forever"
+                   gif:ImageBehavior.AutoStart="True"
+                   Visibility="{Binding WorkInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
+                   Width="16" Height="16" Margin="0,0,5,0" />
+
             <Button Width="80" Content="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" />
             <Button Width="80" Content="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
         </StackPanel>

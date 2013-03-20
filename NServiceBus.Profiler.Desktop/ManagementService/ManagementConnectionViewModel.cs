@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.ManagementService
 {
-    public class ManagementConnectionViewModel : Screen
+    public class ManagementConnectionViewModel : Screen, IWorkTracker
     {
         private readonly IManagementService _managementService;
 
@@ -40,11 +41,13 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
         [AutoCheckAvailability]
         public async virtual void Accept()
         {
+            WorkInProgress = true;
             IsAddressValid = await IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 TryClose(true);
             }
+            WorkInProgress = false;
         }
 
         private async Task<bool> IsValidUrl(string serviceUrl)
@@ -56,5 +59,7 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
 
             return false;
         }
+
+        public bool WorkInProgress { get; private set; }
     }
 }

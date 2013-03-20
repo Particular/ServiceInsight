@@ -6,6 +6,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              WindowStartupLocation="CenterScreen"
              ShowInTaskbar="False"
              ShowTitle="True"
@@ -63,6 +64,12 @@
         <StackPanel Orientation="Horizontal" 
                     Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Image gif:ImageBehavior.AnimatedSource="/Images/AsyncProcess.gif"
+                   gif:ImageBehavior.RepeatBehavior="Forever"
+                   gif:ImageBehavior.AutoStart="True"
+                   Visibility="{Binding WorkInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
+                   Width="16" Height="16" Margin="0,0,5,0" />
+
             <Button Width="80" Content="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" />
             <Button Width="80" Content="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
         </StackPanel>

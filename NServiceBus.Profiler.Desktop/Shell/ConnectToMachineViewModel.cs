@@ -6,7 +6,7 @@ using NServiceBus.Profiler.Core;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class ConnectToMachineViewModel : Screen
+    public class ConnectToMachineViewModel : Screen, IWorkTracker
     {
         private readonly INetworkOperations _networkOperations;
 
@@ -17,13 +17,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
             DisplayName = "Connect To Queue";
         }
 
-        protected override void OnActivate()
+        protected override async void OnActivate()
         {
             base.OnActivate();
 
+            WorkInProgress = true;
             Machines.Clear();
-            Machines.AddRange(_networkOperations.GetMachines());
+
+            var machines = await _networkOperations.GetMachines();
+
+            Machines.AddRange(machines);
             IsAddressValid = true;
+            WorkInProgress = false;
         }
 
         public virtual string ComputerName { get; set; }
@@ -51,5 +56,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 TryClose(true);
             }
         }
+
+        public bool WorkInProgress { get; private set; }
     }
 }

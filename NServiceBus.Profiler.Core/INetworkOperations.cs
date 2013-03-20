@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Core
 {
     public interface INetworkOperations
     {
-        IList<string> GetMachines();
+        Task<IList<string>> GetMachines();
         void Browse(string productUrl);
     }
 }
