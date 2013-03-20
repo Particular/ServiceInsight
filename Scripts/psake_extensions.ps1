@@ -1,3 +1,18 @@
+function Commit-Hash
+{
+	Write-Host "Getting commit hash..."
+	$Hash = $env:build_vcs_number
+	
+	if(!$Hash)
+	{
+		Return Get-Git-Commit
+	}
+	else
+	{
+		Return $Hash.substring(0, 7)
+	}
+}
+
 function Get-Git-Commit
 {
 	$gitLog = git log --oneline -1
