@@ -134,16 +134,15 @@
         
         <zoom:ZoomControl x:Name="ZoomViewer" 
                           MaxZoom="3"
-                          MinZoom="0.5"
-                          MaxZoomDelta="0.1"
-                          AnimationLength="0"
+                          MinZoom="0.6"
+                          AnimationLength="00:00:00"
                           Style="{StaticResource ZoomControlStyle}">
 
             <local:ConversationGraphLayout x:Name="GraphLayout" Margin="10"
                                            LayoutUpdateFinished="OnLayoutFinished"
-                                           IsAnimationEnabled="False"
                                            MoveAnimation="{x:Null}"
                                            DestructionTransition="{x:Null}"
+                                           IsAnimationEnabled="False"
                                            AnimationLength="00:00:00"
                                            LayoutMode="Automatic"
                                            Graph="{Binding Path=Graph}"

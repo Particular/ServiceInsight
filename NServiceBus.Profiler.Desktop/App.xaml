@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:xh="clr-namespace:ExceptionHandler.Wpf.Converters;assembly=ExceptionHandler.Wpf"
-             xmlns:Sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:Startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
              xmlns:zoom="http://hightech.ir/controls"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              ShutdownMode="OnMainWindowClose">
@@ -12,7 +12,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <Startup:AppBootstrapper x:Key="bootstrapper" />
+                    <startup:AppBootstrapper x:Key="Bootstrapper" />
                     
                     <!-- Converters -->
                     <dx:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -20,6 +20,8 @@
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverterInverted" Invert="True" />
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+                    <zoom:DoubleToLog10Converter x:Key="Log10Converter" />
+                    <zoom:EqualityToBooleanConverter x:Key="EqualityConverter" />
 
                     <!-- Colors and Brushes -->
                     <Color x:Key="DiagramShadowColor">LightGray</Color>
@@ -59,15 +61,15 @@
                     <FontWeight x:Key="CaptionFontWeight">Bold</FontWeight>
 
                     <!-- Space, Margin and Padding -->
-                    <Sys:Double x:Key="NoSpacing">0</Sys:Double>
-                    <Sys:Double x:Key="SmallSpacing">2</Sys:Double>
-                    <Sys:Double x:Key="DefaultSpacing">4</Sys:Double>
-                    <Sys:Double x:Key="MediumSpacing">8</Sys:Double>
-                    <Sys:Double x:Key="LargeSpacing">12</Sys:Double>
-                    <Sys:Double x:Key="ExtraLargeSpacing">16</Sys:Double>
-                    <Sys:Double x:Key="IconFontSize">10</Sys:Double>
-                    <Sys:Double x:Key="CaptionFontSize">12</Sys:Double>
-                    <Sys:Double x:Key="MessageFontSize">11</Sys:Double>
+                    <sys:Double x:Key="NoSpacing">0</sys:Double>
+                    <sys:Double x:Key="SmallSpacing">2</sys:Double>
+                    <sys:Double x:Key="DefaultSpacing">4</sys:Double>
+                    <sys:Double x:Key="MediumSpacing">8</sys:Double>
+                    <sys:Double x:Key="LargeSpacing">12</sys:Double>
+                    <sys:Double x:Key="ExtraLargeSpacing">16</sys:Double>
+                    <sys:Double x:Key="IconFontSize">10</sys:Double>
+                    <sys:Double x:Key="CaptionFontSize">12</sys:Double>
+                    <sys:Double x:Key="MessageFontSize">11</sys:Double>
 
                     <Thickness x:Key="DefaultMargin" 
                                Left="{StaticResource LargeSpacing}" 
@@ -114,54 +116,63 @@
 
                     <!-- Zoom Control -->
                     <Style x:Key="ZoomControlStyle" TargetType="{x:Type zoom:ZoomControl}">
+                        <Setter Property="Background" Value="White" />
+                        <Setter Property="ClipToBounds" Value="True" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type zoom:ZoomControl}">
                                     <Grid>
-                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" ClipToBounds="{TemplateBinding ClipToBounds}">
-                                            <zoom:ZoomContentPresenter x:Name="PART_Presenter" ClipToBounds="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Background="{TemplateBinding Background}"
+                                                ClipToBounds="{TemplateBinding ClipToBounds}">
+                                            <zoom:ZoomContentPresenter x:Name="PART_Presenter" ClipToBounds="False" />
                                         </Border>
                                         <Canvas>
-                                            <Border Background="{StaticResource ZoomBoxBackgroundBrush}" 
-                                        BorderBrush="{StaticResource ZoomBoxBorderBrush}"
-                                        CornerRadius="5" Padding="5"  
-                                        BorderThickness="1"
-                                        ToolTipService.InitialShowDelay="0" 
-                                        Canvas.Left="20" 
-                                        Canvas.Top="20" 
-                                        Visibility="{Binding HideZoom, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type zoom:ZoomControl}}}">
+
+                                            <!-- Controls -->
+                                            <Border Padding="5"
+                                                    CornerRadius="5"
+                                                    Background="{StaticResource ZoomBoxBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ZoomBoxBorderBrush}"
+                                                    BorderThickness="1"
+                                                    Canvas.Left="20"
+                                                    Canvas.Top="20"
+                                                    ToolTipService.InitialShowDelay="0">
                                                 <Border.ToolTip>
                                                     <StackPanel Orientation="Vertical">
-                                                        <TextBlock><Run FontWeight="Bold" Text="CTRL + Wheel:"/><Run Text=" Zoom In / Out"/></TextBlock>
-                                                        <TextBlock><Run FontWeight="Bold" Text="ALT + Drag:"/><Run Text=" ZoomBox"/></TextBlock>
-                                                        <TextBlock><Run FontWeight="Bold" Text="(SHIFT +) Drag:"/><Run Text=" Pan"/></TextBlock>
+                                                        <TextBlock><Run FontWeight="Bold">CTRL + Wheel:</Run> Zoom In / Out</TextBlock>
+                                                        <TextBlock><Run FontWeight="Bold">ALT + Drag:</Run> ZoomBox</TextBlock>
+                                                        <TextBlock><Run FontWeight="Bold">(SHIFT +) Drag:</Run> Pan</TextBlock>
                                                     </StackPanel>
                                                 </Border.ToolTip>
                                                 <StackPanel Orientation="Vertical">
                                                     <StackPanel.Resources>
-                                                        <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
+                                                        <Style TargetType="{x:Type RadioButton}">
                                                             <Setter Property="Template">
                                                                 <Setter.Value>
                                                                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                                                                        <Border x:Name="border" 
-                                                                    BorderBrush="{StaticResource ZoomBoxButtonBorderBrush}" 
-                                                                    BorderThickness="1" 
-                                                                    Background="{StaticResource ZoomBoxButtonBackgroundBrush}" 
-                                                                    CornerRadius="5" 
-                                                                    HorizontalAlignment="Center" 
-                                                                    Height="40" 
-                                                                    Margin="2" 
-                                                                    VerticalAlignment="Center" 
-                                                                    Width="40">
-                                                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        <Border x:Name="border"
+                                                                                BorderBrush="{StaticResource ZoomBoxButtonBorderBrush}"
+                                                                                Background="{StaticResource ZoomBoxButtonBackgroundBrush}"
+                                                                                BorderThickness="1"
+                                                                                CornerRadius="5"
+                                                                                Width="40"
+                                                                                Height="40"
+                                                                                Margin="2"
+                                                                                HorizontalAlignment="Center"
+                                                                                VerticalAlignment="Center">
+                                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                                                                VerticalAlignment="Center" />
                                                                         </Border>
+
                                                                         <ControlTemplate.Triggers>
                                                                             <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter Property="Background" TargetName="border" Value="{StaticResource ZoomBoxButtonOverBackgroundBrush}"/>
+                                                                                <Setter TargetName="border" Property="Background" Value="{StaticResource ZoomBoxButtonOverBackgroundBrush}" />
                                                                             </Trigger>
                                                                             <Trigger Property="IsChecked" Value="True">
-                                                                                <Setter Property="Background" TargetName="border" Value="{StaticResource ZoomBoxButtonSelectedBackgroundBrush}"/>
-                                                                                <Setter Property="TextElement.FontWeight" TargetName="border" Value="Bold"/>
+                                                                                <Setter TargetName="border" Property="Background" Value="{StaticResource ZoomBoxButtonSelectedBackgroundBrush}" />
+                                                                                <Setter TargetName="border" Property="TextBlock.FontWeight" Value="Bold" />
                                                                             </Trigger>
                                                                         </ControlTemplate.Triggers>
                                                                     </ControlTemplate>
@@ -169,93 +180,53 @@
                                                             </Setter>
                                                         </Style>
                                                     </StackPanel.Resources>
-                                                    <Slider AutoToolTipPrecision="1" 
-                                                AutoToolTipPlacement="BottomRight" 
-                                                HorizontalAlignment="Center" Height="150" 
-                                                LargeChange="1" Orientation="Vertical" 
-                                                Foreground="{StaticResource ZoomBoxTicksBrush}"
-                                                SmallChange="0.1" Ticks="0.1 0.25 0.5 0.75 1 1.25 1.5 2" 
-                                                TickPlacement="BottomRight" 
-                                                TickFrequency="1">
-                                                        <Slider.Maximum>
-                                                            <TemplateBinding Property="MaxZoom">
-                                                                <TemplateBinding.Converter>
-                                                                    <zoom:DoubleToLog10Converter/>
-                                                                </TemplateBinding.Converter>
-                                                            </TemplateBinding>
-                                                        </Slider.Maximum>
-                                                        <Slider.Minimum>
-                                                            <TemplateBinding Property="MinZoom">
-                                                                <TemplateBinding.Converter>
-                                                                    <zoom:DoubleToLog10Converter/>
-                                                                </TemplateBinding.Converter>
-                                                            </TemplateBinding>
-                                                        </Slider.Minimum>
-                                                        <Slider.Value>
-                                                            <Binding Mode="TwoWay" Path="Zoom" RelativeSource="{RelativeSource TemplatedParent}">
-                                                                <Binding.Converter>
-                                                                    <zoom:DoubleToLog10Converter/>
-                                                                </Binding.Converter>
-                                                            </Binding>
-                                                        </Slider.Value>
-                                                    </Slider>
-                                                    <TextBlock FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:F2\}x}"/>
-                                                    <RadioButton GroupName="rbgZoomMode">
-                                                        <RadioButton.Content>
-                                                            <Image Source="/Images/ZoomActual.png" Width="32" Height="32" />
-                                                        </RadioButton.Content>
-                                                        <RadioButton.IsChecked>
-                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
-                                                                <Binding.ConverterParameter>
-                                                                    <zoom:ZoomControlModes>Original</zoom:ZoomControlModes>
-                                                                </Binding.ConverterParameter>
-                                                                <Binding.Converter>
-                                                                    <zoom:EqualityToBooleanConverter/>
-                                                                </Binding.Converter>
-                                                            </Binding>
-                                                        </RadioButton.IsChecked>
+                                                    <Slider Height="150"
+                                                            Minimum="{TemplateBinding MinZoom,Converter={StaticResource Log10Converter}}"
+                                                            Maximum="{TemplateBinding MaxZoom,Converter={StaticResource Log10Converter}}"
+                                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Zoom,Mode=TwoWay,Converter={StaticResource Log10Converter}}"
+                                                            Ticks="0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2"
+                                                            HorizontalAlignment="Center"
+                                                            AutoToolTipPlacement="None"
+                                                            AutoToolTipPrecision="1"
+                                                            TickPlacement="None"
+                                                            TickFrequency="1"
+                                                            LargeChange="1"
+                                                            SmallChange="0.1"
+                                                            Orientation="Vertical" />
+                                                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Zoom,StringFormat='{}{0:F2}x'}"
+                                                                HorizontalAlignment="Center"
+                                                                FontWeight="Bold" />
+                                                    <RadioButton GroupName="rbgZoomMode"
+                                                                 IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Mode,Converter={StaticResource EqualityConverter},ConverterParameter={x:Static zoom:ZoomControlModes.Original}}">
+                                                        <Image Source="/Images/ZoomActual.png" Width="32" Height="32" />
                                                     </RadioButton>
-                                                    <RadioButton GroupName="rbgZoomMode">
-                                                        <RadioButton.Content>
-                                                            <Image Source="/Images/ZoomFit.png" Width="32" Height="32" />
-                                                        </RadioButton.Content>
-                                                        <RadioButton.IsChecked>
-                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
-                                                                <Binding.ConverterParameter>
-                                                                    <zoom:ZoomControlModes>Fill</zoom:ZoomControlModes>
-                                                                </Binding.ConverterParameter>
-                                                                <Binding.Converter>
-                                                                    <zoom:EqualityToBooleanConverter/>
-                                                                </Binding.Converter>
-                                                            </Binding>
-                                                        </RadioButton.IsChecked>
+                                                    <RadioButton GroupName="rbgZoomMode"
+                                                                 IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Mode,Converter={StaticResource EqualityConverter},ConverterParameter={x:Static zoom:ZoomControlModes.Fill}}">
+                                                        <Image Source="/Images/ZoomFit.png" Width="32" Height="32" />
                                                     </RadioButton>
                                                 </StackPanel>
                                             </Border>
-                                            <Border BorderBrush="{TemplateBinding ZoomBoxBorderBrush}" BorderThickness="{TemplateBinding ZoomBoxBorderThickness}" Background="{TemplateBinding ZoomBoxBackground}" Height="{Binding ZoomBox.Height, RelativeSource={RelativeSource TemplatedParent}}" Canvas.Left="{Binding ZoomBox.X, RelativeSource={RelativeSource TemplatedParent}}" Opacity="{TemplateBinding ZoomBoxOpacity}" Canvas.Top="{Binding ZoomBox.Y, RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding ZoomBox.Width, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                            <!-- ZoomBox -->
+                                            <Border BorderBrush="{TemplateBinding ZoomBoxBorderBrush}"
+                                                    BorderThickness="{TemplateBinding ZoomBoxBorderThickness}"
+                                                    Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ZoomBox.X}"
+                                                    Canvas.Top="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ZoomBox.Y}"
+                                                    Opacity="{TemplateBinding ZoomBoxOpacity}"
+                                                    Background="{TemplateBinding ZoomBoxBackground}"
+                                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ZoomBox.Width}"
+                                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ZoomBox.Height}" />
                                         </Canvas>
                                     </Grid>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
-                        <Setter Property="Background" Value="White"/>
-                        <Setter Property="ZoomBoxBackground">
-                            <Setter.Value>
-                                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                                    <GradientStop Color="Silver" Offset="0"/>
-                                    <GradientStop Color="DarkGray" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="ZoomBoxBorderBrush" Value="Black"/>
-                        <Setter Property="ZoomBoxBorderThickness" Value="1"/>
-                        <Setter Property="ClipToBounds" Value="True"/>
                         <Style.Triggers>
                             <Trigger Property="ModifierMode" Value="Pan">
-                                <Setter Property="Cursor" Value="SizeAll"/>
+                                <Setter Property="Cursor" Value="SizeAll" />
                             </Trigger>
                             <Trigger Property="ModifierMode" Value="ZoomBox">
-                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
