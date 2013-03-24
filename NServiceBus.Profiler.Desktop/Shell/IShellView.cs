@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public interface IShellView
+    public interface IShellView : IPersistableLayout
     {
         void ChangeTheme(string name);
         BarManager GetMenuManager();

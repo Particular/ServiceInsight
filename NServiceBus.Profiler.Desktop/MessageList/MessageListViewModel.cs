@@ -13,7 +13,6 @@ using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using System.Linq;
 using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
@@ -25,7 +24,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
         private readonly IEndpointConnectionProvider _endpointConnection;
-        private int _workCount = 0;
+        private int _workCount;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,

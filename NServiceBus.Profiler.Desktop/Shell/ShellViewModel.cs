@@ -7,6 +7,7 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Events;
@@ -27,7 +28,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private readonly IScreenFactory _screenFactory;
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
-        private int _workCounter = 0;
+        private readonly ISettingsProvider _settingsProvider;
+        private int _workCounter;
         private DispatcherTimer _timer;
         
         public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
@@ -42,11 +44,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IEventAggregator eventAggregator,
             IConversationViewModel conversation,
             IMessageBodyViewModel messageBodyViewer,
+            ISettingsProvider settingsProvider,
             IEnumerable<IHeaderInfoViewModel> headers)
         {
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
+            _settingsProvider = settingsProvider;
             Headers = headers.OrderBy(x => x.Order);
             Conversation = conversation;
             StatusBarManager = statusBarManager;
@@ -78,12 +82,25 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             DisplayName = GetProductName();
             StatusBarManager.Status = "Done";
+            SaveLayout();
         }
 
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
             _timer.Stop();
+
+            RestoreLayout();
+        }
+
+        private void SaveLayout()
+        {
+            View.RestoreLayout(_settingsProvider);
+        }
+
+        private void RestoreLayout()
+        {
+            View.SaveLayout(_settingsProvider);
         }
 
         public virtual bool AutoRefresh { get; set; }
@@ -108,7 +125,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool WorkInProgress
         {
-            get { return _workCounter != 0; }
+            get { return _workCounter > 0; }
         }
 
         public virtual void ExitApp()

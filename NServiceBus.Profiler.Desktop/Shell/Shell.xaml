@@ -31,7 +31,7 @@
         </Style>
     </Window.Resources>
 
-    <dxb:BarManager x:Name="BarManager">
+    <dxb:BarManager  x:Name="BarManager">
 
         <!--Categories-->
         <dxb:BarManager.Categories>
@@ -160,11 +160,12 @@
 
         <!--Dock Windows-->
         <Grid>
-            <dxd:DockLayoutManager>
+            <dxd:DockLayoutManager x:Name="DockManager">
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200">
-                        <dxd:LayoutPanel Caption="Endpoint Explorer"
+                        <dxd:LayoutPanel x:Name="EndpointExplorer" 
+                                         Caption="Endpoint Explorer"
 						                 AllowClose="False" 
 						                 ShowBorder="False" 
 						                 AllowDrag="False" 
@@ -173,7 +174,8 @@
 						                 CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
-                        <dxd:LayoutPanel Caption="Queue Explorer" 
+                        <dxd:LayoutPanel x:Name="QueueExplorer" 
+                                         Caption="Queue Explorer" 
 						                 AllowClose="False" 
 						                 ShowBorder="False" 
 						                 AllowDrag="False" 
@@ -189,12 +191,13 @@
                 
                 <dxd:LayoutGroup>
                     <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
-                        <dxd:LayoutPanel Caption="Messages" 
-							AllowClose="False"
-							AllowDrag="False"
-							AllowFloat="False"
-							AllowMove="False"
-							ShowBorder="False">
+                        <dxd:LayoutPanel x:Name="Messages" 
+                                         Caption="Messages" 
+  							             AllowClose="False"
+							             AllowDrag="False"
+							             AllowFloat="False"
+							             AllowMove="False"
+							             ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
@@ -207,7 +210,8 @@
                                              AllowDock="False"
                                              GroupBorderStyle="Tabbed">
                                 
-                                <dxd:LayoutPanel Caption="Flow Diagram"  
+                                <dxd:LayoutPanel x:Name="FlowDiagram" 
+                                                 Caption="Flow Diagram"  
     							                 AllowClose="False"
 	  						                     AllowDrag="False"
 							                     AllowFloat="False"
@@ -216,7 +220,8 @@
                                     <ContentControl cal:View.Model="{Binding Conversation}" />
                                 </dxd:LayoutPanel>
 
-                                <dxd:LayoutPanel Caption="Body"  
+                                <dxd:LayoutPanel x:Name="MessageBody"
+                                                 Caption="Body"  
     							                 AllowClose="False"
 	  						                     AllowDrag="False"
 							                     AllowFloat="False"
@@ -227,7 +232,8 @@
 
                             </dxd:TabbedGroup>
 
-                            <dxd:LayoutPanel Caption="Message Properties" 
+                            <dxd:LayoutPanel x:Name="MessageProperties" 
+                                             Caption="Message Properties" 
                                              ItemWidth="1*"
 							                 AllowClose="False"
 							                 AllowDrag="False"

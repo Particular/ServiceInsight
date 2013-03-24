@@ -251,6 +251,7 @@
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
     <Compile Include="MessageHeaders\TabPriority.cs" />
+    <Compile Include="MessageList\IMessageListView.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
@@ -314,6 +315,7 @@
     <Compile Include="ScreenManager\MessageChoice.cs" />
     <Compile Include="ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IMenuManager.cs" />
+    <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IShellViewModel.cs" />
     <Compile Include="Shell\IStatusBarManager.cs" />
@@ -328,7 +330,6 @@
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
     <Compile Include="ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
-    <Compile Include="Shell\WorkTracker.cs" />
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />
     <Compile Include="Startup\LoggingConfig.cs" />

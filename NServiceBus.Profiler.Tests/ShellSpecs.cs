@@ -5,6 +5,7 @@ using ExceptionHandler;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Events;
@@ -36,6 +37,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IExceptionHandler exceptionHandler;
         protected static IStatusBarManager statusbarManager;
         protected static IMessageBodyViewModel messageBodyView;
+        protected static ISettingsProvider settingsProvider;
         protected static IEnumerable<IHeaderInfoViewModel> headerInfo;
             
         Establish context = () =>
@@ -51,12 +53,13 @@ namespace NServiceBus.Profiler.Tests.Shell
             eventAggregator = Substitute.For<IEventAggregator>();
             conversation = Substitute.For<IConversationViewModel>();
             messageBodyView = Substitute.For<IMessageBodyViewModel>();
+            settingsProvider = Substitute.For<ISettingsProvider>();
             headerInfo = new List<IHeaderInfoViewModel>(new[] { Substitute.For<IHeaderInfoViewModel>() });
             aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
-            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, headerInfo);
+            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, settingsProvider, headerInfo);
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
