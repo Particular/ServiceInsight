@@ -1,15 +1,14 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
@@ -123,23 +122,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public virtual void OnSelectedNodeChanged()
         {
-            var auditNode = SelectedNode as AuditEndpointExplorerItem;
-            if (auditNode != null)
-            {
-                _eventAggregator.Publish(new LoadAuditMessages { Endpoint = auditNode.Endpoint });                
-            }
-
-            var errorNode = SelectedNode as ErrorEndpointExplorerItem;
-            if (errorNode != null)
-            {
-                _eventAggregator.Publish(new ErrorQueueSelected { Endpoint = errorNode.Endpoint });
-            }
-
-            var node = SelectedNode as EndpointExplorerItem;
-            if (node != null)
-            {
-                _eventAggregator.Publish(new EndpointSelectionChanged(node.Endpoint));
-            }
+            _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
         public virtual void ConnectToService(string url)

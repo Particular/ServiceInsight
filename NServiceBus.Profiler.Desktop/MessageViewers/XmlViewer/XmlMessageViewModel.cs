@@ -1,10 +1,10 @@
 ﻿using System.Xml;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 {

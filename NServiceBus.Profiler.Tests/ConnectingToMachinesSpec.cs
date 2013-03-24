@@ -16,13 +16,12 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
         protected static ConnectToMachineViewModel ConnectTo;
         protected static INetworkOperations NetworkOperations;
         protected static TestConductorScreen Conductor;
-        protected static Task NetworkTask;
-
+        
         Establish context = () =>
         {
-            NetworkTask = Task<IList<string>>.Factory.StartNew(() => new[] {"FirstServer", "SecondServer", Environment.MachineName});
+            IList<string> networkMachines = new List<string> {"FirstServer", "SecondServer", Environment.MachineName};
             NetworkOperations = Substitute.For<INetworkOperations>();
-            NetworkOperations.GetMachines().Returns(NetworkTask);
+            NetworkOperations.GetMachines().Returns(Task.FromResult(networkMachines));
             Conductor = new TestConductorScreen();
             ConnectTo = new ConnectToMachineViewModel(NetworkOperations) { Parent = Conductor };
         };
@@ -32,8 +31,7 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
     {
         Because of = () =>
         {
-            ((IScreen) ConnectTo).Activate();
-            NetworkTask.Await();
+            AsyncHelper.Run(() => ((IScreen) ConnectTo).Activate());
         };
 
         It should_have_list_of_machines_on_the_network_prepopulated = () => ConnectTo.Machines.Count.ShouldBeGreaterThan(0);
@@ -78,15 +76,5 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
         Because of = () => ConnectTo.Accept();
 
         It checks_if_a_valid_address_is_selected = () => ConnectTo.CanAccept().ShouldBeTrue();
-    }
-
-    public static class TestTestHelper
-    {
-        public static T WaitForResult<T>(this Task<T> task)
-        {
-            T result = default(T);
-            task.ContinueWith(t => result = task.Result).Wait();
-            return result;
-        }
     }
 }

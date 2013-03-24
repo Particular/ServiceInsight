@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
@@ -40,7 +40,6 @@ namespace NServiceBus.Profiler.Desktop.Conversations
 
         public void GraphLayoutUpdated()
         {
-            _eventAggregator.Publish(new WorkFinished());
         }
 
         public override void AttachView(object view, object context)

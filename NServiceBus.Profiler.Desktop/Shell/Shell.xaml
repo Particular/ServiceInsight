@@ -85,9 +85,9 @@
             <dxb:BarButtonItem Content="Export To File" x:Name="itemExportMessageToFile" 
 				CategoryName="Tools" Glyph="/Images/Save.png"
 				cal:Message.Attach="[Event ItemClick]=[Action ExportMessage]" />
-            <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefreshQueues"
+            <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefresh"
                 CategoryName="Views" Glyph="/Images/AutoRefresh.png"
-                IsChecked="{Binding AutoRefreshQueues, Mode=TwoWay}" />
+                IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
             <dxb:ToolbarListItem x:Name="itemToolbarList" Content="Toolbar List" BarItemDisplayMode="Content" />
             
             <dxb:BarSubItem x:Name="menuFile" CategoryName="File" Content="File">
@@ -111,7 +111,7 @@
             </dxb:BarSubItem>
             
             <dxb:BarSubItem x:Name="menuViews" CategoryName="Views" Content="Views">
-                <dxb:BarCheckItemLink BarItemName="itemAutoRefreshQueues" />
+                <dxb:BarCheckItemLink BarItemName="itemAutoRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:ToolbarListItemLink BarItemName="itemToolbarList" />
             </dxb:BarSubItem>

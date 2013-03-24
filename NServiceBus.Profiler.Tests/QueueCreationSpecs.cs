@@ -19,26 +19,24 @@ namespace NServiceBus.Profiler.Tests.QueueCreation
         protected static IQueueManager QueueManager;
         protected static IQueueExplorerViewModel Explorer;
         protected static INetworkOperations Network;
-        protected static Task NetworkTask;
 
         Establish context = () =>
         {
+            IList<string> machines = new List<string> {Environment.MachineName, "AnotherMachine"};
             QueueManager = Substitute.For<IQueueManager>();
             Explorer = Substitute.For<IQueueExplorerViewModel>();
             Network = Substitute.For<INetworkOperations>();
             Model = new QueueCreationViewModel(QueueManager, Explorer, Network);
-            NetworkTask = Task<IList<string>>.Factory.StartNew(() => new[] {Environment.MachineName, "AnotherMachine"});
-            Network.GetMachines().Returns(NetworkTask);
-            ((IActivate)Model).Activate();
+            Network.GetMachines().Returns(Task.FromResult(machines));
         };
 
         It creates_transactional_queues_by_default = () => Model.IsTransactional.ShouldBeTrue();
-        It has_not_selected_the_machine_name_by_default = () => Model.SelectedMachine.ShouldBeEmpty();
+        It has_not_selected_the_machine_name_by_default = () => Model.SelectedMachine.ShouldBeNull();
     }
     
     public class when_network_machines_are_fetched : with_queue_creation_view_model
     {
-        Because of = () => NetworkTask.Await();
+        Because of = () => AsyncHelper.Run(() => ((IActivate) Model).Activate());
 
         It has_populated_list_of_available_machines = () => Model.Machines.Count.ShouldEqual(2);
         It is_finished_fetching_network_machine_names = () => Model.WorkInProgress.ShouldBeFalse();

@@ -1,116 +1,101 @@
 ﻿using System;
-using Caliburn.PresentationFramework.ApplicationModel;
+using System.Collections.Generic;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.MessageList;
+using NServiceBus.Profiler.Desktop.Explorer;
 
 namespace NServiceBus.Profiler.Desktop.Search
 {
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
-        
-        public SearchBarViewModel(IEventAggregator eventAggregator)
+        private int _workCount = 0;
+
+        public SearchBarViewModel()
         {
-            _eventAggregator = eventAggregator;
             PageSize = 50; //NOTE: Do we need to change this?
         }
 
-        public virtual Endpoint SelectedEndpoint { get; set; }
-
-        public void GoToFirstPage()
+        public virtual void GoToFirstPage()
         {
-            _eventAggregator.Publish(new LoadAuditMessages
-            {
-                Endpoint = SelectedEndpoint,
-                PageIndex = 1,
-                SearchQuery = SearchQuery,
-            });
+            Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
         }
 
-        public bool CanGoToFirstPage
+        public virtual void GoToPreviousPage()
+        {
+            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage - 1, SearchQuery);
+        }
+
+        public virtual void GoToNextPage()
+        {
+            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage + 1, SearchQuery);
+        }
+
+        public virtual void GoToLastPage()
+        {
+            Parent.RefreshEndpoint(SelectedEndpoint, PageCount, SearchQuery);
+        }
+
+        [AutoCheckAvailability]
+        public virtual async void Search()
+        {
+            SearchInProgress = true;
+            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+        }
+
+        [AutoCheckAvailability]
+        public virtual void CancelSearch()
+        {
+            SearchQuery = null;
+            SearchInProgress = false;
+        }
+
+        public void SetupPaging(PagedResult<MessageInfo> pagedResult)
+        {
+            Result = pagedResult.Result;
+            CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
+            TotalItemCount = pagedResult.TotalCount;
+
+            NotifyPropertiesChanged();
+        }
+
+        public async void RefreshResult()
+        {
+            if (SelectedEndpoint != null)
+            {
+                await Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage, SearchQuery);
+            }
+            else
+            {
+                await Parent.RefreshMessages();
+            }
+        }
+
+        public virtual bool CanGoToLastPage
         {
             get
             {
                 return SelectedEndpoint != null &&
-                       CurrentPage > 1;
+                       CurrentPage < PageCount &&
+                       !WorkInProgress;
             }
         }
 
-        public void GoToPreviousPage()
+        public virtual bool CanCancelSearch
         {
-            _eventAggregator.Publish(new LoadAuditMessages
-            {
-                Endpoint = SelectedEndpoint,
-                PageIndex = CurrentPage - 1,
-                SearchQuery = SearchQuery,
-            });
+            get { return SearchInProgress; }
         }
 
-        public bool CanGoToPreviousPage
+        public new IMessageListViewModel Parent
         {
-            get
-            {
-                return SelectedEndpoint != null &&
-                       CurrentPage - 1 >= 1;
-            }
+            get { return base.Parent as IMessageListViewModel; }
         }
         
-        public void GoToNextPage()
-        {
-            _eventAggregator.Publish(new LoadAuditMessages
-            {
-                Endpoint = SelectedEndpoint,
-                PageIndex = CurrentPage + 1,
-                SearchQuery = SearchQuery,
-            });
-        }
-
-        public bool CanGoToNextPage
-        {
-            get
-            {
-                return SelectedEndpoint != null &&
-                       CurrentPage + 1 <= PageCount;
-            }
-        }
-
-        public void GoToLastPage()
-        {
-            _eventAggregator.Publish(new LoadAuditMessages
-            {
-                Endpoint = SelectedEndpoint,
-                PageIndex = PageCount,
-                SearchQuery = SearchQuery,
-            });
-        }
-
-        public bool CanGoToLastPage
-        {
-            get
-            {
-                return SelectedEndpoint != null &&
-                       CurrentPage < PageCount;
-            }
-        }
-
-        public int CurrentPage
-        {
-            get; private set;
-        }
-
-        public int PageSize
-        {
-            get; private set;
-        }
-
-        public int TotalItemCount
-        {
-            get; private set;
-        }
-
-        public int PageCount
+        public virtual int PageCount
         {
             get
             {
@@ -123,65 +108,81 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool SearchInProgress { get; set; }
+        public virtual bool WorkInProgress
+        {
+            get { return _workCount > 0; }
+        }
 
+        public virtual Endpoint SelectedEndpoint { get; private set; }
+
+        public virtual Queue SelectedQueue { get; private set; }
+        
+        public virtual string SearchQuery { get; set; }
+
+        public virtual bool IsVisible { get; set; }
+
+        public virtual bool CanGoToFirstPage
+        {
+            get
+            {
+                return SelectedEndpoint != null &&
+                       CurrentPage > 1 &&
+                       !WorkInProgress;
+            }
+        }
+
+        public virtual bool CanGoToPreviousPage
+        {
+            get
+            {
+                return SelectedEndpoint != null &&
+                       CurrentPage - 1 >= 1 &&
+                       !WorkInProgress;
+            }
+        }
+
+        public virtual bool CanGoToNextPage
+        {
+            get
+            {
+                return SelectedEndpoint != null &&
+                       CurrentPage + 1 <= PageCount &&
+                       !WorkInProgress;
+            }
+        }
+
+        public virtual IList<MessageInfo> Result { get; private set; }
+
+        public virtual int CurrentPage { get; private set; }
+        
+        public virtual int PageSize { get; private set; }
+        
+        public virtual int TotalItemCount { get; private set; }
+        
+        public virtual bool SearchInProgress { get; private set; }
+        
         public virtual bool SearchEnabled { get; private set; }
 
-        public virtual bool CanSearch()
+        public virtual bool CanSearch
         {
-            return SelectedEndpoint != null &&
-                   !string.IsNullOrWhiteSpace(SearchQuery);
-        }
-
-        public virtual bool CanCancelSearch()
-        {
-            return SearchInProgress;
-        }
-
-        [AutoCheckAvailability]
-        public virtual void Search()
-        {
-            SearchInProgress = true;
-            _eventAggregator.Publish(new LoadAuditMessages
+            get
             {
-                Endpoint = SelectedEndpoint,
-                PageIndex = 1,
-                SearchQuery = SearchQuery,
-            });
-        }
-
-        [AutoCheckAvailability]
-        public virtual void CancelSearch()
-        {
-            SearchQuery = null;
-            SearchInProgress = false;
+                return !WorkInProgress &&
+                       !string.IsNullOrWhiteSpace(SearchQuery) &&
+                       SelectedEndpoint != null;
+            }
         }
 
         public bool CanRefreshResult
         {
             get
             {
-                return SelectedEndpoint != null ||
-                       (SearchInProgress && SearchQuery != null);
+                return !WorkInProgress && (SelectedEndpoint != null || SelectedQueue != null);
             }
         }
 
-        public void RefreshResult()
+        private void NotifyPropertiesChanged()
         {
-            
-        }
-
-        public PagedResult<StoredMessage> Result
-        {
-            get; private set;
-        }
-
-        public void SetupPaging(PagedResult<StoredMessage> pagedResult)
-        {
-            Result = pagedResult;
-            CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
-            TotalItemCount = pagedResult.TotalCount;
-
             NotifyOfPropertyChange(() => PageCount);
             NotifyOfPropertyChange(() => CanGoToFirstPage);
             NotifyOfPropertyChange(() => CanGoToLastPage);
@@ -189,33 +190,57 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyOfPropertyChange(() => CanGoToPreviousPage);
             NotifyOfPropertyChange(() => CanRefreshResult);
             NotifyOfPropertyChange(() => SearchEnabled);
+            NotifyOfPropertyChange(() => WorkInProgress);
         }
 
-        public virtual string SearchQuery { get; set; }
-
-        public virtual void Handle(EndpointSelectionChanged @event)
+        public void OnSelectedEndpointChanged()
         {
-            SearchEnabled = true;
-            SelectedEndpoint = @event.SelectedEndpoint;
+            if (SelectedEndpoint != null)
+            {
+                SelectedQueue = null;
+                SearchEnabled = true;
+            }
         }
 
-        public virtual void Handle(SelectedQueueChanged @event)
+        public void OnSelectedQueueChanged()
         {
-            SearchEnabled = false;
+            if (SelectedQueue != null)
+            {
+                SelectedEndpoint = null;
+                SearchEnabled = false;
+            }
         }
-    }
 
-    public interface ISearchBarViewModel : 
-        IHandle<EndpointSelectionChanged>
-    {
-        Endpoint SelectedEndpoint { get; }
-        string SearchQuery { get; }
-        void GoToFirstPage();
-        void GoToLastPage();
-        void GoToPreviousPage();
-        void GoToNextPage();
-        void Search();
-        void CancelSearch();
-        void SetupPaging(PagedResult<StoredMessage> pagedResult);
+        public virtual void Handle(SelectedExplorerItemChanged @event)
+        {
+            var endpointNode = @event.SelectedExplorerItem.As<EndpointExplorerItem>();
+            if (endpointNode != null)
+            {
+                SelectedEndpoint = endpointNode.Endpoint;                
+            }
+
+            var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();
+            if (queueNode != null)
+            {
+                SelectedQueue = queueNode.Queue;
+            }
+
+            NotifyPropertiesChanged();
+        }
+
+        public virtual void Handle(WorkStarted @event)
+        {
+            _workCount++;
+            NotifyPropertiesChanged();
+        }
+
+        public virtual void Handle(WorkFinished @event)
+        {
+            if (_workCount > 0)
+            {
+                _workCount--;
+                NotifyPropertiesChanged();
+            }
+        }
     }
 }

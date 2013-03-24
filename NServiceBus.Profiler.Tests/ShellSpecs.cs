@@ -7,6 +7,7 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
+using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
@@ -63,17 +64,17 @@ namespace NServiceBus.Profiler.Tests.Shell
 
     public class when_there_is_work_in_progress : with_a_shell
     {
-        Because of = () => shell.WorkInProgress = true;
+        Because of = () => shell.Handle(new WorkStarted());
 
-        It should_not_allow_deleting_the_queue = () => shell.CanDeleteCurrentQueue().ShouldBeFalse();
-        It should_not_allow_deleting_the_messages = () => shell.CanDeleteSelectedMessages().ShouldBeFalse();
-        It should_not_allow_connecting_to_another_machine = () => shell.CanConnectToMachine().ShouldBeFalse();
-        It should_not_allow_creating_new_messages = () => shell.CanCreateMessage().ShouldBeFalse();
-        It should_not_allow_creating_new_queue = () => shell.CanCreateQueue().ShouldBeFalse();
-        It should_not_allow_exporting_messages = () => shell.CanExportMessage().ShouldBeFalse();
-        It should_not_allow_importing_messages = () => shell.CanImportMessage().ShouldBeFalse();
-        It should_not_allow_purging_the_queue = () => shell.CanPurgeCurrentQueue().ShouldBeFalse();
-        It should_not_allow_refreshing_the_queue = () => shell.CanRefreshQueues().ShouldBeFalse();
+        It should_not_allow_deleting_the_queue = () => shell.CanDeleteCurrentQueue.ShouldBeFalse();
+        It should_not_allow_deleting_the_messages = () => shell.CanDeleteSelectedMessages.ShouldBeFalse();
+        It should_not_allow_connecting_to_another_machine = () => shell.CanConnectToMachine.ShouldBeFalse();
+        It should_not_allow_creating_new_messages = () => shell.CanCreateMessage.ShouldBeFalse();
+        It should_not_allow_creating_new_queue = () => shell.CanCreateQueue.ShouldBeFalse();
+        It should_not_allow_exporting_messages = () => shell.CanExportMessage.ShouldBeFalse();
+        It should_not_allow_importing_messages = () => shell.CanImportMessage.ShouldBeFalse();
+        It should_not_allow_purging_the_queue = () => shell.CanPurgeCurrentQueue.ShouldBeFalse();
+        It should_not_allow_refreshing_the_queue = () => shell.CanRefreshQueues.ShouldBeFalse();
     }
 
     public class when_displaying_about_information : with_a_shell
@@ -116,7 +117,7 @@ namespace NServiceBus.Profiler.Tests.Shell
 
     public class when_turning_off_auto_refresh : with_a_shell
     {
-        Establish context = () => shell.AutoRefreshQueues = false;
+        Establish context = () => shell.AutoRefresh = false;
 
         Because of = () => shell.OnAutoRefreshing();
 

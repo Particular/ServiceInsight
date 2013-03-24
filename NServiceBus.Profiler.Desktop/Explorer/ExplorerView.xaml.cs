@@ -1,6 +1,6 @@
 ﻿using System;
 using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Common.Events;
+using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {

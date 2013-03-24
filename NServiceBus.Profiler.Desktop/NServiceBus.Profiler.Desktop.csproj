@@ -225,11 +225,21 @@
     <Compile Include="Conversations\IConversationView.cs" />
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
+    <Compile Include="Events\AutoRefreshBeat.cs" />
+    <Compile Include="Events\ExecuteSearchResult.cs" />
+    <Compile Include="Events\MessageBodyLoaded.cs" />
+    <Compile Include="Events\MessageRemovedFromQueue.cs" />
+    <Compile Include="Events\QueueMessageCountChanged.cs" />
+    <Compile Include="Events\SelectedExplorerItemChanged.cs" />
+    <Compile Include="Events\SelectedMessageChanged.cs" />
+    <Compile Include="Events\WorkFinished.cs" />
+    <Compile Include="Events\WorkStarted.cs" />
     <Compile Include="Explorer\EndpointExplorer\AuditEndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
     <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointConnectionProvider.cs" />
+    <Compile Include="Explorer\ExplorerItemExtensions.cs" />
     <Compile Include="Explorer\IExplorerViewModel.cs" />
     <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
@@ -288,6 +298,7 @@
     <Compile Include="ScreenManager\ChoiceCommand.cs" />
     <Compile Include="ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Search\ISearchBarView.cs" />
+    <Compile Include="Search\ISearchBarViewModel.cs" />
     <Compile Include="Search\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
@@ -317,6 +328,7 @@
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
     <Compile Include="ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
+    <Compile Include="Shell\WorkTracker.cs" />
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />
     <Compile Include="Startup\LoggingConfig.cs" />

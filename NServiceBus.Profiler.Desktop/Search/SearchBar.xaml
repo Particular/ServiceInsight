@@ -29,7 +29,7 @@
             <Run Text="Message(s) Found" />
         </TextBlock>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4">
+        <StackPanel Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="FontFamily" Value="Webdings" />
@@ -54,6 +54,7 @@
         
         <dxe:ComboBoxEdit Grid.Column="3" 
                           IsEnabled="{Binding SearchEnabled}"
+                          Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                           Width="200" 
                           Margin="5" 
                           AllowDefaultButton="False"

@@ -3,9 +3,9 @@ using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
-    public class ServerExplorerItem : ExplorerItem
+    public class QueueServerExplorerItem : ExplorerItem
     {
-        public ServerExplorerItem(string name) : base(name)
+        public QueueServerExplorerItem(string name) : base(name)
         {
         }
 

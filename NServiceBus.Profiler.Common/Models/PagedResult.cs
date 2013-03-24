@@ -9,7 +9,7 @@ namespace NServiceBus.Profiler.Common.Models
             Result = new List<T>();
         }
 
-        public List<T> Result { get; set; }
+        public IList<T> Result { get; set; }
         public int TotalCount { get; set; }
         public int CurrentPage { get; set; }
     }

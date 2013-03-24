@@ -1,6 +1,6 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Common.Events;
+using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

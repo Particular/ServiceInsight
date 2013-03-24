@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Common.Events
+﻿namespace NServiceBus.Profiler.Desktop.Events
 {
     public class WorkStarted
     {

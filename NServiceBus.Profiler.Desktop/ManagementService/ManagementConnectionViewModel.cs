@@ -3,14 +3,13 @@ using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Core.Management;
-using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.ManagementService
 {
-    public class ManagementConnectionViewModel : Screen, IWorkTracker
+    public class ManagementConnectionViewModel : Screen
     {
         private readonly IManagementService _managementService;
-
+        
         public ManagementConnectionViewModel(IManagementService managementService)
         {
             _managementService = managementService;
@@ -20,6 +19,8 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
         public string ServiceUrl { get; set; }
         
         public bool IsAddressValid { get; set; }
+
+        public bool WorkInProgress { get; private set; }
 
         protected override void OnActivate()
         {
@@ -59,7 +60,5 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
 
             return false;
         }
-
-        public bool WorkInProgress { get; private set; }
     }
 }

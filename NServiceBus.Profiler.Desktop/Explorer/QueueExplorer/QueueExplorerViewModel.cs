@@ -6,11 +6,11 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using System.Linq;
+using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using DevExpress.Xpf.Editors.Helpers;
 
@@ -103,7 +103,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
         {
             if (MachineRoot == null)
             {
-                Items.Add(new ServerExplorerItem(ConnectedToAddress));
+                Items.Add(new QueueServerExplorerItem(ConnectedToAddress));
             }
         }
 
@@ -126,7 +126,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public virtual ExplorerItem MachineRoot
         {
-            get { return Items.FirstOrDefault(x => x is ServerExplorerItem); }
+            get { return Items.FirstOrDefault(x => x is QueueServerExplorerItem); }
         }
 
         public virtual ExplorerItem SelectedNode { get; set; }
@@ -177,7 +177,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public virtual void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedQueueChanged(SelectedQueue));
+            _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }

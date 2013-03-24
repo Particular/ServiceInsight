@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -49,7 +49,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
     {
         Establish context = () => Explorer.SelectedNode = QueueNode;
 
-        It should_publish_the_message_that_queue_is_selected = () => EventAggregator.Received(1).Publish(Arg.Any<SelectedQueueChanged>());
+        It should_publish_the_message_that_queue_is_selected = () => EventAggregator.Received(1).Publish(Arg.Any<SelectedExplorerItemChanged>());
         It should_have_a_selected_queue = () => Explorer.SelectedQueue.ShouldNotBeNull();
         It should_have_the_same_queue_selected = () => Explorer.SelectedQueue.ShouldBeTheSameAs(Queue);
     }
@@ -96,7 +96,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
 
         Because of = () => Explorer.PartialRefresh();
 
-        It should_display_connected_server = () => Explorer.Items[0].ShouldBeOfType<ServerExplorerItem>();
+        It should_display_connected_server = () => Explorer.Items[0].ShouldBeOfType<QueueServerExplorerItem>();
         It should_have_only_server_node = () => Explorer.Items.Count.ShouldEqual(1);
         It should_have_queue_for_the_server_as_child_nodes = () => Explorer.MachineRoot.Children.Count.ShouldEqual(2);
     }
@@ -142,7 +142,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
 
         Because of = () => Explorer.Handle(new QueueMessageCountChanged(Queue, 5));
 
-        It should_refresh_message_count_in_the_tree_node = () => Explorer.SelectedNode.DisplayName.ShouldContain("(5)"); //TODO: Fix broken test
+        It should_refresh_message_count_in_the_tree_node = () => Explorer.SelectedNode.DisplayName.ShouldContain("(5)");
     }
 
     public class when_auto_refresh_event_is_triggerred : with_the_explorer

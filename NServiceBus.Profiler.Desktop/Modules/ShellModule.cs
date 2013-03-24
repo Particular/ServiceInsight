@@ -18,7 +18,6 @@ namespace NServiceBus.Profiler.Desktop.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //TODO: Consolidate
             builder.RegisterAssemblyTypes(ThisAssembly)
                    .Where(t => t.IsViewOrViewModel())
                    .AsImplementedInterfaces()

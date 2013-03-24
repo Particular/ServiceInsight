@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Xaml" />
@@ -72,19 +73,8 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="Events\ExecuteSearchResult.cs" />
-    <Compile Include="Events\LoadAuditMessages.cs" />
-    <Compile Include="Events\AutoRefreshBeat.cs" />
-    <Compile Include="Events\EndpointSelectionChanged.cs" />
-    <Compile Include="Events\ErrorQueueSelected.cs" />
-    <Compile Include="Events\MessageBodyLoaded.cs" />
-    <Compile Include="Events\QueueMessageCountChanged.cs" />
-    <Compile Include="Events\WorkFinished.cs" />
-    <Compile Include="Events\MessageRemovedFromQueue.cs" />
-    <Compile Include="Events\SelectedMessageChanged.cs" />
-    <Compile Include="Events\SelectedQueueChanged.cs" />
-    <Compile Include="Events\WorkStarted.cs" />
     <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
+    <Compile Include="ExtensionMethods\GrammerExtensions.cs" />
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
     <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
@@ -99,7 +89,7 @@
     <Compile Include="Guard.cs" />
     <Compile Include="Models\FailureDetails.cs" />
     <Compile Include="Models\HeaderInfo.cs" />
-    <Compile Include="Models\ManagementServerAddress.cs" />
+    <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\ManagementVersionInfo.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageInfo.cs" />

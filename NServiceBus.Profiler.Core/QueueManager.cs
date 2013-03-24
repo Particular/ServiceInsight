@@ -102,17 +102,6 @@ namespace NServiceBus.Profiler.Core
             _queueOperations.DeleteMessage(queue, message.Id);
         }
 
-//        public void ConnectTo(string machineName)
-//        {
-//            Guard.NotNull(() => machineName, machineName);
-//
-//            //TODO: check ipv6 as well?
-//            var ipv4 = GetIpAddressOrMachineName(machineName);
-//
-//            Guard.NotNullOrEmpty(() => ipv4, ipv4);
-//            _machineName = machineName;
-//        }
-
         public void Purge(Queue queue)
         {
             Guard.NotNull(() => queue, queue);

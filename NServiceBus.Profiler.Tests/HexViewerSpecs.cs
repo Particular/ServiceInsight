@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NSubstitute;
 using System.Linq;

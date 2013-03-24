@@ -6,10 +6,11 @@ using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
+using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ManagementService;
@@ -26,6 +27,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private readonly IScreenFactory _screenFactory;
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
+        private int _workCounter = 0;
         private DispatcherTimer _timer;
         
         public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
@@ -61,16 +63,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
             InitializeAutoRefreshTimer();
         }
 
-        private void InitializeAutoRefreshTimer()
-        {
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(AutoRefreshInterval) };
-            _timer.Tick += (s, e) => OnAutoRefreshing();
-            _timer.Start();
-        }
-
         internal void OnAutoRefreshing()
         {
-            if(!AutoRefreshQueues || WorkInProgress) return;
+            if(!AutoRefresh || WorkInProgress) 
+                return;
+
             _eventAggregator.Publish(new AutoRefreshBeat());
         }
 
@@ -83,17 +80,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             StatusBarManager.Status = "Done";
         }
 
-        private string GetProductName()
-        {
-            var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
-            return productAttribute.Product;
-        }
-
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
             _timer.Stop();
         }
+
+        public virtual bool AutoRefresh { get; set; }
 
         public IEnumerable<IHeaderInfoViewModel> Headers { get; private set; }
 
@@ -111,7 +104,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual IStatusBarManager StatusBarManager { get; private set; }
 
-        public virtual bool WorkInProgress { get; set; }
+        public virtual ExplorerItem SelectedExplorerItem { get; private set; }
+
+        public virtual bool WorkInProgress
+        {
+            get { return _workCounter != 0; }
+        }
 
         public virtual void ExitApp()
         {
@@ -141,13 +139,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public virtual bool AutoRefreshQueues { get; set; }
-
-        public void OnAutoRefreshQueuesChanged()
-        {
-            
-        }
-
         [AutoCheckAvailability]
         public virtual void ConnectToManagementService()
         {
@@ -161,15 +152,15 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void DeleteSelectedMessages()
+        public virtual async void DeleteSelectedMessages()
         {
-            Messages.DeleteSelectedMessages();
+            await Messages.DeleteSelectedMessages();
         }
 
         [AutoCheckAvailability]
-        public virtual void PurgeCurrentQueue()
+        public virtual async void PurgeCurrentQueue()
         {
-            Messages.PurgeQueue();
+            await Messages.PurgeQueue();
         }
 
         [AutoCheckAvailability]
@@ -179,9 +170,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void RefreshQueues()
+        public virtual async void RefreshQueues()
         {
-            QueueExplorer.FullRefresh();
+            await Messages.RefreshMessages();
         }
 
         [AutoCheckAvailability]
@@ -214,64 +205,127 @@ namespace NServiceBus.Profiler.Desktop.Shell
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        public virtual bool CanCreateMessage()
+        public void OnAutoRefreshQueuesChanged()
         {
-            return QueueExplorer.SelectedQueue != null && !WorkInProgress;
+            
         }
 
-        public virtual bool CanRefreshQueues()
+        public virtual bool CanCreateMessage
         {
-            return !WorkInProgress;
+            get { return QueueExplorer.SelectedQueue != null && !WorkInProgress; }
         }
 
-        public virtual bool CanPurgeCurrentQueue()
+        public virtual bool CanRefreshQueues
         {
-            return Messages.SelectedQueue != null && !WorkInProgress;
+            get { return !WorkInProgress; }
         }
 
-        public virtual bool CanDeleteCurrentQueue()
+        public virtual bool CanPurgeCurrentQueue
         {
-            return Messages.SelectedQueue != null && !WorkInProgress;
+            get
+            {
+                return Messages.SelectedQueue != null &&
+                       !WorkInProgress &&
+                       SelectedExplorerItem.IsQueueExplorerSelected();
+            }
         }
 
-        public virtual bool CanDeleteSelectedMessages()
+        public virtual bool CanDeleteCurrentQueue
         {
-            return Messages.FocusedMessage != null && !WorkInProgress;
+            get
+            {
+                return Messages.SelectedQueue != null &&
+                       !WorkInProgress &&
+                       SelectedExplorerItem.IsQueueExplorerSelected();
+            }
         }
 
-        public virtual bool CanCreateQueue()
+        public virtual bool CanDeleteSelectedMessages
         {
-            return !QueueExplorer.ConnectedToAddress.IsEmpty() && !WorkInProgress;
+            get
+            {
+                return !WorkInProgress &&
+                       Messages.FocusedMessage != null &&
+                       SelectedExplorerItem.IsQueueExplorerSelected();
+            }
         }
 
-        public virtual bool CanConnectToMachine()
+        public virtual bool CanCreateQueue
         {
-            return !WorkInProgress;
+            get
+            {
+                return !QueueExplorer.ConnectedToAddress.IsEmpty() &&
+                       !WorkInProgress &&
+                       SelectedExplorerItem.IsQueueExplorerSelected();
+            }
         }
 
-        public virtual bool CanConnectToManagementService()
+        public virtual bool CanConnectToMachine
         {
-            return !WorkInProgress;
+            get { return !WorkInProgress; }
         }
 
-        public virtual bool CanExportMessage()
+        public virtual bool CanConnectToManagementService
         {
-            return !WorkInProgress && Messages.SelectedMessages.Count > 0;
+            get { return !WorkInProgress; }
         }
 
-        public virtual bool CanImportMessage()
+        public virtual bool CanExportMessage
         {
-            return !WorkInProgress;
+            get { return !WorkInProgress && Messages.SelectedMessages.Count > 0; }
+        }
+
+        public virtual bool CanImportMessage
+        {
+            get { return !WorkInProgress; }
+        }
+
+        private void InitializeAutoRefreshTimer()
+        {
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(AutoRefreshInterval) };
+            _timer.Tick += (s, e) => OnAutoRefreshing();
+            _timer.Start();
+        }
+
+        private void NotifyPropertiesChanged()
+        {
+            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(() => CanConnectToMachine);
+            NotifyOfPropertyChange(() => CanConnectToManagementService);
+            NotifyOfPropertyChange(() => CanCreateMessage);
+            NotifyOfPropertyChange(() => CanCreateQueue);
+            NotifyOfPropertyChange(() => CanDeleteCurrentQueue);
+            NotifyOfPropertyChange(() => CanDeleteSelectedMessages);
+            NotifyOfPropertyChange(() => CanExportMessage);
+            NotifyOfPropertyChange(() => CanImportMessage);
+            NotifyOfPropertyChange(() => CanPurgeCurrentQueue);
+            NotifyOfPropertyChange(() => CanRefreshQueues);
+        }
+
+        private string GetProductName()
+        {
+            var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
+            return productAttribute.Product;
         }
 
         public virtual void Handle(WorkStarted @event)
         {
-            WorkInProgress = true;
+            _workCounter++;
+            NotifyPropertiesChanged();
         }
 
         public virtual void Handle(WorkFinished @event)
         {
-            WorkInProgress = false;
+            if (_workCounter <= 0) 
+                return;
+
+            _workCounter--;
+            NotifyPropertiesChanged();
+        }
+
+        public virtual void Handle(SelectedExplorerItemChanged @event)
+        {
+            SelectedExplorerItem = @event.SelectedExplorerItem;
         }
     }
 }

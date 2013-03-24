@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Messaging;
 using System.Linq;
 using System.Threading.Tasks;
@@ -117,10 +116,8 @@ namespace NServiceBus.Profiler.Core
                 var q = MessageQueue.Create(queue.Address.ToShortFormatName(), transactional);
                 return _mapper.MapQueue(q);
             }
-            else
-            {
-                return _mapper.MapQueue(queue.AsMessageQueue());
-            }
+            
+            return _mapper.MapQueue(queue.AsMessageQueue());
         }
 
         public virtual void DeleteQueue(Queue queue)
@@ -166,9 +163,15 @@ namespace NServiceBus.Profiler.Core
                 Guard.True(queueDest.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", destination.Address)));
                 Guard.True(queueDest.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", destination.Address)));
 
-                Func<string, Message> retreival = x => queueSource.ReceiveById(x, MessageQueueTransactionType.Automatic);
-                
-                var msg = retreival.TryGetValue(messageId);
+                Message msg = null;
+
+                try
+                {
+                    msg = queueSource.ReceiveById(messageId, MessageQueueTransactionType.Automatic);
+                }
+                catch
+                {
+                }
 
                 Guard.NotNull(() => msg, msg, () => new QueueManagerException("Message could not be loaded."));
 

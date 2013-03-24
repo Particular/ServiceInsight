@@ -6,11 +6,13 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Common.Events;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
 using DevExpress.Xpf.Core;
+using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
@@ -49,9 +51,13 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected Queue SelectedQueue { get; private set; } 
 
-        public void Handle(SelectedQueueChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
-            SelectedQueue = @event.SelectedQueue;
+            var queue = @event.SelectedExplorerItem.As<QueueExplorerItem>();
+            if (queue != null)
+            {
+                SelectedQueue = queue.Queue;
+            }
         }
 
         public virtual void Handle(MessageBodyLoaded @event)
