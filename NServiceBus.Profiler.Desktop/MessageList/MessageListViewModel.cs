@@ -1,6 +1,7 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
+using ExceptionHandler;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
@@ -9,6 +10,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using System.Linq;
@@ -24,6 +26,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
         private readonly IEndpointConnectionProvider _endpointConnection;
+        private readonly IErrorHeaderDisplay _errorHeaderDisplay;
+        private readonly IGeneralHeaderDisplay _generalHeaderDisplay;
+        private readonly IClipboard _clipboard;
+        private IMessageListView _view;
         private int _workCount;
 
         public MessageListViewModel(
@@ -32,20 +38,29 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             IManagementService managementService,
             IQueueManagerAsync asyncQueueManager,
             IEndpointConnectionProvider endpointConnection,
-            ISearchBarViewModel searchBarViewModel)
+            ISearchBarViewModel searchBarViewModel,
+            IErrorHeaderDisplay errorHeaderDisplay,
+            IGeneralHeaderDisplay generalHeaderDisplay,
+            IClipboard clipboard)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
             _managementService = managementService;
             _asyncQueueManager = asyncQueueManager;
             _endpointConnection = endpointConnection;
+            _errorHeaderDisplay = errorHeaderDisplay;
+            _generalHeaderDisplay = generalHeaderDisplay;
+            _clipboard = clipboard;
 
             SearchBar = searchBarViewModel;
 
             Items.Add(SearchBar);
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
+            ContextMenuItems = new BindableCollection<ContextMenuModel>();
         }
+
+        public virtual IObservableCollection<ContextMenuModel> ContextMenuItems { get; private set; }
 
         public virtual IObservableCollection<MessageInfo> Messages { get; private set; }
 
@@ -60,6 +75,52 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public virtual bool WorkInProgress { get { return _workCount > 0; } }
 
         public virtual ExplorerItem SelectedExplorerItem { get; private set; }
+
+        public override void AttachView(object view, object context)
+        {
+            base.AttachView(view, context);
+            _view = (IMessageListView) view;
+            _view.SetupContextMenu();
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            ContextMenuItems.Add(new ContextMenuModel("ReturnToSource", "Return To Source", Properties.Resources.MessageReturn));
+            ContextMenuItems.Add(new ContextMenuModel("CopyMessageId", "Copy Message Identifier"));
+            ContextMenuItems.Add(new ContextMenuModel("CopyHeaders", "Copy Headers"));
+        }
+
+        public virtual void ReturnToSource()
+        {
+            _errorHeaderDisplay.ReturnToSource();
+        }
+
+        public virtual void CopyMessageId()
+        {
+            var msg = FocusedMessage;
+            _clipboard.CopyTo(msg.Id);
+        }
+
+        public virtual void CopyHeaders()
+        {
+            _generalHeaderDisplay.CopyHeaderInfo();
+        }
+
+        public bool CanReturnToSource
+        {
+            get { return _errorHeaderDisplay.CanReturnToSource(); }
+        }
+
+        public bool CanCopyHeaders
+        {
+            get { return _generalHeaderDisplay.CanCopyHeaderInfo(); }
+        }
+
+        public bool CanCopyMessageId
+        {
+            get { return FocusedMessage != null; }
+        }
 
         public virtual void OnFocusedMessageChanged() 
         {
@@ -77,6 +138,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
             }
+
+            NotifyPropertiesChanged();
         }
 
         private void LoadQueueMessage(Queue queue, string selectedMessageId)
@@ -201,9 +264,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return string.Empty;
         }
 
+        public MessageErrorInfo GetMessageErrorInfo()
+        {
+            return new MessageErrorInfo();
+        }
+
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
         {
-            return msg != null ? new MessageErrorInfo(msg.Status) : new MessageErrorInfo();
+            return new MessageErrorInfo(msg.Status);
         }
 
         public virtual async Task DeleteSelectedMessages()
@@ -245,11 +313,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             await RefreshMessages();
         }
 
-        public void Handle(MessageRemovedFromQueue @event)
+        public async void Handle(MessageRemovedFromQueue @event)
         {
-            if (Messages.Contains(@event.Message))
+            var queue = SelectedQueue;
+            var msg = Messages.FirstOrDefault(x => x.Id == @event.Message.Id);
+
+            if (msg != null)
             {
-                Messages.Remove(@event.Message);
+                Messages.Remove(msg);
+                await RefreshQueueMessageCount(queue);
             }
         }
 
@@ -286,6 +358,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
 
             await RefreshMessages();
+
+            NotifyPropertiesChanged();
+        }
+
+        private void NotifyPropertiesChanged()
+        {
+            NotifyOfPropertyChange(() => SelectedExplorerItem);
+            NotifyOfPropertyChange(() => CanCopyHeaders);
+            NotifyOfPropertyChange(() => CanCopyMessageId);
+            NotifyOfPropertyChange(() => CanReturnToSource);
+            SearchBar.NotifyPropertiesChanged();
         }
 
         public virtual void Handle(SelectedExplorerItemChanged @event)

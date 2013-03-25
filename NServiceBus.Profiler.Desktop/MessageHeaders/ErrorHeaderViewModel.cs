@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using Caliburn.PresentationFramework.ApplicationModel;
-using ExceptionHandler;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
@@ -13,18 +12,15 @@ using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public class ErrorHeaderViewModel : HeaderInfoViewModelBase
+    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IErrorHeaderDisplay
     {
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager, 
-            IClipboard clipboard) 
-            : base(eventAggregator, decoder, queueManager, clipboard)
+            IQueueManagerAsync queueManager) 
+            : base(eventAggregator, decoder, queueManager)
         {
             DisplayName = "Errors";
-
-            //TODO:Add back the context menu
         }
 
         public virtual bool CanReturnToSource()

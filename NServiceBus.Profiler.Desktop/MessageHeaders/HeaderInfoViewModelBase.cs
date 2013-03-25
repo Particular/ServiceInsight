@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Windows.Media;
-using System.Xml.Serialization;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using DevExpress.Xpf.Core;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
@@ -18,17 +15,14 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
-        private readonly IClipboard _clipboard;
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
 
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager,
-            IClipboard clipboard)
+            IQueueManagerAsync queueManager)
         {
             _decoder = decoder;
-            _clipboard = clipboard;
             EventAggregator = eventAggregator;
             QueueManager = queueManager;
             Items = new BindableCollection<HeaderInfo>();
@@ -68,14 +62,17 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
             if (SelectedMessage != null)
             {
-                var headers = SelectedMessage.Headers;
-                var decodeResult = _decoder.Decode(headers);
-
-                if (decodeResult.IsParsed)
-                {
-                    OnItemsLoaded(decodeResult.Value);
-                }
+                var headers = DecodeHeader(SelectedMessage);
+                OnItemsLoaded(headers);
             }
+        }
+
+        protected IEnumerable<HeaderInfo> DecodeHeader(MessageBody message)
+        {
+            var headers = message.Headers;
+            var decodeResult = _decoder.Decode(headers);
+            
+            return decodeResult.IsParsed ? decodeResult.Value : Enumerable.Empty<HeaderInfo>();
         }
 
         protected void OnItemsLoaded(IEnumerable<HeaderInfo> headers)
@@ -90,23 +87,6 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         }
 
         protected abstract bool IsMatchingHeader(HeaderInfo header);
-
-        public virtual bool CanCopyHeaderInfo()
-        {
-            return Items != null;
-        }
-
-        public virtual void CopyHeaderInfo()
-        {
-            var serializer = new XmlSerializer(typeof (HeaderInfo[]));
-            using (var stream = new MemoryStream())
-            {
-                var headers = new List<HeaderInfo>(Items);
-                serializer.Serialize(stream, headers.ToArray());
-                var content = stream.ReadString();
-                _clipboard.CopyTo(content);
-            }
-        }
 
         public virtual void Handle(SelectedMessageChanged @event)
         {

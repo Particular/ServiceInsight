@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Media;
 using Caliburn.PresentationFramework.ApplicationModel;
-using ExceptionHandler;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
@@ -16,9 +15,8 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         public PerformanceHeaderViewModel(
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager, 
-            IClipboard clipboard) 
-            : base(eventAggregator, decoder, queueManager, clipboard)
+            IQueueManagerAsync queueManager) 
+            : base(eventAggregator, decoder, queueManager)
         {
             DisplayName = "Performance";
         }

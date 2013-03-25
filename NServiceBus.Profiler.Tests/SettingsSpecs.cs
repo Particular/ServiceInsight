@@ -10,7 +10,7 @@ namespace NServiceBus.Profiler.Tests.Settings
         protected static RegistrySettingsStore RegistryStore;
         protected static Dictionary<string, string> SettingsToSave;
         protected static Dictionary<string, string> LoadedSettings;
-        protected static string StorageKey = @"Software\ParticularSoftware";
+        protected static string StorageKey = @"Software\ParticularSoftware\ServiceBus";
 
         Establish context = () =>
         {

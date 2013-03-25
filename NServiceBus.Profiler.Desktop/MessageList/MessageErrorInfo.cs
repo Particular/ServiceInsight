@@ -16,7 +16,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             Image = GetImage();
         }
 
-        public MessageErrorInfo(MessageStatus status) : this()
+        public MessageErrorInfo(MessageStatus status)
         {
             _statusSpecified = true;
             Status = status;

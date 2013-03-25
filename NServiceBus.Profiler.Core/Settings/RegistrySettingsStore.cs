@@ -62,9 +62,10 @@ namespace NServiceBus.Profiler.Core.Settings
         {
             var dictionary = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var settingKey = _registryKey + key.Replace('.', '\\');
+            var permission = RegistryKeyPermissionCheck.ReadWriteSubTree;
 
             using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
-            using (var settingsRoot = registry.OpenSubKey(settingKey))
+            using (var settingsRoot = registry.OpenSubKey(settingKey, permission))
             {
                 if (settingsRoot != null)
                 {

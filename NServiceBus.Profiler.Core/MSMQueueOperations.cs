@@ -167,6 +167,7 @@ namespace NServiceBus.Profiler.Core
 
                 try
                 {
+                    queueSource.MessageReadPropertyFilter.SetAll();
                     msg = queueSource.ReceiveById(messageId, MessageQueueTransactionType.Automatic);
                 }
                 catch

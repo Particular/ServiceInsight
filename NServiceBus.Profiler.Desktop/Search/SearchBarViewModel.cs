@@ -13,7 +13,7 @@ namespace NServiceBus.Profiler.Desktop.Search
 {
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
-        private int _workCount = 0;
+        private int _workCount;
 
         public SearchBarViewModel()
         {
@@ -181,7 +181,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        private void NotifyPropertiesChanged()
+        public void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => PageCount);
             NotifyOfPropertyChange(() => CanGoToFirstPage);

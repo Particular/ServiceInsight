@@ -24,5 +24,6 @@ namespace NServiceBus.Profiler.Desktop.Search
         void Search();
         void CancelSearch();
         void SetupPaging(PagedResult<MessageInfo> pagedResult);
+        void NotifyPropertiesChanged();
     }
 }

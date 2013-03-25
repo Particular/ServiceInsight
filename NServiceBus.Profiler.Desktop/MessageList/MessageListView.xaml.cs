@@ -1,15 +1,17 @@
-﻿using DevExpress.Xpf.Bars;
+﻿using Caliburn.PresentationFramework.Actions;
+using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Shell;
+using Message = Caliburn.PresentationFramework.RoutedMessaging.Message;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
     /// <summary>
     /// Interaction logic for MessageListView.xaml
     /// </summary>
-    public partial class MessageListView 
+    public partial class MessageListView : IMessageListView
     {
         private static class AdvancedEndpointColumns
         {
@@ -17,7 +19,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             public const string IsFaulted = "IsFaulted";
         }
 
-        private readonly IShellViewModel _shell;
         private readonly IMenuManager _menuManager;
         private PopupMenu _contextMenu;
 
@@ -26,33 +27,25 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             InitializeComponent();
         }
 
-        public MessageListView(IShellViewModel shell, IMenuManager menuManager)
+        public MessageListView(IMenuManager menuManager)
             : this()
         {
-            _shell = shell;
             _menuManager = menuManager;
-            InitializeContextMenu();
         }
 
-        private void InitializeContextMenu()
+        public void SetupContextMenu()
         {
             _contextMenu = _menuManager.CreateContextMenu(grid.View);
-            _contextMenu.Opening += (s, e) => OnPluginContextMenuOpening();
-        }
+            
+            foreach (var item in Model.ContextMenuItems)
+            {
+                var menu = _menuManager.CreateContextMenuItem(item);
+                
+                Message.SetAttach(menu, string.Format("[Event ItemClick]=[Action {0}]", item.Name));
+                Action.SetTarget(menu, Model);
 
-        private void OnPluginContextMenuOpening()
-        {
-            _contextMenu.ItemLinks.Clear();
-
-            //TODO: How to populate contextmenus
-//            var menuItems = _shell.Plugins.SelectMany(plugin => plugin.ContextMenuItems)
-//                                          .OrderBy(mi => mi.Order).ToList();
-//
-//            menuItems.ForEach(mi =>
-//            {
-//                var menu = _menuManager.CreateContextMenuItem(mi);
-//                _contextMenu.ItemLinks.Add(menu);
-//            });
+                _contextMenu.ItemLinks.Add(menu);
+            }
         }
 
         private void OnFocusedMessageChanged(object sender, FocusedRowChangedEventArgs e)
@@ -93,7 +86,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 }
                 if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)
                 {
-                    e.Value = Model.GetMessageErrorInfo(storedMsg);
+                    if (storedMsg != null)
+                    {
+                        e.Value = Model.GetMessageErrorInfo(storedMsg);
+                    }
+                    else
+                    {
+                        e.Value = Model.GetMessageErrorInfo();
+                    }
                 }
             }
         }

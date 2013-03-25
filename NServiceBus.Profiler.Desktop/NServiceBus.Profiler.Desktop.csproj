@@ -250,7 +250,10 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
+    <Compile Include="MessageHeaders\IErrorHeaderDisplay.cs" />
+    <Compile Include="MessageHeaders\IGeneralHeaderDisplay.cs" />
     <Compile Include="MessageHeaders\TabPriority.cs" />
+    <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">

@@ -2,7 +2,8 @@
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    public interface IMessageListView : IPersistableLayout
+    public interface IMessageListView
     {
+        void SetupContextMenu();
     }
 }

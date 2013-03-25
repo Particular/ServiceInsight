@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
+using ExceptionHandler;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
@@ -9,6 +9,7 @@ using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
@@ -26,6 +27,9 @@ namespace NServiceBus.Profiler.Tests
         protected static IManagementService ManagementService;
         protected static IEndpointConnectionProvider EndpointConnectionProvider;
         protected static ISearchBarViewModel SearchBar;
+        protected static IClipboard Clipboard;
+        protected static IErrorHeaderDisplay ErrorDisplay;
+        protected static IGeneralHeaderDisplay GeneralDisplay;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         protected static MessageListViewModel MessageList;
         
@@ -38,7 +42,7 @@ namespace NServiceBus.Profiler.Tests
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar);
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard);
         };
     }
 
