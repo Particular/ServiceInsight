@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-using Caliburn.PresentationFramework;
+﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Management;
@@ -11,9 +10,10 @@ using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
-using System.Linq;
 using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -199,6 +199,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
 
             return string.Empty;
+        }
+
+        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
+        {
+            return msg != null ? new MessageErrorInfo(msg.Status) : new MessageErrorInfo();
         }
 
         public virtual async Task DeleteSelectedMessages()

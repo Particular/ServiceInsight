@@ -252,6 +252,7 @@
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
     <Compile Include="MessageHeaders\TabPriority.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
+    <Compile Include="MessageList\MessageErrorInfo.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
@@ -453,6 +454,10 @@
     <Resource Include="Images\SearchRefresh.png" />
     <Resource Include="Images\SearchSeparator.png" />
     <Resource Include="Images\AsyncProcess.gif" />
+    <Resource Include="Images\Bullet-Green.png" />
+    <Resource Include="Images\Bullet-Red.png" />
+    <Resource Include="Images\Bullet-White.png" />
+    <Resource Include="Images\Bullet-Yellow.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

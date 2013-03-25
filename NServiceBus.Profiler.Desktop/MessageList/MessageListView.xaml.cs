@@ -14,6 +14,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private static class AdvancedEndpointColumns
         {
             public const string CriticalTime = "CriticalTime";
+            public const string IsFaulted = "IsFaulted";
         }
 
         private readonly IShellViewModel _shell;
@@ -82,13 +83,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
-            var msg = Model.Messages[e.ListSourceRowIndex] as StoredMessage;
+            var storedMsg = Model.Messages[e.ListSourceRowIndex] as StoredMessage;
 
-            if (msg != null && e.IsGetData)
+            if (e.IsGetData)
             {
-                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
+                if (storedMsg != null && e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
                 {
-                    e.Value = Model.GetCriticalTime(msg);
+                    e.Value = Model.GetCriticalTime(storedMsg);
+                }
+                if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)
+                {
+                    e.Value = Model.GetMessageErrorInfo(storedMsg);
                 }
             }
         }

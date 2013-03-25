@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
@@ -28,5 +29,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         Task RefreshQueue(Queue queue);
         Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null);
         string GetCriticalTime(StoredMessage msg);
+        MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
     }
 }

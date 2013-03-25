@@ -73,6 +73,7 @@
     <Compile Include="INetworkOperations.cs" />
     <Compile Include="IQueueManager.cs" />
     <Compile Include="IQueueOperations.cs" />
+    <Compile Include="IQueueOperationsAsync.cs" />
     <Compile Include="Management\DefaultManagementService.cs" />
     <Compile Include="Management\IManagementService.cs" />
     <Compile Include="Management\ManagementConfig.cs" />

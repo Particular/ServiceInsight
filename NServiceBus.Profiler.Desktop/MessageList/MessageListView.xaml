@@ -32,6 +32,13 @@
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
+                <dxg:GridColumn AllowSorting="True" FieldName="IsFaulted" Header="Status" UnboundType="Object" Width="16">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="16" Height="16" Source="{Binding Value.Image}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
                 <dxg:GridColumn FieldName="Id" Header="Message ID">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
