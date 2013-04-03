@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.ComponentModel;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Properties;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase
+    [TypeConverter(typeof(HeaderInfoTypeConverter))]
+    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPerformanceHeaderViewModel
     {
         public PerformanceHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -21,17 +20,27 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             DisplayName = "Performance";
         }
 
-        public override ImageSource GroupImage
+        [Description("Time the message was sent")]
+        public string TimeSent { get; set; }
+
+        [Description("Time the processing started")]
+        public string ProcessingStarted { get; set; }
+
+        [Description("Time the processing finished")]
+        public string ProcessingEnded { get; set; }
+
+        protected override void MapHeaderKeys()
         {
-            get { return Resources.HeaderPerformance.ToBitmapImage(); }
+            ConditionsMap.Add(h => h.Key.EndsWith("TimeSent", StringComparison.OrdinalIgnoreCase), h => TimeSent = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("ProcessingStarted", StringComparison.OrdinalIgnoreCase), h => ProcessingStarted = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("ProcessingEnded", StringComparison.OrdinalIgnoreCase), h => ProcessingEnded = h.Value);
         }
 
-        protected override bool IsMatchingHeader(HeaderInfo header)
+        protected override void ClearHeaderValues()
         {
-            //TODO: Add a diff between processing started and ended
-            return header.Key.EndsWith("TimeSent", StringComparison.OrdinalIgnoreCase)          ||
-                   header.Key.EndsWith("ProcessingStarted", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("ProcessingEnded", StringComparison.OrdinalIgnoreCase);
+            TimeSent = null;
+            ProcessingStarted = null;
+            ProcessingEnded = null;
         }
     }
 }

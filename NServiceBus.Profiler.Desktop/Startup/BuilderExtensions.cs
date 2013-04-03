@@ -87,10 +87,10 @@ namespace NServiceBus.Profiler.Desktop.Startup
                    type.IsClass &&
                    !type.IsAbstract &&
                    type.Namespace != null &&
-                   MatchingNamespaces.Any(ns => type.Name.EndsWith(ns, StringComparison.InvariantCultureIgnoreCase));
+                   MatchingNames.Any(ns => type.Name.EndsWith(ns, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private static IEnumerable<string> MatchingNamespaces
+        private static IEnumerable<string> MatchingNames
         {
             get
             {

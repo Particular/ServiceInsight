@@ -28,8 +28,8 @@ namespace NServiceBus.Profiler.Tests
         protected static IEndpointConnectionProvider EndpointConnectionProvider;
         protected static ISearchBarViewModel SearchBar;
         protected static IClipboard Clipboard;
-        protected static IErrorHeaderDisplay ErrorDisplay;
-        protected static IGeneralHeaderDisplay GeneralDisplay;
+        protected static IErrorHeaderViewModel ErrorDisplay;
+        protected static IGeneralHeaderViewModel GeneralDisplay;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         protected static MessageListViewModel MessageList;
         

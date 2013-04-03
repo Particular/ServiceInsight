@@ -206,6 +206,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WPFExtensions.1.0.0-Custom\WPFExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=1.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -250,9 +254,23 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
-    <Compile Include="MessageHeaders\IErrorHeaderDisplay.cs" />
-    <Compile Include="MessageHeaders\IGeneralHeaderDisplay.cs" />
-    <Compile Include="MessageHeaders\TabPriority.cs" />
+    <Compile Include="MessageHeaders\Editors\EmptyTypeEditor.cs" />
+    <Compile Include="MessageHeaders\GatewayHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\IErrorHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\IGeneralHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\IMessagePropertiesViewModel.cs" />
+    <Compile Include="MessageHeaders\IPerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\ISagaHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\MessagePropertiesView.xaml.cs">
+      <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageHeaders\MessagePropertiesViewModel.cs" />
+    <Compile Include="MessageHeaders\PerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\Editors\ResizableDropDownEditor.cs" />
+    <Compile Include="MessageHeaders\SagaHeaderViewModel.cs" />
+    <Compile Include="MessageHeaders\HeaderInfoPropertyDescriptor.cs" />
+    <Compile Include="MessageHeaders\HeaderInfoTypeConverter.cs" />
+    <Compile Include="MessageHeaders\Editors\SelectableTextBoxEditor.cs" />
     <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
@@ -275,13 +293,10 @@
     </Compile>
     <Compile Include="ManagementService\ManagementConnectionViewModel.cs" />
     <Compile Include="MessageHeaders\ErrorHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\GatewayHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\HeaderInfoViewModelBase.cs" />
     <Compile Include="MessageHeaders\IHeaderInfoView.cs" />
     <Compile Include="MessageHeaders\IHeaderInfoViewModel.cs" />
-    <Compile Include="MessageHeaders\PerformanceHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\SagaHeaderViewModel.cs" />
     <Compile Include="MessageList\DeletedMessageConverter.cs" />
     <Compile Include="MessageList\FileSizeFormatProvider.cs" />
     <Compile Include="MessageList\FileSizeValueConverter.cs" />
@@ -377,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MessageHeaders\MessagePropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageViewers\HexViewer\HexContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -461,6 +480,7 @@
     <Resource Include="Images\Bullet-Red.png" />
     <Resource Include="Images\Bullet-White.png" />
     <Resource Include="Images\Bullet-Yellow.png" />
+    <Resource Include="Images\Clipboard.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.ComponentModel;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Properties;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public class GatewayHeaderViewModel : HeaderInfoViewModelBase
+    [TypeConverter(typeof(HeaderInfoTypeConverter))]
+    public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IGatewayHeaderViewModel
     {
         public GatewayHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -21,18 +20,37 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             DisplayName = "Gateway";
         }
 
-        public override ImageSource GroupImage
+        [Description("From address")]
+        public string From { get; set; }
+
+        [Description("To address")]
+        public string To { get; set; }
+
+        [Description("Destination sites")]
+        public string DestinationSites { get; set; }
+
+        [Description("Originating site")]
+        public string OriginatingSite { get; set; }
+
+        [Description("Route to address")]
+        public string RouteTo { get; set; }
+
+        protected override void MapHeaderKeys()
         {
-            get { return Resources.HeaderGateway.ToBitmapImage(); }
+            ConditionsMap.Add(h => h.Key.EndsWith(".From", StringComparison.OrdinalIgnoreCase), h => From = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".To", StringComparison.OrdinalIgnoreCase), h => To = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".DestinationSites", StringComparison.OrdinalIgnoreCase), h => DestinationSites = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".OriginatingSite", StringComparison.OrdinalIgnoreCase), h => OriginatingSite = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".Header.RouteTo", StringComparison.OrdinalIgnoreCase), h => RouteTo = h.Value);
         }
 
-        protected override bool IsMatchingHeader(HeaderInfo header)
+        protected override void ClearHeaderValues()
         {
-            return header.Key.EndsWith(".From", StringComparison.OrdinalIgnoreCase)             ||
-                   header.Key.EndsWith(".To", StringComparison.OrdinalIgnoreCase)               ||
-                   header.Key.EndsWith(".DestinationSites", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith(".OriginatingSite", StringComparison.OrdinalIgnoreCase)  ||
-                   header.Key.EndsWith(".Header.RouteTo", StringComparison.OrdinalIgnoreCase);
+            From = null;
+            To = null;
+            DestinationSites = null;
+            OriginatingSite = null;
+            RouteTo = null;
         }
     }
 }

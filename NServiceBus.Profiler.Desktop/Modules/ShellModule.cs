@@ -21,7 +21,8 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterAssemblyTypes(ThisAssembly)
                    .Where(t => t.IsViewOrViewModel())
                    .AsImplementedInterfaces()
-                   .AsSelf();
+                   .AsSelf()
+                   .SingleInstance();
 
             builder.RegisterSource(new SettingsSource());
             builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();

@@ -1,9 +1,6 @@
 ﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public enum TabPriority
+    public interface IPerformanceHeaderViewModel : IHeaderInfoViewModel
     {
-        High,
-        Regular,
-        Low,
     }
 }

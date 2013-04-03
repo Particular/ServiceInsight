@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media;
-using Caliburn.PresentationFramework;
+﻿using System;
+using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Models;
@@ -16,7 +14,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
-
+        
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
@@ -25,21 +23,17 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             _decoder = decoder;
             EventAggregator = eventAggregator;
             QueueManager = queueManager;
-            Items = new BindableCollection<HeaderInfo>();
+            ConditionsMap = new Dictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>>();
+            MapHeaderKeys();
         }
 
-        public IObservableCollection<HeaderInfo> Items { get; private set; }
-
-        public abstract ImageSource GroupImage { get; }
-
-        public virtual TabPriority Order
-        {
-            get { return TabPriority.Regular; }
-        }
+        protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; private set; }
 
         protected IQueueManagerAsync QueueManager { get; private set; }
 
         protected IEventAggregator EventAggregator { get; private set; }
+
+        protected IList<HeaderInfo> Headers { get; private set; }
 
         protected MessageBody SelectedMessage { get; private set; }
 
@@ -56,44 +50,54 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         public virtual void Handle(MessageBodyLoaded @event)
         {
-            Items.Clear();
-
+            ClearHeaderValues();
             SelectedMessage = @event.Message;
 
             if (SelectedMessage != null)
             {
-                var headers = DecodeHeader(SelectedMessage);
-                OnItemsLoaded(headers);
+                Headers = DecodeHeader(SelectedMessage);
+                OnItemsLoaded();
             }
         }
 
-        protected IEnumerable<HeaderInfo> DecodeHeader(MessageBody message)
+        protected IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
             var headers = message.Headers;
             var decodeResult = _decoder.Decode(headers);
             
-            return decodeResult.IsParsed ? decodeResult.Value : Enumerable.Empty<HeaderInfo>();
+            return decodeResult.IsParsed ? decodeResult.Value : new HeaderInfo[0];
         }
 
-        protected void OnItemsLoaded(IEnumerable<HeaderInfo> headers)
+        protected void OnItemsLoaded()
         {
-            foreach (var header in headers)
+            foreach (var condition in ConditionsMap)
             {
-                if (IsMatchingHeader(header))
+                foreach (var header in Headers)
                 {
-                    Items.Add(header);
+                    if (condition.Key(header))
+                    {
+                        condition.Value(header);
+                    }
                 }
             }
         }
 
-        protected abstract bool IsMatchingHeader(HeaderInfo header);
+        protected abstract void MapHeaderKeys();
+
+        protected abstract void ClearHeaderValues();
+
+        protected string GetConditionalValue(Func<HeaderInfo, bool> condition, HeaderInfo header)
+        {
+            return condition(header) ? header.Value : null;
+        }
 
         public virtual void Handle(SelectedMessageChanged @event)
         {
             if (@event.SelectedMessage == null)
             {
-                Items.Clear();
                 SelectedMessage = null;
+                Headers.Clear();
+                ClearHeaderValues();
             }
         }
     }

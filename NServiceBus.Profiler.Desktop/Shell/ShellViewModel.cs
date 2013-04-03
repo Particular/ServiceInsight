@@ -19,7 +19,6 @@ using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.ScreenManager;
-using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -45,13 +44,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IConversationViewModel conversation,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
-            IEnumerable<IHeaderInfoViewModel> headers)
+            IMessagePropertiesViewModel messageProperties)
         {
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
             _settingsProvider = settingsProvider;
-            Headers = headers.OrderBy(x => x.Order);
+            MessageProperties = messageProperties;
             Conversation = conversation;
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
@@ -108,6 +107,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public IEnumerable<IHeaderInfoViewModel> Headers { get; private set; }
 
         public virtual IShellView View { get; private set; }
+
+        public virtual IMessagePropertiesViewModel MessageProperties { get; private set; }
 
         public virtual IQueueExplorerViewModel QueueExplorer { get; private set; }
 

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.ComponentModel;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Properties;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public class SagaHeaderViewModel : HeaderInfoViewModelBase
+    [TypeConverter(typeof(HeaderInfoTypeConverter))]
+    public class SagaHeaderViewModel : HeaderInfoViewModelBase, ISagaHeaderViewModel
     {
         public SagaHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -21,19 +20,42 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             DisplayName = "Saga";
         }
 
-        public override ImageSource GroupImage
+        [Description("Saga type")]
+        public string SagaType { get; set; }
+
+        [Description("Data type of the saga")]
+        public string SagaDataType { get; set; }
+
+        [Description("Id of the originating saga message")]
+        public string OriginatingSagaId { get; set; }
+
+        [Description("Type of the originating saga")]
+        public string OriginatingSagaType { get; set; }
+
+        [Description("Is this a saga timeout message?")]
+        public string IsSagaTimeoutMessage { get; set; }
+
+        [Description("Id of the sage")]
+        public string SagaId { get; set; }
+
+        protected override void MapHeaderKeys()
         {
-            get { return Resources.HeaderSaga.ToBitmapImage(); }
+            ConditionsMap.Add(h => h.Key.EndsWith(".SagaType", StringComparison.OrdinalIgnoreCase), h => SagaType = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".SagaDataType", StringComparison.OrdinalIgnoreCase), h => SagaDataType = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".OriginatingSagaId", StringComparison.OrdinalIgnoreCase), h => OriginatingSagaId = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".OriginatingSagaType", StringComparison.OrdinalIgnoreCase), h => OriginatingSagaType = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".IsSagaTimeoutMessage", StringComparison.OrdinalIgnoreCase), h => IsSagaTimeoutMessage = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(".SagaId", StringComparison.OrdinalIgnoreCase), h => SagaId = h.Value);
         }
 
-        protected override bool IsMatchingHeader(HeaderInfo header)
+        protected override void ClearHeaderValues()
         {
-            return header.Key.EndsWith(".SagaType", StringComparison.OrdinalIgnoreCase)             ||
-                   header.Key.EndsWith(".SagaDataType", StringComparison.OrdinalIgnoreCase)         ||
-                   header.Key.EndsWith(".OriginatingSagaId", StringComparison.OrdinalIgnoreCase)    ||
-                   header.Key.EndsWith(".OriginatingSagaType", StringComparison.OrdinalIgnoreCase)  ||
-                   header.Key.EndsWith(".IsSagaTimeoutMessage", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith(".SagaId", StringComparison.OrdinalIgnoreCase);
+            SagaType = null;
+            SagaDataType = null;
+            OriginatingSagaId = null;
+            OriginatingSagaType = null;
+            IsSagaTimeoutMessage = null;
+            SagaId = null;
         }
     }
 }

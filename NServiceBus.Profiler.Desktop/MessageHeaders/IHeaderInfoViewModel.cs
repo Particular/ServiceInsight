@@ -1,8 +1,5 @@
-using System.Windows.Media;
-using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
@@ -13,10 +10,5 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         IHandle<MessageBodyLoaded>, 
         IHandle<SelectedMessageChanged>
     {
-        IObservableCollection<HeaderInfo> Items { get; }
-
-        ImageSource GroupImage { get; }
-
-        TabPriority Order { get; }
     }
 }

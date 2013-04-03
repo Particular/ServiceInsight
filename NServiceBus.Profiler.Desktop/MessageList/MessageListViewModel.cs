@@ -26,8 +26,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
         private readonly IEndpointConnectionProvider _endpointConnection;
-        private readonly IErrorHeaderDisplay _errorHeaderDisplay;
-        private readonly IGeneralHeaderDisplay _generalHeaderDisplay;
+        private readonly IErrorHeaderViewModel _errorHeaderDisplay;
+        private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
         private IMessageListView _view;
         private int _workCount;
@@ -39,8 +39,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             IQueueManagerAsync asyncQueueManager,
             IEndpointConnectionProvider endpointConnection,
             ISearchBarViewModel searchBarViewModel,
-            IErrorHeaderDisplay errorHeaderDisplay,
-            IGeneralHeaderDisplay generalHeaderDisplay,
+            IErrorHeaderViewModel errorHeaderDisplay,
+            IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
             _eventAggregator = eventAggregator;

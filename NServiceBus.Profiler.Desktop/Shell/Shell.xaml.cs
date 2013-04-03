@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Caliburn.Core.Logging;
 using DevExpress.Xpf.Bars;
@@ -8,6 +9,7 @@ using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Common.ExtensionMethods;
+using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -80,20 +82,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 Logger.Info("Failed to restore layout, reason is: " + ex);
             }
-        }
-
-        private void OnGroupAdding(object sender, GroupAddingEventArgs e)
-        {
-            if (e.Group == null)
-                return;
-
-            var headerScreen = e.Group.DataContext as IHeaderInfoViewModel;
-            if(headerScreen == null)
-                return;
-
-            e.Group.Header = headerScreen.DisplayName;
-            e.Group.ImageSource = headerScreen.GroupImage;
-            e.Group.ItemsSource = headerScreen.Items;
         }
     }
 }

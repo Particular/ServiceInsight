@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Windows.Media;
 using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Properties;
+using NServiceBus.Profiler.Desktop.MessageHeaders.Editors;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IErrorHeaderDisplay
+    [TypeConverter(typeof(HeaderInfoTypeConverter))]
+    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IErrorHeaderViewModel
     {
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -28,16 +28,14 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             return SelectedQueue != null &&
                    !SelectedQueue.IsRemoteQueue() &&
                    SelectedMessage != null &&
-                   Items.Count > 0 &&
-                   Items.Any(header => header.Key.Equals(HeaderInfo.FailedQueueKey, StringComparison.InvariantCultureIgnoreCase));
+                   FailedQueue != null;
         }
 
         public virtual void ReturnToSource()
         {
             if (!CanReturnToSource()) return;
 
-            var destinationQueueName = Items.First(header => header.Key == HeaderInfo.FailedQueueKey);
-            var destinationAddress = Address.Parse(destinationQueueName.Value);
+            var destinationAddress = Address.Parse(FailedQueue);
             var queues = QueueManager.GetQueues();
             var destinationQueue = queues.FirstOrDefault(q => q.Address == destinationAddress);
 
@@ -48,16 +46,28 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             }
         }
 
-        public override ImageSource GroupImage
+        [Editor(typeof(ResizableDropDownEditor), typeof(ResizableDropDownEditor))]
+        [Description("Stack trace for the error")]
+        public string ExceptionInfo { get; set; }
+
+        [Description("Failed Queue")]
+        public string FailedQueue { get; set; }
+
+        [Description("The time when the message has failed")]
+        public string TimeOfFailure { get; set; }
+
+        protected override void MapHeaderKeys()
         {
-            get { return Resources.HeaderError.ToBitmapImage(); }
+            ConditionsMap.Add(h => h.Key.StartsWith("NServiceBus.ExceptionInfo", StringComparison.OrdinalIgnoreCase), h => ExceptionInfo = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("FailedQ", StringComparison.OrdinalIgnoreCase), h => FailedQueue = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("TimeOfFailure", StringComparison.OrdinalIgnoreCase), h => TimeOfFailure = h.Value);
         }
 
-        protected override bool IsMatchingHeader(HeaderInfo header)
+        protected override void ClearHeaderValues()
         {
-            return header.Key.StartsWith("NServiceBus.ExceptionInfo", StringComparison.OrdinalIgnoreCase) ||
-                   header.Key.EndsWith("FailedQ", StringComparison.OrdinalIgnoreCase)                     ||
-                   header.Key.EndsWith("TimeOfFailure", StringComparison.OrdinalIgnoreCase);
+            FailedQueue = null;
+            ExceptionInfo = null;
+            TimeOfFailure = null;
         }
     }
 }

@@ -13,6 +13,11 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
             }
         }
 
+        public static bool IsEmpty<T>(this IList<T> list)
+        {
+            return list == null || list.Count == 0;
+        }
+
         public static void AddRange<T>(this IList<T> list, IList<T> collectionToAdd)
         {
             foreach (var item in collectionToAdd)

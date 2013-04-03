@@ -59,7 +59,9 @@ namespace NServiceBus.Profiler.Tests.Shell
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
-            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList, statusbarManager, eventAggregator, conversation, messageBodyView, settingsProvider, headerInfo);
+            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList,
+                                       statusbarManager, eventAggregator, conversation, messageBodyView,
+                                       settingsProvider, null); //TODO: Populate the dependency
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
