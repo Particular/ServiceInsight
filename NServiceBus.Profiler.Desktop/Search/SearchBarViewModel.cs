@@ -48,10 +48,11 @@ namespace NServiceBus.Profiler.Desktop.Search
         }
 
         [AutoCheckAvailability]
-        public virtual void CancelSearch()
+        public virtual async void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
+            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<MessageInfo> pagedResult)
