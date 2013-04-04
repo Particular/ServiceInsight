@@ -481,6 +481,10 @@
     <Resource Include="Images\Bullet-White.png" />
     <Resource Include="Images\Bullet-Yellow.png" />
     <Resource Include="Images\Clipboard.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\Diagram.png" />
+    <Resource Include="Images\Document.png" />
+    <Resource Include="Images\Folder-Table.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

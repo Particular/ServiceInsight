@@ -188,7 +188,8 @@
                                          Caption="Messages" 
   							             AllowClose="False"
 							             AllowFloat="False"
-							             ShowBorder="False">
+							             ShowBorder="False"
+                                         CaptionImage="/Images/Folder-Table.png">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
@@ -202,7 +203,8 @@
                                                  Caption="Flow Diagram"  
     							                 AllowClose="False"
 							                     AllowFloat="False"
-							                     ShowBorder="False">
+							                     ShowBorder="False"
+                                                 CaptionImage="/Images/Diagram.png">
                                     <ContentControl cal:View.Model="{Binding Conversation}" />
                                 </dxd:LayoutPanel>
 
@@ -210,7 +212,8 @@
                                                  Caption="Body"  
     							                 AllowClose="False"
 							                     AllowFloat="False"
-							                     ShowBorder="False">
+							                     ShowBorder="False"
+                                                 CaptionImage="/Images/Document.png">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
 
@@ -221,7 +224,8 @@
                                              ItemWidth="1*"
 							                 AllowClose="False"
 							                 AllowFloat="False"
-							                 ShowBorder="False">
+							                 ShowBorder="False"
+                                             CaptionImage="/Images/Properties.png">
 
                                 <ContentControl cal:View.Model="{Binding MessageProperties}" />
                                 
