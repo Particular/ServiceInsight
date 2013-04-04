@@ -81,7 +81,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             DisplayName = GetProductName();
             StatusBarManager.Status = "Done";
-            SaveLayout();
+            RestoreLayout();
         }
 
         protected override void OnDeactivate(bool close)
@@ -89,17 +89,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
             base.OnDeactivate(close);
             _timer.Stop();
 
-            RestoreLayout();
+            SaveLayout();
         }
 
         private void SaveLayout()
         {
-            View.RestoreLayout(_settingsProvider);
+            View.SaveLayout(_settingsProvider);
         }
 
         private void RestoreLayout()
         {
-            View.SaveLayout(_settingsProvider);
+            View.RestoreLayout(_settingsProvider);
         }
 
         public virtual bool AutoRefresh { get; set; }

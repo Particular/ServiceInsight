@@ -165,9 +165,7 @@
                                          Caption="Endpoint Explorer"
 						                 AllowClose="False" 
 						                 ShowBorder="False" 
-						                 AllowDrag="False" 
 						                 AllowFloat="False"
-						                 AllowMove="False"
 						                 CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
@@ -175,9 +173,7 @@
                                          Caption="Queue Explorer" 
 						                 AllowClose="False" 
 						                 ShowBorder="False" 
-						                 AllowDrag="False" 
 						                 AllowFloat="False"
-						                 AllowMove="False"
 						                 CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding QueueExplorer}" />
                         </dxd:LayoutPanel>
@@ -191,9 +187,7 @@
                         <dxd:LayoutPanel x:Name="Messages" 
                                          Caption="Messages" 
   							             AllowClose="False"
-							             AllowDrag="False"
 							             AllowFloat="False"
-							             AllowMove="False"
 							             ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
@@ -201,18 +195,13 @@
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
                             <dxd:TabbedGroup ItemWidth="3*"
                                              AllowClose="False"
-							                 AllowDrag="False"
 							                 AllowFloat="False"
-							                 AllowMove="False" 
-                                             AllowDock="False"
                                              GroupBorderStyle="Tabbed">
                                 
                                 <dxd:LayoutPanel x:Name="FlowDiagram" 
                                                  Caption="Flow Diagram"  
     							                 AllowClose="False"
-	  						                     AllowDrag="False"
 							                     AllowFloat="False"
-							                     AllowMove="False"
 							                     ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding Conversation}" />
                                 </dxd:LayoutPanel>
@@ -220,9 +209,7 @@
                                 <dxd:LayoutPanel x:Name="MessageBody"
                                                  Caption="Body"  
     							                 AllowClose="False"
-	  						                     AllowDrag="False"
 							                     AllowFloat="False"
-							                     AllowMove="False"
 							                     ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
@@ -233,9 +220,7 @@
                                              Caption="Message Properties" 
                                              ItemWidth="1*"
 							                 AllowClose="False"
-							                 AllowDrag="False"
 							                 AllowFloat="False"
-							                 AllowMove="False"
 							                 ShowBorder="False">
 
                                 <ContentControl cal:View.Model="{Binding MessageProperties}" />
