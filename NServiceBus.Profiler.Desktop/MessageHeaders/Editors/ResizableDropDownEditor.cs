@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using DevExpress.Xpf.Editors;
@@ -18,6 +19,8 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders.Editors
             editor.ShowIcon = false;
             editor.Background = Brushes.Transparent;
             editor.TextWrapping = TextWrapping.NoWrap;
+            editor.MemoTextWrapping = TextWrapping.WrapWithOverflow;
+            editor.MemoVerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             editor.Height = 22;
             editor.PopupWidth = 500;
             editor.PopupFooterButtons = PopupFooterButtons.Close;
