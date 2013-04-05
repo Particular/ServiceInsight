@@ -21,11 +21,26 @@ namespace NServiceBus.Profiler.Tests.Helpers
             return MessageQueue.Keys.Select(x => x).ToList();
         }
 
+        Task<int> IQueueManagerAsync.GetMessageCount(Queue queue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<Queue>> GetQueues()
+        {
+            throw new NotImplementedException();
+        }
+
         Task<IList<MessageInfo>> IQueueManagerAsync.GetMessages(Queue queue)
         {
             var t = new Task<IList<MessageInfo>>(() => MessageQueue[queue].ToArray());
             t.Start();
             return t;
+        }
+
+        Task<IList<Queue>> IQueueManagerAsync.GetQueues(string machineName)
+        {
+            throw new NotImplementedException();
         }
 
         public MessageBody GetMessageBody(Queue queue, string messageId)

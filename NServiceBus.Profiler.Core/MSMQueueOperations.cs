@@ -41,6 +41,16 @@ namespace NServiceBus.Profiler.Core
             return Task.Run(() => GetMessages(queue));
         }
 
+        public virtual Task<int> GetMessageCountAsync(Queue queue)
+        {
+            return Task.Run(() => GetMessageCount(queue));
+        }
+
+        public virtual Task<IList<Queue>> GetQueuesAsync(string machineName)
+        {
+            return Task.Run(() => GetQueues(machineName));
+        }
+
         public virtual IList<MessageInfo> GetMessages(Queue queue)
         {
             using (var q = queue.AsMessageQueue())

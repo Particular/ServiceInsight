@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
+using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
@@ -9,6 +11,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using System.Linq;
 
@@ -17,9 +20,9 @@ namespace NServiceBus.Profiler.Tests.Explorer
     [Subject("queueExplorer")]
     public abstract class with_the_explorer
     {
-        protected static IQueueExplorerViewModel Explorer;
+        protected static QueueExplorerViewModel Explorer;
         protected static IExplorerView View;
-        protected static IQueueManager QueueManager;
+        protected static IQueueManagerAsync QueueManager;
         protected static IEventAggregator EventAggregator;
         protected static IWindowManagerEx WindowManagerEx;
         protected static Queue Queue;
@@ -28,7 +31,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
 
         Establish context = () =>
         {
-            QueueManager = Substitute.For<IQueueManager>();
+            QueueManager = Substitute.For<IQueueManagerAsync>();
             View = Substitute.For<IExplorerView>();
             EventAggregator = Substitute.For<IEventAggregator>();
             WindowManagerEx = Substitute.For<IWindowManagerEx>();
@@ -38,9 +41,14 @@ namespace NServiceBus.Profiler.Tests.Explorer
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
 
-            QueueManager.GetQueues().ReturnsForAnyArgs(new[] { Queue, SubQueue });
+            IList<Queue> queues = new List<Queue> {Queue, SubQueue};
+            QueueManager.GetQueues(Arg.Any<string>()).Returns(Task.Run(() => queues));
+            QueueManager.GetQueues().Returns(Task.Run(() => queues));
+            QueueManager.GetMessageCount(Arg.Any<Queue>()).Returns(Task.Run(() => queues.Count));
 
-            Explorer.AttachView(View, null);
+            AsyncHelper.Run(() => Explorer.AttachView(View, null));
+            AsyncHelper.Run(() => Explorer.ConnectToQueue(Environment.MachineName));
+
             QueueNode = Explorer.MachineRoot.Children.OfType<QueueExplorerItem>().First();
         };
     }
@@ -88,8 +96,8 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Establish context = () =>
         {
             AnotherQueue = new Queue("SecondQueue");
-            Queues = new[] { Queue, AnotherQueue };
-            QueueManager.GetQueues(Arg.Any<string>()).Returns(Queues);
+            Queues = new List<Queue> { Queue, AnotherQueue };
+            QueueManager.GetQueues(Arg.Any<string>()).Returns(Task.FromResult(Queues));
 
             Explorer.ConnectToQueue(Environment.MachineName);
         };
@@ -117,11 +125,11 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Establish context = () =>
         {
             Queue = new Queue("FirstQueue");
-            Queues = new[] {Queue};
-            QueueManager.GetQueues(Arg.Any<string>()).Returns(Queues);
+            Queues = new List<Queue> {Queue};
+            QueueManager.GetQueues(Arg.Any<string>()).Returns(Task.FromResult(Queues));
         };
 
-        Because of = () => Explorer.Activate();
+        Because of = () => ((IScreen)Explorer).Activate();
 
         It should_automatically_connect_to_local_machine = () => Explorer.ConnectedToAddress.ShouldEqual(Environment.MachineName.ToLower());
     }
@@ -133,8 +141,8 @@ namespace NServiceBus.Profiler.Tests.Explorer
         Establish context = () =>
         {
             Queue = new Queue("FirstQueue");
-            Queues = new[] {Queue};
-            QueueManager.GetQueues(Arg.Any<string>()).Returns(Queues);
+            Queues = new List<Queue> {Queue};
+            QueueManager.GetQueues(Arg.Any<string>()).Returns(Task.FromResult(Queues));
 
             Explorer.ConnectToQueue(Environment.MachineName);
             Explorer.SelectedNode = new QueueExplorerItem(Queue);
@@ -149,7 +157,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
     {
         protected static Queue Q;
 
-        Establish context = () => QueueManager.GetMessageCount(Arg.Any<Queue>()).Returns(5);
+        Establish context = () => QueueManager.GetMessageCount(Arg.Any<Queue>()).Returns(Task.FromResult(5));
 
         Because of = () =>
         {
@@ -185,21 +193,21 @@ namespace NServiceBus.Profiler.Tests.Explorer
     {
         protected static Exception Error;
 
-        Because of = () => Error = Catch.Exception(() => Explorer.ConnectToQueue("NonExistingMachine"));
+        Because of = () => Error = Catch.Exception(() => AsyncHelper.Run(() => Explorer.ConnectToQueue("NonExistingMachine")));
 
         It should_throw_on_non_existing_machine_names = () => Error.ShouldNotBeNull();
     }
 
     public class when_system_queues_are_orphaned : with_the_explorer
     {
-        protected static List<Queue> UnorderedQueueList;
+        protected static IList<Queue> UnorderedQueueList;
         protected static Exception Error;
 
         Establish context = () =>
         {
             UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
-            QueueManager = Substitute.For<IQueueManager>();
-            QueueManager.GetQueues().ReturnsForAnyArgs(UnorderedQueueList);
+            QueueManager = Substitute.For<IQueueManagerAsync>();
+            QueueManager.GetQueues().ReturnsForAnyArgs(Task.FromResult(UnorderedQueueList));
             Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
         };
 

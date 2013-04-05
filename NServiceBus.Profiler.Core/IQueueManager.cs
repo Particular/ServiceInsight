@@ -22,5 +22,8 @@ namespace NServiceBus.Profiler.Core
     public interface IQueueManagerAsync : IQueueManager
     {
         new Task<IList<MessageInfo>> GetMessages(Queue queue);
+        new Task<IList<Queue>> GetQueues(string machineName);
+        new Task<int> GetMessageCount(Queue queue);
+        Task<IList<Queue>> GetQueues();
     }
 }

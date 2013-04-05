@@ -31,7 +31,7 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
     {
         Because of = () =>
         {
-            AsyncHelper.Run(() => ((IScreen) ConnectTo).Activate());
+             AsyncHelper.Run(() => ((IScreen) ConnectTo).Activate());
         };
 
         It should_have_list_of_machines_on_the_network_prepopulated = () => ConnectTo.Machines.Count.ShouldBeGreaterThan(0);

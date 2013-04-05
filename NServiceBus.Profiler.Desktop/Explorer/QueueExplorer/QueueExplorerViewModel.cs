@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -12,21 +13,20 @@ using NServiceBus.Profiler.Core;
 using System.Linq;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ScreenManager;
-using DevExpress.Xpf.Editors.Helpers;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
     [View(typeof(IExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
-        private readonly IQueueManager _queueManager;
+        private readonly IQueueManagerAsync _queueManager;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public QueueExplorerViewModel(
-            IQueueManager queueManager,
+            IQueueManagerAsync queueManager,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager)
         {
@@ -60,13 +60,13 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public override void AttachView(object view, object context)
+        public override async void AttachView(object view, object context)
         {
             base.AttachView(view, context);
             _view = view as IExplorerView;
             if (!IsConnected)
             {
-                ConnectToQueue(Environment.MachineName);
+                await ConnectToQueue(Environment.MachineName);
             }
         }
 
@@ -107,16 +107,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public virtual void PartialRefresh()
+        public virtual async Task PartialRefresh()
         {
             if (MachineRoot == null)
                 return;
 
-            MachineRoot.Children.OfType<QueueExplorerItem>().ForEach(q =>
+            foreach (var explorerItem in MachineRoot.Children.OfType<QueueExplorerItem>())
             {
-                var count = _queueManager.GetMessageCount(q.Queue);
-                q.UpdateMessageCount(count);
-            });
+                var messageCount = await _queueManager.GetMessageCount(explorerItem.Queue);
+                explorerItem.UpdateMessageCount(messageCount);
+            }
         }
 
         public virtual ExplorerItem FolderRoot
@@ -131,7 +131,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public virtual ExplorerItem SelectedNode { get; set; }
 
-        public virtual void ConnectToQueue(string computerName)
+        public virtual async Task ConnectToQueue(string computerName)
         {
             Guard.NotNull(() => computerName, computerName);
 
@@ -141,20 +141,21 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
             ConnectedToAddress = ipv4;
             AddServerNode();
-            FullRefresh();
+            await FullRefresh();
         }
 
-        public void FullRefresh()
+        public async Task FullRefresh()
         {
             if (MachineRoot == null)
                 return;
 
             MachineRoot.Children.Clear();
 
-            var queues = _queueManager.GetQueues(ConnectedToAddress).OrderBy(x => x.Address).ToList();
+            var queues = await _queueManager.GetQueues(ConnectedToAddress);
+            var sortedQueues = queues.OrderBy(x => x.Address).ToList();
 
-            SetupQueueNodes(queues);
-            PartialRefresh();
+            SetupQueueNodes(sortedQueues);
+            await PartialRefresh();
         }
 
         public virtual string ConnectedToAddress { get; private set; }

@@ -56,6 +56,14 @@
     <Reference Include="ExceptionHandler">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
     </Reference>
+    <Reference Include="ExceptionHandler.IssueReporter.BitBucket, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.IssueReporter.BitBucket.dll</HintPath>
+    </Reference>
+    <Reference Include="ExceptionHandler.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Machine.Specifications">
       <HintPath>..\packages\Machine.Specifications.0.5.11\lib\net40\Machine.Specifications.dll</HintPath>
     </Reference>
@@ -102,7 +110,9 @@
     <Compile Include="SettingsSpecs.cs" />
     <Compile Include="ShellSpecs.cs" />
     <Compile Include="XmlParserSpecs.cs" />
-    <Compile Include="XmlViewerSpecs.cs" />
+    <Compile Include="XmlViewerSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

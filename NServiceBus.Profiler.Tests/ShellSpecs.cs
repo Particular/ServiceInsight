@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Caliburn.PresentationFramework.ApplicationModel;
+﻿using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Machine.Specifications;
@@ -38,7 +37,8 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IStatusBarManager statusbarManager;
         protected static IMessageBodyViewModel messageBodyView;
         protected static ISettingsProvider settingsProvider;
-        protected static IEnumerable<IHeaderInfoViewModel> headerInfo;
+        protected static IShellView view;
+        protected static IMessagePropertiesViewModel messageProperties;
             
         Establish context = () =>
         {
@@ -53,15 +53,18 @@ namespace NServiceBus.Profiler.Tests.Shell
             eventAggregator = Substitute.For<IEventAggregator>();
             conversation = Substitute.For<IConversationViewModel>();
             messageBodyView = Substitute.For<IMessageBodyViewModel>();
+            messageProperties = Substitute.For<IMessagePropertiesViewModel>();
+            view = Substitute.For<IShellView>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            headerInfo = new List<IHeaderInfoViewModel>(new[] { Substitute.For<IHeaderInfoViewModel>() });
             aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
             screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
             screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
             shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList,
                                        statusbarManager, eventAggregator, conversation, messageBodyView,
-                                       settingsProvider, null); //TODO: Populate the dependency
+                                       settingsProvider, messageProperties);
+
+            shell.AttachView(view, null);
         };
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);

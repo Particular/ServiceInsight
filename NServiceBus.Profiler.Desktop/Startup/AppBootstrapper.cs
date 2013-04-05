@@ -54,7 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
             LogManager.Initialize(type => _logger);
         }
 
-        private void TryDisplayUnhandledException(Exception exception)
+        protected virtual void TryDisplayUnhandledException(Exception exception)
         {
             try
             {

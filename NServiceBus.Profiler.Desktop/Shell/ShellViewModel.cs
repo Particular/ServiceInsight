@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Caliburn.PresentationFramework.Actions;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
@@ -191,6 +193,22 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual async void RefreshQueues()
         {
             await Messages.RefreshMessages();
+            await RefreshExplorer();
+        }
+
+        private async Task RefreshExplorer()
+        {
+            var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
+            if (endpointNode != null)
+            {
+                await EndpointExplorer.PartialRefresh();
+            }
+
+            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
+            if (queueNode != null)
+            {
+                await QueueExplorer.PartialRefresh();
+            }
         }
 
         [AutoCheckAvailability]

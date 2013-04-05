@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager) 
+            IQueueManager queueManager) 
             : base(eventAggregator, decoder, queueManager)
         {
             DisplayName = "Errors";

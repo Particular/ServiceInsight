@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Machine.Specifications;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
@@ -30,6 +31,10 @@ namespace NServiceBus.Profiler.Tests.Container
     public class TestableAppBootstrapper : AppBootstrapper
     {
         protected override void PrepareApplication()
+        {
+        }
+
+        protected override void TryDisplayUnhandledException(Exception exception)
         {
         }
     }

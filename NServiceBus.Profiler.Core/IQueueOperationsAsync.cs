@@ -6,9 +6,8 @@ namespace NServiceBus.Profiler.Core
 {
     public interface IQueueOperationsAsync : IQueueOperations
     {
-        /// <summary>
-        /// Gets a list of all messages in the queue
-        /// </summary>
         Task<IList<MessageInfo>> GetMessagesAsync(Queue queue);
+        Task<int> GetMessageCountAsync(Queue queue);
+        Task<IList<Queue>> GetQueuesAsync(string machineName);
     }
 }

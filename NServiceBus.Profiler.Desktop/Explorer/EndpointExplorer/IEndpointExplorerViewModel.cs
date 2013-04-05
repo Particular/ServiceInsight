@@ -18,7 +18,5 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         ExplorerItem ErrorRoot { get; }
         IObservableCollection<ExplorerItem> Items { get; }
         void ConnectToService(string serviceUrl);
-        void FullRefresh();
-        void PartialRefresh();
     }
 }

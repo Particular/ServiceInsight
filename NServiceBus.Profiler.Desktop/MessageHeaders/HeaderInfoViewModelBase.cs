@@ -18,7 +18,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager)
+            IQueueManager queueManager)
         {
             _decoder = decoder;
             EventAggregator = eventAggregator;
@@ -29,7 +29,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; private set; }
 
-        protected IQueueManagerAsync QueueManager { get; private set; }
+        protected IQueueManager QueueManager { get; private set; }
 
         protected IEventAggregator EventAggregator { get; private set; }
 
@@ -96,7 +96,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             if (@event.SelectedMessage == null)
             {
                 SelectedMessage = null;
-                Headers.Clear();
+                Headers = null;
                 ClearHeaderValues();
             }
         }

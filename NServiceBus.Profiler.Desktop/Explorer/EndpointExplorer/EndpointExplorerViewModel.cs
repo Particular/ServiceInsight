@@ -133,12 +133,12 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             AddServiceNode();
         }
 
-        public void FullRefresh()
+        public async Task FullRefresh()
         {
             
         }
 
-        public void PartialRefresh()
+        public async Task PartialRefresh()
         {
         }
 

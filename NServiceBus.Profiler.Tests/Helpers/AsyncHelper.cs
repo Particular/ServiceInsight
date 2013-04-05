@@ -1,116 +1,138 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Tests.Helpers
 {
-    public class AsyncHelper
+    public static class AsyncHelper
     {
-        public static void Run(Action action)
+        public static void Run(Action asyncMethod)
         {
-            RunVoidAsyncAndWait(action);
-        }
+            if (asyncMethod == null) 
+                throw new ArgumentNullException("asyncMethod");
 
-        private static void RunVoidAsyncAndWait(Action action)
-        {
-            var previousContext = SynchronizationContext.Current;
-            var currentContext = new AsyncSynchronizationContext();
-            SynchronizationContext.SetSynchronizationContext(currentContext);
-
+            var prevCtx = SynchronizationContext.Current;
             try
             {
-                action.Invoke();
-                currentContext.WaitForPendingOperationsToComplete();
+                var syncCtx = new SingleThreadSynchronizationContext(true);
+                SynchronizationContext.SetSynchronizationContext(syncCtx);
+
+                syncCtx.OperationStarted();
+                asyncMethod();
+                syncCtx.OperationCompleted();
+
+                syncCtx.RunOnCurrentThread();
             }
             finally
             {
-                SynchronizationContext.SetSynchronizationContext(previousContext);
+                SynchronizationContext.SetSynchronizationContext(prevCtx);
             }
         }
 
-        public class AsyncSynchronizationContext : SynchronizationContext
+        public static void Run(Func<Task> asyncMethod)
         {
-            private int _operationCount;
-            private readonly AsyncOperationQueue _operations = new AsyncOperationQueue();
+            if (asyncMethod == null) 
+                throw new ArgumentNullException("asyncMethod");
 
+            var prevCtx = SynchronizationContext.Current;
+            try
+            {
+                var syncCtx = new SingleThreadSynchronizationContext(false);
+                SynchronizationContext.SetSynchronizationContext(syncCtx);
+
+                var t = asyncMethod();
+
+                if (t == null)
+                    throw new InvalidOperationException("No task provided.");
+
+                t.ContinueWith(delegate { syncCtx.Complete(); }, TaskScheduler.Default);
+
+                syncCtx.RunOnCurrentThread();
+                t.GetAwaiter().GetResult();
+            }
+            finally
+            {
+                SynchronizationContext.SetSynchronizationContext(prevCtx);
+            }
+        }
+
+        public static T Run<T>(Func<Task<T>> asyncMethod)
+        {
+            if (asyncMethod == null) 
+                throw new ArgumentNullException("asyncMethod");
+
+            var prevCtx = SynchronizationContext.Current;
+            try
+            {
+                var syncCtx = new SingleThreadSynchronizationContext(false);
+                SynchronizationContext.SetSynchronizationContext(syncCtx);
+
+                var t = asyncMethod();
+                if (t == null)
+                    throw new InvalidOperationException("No task provided.");
+
+                t.ContinueWith(delegate { syncCtx.Complete(); }, TaskScheduler.Default);
+
+                syncCtx.RunOnCurrentThread();
+                return t.GetAwaiter().GetResult();
+            }
+            finally
+            {
+                SynchronizationContext.SetSynchronizationContext(prevCtx);
+            }
+        }
+
+        private sealed class SingleThreadSynchronizationContext : SynchronizationContext
+        {
+            private readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> _queue;
+            private int _operationCount;
+            private readonly bool _trackOperations;
+
+            internal SingleThreadSynchronizationContext(bool trackOperations)
+            {
+                _queue = new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
+                _trackOperations = trackOperations;
+            }
+
+            /// <summary>Dispatches an asynchronous message to the synchronization context.</summary>
+            /// <param name="d">The System.Threading.SendOrPostCallback delegate to call.</param>
+            /// <param name="state">The object passed to the delegate.</param>
             public override void Post(SendOrPostCallback d, object state)
             {
-                _operations.Enqueue(new AsyncOperation(d, state));
+                if (d == null) 
+                    throw new ArgumentNullException("d");
+
+                _queue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
+            }
+
+            public override void Send(SendOrPostCallback d, object state)
+            {
+                throw new NotSupportedException("Synchronously sending is not supported.");
+            }
+
+            public void RunOnCurrentThread()
+            {
+                foreach (var workItem in _queue.GetConsumingEnumerable())
+                    workItem.Key(workItem.Value);
+            }
+
+            public void Complete()
+            {
+                _queue.CompleteAdding();
             }
 
             public override void OperationStarted()
             {
-                Interlocked.Increment(ref _operationCount);
-                base.OperationStarted();
+                if (_trackOperations)
+                    Interlocked.Increment(ref _operationCount);
             }
 
             public override void OperationCompleted()
             {
-                if (Interlocked.Decrement(ref _operationCount) == 0)
-                    _operations.MarkAsComplete();
-
-                base.OperationCompleted();
-            }
-
-            public void WaitForPendingOperationsToComplete()
-            {
-                _operations.InvokeAll();
-            }
-
-            private class AsyncOperationQueue
-            {
-                private bool _run = true;
-                private readonly Queue _operations = Queue.Synchronized(new Queue());
-                private readonly AutoResetEvent _operationsAvailable = new AutoResetEvent(false);
-
-                public void Enqueue(AsyncOperation asyncOperation)
-                {
-                    _operations.Enqueue(asyncOperation);
-                    _operationsAvailable.Set();
-                }
-
-                public void MarkAsComplete()
-                {
-                    _run = false;
-                    _operationsAvailable.Set();
-                }
-
-                public void InvokeAll()
-                {
-                    while (_run)
-                    {
-                        InvokePendingOperations();
-                        _operationsAvailable.WaitOne();
-                    }
-
-                    InvokePendingOperations();
-                }
-
-                private void InvokePendingOperations()
-                {
-                    while (_operations.Count > 0)
-                    {
-                        var operation = (AsyncOperation) _operations.Dequeue();
-                        operation.Invoke();
-                    }
-                }
-            }
-
-            private class AsyncOperation
-            {
-                private readonly SendOrPostCallback _action;
-                private readonly object _state;
-
-                public AsyncOperation(SendOrPostCallback action, object state)
-                {
-                    _action = action;
-                    _state = state;
-                }
-
-                public void Invoke()
-                {
-                    _action(_state);
-                }
+                if (_trackOperations && Interlocked.Decrement(ref _operationCount) == 0)
+                    Complete();
             }
         }
     }

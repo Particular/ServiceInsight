@@ -1,10 +1,10 @@
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
@@ -21,9 +21,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
         ExplorerItem FolderRoot { get; }
         Queue SelectedQueue { get; }
 
-        void ConnectToQueue(string computerName);
-        void PartialRefresh();
-        void FullRefresh();
+        Task ConnectToQueue(string computerName);
         void ExpandNodes();
         void DeleteSelectedQueue();
     }

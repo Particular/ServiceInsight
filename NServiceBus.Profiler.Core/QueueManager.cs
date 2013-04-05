@@ -19,6 +19,21 @@ namespace NServiceBus.Profiler.Core
         {
             return _queueOperations.GetMessagesAsync(queue);
         }
+
+        Task<IList<Queue>> IQueueManagerAsync.GetQueues(string machineName)
+        {
+            return _queueOperations.GetQueuesAsync(machineName);
+        }
+
+        Task<IList<Queue>> IQueueManagerAsync.GetQueues()
+        {
+            return _queueOperations.GetQueuesAsync(Environment.MachineName);
+        }
+
+        Task<int> IQueueManagerAsync.GetMessageCount(Queue queue)
+        {
+            return _queueOperations.GetMessageCountAsync(queue);
+        }
     }
 
     public class QueueManager : IQueueManager

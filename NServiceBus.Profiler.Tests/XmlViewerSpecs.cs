@@ -84,9 +84,14 @@ namespace NServiceBus.Profiler.Tests.XmlViewer
 
     public class when_copying_message : with_decodable_message
     {
+        protected static string MessageContent = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
+
         Establish context = () =>
         {
-            ViewModel.SelectedMessage = new MessageBody();
+            ViewModel.SelectedMessage = new MessageBody
+            {
+                BodyRaw = Encoding.UTF8.GetBytes(MessageContent)
+            };
         };
 
         Because of = () => ViewModel.CopyMessageXml();
