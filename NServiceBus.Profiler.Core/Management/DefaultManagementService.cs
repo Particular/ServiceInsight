@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Common.Models;
 using RestSharp;
@@ -30,7 +31,7 @@ namespace NServiceBus.Profiler.Core.Management
         public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1)
         {
             var client = new RestClient(serviceUrl);
-            var query = searchQuery != null ? CreateSearchQuery(searchQuery, pageIndex) : 
+            var query = searchQuery != null ? CreateSearchQuery(endpoint.Name, searchQuery, pageIndex) : 
                                               CreateFetchQuery(endpoint.Name, pageIndex);
             var request = new RestRequest(query);
             var result = await client.GetPagedResult<StoredMessage>(request);
@@ -66,9 +67,9 @@ namespace NServiceBus.Profiler.Core.Management
             return version != null;
         }
 
-        private string CreateSearchQuery(string searchQuery, int pageIndex)
+        private string CreateSearchQuery(string endpoint, string searchQuery, int pageIndex)
         {
-            return string.Format("/messages/search/{0}?page={1}", searchQuery, pageIndex);
+            return string.Format("/endpoint/{0}/messages/search/{1}?page={2}", endpoint, searchQuery, pageIndex);
         }
 
         private string CreateFetchQuery(string endpointName, int pageIndex)
