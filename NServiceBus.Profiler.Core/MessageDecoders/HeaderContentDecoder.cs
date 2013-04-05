@@ -39,31 +39,39 @@ namespace NServiceBus.Profiler.Core.MessageDecoders
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
+        private static DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
         {
             try
             {
-                var json = JsonConvert.DeserializeObject<IList<HeaderInfo>>(value);
-                return new DecoderResult<IList<HeaderInfo>>(json, json != null);
+                if (value.StartsWith("{") || value.StartsWith("["))
+                {
+                    var json = JsonConvert.DeserializeObject<IList<HeaderInfo>>(value);
+                    return new DecoderResult<IList<HeaderInfo>>(json, json != null);
+                }
             }
-            catch
+            catch //Swallow
             {
-                return new DecoderResult<IList<HeaderInfo>>();
             }
+
+            return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
+        private static DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
         {
             try
             {
-                var serializer = new XmlSerializer(typeof(HeaderInfo[]));
-                var deserialized = (HeaderInfo[])serializer.Deserialize(new StringReader(value));
-                return new DecoderResult<IList<HeaderInfo>>(deserialized);
+                if (value.StartsWith("<"))
+                {
+                    var serializer = new XmlSerializer(typeof (HeaderInfo[]));
+                    var deserialized = (HeaderInfo[]) serializer.Deserialize(new StringReader(value));
+                    return new DecoderResult<IList<HeaderInfo>>(deserialized);
+                }
             }
-            catch
+            catch //Swallow
             {
-                return new DecoderResult<IList<HeaderInfo>>();
             }
+
+            return new DecoderResult<IList<HeaderInfo>>();
         }
 
         DecoderResult IContentDecoder.Decode(byte[] content)
