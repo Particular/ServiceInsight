@@ -246,20 +246,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public string GetCriticalTime(StoredMessage msg)
         {
-            if (msg.Statistics != null)
-            {
-                var criticalTime = msg.Statistics.CriticalTime;
-                if (criticalTime.TotalSeconds < 1.0)
-                    return string.Format("{0}ms", criticalTime.Milliseconds);
-
-                if (criticalTime.TotalMinutes < 1.0)
-                    return string.Format("{0}s", criticalTime.Seconds);
-                
-                if (criticalTime.TotalHours < 1.0)
-                    return string.Format("{0}m {1:D2}s", criticalTime.Minutes, criticalTime.Seconds);
-                
-                return string.Format("{0}h {1:D2}m {2:D2}s", (int)criticalTime.TotalHours, criticalTime.Minutes, criticalTime.Seconds);
-            }
+            if (msg != null && msg.Statistics != null)
+                return msg.Statistics.CriticalTimeAsString;
 
             return string.Empty;
         }

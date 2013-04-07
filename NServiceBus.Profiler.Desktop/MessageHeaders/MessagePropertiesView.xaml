@@ -10,7 +10,7 @@
     <toolkit:PropertyGrid ShowTitle="False"
                           IsReadOnly="False"
                           ShowSearchBox="False"
-                          ShowSortOptions="False"
+                          ShowSortOptions="True"
                           IsCategorized="False"
                           SelectedObject="{Binding}"
                           AutoGenerateProperties="True"

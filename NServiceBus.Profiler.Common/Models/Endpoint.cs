@@ -6,9 +6,14 @@
         public string Name { get; set; }
         public string Machine { get; set; }
 
+        public string Address
+        {
+            get { return string.Format("{0}@{1}", Name, Machine); }
+        }
+
         public override string ToString()
         {
-            return string.Format("{0}@{1}", Name, Machine);
+            return Address;
         }
     }
 }

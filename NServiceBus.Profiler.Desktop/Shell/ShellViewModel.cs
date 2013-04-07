@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using Caliburn.PresentationFramework.Actions;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
@@ -308,12 +307,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool CanExportMessage
         {
-            get { return !WorkInProgress && Messages.SelectedMessages.Count > 0; }
+            get { return !WorkInProgress && Messages.SelectedMessages.Count > 0 && false; } //TODO: Implement message export
         }
 
         public virtual bool CanImportMessage
         {
-            get { return !WorkInProgress; }
+            get { return !WorkInProgress && false; } //TODO: Implement message import
         }
 
         private void InitializeAutoRefreshTimer()

@@ -59,6 +59,12 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToolTip">
+                        <ControlTemplate.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontSize" Value="13" />
+                                <Setter Property="Foreground" Value="{StaticResource DiagramTooltipForegroundBrush}" />
+                            </Style>
+                        </ControlTemplate.Resources>
                         <Border CornerRadius="7" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Top" 
@@ -80,11 +86,20 @@
             <Setter Property="ToolTip"> 
                 <Setter.Value>
                     <ToolTip Style="{StaticResource DiagramTooltip}">
-                        <TextBlock Grid.Row="0" Grid.Column="1" 
-                                           FontSize="13" 
-                                           Text="{Binding MessageType}" 
-                                           Foreground="{StaticResource DiagramTooltipForegroundBrush}" />
-
+                        <StackPanel>
+                            <TextBlock>
+                                <Run Text="MessageId: " />
+                                <Run Text="{Binding ShortMessageId, Mode=OneWay}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Type: " />
+                                <Run Text="{Binding MessageType, Mode=OneWay}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Critical Time: " />
+                                <Run Text="{Binding Statistics.CriticalTimeAsString, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
                     </ToolTip>
                 </Setter.Value>
             </Setter>
@@ -112,13 +127,17 @@
             <Style.Resources>
                 <ToolTip x:Key="ToolTipContent" Style="{StaticResource DiagramTooltip}" Foreground="{StaticResource DiagramTooltipForegroundBrush}">
                     <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="Bold" Text="Originating "/>
-                            <TextBlock Text="{Binding Source.OriginatingEndpoint.Name}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="Bold" Text="Receiving "/>
-                            <TextBlock Text="{Binding Target.ReceivingEndpoint.Name}"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>
+                                <Run Text="From: " />
+                                <Run Text="{Binding Source.OriginatingEndpoint.Address, Mode=OneWay}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="To: " />
+                                <Run Text="{Binding Target.ReceivingEndpoint.Address, Mode=OneWay}" />
+                            </TextBlock>
+
                         </StackPanel>
                     </StackPanel>
                 </ToolTip>
