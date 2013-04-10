@@ -74,7 +74,7 @@ namespace NServiceBus.Profiler.Core.Management
 
         private string CreateFetchQuery(string endpointName, int pageIndex)
         {
-            return string.Format("/endpoints/{0}/audit?page={1}", endpointName, pageIndex);
+            return string.Format("/endpoints/{0}/messages?page={1}", endpointName, pageIndex);
         }
     }
 }
