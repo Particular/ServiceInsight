@@ -39,7 +39,7 @@ task Init -depends Clean {
 		-product "NServiceBus Profiler $humanReadableversion ($commit)" `
 		-version $version `
 		-clsCompliant "false" `
-		-copyright "Copyright © NServiceBus 2007-2011" `
+		-copyright "Copyright 2010-2013 NServiceBus. All rights reserved" `
 		-supportEmail "h.eskandari@gmail.com" `
 		-supportWeb "http://www.hightech.ir/Products/QueueManager"
 		

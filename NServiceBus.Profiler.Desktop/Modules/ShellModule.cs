@@ -7,6 +7,7 @@ using ExceptionHandler;
 using ExceptionHandler.IssueReporter.BitBucket;
 using ExceptionHandler.Settings;
 using ExceptionHandler.Wpf;
+using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
@@ -32,6 +33,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<QueueCreationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ConnectToMachineView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ManagementConnectionView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<AboutView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
@@ -53,6 +55,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
         {
             get
             {
+                yield return typeof (AboutView);
                 yield return typeof (QueueCreationView);
                 yield return typeof (ConnectToMachineView);
                 yield return typeof (ManagementConnectionView);

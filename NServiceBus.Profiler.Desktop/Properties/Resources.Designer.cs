@@ -183,6 +183,16 @@ namespace NServiceBus.Profiler.Desktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ParticularBanner {
+            get {
+                object obj = ResourceManager.GetObject("ParticularBanner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Queue {
             get {
                 object obj = ResourceManager.GetObject("Queue", resourceCulture);

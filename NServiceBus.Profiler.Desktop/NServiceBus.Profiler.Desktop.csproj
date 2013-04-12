@@ -57,7 +57,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>QueueMan.ico</ApplicationIcon>
+    <ApplicationIcon>Profiler.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
@@ -485,6 +485,7 @@
     <Resource Include="Images\Diagram.png" />
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Folder-Table.png" />
+    <Resource Include="Images\ParticularBanner.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -530,10 +531,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="QueueMan.png" />
+    <Resource Include="Profiler.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="QueueMan.ico" />
+    <Resource Include="Profiler.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ConnectQueue.png" />
