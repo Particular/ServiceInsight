@@ -93,7 +93,7 @@
                             </TextBlock>
                             <TextBlock>
                                 <Run Text="Type: " />
-                                <Run Text="{Binding MessageType, Mode=OneWay}" />
+                                <Run Text="{Binding FriendlyMessageType, Mode=OneWay}" />
                             </TextBlock>
                             <TextBlock>
                                 <Run Text="Critical Time: " />
