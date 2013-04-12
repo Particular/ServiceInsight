@@ -22,11 +22,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
             base.OnActivate();
 
             WorkInProgress = true;
-            Machines.Clear();
 
             var machines = await _networkOperations.GetMachines();
 
-            Machines.AddRange(machines);
+            Machines = new List<string>(machines);
             IsAddressValid = true;
             WorkInProgress = false;
         }

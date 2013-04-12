@@ -64,15 +64,15 @@ namespace NServiceBus.Profiler.Core
                     {
                         for (var i = 0; i < totalEntries; i++)
                         {
-                            tmpBuffer = new IntPtr((int) buffer + (i*sizeofINFO));
+                            tmpBuffer = new IntPtr((long) buffer + (i*sizeofINFO));
                             var svrInfo = (ServerInfo)Marshal.PtrToStructure(tmpBuffer, typeof (ServerInfo));
                             networkComputers.Add(svrInfo.sv100_name);
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return null;
+                    return networkComputers;
                 }
                 finally
                 {
