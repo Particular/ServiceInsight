@@ -27,9 +27,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         Queue SelectedQueue { get; }
         Task PurgeQueue();
         Task DeleteSelectedMessages();
-        Task RefreshMessages();
+        Task RefreshMessages(string columnName = null, bool ascending = false);
         Task RefreshQueue(Queue queue);
-        Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null);
+        Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
         string GetCriticalTime(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo();

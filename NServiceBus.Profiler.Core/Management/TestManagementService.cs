@@ -69,7 +69,7 @@ namespace NServiceBus.Profiler.Core.Management
             });
         }
 
-        public Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1)
+        public Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool @ascending = false)
         {
             return Task.Run(() => audit);
         }

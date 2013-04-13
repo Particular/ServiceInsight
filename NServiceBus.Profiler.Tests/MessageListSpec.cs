@@ -53,7 +53,7 @@ namespace NServiceBus.Profiler.Tests
         Establish context = () =>
         {
             Endpoint = new Endpoint { Machine = "localhost", Name = "Service" };
-            ManagementService.GetAuditMessages(Arg.Any<string>(), Arg.Is(Endpoint), Arg.Any<string>(), Arg.Any<int>())
+            ManagementService.GetAuditMessages(Arg.Any<string>(), Arg.Is(Endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
                              .Returns(x => Task.Run(() => new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,

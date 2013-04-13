@@ -153,12 +153,12 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new MessageBodyLoaded(msg));
         }
 
-        public async Task RefreshMessages()
+        public async Task RefreshMessages(string columnName = null, bool ascending = false)
         {
             var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
             if (endpointNode != null)
             {
-                await RefreshEndpoint(endpointNode.Endpoint);
+                await RefreshEndpoint(endpointNode.Endpoint, orderBy: columnName, ascending: ascending);
             }
 
             var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
@@ -168,14 +168,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        public async Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null)
+        public async Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", endpoint)));
 
             var pagedResult = await _managementService.GetAuditMessages(_endpointConnection.ServiceUrl,
                                                                         endpoint,
                                                                         pageIndex: pageIndex,
-                                                                        searchQuery: searchQuery);
+                                                                        searchQuery: searchQuery,
+                                                                        orderBy: orderBy,
+                                                                        ascending: ascending);
 
             Messages.Clear();
             Messages.AddRange(pagedResult.Result);

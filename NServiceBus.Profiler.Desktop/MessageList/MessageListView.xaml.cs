@@ -1,4 +1,5 @@
 ﻿using Caliburn.PresentationFramework.Actions;
+using DevExpress.Data;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
@@ -101,6 +102,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
         {
             e.Cancel = grid.ShowLoadingPanel;
+        }
+
+        private void OnSortData(object sender, CustomColumnSortEventArgs e)
+        {
+            e.Handled = true;
+            
+            if (Model == null || Model.WorkInProgress || e.Column.Tag == null) return;
+
+            Model.RefreshMessages(e.Column.Tag as string, e.SortOrder == ColumnSortOrder.Ascending);
         }
     }
 }

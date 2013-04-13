@@ -29,31 +29,32 @@
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
                          ItemsSource="{Binding Messages}"
+                         CustomColumnSort="OnSortData"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
-                <dxg:GridColumn AllowSorting="True" FieldName="IsFaulted" Header="Status" UnboundType="Object" Width="16">
+                <dxg:GridColumn AllowSorting="True" FieldName="IsFaulted" Header="Status" UnboundType="Object" Width="16" SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="16" Height="16" Source="{Binding Value.Image}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="Id" Header="Message ID">
+                <dxg:GridColumn FieldName="Id" Tag="id" Header="Message ID" SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="FriendlyMessageType" Header="Message Type">
+                <dxg:GridColumn FieldName="FriendlyMessageType" Tag="message_type" Header="Message Type" SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="TimeSent" Header="Time Sent">
+                <dxg:GridColumn FieldName="TimeSent" Tag="time_sent" Header="Time Sent" SortMode="Custom">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
                     </dxg:GridColumn.EditSettings>
@@ -63,7 +64,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="CriticalTime" UnboundType="String" Header="Critical Time">
+                <dxg:GridColumn FieldName="CriticalTime" UnboundType="String" Header="Critical Time" SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

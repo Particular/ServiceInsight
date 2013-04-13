@@ -29,6 +29,15 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         [Description("Time the processing finished")]
         public string ProcessingEnded { get; set; }
 
+        [Description("Calculated duration of processing")]
+        public string ProcessingTime { get; set; }
+
+        [Description("Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint")]
+        public string DeliveryTime { get; set; }
+
+        [Description("Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint")]
+        public string CriticalTime { get; set; }
+
         protected override void MapHeaderKeys()
         {
             ConditionsMap.Add(h => h.Key.EndsWith("TimeSent", StringComparison.OrdinalIgnoreCase), h => TimeSent = h.Value);
@@ -41,6 +50,9 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             TimeSent = null;
             ProcessingStarted = null;
             ProcessingEnded = null;
+            ProcessingTime = null;
+            DeliveryTime = null;
+            CriticalTime = null;
         }
     }
 }

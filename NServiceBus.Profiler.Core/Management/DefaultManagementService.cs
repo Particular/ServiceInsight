@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Common.Models;
 using RestSharp;
@@ -21,19 +21,26 @@ namespace NServiceBus.Profiler.Core.Management
         public async Task<PagedResult<StoredMessage>> Search(string serviceUrl, string searchKeyword, int pageIndex = 1)
         {
             var client = new RestClient(serviceUrl);
-            var request = new RestRequest("/messages/search/" + searchKeyword + "?page=" + pageIndex);
+            var request = new RestRequest("/messages/");
+            
+            AppendSearchQuery(request, searchKeyword);
+            AppendPaging(request, pageIndex);
+
             var result = await client.GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1)
+        public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var client = new RestClient(serviceUrl);
-            var query = searchQuery != null ? CreateSearchQuery(endpoint.Name, searchQuery, pageIndex) : 
-                                              CreateFetchQuery(endpoint.Name, pageIndex);
-            var request = new RestRequest(query);
+            var request = new RestRequest(string.Format("/endpoints/{0}/messages/", endpoint.Name));
+
+            AppendSearchQuery(request, searchQuery);
+            AppendPaging(request, pageIndex);
+            AppendOrdering(request, orderBy, ascending);
+
             var result = await client.GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
@@ -43,7 +50,7 @@ namespace NServiceBus.Profiler.Core.Management
         public async Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId)
         {
             var client = new RestClient(serviceUrl);
-            var request = new RestRequest("conversations/" + conversationId);
+            var request = new RestRequest(string.Format("conversations/{0}", conversationId));
             var messages = await client.GetModelAsync<List<StoredMessage>>(request);
 
             return messages ?? new List<StoredMessage>();
@@ -67,14 +74,50 @@ namespace NServiceBus.Profiler.Core.Management
             return version != null;
         }
 
-        private string CreateSearchQuery(string endpoint, string searchQuery, int pageIndex)
+        private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
-            return string.Format("/endpoint/{0}/messages/search/{1}?page={2}", endpoint, searchQuery, pageIndex);
+            if(orderBy == null) return;
+            request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
+            request.AddParameter("direction", GetSortDirection(ascending), ParameterType.GetOrPost);
         }
 
-        private string CreateFetchQuery(string endpointName, int pageIndex)
+        private void AppendPaging(IRestRequest request, int pageIndex)
         {
-            return string.Format("/endpoints/{0}/messages?page={1}", endpointName, pageIndex);
+            request.AddParameter("page", pageIndex, ParameterType.GetOrPost);
+        }
+
+        private void AppendSearchQuery(IRestRequest request, string searchQuery)
+        {
+            if(searchQuery == null) return;
+            request.Resource += string.Format("search/{0}", searchQuery);
+        }
+
+        private string GetPropertyName(string propertyName)
+        {
+            var parts = new List<string>();
+            var currentWord = new StringBuilder();
+
+            foreach (var c in propertyName)
+            {
+                if (char.IsUpper(c) && currentWord.Length > 0)
+                {
+                    parts.Add(currentWord.ToString());
+                    currentWord.Clear();
+                }
+                currentWord.Append(char.ToLower(c));
+            }
+
+            if (currentWord.Length > 0)
+            {
+                parts.Add(currentWord.ToString());
+            }
+
+            return string.Join("_", parts.ToArray());
+        }
+
+        private string GetSortDirection(bool ascending)
+        {
+            return ascending ? "asc" : "desc";
         }
     }
 }
