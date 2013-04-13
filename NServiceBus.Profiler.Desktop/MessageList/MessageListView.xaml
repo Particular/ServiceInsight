@@ -33,28 +33,46 @@
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
-                <dxg:GridColumn AllowSorting="True" FieldName="IsFaulted" Header="Status" UnboundType="Object" Width="16" SortMode="Custom">
+                <dxg:GridColumn AllowSorting="False" 
+                                AllowColumnFiltering="False"
+                                FieldName="IsFaulted" 
+                                Header="Status" 
+                                UnboundType="Object" 
+                                Width="16" 
+                                SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="16" Height="16" Source="{Binding Value.Image}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="Id" Tag="id" Header="Message ID" SortMode="Custom">
+                <dxg:GridColumn FieldName="Id" 
+                                Tag="id" 
+                                AllowColumnFiltering="False"
+                                Header="Message ID" 
+                                SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="FriendlyMessageType" Tag="message_type" Header="Message Type" SortMode="Custom">
+                <dxg:GridColumn FieldName="FriendlyMessageType" 
+                                AllowColumnFiltering="False"
+                                Tag="message_type" 
+                                Header="Message Type" 
+                                SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="TimeSent" Tag="time_sent" Header="Time Sent" SortMode="Custom">
+                <dxg:GridColumn FieldName="TimeSent" 
+                                Tag="time_sent" 
+                                AllowColumnFiltering="False"
+                                Header="Time Sent" 
+                                SortMode="Custom">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
                     </dxg:GridColumn.EditSettings>
@@ -64,7 +82,12 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="CriticalTime" UnboundType="String" Header="Critical Time" SortMode="Custom">
+                <dxg:GridColumn FieldName="CriticalTime" 
+                                AllowColumnFiltering="False"
+                                AllowSorting="False"
+                                UnboundType="String" 
+                                Header="Critical Time" 
+                                SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
