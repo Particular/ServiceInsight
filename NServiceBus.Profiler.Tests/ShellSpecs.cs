@@ -19,6 +19,12 @@ using NSubstitute;
 
 namespace NServiceBus.Profiler.Tests.Shell
 {
+    public interface ITestShellView : IShellView
+    {
+        bool IsOpen { get; set; }
+        void Close();
+    }
+
     [Subject("shell")]
     public class with_a_shell
     {
@@ -37,7 +43,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IStatusBarManager statusbarManager;
         protected static IMessageBodyViewModel messageBodyView;
         protected static ISettingsProvider settingsProvider;
-        protected static IShellView view;
+        protected static ITestShellView view;
         protected static IMessagePropertiesViewModel messageProperties;
             
         Establish context = () =>
@@ -54,7 +60,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             conversation = Substitute.For<IConversationViewModel>();
             messageBodyView = Substitute.For<IMessageBodyViewModel>();
             messageProperties = Substitute.For<IMessagePropertiesViewModel>();
-            view = Substitute.For<IShellView>();
+            view = Substitute.For<ITestShellView>();
             settingsProvider = Substitute.For<ISettingsProvider>();
             aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
             connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
@@ -66,6 +72,8 @@ namespace NServiceBus.Profiler.Tests.Shell
 
             shell.AttachView(view, null);
         };
+
+        It should_reload_stored_layout = () => view.Received().RestoreLayout(settingsProvider);
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
     }
@@ -121,6 +129,13 @@ namespace NServiceBus.Profiler.Tests.Shell
         Because of = () => ((IScreen)shell).Activate();
 
         It should_have_all_child_screens_ready = () => shell.Items.ForEach(x => x.Received().Activate());
+    }
+
+    public class when_shell_deactivated : with_a_shell
+    {
+        Because of = () => ((IScreen) shell).Deactivate(true);
+
+        It should_persist_layout_in_the_setting_storage = () => view.Received().SaveLayout(settingsProvider);
     }
 
     public class when_turning_off_auto_refresh : with_a_shell

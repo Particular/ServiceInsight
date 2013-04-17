@@ -85,11 +85,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
             RestoreLayout();
         }
 
-        protected override void OnDeactivate(bool close)
+        public virtual void Deactivate(bool close)
         {
             base.OnDeactivate(close);
             _timer.Stop();
-
             SaveLayout();
         }
 

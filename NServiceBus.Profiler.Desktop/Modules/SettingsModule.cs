@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Autofac;
-using ExceptionHandler.Extensions;
+using Caliburn.Core;
 using NServiceBus.Profiler.Core.Settings;
 using SettingsProvider = NServiceBus.Profiler.Core.Settings.SettingsProvider;
 
@@ -29,7 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
 
             protected override Dictionary<string, string> LoadSettings<T>()
             {
-                var storageProvider = typeof(T).GetAttribute<SettingsProviderAttribute>();
+                var storageProvider = typeof(T).GetAttributes<SettingsProviderAttribute>(false).FirstOrDefault();
                 if (storageProvider != null)
                 {
                     var storageName = storageProvider.ProviderTypeName;

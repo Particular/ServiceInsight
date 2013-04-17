@@ -89,13 +89,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private string GetConfiguredAddress()
         {
+            var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
+            if (appSettings != null && appSettings.LastUsedManagementApi != null)
+                return appSettings.LastUsedManagementApi;
+
             var managementConfig = _settingsProvider.GetSettings<Management>();
             return string.Format("http://{0}:{1}/api", managementConfig.Hostname, managementConfig.Port);
         }
 
-        private async Task<bool> ServiceAvailable(string defaultAddress)
+        private async Task<bool> ServiceAvailable(string serviceUrl)
         {
-            return await _managementService.IsAlive(defaultAddress);
+            return await _managementService.IsAlive(serviceUrl);
         }
 
         private async void AddServiceNode()

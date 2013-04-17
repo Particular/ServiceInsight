@@ -2,17 +2,21 @@
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
+using NServiceBus.Profiler.Core.Settings;
 
 namespace NServiceBus.Profiler.Desktop.ManagementService
 {
     public class ManagementConnectionViewModel : Screen
     {
         private readonly IManagementService _managementService;
-        
-        public ManagementConnectionViewModel(IManagementService managementService)
+        private readonly ISettingsProvider _settingsProvider;
+
+        public ManagementConnectionViewModel(IManagementService managementService, ISettingsProvider settingsProvider)
         {
             _managementService = managementService;
+            _settingsProvider = settingsProvider;
             DisplayName = "Connect To Service";
         }
 
@@ -46,9 +50,17 @@ namespace NServiceBus.Profiler.Desktop.ManagementService
             IsAddressValid = await IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
+                StoreConnectionAddress();
                 TryClose(true);
             }
             WorkInProgress = false;
+        }
+
+        private void StoreConnectionAddress()
+        {
+            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            settings.LastUsedManagementApi = ServiceUrl;
+            _settingsProvider.SaveSettings(settings);
         }
 
         private async Task<bool> IsValidUrl(string serviceUrl)

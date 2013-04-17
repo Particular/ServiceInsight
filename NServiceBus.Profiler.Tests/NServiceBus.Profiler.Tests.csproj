@@ -93,6 +93,7 @@
     <Compile Include="ConnectingToMachinesSpec.cs" />
     <Compile Include="ContainerConfigurationSpec.cs" />
     <Compile Include="ContentDecodersSpec.cs" />
+    <Compile Include="ConnectingToManagementServiceSpec.cs" />
     <Compile Include="ExplorerSpecs.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\FakeQueueManager.cs" />

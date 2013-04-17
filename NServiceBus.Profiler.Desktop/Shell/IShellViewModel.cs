@@ -14,6 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public interface IShellViewModel : 
         IConductor, 
+        IDeactivate,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
