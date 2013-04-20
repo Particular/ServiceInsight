@@ -13,7 +13,7 @@
     
     <UserControl.Resources>
         
-        <DataTemplate x:Key="ConversationTemplate" DataType="{x:Type models:StoredMessage}">
+        <DataTemplate x:Key="ConversationTemplate" DataType="{x:Type models:DiagramNode}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -110,14 +110,19 @@
                                 Background="{Binding Path=Status, Converter={StaticResource StatusToBrushConverter}}"
                                 BorderThickness="1"
                                 CornerRadius="10"
-                                Margin="{TemplateBinding Margin}">
+                                Margin="{TemplateBinding Margin}"
+                                Effect="{StaticResource DiagramNodeShadow}"
+                                x:Name="Border">
                             <ContentPresenter Content="{TemplateBinding Vertex}" 
                                               ContentTemplate="{StaticResource ConversationTemplate}" />
                            
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="2" Color="{StaticResource DiagramShadowColor}" Opacity="0.3" Direction="315"/>
-                            </Border.Effect>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsCurrentMessage}" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DiagramCurrentNodeBorderBrush}" />
+                                <Setter TargetName="Border" Property="Effect" Value="{StaticResource DiagramSelectedNodeShadow}" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

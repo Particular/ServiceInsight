@@ -87,6 +87,7 @@
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Models\DiagramNode.cs" />
     <Compile Include="Models\FailureDetails.cs" />
     <Compile Include="Models\HeaderInfo.cs" />
     <Compile Include="Models\Endpoint.cs" />

@@ -6,11 +6,11 @@ using NServiceBus.Profiler.Common.Models;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
-    public class ConversationGraphLayout : GraphLayout<StoredMessage, MessageEdge, ConversationGraph>
+    public class ConversationGraphLayout : GraphLayout<DiagramNode, MessageEdge, ConversationGraph>
     {
         public event EventHandler LayoutUpdateFinished;
 
-        protected override void OnLayoutIterationFinished(IDictionary<StoredMessage, Point> vertexPositions, string message)
+        protected override void OnLayoutIterationFinished(IDictionary<DiagramNode, Point> vertexPositions, string message)
         {
             base.OnLayoutIterationFinished(vertexPositions, message);
             var handler = LayoutUpdateFinished;

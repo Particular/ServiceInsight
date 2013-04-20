@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
@@ -14,7 +15,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         private readonly IManagementService _managementService;
         private readonly IEndpointConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
-        private readonly ConcurrentDictionary<string, StoredMessage> _nodeMap;
+        private readonly ConcurrentDictionary<string, DiagramNode> _nodeMap;
         private IConversationView _view;
 
         public ConversationViewModel(
@@ -25,12 +26,12 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             _managementService = managementService;
             _connection = connection;
             _eventAggregator = eventAggregator;
-            _nodeMap = new ConcurrentDictionary<string, StoredMessage>();
+            _nodeMap = new ConcurrentDictionary<string, DiagramNode>();
 
             Graph = new ConversationGraph();
         }
 
-        private void NewGraphEdge(StoredMessage from, StoredMessage to)
+        private void NewGraphEdge(DiagramNode from, DiagramNode to)
         {
             var edge = new MessageEdge(from, to);
             Graph.AddEdge(edge);
@@ -57,15 +58,16 @@ namespace NServiceBus.Profiler.Desktop.Conversations
 
                 var conversationId = storedMessage.ConversationId;
                 var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
+                var nodes = relatedMessagesTask.ConvertAll(x => new DiagramNode(x));
 
-                CreateConversationNodes(relatedMessagesTask);
-                LinkConversationNodes(relatedMessagesTask);
+                CreateConversationNodes(@event.Message.Id, nodes);
+                LinkConversationNodes(nodes);
 
                 _eventAggregator.Publish(new WorkFinished());
             }
         }
 
-        private void LinkConversationNodes(IEnumerable<StoredMessage> relatedMessagesTask)
+        private void LinkConversationNodes(IEnumerable<DiagramNode> relatedMessagesTask)
         {
             foreach (var msg in relatedMessagesTask)
             {
@@ -84,10 +86,12 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             }
         }
 
-        private void CreateConversationNodes(IEnumerable<StoredMessage> relatedMessages)
+        private void CreateConversationNodes(string selectedMessageId, IEnumerable<DiagramNode> relatedMessages)
         {
             foreach (var msg in relatedMessages)
             {
+                msg.IsCurrentMessage = String.Equals(msg.Id, selectedMessageId, StringComparison.InvariantCultureIgnoreCase);
+
                 Graph.AddVertex(msg);
                 _nodeMap.TryAdd(msg.Id, msg);
             }

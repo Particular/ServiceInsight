@@ -3,9 +3,9 @@ using QuickGraph;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
-    public class MessageEdge : Edge<StoredMessage>
+    public class MessageEdge : Edge<DiagramNode>
     {
-        public MessageEdge(StoredMessage source, StoredMessage target) 
+        public MessageEdge(DiagramNode source, DiagramNode target) 
             : base(source, target)
         {
         }

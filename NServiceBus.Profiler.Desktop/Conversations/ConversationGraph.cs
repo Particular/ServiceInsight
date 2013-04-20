@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
-    public class ConversationGraph : QuickGraph.BidirectionalGraph<StoredMessage, MessageEdge>
+    public class ConversationGraph : QuickGraph.BidirectionalGraph<DiagramNode, MessageEdge>
     {
     }
 }
