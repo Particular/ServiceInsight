@@ -83,7 +83,7 @@
 				CategoryName="Tools" Glyph="/Images/Save.png"
 				cal:Message.Attach="[Event ItemClick]=[Action ExportMessage]" />
             <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefresh"
-                CategoryName="Views" Glyph="/Images/AutoRefresh.png"
+                CategoryName="Views" 
                 IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
             <dxb:ToolbarListItem x:Name="itemToolbarList" Content="Toolbar List" BarItemDisplayMode="Content" />
             
