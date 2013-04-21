@@ -11,6 +11,7 @@ namespace NServiceBus.Profiler.Common.Models
             Destination = msg.Destination;
             FailureDetails = msg.FailureDetails;
             Id = msg.Id;
+            MessageId = msg.MessageId;
             IsDeferredMessage = msg.IsDeferredMessage;
             MessageType = msg.MessageType;
             OriginatingEndpoint = msg.OriginatingEndpoint;

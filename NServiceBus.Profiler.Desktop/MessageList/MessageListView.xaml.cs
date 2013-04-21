@@ -18,6 +18,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             public const string CriticalTime = "CriticalTime";
             public const string IsFaulted = "IsFaulted";
+            public const string MessageId = "Identifier";
         }
 
         private readonly IMenuManager _menuManager;
@@ -77,24 +78,24 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
-            var storedMsg = Model.Messages[e.ListSourceRowIndex] as StoredMessage;
-
+            var msg = Model.Messages[e.ListSourceRowIndex];
+            var storedMsg = msg as StoredMessage;
+            
             if (e.IsGetData)
             {
-                if (storedMsg != null && e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
+                if (e.Column.FieldName == AdvancedEndpointColumns.MessageId)
+                {
+                    e.Value = storedMsg != null ? storedMsg.MessageId : msg.Id;
+                }
+
+                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime && storedMsg != null)
                 {
                     e.Value = Model.GetCriticalTime(storedMsg);
                 }
+                
                 if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)
                 {
-                    if (storedMsg != null)
-                    {
-                        e.Value = Model.GetMessageErrorInfo(storedMsg);
-                    }
-                    else
-                    {
-                        e.Value = Model.GetMessageErrorInfo();
-                    }
+                    e.Value = storedMsg != null ? Model.GetMessageErrorInfo(storedMsg) : Model.GetMessageErrorInfo();
                 }
             }
         }

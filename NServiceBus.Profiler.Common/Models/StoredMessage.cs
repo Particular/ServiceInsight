@@ -14,5 +14,6 @@ namespace NServiceBus.Profiler.Common.Models
         public bool IsDeferredMessage { get; set; }
         public string RelatedToMessageId { get; set; }
         public string ConversationId { get; set; }
+        public string MessageId { get; set; }
     }
 }

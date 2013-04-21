@@ -46,9 +46,10 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="Id" 
+                <dxg:GridColumn FieldName="Identifier" 
                                 Tag="id" 
                                 AllowColumnFiltering="False"
+                                UnboundType="String"
                                 Header="Message ID" 
                                 SortMode="Custom">
                     <dxg:GridColumn.CellTemplate>

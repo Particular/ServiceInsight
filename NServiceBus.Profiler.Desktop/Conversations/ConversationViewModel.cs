@@ -60,7 +60,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
                 var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(x => new DiagramNode(x));
 
-                CreateConversationNodes(@event.Message.Id, nodes);
+                CreateConversationNodes(storedMessage.MessageId, nodes);
                 LinkConversationNodes(nodes);
 
                 _eventAggregator.Publish(new WorkFinished());
@@ -72,10 +72,10 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             foreach (var msg in relatedMessagesTask)
             {
                 if (msg.RelatedToMessageId != null && 
-                    _nodeMap.ContainsKey(msg.Id) &&
+                    _nodeMap.ContainsKey(msg.MessageId) &&
                     _nodeMap.ContainsKey(msg.RelatedToMessageId))
                 {
-                    var source = _nodeMap[msg.Id];
+                    var source = _nodeMap[msg.MessageId];
                     var target = _nodeMap[msg.RelatedToMessageId];
 
                     if (source != null && target != null)
@@ -90,10 +90,10 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         {
             foreach (var msg in relatedMessages)
             {
-                msg.IsCurrentMessage = String.Equals(msg.Id, selectedMessageId, StringComparison.InvariantCultureIgnoreCase);
+                msg.IsCurrentMessage = String.Equals(msg.MessageId, selectedMessageId, StringComparison.InvariantCultureIgnoreCase);
 
                 Graph.AddVertex(msg);
-                _nodeMap.TryAdd(msg.Id, msg);
+                _nodeMap.TryAdd(msg.MessageId, msg);
             }
         }
 
