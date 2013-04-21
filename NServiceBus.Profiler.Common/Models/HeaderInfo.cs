@@ -4,6 +4,7 @@
     {
         private const string Null = "<Null>";
         public const string FailedQueueKey = "NServiceBus.FailedQ";
+        public const string MessageDateFormat = "yyyy-MM-dd HH:mm:ss:ffffff Z";
 
         public string Key { get; set; }
         public string Value { get; set; }

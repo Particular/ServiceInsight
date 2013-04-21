@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -6,6 +7,7 @@ using DevExpress.Xpf.Editors;
 using ExceptionHandler;
 using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Properties;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
@@ -23,21 +25,25 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders.Editors
 
         public FrameworkElement ResolveEditor(PropertyItem propertyItem)
         {
+            var editor = new ButtonEdit();
             var button = new ButtonInfo {GlyphKind = GlyphKind.User };
-            button.Click += (s, e) => OnCopyPropertyValue(propertyItem);
+
+            button.Click += (s, e) => OnCopyValue(editor);
             button.Content = new Image
             {
-                Source = Resources.Clipboard.ToBitmapImage(), 
+                Source = Properties.Resources.Clipboard.ToBitmapImage(), 
                 Width = 16, 
                 Height = 16,
                 Stretch = Stretch.Uniform
             };
 
-            var editor = new ButtonEdit();
             editor.Buttons.Add(button);
             editor.AllowDefaultButton = false;
             editor.ShowBorder = false;
             editor.IsReadOnly = false;
+            editor.Mask = GetDisplayFormat(propertyItem);
+            editor.MaskType = GetMaskType(propertyItem);
+            editor.MaskUseAsDisplayFormat = true;
             editor.EditMode = EditMode.Standalone;
             editor.Background = Brushes.Transparent;
             editor.TextWrapping = TextWrapping.NoWrap;
@@ -53,11 +59,31 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders.Editors
             return editor;
         }
 
-        private void OnCopyPropertyValue(PropertyItem property)
+        private MaskType GetMaskType(PropertyItem propertyItem)
         {
-            if (property.Value != null)
+            if (propertyItem.Value is DateTime)
             {
-                _clipboard.CopyTo(property.Value.ToString());
+                return MaskType.DateTime;
+            }
+
+            return MaskType.None;
+        }
+
+        private string GetDisplayFormat(PropertyItem propertyItem)
+        {
+            if (propertyItem.Value is DateTime)
+            {
+                return HeaderInfo.MessageDateFormat;
+            }
+
+            return null;
+        }
+
+        private void OnCopyValue(BaseEdit editor)
+        {
+            if (editor.DisplayText != null)
+            {
+                _clipboard.CopyTo(editor.DisplayText);
             }
         }
     }

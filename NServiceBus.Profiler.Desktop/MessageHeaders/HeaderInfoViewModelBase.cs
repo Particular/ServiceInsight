@@ -80,16 +80,17 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
                     }
                 }
             }
+
+            OnMessagePropertiesLoaded();
+        }
+
+        protected virtual void OnMessagePropertiesLoaded()
+        {
         }
 
         protected abstract void MapHeaderKeys();
 
         protected abstract void ClearHeaderValues();
-
-        protected string GetConditionalValue(Func<HeaderInfo, bool> condition, HeaderInfo header)
-        {
-            return condition(header) ? header.Value : null;
-        }
 
         public virtual void Handle(SelectedMessageChanged @event)
         {

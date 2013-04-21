@@ -43,6 +43,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             {
                 yield return typeof(IScreen);
                 yield return typeof(string);
+                yield return typeof(DateTime?);
             }
         }
 

@@ -80,6 +80,7 @@
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
     <Compile Include="ExtensionMethods\RestSharpExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
     <Compile Include="Models\AccessMode.cs" />
     <Compile Include="Models\Address.cs" />
