@@ -15,7 +15,6 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ManagementService;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;

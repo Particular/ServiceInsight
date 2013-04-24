@@ -288,10 +288,10 @@
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
-    <Compile Include="ManagementService\ManagementConnectionView.xaml.cs">
+    <Compile Include="Shell\ManagementConnectionView.xaml.cs">
       <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ManagementService\ManagementConnectionViewModel.cs" />
+    <Compile Include="Shell\ManagementConnectionViewModel.cs" />
     <Compile Include="MessageHeaders\ErrorHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\HeaderInfoViewModelBase.cs" />
@@ -404,7 +404,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ManagementService\ManagementConnectionView.xaml">
+    <Page Include="Shell\ManagementConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

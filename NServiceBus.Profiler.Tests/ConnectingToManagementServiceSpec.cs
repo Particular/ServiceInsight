@@ -3,7 +3,6 @@ using Machine.Specifications;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
-using NServiceBus.Profiler.Desktop.ManagementService;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;

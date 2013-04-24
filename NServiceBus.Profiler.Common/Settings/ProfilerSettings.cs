@@ -6,6 +6,8 @@ namespace NServiceBus.Profiler.Common.Settings
     {
         public List<string> RecentSearchEntries { get; set; }
 
+        public List<string> RecentManagementApiEntries { get; set; }
+
         public string LastUsedManagementApi { get; set; }
     }
 }

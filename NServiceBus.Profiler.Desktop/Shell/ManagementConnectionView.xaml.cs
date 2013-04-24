@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.ManagementService
+namespace NServiceBus.Profiler.Desktop.Shell
 {
     /// <summary>
     /// Interaction logic for ManagementConnectionView.xaml
