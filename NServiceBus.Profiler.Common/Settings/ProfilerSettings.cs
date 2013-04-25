@@ -4,6 +4,12 @@ namespace NServiceBus.Profiler.Common.Settings
 {
     public class ProfilerSettings
     {
+        public ProfilerSettings()
+        {
+            RecentSearchEntries = new List<string>();
+            RecentManagementApiEntries = new List<string>();
+        }
+
         public List<string> RecentSearchEntries { get; set; }
 
         public List<string> RecentManagementApiEntries { get; set; }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
@@ -23,26 +25,37 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
             Shell = Substitute.For<IShellViewModel>();
             ManagementService = Substitute.For<IManagementService>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
-            StoredSetting = new ProfilerSettings();
+            StoredSetting = GetReloadedSettings();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(StoredSetting);
             ConnectTo = new ManagementConnectionViewModel(ManagementService, SettingsProvider) { Parent = Shell };
         };
+
+        private static ProfilerSettings GetReloadedSettings()
+        {
+            var settings = new ProfilerSettings();
+
+            settings.RecentManagementApiEntries.Add("http://localhost/api");
+            settings.RecentManagementApiEntries.Add("http://othermachine:8888/api");
+
+            return settings;
+        }
     }
 
     public class with_connection_to_management_api : with_a_endpoint_connection_dialog
     {
-        Establish context = () =>
-        {
-            ManagementService.IsAlive(Arg.Any<string>()).Returns(Task.Run(() => true));
-        };
+        Establish context = () => ManagementService.IsAlive(Arg.Any<string>()).Returns(Task.Run(() => true));
 
         Because of = () =>
         {
+            ((IActivate)ConnectTo).Activate();
             ConnectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
             AsyncHelper.Run(() => ConnectTo.Accept());
         };
 
+        It should_allow_selecting_the_valid_service_url = () => ConnectTo.CanAccept().ShouldBeTrue();
         It should_consider_the_address_valid = () => ConnectTo.IsAddressValid.ShouldBeTrue();
         It should_store_connection_address = () => SettingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
+        It should_update_recent_connection_entries = () => StoredSetting.RecentManagementApiEntries.Count.ShouldEqual(3);
+        It recent_connection_should_contain_last_connected_entry = () => StoredSetting.RecentManagementApiEntries.ShouldContain("http://localhost:8080/managemnetApi");
     }
 }
