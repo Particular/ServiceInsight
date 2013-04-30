@@ -101,6 +101,11 @@ namespace NServiceBus.Profiler.Core.Management
             });
         }
 
+        public Task<bool> RetryMessage(string serviceUrl, string messageId)
+        {
+            return Task.Run(() => true);
+        }
+
         public Task<bool> IsAlive(string serviceUrl)
         {
             return Task.Run(() => true);

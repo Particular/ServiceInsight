@@ -39,6 +39,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                     return Resources.BulletRed.ToBitmapImage();
                 case MessageStatus.Successfull:
                     return Resources.BulletGreen.ToBitmapImage();
+                case MessageStatus.RetryIssued:
+                    return Resources.BulletWhite.ToBitmapImage();
                 default:
                     throw new ArgumentOutOfRangeException(string.Format("Status {0} is not implemented", Status));
             }

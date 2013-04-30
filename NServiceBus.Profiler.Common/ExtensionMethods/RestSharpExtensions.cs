@@ -47,25 +47,48 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
             return ExecuteAsync<T>(client, request, response => response.Data);
         }
 
+        public static Task<bool> ExecuteAsync(this IRestClient client, IRestRequest request)
+        {
+            var completionSource = new TaskCompletionSource<bool>();
+            client.ExecuteAsync(request, response => ProcessResponse(r => response.StatusCode == HttpStatusCode.OK, response, completionSource));
+            return completionSource.Task;
+        }
+
         private static Task<T> ExecuteAsync<T>(this IRestClient client, IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
             var completionSource = new TaskCompletionSource<T>();
-            client.ExecuteAsync<T>(request, response =>
-            {
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    completionSource.SetResult(selector(response));
-                }
-                else
-                {
-                    var errorMessage = string.Format("Unknown error connecting to the service at {0}, Http Status code is {1}", client.BuildUri(request), response.StatusCode);
-                    Logger.Error(errorMessage, response.ErrorException);
-                    completionSource.SetResult(null);
-                }
-            });
+            client.ExecuteAsync<T>(request, response => ProcessResponse(selector, response, completionSource));
             return completionSource.Task;
         }
 
+        private static void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                completionSource.SetResult(selector(response));
+            }
+            else
+            {
+                var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
+                Logger.Error(errorMessage, response.ErrorException);
+                completionSource.SetCanceled();
+            }
+        }
+
+        private static void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource) 
+            where T : class, new()
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                completionSource.SetResult(selector(response));
+            }
+            else
+            {
+                var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
+                Logger.Error(errorMessage, response.ErrorException);
+                completionSource.SetCanceled();
+            }
+        }
     }
 }

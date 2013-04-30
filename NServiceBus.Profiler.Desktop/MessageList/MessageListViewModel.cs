@@ -87,6 +87,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             base.OnActivate();
             ContextMenuItems.Add(new ContextMenuModel("ReturnToSource", "Return To Source", Properties.Resources.MessageReturn));
+            ContextMenuItems.Add(new ContextMenuModel("RetryMessage", "Retry Message", Properties.Resources.MessageReturn));
             ContextMenuItems.Add(new ContextMenuModel("CopyMessageId", "Copy Message Identifier"));
             ContextMenuItems.Add(new ContextMenuModel("CopyHeaders", "Copy Headers"));
         }
@@ -94,6 +95,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public virtual void ReturnToSource()
         {
             _errorHeaderDisplay.ReturnToSource();
+        }
+
+        public virtual async void RetryMessage()
+        {
+            var msg = (StoredMessage)FocusedMessage;
+            await _managementService.RetryMessage(_endpointConnection.ServiceUrl, FocusedMessage.Id);
+            msg.Status = MessageStatus.RetryIssued;
         }
 
         public virtual void CopyMessageId()
@@ -105,6 +113,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public virtual void CopyHeaders()
         {
             _generalHeaderDisplay.CopyHeaderInfo();
+        }
+
+        public bool CanRetryMessage
+        {
+            get
+            {
+                var storedMessage = FocusedMessage as StoredMessage;
+                return storedMessage != null &&
+                       (storedMessage.Status == MessageStatus.Failed || storedMessage.Status == MessageStatus.RepeatedFailures);
+            }
         }
 
         public bool CanReturnToSource
@@ -358,6 +376,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             NotifyOfPropertyChange(() => CanCopyHeaders);
             NotifyOfPropertyChange(() => CanCopyMessageId);
             NotifyOfPropertyChange(() => CanReturnToSource);
+            NotifyOfPropertyChange(() => CanRetryMessage);
             SearchBar.NotifyPropertiesChanged();
         }
 

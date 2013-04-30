@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Common.Models;
 using RestSharp;
@@ -74,6 +73,15 @@ namespace NServiceBus.Profiler.Core.Management
             return version != null;
         }
 
+        public async Task<bool> RetryMessage(string serviceUrl, string messageId)
+        {
+            var client = new RestClient(serviceUrl);
+            var request = new RestRequest("errors/retry", Method.POST);
+            var response = await client.ExecuteAsync(request);
+
+            return response;
+        }
+
         private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
             if(orderBy == null) return;
@@ -90,29 +98,6 @@ namespace NServiceBus.Profiler.Core.Management
         {
             if(searchQuery == null) return;
             request.Resource += string.Format("search/{0}", searchQuery);
-        }
-
-        private string GetPropertyName(string propertyName)
-        {
-            var parts = new List<string>();
-            var currentWord = new StringBuilder();
-
-            foreach (var c in propertyName)
-            {
-                if (char.IsUpper(c) && currentWord.Length > 0)
-                {
-                    parts.Add(currentWord.ToString());
-                    currentWord.Clear();
-                }
-                currentWord.Append(char.ToLower(c));
-            }
-
-            if (currentWord.Length > 0)
-            {
-                parts.Add(currentWord.ToString());
-            }
-
-            return string.Join("_", parts.ToArray());
         }
 
         private string GetSortDirection(bool ascending)
