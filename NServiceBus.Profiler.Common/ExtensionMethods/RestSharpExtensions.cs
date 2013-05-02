@@ -72,7 +72,7 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
             {
                 var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
                 Logger.Error(errorMessage, response.ErrorException);
-                completionSource.SetCanceled();
+                completionSource.SetResult(default(T));
             }
         }
 
@@ -87,7 +87,7 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
             {
                 var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
                 Logger.Error(errorMessage, response.ErrorException);
-                completionSource.SetCanceled();
+                completionSource.SetResult(null);
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Messaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Transactions;
 using NServiceBus.Profiler.Common;
@@ -28,12 +29,19 @@ namespace NServiceBus.Profiler.Core
 
         public virtual IList<Queue> GetQueues(string machineName)
         {
-            var queuesPrivate = MessageQueue.GetPrivateQueuesByMachine(machineName).ToList();
-            var mapped = queuesPrivate.Select(x => _mapper.MapQueue(x)).ToList();
+            try
+            {
+                var queuesPrivate = MessageQueue.GetPrivateQueuesByMachine(machineName).ToList();
+                var mapped = queuesPrivate.Select(x => _mapper.MapQueue(x)).ToList();
 
-            queuesPrivate.ForEach(x => x.Close());
+                queuesPrivate.ForEach(x => x.Close());
 
-            return mapped;
+                return mapped;
+            }
+            catch (InvalidOperationException ex)
+            {
+                return new List<Queue>();
+            }
         }
 
         public virtual Task<IList<MessageInfo>> GetMessagesAsync(Queue queue)
