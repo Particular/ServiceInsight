@@ -43,12 +43,13 @@
     <ROW Component="Path" ComponentId="{AD0D258A-2196-4EE4-A030-632F9495900C}" Directory_="APPDIR" Attributes="4" Condition="DESK_SH" KeyPath="Path"/>
     <ROW Component="ProductInformation" ComponentId="{EDE6C5EB-DE0A-4FC2-9A69-9F35F16EBADE}" Directory_="APPDIR" Attributes="4" Condition="ALL_PROGRAMS_SH" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{EA7996F1-7FA9-4A26-A0CD-53C695E5EDBE}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="TrialStart" ComponentId="{B3C3A924-2FB0-4B65-BEB8-01C0390A6F83}" Directory_="APPDIR" Attributes="4" KeyPath="TrialStart"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="DTC" Title="DTC" Description="Install the Microsoft Distributed Transaction Coordinator (required for MSMQ)" Display="7" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName"/>
     <ROW Feature="MSMQ" Feature_Parent="DTC" Title="MSMQ" Description="Install Microsoft Message Queuing (requires DTC)" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName"/>
     <ROW Feature="ManagementAPI" Title="Management Service" Description="Install the Particular Management windows service (Particular.Management)" Display="5" Level="32767" Attributes="0" Options="32" Components="AI_CustomARPName"/>
-    <ROW Feature="Profiler" Title="Profiler" Description="Install Profiler for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName NServiceBus.Profiler.Common.dll NServiceBus.Profiler.Core.dll NServiceBus.Profiler.Desktop.exe NServiceBus.Profiler.Desktop.exe.config Path ProductInformation SHORTCUTDIR"/>
+    <ROW Feature="Profiler" Title="Profiler" Description="Install Profiler for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName NServiceBus.Profiler.Common.dll NServiceBus.Profiler.Core.dll NServiceBus.Profiler.Desktop.exe NServiceBus.Profiler.Desktop.exe.config Path ProductInformation SHORTCUTDIR TrialStart"/>
     <ATTRIBUTE name="CurrentFeature" value="Profiler"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
@@ -379,6 +380,7 @@
     <ROW Registry="NoRepair" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="NoRepair" Value="#1" Component_="AI_CustomARPName"/>
     <ROW Registry="Path" Root="2" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="Path"/>
     <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
+    <ROW Registry="TrialStart" Root="1" Key="Software\ParticularSoftware\Profiler\1.0" Name="TrialStart" Value="[Date]" Component_="TrialStart"/>
     <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
     <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode]" Component_="AI_CustomARPName"/>
