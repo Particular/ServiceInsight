@@ -16,6 +16,7 @@ using NServiceBus.Profiler.Desktop.Search;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -29,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IErrorHeaderViewModel _errorHeaderDisplay;
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
+        private readonly IStatusBarManager _statusBar;
         private IMessageListView _view;
         private int _workCount;
 
@@ -41,7 +43,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             ISearchBarViewModel searchBarViewModel,
             IErrorHeaderViewModel errorHeaderDisplay,
             IGeneralHeaderViewModel generalHeaderDisplay,
-            IClipboard clipboard)
+            IClipboard clipboard,
+            IStatusBarManager statusBar)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
@@ -51,6 +54,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _errorHeaderDisplay = errorHeaderDisplay;
             _generalHeaderDisplay = generalHeaderDisplay;
             _clipboard = clipboard;
+            _statusBar = statusBar;
 
             SearchBar = searchBarViewModel;
 
@@ -69,6 +73,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public virtual ISearchBarViewModel SearchBar { get; private set; }
 
         public virtual MessageInfo FocusedMessage { get; set; }
+
+        public virtual StoredMessage StoredMessage
+        {
+            get { return FocusedMessage as StoredMessage; }
+        }
 
         public virtual Queue SelectedQueue { get; private set; }
 
@@ -99,9 +108,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual async void RetryMessage()
         {
+            _statusBar.Status = string.Format("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
             await _managementService.RetryMessage(_endpointConnection.ServiceUrl, FocusedMessage.Id);
-            msg.Status = MessageStatus.RetryIssued;
+            Messages.Remove(msg);
+            _statusBar.Status = "Done";
         }
 
         public virtual void CopyMessageId()
@@ -119,9 +130,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             get
             {
-                var storedMessage = FocusedMessage as StoredMessage;
-                return storedMessage != null &&
-                       (storedMessage.Status == MessageStatus.Failed || storedMessage.Status == MessageStatus.RepeatedFailures);
+                return StoredMessage != null &&
+                       (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailures);
             }
         }
 
@@ -144,10 +154,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
 
-            var loadedMessage = FocusedMessage as StoredMessage;
-            if (loadedMessage != null)
+            if (StoredMessage != null)
             {
-                _eventAggregator.Publish(new MessageBodyLoaded(loadedMessage));
+                _eventAggregator.Publish(new MessageBodyLoaded(StoredMessage));
                 return;
             }
 

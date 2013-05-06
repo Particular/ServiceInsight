@@ -42,10 +42,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         public void Handle(SelectedExplorerItemChanged @event)
         {
             var queue = @event.SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queue != null)
-            {
-                SelectedQueue = queue.Queue;
-            }
+            SelectedQueue = queue != null ? queue.Queue : null;
         }
 
         public virtual void Handle(MessageBodyLoaded @event)

@@ -42,7 +42,7 @@ namespace NServiceBus.Profiler.Tests
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard);
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, null);
         };
     }
 
