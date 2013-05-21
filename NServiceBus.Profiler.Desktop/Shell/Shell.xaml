@@ -28,7 +28,7 @@
         </Style>
     </Window.Resources>
 
-    <dxb:BarManager  x:Name="BarManager">
+    <dxb:BarManager x:Name="BarManager">
 
         <!--Categories-->
         <dxb:BarManager.Categories>

@@ -77,6 +77,7 @@ namespace NServiceBus.Profiler.Core.Management
         {
             var client = new RestClient(serviceUrl);
             var request = new RestRequest("errors/retry", Method.POST);
+            request.AddParameter("MessageId", messageId);
             var response = await client.ExecuteAsync(request);
 
             return response;

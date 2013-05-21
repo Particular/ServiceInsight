@@ -22,6 +22,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             ChangeTheme(Theme.VS2010Name);
             InitializeComponent();
+            BarManager.CheckBarItemNames = false;
         }
 
         public void ChangeTheme(string name)
@@ -33,8 +34,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         { 
             return BarManager;
         }
-
-        public ILog Logger { get; set; }
 
         public void SaveLayout(ISettingsProvider settingProvider)
         {
@@ -64,7 +63,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch (Exception ex)
             {
-                Logger.Info("Failed to save the layout, reason is: " + ex);
+                //TODO: Logger not injected?
+                //Logger.Info("Failed to save the layout, reason is: " + ex);
                 return null;
             }
         }
@@ -80,7 +80,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch(Exception ex)
             {
-                Logger.Info("Failed to restore layout, reason is: " + ex);
+                //Logger.Info("Failed to restore layout, reason is: " + ex);
             }
         }
     }
