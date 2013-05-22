@@ -34,7 +34,7 @@ namespace NServiceBus.Profiler.Core.Management
         public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var client = new RestClient(serviceUrl);
-            var request = new RestRequest(string.Format("/endpoints/{0}/messages/", endpoint.Name));
+            var request = new RestRequest(CreateBaseUrl(endpoint.Name, searchQuery));
 
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
@@ -44,6 +44,12 @@ namespace NServiceBus.Profiler.Core.Management
             result.CurrentPage = pageIndex;
 
             return result;
+        }
+
+        private static string CreateBaseUrl(string endpointName, string searchQuery)
+        {
+            return searchQuery == null ? string.Format("/endpoints/{0}/messages/", endpointName) 
+                                       : "/messages/";
         }
 
         public async Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId)
