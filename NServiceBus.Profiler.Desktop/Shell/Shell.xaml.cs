@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Caliburn.Core.Logging;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
-using DevExpress.Xpf.NavBar;
+using DevExpress.Xpf.Core.Serialization;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Settings;
-using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Common.ExtensionMethods;
-using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -35,10 +32,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             return BarManager;
         }
 
+        public ILog Logger { get; set; }
+
         public void SaveLayout(ISettingsProvider settingProvider)
         {
             var layoutSetting = new ShellLayoutSettings();
 
+            layoutSetting.LayoutVersion = GetCurrentLayoutVersion();
             layoutSetting.DockLayout = GetLayout(DockManager);
             layoutSetting.MenuLayout = GetLayout(BarManager);
 
@@ -48,9 +48,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public void RestoreLayout(ISettingsProvider settingsProvider)
         {
             var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>(true);
+            var currentLayoutVersion = GetCurrentLayoutVersion();
 
-            SetLayout(DockManager, layoutSetting.DockLayout.GetAsStream());
-            SetLayout(BarManager, layoutSetting.MenuLayout.GetAsStream());
+            if (layoutSetting.LayoutVersion == currentLayoutVersion)
+            {
+                SetLayout(DockManager, layoutSetting.DockLayout.GetAsStream());
+                SetLayout(BarManager, layoutSetting.MenuLayout.GetAsStream());
+            }
+        }
+
+        private string GetCurrentLayoutVersion()
+        {
+            return DXSerializer.GetLayoutVersion(BarManager);
         }
 
         private string GetLayout(dynamic control) //Lack of common interface :(
@@ -63,8 +72,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch (Exception ex)
             {
-                //TODO: Logger not injected?
-                //Logger.Info("Failed to save the layout, reason is: " + ex);
+                Logger.Info("Failed to save the layout, reason is: " + ex);
                 return null;
             }
         }
@@ -80,7 +88,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch(Exception ex)
             {
-                //Logger.Info("Failed to restore layout, reason is: " + ex);
+                Logger.Info("Failed to restore layout, reason is: " + ex);
             }
         }
     }

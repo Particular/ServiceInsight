@@ -11,5 +11,8 @@ namespace NServiceBus.Profiler.Common.Settings
 
         [DefaultValue(null)]
         public string MenuLayout { get; set; }
+
+        [DefaultValue(null)]
+        public string LayoutVersion { get; set; }
     }
 }

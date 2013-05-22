@@ -36,8 +36,8 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance();
-            builder.RegisterType<ShellView>().As<IShellView>().SingleInstance();
+            builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBar>().As<ISearchBarView>().SingleInstance();
             builder.RegisterType<MenuManager>().As<IMenuManager>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();

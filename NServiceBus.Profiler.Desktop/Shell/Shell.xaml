@@ -1,6 +1,7 @@
 ﻿<Window 
         xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
         xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,7 +29,9 @@
         </Style>
     </Window.Resources>
 
-    <dxb:BarManager x:Name="BarManager">
+    <dxb:BarManager x:Name="BarManager" 
+                    dxc:DXSerializer.SerializationID="BarManager"
+                    dxc:DXSerializer.LayoutVersion="1.0">
 
         <!--Categories-->
         <dxb:BarManager.Categories>
@@ -73,9 +76,9 @@
             <dxb:BarButtonItem Content="Create Queue" x:Name="itemCreateQueue" 
 				CategoryName="Tools" Glyph="/Images/CreateQueue.png"
 				cal:Message.Attach="[Event ItemClick]=[Action CreateQueue]" />
-            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" 
-				CategoryName="Tools" Glyph="/Images/CreateMessage.png"
-				cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />
+<!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
+<!--				CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->
+<!--				cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />-->
             <dxb:BarButtonItem Content="Import From File" x:Name="itemImportMessageToFile" 
 				CategoryName="Tools" Glyph="/Images/Open.png"
 				cal:Message.Attach="[Event ItemClick]=[Action ImportMessage]" />
@@ -103,7 +106,7 @@
                 <dxb:BarButtonItemLink BarItemName="itemPurgeQueue" />
                 <dxb:BarButtonItemLink BarItemName="itemDeleteQueue" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />
+<!--                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
                 <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
             </dxb:BarSubItem>
             
@@ -142,7 +145,7 @@
                 <dxb:BarButtonItemLink BarItemName="itemPurgeQueue" />
                 <dxb:BarButtonItemLink BarItemName="itemDeleteQueue" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />
+                <!--<dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
                 <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
             </dxb:Bar>
             <dxb:Bar IsStatusBar="True" Caption="Statusbar" AllowHide="True" AllowCollapse="True" >
