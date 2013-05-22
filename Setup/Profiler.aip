@@ -17,7 +17,7 @@
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:Particular_Profiler_White_v2.png" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
-    <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="8888" Type="4"/>
+    <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
     <ROW Property="ProductCode" Value="1033:{6F29C354-F8C6-4F8B-BD85-63BB59E5E3FD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Particular Software Profiler 4.0.0"/>
