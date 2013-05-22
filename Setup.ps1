@@ -34,7 +34,8 @@ task BuildSetup {
 	# edit Advanced Installer Project	  
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetVersion "$ProductVersion.$PatchVersion" -noprodcode }	
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetPackageName "$archive.exe" -buildname DefaultBuild }
-	
+	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetOutputLocation -buildname DefaultBuild -path "$baseDir\Setup\Output Package" }
+
 	# Build setup with Advanced Installer	
 	exec { &$script:AdvinstCLI /rebuild $setupProjectFile }
 }
