@@ -3,6 +3,7 @@ using System.Xml;
 using Autofac;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.MessageDecoders;
 
@@ -20,12 +21,9 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<HeaderContentDecoder>().As<IContentDecoder<IList<HeaderInfo>>>();
             builder.RegisterType<DefaultMapper>().As<IMapper>().SingleInstance();
             builder.RegisterType<NetworkOperations>().As<INetworkOperations>().SingleInstance();
-
-//#if DEBUG
-            //builder.RegisterType<TestManagementService>().As<IManagementService>().SingleInstance();
-//#else
+            builder.RegisterType<AppLicenseManager>().As<ILicenseManager>().SingleInstance();
+            builder.RegisterType<CryptographyService>().As<ICryptoService>().SingleInstance();
             builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
-//#endif
         }
     }
 }

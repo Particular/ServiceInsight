@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace NServiceBus.Profiler.Common.CodeParser
 {
     public class CodeLexem
     {
-        public CodeLexem()
-            : this("")
-        {
-        }
-
         public CodeLexem(string text)
             : this(LexemType.Complex, text)
         {

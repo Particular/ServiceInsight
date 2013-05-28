@@ -5,23 +5,13 @@ using NServiceBus.Profiler.Common.CodeParser;
 
 namespace NServiceBus.Profiler.Tests.Parsers
 {
-    [Subject("json code parser")]
-    public abstract class with_a_json_parser
-    {
-        protected static JsonParser Parser;
-        protected static IList<CodeLexem> Lexemes;
-
-        Establish context = () =>
-        {
-            Parser = new JsonParser();
-        };
-    }
-
-    public class when_parsing_simple_json_string : with_a_json_parser
+    [Subject("Json parser")]
+    public class when_parsing_simple_json_string
     {
         protected static string TestMessage = "﻿[{\"$type\":\"NSB.Messages.CRM.RegisterCustomer, NSB.Messages\",\"Name\":\"Hadi\",\"Password\":\"123456\",\"EmailAddress\":\"h.eskandari@gmail.com\",\"RegistrationDate\":\"2013-01-28T03:24:05.0546437Z\"}]";
+        protected static IList<CodeLexem> Lexemes;
 
-        Because of = () => Lexemes = Parser.Parse(TestMessage);
+        Because of = () => Lexemes = new CodeLexem(TestMessage).Parse(CodeLanguage.Json);
 
         It should_parse_all_properties = () => Lexemes.Count(lx => lx.Type == LexemType.Property).ShouldEqual(5);
         It should_parse_all_property_values = () => Lexemes.Count(lx => lx.Type == LexemType.Value).ShouldEqual(5);
@@ -29,8 +19,9 @@ namespace NServiceBus.Profiler.Tests.Parsers
         It should_parse_all_symbols = () => Lexemes.Count(lx => lx.Type == LexemType.Symbol).ShouldEqual(13);
     }
 
-    public class when_parsing_json_object_graph : with_a_json_parser
+    public class when_parsing_json_object_graph
     {
+        protected static IList<CodeLexem> Lexemes;
         protected static string JsonGraph = @"{""menu"": {
   ""id"": ""file"",
   ""value"": ""File"",
@@ -43,7 +34,7 @@ namespace NServiceBus.Profiler.Tests.Parsers
   }
 }}";
 
-        Because of = () => Lexemes = Parser.Parse(JsonGraph);
+        Because of = () => Lexemes = new CodeLexem(JsonGraph).Parse(CodeLanguage.Json);
 
         It should_parse_all_properties = () => Lexemes.Count(lx => lx.Type == LexemType.Property).ShouldEqual(11);
         It should_parse_all_property_values = () => Lexemes.Count(lx => lx.Type == LexemType.Value).ShouldEqual(8);

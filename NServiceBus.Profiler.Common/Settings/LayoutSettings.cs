@@ -14,5 +14,8 @@ namespace NServiceBus.Profiler.Common.Settings
 
         [DefaultValue(null)]
         public string LayoutVersion { get; set; }
+
+        [DefaultValue(false)]
+        public bool ResetLayout { get; set; }
     }
 }

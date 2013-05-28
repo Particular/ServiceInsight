@@ -16,6 +16,7 @@
 
         public DecoderResult(T value, bool isParsed = true)
         {
+            base.Value = value;
             Value = value;
             IsParsed = isParsed;
         }

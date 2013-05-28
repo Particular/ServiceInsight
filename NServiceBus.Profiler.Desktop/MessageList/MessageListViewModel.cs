@@ -108,11 +108,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual async void RetryMessage()
         {
-            _statusBar.Status = string.Format("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
+            _statusBar.StatusMessage = string.Format("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
             await _managementService.RetryMessage(_endpointConnection.ServiceUrl, FocusedMessage.Id);
             Messages.Remove(msg);
-            _statusBar.Status = "Done";
+            _statusBar.StatusMessage = "Done";
         }
 
         public virtual void CopyMessageId()

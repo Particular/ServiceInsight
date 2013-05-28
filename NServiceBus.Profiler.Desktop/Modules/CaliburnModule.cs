@@ -9,7 +9,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WindowManagerEx>().As<IWindowManager>().As<IWindowManagerEx>().InstancePerLifetimeScope();
+            builder.RegisterType<WindowManagerEx>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DefaultEventAggregator>().As<IEventAggregator>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultDispatcher>().As<IDispatcher>().InstancePerLifetimeScope();
         }

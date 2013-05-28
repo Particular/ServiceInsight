@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Conversations;
@@ -26,11 +25,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IStatusBarManager StatusBarManager { get; }
         IConversationViewModel Conversation { get; }
         IMessageBodyViewModel MessageBody { get; }
-        IEnumerable<IHeaderInfoViewModel> Headers { get; }
+        IMessagePropertiesViewModel MessageProperties { get; }
         IShellView View { get; }
         ExplorerItem SelectedExplorerItem { get; }
         bool AutoRefresh { get; }
-        void ExitApp();
+        void Shutdown();
         void ShowAbout();
         void ShowHelp();
         void DeleteCurrentQueue();

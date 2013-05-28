@@ -1,0 +1,56 @@
+﻿<dxc:DXWindow x:Class="NServiceBus.Profiler.Desktop.Shell.LicenseRegistrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             mc:Ignorable="d" 
+             Width="380" Height="250"
+             WindowStartupLocation="CenterOwner"
+             ShowInTaskbar="False"
+             ResizeMode="NoResize"
+             d:DesignHeight="380" d:DesignWidth="180">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" 
+               Source="/Images/Registration.jpg" 
+               Height="110" 
+               Stretch="UniformToFill" />
+        <TextBlock Grid.Row="1" 
+                   Margin="{StaticResource LabelMargin}" 
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center">
+                <Run Text="{Binding LicenseType, Mode=OneWay}" />
+                <Run Text="License Registered To: " />
+                <Run Text="{Binding RegisteredTo, Mode=OneWay}" />
+        </TextBlock>
+        <TextBlock Grid.Row="2" 
+                   Margin="{StaticResource LabelMargin}"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+            <Run Text="Trial Day(s) Remaining: " />
+            <Run Text="{Binding TrialDaysRemaining, Mode=OneWay}" />
+        </TextBlock>
+        <StackPanel Grid.Row="3" Orientation="Horizontal"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom"
+                    Margin="{StaticResource DefaultMargin}">
+            <Button Style="{StaticResource DialogButton}" 
+                    Width="120"
+                    Content="Browse For License..."
+                    x:Name="LoadLicense"
+                    Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+
+            <Button Style="{StaticResource DialogButton}" 
+                    x:Name="Close"
+                    Width="120"
+                    Content="Close" />
+        </StackPanel>
+    </Grid>
+</dxc:DXWindow>

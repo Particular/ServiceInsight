@@ -9,7 +9,7 @@
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              Width="380" Height="180"
-             WindowStartupLocation="CenterScreen"
+             WindowStartupLocation="CenterOwner"
              ShowInTaskbar="False"
              ShowTitle="True"
              ResizeMode="NoResize"

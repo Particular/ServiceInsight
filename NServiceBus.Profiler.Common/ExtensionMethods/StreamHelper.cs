@@ -41,12 +41,7 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
 
         public static string GetAsString(this byte[] data)
         {
-            return GetAsString(data, Encoding.Default);
-        }
-
-        public static string GetAsString(this byte[] data, Encoding encoding)
-        {
-            return encoding.GetString(data);
+            return Encoding.UTF8.GetString(data);
         }
     }
 }

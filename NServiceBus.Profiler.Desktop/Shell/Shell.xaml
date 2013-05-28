@@ -32,7 +32,6 @@
     <dxb:BarManager x:Name="BarManager" 
                     dxc:DXSerializer.SerializationID="BarManager"
                     dxc:DXSerializer.LayoutVersion="1.0">
-
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -45,51 +44,57 @@
         <!--Menu/Toolbar Items-->
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Content="Exit Application" x:Name="itemExit" 
-				CategoryName="File" Glyph="/Images/Exit.png" 
-				cal:Message.Attach="[Event ItemClick]=[Action ExitApp]" />
+                               CategoryName="File" Glyph="/Images/Exit.png" 
+                               cal:Message.Attach="[Event ItemClick]=[Action Shutdown]" />
             <dxb:BarButtonItem Content="About" x:Name="itemAbout" 
-				CategoryName="Help" Glyph="/Images/About.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ShowAbout]" />
+                               CategoryName="Help" Glyph="/Images/About.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ShowAbout]" />
             <dxb:BarButtonItem Content="Help" x:Name="itemHelp" 
-				CategoryName="Help" Glyph="/Images/Help.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ShowHelp]" />
+                               CategoryName="Help" Glyph="/Images/Help.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ShowHelp]" />
             <dxb:BarButtonItem Content="Connect To Machine" x:Name="itemConnectQueue" 
-				CategoryName="Tools" Glyph="/Images/ConnectQueue.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ConnectToMachine]" />
+                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ConnectToMachine]" />
             <dxb:BarButtonItem Content="Connect To Management Service" x:Name="itemConnectService" 
-				CategoryName="Tools" Glyph="/Images/ConnectService.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ConnectToManagementService]" />
+                               CategoryName="Tools" Glyph="/Images/ConnectService.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ConnectToManagementService]" />
             <dxb:BarButtonItem Content="Delete Message(s)" x:Name="itemDeleteMessage" 
-				CategoryName="Tools" Glyph="/Images/DeleteMessage.png"
-				cal:Message.Attach="[Event ItemClick]=[Action DeleteSelectedMessages]" />
+                               CategoryName="Tools" Glyph="/Images/DeleteMessage.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action DeleteSelectedMessages]" />
             <dxb:BarButtonItem Content="Purge Queue" x:Name="itemPurgeQueue" 
-				CategoryName="Tools" Glyph="/Images/PurgeQueue.png"
-				cal:Message.Attach="[Event ItemClick]=[Action PurgeCurrentQueue]" />
+                               CategoryName="Tools" Glyph="/Images/PurgeQueue.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action PurgeCurrentQueue]" />
             <dxb:BarButtonItem Content="Delete Queue" x:Name="itemDeleteQueue" 
-                KeyGesture="ALT+DEL"
-				CategoryName="Tools" Glyph="/Images/DeleteQueue.png"
-				cal:Message.Attach="[Event ItemClick]=[Action DeleteCurrentQueue]" />
+                               KeyGesture="ALT+DEL"
+                               CategoryName="Tools" Glyph="/Images/DeleteQueue.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action DeleteCurrentQueue]" />
             <dxb:BarButtonItem Content="Refresh" x:Name="itemRefresh" 
-				CategoryName="Tools" Glyph="/Images/Refresh.png"
-				cal:Message.Attach="[Event ItemClick]=[Action RefreshQueues]"
-                KeyGesture="F5" />
+                               CategoryName="Tools" Glyph="/Images/Refresh.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action RefreshQueues]"
+                               KeyGesture="F5" />
             <dxb:BarButtonItem Content="Create Queue" x:Name="itemCreateQueue" 
-				CategoryName="Tools" Glyph="/Images/CreateQueue.png"
-				cal:Message.Attach="[Event ItemClick]=[Action CreateQueue]" />
-<!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
-<!--				CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->
-<!--				cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />-->
+                               CategoryName="Tools" Glyph="/Images/CreateQueue.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action CreateQueue]" />
+            <!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
+            <!--                               CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->
+            <!--                               cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />-->
             <dxb:BarButtonItem Content="Import From File" x:Name="itemImportMessageToFile" 
-				CategoryName="Tools" Glyph="/Images/Open.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ImportMessage]" />
+                               CategoryName="Tools" Glyph="/Images/Open.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ImportMessage]" />
             <dxb:BarButtonItem Content="Export To File" x:Name="itemExportMessageToFile" 
-				CategoryName="Tools" Glyph="/Images/Save.png"
-				cal:Message.Attach="[Event ItemClick]=[Action ExportMessage]" />
+                               CategoryName="Tools" Glyph="/Images/Save.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action ExportMessage]" />
+            <dxb:BarButtonItem Content="Register..." x:Name="itemRegister"
+                               CategoryName="Help" Glyph="/Images/Key.png"
+                               cal:Message.Attach="[Event ItemClick]=[Action Register]"/>
+            <dxb:BarButtonItem Content="Restore Layout" x:Name="itemRestoreLayout"
+                               CategoryName="Views"
+                               cal:Message.Attach="[Event ItemClick]=[Action ResetLayout]"/>
             <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefresh"
-                CategoryName="Views" 
-                IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
+                              CategoryName="Views" 
+                              IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
             <dxb:ToolbarListItem x:Name="itemToolbarList" Content="Toolbar List" BarItemDisplayMode="Content" />
-            
+
             <dxb:BarSubItem x:Name="menuFile" CategoryName="File" Content="File">
                 <dxb:BarButtonItemLink BarItemName="itemExportMessageToFile" />
                 <dxb:BarButtonItemLink BarItemName="itemImportMessageToFile" />
@@ -106,23 +111,32 @@
                 <dxb:BarButtonItemLink BarItemName="itemPurgeQueue" />
                 <dxb:BarButtonItemLink BarItemName="itemDeleteQueue" />
                 <dxb:BarItemLinkSeparator />
-<!--                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
+                <!--                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
                 <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
             </dxb:BarSubItem>
-            
+
             <dxb:BarSubItem x:Name="menuViews" CategoryName="Views" Content="Views">
                 <dxb:BarCheckItemLink BarItemName="itemAutoRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:ToolbarListItemLink BarItemName="itemToolbarList" />
+                <dxb:BarButtonItemLink BarItemName="itemRestoreLayout" />
             </dxb:BarSubItem>
 
             <dxb:BarSubItem x:Name="menuHelp" CategoryName="Help" Content="Help">
                 <dxb:BarButtonItemLink BarItemName="itemHelp" />
                 <dxb:BarButtonItemLink BarItemName="itemAbout" />
+                <dxb:BarButtonItemLink BarItemName="itemRegister" />
             </dxb:BarSubItem>
-            
+
+            <dxb:BarStaticItem x:Name="menuRegistration"
+                               CategoryName="Status"
+                               Content="{Binding StatusBarManager.Registration, Mode=TwoWay}" 
+                               AutoSizeMode="Content" 
+                               Alignment="Far" />
+
             <dxb:BarStaticItem x:Name="menuStatus" 
-                               Content="{Binding StatusBarManager.Status, Mode=TwoWay}" 
+                               CategoryName="Status"
+                               Content="{Binding StatusBarManager.StatusMessage, Mode=TwoWay}" 
                                AutoSizeMode="Fill" 
                                ShowBorder="False" />
 
@@ -153,7 +167,9 @@
                     <dxb:BarDockInfo ContainerType="Bottom" />
                 </dxb:Bar.DockInfo>
                 <dxb:Bar.ItemLinks>
-                    <dxb:BarStaticItemLink BarItemName="menuStatus"/>
+                    <dxb:BarStaticItemLink BarItemName="menuStatus" />
+                    <dxb:BarItemLinkSeparator />
+                    <dxb:BarStaticItemLink BarItemName="menuRegistration" />
                 </dxb:Bar.ItemLinks>
             </dxb:Bar>
         </dxb:BarManager.Bars>
@@ -166,32 +182,32 @@
                     <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200">
                         <dxd:LayoutPanel x:Name="EndpointExplorer" 
                                          Caption="Endpoint Explorer"
-						                 AllowClose="False" 
-						                 ShowBorder="False" 
-						                 AllowFloat="False"
-						                 CaptionImage="/Images/ServerExplorer.png">
+                                         AllowClose="False" 
+                                         ShowBorder="False" 
+                                         AllowFloat="False"
+                                         CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
                         <dxd:LayoutPanel x:Name="QueueExplorer" 
                                          Caption="Queue Explorer" 
-						                 AllowClose="False" 
-						                 ShowBorder="False" 
-						                 AllowFloat="False"
-						                 CaptionImage="/Images/ServerExplorer.png">
+                                         AllowClose="False" 
+                                         ShowBorder="False" 
+                                         AllowFloat="False"
+                                         CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding QueueExplorer}" />
                         </dxd:LayoutPanel>
 
                     </dxd:AutoHideGroup>
 
                 </dxd:DockLayoutManager.AutoHideGroups>
-                
+
                 <dxd:LayoutGroup>
                     <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
                         <dxd:LayoutPanel x:Name="Messages" 
                                          Caption="Messages" 
-  							             AllowClose="False"
-							             AllowFloat="False"
-							             ShowBorder="False"
+                                         AllowClose="False"
+                                         AllowFloat="False"
+                                         ShowBorder="False"
                                          CaptionImage="/Images/Folder-Table.png">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
@@ -199,23 +215,23 @@
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
                             <dxd:TabbedGroup ItemWidth="3*"
                                              AllowClose="False"
-							                 AllowFloat="False"
+                                             AllowFloat="False"
                                              GroupBorderStyle="Tabbed">
-                                
+
                                 <dxd:LayoutPanel x:Name="FlowDiagram" 
                                                  Caption="Flow Diagram"  
-    							                 AllowClose="False"
-							                     AllowFloat="False"
-							                     ShowBorder="False"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
                                                  CaptionImage="/Images/Diagram.png">
                                     <ContentControl cal:View.Model="{Binding Conversation}" />
                                 </dxd:LayoutPanel>
 
                                 <dxd:LayoutPanel x:Name="MessageBody"
                                                  Caption="Body"  
-    							                 AllowClose="False"
-							                     AllowFloat="False"
-							                     ShowBorder="False"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
                                                  CaptionImage="/Images/Document.png">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
@@ -225,13 +241,13 @@
                             <dxd:LayoutPanel x:Name="MessageProperties" 
                                              Caption="Message Properties" 
                                              ItemWidth="1*"
-							                 AllowClose="False"
-							                 AllowFloat="False"
-							                 ShowBorder="False"
+                                             AllowClose="False"
+                                             AllowFloat="False"
+                                             ShowBorder="False"
                                              CaptionImage="/Images/Properties.png">
 
                                 <ContentControl cal:View.Model="{Binding MessageProperties}" />
-                                
+
                             </dxd:LayoutPanel>
                         </dxd:LayoutGroup>
 
@@ -239,7 +255,7 @@
                 </dxd:LayoutGroup>
             </dxd:DockLayoutManager>
         </Grid>
-        
+
     </dxb:BarManager>
 
 </Window>

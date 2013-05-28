@@ -15,10 +15,9 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
                  return string.Format("{0}s", time.Seconds);
 
              if (time.TotalHours < 1.0)
-                 return string.Format("{0}m {1:D2}s", time.Minutes, time.Seconds);
+                 return string.Format("{0}m {1}s", time.Minutes, time.Seconds);
 
-             return string.Format("{0}h {1:D2}m {2:D2}s", (int)time.TotalHours, time.Minutes,
-                                  time.Seconds);
+             return string.Format("{0}h {1}m {2}s", time.Hours, time.Minutes, time.Seconds);
          }
 
         public static DateTime? ParseHeaderDate(this string date)

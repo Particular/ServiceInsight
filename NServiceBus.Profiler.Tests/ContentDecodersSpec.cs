@@ -10,11 +10,11 @@ namespace NServiceBus.Profiler.Tests.Decoders
     {
         protected static byte[] StringContent;
         protected static string Decoded;
-        protected static StringContentDecoder Decoder;
+        protected static IContentDecoder Decoder;
 
         Establish context = () =>
         {
-            StringContent = Encoding.Default.GetBytes("This is a string content");
+            StringContent = Encoding.UTF8.GetBytes("This is a string content");
         };
 
         Because of = () => Decoder = new StringContentDecoder();
@@ -30,7 +30,7 @@ namespace NServiceBus.Profiler.Tests.Decoders
     {
         protected static XmlDocument Decoded;
         protected static byte[] XmlContent;
-        protected static XmlContentDecoder Decoder;
+        protected static IContentDecoder Decoder;
 
         Establish context = () =>
         {

@@ -6,5 +6,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
     {
         void SaveLayout(ISettingsProvider settingsProvider);
         void RestoreLayout(ISettingsProvider settingsProvider);
+        void ResetLayout(ISettingsProvider settingsProvider);
     }
 }

@@ -21,10 +21,5 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
         {
             return string.Format("{0}", (count == 1 ? "is" : "are"));
         }
-
-        public static string PluralizeWord(this int count, string word)
-        {
-            return PluralizeWord(word, count);
-        }
     }
 }

@@ -8,7 +8,17 @@ using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class QueueCreationViewModel : Screen, IWorkTracker
+    public interface IQueueCreationViewModel : IScreen, IWorkTracker
+    {
+        string QueueName { get; set; }
+        string SelectedMachine { get; set; }
+        bool IsTransactional { get; set; }
+        List<string> Machines { get; }
+        bool CanAccept();
+        bool CreateQueue();
+    }
+
+    public class QueueCreationViewModel : Screen, IQueueCreationViewModel
     {
         private readonly IQueueManager _queueManager;
         private readonly IQueueExplorerViewModel _explorer;
@@ -67,7 +77,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        private bool CreateQueue()
+        public bool CreateQueue()
         {
             var queue = _queueManager.CreatePrivateQueue(new Queue(SelectedMachine, QueueName), IsTransactional);
             return queue != null;

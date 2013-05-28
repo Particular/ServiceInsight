@@ -9,16 +9,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkStarted>,
         IHandle<WorkFinished>
     {
-        public virtual string Status { get; set; }
+        public virtual string StatusMessage { get; set; }
+
+        public virtual string Registration { get; set; }
 
         public virtual void Handle(WorkStarted @event)
         {
-            Status = @event.Message;
+            StatusMessage = @event.Message;
         }
 
         public virtual void Handle(WorkFinished @event)
         {
-            Status = @event.Message;
+            StatusMessage = @event.Message;
         }
     }
 }

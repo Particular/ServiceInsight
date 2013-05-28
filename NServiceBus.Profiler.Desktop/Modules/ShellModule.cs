@@ -29,8 +29,10 @@ namespace NServiceBus.Profiler.Desktop.Modules
                    .SingleInstance();
 
             builder.RegisterSource(new SettingsSource());
+            builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<QueueCreationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ConnectToMachineView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ManagementConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<AboutView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();
@@ -45,8 +47,8 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
             builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
-            builder.RegisterType<BitBucketIssueTracker>().As<IIssueTracker>();
-            builder.RegisterType<BitBucketIssueRelayApi>();
+//            builder.RegisterType<BitBucketIssueTracker>().As<IIssueTracker>();
+//            builder.RegisterType<BitBucketIssueRelayApi>();
             builder.RegisterType<SimpleSettingsReader>().As<ISettingsReader>().WithParameter(TypedParameter.From(ConfigurationManager.AppSettings));
         }
 
@@ -57,6 +59,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (AboutView);
                 yield return typeof (QueueCreationView);
                 yield return typeof (ConnectToMachineView);
+                yield return typeof (LicenseRegistrationView);
                 yield return typeof (ManagementConnectionView);
                 yield return typeof (ShellView);
             }

@@ -1,13 +1,18 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
+﻿using System;
+using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
@@ -19,7 +24,7 @@ using NSubstitute;
 
 namespace NServiceBus.Profiler.Tests.Shell
 {
-    public interface ITestShellView : IShellView
+    public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
         void Close();
@@ -29,51 +34,56 @@ namespace NServiceBus.Profiler.Tests.Shell
     public class with_a_shell
     {
         protected static ShellViewModel shell;
-        protected static IScreenFactory screenFactory;
-        protected static IWindowManagerEx windowManager;
-        protected static IQueueExplorerViewModel queueExplorer;
-        protected static IEndpointExplorerViewModel endpointExplorer;
-        protected static IMessageListViewModel messageList;
-        protected static AboutViewModel aboutViewModel;
-        protected static ConnectToMachineViewModel connectToViewModel;
-        protected static INetworkOperations networkOperations;
-        protected static IConversationViewModel conversation;
-        protected static IEventAggregator eventAggregator;
-        protected static IExceptionHandler exceptionHandler;
-        protected static IStatusBarManager statusbarManager;
-        protected static IMessageBodyViewModel messageBodyView;
-        protected static ISettingsProvider settingsProvider;
-        protected static ITestShellView view;
-        protected static IMessagePropertiesViewModel messageProperties;
-            
+        protected static IScreenFactory ScreenFactory;
+        protected static IWindowManagerEx WindowManager;
+        protected static IQueueExplorerViewModel QueueExplorer;
+        protected static IEndpointExplorerViewModel EndpointExplorer;
+        protected static IMessageListViewModel MessageList;
+        protected static AboutViewModel AboutViewModel;
+        protected static ConnectToMachineViewModel ConnectToViewModel;
+        protected static INetworkOperations NetworkOperations;
+        protected static IConversationViewModel Conversation;
+        protected static IEventAggregator EventAggregator;
+        protected static IExceptionHandler ExceptionHandler;
+        protected static IStatusBarManager StatusbarManager;
+        protected static IMessageBodyViewModel MessageBodyView;
+        protected static ISettingsProvider SettingsProvider;
+        protected static ILicenseManager LicenseManager;
+        protected static IShellViewStub View;
+        protected static IMessagePropertiesViewModel MessageProperties;
+        protected static IAppCommands App;
+
         Establish context = () =>
         {
-            screenFactory = Substitute.For<IScreenFactory>();
-            windowManager = Substitute.For<IWindowManagerEx>();
-            queueExplorer = Substitute.For<IQueueExplorerViewModel>();
-            endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
-            messageList = Substitute.For<IMessageListViewModel>();
-            networkOperations = Substitute.For<INetworkOperations>();
-            exceptionHandler = Substitute.For<IExceptionHandler>();
-            statusbarManager = Substitute.For<IStatusBarManager>();
-            eventAggregator = Substitute.For<IEventAggregator>();
-            conversation = Substitute.For<IConversationViewModel>();
-            messageBodyView = Substitute.For<IMessageBodyViewModel>();
-            messageProperties = Substitute.For<IMessagePropertiesViewModel>();
-            view = Substitute.For<ITestShellView>();
-            settingsProvider = Substitute.For<ISettingsProvider>();
-            aboutViewModel = Substitute.For<AboutViewModel>(networkOperations);
-            connectToViewModel = Substitute.For<ConnectToMachineViewModel>(networkOperations);
-            screenFactory.CreateScreen<AboutViewModel>().Returns(aboutViewModel);
-            screenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(connectToViewModel);
-            shell = new ShellViewModel(screenFactory, windowManager, queueExplorer, endpointExplorer, messageList,
-                                       statusbarManager, eventAggregator, conversation, messageBodyView,
-                                       settingsProvider, messageProperties);
+            ScreenFactory = Substitute.For<IScreenFactory>();
+            WindowManager = Substitute.For<IWindowManagerEx>();
+            QueueExplorer = Substitute.For<IQueueExplorerViewModel>();
+            EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
+            MessageList = Substitute.For<IMessageListViewModel>();
+            NetworkOperations = Substitute.For<INetworkOperations>();
+            ExceptionHandler = Substitute.For<IExceptionHandler>();
+            StatusbarManager = Substitute.For<IStatusBarManager>();
+            EventAggregator = Substitute.For<IEventAggregator>();
+            Conversation = Substitute.For<IConversationViewModel>();
+            MessageBodyView = Substitute.For<IMessageBodyViewModel>();
+            MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
+            View = Substitute.For<IShellViewStub>();
+            SettingsProvider = Substitute.For<ISettingsProvider>();
+            LicenseManager = Substitute.For<ILicenseManager>();
+            AboutViewModel = Substitute.For<AboutViewModel>(NetworkOperations);
+            ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
+            App = Substitute.For<IAppCommands>();
+            shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
+                                       StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
+                                       SettingsProvider, MessageProperties);
 
-            shell.AttachView(view, null);
+            ScreenFactory.CreateScreen<AboutViewModel>().Returns(AboutViewModel);
+            ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
+
+            shell.AttachView(View, null);
         };
 
-        It should_reload_stored_layout = () => view.Received().RestoreLayout(settingsProvider);
+        It should_reload_stored_layout = () => View.Received().RestoreLayout(SettingsProvider);
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
     }
@@ -93,34 +103,65 @@ namespace NServiceBus.Profiler.Tests.Shell
         It should_not_allow_refreshing_the_queue = () => shell.CanRefreshQueues.ShouldBeFalse();
     }
 
+    public class when_the_work_is_partially_finished : with_a_shell
+    {
+        Establish context = () =>
+        {
+            shell.Handle(new WorkStarted("Some Work"));
+            shell.Handle(new WorkStarted("Some Other Work"));
+        };
+
+        Because of = () => shell.Handle(new WorkFinished());
+
+        It should_still_report_another_work_in_progress = () => shell.WorkInProgress.ShouldBeTrue();
+    }
+
+    public class when_the_work_is_finished : with_a_shell
+    {
+        Establish context = () => shell.Handle(new WorkStarted());
+
+        Because of = () => shell.Handle(new WorkFinished());
+
+        It should_finish_all_the_works_in_progress = () => shell.WorkInProgress.ShouldBeFalse();
+    }
+
+    public class when_more_work_is_finished_than_started : with_a_shell
+    {
+        Establish context = () => shell.Handle(new WorkStarted());
+
+        Because of = () =>
+        {
+            shell.Handle(new WorkFinished());
+            shell.Handle(new WorkFinished());
+        };
+
+        It should_have_finished_the_work_in_progress = () => shell.WorkInProgress.ShouldBeFalse();
+    }
+
     public class when_displaying_about_information : with_a_shell
     {
         Because of = () => shell.ShowAbout();
 
-        It should_display_about_information = () =>
-        {
-            screenFactory.Received().CreateScreen<AboutViewModel>();
-            windowManager.Received().ShowDialog(aboutViewModel);
-        };
+        It should_display_about_information = () => WindowManager.Received().ShowDialog<AboutViewModel>();
     }
 
     public class when_connecting_to_msmq : with_a_shell
     {
         Because of = () =>
         {
-            connectToViewModel.ComputerName.Returns("NewMachine");
-            windowManager.ShowDialog(Arg.Any<object>(), Arg.Any<object>()).Returns(true);
+            ConnectToViewModel.ComputerName.Returns("NewMachine");
+            WindowManager.ShowDialog(Arg.Any<object>(), Arg.Any<object>()).Returns(true);
 
             shell.ConnectToMachine();
         };
 
         It should_display_connect_dialog = () =>
         {
-            screenFactory.Received().CreateScreen<ConnectToMachineViewModel>();
-            windowManager.Received().ShowDialog(connectToViewModel);
+            ScreenFactory.Received().CreateScreen<ConnectToMachineViewModel>();
+            WindowManager.Received().ShowDialog(ConnectToViewModel);
         };
 
-        It should_connect_explorer_to_the_msmq_machine = () => queueExplorer.Received().ConnectToQueue("NewMachine");
+        It should_connect_explorer_to_the_msmq_machine = () => QueueExplorer.Received().ConnectToQueue("NewMachine");
 
     }
 
@@ -133,9 +174,9 @@ namespace NServiceBus.Profiler.Tests.Shell
 
     public class when_shell_deactivated : with_a_shell
     {
-        Because of = () => ((IScreen) shell).Deactivate(true);
+        Because of = () => ((IScreen)shell).Deactivate(true);
 
-        It should_persist_layout_in_the_setting_storage = () => view.Received().SaveLayout(settingsProvider);
+        It should_persist_layout_in_the_setting_storage = () => View.Received().SaveLayout(SettingsProvider);
     }
 
     public class when_turning_off_auto_refresh : with_a_shell
@@ -144,6 +185,77 @@ namespace NServiceBus.Profiler.Tests.Shell
 
         Because of = () => shell.OnAutoRefreshing();
 
-        It should_not_refresh_the_queues = () => queueExplorer.DidNotReceive().PartialRefresh();
+        It should_not_refresh_the_queues = () => QueueExplorer.DidNotReceive().PartialRefresh();
+    }
+
+    public class when_importing_messages : with_a_shell
+    {
+        It is_still_not_implemented = () => Catch.Exception(() => shell.ImportMessage());
+    }
+
+    public class when_exporting_messages : with_a_shell
+    {
+        It is_still_not_implemented = () => Catch.Exception(() => shell.ExportMessage());
+    }
+
+    public class when_creating_new_messages : with_a_shell
+    {
+        It is_still_not_implemented = () => Catch.Exception(() => shell.CreateMessage());
+    }
+
+    public class when_creating_new_queue : with_a_shell
+    {
+        protected static IQueueCreationViewModel ViewModel;
+
+        Establish context = () =>
+        {
+            ViewModel = Substitute.For<IQueueCreationViewModel>();
+            
+            ScreenFactory.CreateScreen<IQueueCreationViewModel>().Returns(ViewModel);
+            WindowManager.ShowDialog(ViewModel, null).Returns(true);
+        };
+
+        Because of = () => shell.CreateQueue();
+
+        //TODO: Upgrade to latest NSubstitute and use CancelAsync?
+        //It should_refresh_exporer = () => shell.QueueExplorer.FullRefresh().ReceivedCalls();
+    }
+
+    public class when_selecting_an_item_in_the_explorer : with_a_shell
+    {
+        protected static ExplorerItem Selected;
+
+        Establish context = () => Selected = new QueueExplorerItem(new Queue("Error"));
+
+        Because of = () => shell.Handle(new SelectedExplorerItemChanged(Selected));
+
+        It should_have_a_selection = () => shell.SelectedExplorerItem.ShouldNotBeNull();
+        It should_be_the_same_selection = () => shell.SelectedExplorerItem.ShouldBeTheSameAs(Selected);
+    }
+
+    public class when_validation_application_with_trial_license : with_a_shell
+    {
+        protected static ProfilerLicense IssuedLicense;
+        protected static string RegisteredUser = "John Doe";
+        protected static string LicenseType = "Trial";
+        protected static int NumberOfDaysRemainingFromTrial = 5;
+
+        Establish context = () =>
+        {
+            IssuedLicense = new ProfilerLicense
+            {
+                LicenseType = LicenseType,
+                ExpirationDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
+                RegisteredTo = RegisteredUser
+            };
+
+            LicenseManager.CurrentLicense.Returns(IssuedLicense);
+            LicenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
+        };
+
+        Because of = () => shell.OnApplicationIdle();
+
+        It should_display_license_owner_on_statusbar = () => StatusbarManager.Registration.ShouldContain(NumberOfDaysRemainingFromTrial.ToString());
+        It should_display_license_type_on_statusbar = () => StatusbarManager.Registration.ShouldContain("Unlicensed");
     }
 }

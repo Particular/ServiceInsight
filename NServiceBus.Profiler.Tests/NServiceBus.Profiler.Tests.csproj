@@ -73,6 +73,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -94,6 +98,8 @@
     <Compile Include="ContainerConfigurationSpec.cs" />
     <Compile Include="ContentDecodersSpec.cs" />
     <Compile Include="ConnectingToManagementServiceSpec.cs" />
+    <Compile Include="CryptographyServiceSpecs.cs" />
+    <Compile Include="DateTimeTests.cs" />
     <Compile Include="ExplorerSpecs.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\FakeQueueManager.cs" />
@@ -110,6 +116,7 @@
     <Compile Include="QueueSpecs.cs" />
     <Compile Include="SettingsSpecs.cs" />
     <Compile Include="ShellSpecs.cs" />
+    <Compile Include="StreamSpecs.cs" />
     <Compile Include="XmlParserSpecs.cs" />
     <Compile Include="XmlViewerSpecs.cs">
       <SubType>Code</SubType>

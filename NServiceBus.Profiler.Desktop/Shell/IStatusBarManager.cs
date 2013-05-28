@@ -2,6 +2,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public interface IStatusBarManager
     {
-        string Status { get; set; }
+        string StatusMessage { get; set; }
+        string Registration { get; set; }
     }
 }

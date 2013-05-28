@@ -73,6 +73,12 @@
                     <sys:Double x:Key="CaptionFontSize">12</sys:Double>
                     <sys:Double x:Key="MessageFontSize">11</sys:Double>
 
+                    <Thickness x:Key="LabelMargin" 
+                               Left="{StaticResource MediumSpacing}" 
+                               Top="{StaticResource MediumSpacing}" 
+                               Right="{StaticResource SmallSpacing}" 
+                               Bottom="{StaticResource SmallSpacing}" />
+
                     <Thickness x:Key="DefaultMargin" 
                                Left="{StaticResource LargeSpacing}" 
                                Top="{StaticResource MediumSpacing}" 
@@ -109,7 +115,7 @@
                         <Setter Property="Margin" Value="{StaticResource ButtonMargin}" />
                         <Setter Property="Padding" Value="1" />
                     </Style>
-
+                    
                     <!-- Checkbox -->
                     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
                         <Setter Property="VerticalAlignment" Value="Center" />

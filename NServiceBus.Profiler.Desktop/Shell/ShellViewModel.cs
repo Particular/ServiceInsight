@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
@@ -24,16 +23,23 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
+        private readonly IAppCommands _appCommander;
         private readonly IScreenFactory _screenFactory;
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
+        private readonly ILicenseManager _licenseManager;
         private readonly ISettingsProvider _settingsProvider;
         private int _workCounter;
-        private DispatcherTimer _timer;
+        private DispatcherTimer _refreshTimer;
+        private DispatcherTimer _idleTimer;
         
+        public const string UnlicensedStatusMessage = "Unlicensed version: {0} left";
+        public const string LicensedStatusMessage = "Registered to '{0}'";
+        public const string DoneStatusMessage = "Done";
         public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
 
         public ShellViewModel(
+            IAppCommands appCommander,
             IScreenFactory screenFactory,
             IWindowManagerEx windowManager,
             IQueueExplorerViewModel queueExplorer, 
@@ -41,14 +47,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
+            ILicenseManager licenseManager,
             IConversationViewModel conversation,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties)
         {
+            _appCommander = appCommander;
             _screenFactory = screenFactory;
             _windowManager = windowManager;
             _eventAggregator = eventAggregator;
+            _licenseManager = licenseManager;
             _settingsProvider = settingsProvider;
             MessageProperties = messageProperties;
             Conversation = conversation;
@@ -64,14 +73,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Items.Add(messages);
 
             InitializeAutoRefreshTimer();
-        }
-
-        internal void OnAutoRefreshing()
-        {
-            if(!AutoRefresh || WorkInProgress) 
-                return;
-
-            _eventAggregator.Publish(new AutoRefreshBeat());
+            InitializeIdleTimer();
         }
 
         public override void AttachView(object view, object context)
@@ -80,14 +82,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View = (IShellView)view;
 
             DisplayName = GetProductName();
-            StatusBarManager.Status = "Done";
+            StatusBarManager.StatusMessage = DoneStatusMessage;
             RestoreLayout();
         }
 
-        public virtual void Deactivate(bool close)
+        public virtual void Deactivate(bool close )
         {
             base.OnDeactivate(close);
-            _timer.Stop();
+            _refreshTimer.Stop();
             SaveLayout();
         }
 
@@ -101,9 +103,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View.RestoreLayout(_settingsProvider);
         }
 
-        public virtual bool AutoRefresh { get; set; }
+        public virtual void ResetLayout()
+        {
+            View.ResetLayout(_settingsProvider);
+        }
 
-        public IEnumerable<IHeaderInfoViewModel> Headers { get; private set; }
+        public virtual bool AutoRefresh { get; set; }
 
         public virtual IShellView View { get; private set; }
 
@@ -128,15 +133,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
             get { return _workCounter > 0; }
         }
 
-        public virtual void ExitApp()
+        public virtual void Shutdown()
         {
-            Application.Current.Shutdown(0);
+            _appCommander.ShutdownImmediately();
         }
 
         public virtual void ShowAbout()
         {
-            var aboutViewModel = _screenFactory.CreateScreen<AboutViewModel>();
-            _windowManager.ShowDialog(aboutViewModel);
+            _windowManager.ShowDialog<AboutViewModel>();
         }
 
         public virtual void ShowHelp()
@@ -223,7 +227,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public virtual void CreateQueue()
         {
-            var screen = _screenFactory.CreateScreen<QueueCreationViewModel>();
+            var screen = _screenFactory.CreateScreen<IQueueCreationViewModel>();
             var result = _windowManager.ShowDialog(screen);
 
             if(result.GetValueOrDefault(false))
@@ -236,6 +240,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual void CreateMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
+        }
+
+        public virtual void Register()
+        {
+            _windowManager.ShowDialog<ILicenseRegistrationViewModel>();
+            DisplayRegistrationStatus();
         }
 
         public void OnAutoRefreshQueuesChanged()
@@ -312,12 +322,69 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get { return !WorkInProgress && false; } //TODO: Implement message import
         }
+        
+        private void InitializeIdleTimer()
+        {
+            _idleTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle) {Interval = TimeSpan.FromSeconds(0)};
+            _idleTimer.Tick += (s, e) => OnApplicationIdle();
+            _idleTimer.Start();
+        }
 
         private void InitializeAutoRefreshTimer()
         {
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(AutoRefreshInterval) };
-            _timer.Tick += (s, e) => OnAutoRefreshing();
-            _timer.Start();
+            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(AutoRefreshInterval) };
+            _refreshTimer.Tick += (s, e) => OnAutoRefreshing();
+            _refreshTimer.Start();
+        }
+
+        internal void OnApplicationIdle()
+        {
+            if (_idleTimer != null)
+                _idleTimer.Stop();
+
+            CheckValidLicense();
+        }
+
+        internal void OnAutoRefreshing()
+        {
+            if (!AutoRefresh || WorkInProgress)
+                return;
+
+            _eventAggregator.Publish(new AutoRefreshBeat());
+        }
+        
+        private void CheckValidLicense()
+        {
+            if (_licenseManager.TrialExpired)
+            {
+                RegisterLicense();
+            }
+
+            DisplayRegistrationStatus();
+        }
+
+        private void DisplayRegistrationStatus()
+        {
+            var license = _licenseManager.CurrentLicense;
+            if (license.LicenseType == ProfilerLicenseTypes.Standard)
+            {
+                StatusBarManager.Registration = string.Format(LicensedStatusMessage, license.RegisteredTo);
+            }
+            else
+            {
+                StatusBarManager.Registration = string.Format(UnlicensedStatusMessage, ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+            }
+        }
+
+        private void RegisterLicense()
+        {
+            var model = _screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
+            var result = _windowManager.ShowDialog(model);
+
+            if (!result.GetValueOrDefault(false))
+            {
+                Shutdown();
+            }
         }
 
         private void NotifyPropertiesChanged()

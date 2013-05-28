@@ -13,6 +13,7 @@ using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
+using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 
@@ -30,6 +31,7 @@ namespace NServiceBus.Profiler.Tests
         protected static IClipboard Clipboard;
         protected static IErrorHeaderViewModel ErrorDisplay;
         protected static IGeneralHeaderViewModel GeneralDisplay;
+        protected static IStatusBarManager StatusBarManager;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         protected static MessageListViewModel MessageList;
         
@@ -42,7 +44,8 @@ namespace NServiceBus.Profiler.Tests
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, null);
+            StatusBarManager = Substitute.For<IStatusBarManager>();
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, StatusBarManager);
         };
     }
 
@@ -81,14 +84,22 @@ namespace NServiceBus.Profiler.Tests
         Establish context = () =>
         {
             SelectedQueue = new Queue("testqueue");
-            MessageStore.Add(SelectedQueue, new List<MessageInfo>(new[] { new MessageInfo(), new MessageInfo() }));
+            MessageStore.Add(SelectedQueue, new List<MessageInfo>(new[]
+            {
+                new MessageInfo { MessageType = "Contracts.SomeMessage, Contracts"}, 
+                new MessageInfo { MessageType = "Contracts.SomeMessage+SubMessage, Contracts"},
+                new MessageInfo { MessageType = ""}, 
+            }));
         };
 
         Because of = () => AsyncHelper.Run(() => MessageList.Handle(new SelectedExplorerItemChanged(new QueueExplorerItem(SelectedQueue)))); // trigger refresh
 
         It signals_work_is_started = () => EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
         It signals_work_is_finished = () => EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
-        It loads_the_messages = () => MessageList.Messages.Count.ShouldEqual(2);
+        It loads_the_messages = () => MessageList.Messages.Count.ShouldEqual(3);
         It hides_the_search_bar = () => SearchBar.IsVisible.ShouldBeFalse();
+        It displays_the_friendly_message_type_based_on_message_class = () => MessageList.Messages[0].FriendlyMessageType.ShouldEqual("SomeMessage");
+        It displays_the_friendly_message_type_of_internal_message_types = () => MessageList.Messages[1].FriendlyMessageType.ShouldEqual("SubMessage");
+        It displays_no_friendly_message_type_when_there_is_none_provided = () => MessageList.Messages[2].FriendlyMessageType.ShouldBeNull();
     }
 }

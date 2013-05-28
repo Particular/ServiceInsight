@@ -154,8 +154,9 @@
     <Reference Include="GraphSharp.Controls">
       <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -175,6 +176,10 @@
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1-Custom\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Licensing, Version=1.3.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rhino.Licensing.1.3\lib\Net45\Rhino.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -288,6 +293,12 @@
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
+    <Compile Include="ScreenManager\FileDialogModel.cs" />
+    <Compile Include="ScreenManager\FileDialogResult.cs" />
+    <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
+      <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
     <Compile Include="Shell\ManagementConnectionView.xaml.cs">
       <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
     </Compile>
@@ -404,6 +415,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Shell\LicenseRegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\ManagementConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -486,6 +501,8 @@
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Folder-Table.png" />
     <Resource Include="Images\ParticularBanner.png" />
+    <Resource Include="Images\Key.png" />
+    <Resource Include="Images\Registration.jpg" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -36,11 +36,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void SaveLayout(ISettingsProvider settingProvider)
         {
-            var layoutSetting = new ShellLayoutSettings();
+            var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>();
 
-            layoutSetting.LayoutVersion = GetCurrentLayoutVersion();
-            layoutSetting.DockLayout = GetLayout(DockManager);
-            layoutSetting.MenuLayout = GetLayout(BarManager);
+            if (!layoutSetting.ResetLayout)
+            {
+                layoutSetting.LayoutVersion = GetCurrentLayoutVersion();
+                layoutSetting.DockLayout = GetLayout(DockManager);
+                layoutSetting.MenuLayout = GetLayout(BarManager);
+            }
+            else
+            {
+                layoutSetting.ResetLayout = false;
+            }
 
             settingProvider.SaveSettings(layoutSetting);
         }
@@ -55,6 +62,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 SetLayout(DockManager, layoutSetting.DockLayout.GetAsStream());
                 SetLayout(BarManager, layoutSetting.MenuLayout.GetAsStream());
             }
+        }
+
+        public void ResetLayout(ISettingsProvider settingsProvider)
+        {
+            var layoutSettings = settingsProvider.GetSettings<ShellLayoutSettings>(true);
+
+            layoutSettings.ResetLayout = true;
+            layoutSettings.MenuLayout = null;
+            layoutSettings.DockLayout = null;
+            
+            settingsProvider.SaveSettings(layoutSettings);
         }
 
         private string GetCurrentLayoutVersion()

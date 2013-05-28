@@ -1,20 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Forms;
 using Caliburn.PresentationFramework.ApplicationModel;
+using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.ViewModels;
 using Caliburn.PresentationFramework.Views;
 
 namespace NServiceBus.Profiler.Desktop.ScreenManager
 {
+    public interface IDialogManager
+    {
+        FileDialogResult OpenFileDialog(FileDialogModel model);
+    }
+
     public interface IWindowManagerEx : IWindowManager
     {
         MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
+        bool? ShowDialog<T>() where T : IScreen;
     }
 
-    public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx
+    public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
+        private readonly IScreenFactory _screenFactory;
         private static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
         private static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
+        private static readonly IDictionary<DialogResult, bool?> DialogResultMaps;
 
         static WindowManagerEx()
         {
@@ -32,12 +42,44 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
                 {MessageBoxImage.Hand, MessageIcon.Error},
                 {MessageBoxImage.Question, MessageIcon.Question}
             };
+            DialogResultMaps = new Dictionary<DialogResult, bool?>
+            {
+                {DialogResult.Abort,  null },
+                {DialogResult.Cancel, null },
+                {DialogResult.Ignore, null },
+                {DialogResult.None,   null },
+                {DialogResult.Retry,  null },
+                {DialogResult.Yes,    true },
+                {DialogResult.OK,     true },
+                {DialogResult.No,     false},
+            };
         }
 
         public WindowManagerEx(
             IViewLocator viewLocator, 
-            IViewModelBinder viewModelBinder) : base(viewLocator, viewModelBinder)
+            IViewModelBinder viewModelBinder,
+            IScreenFactory screenFactory) : base(viewLocator, viewModelBinder)
         {
+            _screenFactory = screenFactory;
+        }
+
+        public FileDialogResult OpenFileDialog(FileDialogModel model)
+        {
+            using(var dialog = new OpenFileDialog())
+            {
+                dialog.CheckFileExists = model.CheckFileExists;
+                dialog.CheckPathExists = model.CheckPathExists;
+                dialog.DefaultExt = model.DefaultExtension;
+                dialog.Filter = model.Filter;
+                dialog.FilterIndex = model.FilterIndex;
+                dialog.Multiselect = model.Multiselect;
+                dialog.Title = model.Title;
+                
+                var dialogResult = dialog.ShowDialog();
+                var result = new FileDialogResult(DialogResultMaps[dialogResult], dialog.FileNames);
+                
+                return result;
+            }
         }
 
         public MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK)
@@ -51,6 +93,12 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
                 return MessageOptionsMaps[result];
 
             return MessageBoxResult.None;
+        }
+
+        public bool? ShowDialog<T>() where T : IScreen
+        {
+            var screen = _screenFactory.CreateScreen<T>();
+            return base.ShowDialog(screen, null);
         }
 
         private static MessageChoice GetMessageChoice(MessageBoxButton button)
