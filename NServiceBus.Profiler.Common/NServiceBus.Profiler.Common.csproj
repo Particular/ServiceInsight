@@ -15,6 +15,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <FodyPath>..\packages\Fody.1.13.8.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +48,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChanged.Fody.1.38.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1-Custom\RestSharp.dll</HintPath>
@@ -109,19 +114,13 @@
     <Compile Include="Settings\ReportingSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  -->
-  <Import Project="$(SolutionDir)\Tools\Fody\Fody.targets" />
-  <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)Tools\Costura.dll" />
-  <Target Name="AfterBuild">
-    <Costura.EmbedTask DeleteReferences="false" MessageImportance="High" ExcludeAssemblies="@(NotEmbed)" />
-  </Target>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="Fody.targets" />
 </Project>
