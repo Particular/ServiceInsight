@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Core.Licensing
         private const string InvalidTrialPeriodMessage = "Trial period is not valid; Please contact Particular Software support for assistance";
         private const string LicenseTypeKey = "LicenseType";
         private const string LicenseVersionKey = "LicenseVersion";
-        private const string DateFormat = "MM/dd/yyyy"; 
+        private const string DateFormat = "M/d/yyyy"; 
         private const int TrialDays = 30;
 
         private static readonly ILog Logger = LogManager.GetLog(typeof(ILicenseManager));
@@ -177,11 +177,9 @@ namespace NServiceBus.Profiler.Core.Licensing
             return trialExpirationDate;
         }
 
-        private static DateTime ParseDateString(string trialStartDateString)
+        private static DateTime ParseDateString(string date)
         {
-            return DateTime.ParseExact(trialStartDateString, DateFormat,
-                                       CultureInfo.InvariantCulture,
-                                       DateTimeStyles.AssumeUniversal);
+            return DateTime.ParseExact(date, DateFormat, CultureInfo.InvariantCulture);
         }
 
         public int GetRemainingTrialDays()
