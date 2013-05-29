@@ -16,7 +16,7 @@ properties {
   $uploadScript = "$base_dir\PublishBuild.build"
   $include_pdb_files = $false
   $cleanup_build_folder = $false
-  $test_assembly_name = "NServiceBus.Profiler.Tests";
+  $test_assembly_name = "NServiceBus.ServiceInsight.Tests";
 }
 
 task default -depends Compile
@@ -33,15 +33,15 @@ task Init -depends Clean {
 	
 	Generate-Assembly-Info `
 		-file "$base_dir\NServiceBus.Profiler.Desktop\Properties\AssemblyInfo.cs" `
-		-title "NServiceBus Profiler" `
-		-description "NServiceBus Profiler" `
+		-title "ServiceInsight for NServicebus" `
+		-description "ServiceInsight for NServicebus" `
 		-company "NServiceBus" `
-		-product "NServiceBus Profiler $humanReadableversion ($commit)" `
+		-product "ServiceInsight for NServicebus $humanReadableversion ($commit)" `
 		-version $version `
 		-clsCompliant "false" `
 		-copyright "Copyright 2010-2013 NServiceBus. All rights reserved" `
 		-supportEmail "h.eskandari@gmail.com" `
-		-supportWeb "http://www.hightech.ir/Products/QueueManager"
+		-supportWeb "http://www.particular.net"
 		
 	new-item $release_dir -itemType directory -ErrorAction SilentlyContinue 
 	new-item $buildartifacts_dir -itemType directory 
@@ -51,24 +51,7 @@ task Compile -depends Init {
   exec { msbuild /p:OutDir=$buildartifacts_dir $sln_file  }
 }
 
-task CopyPlugins -depends Compile {
-  Write-Host "Copying plugin files..."
-  
-  new-item $buildartifacts_dir\Plugins -itemType directory
-  
-  copy-item $buildartifacts_dir\NServiceBus.Profiler.HexViewer.* $buildartifacts_dir\Plugins
-  copy-item $buildartifacts_dir\NServiceBus.Profiler.Bus.* $buildartifacts_dir\Plugins
-  copy-item $buildartifacts_dir\NServiceBus.Profiler.XmlViewer.* $buildartifacts_dir\Plugins
-  copy-item $buildartifacts_dir\NServiceBus.Profiler.JsonViewer.* $buildartifacts_dir\Plugins
-  
-  if($include_pdb_files -eq $false) {
-     remove-item $buildartifacts_dir\*.pdb
-	 remove-item $buildartifacts_dir\Plugins\*.pdb
-  }
-  
-}
-
-task Test -depends Compile, CopyPlugins {
+task Test -depends Compile {
   $old = pwd
   cd $build_dir
   
@@ -80,12 +63,11 @@ task Test -depends Compile, CopyPlugins {
 task Zip -depends Test {
 
 	& $tools_dir\7z.exe a -tzip `
-	  $release_dir\NSBProfiler-$humanReadableversion.zip `
-      $build_dir\NServiceBus.Profiler.Desktop.exe `
-      $build_dir\NServiceBus.Profiler.Desktop.exe.config `
-      $build_dir\NServiceBus.Profiler.Core.* `
-      $build_dir\NServiceBus.Profiler.Common.* `
-      $build_dir\Plugins\ 
+	  $release_dir\ServiceInsight-$humanReadableversion.zip `
+      $build_dir\NServiceBus.ServiceInsight.Desktop.exe `
+      $build_dir\NServiceBus.ServiceInsight.Desktop.exe.config `
+      $build_dir\NServiceBus.ServiceInsight.Core.* `
+      $build_dir\NServiceBus.ServiceInsight.Common.*
 	  
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"
@@ -93,31 +75,5 @@ task Zip -depends Test {
 	
 	if ($cleanup_build_folder -eq $true) {
 	    remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 
-	}
-}
-
-task Release -depends Test {
-	Create-Setup `
-		-setupScript "$base_dir\SolutionItems\Installer.nsi" `
-		-nsis $nsis
-		
-	move-item $base_dir\SolutionItems\Install.exe $release_dir\NSBProfiler-$humanReadableversion.exe
-	
-    if ($cleanup_build_folder -eq $true) {
-	    remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 
-	}
-}
-
-task Upload -depends Release {
-	if (Test-Path $uploadScript ) {
-		$log = git log -n 1 --oneline		
-		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\NSBProfiler-$humanReadableversion-Build-$env:ccnetnumericlabel.zip"
-		
-		if ($lastExitCode -ne 0) {
-			throw "Error: Failed to publish build"
-		}
-	}
-	else {
-		Write-Host "could not find upload script $uploadScript, skipping upload"
 	}
 }

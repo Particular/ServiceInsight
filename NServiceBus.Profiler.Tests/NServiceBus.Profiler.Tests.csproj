@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.Profiler.Tests</RootNamespace>
-    <AssemblyName>NServiceBus.Profiler.Tests</AssemblyName>
+    <AssemblyName>NServiceBus.ServiceInsight.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.Profiler.Desktop</RootNamespace>
-    <AssemblyName>NServiceBus.Profiler.Desktop</AssemblyName>
+    <AssemblyName>NServiceBus.ServiceInsight.Desktop</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -58,7 +58,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Profiler.ico</ApplicationIcon>
+    <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
@@ -475,6 +475,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <SplashScreen Include="ServiceInsight-Splash.png" />
     <None Include="Images\HeaderError.png" />
     <None Include="Images\HeaderPerformance.png" />
     <None Include="Images\HeaderGeneral.png" />
@@ -506,7 +507,7 @@
     <Resource Include="Images\Diagram.png" />
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Folder-Table.png" />
-    <Resource Include="Images\ParticularBanner.png" />
+    <Resource Include="Images\ServiceInsight-Banner.png" />
     <Resource Include="Images\Key.png" />
     <Resource Include="Images\Registration.jpg" />
     <Content Include="log4net.config">
@@ -554,10 +555,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Profiler.png" />
+    <Resource Include="ServiceInsight.png" />
+    <Resource Include="ServiceInsight-Small.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Profiler.ico" />
+    <Resource Include="ServiceInsight.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ConnectQueue.png" />

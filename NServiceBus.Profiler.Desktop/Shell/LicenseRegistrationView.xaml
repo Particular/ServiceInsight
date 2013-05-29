@@ -9,6 +9,7 @@
              WindowStartupLocation="CenterOwner"
              ShowInTaskbar="False"
              ResizeMode="NoResize"
+             Icon="/ServiceInsight-Small.png"
              d:DesignHeight="380" d:DesignWidth="180">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,8 +19,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Image Grid.Row="0" 
-               Source="/Images/Registration.jpg" 
-               Height="110" 
+               Source="/Images/ServiceInsight-Banner.png" 
+               Height="100" 
                Stretch="UniformToFill" />
         <TextBlock Grid.Row="1" 
                    Margin="{StaticResource LabelMargin}" 
