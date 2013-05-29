@@ -38,8 +38,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_CustomARPName" ComponentId="{ED484AE3-C508-4860-948D-0088E30435C0}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{3D290727-E7AA-440A-8E47-A840D3F9EE77}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
-    <ROW Component="NServiceBus.Profiler.Common.dll" ComponentId="{4C22C74F-FAEB-48CF-9B1B-E9529511DF2A}" Directory_="Profiler_Dir" Attributes="0" KeyPath="NServiceBus.Profiler.Common.dll"/>
-    <ROW Component="NServiceBus.Profiler.Core.dll" ComponentId="{D75BEBEF-F4B1-458E-B9B6-9C85950FECAF}" Directory_="Profiler_Dir" Attributes="0" KeyPath="NServiceBus.Profiler.Core.dll"/>
     <ROW Component="NServiceBus.Profiler.Desktop.exe" ComponentId="{C9BC99B4-D960-4EDA-BE26-AD5FE9E14580}" Directory_="Profiler_Dir" Attributes="0" KeyPath="NServiceBus.Profiler.Desktop.exe"/>
     <ROW Component="NServiceBus.Profiler.Desktop.exe.config" ComponentId="{76CA4A98-8107-4412-BBEE-90D3857B8099}" Directory_="Profiler_Dir" Attributes="0" KeyPath="NServiceBus.Profiler.Desktop.exe.config" Type="0"/>
     <ROW Component="Path" ComponentId="{AD0D258A-2196-4EE4-A030-632F9495900C}" Directory_="APPDIR" Attributes="4" Condition="DESK_SH" KeyPath="Path"/>
