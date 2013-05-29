@@ -64,8 +64,7 @@ task Zip -depends Test {
 	& $tools_dir\7z.exe a -tzip `
 	  $release_dir\ServiceInsight-$humanReadableversion.zip `
       $build_dir\Particular.ServiceInsight.exe `
-      $build_dir\Particular.ServiceInsight.Core.* `
-      $build_dir\Particular.ServiceInsight.Common.*
+      $build_dir\Particular.ServiceInsight.pdb
 	  
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"
