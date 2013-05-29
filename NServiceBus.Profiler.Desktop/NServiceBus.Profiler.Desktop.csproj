@@ -509,7 +509,6 @@
     <Resource Include="Images\Folder-Table.png" />
     <Resource Include="Images\ServiceInsight-Banner.png" />
     <Resource Include="Images\Key.png" />
-    <Resource Include="Images\Registration.jpg" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
