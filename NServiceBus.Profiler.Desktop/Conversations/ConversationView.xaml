@@ -7,7 +7,7 @@
              xmlns:zoom="http://hightech.ir/controls"
              xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
              xmlns:tree="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
-             xmlns:models="clr-namespace:NServiceBus.Profiler.Common.Models;assembly=NServiceBus.ServiceInsight.Common"
+             xmlns:models="clr-namespace:NServiceBus.Profiler.Common.Models;assembly=Particular.ServiceInsight.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     

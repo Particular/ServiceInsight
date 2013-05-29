@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.Profiler.Desktop</RootNamespace>
-    <AssemblyName>NServiceBus.ServiceInsight.Desktop</AssemblyName>
+    <AssemblyName>Particular.ServiceInsight</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -227,10 +227,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="About\AboutView.xaml.cs">
-      <DependentUpon>AboutView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="About\AboutViewModel.cs" />
     <Compile Include="Conversations\ConversationGraph.cs" />
     <Compile Include="Conversations\ConversationGraphLayout.cs" />
     <Compile Include="Conversations\ConversationView.xaml.cs">
@@ -401,10 +397,6 @@
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
-    <Page Include="About\AboutView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Conversations\ConversationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -485,7 +477,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
     <Resource Include="Images\AutoRefresh.png" />
     <Resource Include="Images\ConnectService.png" />
     <Resource Include="Images\Monitoring.png" />

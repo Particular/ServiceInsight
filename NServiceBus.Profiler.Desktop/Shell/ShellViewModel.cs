@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
@@ -8,7 +9,6 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Core.Settings;
-using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
@@ -140,7 +140,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual void ShowAbout()
         {
-            _windowManager.ShowDialog<AboutViewModel>();
         }
 
         public virtual void ShowHelp()

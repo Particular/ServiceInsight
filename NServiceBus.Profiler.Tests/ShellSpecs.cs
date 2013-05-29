@@ -9,7 +9,6 @@ using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop;
-using NServiceBus.Profiler.Desktop.About;
 using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
@@ -39,7 +38,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IQueueExplorerViewModel QueueExplorer;
         protected static IEndpointExplorerViewModel EndpointExplorer;
         protected static IMessageListViewModel MessageList;
-        protected static AboutViewModel AboutViewModel;
+        //protected static AboutViewModel AboutViewModel;
         protected static ConnectToMachineViewModel ConnectToViewModel;
         protected static INetworkOperations NetworkOperations;
         protected static IConversationViewModel Conversation;
@@ -70,14 +69,14 @@ namespace NServiceBus.Profiler.Tests.Shell
             View = Substitute.For<IShellViewStub>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
-            AboutViewModel = Substitute.For<AboutViewModel>(NetworkOperations);
+            //AboutViewModel = Substitute.For<AboutViewModel>(NetworkOperations);
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
             App = Substitute.For<IAppCommands>();
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
                                        StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
                                        SettingsProvider, MessageProperties);
 
-            ScreenFactory.CreateScreen<AboutViewModel>().Returns(AboutViewModel);
+            //ScreenFactory.CreateScreen<AboutViewModel>().Returns(AboutViewModel);
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
             shell.AttachView(View, null);
@@ -136,13 +135,6 @@ namespace NServiceBus.Profiler.Tests.Shell
         };
 
         It should_have_finished_the_work_in_progress = () => shell.WorkInProgress.ShouldBeFalse();
-    }
-
-    public class when_displaying_about_information : with_a_shell
-    {
-        Because of = () => shell.ShowAbout();
-
-        It should_display_about_information = () => WindowManager.Received().ShowDialog<AboutViewModel>();
     }
 
     public class when_connecting_to_msmq : with_a_shell

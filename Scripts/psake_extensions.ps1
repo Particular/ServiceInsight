@@ -41,7 +41,6 @@ param(
 	[string]$copyright, 
 	[string]$version,
 	[string]$file = $(throw "file is a required parameter."),
-	[string]$supportEmail = $(throw "file is a required parameter."),
 	[string]$supportWeb = $(throw "file is a required parameter.")
 )
   $asmInfo = "using System;
@@ -61,7 +60,6 @@ using ExceptionHandler;
 [assembly: AssemblyInformationalVersion(""$version"")]
 [assembly: AssemblyFileVersion(""$version"")]
 [assembly: AssemblyDelaySign(false)]
-[assembly: SupportEmail(""$supportEmail"")]
 [assembly: SupportWebUrl(""$supportWeb"")]
 [assembly: InternalsVisibleTo(""$test_assembly_name"")]
 "

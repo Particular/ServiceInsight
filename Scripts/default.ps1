@@ -16,7 +16,7 @@ properties {
   $uploadScript = "$base_dir\PublishBuild.build"
   $include_pdb_files = $false
   $cleanup_build_folder = $false
-  $test_assembly_name = "NServiceBus.ServiceInsight.Tests";
+  $test_assembly_name = "Particular.ServiceInsight.Tests";
 }
 
 task default -depends Compile
@@ -33,14 +33,13 @@ task Init -depends Clean {
 	
 	Generate-Assembly-Info `
 		-file "$base_dir\NServiceBus.Profiler.Desktop\Properties\AssemblyInfo.cs" `
-		-title "ServiceInsight for NServicebus" `
-		-description "ServiceInsight for NServicebus" `
-		-company "NServiceBus" `
-		-product "ServiceInsight for NServicebus $humanReadableversion ($commit)" `
+		-title "ServiceInsight for NServiceBus" `
+		-description "ServiceInsight for NServiceBus" `
+		-company "Particular Software Incorporated" `
+		-product "ServiceInsight for NServiceBus $humanReadableversion ($commit)" `
 		-version $version `
 		-clsCompliant "false" `
-		-copyright "Copyright 2010-2013 NServiceBus. All rights reserved" `
-		-supportEmail "h.eskandari@gmail.com" `
+		-copyright "Copyright © 2013 Particular Software Incorporated. All rights reserved" `
 		-supportWeb "http://www.particular.net"
 		
 	new-item $release_dir -itemType directory -ErrorAction SilentlyContinue 
@@ -64,10 +63,9 @@ task Zip -depends Test {
 
 	& $tools_dir\7z.exe a -tzip `
 	  $release_dir\ServiceInsight-$humanReadableversion.zip `
-      $build_dir\NServiceBus.ServiceInsight.Desktop.exe `
-      $build_dir\NServiceBus.ServiceInsight.Desktop.exe.config `
-      $build_dir\NServiceBus.ServiceInsight.Core.* `
-      $build_dir\NServiceBus.ServiceInsight.Common.*
+      $build_dir\Particular.ServiceInsight.exe `
+      $build_dir\Particular.ServiceInsight.Core.* `
+      $build_dir\Particular.ServiceInsight.Common.*
 	  
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"

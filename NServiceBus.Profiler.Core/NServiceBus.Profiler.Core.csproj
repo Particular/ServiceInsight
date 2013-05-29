@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.Profiler.Core</RootNamespace>
-    <AssemblyName>NServiceBus.ServiceInsight.Core</AssemblyName>
+    <AssemblyName>Particular.ServiceInsight.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
