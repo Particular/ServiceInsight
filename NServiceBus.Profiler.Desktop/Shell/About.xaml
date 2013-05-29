@@ -1,0 +1,8 @@
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.Shell.AboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="320" Width="640">
+    <Grid>
+        <Image Source="/ServiceInsight-Splash.png" Width="640" Height="320" Cursor="Hand" MouseDown="OnImageMouseDown" />
+    </Grid>
+</UserControl>

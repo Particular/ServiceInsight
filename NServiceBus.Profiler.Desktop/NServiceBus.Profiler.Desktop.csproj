@@ -297,6 +297,9 @@
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
     <Compile Include="ScreenManager\FileDialogModel.cs" />
     <Compile Include="ScreenManager\FileDialogResult.cs" />
+    <Compile Include="Shell\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
@@ -413,6 +416,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Shell\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\LicenseRegistrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -500,6 +507,8 @@
     <Resource Include="Images\Folder-Table.png" />
     <Resource Include="Images\ServiceInsight-Banner.png" />
     <Resource Include="Images\Key.png" />
+    <Resource Include="Images\TreeErrorQueue.png" />
+    <Resource Include="Images\TreeMonitoring.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
