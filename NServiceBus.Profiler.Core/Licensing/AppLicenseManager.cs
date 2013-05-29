@@ -91,11 +91,11 @@ namespace NServiceBus.Profiler.Core.Licensing
             }
         }
 
-        private void StoreTrialStart(DateTime trialStart)
+        private void StoreTrialStart(DateTime? trialStart)
         {
-            if (string.IsNullOrEmpty(_licenseSettings.HashedStartTrial))
+            if (string.IsNullOrEmpty(_licenseSettings.HashedStartTrial) && trialStart.HasValue)
             {
-                _licenseSettings.HashedStartTrial = _cryptoService.Encrypt(trialStart.ToString(DateFormat));
+                _licenseSettings.HashedStartTrial = _cryptoService.Encrypt(trialStart.Value.ToString(DateFormat));
                 _settingsProvider.SaveSettings(_licenseSettings);
             }
         }
@@ -105,14 +105,14 @@ namespace NServiceBus.Profiler.Core.Licensing
             if(TrialExpired)
                 return;
 
-            if (string.IsNullOrEmpty(LicenseDescriptor.TrialStart))
+            var trialStart = ParseDateString(LicenseDescriptor.TrialStart);
+            if (!trialStart.HasValue)
                 throw new LicenseExpiredException(InvalidTrialPeriodMessage);
 
-            var trialStart = ParseDateString(LicenseDescriptor.TrialStart);
             var hashedStartDate = _cryptoService.Decrypt(_licenseSettings.HashedStartTrial);
             var storedTrialStart = ParseDateString(hashedStartDate);
 
-            if (storedTrialStart.Date != trialStart.Date)
+            if (storedTrialStart.Value.Date != trialStart.Value.Date)
                 throw new LicenseExpiredException(InvalidTrialPeriodMessage);
         }
 
@@ -163,23 +163,27 @@ namespace NServiceBus.Profiler.Core.Licensing
         private DateTime GetTrialExpirationDate()
         {
             var trialExpirationDate = DateTime.UtcNow.Date;
+            var trialStartDate = ParseDateString(LicenseDescriptor.TrialStart);
 
-            if (LicenseDescriptor.TrialStart == null)
+            if (trialStartDate.HasValue)
             {
-                TrialExpired = true;
+                trialExpirationDate = trialStartDate.Value.Date.AddDays(TrialDays);
             }
             else
             {
-                var trialStartDate = ParseDateString(LicenseDescriptor.TrialStart);
-                trialExpirationDate = trialStartDate.Date.AddDays(TrialDays);
+                TrialExpired = true;
             }
 
             return trialExpirationDate;
         }
 
-        private static DateTime ParseDateString(string date)
+        private static DateTime? ParseDateString(string date)
         {
-            return DateTime.ParseExact(date, DateFormat, CultureInfo.InvariantCulture);
+            DateTime parsedDate;
+            if (DateTime.TryParseExact(date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+                return parsedDate;
+
+            return null;
         }
 
         public int GetRemainingTrialDays()
