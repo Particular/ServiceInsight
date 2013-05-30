@@ -17,8 +17,8 @@
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:ServiceInsightwhite.png" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
+    <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
-    <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7_1" Value="33333" Type="4"/>
     <ROW Property="ProductCode" Value="1033:{6F29C354-F8C6-4F8B-BD85-63BB59E5E3FD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Particular Software ServiceInsight 4.0.0"/>
@@ -31,7 +31,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="Deskto~1|DesktopFolder" IsPseudoRoot="1"/>
-    <ROW Directory="Profiler_Dir" Directory_Parent="APPDIR" DefaultDir="Profiler"/>
+    <ROW Directory="Profiler_Dir" Directory_Parent="APPDIR" DefaultDir="Servic~1|ServiceInsight"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
@@ -58,7 +58,7 @@
     <ROW File="Particular.ServiceInsight.exe.config" Component_="Particular.ServiceInsight.exe.config" FileName="Partic~1.con|Particular.ServiceInsight.exe.config" Attributes="0" SourcePath="Files\Particular.ServiceInsight.exe.config" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="ServiceInsight.1.0.0"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="Particular.ServiceInsight-[|ProductVersion][|OPT_PRERELEASE_NAME]"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
@@ -66,7 +66,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.verisign.com/scripts/timstamp.dll" SignerDescription="Particular Software Profiler" DescriptionUrl="http://www.nservicebus.com" SignOptions="7" SignTool="0" Thumbprint="69ebd61ccbd9a73a972a789c19bfacbbea171c67 Subject: NServiceBus Ltd.&#10;Issuer: VeriSign Class 3 Code Signing 2010 CA&#10;Valid from 10/19/2012 to 10/10/2013"/>
+    <ROW TimeStampUrl="http://timestamp.verisign.com/scripts/timstamp.dll" SignerDescription="Particular Software ServiceInsight" DescriptionUrl="http://www.nservicebus.com" SignOptions="7" SignTool="0" Thumbprint="69ebd61ccbd9a73a972a789c19bfacbbea171c67 Subject: NServiceBus Ltd.&#10;Issuer: VeriSign Class 3 Code Signing 2010 CA&#10;Valid from 10/19/2012 to 10/10/2013"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -132,7 +132,7 @@
     <ROW Dialog_="CustomizeDialog" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="700"/>
     <ROW Dialog_="CustomizeDialog" Control="QuickSelectionTree_1" Type="QuickSelectionTree" X="15" Y="124" Width="314" Height="77" Attributes="3" Property="QUICKSELECTIONTREE_1_PROP" Text="QuickSelectionTree" Order="800" ExtType="QuickSelectionTree"/>
     <ROW Dialog_="CustomizeDialog" Control="ItemDescription" Type="Text" X="17" Y="206" Width="312" Height="32" Attributes="65539" Text="Multiline description of the currently selected item." Order="900" TextLocId="Control.Text.CustomizeDlg#ItemDescription"/>
-    <ROW Dialog_="CustomizeDialog" Control="Edit_1" Type="Edit" X="174" Y="252" Width="77" Height="18" Attributes="19" Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7_1" Text="{260}" Order="1000"/>
+    <ROW Dialog_="CustomizeDialog" Control="Edit_1" Type="Edit" X="174" Y="252" Width="77" Height="18" Attributes="19" Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Text="{260}" Order="1000"/>
     <ROW Dialog_="CustomizeDialog" Control="Text_1" Type="Text" X="17" Y="252" Width="150" Height="18" Attributes="65539" Property="TEXT_1_PROP_3" Text="Management Service Port:" Order="1100"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_1" Type="ImageCheckBox" X="96" Y="324" Width="179" Height="14" Attributes="3" Property="DESK_SH" Text="[checkbox]" Order="1200" ExtType="ImageCheckBox" ExtData="Desktop" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_2" Type="ImageCheckBox" X="96" Y="304" Width="167" Height="14" Attributes="3" Property="ALL_PROGRAMS_SH" Text="[checkbox]" Order="1300" ExtType="ImageCheckBox" ExtData="All Programs" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
@@ -340,7 +340,7 @@
     <ROW Action="DetectService" Type="1" Source="aicustact.dll" Target="DetectService" Options="3" AdditionalSeq="AI_DATA_SETTER_1"/>
     <ROW Action="InstallDtc" Type="1025" Source="Particular.CustomActions.CA.dll" Target="InstallDtc"/>
     <ROW Action="InstallMsmq" Type="1025" Source="Particular.CustomActions.CA.dll" Target="InstallMsmq"/>
-    <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=Profiler" Options="1"/>
+    <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=ServiceInsight" Options="1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder]Particular Software\"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
