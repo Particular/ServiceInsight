@@ -38,7 +38,7 @@ task BuildSetup {
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetPackageName "$archive.exe" -buildname DefaultBuild }
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetOutputLocation -buildname DefaultBuild -path "$baseDir\Setup\Output Package" }
     
-    exec { &$script:AdvinstCLI /edit $projectFile /SetProperty OPT_PRERELEASE_NAME="$preReleaseName" }
+    exec { &$script:AdvinstCLI /edit $setupProjectFile /SetProperty OPT_PRERELEASE_NAME="$preReleaseName" }
     
 	# Build setup with Advanced Installer	
 	exec { &$script:AdvinstCLI /rebuild $setupProjectFile }
