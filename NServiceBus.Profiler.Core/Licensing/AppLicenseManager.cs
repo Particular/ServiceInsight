@@ -23,7 +23,9 @@ namespace NServiceBus.Profiler.Core.Licensing
         private readonly ICryptoService _cryptoService;
         private AbstractLicenseValidator _validator;
 
-        public AppLicenseManager(ISettingsProvider settingsProvider, ICryptoService cryptoService)
+        public AppLicenseManager(
+            ISettingsProvider settingsProvider, 
+            ICryptoService cryptoService)
         {
             _settingsProvider = settingsProvider;
             _cryptoService = cryptoService;
@@ -91,11 +93,11 @@ namespace NServiceBus.Profiler.Core.Licensing
             }
         }
 
-        private void StoreTrialStart(DateTime? trialStart)
+        private void StoreTrialStart(DateTime trialStart)
         {
-            if (string.IsNullOrEmpty(_licenseSettings.HashedStartTrial) && trialStart.HasValue)
+            if (string.IsNullOrEmpty(_licenseSettings.HashedStartTrial))
             {
-                _licenseSettings.HashedStartTrial = _cryptoService.Encrypt(trialStart.Value.ToString(DateFormat));
+                _licenseSettings.HashedStartTrial = _cryptoService.Encrypt(trialStart.ToString(DateFormat));
                 _settingsProvider.SaveSettings(_licenseSettings);
             }
         }
@@ -105,14 +107,14 @@ namespace NServiceBus.Profiler.Core.Licensing
             if(TrialExpired)
                 return;
 
-            var trialStart = ParseDateString(LicenseDescriptor.TrialStart);
-            if (!trialStart.HasValue)
+            if (string.IsNullOrEmpty(LicenseDescriptor.TrialStart))
                 throw new LicenseExpiredException(InvalidTrialPeriodMessage);
 
+            var trialStart = ParseDateString(LicenseDescriptor.TrialStart);
             var hashedStartDate = _cryptoService.Decrypt(_licenseSettings.HashedStartTrial);
             var storedTrialStart = ParseDateString(hashedStartDate);
 
-            if (storedTrialStart.Value.Date != trialStart.Value.Date)
+            if (storedTrialStart.Date != trialStart.Date)
                 throw new LicenseExpiredException(InvalidTrialPeriodMessage);
         }
 
@@ -163,27 +165,30 @@ namespace NServiceBus.Profiler.Core.Licensing
         private DateTime GetTrialExpirationDate()
         {
             var trialExpirationDate = DateTime.UtcNow.Date;
-            var trialStartDate = ParseDateString(LicenseDescriptor.TrialStart);
 
-            if (trialStartDate.HasValue)
+            if (LicenseDescriptor.TrialStart == null)
             {
-                trialExpirationDate = trialStartDate.Value.Date.AddDays(TrialDays);
+                TrialExpired = true;
             }
             else
             {
-                TrialExpired = true;
+                var trialStartDate = ParseDateString(LicenseDescriptor.TrialStart);
+                trialExpirationDate = trialStartDate.Date.AddDays(TrialDays);
             }
 
             return trialExpirationDate;
         }
 
-        private static DateTime? ParseDateString(string date)
+        private static DateTime ParseDateString(string date)
         {
-            DateTime parsedDate;
-            if (DateTime.TryParseExact(date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-                return parsedDate;
-
-            return null;
+            try
+            {
+                return DateTime.ParseExact(date, DateFormat, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                throw new InvalidLicenseException(InvalidTrialPeriodMessage);
+            }
         }
 
         public int GetRemainingTrialDays()

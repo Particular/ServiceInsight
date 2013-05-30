@@ -101,6 +101,17 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return base.ShowDialog(screen, null);
         }
 
+        protected override Window EnsureWindow(object model, object view, bool isDialog)
+        {
+            var window = base.EnsureWindow(model, view, isDialog);
+            if (window.Parent == null)
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+
+            return window;
+        }
+
         private static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
             MessageChoice choices;

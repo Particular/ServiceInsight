@@ -22,7 +22,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
                 throw new ArgumentException();
 
-            _view = new Dialog { Owner = parent, DataContext = this };
+            _view = CreateWindow(parent);
 
             Icon = icon;
             Title = title;
@@ -50,6 +50,22 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
                 Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
 
             _view.ShowDialog();
+        }
+
+        private Dialog CreateWindow(Window parent)
+        {
+            var dialog = new Dialog { Owner = parent, DataContext = this };
+
+            if (parent == null)
+            {
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+            else
+            {
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+
+            return dialog;
         }
 
         private static bool IsSet(MessageChoice choices, MessageChoice bits)

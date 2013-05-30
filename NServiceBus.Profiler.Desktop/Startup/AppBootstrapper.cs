@@ -65,6 +65,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
             catch(Exception ex)
             {
                 _logger.Error("Failed to display exception dialog", ex);
+                Environment.Exit(-1);
             }
         }
     }

@@ -7,7 +7,7 @@ using NServiceBus.Profiler.Desktop.Startup;
 namespace NServiceBus.Profiler.Tests.Container
 {
     [Subject("container")]
-    public class with_a_populated_container
+    public abstract class with_a_populated_container
     {
         protected static AppBootstrapper Bootstrapper;
         protected static IContainer Container;
@@ -19,6 +19,7 @@ namespace NServiceBus.Profiler.Tests.Container
         };
     }
 
+    [Ignore("Need a better way to make sure application is composed correctly")]
     public class resolving_components : with_a_populated_container
     {
         protected static IShellViewModel Shell;

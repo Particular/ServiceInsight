@@ -341,7 +341,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (_idleTimer != null)
                 _idleTimer.Stop();
 
-            CheckValidLicense();
+            ValidateLicense();
         }
 
         internal void OnAutoRefreshing()
@@ -352,7 +352,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _eventAggregator.Publish(new AutoRefreshBeat());
         }
         
-        private void CheckValidLicense()
+        private void ValidateLicense()
         {
             if (_licenseManager.TrialExpired)
             {

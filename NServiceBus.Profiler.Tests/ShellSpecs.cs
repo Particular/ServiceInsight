@@ -38,7 +38,6 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IQueueExplorerViewModel QueueExplorer;
         protected static IEndpointExplorerViewModel EndpointExplorer;
         protected static IMessageListViewModel MessageList;
-        //protected static AboutViewModel AboutViewModel;
         protected static ConnectToMachineViewModel ConnectToViewModel;
         protected static INetworkOperations NetworkOperations;
         protected static IConversationViewModel Conversation;
@@ -69,14 +68,12 @@ namespace NServiceBus.Profiler.Tests.Shell
             View = Substitute.For<IShellViewStub>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
-            //AboutViewModel = Substitute.For<AboutViewModel>(NetworkOperations);
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
             App = Substitute.For<IAppCommands>();
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
                                        StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
                                        SettingsProvider, MessageProperties);
 
-            //ScreenFactory.CreateScreen<AboutViewModel>().Returns(AboutViewModel);
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
             shell.AttachView(View, null);
