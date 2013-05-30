@@ -27,15 +27,19 @@ task BuildSetup {
     
 	if($PreRelease -eq "") {
 		$archive = "Profiler.$ProductVersion.$PatchVersion" 
+        $preReleaseName = ""
 	} else {
 		$archive = "Profiler.$ProductVersion.$PatchVersion-$PreRelease$BuildNumber"
+        $preReleaseName = "-$PreRelease$BuildNumber"
 	}
 
 	# edit Advanced Installer Project	  
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetVersion "$ProductVersion.$PatchVersion" -noprodcode }	
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetPackageName "$archive.exe" -buildname DefaultBuild }
 	exec { &$script:AdvinstCLI /edit $setupProjectFile /SetOutputLocation -buildname DefaultBuild -path "$baseDir\Setup\Output Package" }
-
+    
+    exec { &$script:AdvinstCLI /edit $projectFile /SetProperty OPT_PRERELEASE_NAME="$preReleaseName" }
+    
 	# Build setup with Advanced Installer	
 	exec { &$script:AdvinstCLI /rebuild $setupProjectFile }
 }
