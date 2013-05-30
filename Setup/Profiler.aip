@@ -19,7 +19,6 @@
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
     <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
-    <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7_1" Value="33333" Type="4"/>
     <ROW Property="ProductCode" Value="1033:{6F29C354-F8C6-4F8B-BD85-63BB59E5E3FD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Particular Software ServiceInsight 4.0.0"/>
@@ -137,7 +136,7 @@
     <ROW Dialog_="CustomizeDialog" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="700"/>
     <ROW Dialog_="CustomizeDialog" Control="QuickSelectionTree_1" Type="QuickSelectionTree" X="15" Y="124" Width="314" Height="77" Attributes="3" Property="QUICKSELECTIONTREE_1_PROP" Text="QuickSelectionTree" Order="800" ExtType="QuickSelectionTree"/>
     <ROW Dialog_="CustomizeDialog" Control="ItemDescription" Type="Text" X="17" Y="206" Width="312" Height="32" Attributes="65539" Text="Multiline description of the currently selected item." Order="900" TextLocId="Control.Text.CustomizeDlg#ItemDescription"/>
-    <ROW Dialog_="CustomizeDialog" Control="Edit_1" Type="Edit" X="174" Y="252" Width="77" Height="18" Attributes="19" Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7_1" Text="{260}" Order="1000"/>
+    <ROW Dialog_="CustomizeDialog" Control="Edit_1" Type="Edit" X="174" Y="252" Width="77" Height="18" Attributes="19" Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Text="{260}" Order="1000"/>
     <ROW Dialog_="CustomizeDialog" Control="Text_1" Type="Text" X="17" Y="252" Width="150" Height="18" Attributes="65539" Property="TEXT_1_PROP_3" Text="Management Service Port:" Order="1100"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_1" Type="ImageCheckBox" X="96" Y="324" Width="179" Height="14" Attributes="3" Property="DESK_SH" Text="[checkbox]" Order="1200" ExtType="ImageCheckBox" ExtData="Desktop" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_2" Type="ImageCheckBox" X="96" Y="304" Width="167" Height="14" Attributes="3" Property="ALL_PROGRAMS_SH" Text="[checkbox]" Order="1300" ExtType="ImageCheckBox" ExtData="All Programs" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
