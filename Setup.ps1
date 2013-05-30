@@ -26,10 +26,10 @@ task Init {
 task BuildSetup {  
     
 	if($PreRelease -eq "") {
-		$archive = "Profiler.$ProductVersion.$PatchVersion" 
+		$archive = "Particular.ServiceInsight-$ProductVersion.$PatchVersion" 
         $preReleaseName = ""
 	} else {
-		$archive = "Profiler.$ProductVersion.$PatchVersion-$PreRelease$BuildNumber"
+		$archive = "Particular.ServiceInsight-$ProductVersion.$PatchVersion-$PreRelease$BuildNumber"
         $preReleaseName = "-$PreRelease$BuildNumber"
 	}
 
