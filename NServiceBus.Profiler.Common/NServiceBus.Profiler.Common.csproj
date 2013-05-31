@@ -78,6 +78,7 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="ExtensionMethods\ElementExtensions.cs" />
     <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
     <Compile Include="ExtensionMethods\GrammerExtensions.cs" />
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />

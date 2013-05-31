@@ -29,7 +29,7 @@
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
                          ItemsSource="{Binding Messages}"
-                         CustomColumnSort="OnSortData"
+                         PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
@@ -38,8 +38,7 @@
                                 FieldName="IsFaulted" 
                                 Header="Status" 
                                 UnboundType="Object" 
-                                Width="16" 
-                                SortMode="Custom">
+                                Width="16" >
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="16" Height="16" Source="{Binding Value.Image}" />
@@ -50,8 +49,7 @@
                                 Tag="id" 
                                 AllowColumnFiltering="False"
                                 UnboundType="String"
-                                Header="Message ID" 
-                                SortMode="Custom">
+                                Header="Message ID">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
@@ -61,8 +59,7 @@
                 <dxg:GridColumn FieldName="FriendlyMessageType" 
                                 AllowColumnFiltering="False"
                                 Tag="message_type" 
-                                Header="Message Type" 
-                                SortMode="Custom">
+                                Header="Message Type">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
@@ -72,8 +69,7 @@
                 <dxg:GridColumn FieldName="TimeSent" 
                                 Tag="time_sent" 
                                 AllowColumnFiltering="False"
-                                Header="Time Sent" 
-                                SortMode="Custom">
+                                Header="Time Sent">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
                     </dxg:GridColumn.EditSettings>
@@ -87,8 +83,7 @@
                                 AllowColumnFiltering="False"
                                 AllowSorting="False"
                                 UnboundType="String" 
-                                Header="Critical Time" 
-                                SortMode="Custom">
+                                Header="Critical Time">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -107,6 +102,7 @@
                                AllowCascadeUpdate="True" 
                                AllowPerPixelScrolling="True" 
                                AutoWidth="True" 
+                               AllowSorting="False"
                                AllowEditing="False" 
                                AllowGrouping="True" 
                                ShowGroupPanel="False"
