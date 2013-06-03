@@ -82,8 +82,7 @@ namespace NServiceBus.Profiler.Core.Management
         public async Task<bool> RetryMessage(string serviceUrl, string messageId)
         {
             var client = new RestClient(serviceUrl);
-            var request = new RestRequest("errors/retry", Method.POST);
-            request.AddParameter("MessageId", messageId);
+            var request = new RestRequest("errors/" + messageId + "/retry", Method.POST);
             var response = await client.ExecuteAsync(request);
 
             return response;
