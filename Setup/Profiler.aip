@@ -435,7 +435,7 @@
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ProfilerforNServiceBus" Directory_="SHORTCUTDIR" Name="Profil~1|Profiler for NServiceBus" Component_="ProductInformation" Target="[Profiler_Dir]Particular.ServiceInsight.exe" Hotkey="0" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="ProfilerforNServiceBus" Directory_="SHORTCUTDIR" Name="Servic~1|ServiceInsight for NServiceBus" Component_="ProductInformation" Target="[Profiler_Dir]Particular.ServiceInsight.exe" Hotkey="0" IconIndex="0" ShowCmd="1"/>
     <ROW Shortcut="ProfilerforNServiceBus_1" Directory_="DesktopFolder" Name="Servic~1|ServiceInsight for NServiceBus" Component_="Path" Target="[Profiler_Dir]Particular.ServiceInsight.exe" Hotkey="0" Icon_="ServiceInsights.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
