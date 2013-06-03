@@ -109,13 +109,6 @@ namespace NServiceBus.Profiler.Core.Licensing
 
             if (string.IsNullOrEmpty(LicenseDescriptor.TrialStart))
                 throw new LicenseExpiredException(InvalidTrialPeriodMessage);
-
-            var trialStart = ParseDateString(LicenseDescriptor.TrialStart);
-            var hashedStartDate = _cryptoService.Decrypt(_licenseSettings.HashedStartTrial);
-            var storedTrialStart = ParseDateString(hashedStartDate);
-
-            if (storedTrialStart.Date != trialStart.Date)
-                throw new LicenseExpiredException(InvalidTrialPeriodMessage);
         }
 
         private void CreateTrialLicense()
