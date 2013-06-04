@@ -64,6 +64,9 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         [Description("Is this message deferred?")]
         public string IsDeferedMessage { get; set; }
 
+        [Description("Conversation Identifier")]
+        public string ConversationId { get; set; }
+
         protected override void MapHeaderKeys()
         {
             ConditionsMap.Add(h => h.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase), h => Version = h.Value);
@@ -72,6 +75,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             ConditionsMap.Add(h => h.Key.EndsWith("RelatedTo", StringComparison.OrdinalIgnoreCase), h => RelatedTo = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith("ContentType", StringComparison.OrdinalIgnoreCase), h => ContentType = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith("IsDeferedMessage", StringComparison.OrdinalIgnoreCase), h => IsDeferedMessage = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("ConversationId", StringComparison.OrdinalIgnoreCase), h => ConversationId = h.Value);
         }
 
         protected override void ClearHeaderValues()
@@ -82,6 +86,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             RelatedTo = null;
             ContentType = null;
             IsDeferedMessage = null;
+            ConversationId = null;
         }
     }
 }
