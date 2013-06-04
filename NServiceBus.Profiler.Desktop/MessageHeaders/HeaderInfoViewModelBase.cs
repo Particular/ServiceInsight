@@ -39,7 +39,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
 
         protected Queue SelectedQueue { get; private set; } 
 
-        public void Handle(SelectedExplorerItemChanged @event)
+        public virtual void Handle(SelectedExplorerItemChanged @event)
         {
             var queue = @event.SelectedExplorerItem.As<QueueExplorerItem>();
             SelectedQueue = queue != null ? queue.Queue : null;
@@ -57,12 +57,12 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             }
         }
 
-        protected IList<HeaderInfo> DecodeHeader(MessageBody message)
+        protected virtual IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
             var headers = message.Headers;
-            var decodeResult = _decoder.Decode(headers);
+            var decodedResult = _decoder.Decode(headers);
             
-            return decodeResult.IsParsed ? decodeResult.Value : new HeaderInfo[0];
+            return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
         }
 
         protected void OnItemsLoaded()

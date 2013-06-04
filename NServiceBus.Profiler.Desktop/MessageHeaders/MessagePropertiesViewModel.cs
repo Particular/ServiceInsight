@@ -8,12 +8,14 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
     {
         public MessagePropertiesViewModel(
+            IRawHeaderViewModel rawHeader,
             IErrorHeaderViewModel error,
             IGeneralHeaderViewModel general,
             ISagaHeaderViewModel saga,
             IPerformanceHeaderViewModel performance,
             IGatewayHeaderViewModel gateway)
         {
+            RawHeader = rawHeader;
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
@@ -22,18 +24,21 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         }
 
         [PropertyOrder(1)]
-        public IGeneralHeaderViewModel General { get; private set; }
+        public IRawHeaderViewModel RawHeader { get; private set; }
 
         [PropertyOrder(2)]
-        public IPerformanceHeaderViewModel Performance { get; private set; }
+        public IGeneralHeaderViewModel General { get; private set; }
 
         [PropertyOrder(3)]
-        public IErrorHeaderViewModel Errors { get; private set; }
+        public IPerformanceHeaderViewModel Performance { get; private set; }
 
         [PropertyOrder(4)]
-        public IGatewayHeaderViewModel Gateway { get; private set; }
+        public IErrorHeaderViewModel Errors { get; private set; }
 
         [PropertyOrder(5)]
+        public IGatewayHeaderViewModel Gateway { get; private set; }
+
+        [PropertyOrder(6)]
         public ISagaHeaderViewModel Saga { get; private set; }
     }
 }
