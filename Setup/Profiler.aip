@@ -16,6 +16,7 @@
     <ROW Property="ARPPRODUCTICON" Value="ServiceInsights.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:ServiceInsightwhite.png" Type="1" MsiKey="AppLogoIcon"/>
+    <ROW Property="MY_VERSION" Value="4.0"/>
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
     <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
@@ -340,7 +341,7 @@
     <ROW Action="InstallMsmq" Type="1025" Source="Particular.CustomActions.CA.dll" Target="InstallMsmq"/>
     <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=ServiceInsight" Options="1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder]Particular Software\"/>
-    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="DefaultBuild:[ProgramMenuFolder]Particular Software\ServiceInsight\v[MY_VERSION]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
     <ROW Action="UpdateFeaturesInstallStates" Type="1" Source="aicustact.dll" Target="UpdateFeatureStates" Options="1"/>
   </COMPONENT>
@@ -433,7 +434,7 @@
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ProfilerforNServiceBus" Directory_="SHORTCUTDIR" Name="Profil~1|Profiler for NServiceBus" Component_="ProductInformation" Target="[Profiler_Dir]NServiceBus.Profiler.Desktop.exe" Hotkey="0" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="ProfilerforNServiceBus" Directory_="SHORTCUTDIR" Name="Servic~1|ServiceInsight For NServiceBus" Component_="ProductInformation" Target="[Profiler_Dir]NServiceBus.Profiler.Desktop.exe" Hotkey="0" IconIndex="0" ShowCmd="1"/>
     <ROW Shortcut="ProfilerforNServiceBus_1" Directory_="DesktopFolder" Name="Servic~1|ServiceInsight for NServiceBus" Component_="Path" Target="[Profiler_Dir]NServiceBus.Profiler.Desktop.exe" Hotkey="0" Icon_="ServiceInsights.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
