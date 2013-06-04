@@ -6,6 +6,10 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Core.Management
 {
+    using System;
+    using System.Linq;
+    using MessageDecoders;
+
     public class DefaultManagementService : IManagementService
     {
         public async Task<PagedResult<StoredMessage>> GetErrorMessages(string serviceUrl)
@@ -56,9 +60,30 @@ namespace NServiceBus.Profiler.Core.Management
         {
             var client = new RestClient(serviceUrl);
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = await client.GetModelAsync<List<StoredMessage>>(request);
+            var messages = await client.GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
-            return messages ?? new List<StoredMessage>();
+            //************* Workaround until API is fixed. Remove in Beta2 
+            // http://particular.myjetbrains.com/youtrack/issue/SB-137
+            var decoder = new HeaderContentDecoder(new StringContentDecoder());
+
+            foreach (var storedMessage in messages)
+            {
+                try
+                {
+                    var result = decoder.Decode(storedMessage.Headers);
+
+                    var messageIdHeader = result.Value.FirstOrDefault(h => h.Key == "NServiceBus.MessageId");
+
+                    if (messageIdHeader != null)
+                        storedMessage.MessageId = messageIdHeader.Value;
+                    
+                }
+                catch(Exception){}
+            }
+
+            //************* End workaround
+
+            return messages;
         }
 
         public async Task<List<Endpoint>> GetEndpoints(string serviceUrl)
