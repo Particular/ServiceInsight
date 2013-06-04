@@ -10,6 +10,9 @@ using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
+    using System.Diagnostics;
+    using System.Linq;
+
     public class ConversationViewModel : Screen, IConversationViewModel
     {
         private readonly IManagementService _managementService;
@@ -19,7 +22,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         private IConversationView _view;
 
         public ConversationViewModel(
-            IManagementService managementService, 
+            IManagementService managementService,
             IEndpointConnectionProvider connection,
             IEventAggregator eventAggregator)
         {
@@ -60,7 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
                 var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(x => new DiagramNode(x));
 
-                CreateConversationNodes(storedMessage.MessageId, nodes);
+                CreateConversationNodes(storedMessage.Id, nodes);
                 LinkConversationNodes(nodes);
 
                 _eventAggregator.Publish(new WorkFinished());
@@ -71,29 +74,30 @@ namespace NServiceBus.Profiler.Desktop.Conversations
         {
             foreach (var msg in relatedMessagesTask)
             {
-                if (msg.RelatedToMessageId != null && 
-                    _nodeMap.ContainsKey(msg.MessageId) &&
-                    _nodeMap.ContainsKey(msg.RelatedToMessageId))
-                {
-                    var source = _nodeMap[msg.MessageId];
-                    var target = _nodeMap[msg.RelatedToMessageId];
+                Debug.WriteLine("Processing message type: " + msg.MessageType);
 
-                    if (source != null && target != null)
-                    {
-                        NewGraphEdge(target, source);
-                    }
-                }
+                if (msg.RelatedToMessageId == null && msg.RelatedToMessageId != msg.MessageId)
+                    continue;
+
+                var parentMessage = _nodeMap.Values.SingleOrDefault(m => 
+                    m.MessageId == msg.RelatedToMessageId && 
+                    m.ReceivingEndpoint.Name == msg.OriginatingEndpoint.Name);
+
+                if (parentMessage == null)
+                    continue;
+
+                NewGraphEdge(parentMessage, msg);
             }
         }
 
-        private void CreateConversationNodes(string selectedMessageId, IEnumerable<DiagramNode> relatedMessages)
+        private void CreateConversationNodes(string selectedId, IEnumerable<DiagramNode> relatedMessages)
         {
             foreach (var msg in relatedMessages)
             {
-                msg.IsCurrentMessage = String.Equals(msg.MessageId, selectedMessageId, StringComparison.InvariantCultureIgnoreCase);
+                msg.IsCurrentMessage = String.Equals(msg.Id, selectedId, StringComparison.InvariantCultureIgnoreCase);
 
                 Graph.AddVertex(msg);
-                _nodeMap.TryAdd(msg.MessageId, msg);
+                _nodeMap.TryAdd(msg.Id, msg);
             }
         }
 

@@ -2,6 +2,9 @@
 
 namespace NServiceBus.Profiler.Common.Models
 {
+    using System.Diagnostics;
+
+    [DebuggerDisplay("MessageType={MessageType},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class DiagramNode : StoredMessage
     {
         public DiagramNode(StoredMessage msg)

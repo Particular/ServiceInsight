@@ -2,7 +2,9 @@
 
 namespace NServiceBus.Profiler.Common.Models
 {
-    [DebuggerDisplay("Id={Id}, RelatedToMessageId={RelatedToMessageId}")]
+    using System.Collections.Generic;
+
+    [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
         public MessageStatus Status { get; set; }
