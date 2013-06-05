@@ -1,4 +1,5 @@
 include .\psake_extensions.ps1
+include .\buildutils.ps1
 
 properties {
   $base_dir  = resolve-path ..
@@ -6,8 +7,8 @@ properties {
   $build_dir = "$base_dir\build" 
   $buildartifacts_dir = "$build_dir\" 
   $sln_file = "$base_dir\NServiceBus.Profiler.sln" 
-  $version = "1.0.0.0"
-  $humanReadableversion = "v1.0-BETA"
+  $version = "4.0.0.0"
+  $humanReadableversion = "v4.0-BETA"
   $tools_dir = "$base_dir\Tools"
   $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
   $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
@@ -38,7 +39,9 @@ task Init -depends Clean {
 		-company "Particular Software Incorporated" `
 		-product "ServiceInsight for NServiceBus $humanReadableversion ($commit)" `
 		-version $version `
+		-infoVersion "$humanReadableversion ($commit)" `
 		-clsCompliant "false" `
+		-internalsVisibleTo $test_assembly_name `
 		-copyright "Copyright © 2013 Particular Software Incorporated. All rights reserved" `
 		-supportWeb "http://www.particular.net"
 		

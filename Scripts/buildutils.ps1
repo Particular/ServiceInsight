@@ -90,6 +90,7 @@ param(
 	[string]$version,
 	[string]$fileVersion,
 	[string]$infoVersion,	
+	[string]$supportWeb,
 	[string]$file = $(throw "file is a required parameter.")
 )
 	if($infoVersion -eq ""){
@@ -101,7 +102,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Runtime.CompilerServices;
+using ExceptionHandler;
 
+[assembly: ComVisible(false)]
 [assembly: AssemblyTitle(""$assemblyTitle"")]
 [assembly: AssemblyDescription(""$assemblyDescription"")]
 [assembly: AssemblyVersion(""$version"")]
@@ -111,7 +114,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCompany(""$company"")]
 [assembly: AssemblyConfiguration(""$configuration"")]
 [assembly: AssemblyInformationalVersion(""$infoVersion"")]
-[assembly: ComVisible(false)]		
+[assembly: SupportWebUrl(""$supportWeb"")]
 "
 	
 	if($clsCompliant.ToLower() -eq "true"){
