@@ -6,28 +6,24 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+using System.Diagnostics;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {
-    using System.Diagnostics;
-    using System.Linq;
 
     public class ConversationViewModel : Screen, IConversationViewModel
     {
         private readonly IManagementService _managementService;
-        private readonly IEndpointConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
         private readonly ConcurrentDictionary<string, DiagramNode> _nodeMap;
         private IConversationView _view;
 
         public ConversationViewModel(
             IManagementService managementService,
-            IEndpointConnectionProvider connection,
             IEventAggregator eventAggregator)
         {
             _managementService = managementService;
-            _connection = connection;
             _eventAggregator = eventAggregator;
             _nodeMap = new ConcurrentDictionary<string, DiagramNode>();
 
@@ -60,7 +56,7 @@ namespace NServiceBus.Profiler.Desktop.Conversations
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var conversationId = storedMessage.ConversationId;
-                var relatedMessagesTask = await _managementService.GetConversationById(_connection.ServiceUrl, conversationId);
+                var relatedMessagesTask = await _managementService.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(x => new DiagramNode(x));
 
                 CreateConversationNodes(storedMessage.Id, nodes);

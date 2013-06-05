@@ -26,7 +26,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IWindowManagerEx _windowManager;
         private readonly IManagementService _managementService;
         private readonly IQueueManagerAsync _asyncQueueManager;
-        private readonly IEndpointConnectionProvider _endpointConnection;
         private readonly IErrorHeaderViewModel _errorHeaderDisplay;
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
@@ -39,7 +38,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             IWindowManagerEx windowManager,
             IManagementService managementService,
             IQueueManagerAsync asyncQueueManager,
-            IEndpointConnectionProvider endpointConnection,
             ISearchBarViewModel searchBarViewModel,
             IErrorHeaderViewModel errorHeaderDisplay,
             IGeneralHeaderViewModel generalHeaderDisplay,
@@ -50,7 +48,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _windowManager = windowManager;
             _managementService = managementService;
             _asyncQueueManager = asyncQueueManager;
-            _endpointConnection = endpointConnection;
             _errorHeaderDisplay = errorHeaderDisplay;
             _generalHeaderDisplay = generalHeaderDisplay;
             _clipboard = clipboard;
@@ -110,7 +107,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _statusBar.StatusMessage = string.Format("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
-            await _managementService.RetryMessage(_endpointConnection.ServiceUrl, FocusedMessage.Id);
+            await _managementService.RetryMessage(FocusedMessage.Id);
             Messages.Remove(msg);
             _statusBar.StatusMessage = "Done";
         }
@@ -199,8 +196,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", endpoint)));
 
-            var pagedResult = await _managementService.GetAuditMessages(_endpointConnection.ServiceUrl,
-                                                                        endpoint,
+            var pagedResult = await _managementService.GetAuditMessages(                                                                        endpoint,
                                                                         pageIndex: pageIndex,
                                                                         searchQuery: searchQuery,
                                                                         orderBy: orderBy,

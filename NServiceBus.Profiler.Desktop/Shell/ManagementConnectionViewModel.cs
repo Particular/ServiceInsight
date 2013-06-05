@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autofac;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Common.Settings;
@@ -11,16 +12,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public class ManagementConnectionViewModel : Screen
     {
-        private readonly IManagementService _managementService;
         private readonly ISettingsProvider _settingsProvider;
         private readonly ProfilerSettings _appSettings;
+        private readonly IContainer _container;
 
         public ManagementConnectionViewModel(
-            IManagementService managementService, 
-            ISettingsProvider settingsProvider)
+            ISettingsProvider settingsProvider,
+            IContainer container)
         {
-            _managementService = managementService;
             _settingsProvider = settingsProvider;
+            _container = container;
             _appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To Management Service";
         }
@@ -86,7 +87,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
             {
-                return await _managementService.IsAlive(serviceUrl);   
+                using (var scope = _container.BeginLifetimeScope())
+                {
+                    var connection = scope.Resolve<IManagementConnectionProvider>();
+                    var service = scope.Resolve<IManagementService>();
+
+                    connection.ConnectTo(serviceUrl);
+                    return await service.IsAlive();
+                }
             }
 
             return false;

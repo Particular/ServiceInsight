@@ -89,8 +89,8 @@
     <Compile Include="Licensing\LicenseType.cs" />
     <Compile Include="Licensing\ProfilerLicense.cs" />
     <Compile Include="Management\DefaultManagementService.cs" />
+    <Compile Include="Management\IManagementServiceConnection.cs" />
     <Compile Include="Management\IManagementService.cs" />
-    <Compile Include="Management\ManagementConfig.cs" />
     <Compile Include="MessageDecoders\DecoderResult.cs" />
     <Compile Include="MessageDecoders\HeaderContentDecoder.cs" />
     <Compile Include="MessageDecoders\IContentDecoder.cs" />

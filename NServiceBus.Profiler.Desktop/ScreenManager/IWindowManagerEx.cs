@@ -5,6 +5,7 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.ViewModels;
 using Caliburn.PresentationFramework.Views;
+using Application = System.Windows.Application;
 
 namespace NServiceBus.Profiler.Desktop.ScreenManager
 {
@@ -104,12 +105,28 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
         protected override Window EnsureWindow(object model, object view, bool isDialog)
         {
             var window = base.EnsureWindow(model, view, isDialog);
-            if (window.Parent == null)
+            SetParentToMain(window);
+
+            if (window.Owner == null)
             {
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
+            else
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
 
             return window;
+        }
+
+        private void SetParentToMain(Window window)
+        {
+            if (window.Owner == null &&
+                Application.Current != null &&
+                Application.Current.MainWindow != null)
+            {
+                window.Owner = Application.Current.MainWindow;
+            }
         }
 
         private static MessageChoice GetMessageChoice(MessageBoxButton button)

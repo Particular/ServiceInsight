@@ -10,7 +10,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         IExplorerViewModel,
         IScreen,
         IViewAware,
-        IEndpointConnectionProvider,
         IHandle<AutoRefreshBeat>
     {
         ExplorerItem ServiceRoot { get; }

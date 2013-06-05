@@ -1,50 +1,53 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Core.MessageDecoders;
 using RestSharp;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Core.Management
 {
-    using System;
-    using System.Linq;
-    using MessageDecoders;
-
     public class DefaultManagementService : IManagementService
     {
-        public async Task<PagedResult<StoredMessage>> GetErrorMessages(string serviceUrl)
+        private readonly IManagementConnectionProvider _connection;
+
+        public DefaultManagementService(IManagementConnectionProvider connection)
         {
-            var client = new RestClient(serviceUrl);
+            _connection = connection;
+        }
+
+        public async Task<PagedResult<StoredMessage>> GetErrorMessages()
+        {
             var request = new RestRequest("failedmessages");
-            var result = await client.GetPagedResult<StoredMessage>(request);
+            var result = await CreateClient().GetPagedResult<StoredMessage>(request);
             
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> Search(string serviceUrl, string searchKeyword, int pageIndex = 1)
+        public async Task<PagedResult<StoredMessage>> Search(string searchKeyword, int pageIndex = 1)
         {
-            var client = new RestClient(serviceUrl);
             var request = new RestRequest("/messages/");
             
             AppendSearchQuery(request, searchKeyword);
             AppendPaging(request, pageIndex);
 
-            var result = await client.GetPagedResult<StoredMessage>(request);
+            var result = await CreateClient().GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> GetAuditMessages(string serviceUrl, Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public async Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
-            var client = new RestClient(serviceUrl);
             var request = new RestRequest(CreateBaseUrl(endpoint.Name, searchQuery));
 
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = await client.GetPagedResult<StoredMessage>(request);
+            var result = await CreateClient().GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
@@ -56,11 +59,10 @@ namespace NServiceBus.Profiler.Core.Management
                                        : "/messages/";
         }
 
-        public async Task<List<StoredMessage>> GetConversationById(string serviceUrl, string conversationId)
+        public async Task<List<StoredMessage>> GetConversationById(string conversationId)
         {
-            var client = new RestClient(serviceUrl);
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = await client.GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+            var messages = await CreateClient().GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             //************* Workaround until API is fixed. Remove in Beta2 
             // http://particular.myjetbrains.com/youtrack/issue/SB-137
@@ -86,29 +88,31 @@ namespace NServiceBus.Profiler.Core.Management
             return messages;
         }
 
-        public async Task<List<Endpoint>> GetEndpoints(string serviceUrl)
+        public async Task<List<Endpoint>> GetEndpoints()
         {
-            var client = new RestClient(serviceUrl);
             var request = new RestRequest("endpoints");
-            var messages = await client.GetModelAsync<List<Endpoint>>(request);
+            var messages = await CreateClient().GetModelAsync<List<Endpoint>>(request);
 
             return messages ?? new List<Endpoint>();
         }
 
-        public async Task<bool> IsAlive(string serviceUrl)
+        public async Task<bool> IsAlive()
         {
-            var client = new RestClient(serviceUrl);
-            var request = new RestRequest("ping");
-            var version = await client.GetModelAsync<VersionInfo>(request);
-
-            return version != null;
+            return await GetVersion() != null;
         }
 
-        public async Task<bool> RetryMessage(string serviceUrl, string messageId)
+        public async Task<VersionInfo> GetVersion()
         {
-            var client = new RestClient(serviceUrl);
+            var request = new RestRequest("ping");
+            var version = await CreateClient().GetModelAsync<VersionInfo>(request);
+
+            return version;
+        }
+
+        public async Task<bool> RetryMessage(string messageId)
+        {
             var request = new RestRequest("errors/" + messageId + "/retry", Method.POST);
-            var response = await client.ExecuteAsync(request);
+            var response = await CreateClient().ExecuteAsync(request);
 
             return response;
         }
@@ -134,6 +138,11 @@ namespace NServiceBus.Profiler.Core.Management
         private string GetSortDirection(bool ascending)
         {
             return ascending ? "asc" : "desc";
+        }
+
+        private IRestClient CreateClient()
+        {
+            return new RestClient(_connection.Url);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Autofac;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Common.Settings;
@@ -17,18 +17,33 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
         protected static IManagementService ManagementService;
         protected static IShellViewModel Shell;
         protected static ISettingsProvider SettingsProvider;
+        protected static IContainer Container;
+        protected static ILifetimeScope Scope;
+        protected static IManagementConnectionProvider Connection;
         protected static ProfilerSettings StoredSetting;
         protected static ManagementConnectionViewModel ConnectTo;
-        
+
         Establish context = () =>
         {
             Shell = Substitute.For<IShellViewModel>();
             ManagementService = Substitute.For<IManagementService>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
+            Connection = Substitute.For<IManagementConnectionProvider>();
+            Container = RegisterContainer();
             StoredSetting = GetReloadedSettings();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(StoredSetting);
-            ConnectTo = new ManagementConnectionViewModel(ManagementService, SettingsProvider) { Parent = Shell };
+            ConnectTo = new ManagementConnectionViewModel(SettingsProvider, Container) { Parent = Shell };
         };
+
+        private static IContainer RegisterContainer()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterInstance(ManagementService);
+            builder.RegisterInstance(Connection);
+
+            return builder.Build();
+        }
 
         private static ProfilerSettings GetReloadedSettings()
         {
@@ -43,7 +58,7 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
 
     public class with_connection_to_management_api : with_a_endpoint_connection_dialog
     {
-        Establish context = () => ManagementService.IsAlive(Arg.Any<string>()).Returns(Task.Run(() => true));
+        Establish context = () => ManagementService.IsAlive().Returns(Task.Run(() => true));
 
         Because of = () =>
         {

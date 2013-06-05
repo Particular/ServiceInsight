@@ -7,6 +7,7 @@
              xmlns:startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
              xmlns:zoom="http://hightech.ir/controls"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:graph="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -22,6 +23,7 @@
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <zoom:DoubleToLog10Converter x:Key="Log10Converter" />
                     <zoom:EqualityToBooleanConverter x:Key="EqualityConverter" />
+                    <graph:EdgeRouteToPathConverter x:Key="RouteToPathConverter" />
 
                     <!-- Colors and Brushes -->
                     <Color x:Key="DiagramShadowColor">LightGray</Color>

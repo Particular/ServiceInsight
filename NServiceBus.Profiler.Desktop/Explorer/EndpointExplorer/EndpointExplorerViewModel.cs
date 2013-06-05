@@ -4,7 +4,6 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Common;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
@@ -18,17 +17,20 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private readonly IEventAggregator _eventAggregator;
         private readonly ISettingsProvider _settingsProvider;
         private readonly IManagementService _managementService;
+        private readonly IManagementConnectionProvider _managementConnection;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
+            IManagementConnectionProvider managementConnection,
             IManagementService managementService)
         {
             _eventAggregator = eventAggregator;
             _settingsProvider = settingsProvider;
             _managementService = managementService;
+            _managementConnection = managementConnection;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -77,12 +79,18 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _view = view as IExplorerView;
 
             var configuredAddress = GetConfiguredAddress();
+            var existingUrl = _managementConnection.Url;
+
             if (!IsConnected)
             {
                 var available = await ServiceAvailable(configuredAddress);
                 if (available)
                 {
                     ConnectToService(configuredAddress);
+                }
+                else
+                {
+                    ConnectToService(existingUrl);
                 }
             }
         }
@@ -99,7 +107,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
         {
-            return await _managementService.IsAlive(serviceUrl);
+            _managementConnection.ConnectTo(serviceUrl);
+
+            var connected = await _managementService.IsAlive();
+
+            return connected;
         }
 
         private async void AddServiceNode()
@@ -111,7 +123,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
             ServiceRoot.Children.Clear();
 
-            var endpoints = await _managementService.GetEndpoints(ServiceUrl);
+            var endpoints = await _managementService.GetEndpoints();
             
             if(endpoints == null)
                 return;
@@ -129,9 +141,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        public virtual void ConnectToService(string url)
+        public void ConnectToService(string url)
         {
-            Guard.NotNull(() => url, url);
+            if(url == null)
+                return;
 
             ServiceUrl = url;
             AddServiceNode();

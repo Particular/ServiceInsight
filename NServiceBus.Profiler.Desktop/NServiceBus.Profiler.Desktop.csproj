@@ -249,7 +249,6 @@
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
     <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
-    <Compile Include="Explorer\EndpointExplorer\IEndpointConnectionProvider.cs" />
     <Compile Include="Explorer\ExplorerItemExtensions.cs" />
     <Compile Include="Explorer\IExplorerViewModel.cs" />
     <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
@@ -303,6 +302,7 @@
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\AboutViewModel.cs" />
     <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
@@ -476,6 +476,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="ServiceInsight-About.png" />
     <SplashScreen Include="ServiceInsight-Splash.png" />
     <None Include="Images\HeaderError.png" />
     <None Include="Images\HeaderPerformance.png" />
@@ -511,6 +512,9 @@
     <Resource Include="Images\Key.png" />
     <Resource Include="Images\TreeErrorQueue.png" />
     <Resource Include="Images\TreeMonitoring.png" />
+    <Resource Include="Images\Endpoint.png" />
+    <Resource Include="Images\Bullet-Blue.png" />
+    <Resource Include="Images\Information-Large.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

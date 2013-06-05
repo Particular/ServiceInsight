@@ -23,7 +23,8 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<NetworkOperations>().As<INetworkOperations>().SingleInstance();
             builder.RegisterType<AppLicenseManager>().As<ILicenseManager>().SingleInstance();
             builder.RegisterType<CryptographyService>().As<ICryptoService>().SingleInstance();
-            builder.RegisterType<DefaultManagementService>().As<IManagementService>().SingleInstance();
+            builder.RegisterType<ManagementConnectionProvider>().As<IManagementConnectionProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultManagementService>().As<IManagementService>().InstancePerLifetimeScope();
         }
     }
 }

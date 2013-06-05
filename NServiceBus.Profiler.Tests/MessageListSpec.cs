@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Tests
         protected static IWindowManagerEx WindowManager;
         protected static IEventAggregator EventAggregator;
         protected static IManagementService ManagementService;
-        protected static IEndpointConnectionProvider EndpointConnectionProvider;
+        protected static IManagementConnectionProvider Connection;
         protected static ISearchBarViewModel SearchBar;
         protected static IClipboard Clipboard;
         protected static IErrorHeaderViewModel ErrorDisplay;
@@ -39,13 +39,13 @@ namespace NServiceBus.Profiler.Tests
         {
             EventAggregator = Substitute.For<IEventAggregator>();
             ManagementService = Substitute.For<IManagementService>();
-            EndpointConnectionProvider = Substitute.For<IEndpointConnectionProvider>();
+            Connection = Substitute.For<IManagementConnectionProvider>();
             MessageStore = new Dictionary<Queue, List<MessageInfo>>();
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             StatusBarManager = Substitute.For<IStatusBarManager>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, EndpointConnectionProvider, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, StatusBarManager);
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, StatusBarManager);
         };
     }
 
@@ -56,7 +56,7 @@ namespace NServiceBus.Profiler.Tests
         Establish context = () =>
         {
             Endpoint = new Endpoint { Machine = "localhost", Name = "Service" };
-            ManagementService.GetAuditMessages(Arg.Any<string>(), Arg.Is(Endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
+            ManagementService.GetAuditMessages(Arg.Is(Endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
                              .Returns(x => Task.Run(() => new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,
