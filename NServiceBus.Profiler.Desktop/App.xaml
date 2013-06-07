@@ -42,12 +42,12 @@
                     <SolidColorBrush Color="#FF000000" x:Key="ZoomBoxTicksBrush" />
                     <SolidColorBrush Color="#FFAAACA5" x:Key="ZoomBoxButtonBorderBrush" />
                     <SolidColorBrush Color="#FFBCC7D8" x:Key="DialogBackgroundBrush" />
-                    <SolidColorBrush Color="#FF000000" x:Key="DialogForegroundBrush" />                    
+                    <SolidColorBrush Color="#FF000000" x:Key="DialogForegroundBrush" />
                     <SolidColorBrush Color="White" x:Key="DiagramNodeForegroundBrush" />
                     <SolidColorBrush Color="#FF293955" x:Key="DiagramEdgeForegroundBrush" />
                     <SolidColorBrush Color="#FFFFFFFF" x:Key="DiagramTooltipForegroundBrush" />
                     <SolidColorBrush Color="#FF606060" x:Key="DiagramNodeBorderBrush" />
-                    <SolidColorBrush Color="#FF000000" x:Key="DiagramCurrentNodeBorderBrush" />
+                    <SolidColorBrush Color="#FF333333" x:Key="DiagramCurrentNodeBorderBrush" />
                     <SolidColorBrush Color="#FFFF6932" x:Key="DiagramFailedNodeBackground" />
                     <SolidColorBrush Color="#FFE52620" x:Key="DiagramRepeatedFailedNodeBackground" />
                     <SolidColorBrush Color="#FF4C5F81" x:Key="DiagramSuccessNodeBackground" />
@@ -94,8 +94,8 @@
                                Bottom="{StaticResource NoSpacing}" />
 
                     <!--Effect-->
-                    <DropShadowEffect x:Key="DiagramNodeShadow" BlurRadius="1" Color="{StaticResource DiagramShadowColor}" Opacity="0.2" Direction="315"/>
-                    <DropShadowEffect x:Key="DiagramSelectedNodeShadow" BlurRadius="25" Color="{StaticResource DiagramSelectedShadowColor}" Opacity="1" ShadowDepth="0" Direction="0" />
+                    <DropShadowEffect x:Key="DiagramNodeShadow" BlurRadius="1" Color="{StaticResource DiagramShadowColor}" Opacity="0.1" Direction="315"/>
+                    <DropShadowEffect x:Key="DiagramSelectedNodeShadow" BlurRadius="35" Color="{StaticResource DiagramSelectedShadowColor}" Opacity="1" ShadowDepth="0" Direction="0" />
                     
                     <!-- Dialog Style -->
                     <Style x:Key="DialogRootContainer" TargetType="{x:Type Border}">
