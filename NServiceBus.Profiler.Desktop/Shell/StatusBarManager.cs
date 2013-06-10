@@ -9,18 +9,54 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkStarted>,
         IHandle<WorkFinished>
     {
-        public virtual string StatusMessage { get; set; }
-
-        public virtual string Registration { get; set; }
-
-        public virtual void Handle(WorkStarted @event)
+        public StatusBarManager()
         {
-            StatusMessage = @event.Message;
+            
+        }
+        public const string DoneStatusMessage = "Done";
+
+        public string StatusMessage { get; private set; }
+
+        public string Registration { get; private set; }
+
+        public bool ErrorMessageVisible { get; private set; }
+
+        public void Handle(WorkStarted @event)
+        {
+            SetSuccessStatusMessage(@event.Message);
         }
 
-        public virtual void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
-            StatusMessage = @event.Message;
+            if (!ErrorMessageVisible)
+            {
+                SetSuccessStatusMessage(@event.Message);
+            }
+        }
+
+        public void SetRegistrationInfo(string message, params object[] args)
+        {
+            Registration = string.Format(message, args);
+        }
+
+        public void SetSuccessStatusMessage(string message, params object[] args)
+        {
+            StatusMessage = string.Format(message, args);
+            ErrorMessageVisible = false;
+        }
+
+        public void SetFailStatusMessage(string message, params object[] args)
+        {
+            StatusMessage = string.Format(message, args);
+            ErrorMessageVisible = true;
+        }
+
+        public void Done()
+        {
+            if (!ErrorMessageVisible)
+            {
+                StatusMessage = DoneStatusMessage;
+            }
         }
     }
 }

@@ -136,9 +136,18 @@
 
             <dxb:BarStaticItem x:Name="menuStatus" 
                                CategoryName="Status"
-                               Content="{Binding StatusBarManager.StatusMessage, Mode=TwoWay}" 
                                AutoSizeMode="Fill" 
-                               ShowBorder="False" />
+                               ShowBorder="False"
+                               Content="{Binding}">
+                <dxb:BarStaticItem.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/ErrorStatus.png" Width="16" Height="16" Stretch="Uniform" Margin="0,0,5,0" Visibility="{Binding StatusBarManager.ErrorMessageVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <TextBlock Text="{Binding Path=StatusBarManager.StatusMessage, Mode=OneWay}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxb:BarStaticItem.ContentTemplate>
+            </dxb:BarStaticItem>
 
         </dxb:BarManager.Items>
 

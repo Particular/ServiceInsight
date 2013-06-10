@@ -236,6 +236,7 @@
     <Compile Include="Conversations\IConversationView.cs" />
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
+    <Compile Include="Events\AsyncOperationFailedEvent.cs" />
     <Compile Include="Events\AutoRefreshBeat.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
     <Compile Include="Events\MessageBodyLoaded.cs" />
@@ -260,6 +261,9 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
+    <Compile Include="Management\DefaultManagementService.cs" />
+    <Compile Include="Management\IManagementService.cs" />
+    <Compile Include="Management\IManagementServiceConnection.cs" />
     <Compile Include="MessageHeaders\Editors\EmptyTypeEditor.cs" />
     <Compile Include="MessageHeaders\GatewayHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\IErrorHeaderViewModel.cs" />
@@ -515,6 +519,7 @@
     <Resource Include="Images\Endpoint.png" />
     <Resource Include="Images\Bullet-Blue.png" />
     <Resource Include="Images\Information-Large.png" />
+    <Resource Include="Images\ErrorStatus.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

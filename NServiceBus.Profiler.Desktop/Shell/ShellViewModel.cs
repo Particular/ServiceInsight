@@ -34,7 +34,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         public const string UnlicensedStatusMessage = "Unlicensed version: {0} left";
         public const string LicensedStatusMessage = "Registered to '{0}'";
-        public const string DoneStatusMessage = "Done";
         public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
 
         public ShellViewModel(
@@ -81,7 +80,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View = (IShellView)view;
 
             DisplayName = GetProductName();
-            StatusBarManager.StatusMessage = DoneStatusMessage;
+            StatusBarManager.Done();
             RestoreLayout();
         }
 
@@ -168,6 +167,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (result.GetValueOrDefault(false))
             {
                 EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                _eventAggregator.Publish(new WorkFinished("Connected to Management API Version {0}", connectionViewModel.Version.Version));
             }
         }
 
@@ -367,11 +367,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
             var license = _licenseManager.CurrentLicense;
             if (license.LicenseType == ProfilerLicenseTypes.Standard)
             {
-                StatusBarManager.Registration = string.Format(LicensedStatusMessage, license.RegisteredTo);
+                StatusBarManager.SetRegistrationInfo(LicensedStatusMessage, license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.Registration = string.Format(UnlicensedStatusMessage, ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
             }
         }
 
@@ -425,6 +425,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
+        }
+
+        public virtual void Handle(AsyncOperationFailedEvent message)
+        {
+            StatusBarManager.SetFailStatusMessage("Operation Failed: {0}, Error Code: {1}", message.Description, message.ErrorCode);
         }
     }
 }

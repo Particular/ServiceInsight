@@ -60,7 +60,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             MessageList = Substitute.For<IMessageListViewModel>();
             NetworkOperations = Substitute.For<INetworkOperations>();
             ExceptionHandler = Substitute.For<IExceptionHandler>();
-            StatusbarManager = Substitute.For<IStatusBarManager>();
+            StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             Conversation = Substitute.For<IConversationViewModel>();
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();

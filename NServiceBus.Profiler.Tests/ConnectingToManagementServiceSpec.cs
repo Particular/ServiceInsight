@@ -2,9 +2,10 @@
 using Autofac;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Management;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
@@ -58,12 +59,13 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
 
     public class with_connection_to_management_api : with_a_endpoint_connection_dialog
     {
-        Establish context = () => ManagementService.IsAlive().Returns(Task.Run(() => true));
+        Establish context = () => ManagementService.GetVersion().Returns(Task.Run(() => new VersionInfo { Version = "1.0" }));
 
         Because of = () =>
         {
             ((IActivate)ConnectTo).Activate();
             ConnectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
+            //ConnectTo.SetPrivate(x => x.Version, new VersionInfo {Version = "1.0"});
             AsyncHelper.Run(() => ConnectTo.Accept());
         };
 

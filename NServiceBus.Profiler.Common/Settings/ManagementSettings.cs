@@ -4,7 +4,7 @@ using System.Configuration;
 namespace NServiceBus.Profiler.Common.Settings
 {
     [SettingsProvider("Registry")]
-    public class Management
+    public class ManagementSettings
     {
         [DefaultValue("localhost")]
         public string Hostname { get; set; }

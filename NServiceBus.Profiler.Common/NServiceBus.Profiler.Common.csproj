@@ -84,7 +84,6 @@
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
     <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
-    <Compile Include="ExtensionMethods\RestSharpExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />

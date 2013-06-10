@@ -5,9 +5,9 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Management;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
@@ -101,7 +101,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if (appSettings != null && appSettings.LastUsedManagementApi != null)
                 return appSettings.LastUsedManagementApi;
 
-            var managementConfig = _settingsProvider.GetSettings<Management>();
+            var managementConfig = _settingsProvider.GetSettings<ManagementSettings>();
             return string.Format("http://{0}:{1}/api", managementConfig.Hostname, managementConfig.Port);
         }
 

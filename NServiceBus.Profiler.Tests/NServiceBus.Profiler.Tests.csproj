@@ -105,6 +105,7 @@
     <Compile Include="Helpers\FakeQueueManager.cs" />
     <Compile Include="GuardSpecs.cs" />
     <Compile Include="Helpers\TestConductorScreen.cs" />
+    <Compile Include="Helpers\TestExtensions.cs" />
     <Compile Include="HexViewerSpecs.cs" />
     <Compile Include="JsonParserSpecs.cs" />
     <Compile Include="JsonViewerSpecs.cs" />

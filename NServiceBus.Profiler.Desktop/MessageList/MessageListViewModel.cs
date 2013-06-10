@@ -5,11 +5,11 @@ using ExceptionHandler;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.Management;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
@@ -105,11 +105,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual async void RetryMessage()
         {
-            _statusBar.StatusMessage = string.Format("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
+            _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
             await _managementService.RetryMessage(FocusedMessage.Id);
             Messages.Remove(msg);
-            _statusBar.StatusMessage = "Done";
+            _statusBar.Done();
         }
 
         public virtual void CopyMessageId()

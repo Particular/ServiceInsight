@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Management;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -58,6 +59,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public List<string> RecentEntries { get; private set; }
 
+        public VersionInfo Version { get; private set; }
+
         [AutoCheckAvailability]
         public async virtual void Accept()
         {
@@ -93,7 +96,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
                     var service = scope.Resolve<IManagementService>();
 
                     connection.ConnectTo(serviceUrl);
-                    return await service.IsAlive();
+                    Version = await service.GetVersion();
+
+                    return Version != null;
                 }
             }
 

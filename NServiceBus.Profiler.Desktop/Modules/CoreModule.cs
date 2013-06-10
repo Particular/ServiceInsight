@@ -4,8 +4,8 @@ using Autofac;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Licensing;
-using NServiceBus.Profiler.Core.Management;
 using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Management;
 
 namespace NServiceBus.Profiler.Desktop.Modules
 {
