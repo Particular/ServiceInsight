@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 using Caliburn.PresentationFramework.ApplicationModel;
 using DevExpress.Xpf.Core;
@@ -10,6 +11,7 @@ using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.MessageHeaders.Editors;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
@@ -17,6 +19,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
     {
         private readonly IClipboard _clipboard;
+        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -26,6 +29,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             : base(eventAggregator, decoder, queueManager)
         {
             _clipboard = clipboard;
+            _decoder = decoder;
             DisplayName = "General";
         }
 
@@ -67,6 +71,18 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         [Description("Conversation Identifier")]
         public string ConversationId { get; set; }
 
+        [Editor(typeof(ResizableDropDownEditor), typeof(ResizableDropDownEditor))]
+        [Description("Raw header information")]
+        public string HeaderContent { get; set; }
+
+        protected override IList<HeaderInfo> DecodeHeader(MessageBody message)
+        {
+            HeaderContent = Encoding.UTF8.GetString(message.Headers);
+
+            var decodedResult = _decoder.Decode(message.Headers);
+            return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
+        }
+
         protected override void MapHeaderKeys()
         {
             ConditionsMap.Add(h => h.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase), h => Version = h.Value);
@@ -87,6 +103,7 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
             ContentType = null;
             IsDeferedMessage = null;
             ConversationId = null;
+            HeaderContent = null;
         }
     }
 }

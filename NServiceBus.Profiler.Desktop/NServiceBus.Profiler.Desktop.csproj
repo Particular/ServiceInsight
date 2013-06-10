@@ -271,7 +271,6 @@
     <Compile Include="MessageHeaders\IGeneralHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\IMessagePropertiesViewModel.cs" />
     <Compile Include="MessageHeaders\IPerformanceHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\IRawHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\ISagaHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\MessagePropertiesView.xaml.cs">
       <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
@@ -279,7 +278,6 @@
     <Compile Include="MessageHeaders\MessagePropertiesViewModel.cs" />
     <Compile Include="MessageHeaders\PerformanceHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\Editors\ResizableDropDownEditor.cs" />
-    <Compile Include="MessageHeaders\RawHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\SagaHeaderViewModel.cs" />
     <Compile Include="MessageHeaders\HeaderInfoPropertyDescriptor.cs" />
     <Compile Include="MessageHeaders\HeaderInfoTypeConverter.cs" />

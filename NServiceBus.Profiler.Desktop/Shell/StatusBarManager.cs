@@ -9,10 +9,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkStarted>,
         IHandle<WorkFinished>
     {
-        public StatusBarManager()
-        {
-            
-        }
         public const string DoneStatusMessage = "Done";
 
         public string StatusMessage { get; private set; }
