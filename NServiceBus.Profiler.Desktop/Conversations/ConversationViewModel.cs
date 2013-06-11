@@ -53,9 +53,11 @@ namespace NServiceBus.Profiler.Desktop.Conversations
             var storedMessage = @event.Message as StoredMessage;
             if (storedMessage != null)
             {
+                var conversationId = storedMessage.ConversationId;
+                if (conversationId == null) return;
+
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
-                var conversationId = storedMessage.ConversationId;
                 var relatedMessagesTask = await _managementService.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(x => new DiagramNode(x));
 
