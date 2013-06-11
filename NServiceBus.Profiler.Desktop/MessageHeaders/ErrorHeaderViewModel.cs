@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Caliburn.PresentationFramework.ApplicationModel;
+using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.MessageDecoders;
@@ -53,14 +54,14 @@ namespace NServiceBus.Profiler.Desktop.MessageHeaders
         [Description("Failed Queue")]
         public string FailedQueue { get; set; }
 
-        [Description("The time when the message has failed")]
+        [Description("The first time the message has failed")]
         public string TimeOfFailure { get; set; }
 
         protected override void MapHeaderKeys()
         {
             ConditionsMap.Add(h => h.Key.StartsWith("NServiceBus.ExceptionInfo", StringComparison.OrdinalIgnoreCase), h => ExceptionInfo = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith("FailedQ", StringComparison.OrdinalIgnoreCase), h => FailedQueue = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("TimeOfFailure", StringComparison.OrdinalIgnoreCase), h => TimeOfFailure = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith("TimeOfFailure", StringComparison.OrdinalIgnoreCase), h => TimeOfFailure = h.Value.ParseHeaderDate().ToString());
         }
 
         protected override void ClearHeaderValues()
