@@ -43,7 +43,7 @@
                 <DataTrigger Binding="{Binding Status}" Value="Failed">
                     <Setter TargetName="img" Property="Source" Value="/Images/Msg_Warning.png" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Status}" Value="Successfull">
+                <DataTrigger Binding="{Binding Status}" Value="Successful">
                     <Setter TargetName="img" Property="Source" Value="/Images/Msg_Info.png" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Status}" Value="RepeatedFailures">

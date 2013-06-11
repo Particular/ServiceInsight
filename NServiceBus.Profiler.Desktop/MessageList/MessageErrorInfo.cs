@@ -21,10 +21,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _statusSpecified = true;
             Status = status;
             Image = GetImage();
+            Description = status.GetDescription();
         }
 
         public BitmapImage Image { get; private set; }
+
         public MessageStatus Status { get; private set; }
+
+        public string Description { get; private set; }
 
         private BitmapImage GetImage()
         {
@@ -37,7 +41,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                     return Resources.BulletYellow.ToBitmapImage();
                 case MessageStatus.RepeatedFailures:
                     return Resources.BulletRed.ToBitmapImage();
-                case MessageStatus.Successfull:
+                case MessageStatus.Successful:
                     return Resources.BulletGreen.ToBitmapImage();
                 case MessageStatus.RetryIssued:
                     return Resources.BulletWhite.ToBitmapImage();
@@ -71,7 +75,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                     return "Failed";
                 case MessageStatus.RepeatedFailures:
                     return "Faulted";
-                case MessageStatus.Successfull:
+                case MessageStatus.Successful:
                     return "Success";
                 default:
                     throw new ArgumentOutOfRangeException();

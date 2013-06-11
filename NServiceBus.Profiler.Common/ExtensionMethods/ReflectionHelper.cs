@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace NServiceBus.Profiler.Common.ExtensionMethods
 {
@@ -12,6 +14,14 @@ namespace NServiceBus.Profiler.Common.ExtensionMethods
                  return (T)attrib[0];
              
              return null;
+         }
+
+         public static string GetDescription(this Enum value)
+         {
+             var field = value.GetType().GetField(value.ToString());
+             var attribute = field.GetAttribute<DescriptionAttribute>();
+
+             return attribute != null ? attribute.Description : value.ToString();
          }
     }
 }

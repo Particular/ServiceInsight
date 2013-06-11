@@ -22,7 +22,7 @@ namespace NServiceBus.Profiler.Desktop.ValueConverters
                         return app.TryFindResource("DiagramFailedNodeBackground") as SolidColorBrush;
                     case MessageStatus.RepeatedFailures:
                         return app.TryFindResource("DiagramRepeatedFailedNodeBackground") as SolidColorBrush;
-                    case MessageStatus.Successfull:
+                    case MessageStatus.Successful:
                         return app.TryFindResource("DiagramSuccessNodeBackground") as SolidColorBrush;
                     default:
                         throw new ArgumentOutOfRangeException();

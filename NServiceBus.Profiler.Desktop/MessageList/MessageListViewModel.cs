@@ -196,7 +196,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", endpoint)));
 
-            var pagedResult = await _managementService.GetAuditMessages(                                                                        endpoint,
+            var pagedResult = await _managementService.GetAuditMessages(endpoint,
                                                                         pageIndex: pageIndex,
                                                                         searchQuery: searchQuery,
                                                                         orderBy: orderBy,

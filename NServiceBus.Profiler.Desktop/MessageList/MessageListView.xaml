@@ -41,7 +41,9 @@
                                 Width="16" >
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Width="16" Height="16" Source="{Binding Value.Image}" />
+                            <Image Width="16" Height="16" 
+                                   Source="{Binding Value.Image}"
+                                   ToolTip="{Binding Value.Description}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
