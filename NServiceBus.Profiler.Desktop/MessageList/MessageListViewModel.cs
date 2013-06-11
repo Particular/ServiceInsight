@@ -182,7 +182,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
             if (endpointNode != null)
             {
-                await RefreshEndpoint(endpointNode.Endpoint, orderBy: columnName, ascending: ascending);
+                await RefreshEndpoint(endpointNode.Endpoint, 
+                                      searchQuery: SearchBar.SearchQuery,
+                                      orderBy: columnName, 
+                                      ascending: ascending);
             }
 
             var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
