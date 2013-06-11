@@ -105,6 +105,8 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
         protected override Window EnsureWindow(object model, object view, bool isDialog)
         {
             var window = base.EnsureWindow(model, view, isDialog);
+            window.ResizeMode = ResizeMode.NoResize;
+
             SetParentToMain(window);
 
             if (window.Owner == null)
