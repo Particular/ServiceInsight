@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
@@ -12,10 +13,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         IViewAware,
         IHandle<AutoRefreshBeat>
     {
-        ExplorerItem ServiceRoot { get; }
-        ExplorerItem AuditRoot { get; }
-        ExplorerItem ErrorRoot { get; }
+        ServiceExplorerItem ServiceRoot { get; }
+        AuditEndpointExplorerItem AuditRoot { get; }
+        ErrorEndpointExplorerItem ErrorRoot { get; }
         IObservableCollection<ExplorerItem> Items { get; }
-        void ConnectToService(string serviceUrl);
+        Task ConnectToService(string serviceUrl);
     }
 }

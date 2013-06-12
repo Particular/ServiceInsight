@@ -159,14 +159,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void ConnectToManagementService()
+        public virtual async void ConnectToManagementService()
         {
             var connectionViewModel = _screenFactory.CreateScreen<ManagementConnectionViewModel>();
             var result = _windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
             {
-                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
                 _eventAggregator.Publish(new WorkFinished("Connected to Management API Version {0}", connectionViewModel.Version.Version));
             }
         }
@@ -198,14 +198,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private async Task RefreshExplorer()
         {
-            var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
-            if (endpointNode != null)
+            if (SelectedExplorerItem.IsEndpointExplorerSelected())
             {
                 await EndpointExplorer.PartialRefresh();
             }
 
-            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queueNode != null)
+            if (SelectedExplorerItem.IsQueueExplorerSelected())
             {
                 await QueueExplorer.PartialRefresh();
             }

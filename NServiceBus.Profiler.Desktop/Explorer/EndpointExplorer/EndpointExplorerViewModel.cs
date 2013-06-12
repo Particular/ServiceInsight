@@ -36,17 +36,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
 
-        public virtual ExplorerItem ServiceRoot
+        public virtual ServiceExplorerItem ServiceRoot
         {
-            get { return Items.FirstOrDefault(x => x is ServiceExplorerItem); }
+            get { return Items.OfType<ServiceExplorerItem>().FirstOrDefault(); }
         }
 
-        public virtual ExplorerItem AuditRoot
+        public virtual AuditEndpointExplorerItem AuditRoot
         {
             get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
         }
 
-        public virtual ExplorerItem ErrorRoot
+        public virtual ErrorEndpointExplorerItem ErrorRoot
         {
             get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
         }
@@ -81,18 +81,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             var configuredAddress = GetConfiguredAddress();
             var existingUrl = _managementConnection.Url;
 
-            if (!IsConnected)
-            {
-                var available = await ServiceAvailable(configuredAddress);
-                if (available)
-                {
-                    ConnectToService(configuredAddress);
-                }
-                else
-                {
-                    ConnectToService(existingUrl);
-                }
-            }
+            if (IsConnected) 
+                return;
+
+            var available = await ServiceAvailable(configuredAddress);
+            var connectTo = available ? configuredAddress : existingUrl;
+
+            _eventAggregator.Publish(new WorkStarted("Trying to connect to Management API at {0}", connectTo));
+
+            await ConnectToService(connectTo);
+
+            _eventAggregator.Publish(new WorkFinished());
         }
 
         private string GetConfiguredAddress()
@@ -114,26 +113,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             return connected;
         }
 
-        private async void AddServiceNode()
+        private void AddServiceNode()
         {
             if (ServiceRoot == null)
             {
                 Items.Add(new ServiceExplorerItem(ServiceUrl));
             }
-
-            ServiceRoot.Children.Clear();
-
-            var endpoints = await _managementService.GetEndpoints();
-            
-            if(endpoints == null)
-                return;
-
-            foreach (var endpoint in endpoints)
+            else
             {
-                ServiceRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                ServiceRoot.Children.Clear();
             }
-
-            _view.ExpandNode(ServiceRoot);
         }
 
         public virtual void OnSelectedNodeChanged()
@@ -141,13 +130,15 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        public void ConnectToService(string url)
+        public async Task ConnectToService(string url)
         {
             if(url == null)
                 return;
 
             ServiceUrl = url;
             AddServiceNode();
+            await RefreshEndpoints();
+            ExpandServiceNode();
         }
 
         public async Task FullRefresh()
@@ -157,12 +148,33 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public async Task PartialRefresh()
         {
+            await RefreshEndpoints();
         }
 
-        public void Handle(AutoRefreshBeat message)
+        public async void Handle(AutoRefreshBeat message)
         {
-            PartialRefresh();
+            await PartialRefresh();
         }
 
+        private async Task RefreshEndpoints()
+        {
+            var endpoints = await _managementService.GetEndpoints();
+
+            if (endpoints == null)
+                return;
+
+            foreach (var endpoint in endpoints)
+            {
+                if (!ServiceRoot.EndpointExists(endpoint))
+                {
+                    ServiceRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                }
+            }
+        }
+
+        private void ExpandServiceNode()
+        {
+            _view.ExpandNode(ServiceRoot);
+        }
     }
 }
