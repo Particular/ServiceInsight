@@ -8,6 +8,7 @@ using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
 using RestSharp;
+using RestSharp.Contrib;
 using log4net;
 
 namespace NServiceBus.Profiler.Desktop.Management
@@ -140,7 +141,7 @@ namespace NServiceBus.Profiler.Desktop.Management
         private void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
             if(searchQuery == null) return;
-            request.Resource += string.Format("search/{0}", searchQuery);
+            request.Resource += string.Format("search/{0}", Encode(searchQuery));
         }
 
         private string GetSortDirection(bool ascending)
@@ -177,15 +178,6 @@ namespace NServiceBus.Profiler.Desktop.Management
                 }
             });
             return completionSource.Task;
-        }
-
-        private void RaiseAsyncOperationFailed(HttpStatusCode statusCode, string errorMessage)
-        {
-            _eventAggregator.Publish(new AsyncOperationFailedEvent
-            {
-                ErrorCode = (int)statusCode,
-                Description = errorMessage
-            });
         }
 
         private Task<T> GetModelAsync<T>(IRestRequest request)
@@ -240,5 +232,18 @@ namespace NServiceBus.Profiler.Desktop.Management
             }
         }
 
+        private static string Encode(string parameterValue)
+        {
+            return HttpUtility.HtmlEncode(parameterValue);
+        }
+
+        private void RaiseAsyncOperationFailed(HttpStatusCode statusCode, string errorMessage)
+        {
+            _eventAggregator.Publish(new AsyncOperationFailedEvent
+            {
+                ErrorCode = (int)statusCode,
+                Description = errorMessage
+            });
+        }
     }
 }
