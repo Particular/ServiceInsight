@@ -392,5 +392,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
+
+        public virtual void Handle(AsyncOperationFailedEvent message)
+        {
+            _workCount = 0;
+            NotifyOfPropertyChange(() => WorkInProgress);
+        }
     }
 }

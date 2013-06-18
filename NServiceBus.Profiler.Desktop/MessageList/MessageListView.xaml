@@ -29,7 +29,6 @@
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
                          ItemsSource="{Binding Messages}"
-                         PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
@@ -38,7 +37,7 @@
                                 FieldName="IsFaulted" 
                                 Header="Status" 
                                 UnboundType="Object" 
-                                Width="16" >
+                                Width="16">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="16" Height="16" 
@@ -99,12 +98,13 @@
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
                                FocusedRowChanged="OnFocusedMessageChanged"
                                SelectionChanged="OnSelectedMessagesChanged"
+                               ColumnHeaderClick="OnColumnHeaderClicked"
                                ShowIndicator="False"
                                MultiSelectMode="Row"
                                AllowCascadeUpdate="True" 
                                AllowPerPixelScrolling="True" 
                                AutoWidth="True" 
-                               AllowSorting="False"
+                               AllowSorting="True"
                                AllowEditing="False" 
                                AllowGrouping="True" 
                                ShowGroupPanel="False"

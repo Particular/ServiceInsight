@@ -50,20 +50,29 @@ namespace NServiceBus.Profiler.Desktop.Explorer
 
         public void Handle(WorkStarted message)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                treeList.IsHitTestVisible = false;
-                treeList.ShowLoadingPanel = true;
-            }));
+            Dispatcher.BeginInvoke((Action)(StartWorkInProgress));
         }
 
         public void Handle(WorkFinished message)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                treeList.ShowLoadingPanel = false;
-                treeList.IsHitTestVisible = true;
-            }));
+            Dispatcher.BeginInvoke((Action)(StopWorkInProgress));
+        }
+
+        public void Handle(AsyncOperationFailedEvent message)
+        {
+            Dispatcher.BeginInvoke((Action)(StopWorkInProgress));
+        }
+
+        private void StopWorkInProgress()
+        {
+            treeList.ShowLoadingPanel = false;
+            treeList.IsHitTestVisible = true;
+        }
+
+        private void StartWorkInProgress()
+        {
+            treeList.IsHitTestVisible = false;
+            treeList.ShowLoadingPanel = true;
         }
     }
 }

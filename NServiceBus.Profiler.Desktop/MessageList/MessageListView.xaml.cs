@@ -37,8 +37,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public MessageListView()
         {
             InitializeComponent();
-            _sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
-            _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+//            _sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+//            _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
         public MessageListView(IMenuManager menuManager)
@@ -117,60 +117,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             e.Cancel = grid.ShowLoadingPanel;
         }
 
-        private void SortData(ColumnBase column, ColumnSortOrder order)
+        private void OnColumnHeaderClicked(object sender, ColumnHeaderClickEventArgs e)
         {
-            Model.RefreshMessages(column.Tag as string, order == ColumnSortOrder.Ascending);
-        }
-
-        private void OnGridControlClicked(object sender, MouseButtonEventArgs e)
-        {
-            var columnHeader = LayoutHelper.FindLayoutOrVisualParentObject((DependencyObject) e.OriginalSource, typeof (GridColumnHeader)) as GridColumnHeader;
-            if (columnHeader == null || Model == null || Model.WorkInProgress) return;
-
-            var clickedColumn = (GridColumn)columnHeader.DataContext;
-            if(clickedColumn.Tag == null) return;
-
-            ClearSortExcept(columnHeader);
-
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(columnHeader, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(columnHeader, null);
-            ColumnSortOrder sort;
-
-            if (sortUpControl.Visibility != Visibility.Visible)
-            {
-                sortUpControl.Visibility = Visibility.Visible;
-                sortDownControl.Visibility = Visibility.Hidden;
-                sort = ColumnSortOrder.Ascending;
-            }
-            else
-            {
-                sortUpControl.Visibility = Visibility.Hidden;
-                sortDownControl.Visibility = Visibility.Visible;
-                sort = ColumnSortOrder.Descending;
-            }
-            
-            SortData(clickedColumn, sort);
-        }
-
-        private void HideIndicator(BaseGridColumnHeader header)
-        {
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(header, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(header, null);
-
-            sortUpControl.Visibility = Visibility.Hidden;
-            sortDownControl.Visibility = Visibility.Hidden;
-        }
-
-        private void ClearSortExcept(GridColumnHeader clickedHeader)
-        {
-            var headers = grid.FindVisualChildren<GridColumnHeader>();
-            foreach (var header in headers)
-            {
-                if(header == clickedHeader)
-                    continue;
-
-                HideIndicator(header);
-            }
+            Model.RefreshMessages(e.Column.Tag as string, e.Column.SortOrder == ColumnSortOrder.Ascending);
         }
     }
 }
