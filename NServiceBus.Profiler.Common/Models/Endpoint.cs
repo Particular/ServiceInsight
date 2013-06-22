@@ -13,7 +13,7 @@
 
         protected bool Equals(Endpoint other)
         {
-            return other.Address == Address;
+            return string.Equals(Address, other.Address);
         }
 
         public override bool Equals(object obj)
@@ -26,7 +26,17 @@
 
         public override int GetHashCode()
         {
-            return Address != null ? Address.GetHashCode() : 0;
+            return (Address != null ? Address.GetHashCode() : 0);
+        }
+
+        public static bool operator ==(Endpoint left, Endpoint right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Endpoint left, Endpoint right)
+        {
+            return !Equals(left, right);
         }
 
         public override string ToString()

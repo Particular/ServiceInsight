@@ -29,6 +29,7 @@
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
                          ItemsSource="{Binding Messages}"
+                         PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
 
             <dxg:GridControl.Columns>
@@ -98,13 +99,12 @@
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
                                FocusedRowChanged="OnFocusedMessageChanged"
                                SelectionChanged="OnSelectedMessagesChanged"
-                               ColumnHeaderClick="OnColumnHeaderClicked"
                                ShowIndicator="False"
                                MultiSelectMode="Row"
                                AllowCascadeUpdate="True" 
                                AllowPerPixelScrolling="True" 
                                AutoWidth="True" 
-                               AllowSorting="True"
+                               AllowSorting="False"
                                AllowEditing="False" 
                                AllowGrouping="True" 
                                ShowGroupPanel="False"

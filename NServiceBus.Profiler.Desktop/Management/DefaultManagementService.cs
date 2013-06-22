@@ -62,12 +62,6 @@ namespace NServiceBus.Profiler.Desktop.Management
             return result;
         }
 
-        private static string CreateBaseUrl(string endpointName, string searchQuery)
-        {
-            return searchQuery == null ? string.Format("/endpoints/{0}/messages/", endpointName) 
-                                       : "/messages/";
-        }
-
         public async Task<List<StoredMessage>> GetConversationById(string conversationId)
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
@@ -154,6 +148,12 @@ namespace NServiceBus.Profiler.Desktop.Management
             return new RestClient(_connection.Url);
         }
 
+        private static string CreateBaseUrl(string endpointName, string searchQuery)
+        {
+            return searchQuery == null ? string.Format("/endpoints/{0}/messages/", endpointName)
+                                       : "/messages/";
+        }
+
         private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
         {
             var completionSource = new TaskCompletionSource<PagedResult<T>>();
@@ -174,7 +174,7 @@ namespace NServiceBus.Profiler.Desktop.Management
                     RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
                     var errorMessage = string.Format("Unknown error connecting to the service at {0}, Http Status code is {1}", client.BuildUri(request), response.StatusCode);
                     Logger.Error(errorMessage, response.ErrorException);
-                    completionSource.SetException(response.ErrorException);
+                    completionSource.SetException(response.ErrorException ?? new Exception(errorMessage));
                 }
             });
             return completionSource.Task;
@@ -189,7 +189,7 @@ namespace NServiceBus.Profiler.Desktop.Management
         private Task<bool> ExecuteAsync(IRestRequest request)
         {
             var completionSource = new TaskCompletionSource<bool>();
-            CreateClient().ExecuteAsync(request, response => ProcessResponse(r => response.StatusCode == HttpStatusCode.OK, response, completionSource));
+            CreateClient().ExecuteAsync(request, response => ProcessResponse(r => IsSuccessCode(r.StatusCode), response, completionSource));
             return completionSource.Task;
         }
 
@@ -203,7 +203,7 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
         {
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (IsSuccessCode(response.StatusCode))
             {
                 completionSource.SetResult(selector(response));
             }
@@ -216,10 +216,24 @@ namespace NServiceBus.Profiler.Desktop.Management
             }
         }
 
+        private static bool IsSuccessCode(HttpStatusCode statusCode)
+        {
+            return SuccessCodes.Any(x => x == statusCode);
+        }
+
+        private static IEnumerable<HttpStatusCode> SuccessCodes
+        {
+            get
+            {
+                yield return HttpStatusCode.OK;
+                yield return HttpStatusCode.Accepted;
+            }
+        }
+
         private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
             where T : class, new()
         {
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (IsSuccessCode(response.StatusCode))
             {
                 completionSource.SetResult(selector(response));
             }
