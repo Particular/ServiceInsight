@@ -275,7 +275,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public string GetCriticalTime(StoredMessage msg)
         {
             if (msg != null && msg.Statistics != null)
-                return msg.Statistics.CriticalTimeAsString;
+                return msg.Statistics.ElapsedCriticalTime;
+
+            return string.Empty;
+        }
+
+        public string GetProcessingTime(StoredMessage msg)
+        {
+            if (msg != null && msg.Statistics != null)
+                return msg.Statistics.ElapsedProcessingTime;
 
             return string.Empty;
         }

@@ -22,6 +22,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private static class AdvancedEndpointColumns
         {
             public const string CriticalTime = "CriticalTime";
+            public const string ProcessingTime = "ProcessingTime";
             public const string IsFaulted = "IsFaulted";
             public const string MessageId = "Identifier";
         }
@@ -97,9 +98,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                     e.Value = storedMsg != null ? storedMsg.MessageId : msg.Id;
                 }
 
-                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime && storedMsg != null)
+                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
                 {
                     e.Value = Model.GetCriticalTime(storedMsg);
+                }
+
+                if (e.Column.FieldName == AdvancedEndpointColumns.ProcessingTime)
+                {
+                    e.Value = Model.GetProcessingTime(storedMsg);
                 }
 
                 if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)

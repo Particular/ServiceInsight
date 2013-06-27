@@ -82,8 +82,9 @@
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="CriticalTime" 
+                                Tag="critical_time"
                                 AllowColumnFiltering="False"
-                                AllowSorting="False"
+                                AllowSorting="True"
                                 UnboundType="String" 
                                 Header="Critical Time">
                     <dxg:GridColumn.CellTemplate>
@@ -92,6 +93,19 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ProcessingTime" 
+                                Tag="processing_time"
+                                AllowColumnFiltering="False"
+                                AllowSorting="True"
+                                UnboundType="String" 
+                                Header="Processing Time">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
             </dxg:GridControl.Columns>
 
             <dxg:GridControl.View>

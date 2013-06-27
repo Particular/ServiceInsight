@@ -32,6 +32,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         Task RefreshQueue(Queue queue);
         Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
         string GetCriticalTime(StoredMessage msg);
+        string GetProcessingTime(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo();
     }

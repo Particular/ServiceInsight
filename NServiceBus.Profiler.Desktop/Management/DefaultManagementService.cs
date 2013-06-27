@@ -172,9 +172,9 @@ namespace NServiceBus.Profiler.Desktop.Management
                 else
                 {
                     RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                    var errorMessage = string.Format("Unknown error connecting to the service at {0}, Http Status code is {1}", client.BuildUri(request), response.StatusCode);
+                    var errorMessage = string.Format("Error connecting to the service at {0}, Http Status code is {1}", client.BuildUri(request), response.StatusCode);
                     Logger.Error(errorMessage, response.ErrorException);
-                    completionSource.SetException(response.ErrorException ?? new Exception(errorMessage));
+                    completionSource.SetResult(new PagedResult<T>());
                 }
             });
             return completionSource.Task;
