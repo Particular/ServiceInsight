@@ -115,14 +115,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private void AddServiceNode()
         {
-            if (ServiceRoot == null)
-            {
-                Items.Add(new ServiceExplorerItem(ServiceUrl));
-            }
-            else
-            {
-                ServiceRoot.Children.Clear();
-            }
+            Items.Clear();
+            Items.Add(new ServiceExplorerItem(ServiceUrl));
         }
 
         public virtual void OnSelectedNodeChanged()
@@ -135,6 +129,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if(url == null)
                 return;
 
+            _managementConnection.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
             await RefreshEndpoints();
