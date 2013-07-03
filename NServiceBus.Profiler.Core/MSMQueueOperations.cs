@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Messaging;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Transactions;
 using NServiceBus.Profiler.Common;
@@ -131,7 +130,7 @@ namespace NServiceBus.Profiler.Core
             var path = queue.Address.ToPathName();
             if(!QueueExists(queue)) //MessageQueue.Exist method does not accept format name
             {
-                var q = MessageQueue.Create(queue.Address.ToShortFormatName(), transactional);
+                var q = MessageQueue.Create(path, transactional);
                 return _mapper.MapQueue(q);
             }
             
@@ -219,5 +218,5 @@ namespace NServiceBus.Profiler.Core
             }
             return messageCount;
         }
-    }
+    }   
 }
