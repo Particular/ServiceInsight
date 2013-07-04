@@ -52,7 +52,7 @@ namespace NServiceBus.Profiler.Core.Licensing
             }
             set
             {
-                using (var registryKey = Registry.CurrentUser.OpenSubKey(RegistryKey, true))
+                using (var registryKey = Registry.CurrentUser.CreateSubKey(RegistryKey))
                 {
                     if (registryKey != null)
                     {
