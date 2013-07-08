@@ -127,7 +127,7 @@ namespace NServiceBus.Profiler.Core
 
         public virtual Queue CreateQueue(Queue queue, bool transactional)
         {
-            var path = queue.Address.ToPathName();
+            var path = queue.Address.ToShortFormatName();
             if(!QueueExists(queue)) //MessageQueue.Exist method does not accept format name
             {
                 var q = MessageQueue.Create(path, transactional);
