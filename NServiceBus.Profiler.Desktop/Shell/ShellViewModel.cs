@@ -68,6 +68,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Messages = messages;
             LogWindow = logWindow;
 
+            Items.Add(endpointExplorer);
             Items.Add(messageBodyViewer);
             Items.Add(conversation);
             Items.Add(queueExplorer);

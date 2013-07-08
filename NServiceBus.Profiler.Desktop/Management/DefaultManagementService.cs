@@ -150,8 +150,8 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private static string CreateBaseUrl(string endpointName, string searchQuery)
         {
-            return searchQuery == null ? string.Format("/endpoints/{0}/messages/", endpointName)
-                                       : "/messages/";
+            return searchQuery == null ? string.Format("endpoints/{0}/messages/", endpointName)
+                                       : "messages/";
         }
 
         private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
@@ -163,6 +163,8 @@ namespace NServiceBus.Profiler.Desktop.Management
 
             client.ExecuteAsync<List<T>>(request, response =>
             {
+                LogResponse(response);
+
                 if (HasSucceeded(response))
                 {
                     completionSource.SetResult(new PagedResult<T>
@@ -174,8 +176,7 @@ namespace NServiceBus.Profiler.Desktop.Management
                 else
                 {
                     RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                    var errorMessage = string.Format("Error connecting to the service at {0}, Http Status code is {1}", client.BuildUri(request), response.StatusCode);
-                    Logger.Error(errorMessage, response.ErrorException);
+                    Logger.Error("Error executing the request", response.ErrorException);
                     completionSource.SetResult(new PagedResult<T>());
                 }
             });
@@ -185,7 +186,6 @@ namespace NServiceBus.Profiler.Desktop.Management
         private Task<T> GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
-            LogRequest(request);
             return ExecuteAsync<T>(request, response => response.Data);
         }
 
@@ -210,6 +210,8 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
         {
+            LogResponse(response);
+
             if (HasSucceeded(response))
             {
                 completionSource.SetResult(selector(response));
@@ -217,8 +219,7 @@ namespace NServiceBus.Profiler.Desktop.Management
             else
             {
                 RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
-                Logger.Error(errorMessage, response.ErrorException);
+                Logger.Error("Error executing the request", response.ErrorException);
                 completionSource.SetResult(default(T));
             }
         }
@@ -240,6 +241,8 @@ namespace NServiceBus.Profiler.Desktop.Management
         private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
             where T : class, new()
         {
+            LogResponse(response);
+
             if (HasSucceeded(response))
             {
                 completionSource.SetResult(selector(response));
@@ -247,8 +250,7 @@ namespace NServiceBus.Profiler.Desktop.Management
             else
             {
                 RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                var errorMessage = string.Format("Error executing the request, Http Status code is {0}", response.StatusCode);
-                Logger.Error(errorMessage, response.ErrorException);
+                Logger.Error("Error executing the request.", response.ErrorException);
                 completionSource.SetResult(null);
             }
         }
@@ -261,11 +263,20 @@ namespace NServiceBus.Profiler.Desktop.Management
         private void LogRequest(IRestRequest request)
         {
             Logger.InfoFormat("Executing HTTP {0} request on {1}/{2}", request.Method, _connection.Url, request.Resource);
-            Logger.DebugFormat("{0} Request has {1} parameters", request.Method, request.Parameters.Count);
             
             foreach (var parameter in request.Parameters)
             {
                 Logger.DebugFormat("Parameter: {0} of type {1} has value {2}", parameter.Name, parameter.Type, parameter.Value);
+            }
+        }
+
+        private void LogResponse(IRestResponse response)
+        {
+            Logger.DebugFormat("Received HTTP Status {0} on the call to {1}/{2}", response.StatusCode, _connection.Url, response.ResponseUri);
+
+            foreach (var header in response.Headers)
+            {
+                Logger.DebugFormat("Header: {0} of type {1} has value {2}", header.Name, header.Type, header.Value);
             }
         }
 

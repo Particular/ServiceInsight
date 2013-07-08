@@ -73,17 +73,20 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             }
         }
 
-        public async override void AttachView(object view, object context)
+        public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
             _view = view as IExplorerView;
+        }
+
+        protected async override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (IsConnected) return;
 
             var configuredAddress = GetConfiguredAddress();
             var existingUrl = _managementConnection.Url;
-
-            if (IsConnected) 
-                return;
-
             var available = await ServiceAvailable(configuredAddress);
             var connectTo = available ? configuredAddress : existingUrl;
 

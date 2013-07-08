@@ -1,6 +1,5 @@
 ﻿using log4net;
 using log4net.Repository.Hierarchy;
-using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
@@ -30,7 +29,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         public void Initialize()
         {
-            appender = new RichTextBoxAppender(this);
+            appender = new RichTextBoxAppender(LogContainer);
             var hierarchy = (Hierarchy)LogManager.GetRepository();
             hierarchy.Root.AddAppender(appender);
         }
@@ -43,6 +42,11 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
         public void Clear()
         {
             appender.Clear();
+        }
+
+        public void Copy()
+        {
+            LogContainer.Copy();
         }
 
         public void Close()
