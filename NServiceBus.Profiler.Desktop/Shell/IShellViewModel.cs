@@ -5,6 +5,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.LogWindow;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
@@ -24,6 +25,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IEndpointExplorerViewModel EndpointExplorer { get; }
         IMessageListViewModel Messages { get; }
         IStatusBarManager StatusBarManager { get; }
+        ILogWindowViewModel LogWindow { get; }
         IConversationViewModel Conversation { get; }
         IMessageBodyViewModel MessageBody { get; }
         IMessagePropertiesViewModel MessageProperties { get; }

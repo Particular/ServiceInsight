@@ -13,6 +13,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.LogWindow;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
@@ -49,7 +50,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IConversationViewModel conversation,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
-            IMessagePropertiesViewModel messageProperties)
+            IMessagePropertiesViewModel messageProperties,
+            ILogWindowViewModel logWindow)
         {
             _appCommander = appCommander;
             _screenFactory = screenFactory;
@@ -64,6 +66,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             EndpointExplorer = endpointExplorer;
             MessageBody = messageBodyViewer;
             Messages = messages;
+            LogWindow = logWindow;
 
             Items.Add(messageBodyViewer);
             Items.Add(conversation);
@@ -123,6 +126,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual IMessageBodyViewModel MessageBody { get; private set; }
 
         public virtual IStatusBarManager StatusBarManager { get; private set; }
+
+        public virtual ILogWindowViewModel LogWindow { get; private set; }
 
         public virtual ExplorerItem SelectedExplorerItem { get; private set; }
 

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Autofac;
 using Caliburn.Core.InversionOfControl;
-using Caliburn.Core.Logging;
 using Caliburn.PresentationFramework.ApplicationModel;
 using ExceptionHandler;
+using log4net;
 using NServiceBus.Profiler.Desktop.Shell;
 using IContainer = Autofac.IContainer;
 
@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
 {
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {
-        private ILog _logger;
+        private ILog _logger = LogManager.GetLogger(typeof(AppBootstrapper));
         private IContainer _container;
         
         public AppBootstrapper()
@@ -50,8 +50,9 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
         private void ConfigLogger()
         {
-            _logger = new LoggingConfig().GetLogger();
-            LogManager.Initialize(type => _logger);
+            new LoggingConfig().SetupLog4net();
+            //_logger = new LoggingConfig().GetLogger();
+            //LogManager.Initialize(type => _logger);
         }
 
         protected virtual void TryDisplayUnhandledException(Exception exception)

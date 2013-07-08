@@ -1,8 +1,10 @@
-using System;
 using System.Windows;
+using Caliburn.PresentationFramework;
+using Caliburn.PresentationFramework.RoutedMessaging;
 using DevExpress.Xpf.Bars;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageList;
+using ActionFactory = Caliburn.PresentationFramework.Actions.Action;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -15,22 +17,34 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _shell = shell;
         }
 
-        public PopupMenu CreateContextMenu(FrameworkElement view)
+        public void CreateContextMenu(FrameworkElement view, IObservableCollection<ContextMenuModel> contextMenuItems)
         {
             var contextMenu = new PopupMenu { Manager = _shell.GetMenuManager() };
             BarManager.SetDXContextMenu(view, contextMenu);
 
-            return contextMenu;
+            foreach (var item in contextMenuItems)
+            {
+                AddContextMenuItem(contextMenu, item);
+            }
         }
 
-        public BarItem CreateContextMenuItem(ContextMenuModel menu)
+        public void AddContextMenuItem(PopupMenu contextMenu, ContextMenuModel item)
         {
-            return new BarButtonItem
+            var menu = new BarButtonItem
             {
-                Name = menu.Name, 
-                Content = menu.DisplayName,
-                Glyph = menu.Image.ToBitmapImage(),
+                Name = item.Name, 
+                Content = item.DisplayName,
+                Glyph = item.Image.ToBitmapImage(),
             };
+
+            SetUpActionHandler(menu, item);
+            contextMenu.ItemLinks.Add(menu);
+        }
+
+        private void SetUpActionHandler(BarItem menu, ContextMenuModel item)
+        {
+            Message.SetAttach(menu, string.Format("[Event ItemClick]=[Action {0}]", item.Name));
+            ActionFactory.SetTarget(menu, item.Owner);
         }
     }
 }

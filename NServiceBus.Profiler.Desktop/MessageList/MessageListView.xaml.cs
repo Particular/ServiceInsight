@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Actions;
 using DevExpress.Data;
 using DevExpress.Xpf.Bars;
@@ -30,7 +31,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IMenuManager _menuManager;
         private readonly PropertyInfo _sortUpProperty;
         private readonly PropertyInfo _sortDownProperty;
-        private PopupMenu _contextMenu;
 
         public MessageListView()
         {
@@ -47,17 +47,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public void SetupContextMenu()
         {
-            _contextMenu = _menuManager.CreateContextMenu(grid.View);
-
-            foreach (var item in Model.ContextMenuItems)
-            {
-                var menu = _menuManager.CreateContextMenuItem(item);
-
-                Message.SetAttach(menu, string.Format("[Event ItemClick]=[Action {0}]", item.Name));
-                Action.SetTarget(menu, Model);
-
-                _contextMenu.ItemLinks.Add(menu);
-            }
+            _menuManager.CreateContextMenu(grid.View, Model.ContextMenuItems);
         }
 
         private void OnFocusedMessageChanged(object sender, FocusedRowChangedEventArgs e)

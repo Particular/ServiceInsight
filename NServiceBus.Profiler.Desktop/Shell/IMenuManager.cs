@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using DevExpress.Xpf.Bars;
+using Caliburn.PresentationFramework;
 using NServiceBus.Profiler.Desktop.MessageList;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
     public interface IMenuManager
     {
-        PopupMenu CreateContextMenu(FrameworkElement view);
-        BarItem CreateContextMenuItem(ContextMenuModel menu);
+        void CreateContextMenu(FrameworkElement view, IObservableCollection<ContextMenuModel> contextMenuItems);
     }
 }

@@ -244,6 +244,15 @@
                                                  CaptionImage="/Images/Document.png">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
+                                
+                                <dxd:LayoutPanel x:Name="LogWindow"
+                                                 Caption="Logs"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
+                                                 CaptionImage="/Images/Log.png">
+                                    <ContentControl cal:View.Model="{Binding LogWindow}" />
+                                </dxd:LayoutPanel>
 
                             </dxd:TabbedGroup>
 

@@ -261,6 +261,11 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
+    <Compile Include="LogWindow\LogWindowView.xaml.cs">
+      <DependentUpon>LogWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogWindow\LogWindowViewModel.cs" />
+    <Compile Include="LogWindow\RichTextBoxAppender.cs" />
     <Compile Include="Management\DefaultManagementService.cs" />
     <Compile Include="Management\IManagementService.cs" />
     <Compile Include="Management\IManagementServiceConnection.cs" />
@@ -408,6 +413,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="LogWindow\LogWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageHeaders\MessagePropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -518,8 +527,11 @@
     <Resource Include="Images\Bullet-Blue.png" />
     <Resource Include="Images\Information-Large.png" />
     <Resource Include="Images\ErrorStatus.png" />
+    <Resource Include="Images\Log-Large.png" />
+    <Resource Include="Images\Log.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>

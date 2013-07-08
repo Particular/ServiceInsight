@@ -14,6 +14,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.LogWindow;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
@@ -49,6 +50,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static ILicenseManager LicenseManager;
         protected static IShellViewStub View;
         protected static IMessagePropertiesViewModel MessageProperties;
+        protected static ILogWindowViewModel LogWindow;
         protected static IAppCommands App;
 
         Establish context = () =>
@@ -68,11 +70,12 @@ namespace NServiceBus.Profiler.Tests.Shell
             View = Substitute.For<IShellViewStub>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
+            LogWindow = Substitute.For<ILogWindowViewModel>();
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
             App = Substitute.For<IAppCommands>();
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
                                        StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
-                                       SettingsProvider, MessageProperties);
+                                       SettingsProvider, MessageProperties, LogWindow);
 
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
 

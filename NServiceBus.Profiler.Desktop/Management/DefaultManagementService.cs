@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Desktop.Management
     {
         private readonly IManagementConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(IRestClient));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IManagementService));
 
         public DefaultManagementService(
             IManagementConnectionProvider connection, 
@@ -156,12 +156,14 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
         {
+            LogRequest(request);
+
             var completionSource = new TaskCompletionSource<PagedResult<T>>();
             var client = CreateClient();
 
             client.ExecuteAsync<List<T>>(request, response =>
             {
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (HasSucceeded(response))
                 {
                     completionSource.SetResult(new PagedResult<T>
                     {
@@ -183,19 +185,24 @@ namespace NServiceBus.Profiler.Desktop.Management
         private Task<T> GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
+            LogRequest(request);
             return ExecuteAsync<T>(request, response => response.Data);
         }
 
         private Task<bool> ExecuteAsync(IRestRequest request)
         {
+            LogRequest(request);
+
             var completionSource = new TaskCompletionSource<bool>();
-            CreateClient().ExecuteAsync(request, response => ProcessResponse(r => IsSuccessCode(r.StatusCode), response, completionSource));
+            CreateClient().ExecuteAsync(request, response => ProcessResponse(HasSucceeded, response, completionSource));
             return completionSource.Task;
         }
 
         private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
+            LogRequest(request);
+
             var completionSource = new TaskCompletionSource<T>();
             CreateClient().ExecuteAsync<T>(request, response => ProcessResponse(selector, response, completionSource));
             return completionSource.Task;
@@ -203,7 +210,7 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
         {
-            if (IsSuccessCode(response.StatusCode))
+            if (HasSucceeded(response))
             {
                 completionSource.SetResult(selector(response));
             }
@@ -216,9 +223,9 @@ namespace NServiceBus.Profiler.Desktop.Management
             }
         }
 
-        private static bool IsSuccessCode(HttpStatusCode statusCode)
+        private static bool HasSucceeded(IRestResponse response)
         {
-            return SuccessCodes.Any(x => x == statusCode);
+            return SuccessCodes.Any(x => x == response.StatusCode);
         }
 
         private static IEnumerable<HttpStatusCode> SuccessCodes
@@ -233,7 +240,7 @@ namespace NServiceBus.Profiler.Desktop.Management
         private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
             where T : class, new()
         {
-            if (IsSuccessCode(response.StatusCode))
+            if (HasSucceeded(response))
             {
                 completionSource.SetResult(selector(response));
             }
@@ -249,6 +256,17 @@ namespace NServiceBus.Profiler.Desktop.Management
         private static string Encode(string parameterValue)
         {
             return HttpUtility.HtmlEncode(parameterValue);
+        }
+
+        private void LogRequest(IRestRequest request)
+        {
+            Logger.InfoFormat("Executing HTTP {0} request on {1}/{2}", request.Method, _connection.Url, request.Resource);
+            Logger.DebugFormat("{0} Request has {1} parameters", request.Method, request.Parameters.Count);
+            
+            foreach (var parameter in request.Parameters)
+            {
+                Logger.DebugFormat("Parameter: {0} of type {1} has value {2}", parameter.Name, parameter.Type, parameter.Value);
+            }
         }
 
         private void RaiseAsyncOperationFailed(HttpStatusCode statusCode, string errorMessage)

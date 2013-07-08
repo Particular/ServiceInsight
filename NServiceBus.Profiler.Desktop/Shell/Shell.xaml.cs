@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Caliburn.Core.Logging;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Serialization;
+using log4net;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Common.ExtensionMethods;
@@ -15,6 +15,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
     /// </summary>
     public partial class ShellView : IShellView
     {
+        private readonly ILog _logger = LogManager.GetLogger(typeof (IShellView));
+
         public ShellView()
         {
             ChangeTheme(Theme.VS2010Name);
@@ -31,8 +33,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         { 
             return BarManager;
         }
-
-        public ILog Logger { get; set; }
 
         public void SaveLayout(ISettingsProvider settingProvider)
         {
@@ -90,7 +90,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch (Exception ex)
             {
-                Logger.Info("Failed to save the layout, reason is: " + ex);
+                _logger.Info("Failed to save the layout, reason is: " + ex);
                 return null;
             }
         }
@@ -106,7 +106,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch(Exception ex)
             {
-                Logger.Info("Failed to restore layout, reason is: " + ex);
+                _logger.Info("Failed to restore layout, reason is: " + ex);
             }
         }
     }

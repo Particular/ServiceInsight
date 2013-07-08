@@ -1,4 +1,4 @@
-﻿using Caliburn.Core.Logging;
+﻿using log4net;
 using NServiceBus.Profiler.Common.Settings;
 using NServiceBus.Profiler.Core.Settings;
 using Rhino.Licensing;
@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Core.Licensing
         private const string DateFormat = "M/d/yyyy"; 
         private const int TrialDays = 30;
 
-        private static readonly ILog Logger = LogManager.GetLog(typeof(ILicenseManager));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ILicenseManager));
         private readonly LicenseSettings _licenseSettings;
         private readonly ISettingsProvider _settingsProvider;
         private readonly ICryptoService _cryptoService;
@@ -51,12 +51,12 @@ namespace NServiceBus.Profiler.Core.Licensing
                 {
                     _validator.AssertValidLicense();
 
-                    Logger.Info("Found a {0} license.", _validator.LicenseType);
-                    Logger.Info("Registered to {0}", _validator.Name);
-                    Logger.Info("Expires on {0}", _validator.ExpirationDate);
+                    Logger.InfoFormat("Found a {0} license.", _validator.LicenseType);
+                    Logger.InfoFormat("Registered to {0}", _validator.Name);
+                    Logger.InfoFormat("Expires on {0}", _validator.ExpirationDate);
                     if ((_validator.LicenseAttributes != null) && (_validator.LicenseAttributes.Count > 0))
                         foreach (var licenseAttribute in _validator.LicenseAttributes)
-                            Logger.Info("[{0}]: [{1}]", licenseAttribute.Key, licenseAttribute.Value);
+                            Logger.InfoFormat("[{0}]: [{1}]", licenseAttribute.Key, licenseAttribute.Value);
 
                     ValidateLicenseVersion();
                     CreateLicense();
@@ -117,11 +117,11 @@ namespace NServiceBus.Profiler.Core.Licensing
 
             if (trialExpirationDate.HasValue && trialExpirationDate.Value > DateTime.UtcNow.Date)
             {
-                Logger.Info("Trial for NServiceBus Profiler v{0} is still active, trial expires on {1}.",
+                Logger.InfoFormat("Trial for NServiceBus Profiler v{0} is still active, trial expires on {1}.",
                                    LicenseDescriptor.SoftwareVersion, 
                                    trialExpirationDate.Value.ToLocalTime().ToShortDateString());
 
-                Logger.Info("Configuring NServiceBus Profiler to run in trial mode.");
+                Logger.InfoFormat("Configuring NServiceBus Profiler to run in trial mode.");
 
                 CurrentLicense = new ProfilerLicense
                 {
@@ -135,7 +135,7 @@ namespace NServiceBus.Profiler.Core.Licensing
             }
             else
             {
-                Logger.Info("Trial for NServiceBus Profiler v{0} has expired.", LicenseDescriptor.SoftwareVersion);
+                Logger.InfoFormat("Trial for NServiceBus Profiler v{0} has expired.", LicenseDescriptor.SoftwareVersion);
                 Logger.Warn("Falling back to run in Trial license mode.");
 
                 TrialExpired = true;
@@ -201,7 +201,7 @@ namespace NServiceBus.Profiler.Core.Licensing
         {
             if (license == null && !string.IsNullOrEmpty(LicenseDescriptor.License))
             {
-                Logger.Info(@"Using embeded license found in registry [{0}\License].", LicenseDescriptor.RegistryKey);
+                Logger.InfoFormat(@"Using embeded license found in registry [{0}\License].", LicenseDescriptor.RegistryKey);
                 license = LicenseDescriptor.License;
             }
 

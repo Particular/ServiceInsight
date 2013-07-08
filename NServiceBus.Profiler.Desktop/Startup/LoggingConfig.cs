@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
             return new CompositeLogger(new ILog[] { new Log4NetLogger(), new TraceLogger() });
         }
 
-        private void SetupLog4net()
+        public void SetupLog4net()
         {
             var logConfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(logConfig));
