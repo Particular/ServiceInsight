@@ -1,23 +1,13 @@
 ﻿using System;
 using System.IO;
-using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Desktop.Logging;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
-    public class LoggingConfig
+    public static class LoggingConfig
     {
-        public LoggingConfig()
-        {
-            SetupLog4net();
-        }
+        public const string LogPattern = "%date - [%-5level] - %logger{1} - %message%newline";
 
-        public ILog GetLogger()
-        {
-            return new CompositeLogger(new ILog[] { new Log4NetLogger(), new TraceLogger() });
-        }
-
-        public void SetupLog4net()
+        public static void SetupLog4net()
         {
             var logConfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(logConfig));

@@ -1,11 +1,13 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Layout;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
 {
@@ -25,7 +27,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         private ILayout CreateLogLayout()
         {
-            return new PatternLayout("%date - [%-5level] - %logger - %message%newline");
+            return new PatternLayout(LoggingConfig.LogPattern);
         }
 
         protected FlowDocument Document
@@ -62,7 +64,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
             switch (loggingEvent.Level.ToString())
             {
                 case "INFO":
-                    AppendText(log, Colors.Black);
+                    AppendText(log, Colors.Black, true);
                     break;
                 case "WARN":
                     AppendText(log, Colors.DarkOrange);
@@ -84,17 +86,18 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
             _richtextBox.ScrollToEnd();
         }
 
-        private void AppendText(string log, Color color)
+        private void AppendText(string log, Color color, bool bold = false)
         {
-            Lines.Add(CreateInline(log, color));
+            Lines.Add(CreateInline(log, color, bold));
         }
 
-        private static Inline CreateInline(string text, Color color)
+        private static Inline CreateInline(string text, Color color, bool bold)
         {
             return new Run
             {
                 Text = text,
-                Foreground = new SolidColorBrush(color)
+                Foreground = new SolidColorBrush(color),
+                FontWeight = bold ? FontWeights.Bold : FontWeights.Normal
             };
         }
 

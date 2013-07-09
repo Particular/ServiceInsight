@@ -433,7 +433,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual void Handle(AsyncOperationFailedEvent message)
         {
-            StatusBarManager.SetFailStatusMessage("Operation Failed: {0}, Error Code: {1}", message.Description, message.ErrorCode);
+            StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
         }
     }
 }

@@ -2,7 +2,6 @@
 {
     public class AsyncOperationFailedEvent
     {
-        public int ErrorCode { get; set; }
-        public string Description { get; set; }
+        public string Message { get; set; }
     }
 }

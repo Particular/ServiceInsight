@@ -58,7 +58,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             if (_shell.WorkInProgress)
             {
-                _eventAggregator.Publish(new AsyncOperationFailedEvent {Description = rootError.Message});
+                _eventAggregator.Publish(new AsyncOperationFailedEvent {Message = rootError.Message});
             }
         }
 

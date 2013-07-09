@@ -9,8 +9,6 @@ namespace NServiceBus.Profiler.Desktop.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<Log4NetLogger>().As<ILog>();
-            //builder.RegisterType<TraceLogger>().As<ILog>();
-            //builder.RegisterType<CompositeLogger>().As<ILog>();
         }
     }
 }

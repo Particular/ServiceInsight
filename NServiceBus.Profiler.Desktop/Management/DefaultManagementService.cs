@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
 using RestSharp;
 using RestSharp.Contrib;
@@ -66,27 +65,6 @@ namespace NServiceBus.Profiler.Desktop.Management
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
             var messages = await GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
-
-            //************* Workaround until API is fixed. Remove in Beta2 
-            // http://particular.myjetbrains.com/youtrack/issue/SB-137
-            var decoder = new HeaderContentDecoder(new StringContentDecoder());
-
-            foreach (var storedMessage in messages)
-            {
-                try
-                {
-                    var result = decoder.Decode(storedMessage.Headers);
-
-                    var messageIdHeader = result.Value.FirstOrDefault(h => h.Key == "NServiceBus.MessageId");
-
-                    if (messageIdHeader != null)
-                        storedMessage.MessageId = messageIdHeader.Value;
-                    
-                }
-                catch(Exception){}
-            }
-
-            //************* End workaround
 
             return messages;
         }
@@ -150,8 +128,7 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private static string CreateBaseUrl(string endpointName, string searchQuery)
         {
-            return searchQuery == null ? string.Format("endpoints/{0}/messages/", endpointName)
-                                       : "messages/";
+            return searchQuery == null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
         }
 
         private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
@@ -175,8 +152,7 @@ namespace NServiceBus.Profiler.Desktop.Management
                 }
                 else
                 {
-                    RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                    Logger.Error("Error executing the request", response.ErrorException);
+                    LogError(response);
                     completionSource.SetResult(new PagedResult<T>());
                 }
             });
@@ -218,23 +194,8 @@ namespace NServiceBus.Profiler.Desktop.Management
             }
             else
             {
-                RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                Logger.Error("Error executing the request", response.ErrorException);
+                LogError(response);
                 completionSource.SetResult(default(T));
-            }
-        }
-
-        private static bool HasSucceeded(IRestResponse response)
-        {
-            return SuccessCodes.Any(x => x == response.StatusCode);
-        }
-
-        private static IEnumerable<HttpStatusCode> SuccessCodes
-        {
-            get
-            {
-                yield return HttpStatusCode.OK;
-                yield return HttpStatusCode.Accepted;
             }
         }
 
@@ -249,8 +210,7 @@ namespace NServiceBus.Profiler.Desktop.Management
             }
             else
             {
-                RaiseAsyncOperationFailed(response.StatusCode, response.ErrorMessage);
-                Logger.Error("Error executing the request.", response.ErrorException);
+                LogError(response);
                 completionSource.SetResult(null);
             }
         }
@@ -262,31 +222,61 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private void LogRequest(IRestRequest request)
         {
-            Logger.InfoFormat("Executing HTTP {0} request on {1}/{2}", request.Method, _connection.Url, request.Resource);
+            Logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
             
             foreach (var parameter in request.Parameters)
             {
-                Logger.DebugFormat("Parameter: {0} of type {1} has value {2}", parameter.Name, parameter.Type, parameter.Value);
+                Logger.DebugFormat("Request Parameter: {0} : {1}", 
+                                                       parameter.Name, 
+                                                       parameter.Value);
             }
         }
 
         private void LogResponse(IRestResponse response)
         {
-            Logger.DebugFormat("Received HTTP Status {0} on the call to {1}/{2}", response.StatusCode, _connection.Url, response.ResponseUri);
+            Logger.DebugFormat("HTTP Status {0} ({1}) ({2}/{3})", 
+                                            response.StatusCode, 
+                                            (int)response.StatusCode, 
+                                            _connection.Url, 
+                                            response.ResponseUri);
 
             foreach (var header in response.Headers)
             {
-                Logger.DebugFormat("Header: {0} of type {1} has value {2}", header.Name, header.Type, header.Value);
+                Logger.DebugFormat("Response Header: {0} : {1}", 
+                                                     header.Name, 
+                                                     header.Value);
             }
         }
 
-        private void RaiseAsyncOperationFailed(HttpStatusCode statusCode, string errorMessage)
+        private void LogError(IRestResponse response)
+        {
+            var errorMessage = string.Format("Error executing the request: {0}, Status code is {1}", 
+                                                                           response.ErrorMessage, 
+                                                                           response.StatusCode);
+            RaiseAsyncOperationFailed(errorMessage);
+            Logger.ErrorFormat(errorMessage, response.ErrorException);
+        }
+
+        private static bool HasSucceeded(IRestResponse response)
+        {
+            return SuccessCodes.Any(x => x == response.StatusCode);
+        }
+
+        private void RaiseAsyncOperationFailed(string errorMessage)
         {
             _eventAggregator.Publish(new AsyncOperationFailedEvent
             {
-                ErrorCode = (int)statusCode,
-                Description = errorMessage
+                Message = errorMessage
             });
+        }
+
+        private static IEnumerable<HttpStatusCode> SuccessCodes
+        {
+            get
+            {
+                yield return HttpStatusCode.OK;
+                yield return HttpStatusCode.Accepted;
+            }
         }
     }
 }

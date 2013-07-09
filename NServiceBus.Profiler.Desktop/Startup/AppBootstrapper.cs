@@ -14,12 +14,12 @@ namespace NServiceBus.Profiler.Desktop.Startup
 {
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {
-        private ILog _logger = LogManager.GetLogger(typeof(AppBootstrapper));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(AppBootstrapper));
         private IContainer _container;
         
         public AppBootstrapper()
         {
-            ConfigLogger();
+            LoggingConfig.SetupLog4net();
             WireTaskExceptionHandler();
         }
 
@@ -48,24 +48,17 @@ namespace NServiceBus.Profiler.Desktop.Startup
             return new AutofacAdapter(_container);
         }
 
-        private void ConfigLogger()
-        {
-            new LoggingConfig().SetupLog4net();
-            //_logger = new LoggingConfig().GetLogger();
-            //LogManager.Initialize(type => _logger);
-        }
-
         protected virtual void TryDisplayUnhandledException(Exception exception)
         {
             try
             {
-                _logger.Error(exception);
+                Logger.Error(exception);
                 var handler = _container.Resolve<IExceptionHandler>();
                 handler.Handle(exception);
             }
             catch(Exception ex)
             {
-                _logger.Error("Failed to display exception dialog", ex);
+                Logger.Error("Failed to display exception dialog", ex);
                 Environment.Exit(-1);
             }
         }
