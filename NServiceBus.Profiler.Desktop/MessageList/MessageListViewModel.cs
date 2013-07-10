@@ -31,6 +31,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IClipboard _clipboard;
         private readonly IStatusBarManager _statusBar;
         private IMessageListView _view;
+        private string _lastSortColumn;
+        private bool _lastSortOrderAscending;
         private int _workCount;
 
         public MessageListViewModel(
@@ -199,11 +201,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", endpoint)));
 
+            if (orderBy != null)
+            {
+                _lastSortColumn = orderBy;
+                _lastSortOrderAscending = ascending;
+            }
+
             var pagedResult = await _managementService.GetAuditMessages(endpoint,
                                                                         pageIndex: pageIndex,
                                                                         searchQuery: searchQuery,
-                                                                        orderBy: orderBy,
-                                                                        ascending: ascending);
+                                                                        orderBy: _lastSortColumn,
+                                                                        ascending: _lastSortOrderAscending);
 
             Messages.Clear();
             Messages.AddRange(pagedResult.Result);

@@ -1,17 +1,13 @@
 ﻿using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.Actions;
 using DevExpress.Data;
-using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Shell;
-using Message = Caliburn.PresentationFramework.RoutedMessaging.Message;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
