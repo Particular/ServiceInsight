@@ -13,7 +13,10 @@ namespace NServiceBus.Profiler.Core.MessageDecoders
             {
                 try
                 {
-                    var xml = Encoding.UTF8.GetString(content);
+                    var base64EncodedString = Encoding.UTF8.GetString(content);
+                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(base64EncodedString);
+                    string xml = Encoding.UTF8.GetString(encodedDataAsBytes);
+
                     doc.LoadXml(xml);
                     return new DecoderResult<XmlDocument>(doc);
                 }
