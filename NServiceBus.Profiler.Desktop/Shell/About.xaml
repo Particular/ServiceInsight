@@ -5,6 +5,13 @@
     <Grid Background="White">
         <Image Source="/ServiceInsight-About.png" Cursor="Hand" MouseDown="OnImageMouseDown" Stretch="None" />
         
+        <TextBlock FontFamily="Tahoma" FontSize="11" 
+                   Margin="38"
+                   Visibility="{Binding License.HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+            <Run Text="Registered to:" FontWeight="Bold" />
+            <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
+        </TextBlock>
+        
         <TextBlock Padding="38 224" FontFamily="Tahoma" FontSize="11" FontWeight="Bold">
             <Run Text="Version " />
             <Run Text="{Binding AppVersion}" />

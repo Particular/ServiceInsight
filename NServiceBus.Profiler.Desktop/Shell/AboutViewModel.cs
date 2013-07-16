@@ -15,16 +15,20 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public AboutViewModel(
             INetworkOperations networkOperations, 
-            IManagementService managementService)
+            IManagementService managementService,
+            ILicenseRegistrationViewModel licenseInfo)
         {
             _networkOperations = networkOperations;
             _managementService = managementService;
+            
+            License = licenseInfo;
             DisplayName = "About";
         }
 
         protected async override void OnActivate()
         {
             base.OnActivate();
+            License.Activate();
             await LoadVersions();
         }
 
@@ -50,6 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _networkOperations.Browse(supportUrl.WebUrl);
         }
 
+        public ILicenseRegistrationViewModel License { get; private set; }
         public string AppVersion { get; set; }
         public string ManagementApiVersion { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Licensing;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
@@ -9,20 +10,33 @@ namespace NServiceBus.Profiler.Desktop.Shell
     {
         private readonly ILicenseManager _licenseManager;
         private readonly IDialogManager _dialogManager;
+        private readonly INetworkOperations _network;
+
+        public const string LicensingPageUrl = "http://particular.net/licensing";
 
         public LicenseRegistrationViewModel(
             ILicenseManager licenseManager, 
-            IDialogManager dialogManager)
+            IDialogManager dialogManager,
+            INetworkOperations network)
         {
             _licenseManager = licenseManager;
             _dialogManager = dialogManager;
+            _network = network;
         }
 
         protected override void OnActivate()
         {
             base.OnActivate();
             License = _licenseManager.CurrentLicense;
-            DisplayName = "Registration";
+            DisplayName = GetScreenTitle();
+        }
+
+        private string GetScreenTitle()
+        {
+            if (HasRemainingTrial) return string.Format("ServiceInsight - {0} day(s) left on trial", TrialDaysRemaining);
+            if(HasFullLicense) return "ServiceInsight"; 
+            
+            return string.Format("ServiceInsight - Trial Expired");
         }
 
         public ProfilerLicense License { get; set; }
@@ -45,6 +59,21 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public bool HasTrialLicense
         {
             get { return LicenseType == ProfilerLicenseTypes.Trial; }
+        }
+
+        public bool HasFullLicense
+        {
+            get { return LicenseType == ProfilerLicenseTypes.Standard; }
+        }
+
+        public bool HasRemainingTrial
+        {
+            get { return HasTrialLicense && TrialDaysRemaining > 0; }
+        }
+
+        public bool AllowedToUse
+        {
+            get { return HasRemainingTrial || HasFullLicense; }
         }
 
         public void OnLicenseChanged()
@@ -77,7 +106,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void Close()
         {
-            TryClose(!HasTrialLicense || TrialDaysRemaining > 0);
+            TryClose(AllowedToUse);
+        }
+
+        public void Purchase()
+        {
+            _network.Browse(LicensingPageUrl);
         }
 
         private string ReadAllTextWithoutLocking(string path)
@@ -96,7 +130,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         string RegisteredTo { get; }
         int TrialDaysRemaining { get; }
         bool HasTrialLicense { get; }
-
         void LoadLicense();
         void Close();
     }
