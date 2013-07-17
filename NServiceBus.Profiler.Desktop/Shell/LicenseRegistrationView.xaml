@@ -43,7 +43,7 @@
                    Visibility="{Binding HasRemainingTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <Run Text="You currently have " />
             <Run Text="{Binding TrialDaysRemaining, Mode=OneWay}" />
-            <Run Text="day(s) left from your trial." />
+            <Run Text="day(s) left on your free trial." />
         </TextBlock>
         <TextBlock Grid.Row="3"
                    FontSize="{StaticResource LargeFontSize}"

@@ -33,7 +33,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private string GetScreenTitle()
         {
-            if (HasRemainingTrial) return string.Format("ServiceInsight - {0} day(s) left on trial", TrialDaysRemaining);
+            if (HasRemainingTrial) return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
             if(HasFullLicense) return "ServiceInsight"; 
             
             return string.Format("ServiceInsight - Trial Expired");
