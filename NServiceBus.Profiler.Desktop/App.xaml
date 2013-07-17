@@ -26,6 +26,7 @@
                     <graph:EdgeRouteToPathConverter x:Key="RouteToPathConverter" />
 
                     <!-- Colors and Brushes -->
+                    <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
                     <SolidColorBrush x:Key="WarningBrush" Color="#FFE52620" />
                     <Color x:Key="DiagramShadowColor">LightGray</Color>
                     <Color x:Key="DiagramSelectedShadowColor">Black</Color>

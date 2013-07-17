@@ -17,6 +17,7 @@ namespace NServiceBus.Profiler.Core
         void DeleteMessage(Queue queue, MessageInfo message);
         void Purge(Queue queue);
         int GetMessageCount(Queue queue);
+        bool IsMsmqInstalled(string machineName);
     }
 
     public interface IQueueManagerAsync : IQueueManager
@@ -24,6 +25,7 @@ namespace NServiceBus.Profiler.Core
         new Task<IList<MessageInfo>> GetMessages(Queue queue);
         new Task<IList<Queue>> GetQueues(string machineName);
         new Task<int> GetMessageCount(Queue queue);
+        new Task<bool> IsMsmqInstalled(string machineName);
         Task<IList<Queue>> GetQueues();
     }
 }

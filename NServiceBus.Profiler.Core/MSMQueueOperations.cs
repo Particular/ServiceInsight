@@ -58,6 +58,11 @@ namespace NServiceBus.Profiler.Core
             return Task.Run(() => GetQueues(machineName));
         }
 
+        Task<bool> IQueueOperationsAsync.IsMsmqInstalled(string machineName)
+        {
+            return Task.Run(() => IsMsmqInstalled(machineName));
+        }
+
         public virtual IList<MessageInfo> GetMessages(Queue queue)
         {
             using (var q = queue.AsMessageQueue())
@@ -116,6 +121,19 @@ namespace NServiceBus.Profiler.Core
                 {
                     return null;
                 }
+            }
+        }
+
+        public bool IsMsmqInstalled(string machineName)
+        {
+            try
+            {
+                MessageQueue.GetPrivateQueuesByMachine(machineName);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

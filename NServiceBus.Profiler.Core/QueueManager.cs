@@ -25,6 +25,11 @@ namespace NServiceBus.Profiler.Core
             return _queueOperations.GetQueuesAsync(machineName);
         }
 
+        Task<bool> IQueueManagerAsync.IsMsmqInstalled(string machineName)
+        {
+            return _queueOperations.IsMsmqInstalled(machineName);
+        }
+
         Task<IList<Queue>> IQueueManagerAsync.GetQueues()
         {
             return _queueOperations.GetQueuesAsync(Environment.MachineName);
@@ -76,6 +81,11 @@ namespace NServiceBus.Profiler.Core
             Guard.NotNull(() => queue, queue);
 
             return _queueOperations.GetMessageCount(queue);
+        }
+
+        public bool IsMsmqInstalled(string machineName)
+        {
+            return _queueOperations.IsMsmqInstalled(machineName);
         }
 
         public virtual Queue CreatePrivateQueue(Queue queue, bool transactional = true)

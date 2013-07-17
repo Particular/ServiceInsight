@@ -32,7 +32,8 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ConnectToMachineView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ManagementConnectionView>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<ExplorerView>().As<IExplorerView>().InstancePerDependency();
+            builder.RegisterType<EndpointExplorerView>().As<IExplorerView>().InstancePerDependency();
+            builder.RegisterType<QueueExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();

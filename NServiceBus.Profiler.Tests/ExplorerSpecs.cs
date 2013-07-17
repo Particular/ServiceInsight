@@ -25,6 +25,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
         protected static IQueueManagerAsync QueueManager;
         protected static IEventAggregator EventAggregator;
         protected static IWindowManagerEx WindowManagerEx;
+        protected static INetworkOperations NetworkOperations;
         protected static Queue Queue;
         protected static Queue SubQueue;
         protected static QueueExplorerItem QueueNode;
@@ -35,8 +36,8 @@ namespace NServiceBus.Profiler.Tests.Explorer
             View = Substitute.For<IExplorerView>();
             EventAggregator = Substitute.For<IEventAggregator>();
             WindowManagerEx = Substitute.For<IWindowManagerEx>();
-
-            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            NetworkOperations = Substitute.For<INetworkOperations>();
+            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, NetworkOperations);
 
             Queue = new Queue("TestQueue");
             SubQueue = new Queue("TestQueue.Subscriptions");
@@ -45,6 +46,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             QueueManager.GetQueues(Arg.Any<string>()).Returns(Task.Run(() => queues));
             QueueManager.GetQueues().Returns(Task.Run(() => queues));
             QueueManager.GetMessageCount(Arg.Any<Queue>()).Returns(Task.Run(() => queues.Count));
+            QueueManager.IsMsmqInstalled(Arg.Any<string>()).Returns(Task.Run(() => true));
 
             AsyncHelper.Run(() => Explorer.AttachView(View, null));
             AsyncHelper.Run(() => Explorer.ConnectToQueue(Environment.MachineName));
@@ -208,7 +210,7 @@ namespace NServiceBus.Profiler.Tests.Explorer
             UnorderedQueueList = new List<Queue>(new[] { new Queue("myqueue.subscriptions") });
             QueueManager = Substitute.For<IQueueManagerAsync>();
             QueueManager.GetQueues().ReturnsForAnyArgs(Task.FromResult(UnorderedQueueList));
-            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx);
+            Explorer = new QueueExplorerViewModel(QueueManager, EventAggregator, WindowManagerEx, NetworkOperations);
         };
 
         Because of = () => Error = Catch.Exception(() => Explorer.FullRefresh());

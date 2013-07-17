@@ -16,23 +16,26 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
-    [View(typeof(IExplorerView))]
+    [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
         private readonly IQueueManagerAsync _queueManager;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
+        private readonly INetworkOperations _networkOperations;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public QueueExplorerViewModel(
             IQueueManagerAsync queueManager,
             IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager)
+            IWindowManagerEx windowManager,
+            INetworkOperations networkOperations)
         {
             _queueManager = queueManager;
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
+            _networkOperations = networkOperations;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -66,7 +69,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             _view = view as IExplorerView;
             if (!IsConnected)
             {
-                await ConnectToQueue(Environment.MachineName);
+                IsMSMQInstalled = await _queueManager.IsMsmqInstalled(LocalMachineName);
+                if (IsMSMQInstalled)
+                {
+                    await ConnectToQueue(LocalMachineName);
+                }
             }
         }
 
@@ -118,6 +125,18 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
                 explorerItem.UpdateMessageCount(messageCount);
             }
         }
+
+        public void Navigate(string navigateUri)
+        {
+            _networkOperations.Browse(navigateUri);
+        }
+
+        public string LocalMachineName
+        {
+            get { return Environment.MachineName; }
+        }
+
+        public bool IsMSMQInstalled { get; private set; }
 
         public virtual ExplorerItem FolderRoot
         {

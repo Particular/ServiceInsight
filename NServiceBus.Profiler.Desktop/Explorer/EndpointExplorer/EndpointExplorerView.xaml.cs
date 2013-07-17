@@ -2,14 +2,14 @@
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
     /// <summary>
     /// Interaction logic for QueuesListView.xaml
     /// </summary>
-    public partial class ExplorerView : IExplorerView
+    public partial class EndpointExplorerView : IExplorerView
     {
-        public ExplorerView()
+        public EndpointExplorerView()
         {
             InitializeComponent();
         }

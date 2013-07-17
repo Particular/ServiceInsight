@@ -5,18 +5,20 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Common.Settings;
+using NServiceBus.Profiler.Core;
 using NServiceBus.Profiler.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Management;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    [View(typeof(IExplorerView))]
+    [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly ISettingsProvider _settingsProvider;
         private readonly IManagementService _managementService;
+        private readonly INetworkOperations _networkOperations;
         private readonly IManagementConnectionProvider _managementConnection;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
@@ -25,11 +27,13 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
             IManagementConnectionProvider managementConnection,
-            IManagementService managementService)
+            IManagementService managementService,
+            INetworkOperations networkOperations)
         {
             _eventAggregator = eventAggregator;
             _settingsProvider = settingsProvider;
             _managementService = managementService;
+            _networkOperations = networkOperations;
             _managementConnection = managementConnection;
             Items = new BindableCollection<ExplorerItem>();
         }
@@ -147,6 +151,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         public async Task PartialRefresh()
         {
             await RefreshEndpoints();
+        }
+
+        public void Navigate(string navigateUri)
+        {
+            _networkOperations.Browse(navigateUri);
         }
 
         public async void Handle(AutoRefreshBeat message)

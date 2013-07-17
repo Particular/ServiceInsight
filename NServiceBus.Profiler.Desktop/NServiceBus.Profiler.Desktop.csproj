@@ -246,6 +246,9 @@
     <Compile Include="Events\SelectedMessageChanged.cs" />
     <Compile Include="Events\WorkFinished.cs" />
     <Compile Include="Events\WorkStarted.cs" />
+    <Compile Include="Explorer\EndpointExplorer\EndpointExplorerView.xaml.cs">
+      <DependentUpon>EndpointExplorerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Explorer\EndpointExplorer\AuditEndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
@@ -387,8 +390,8 @@
     <Compile Include="Modules\LoggerModule.cs" />
     <Compile Include="Modules\ShellModule.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueExplorerViewModel.cs" />
-    <Compile Include="Explorer\ExplorerView.xaml.cs">
-      <DependentUpon>ExplorerView.xaml</DependentUpon>
+    <Compile Include="Explorer\QueueExplorer\QueueExplorerView.xaml.cs">
+      <DependentUpon>QueueExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>
@@ -410,6 +413,10 @@
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Page Include="Conversations\ConversationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Explorer\EndpointExplorer\EndpointExplorerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -457,7 +464,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Explorer\ExplorerView.xaml">
+    <Page Include="Explorer\QueueExplorer\QueueExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

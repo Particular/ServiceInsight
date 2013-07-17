@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {
@@ -8,5 +9,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         ExplorerItem SelectedNode { get; set; }
         Task FullRefresh();
         Task PartialRefresh();
+        void Navigate(string navigateUri);
     }
 }

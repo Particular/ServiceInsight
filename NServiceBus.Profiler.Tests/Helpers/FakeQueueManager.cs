@@ -26,6 +26,16 @@ namespace NServiceBus.Profiler.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        Task<bool> IQueueManagerAsync.IsMsmqInstalled(string machineName)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IQueueManager.IsMsmqInstalled(string machineName)
+        {
+            return true;
+        }
+
         public Task<IList<Queue>> GetQueues()
         {
             throw new NotImplementedException();
