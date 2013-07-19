@@ -37,6 +37,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             _windowManager = windowManager;
             _networkOperations = networkOperations;
             Items = new BindableCollection<ExplorerItem>();
+            IsMSMQInstalled = true;
         }
 
         public static IList<string> SubQueueNames = new[]
