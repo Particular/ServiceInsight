@@ -82,12 +82,22 @@ namespace NServiceBus.Profiler.Desktop.Management
             return await GetVersion() != null;
         }
 
-        public async Task<VersionInfo> GetVersion()
+        public async Task<string> GetVersion()
         {
-            var request = new RestRequest("ping");
-            var version = await GetModelAsync<VersionInfo>(request);
+            var request = new RestRequest();
 
-            return version;
+            LogRequest(request);
+
+            var completionSource = new TaskCompletionSource<string>();
+            CreateClient()
+                .ExecuteAsync(request,
+                              response =>
+                              ProcessResponse(
+                                  restResponse =>
+                                  restResponse.Headers.First(x => x.Name == "X-Particular-Version").Value.ToString(),
+                                  response, completionSource));
+
+            return await completionSource.Task;
         }
 
         public async Task<bool> RetryMessage(string messageId)

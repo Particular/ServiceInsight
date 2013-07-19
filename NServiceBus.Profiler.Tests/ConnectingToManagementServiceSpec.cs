@@ -59,7 +59,7 @@ namespace NServiceBus.Profiler.Tests.Shell.Dialog
 
     public class with_connection_to_management_api : with_a_endpoint_connection_dialog
     {
-        Establish context = () => ManagementService.GetVersion().Returns(Task.Run(() => new VersionInfo { Version = "1.0" }));
+        Establish context = () => ManagementService.GetVersion().Returns(Task.Run(() => "1.0"));
 
         Because of = () =>
         {

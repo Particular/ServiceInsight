@@ -12,6 +12,6 @@ namespace NServiceBus.Profiler.Desktop.Management
         Task<List<Endpoint>> GetEndpoints();
         Task<bool> RetryMessage(string messageId);
         Task<bool> IsAlive();
-        Task<VersionInfo> GetVersion();
+        Task<string> GetVersion();
     }
 }

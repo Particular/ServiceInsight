@@ -40,7 +40,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             var version = await _managementService.GetVersion();
             if (version != null)
             {
-                ManagementApiVersion = version.Version;
+                ManagementApiVersion = version;
             }
             else
             {
