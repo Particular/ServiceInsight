@@ -31,7 +31,7 @@
 
     <dxb:BarManager x:Name="BarManager" 
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.0">
+                    dxc:DXSerializer.LayoutVersion="1.1">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -87,11 +87,11 @@
             <dxb:BarButtonItem Content="Register..." x:Name="itemRegister"
                                CategoryName="Help" Glyph="/Images/Key.png"
                                cal:Message.Attach="[Event ItemClick]=[Action Register]"/>
-            <dxb:BarButtonItem Content="Restore Layout" x:Name="itemRestoreLayout"
-                               CategoryName="Views"
+            <dxb:BarButtonItem Content="Restore default layout" x:Name="itemRestoreLayout"
+                               CategoryName="View"
                                cal:Message.Attach="[Event ItemClick]=[Action ResetLayout]"/>
             <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefresh"
-                              CategoryName="Views" 
+                              CategoryName="View" 
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
             <dxb:ToolbarListItem x:Name="itemToolbarList" Content="Toolbar List" BarItemDisplayMode="Content" />
 
@@ -115,7 +115,7 @@
                 <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="menuViews" CategoryName="Views" Content="Views">
+            <dxb:BarSubItem x:Name="menuView" CategoryName="View" Content="View">
                 <dxb:BarCheckItemLink BarItemName="itemAutoRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:ToolbarListItemLink BarItemName="itemToolbarList" />
@@ -156,7 +156,7 @@
             <dxb:Bar Caption="Menu" IsMainMenu="True" UseWholeRow="True">
                 <dxb:BarSubItemLink BarItemName="menuFile" />
                 <dxb:BarSubItemLink BarItemName="menuTools" />
-                <dxb:BarSubItemLink BarItemName="menuViews" />
+                <dxb:BarSubItemLink BarItemName="menuView" />
                 <dxb:BarSubItemLink BarItemName="menuHelp" />
             </dxb:Bar>
             <dxb:Bar UseWholeRow="True" Caption="Toolbar" AllowHide="True" AllowCollapse="True">
