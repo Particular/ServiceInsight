@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Models;
 using NSubstitute;
 using System.Linq;
 

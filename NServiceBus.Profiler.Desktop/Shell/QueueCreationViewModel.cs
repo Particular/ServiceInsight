@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

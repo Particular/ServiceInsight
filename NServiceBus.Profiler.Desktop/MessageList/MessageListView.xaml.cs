@@ -5,8 +5,8 @@ using DevExpress.Data;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageList

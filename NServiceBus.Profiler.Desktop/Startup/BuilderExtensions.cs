@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using NServiceBus.Profiler.Common;
 using log4net;
 using Module = Autofac.Module;
 

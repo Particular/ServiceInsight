@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using Autofac;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.Licensing;
-using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.Licensing;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Modules
 {

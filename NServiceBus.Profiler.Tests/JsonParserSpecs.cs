@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.CodeParser;
+using NServiceBus.Profiler.Desktop.CodeParser;
 
 namespace NServiceBus.Profiler.Tests.Parsers
 {

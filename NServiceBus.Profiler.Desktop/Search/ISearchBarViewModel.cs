@@ -1,7 +1,7 @@
 ﻿using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.Search

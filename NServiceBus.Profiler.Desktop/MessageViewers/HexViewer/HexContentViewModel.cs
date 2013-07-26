@@ -2,8 +2,8 @@
 using System.Text;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 {

@@ -4,11 +4,11 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {

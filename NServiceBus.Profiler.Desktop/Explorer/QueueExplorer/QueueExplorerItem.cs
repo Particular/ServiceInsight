@@ -1,6 +1,6 @@
 using System.Drawing;
 using System.Globalization;
-using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer

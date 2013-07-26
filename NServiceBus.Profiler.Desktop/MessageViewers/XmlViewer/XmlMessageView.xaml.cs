@@ -1,5 +1,5 @@
 ﻿using System.Windows.Documents;
-using NServiceBus.Profiler.Common.CodeParser;
+using NServiceBus.Profiler.Desktop.CodeParser;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 {

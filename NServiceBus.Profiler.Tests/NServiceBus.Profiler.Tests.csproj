@@ -128,14 +128,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Profiler.Common\NServiceBus.Profiler.Common.csproj">
-      <Project>{1B807911-9599-4FE0-A7D5-6743A4691B1F}</Project>
-      <Name>NServiceBus.Profiler.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.Core\NServiceBus.Profiler.Core.csproj">
-      <Project>{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}</Project>
-      <Name>NServiceBus.Profiler.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NServiceBus.Profiler.Desktop\NServiceBus.Profiler.Desktop.csproj">
       <Project>{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}</Project>
       <Name>NServiceBus.Profiler.Desktop</Name>

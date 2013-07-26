@@ -2,7 +2,7 @@
 using System.Windows.Documents;
 using Machine.Specifications;
 using System.Linq;
-using NServiceBus.Profiler.Common.CodeParser;
+using NServiceBus.Profiler.Desktop.CodeParser;
 
 namespace NServiceBus.Profiler.Tests.Parsers
 {

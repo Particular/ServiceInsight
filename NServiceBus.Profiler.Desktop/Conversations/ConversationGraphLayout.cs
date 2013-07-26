@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using GraphSharp.Controls;
-using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {

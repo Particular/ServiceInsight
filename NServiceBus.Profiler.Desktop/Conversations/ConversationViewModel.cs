@@ -3,11 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
 using System.Diagnostics;
 using System.Linq;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Conversations
 {

@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Xml;
 using Machine.Specifications;
-using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 
 namespace NServiceBus.Profiler.Tests.Decoders
 {

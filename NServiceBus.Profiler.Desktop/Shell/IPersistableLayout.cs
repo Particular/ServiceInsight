@@ -1,4 +1,4 @@
-﻿using NServiceBus.Profiler.Core.Settings;
+﻿using NServiceBus.Profiler.Desktop.Core.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

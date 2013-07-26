@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {

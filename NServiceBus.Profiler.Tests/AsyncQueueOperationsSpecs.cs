@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Tests.Helpers;
 
 namespace NServiceBus.Profiler.Tests.Messages

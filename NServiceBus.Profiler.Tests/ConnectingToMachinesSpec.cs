@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;

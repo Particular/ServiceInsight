@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.Licensing;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.Shell

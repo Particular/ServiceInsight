@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Helpers
 {

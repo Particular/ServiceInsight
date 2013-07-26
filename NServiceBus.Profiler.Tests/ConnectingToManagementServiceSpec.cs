@@ -2,10 +2,9 @@
 using Autofac;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;

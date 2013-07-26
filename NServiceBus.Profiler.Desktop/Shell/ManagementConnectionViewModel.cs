@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Autofac;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Settings;
+using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.Management;
 
 namespace NServiceBus.Profiler.Desktop.Shell

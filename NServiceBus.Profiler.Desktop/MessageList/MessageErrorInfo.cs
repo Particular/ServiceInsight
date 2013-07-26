@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Properties;
-using NServiceBus.Profiler.Common.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {

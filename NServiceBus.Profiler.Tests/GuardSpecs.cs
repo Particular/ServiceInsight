@@ -1,6 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common;
+using NServiceBus.Profiler.Desktop;
 
 namespace NServiceBus.Profiler.Tests.Utilities
 {

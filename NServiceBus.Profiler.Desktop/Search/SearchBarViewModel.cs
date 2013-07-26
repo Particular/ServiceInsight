@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Search
 {

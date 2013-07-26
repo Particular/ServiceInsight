@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Tests.Streams
 {

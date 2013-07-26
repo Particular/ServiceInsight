@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using Machine.Specifications;
 using System.Linq;
-using NServiceBus.Profiler.Common.Models;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Queues
 {

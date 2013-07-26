@@ -2,7 +2,7 @@ using System.Windows;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.RoutedMessaging;
 using DevExpress.Xpf.Bars;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageList;
 using ActionFactory = Caliburn.PresentationFramework.Actions.Action;
 

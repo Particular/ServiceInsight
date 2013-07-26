@@ -4,9 +4,9 @@ using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Serialization;
 using log4net;
-using NServiceBus.Profiler.Common.Settings;
-using NServiceBus.Profiler.Core.Settings;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Core.Settings;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.Grid.TreeList;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {

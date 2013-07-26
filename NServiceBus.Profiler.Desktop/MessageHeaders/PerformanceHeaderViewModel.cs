@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Common.ExtensionMethods;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
-using NServiceBus.Profiler.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {

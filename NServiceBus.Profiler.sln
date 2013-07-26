@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Desktop", "NServiceBus.Profiler.Desktop\NServiceBus.Profiler.Desktop.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Common", "NServiceBus.Profiler.Common\NServiceBus.Profiler.Common.csproj", "{1B807911-9599-4FE0-A7D5-6743A4691B1F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Core", "NServiceBus.Profiler.Core\NServiceBus.Profiler.Core.csproj", "{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Tests", "NServiceBus.Profiler.Tests\NServiceBus.Profiler.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{65414F37-1718-43AC-A985-1DE095C427E1}"
@@ -36,26 +32,6 @@ Global
 		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|x86.ActiveCfg = Release|x86
 		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|x86.Build.0 = Release|x86
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1B807911-9599-4FE0-A7D5-6743A4691B1F}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}.Release|x86.ActiveCfg = Release|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

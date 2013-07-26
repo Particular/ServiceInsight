@@ -1,4 +1,4 @@
-﻿using NServiceBus.Profiler.Common.Models;
+﻿using NServiceBus.Profiler.Desktop.Models;
 using QuickGraph;
 
 namespace NServiceBus.Profiler.Desktop.Conversations

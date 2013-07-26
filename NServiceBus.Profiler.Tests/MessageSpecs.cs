@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Messaging;
 using Machine.Specifications;
-using NServiceBus.Profiler.Common.Models;
-using NServiceBus.Profiler.Core;
+using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Messages
 {

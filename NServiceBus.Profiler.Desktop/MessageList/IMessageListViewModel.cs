@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Common.Models;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.Shell;
 

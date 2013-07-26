@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Common.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Desktop.Logging
 {

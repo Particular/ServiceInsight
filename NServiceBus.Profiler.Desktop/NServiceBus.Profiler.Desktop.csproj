@@ -190,10 +190,12 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\Caliburn.Micro.1.3.1\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -227,6 +229,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CodeParser\BaseParser.cs" />
+    <Compile Include="CodeParser\CodeBlockPresenter.cs" />
+    <Compile Include="CodeParser\CodeLanguage.cs" />
+    <Compile Include="CodeParser\CodeLexem.cs" />
+    <Compile Include="CodeParser\JsonParser.cs" />
+    <Compile Include="CodeParser\LexemType.cs" />
+    <Compile Include="CodeParser\SourcePart.cs" />
+    <Compile Include="CodeParser\XmlParser.cs" />
     <Compile Include="Conversations\ConversationGraph.cs" />
     <Compile Include="Conversations\ConversationGraphLayout.cs" />
     <Compile Include="Conversations\ConversationView.xaml.cs">
@@ -236,6 +246,35 @@
     <Compile Include="Conversations\IConversationView.cs" />
     <Compile Include="Conversations\IConversationViewModel.cs" />
     <Compile Include="Conversations\MessageEdge.cs" />
+    <Compile Include="Core\DefaultMapper.cs" />
+    <Compile Include="Core\IMapper.cs" />
+    <Compile Include="Core\INetworkOperations.cs" />
+    <Compile Include="Core\IQueueManager.cs" />
+    <Compile Include="Core\IQueueOperations.cs" />
+    <Compile Include="Core\IQueueOperationsAsync.cs" />
+    <Compile Include="Core\Licensing\AppLicenseManager.cs" />
+    <Compile Include="Core\Licensing\CryptographyService.cs" />
+    <Compile Include="Core\Licensing\ILicenseManager.cs" />
+    <Compile Include="Core\Licensing\InvalidLicenseException.cs" />
+    <Compile Include="Core\Licensing\LicenseDescriptor.cs" />
+    <Compile Include="Core\Licensing\LicenseType.cs" />
+    <Compile Include="Core\Licensing\ProfilerLicense.cs" />
+    <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
+    <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />
+    <Compile Include="Core\MessageDecoders\IContentDecoder.cs" />
+    <Compile Include="Core\MessageDecoders\StringContentDecoder.cs" />
+    <Compile Include="Core\MessageDecoders\XmlContentDecoder.cs" />
+    <Compile Include="Core\MSMQueueOperations.cs" />
+    <Compile Include="Core\NetworkOperations.cs" />
+    <Compile Include="Core\QueueManager.cs" />
+    <Compile Include="Core\QueueManagerException.cs" />
+    <Compile Include="Core\Settings\EnumHelper.cs" />
+    <Compile Include="Core\Settings\ISettingsProvider.cs" />
+    <Compile Include="Core\Settings\ISettingsStorage.cs" />
+    <Compile Include="Core\Settings\IsolatedStorageSettingsStore.cs" />
+    <Compile Include="Core\Settings\JsonSettingsStoreBase.cs" />
+    <Compile Include="Core\Settings\RegistrySettingsStore.cs" />
+    <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailedEvent.cs" />
     <Compile Include="Events\AutoRefreshBeat.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
@@ -264,6 +303,18 @@
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
+    <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
+    <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
+    <Compile Include="ExtensionMethods\ElementExtensions.cs" />
+    <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
+    <Compile Include="ExtensionMethods\GrammerExtensions.cs" />
+    <Compile Include="ExtensionMethods\ImageExtensions.cs" />
+    <Compile Include="ExtensionMethods\QueueExtensions.cs" />
+    <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
+    <Compile Include="ExtensionMethods\StreamHelper.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
+    <Compile Include="Guard.cs" />
     <Compile Include="LogWindow\LogWindowView.xaml.cs">
       <DependentUpon>LogWindowView.xaml</DependentUpon>
     </Compile>
@@ -307,8 +358,28 @@
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
+    <Compile Include="Models\AccessMode.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AddressMode.cs" />
+    <Compile Include="Models\DiagramNode.cs" />
+    <Compile Include="Models\Endpoint.cs" />
+    <Compile Include="Models\FailureDetails.cs" />
+    <Compile Include="Models\HeaderInfo.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageInfo.cs" />
+    <Compile Include="Models\MessageStatistics.cs" />
+    <Compile Include="Models\MessageStatus.cs" />
+    <Compile Include="Models\PagedResult.cs" />
+    <Compile Include="Models\Queue.cs" />
+    <Compile Include="Models\QueueTypes.cs" />
+    <Compile Include="Models\StoredMessage.cs" />
     <Compile Include="ScreenManager\FileDialogModel.cs" />
     <Compile Include="ScreenManager\FileDialogResult.cs" />
+    <Compile Include="Settings\LayoutSettings.cs" />
+    <Compile Include="Settings\LicenseSettings.cs" />
+    <Compile Include="Settings\ManagementSettings.cs" />
+    <Compile Include="Settings\ProfilerSettings.cs" />
+    <Compile Include="Settings\ReportingSettings.cs" />
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -548,16 +619,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Profiler.Common\NServiceBus.Profiler.Common.csproj">
-      <Project>{1B807911-9599-4FE0-A7D5-6743A4691B1F}</Project>
-      <Name>NServiceBus.Profiler.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NServiceBus.Profiler.Core\NServiceBus.Profiler.Core.csproj">
-      <Project>{DC0DB4EC-CEB4-4EBA-9139-91B42E6F312D}</Project>
-      <Name>NServiceBus.Profiler.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
