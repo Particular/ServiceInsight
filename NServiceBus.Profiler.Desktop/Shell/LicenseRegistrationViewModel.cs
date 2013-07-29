@@ -98,7 +98,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 License = _licenseManager.CurrentLicense;
             }
 
-            if (License != null)
+            if (!_licenseManager.TrialExpired && License != null)
             {
                 TryClose(true);
             }

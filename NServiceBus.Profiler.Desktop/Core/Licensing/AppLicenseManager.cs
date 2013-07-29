@@ -62,6 +62,11 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
                     CreateLicense();
                     StoreLicense(license);
                 }
+                catch (InvalidLicenseException)
+                {
+                    TrialExpired = true;
+                    Logger.Info("Suitable license was not found");
+                }
                 catch (LicenseExpiredException)
                 {
                     TrialExpired = true;
