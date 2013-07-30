@@ -22,6 +22,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
             ChangeTheme(Theme.VS2010Name);
             InitializeComponent();
             BarManager.CheckBarItemNames = false;
+
+            // Maximize window
+            this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            this.SourceInitialized += (s, a) => this.WindowState = System.Windows.WindowState.Maximized;
         }
 
         public void ChangeTheme(string name)
