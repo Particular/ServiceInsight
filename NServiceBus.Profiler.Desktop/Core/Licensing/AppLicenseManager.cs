@@ -10,7 +10,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 {
     public class AppLicenseManager : ILicenseManager
     {
-        private const string InvalidLicenseVersionMessage = "Your license is valid for an older version of NServiceBus Profiler. If you are still within the 1 year upgrade protection period of your original license, you should have already received a new license and if you haven’t, please contact customer.care@nservicebus.com. If your upgrade protection has lapsed, you can renew it at http://www.nservicebus.com/PurchaseSupport.aspx.";
+        private const string InvalidLicenseVersionMessage = "Your license is valid for an older version of ServiceInsight. If you are still within the 1 year upgrade protection period of your original license, you should have already received a new license and if you haven’t, please contact customer.care@particular.net If your upgrade protection has lapsed, you can renew it at http://particular.net/support";
         private const string InvalidTrialPeriodMessage = "Trial period is not valid; Please contact Particular Software support for assistance";
         private const string LicenseTypeKey = "LicenseType";
         private const string LicenseVersionKey = "LicenseVersion";
