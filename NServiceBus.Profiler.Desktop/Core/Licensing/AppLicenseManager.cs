@@ -122,11 +122,11 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 
             if (trialExpirationDate.HasValue && trialExpirationDate.Value > DateTime.UtcNow.Date)
             {
-                Logger.InfoFormat("Trial for NServiceBus Profiler v{0} is still active, trial expires on {1}.",
+                Logger.InfoFormat("Trial for ServiceInsight v{0} is still active, trial expires on {1}.",
                                    LicenseDescriptor.SoftwareVersion, 
                                    trialExpirationDate.Value.ToLocalTime().ToShortDateString());
 
-                Logger.InfoFormat("Configuring NServiceBus Profiler to run in trial mode.");
+                Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
 
                 CurrentLicense = new ProfilerLicense
                 {
@@ -140,7 +140,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             }
             else
             {
-                Logger.InfoFormat("Trial for NServiceBus Profiler v{0} has expired.", LicenseDescriptor.SoftwareVersion);
+                Logger.InfoFormat("Trial for ServiceInsight v{0} has expired.", LicenseDescriptor.SoftwareVersion);
                 Logger.Warn("Falling back to run in Trial license mode.");
 
                 TrialExpired = true;
