@@ -8,7 +8,7 @@ using ExceptionHandler;
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("")]
 [assembly: AssemblyCopyright("Copyright © 2013 Particular Software Incorporated. All rights reserved")]
 [assembly: AssemblyProduct("ServiceInsight for NServiceBus v4.0-BETA (4427637)")]
