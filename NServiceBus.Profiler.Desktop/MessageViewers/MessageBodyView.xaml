@@ -17,11 +17,11 @@
                         <Setter Property="Padding" Value="1"/>
                     </Style>
                 </dxlc:LayoutGroup.TabsStyle>
-                <dxlc:LayoutGroup Header="Json">
+                <dxlc:LayoutGroup Header="JSON">
                     <ContentControl cal:View.Model="{Binding Path=JsonViewer}" />
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Header="Xml">
-                    <ContentControl cal:View.Model="{Binding Path=XmlViewer}" />                    
+                <dxlc:LayoutGroup Header="XML">
+                    <ContentControl cal:View.Model="{Binding Path=XmlViewer}" />
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Header="Hex">
                     <ContentControl cal:View.Model="{Binding Path=HexViewer}" />
