@@ -97,7 +97,7 @@
                             </TextBlock>
                             <TextBlock>
                                 <Run Text="Critical Time: " />
-                                <Run Text="{Binding Statistics.CriticalTimeAsString, Mode=OneWay}" />
+                                <Run Text="{Binding Statistics.ElapsedCriticalTime, Mode=OneWay}" />
                             </TextBlock>
                         </StackPanel>
                     </ToolTip>
