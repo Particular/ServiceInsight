@@ -245,10 +245,9 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private void LogResponse(IRestResponse response)
         {
-            Logger.DebugFormat("HTTP Status {0} ({1}) ({2}/{3})", 
+            Logger.DebugFormat("HTTP Status {0} ({1}) ({2})", 
                                             response.StatusCode, 
                                             (int)response.StatusCode, 
-                                            _connection.Url, 
                                             response.ResponseUri);
 
             foreach (var header in response.Headers)
