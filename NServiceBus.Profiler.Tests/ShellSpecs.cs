@@ -19,6 +19,7 @@ using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Shell;
 using NSubstitute;
 
@@ -72,6 +73,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             LicenseManager = Substitute.For<ILicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
+            SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
                                        StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
@@ -81,6 +83,14 @@ namespace NServiceBus.Profiler.Tests.Shell
 
             shell.AttachView(View, null);
         };
+
+        private static ProfilerSettings DefaultAppSetting()
+        {
+            return new ProfilerSettings
+            {
+                AutoRefreshTimer = 15,
+            };
+        }
 
         It should_reload_stored_layout = () => View.Received().OnRestoreLayout(SettingsProvider);
 
