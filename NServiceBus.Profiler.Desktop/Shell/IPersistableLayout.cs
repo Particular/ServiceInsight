@@ -4,8 +4,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public interface IPersistableLayout
     {
-        void SaveLayout(ISettingsProvider settingsProvider);
-        void RestoreLayout(ISettingsProvider settingsProvider);
-        void ResetLayout(ISettingsProvider settingsProvider);
+        void OnSaveLayout(ISettingsProvider settingsProvider);
+        void OnRestoreLayout(ISettingsProvider settingsProvider);
+        void OnResetLayout(ISettingsProvider settingsProvider);
     }
 }

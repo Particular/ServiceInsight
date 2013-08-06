@@ -8,6 +8,7 @@
              xmlns:zoom="http://hightech.ir/controls"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              xmlns:graph="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
+             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -20,6 +21,7 @@
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverterInverted" Invert="True" />
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
+                    <cnv:StringEmptyOrNullToVisibilityConverter x:Key="StringEmptyOrNullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <zoom:DoubleToLog10Converter x:Key="Log10Converter" />
                     <zoom:EqualityToBooleanConverter x:Key="EqualityConverter" />
@@ -71,6 +73,7 @@
                     <sys:Double x:Key="SmallSpacing">2</sys:Double>
                     <sys:Double x:Key="DefaultSpacing">4</sys:Double>
                     <sys:Double x:Key="MediumSpacing">8</sys:Double>
+                    <sys:Double x:Key="DefaultDialogMargin">11</sys:Double>
                     <sys:Double x:Key="LargeSpacing">12</sys:Double>
                     <sys:Double x:Key="X-LargeSpacing">30</sys:Double>
                     <sys:Double x:Key="XXX-LargeSpacing">45</sys:Double>
@@ -81,7 +84,13 @@
                     <sys:Double x:Key="MessageFontSize">11</sys:Double>
                     <sys:Double x:Key="LargeFontSize">16</sys:Double>
 
-                    <Thickness x:Key="XX-LargeMargine"
+                    <Thickness x:Key="SmallMargin"
+                               Left="{StaticResource SmallSpacing}" 
+                               Top="{StaticResource SmallSpacing}" 
+                               Right="{StaticResource SmallSpacing}" 
+                               Bottom="{StaticResource SmallSpacing}" />
+
+                    <Thickness x:Key="XX-LargeMargin"
                                Left="{StaticResource XX-LargeSpacing}" 
                                Top="{StaticResource XX-LargeSpacing}" 
                                Right="{StaticResource XX-LargeSpacing}" 
@@ -96,8 +105,21 @@
                     <Thickness x:Key="LabelMargin" 
                                Left="{StaticResource MediumSpacing}" 
                                Top="{StaticResource MediumSpacing}" 
-                               Right="{StaticResource SmallSpacing}" 
-                               Bottom="{StaticResource SmallSpacing}" />
+                               Right="{StaticResource MediumSpacing}" 
+                               Bottom="{StaticResource MediumSpacing}" />
+
+                    <Thickness x:Key="DialogMargin" 
+                               Left="{StaticResource DefaultDialogMargin}" 
+                               Top="{StaticResource DefaultDialogMargin}" 
+                               Right="{StaticResource DefaultDialogMargin}" 
+                               Bottom="{StaticResource DefaultDialogMargin}" />
+
+
+                    <Thickness x:Key="DialogButtonMargin" 
+                               Left="{StaticResource DefaultSpacing}" 
+                               Top="{StaticResource NoSpacing}" 
+                               Right="{StaticResource DefaultSpacing}" 
+                               Bottom="{StaticResource DefaultSpacing}" />
 
                     <Thickness x:Key="DefaultMargin" 
                                Left="{StaticResource LargeSpacing}" 
@@ -127,7 +149,7 @@
                     <Style x:Key="DialogButton" TargetType="{x:Type Button}">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                         <Setter Property="MinWidth" Value="75" />
-                        <Setter Property="MinHeight" Value="20" />
+                        <Setter Property="MinHeight" Value="23" />
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="FontFamily" Value="{StaticResource MessageFontFamily}" />
                         <Setter Property="FontSize" Value="{StaticResource MessageFontSize}" />

@@ -17,7 +17,9 @@ using NServiceBus.Profiler.Desktop.LogWindow;
 using NServiceBus.Profiler.Desktop.MessageHeaders;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageViewers;
+using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -35,7 +37,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         public const string UnlicensedStatusMessage = "Unlicensed version: {0} left";
         public const string LicensedStatusMessage = "Registered to '{0}'";
-        public const int AutoRefreshInterval = 15000; //TODO: Wire to configuration/settings
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -97,17 +98,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private void SaveLayout()
         {
-            View.SaveLayout(_settingsProvider);
+            View.OnSaveLayout(_settingsProvider);
         }
 
         private void RestoreLayout()
         {
-            View.RestoreLayout(_settingsProvider);
+            View.OnRestoreLayout(_settingsProvider);
         }
 
         public virtual void ResetLayout()
         {
-            View.ResetLayout(_settingsProvider);
+            View.OnResetLayout(_settingsProvider);
         }
 
         public virtual bool AutoRefresh { get; set; }
@@ -137,19 +138,24 @@ namespace NServiceBus.Profiler.Desktop.Shell
             get { return _workCounter > 0; }
         }
 
-        public virtual void Shutdown()
+        public virtual void ShutDown()
         {
             _appCommander.ShutdownImmediately();
         }
 
-        public virtual void ShowAbout()
+        public virtual void About()
         {
             _windowManager.ShowDialog<AboutViewModel>();
         }
 
-        public virtual void ShowHelp()
+        public virtual void Help()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
+        }
+
+        public void Options()
+        {
+            _windowManager.ShowDialog<OptionsViewModel>();
         }
 
         [AutoCheckAvailability]
@@ -196,7 +202,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual async void RefreshQueues()
+        public virtual async void RefreshAll()
         {
             await Messages.RefreshMessages();
             await RefreshExplorer();
@@ -335,7 +341,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private void InitializeAutoRefreshTimer()
         {
-            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(AutoRefreshInterval) };
+            var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
+            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(appSetting.AutoRefreshTimer) };
             _refreshTimer.Tick += (s, e) => OnAutoRefreshing();
             _refreshTimer.Start();
         }
@@ -386,7 +393,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if (!result.GetValueOrDefault(false))
             {
-                Shutdown();
+                ShutDown();
             }
         }
 

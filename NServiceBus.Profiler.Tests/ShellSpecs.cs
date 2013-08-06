@@ -82,7 +82,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             shell.AttachView(View, null);
         };
 
-        It should_reload_stored_layout = () => View.Received().RestoreLayout(SettingsProvider);
+        It should_reload_stored_layout = () => View.Received().OnRestoreLayout(SettingsProvider);
 
         Cleanup after = () => ((IScreen)shell).Deactivate(true);
     }
@@ -168,7 +168,7 @@ namespace NServiceBus.Profiler.Tests.Shell
     {
         Because of = () => ((IScreen)shell).Deactivate(true);
 
-        It should_persist_layout_in_the_setting_storage = () => View.Received().SaveLayout(SettingsProvider);
+        It should_persist_layout_in_the_setting_storage = () => View.Received().OnSaveLayout(SettingsProvider);
     }
 
     public class when_turning_off_auto_refresh : with_a_shell

@@ -32,15 +32,15 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IShellView View { get; }
         ExplorerItem SelectedExplorerItem { get; }
         bool AutoRefresh { get; }
-        void Shutdown();
-        void ShowAbout();
-        void ShowHelp();
+        void ShutDown();
+        void About();
+        void Help();
         void DeleteCurrentQueue();
         void ConnectToMachine();
         void ConnectToManagementService();
         void DeleteSelectedMessages();
         void PurgeCurrentQueue();
-        void RefreshQueues();
+        void RefreshAll();
         void ImportMessage();
         void ExportMessage();
         void CreateQueue();

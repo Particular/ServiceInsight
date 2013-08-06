@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
+using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.Settings;
 using RestSharp;
 using RestSharp.Contrib;
 using log4net;
@@ -16,14 +18,17 @@ namespace NServiceBus.Profiler.Desktop.Management
     {
         private readonly IManagementConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
+        private readonly ProfilerSettings _settings;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IManagementService));
 
         public DefaultManagementService(
             IManagementConnectionProvider connection, 
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            ISettingsProvider settingsProvider)
         {
             _connection = connection;
             _eventAggregator = eventAggregator;
+            _settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
         public async Task<PagedResult<StoredMessage>> GetErrorMessages()
@@ -51,6 +56,7 @@ namespace NServiceBus.Profiler.Desktop.Management
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name, searchQuery));
 
+            AppendSystemMessages(request, searchQuery);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -107,6 +113,12 @@ namespace NServiceBus.Profiler.Desktop.Management
             var response = await ExecuteAsync(request);
 
             return response;
+        }
+
+        private void AppendSystemMessages(RestRequest request, string searchQuery)
+        {
+            if (searchQuery != null) return; //Not supported by search endpoint/api
+            request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
         }
 
         private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)

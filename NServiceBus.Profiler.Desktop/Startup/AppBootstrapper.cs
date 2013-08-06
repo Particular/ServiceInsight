@@ -3,8 +3,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Autofac;
+using Caliburn.Core.Configuration;
 using Caliburn.Core.InversionOfControl;
 using Caliburn.PresentationFramework.ApplicationModel;
+using Caliburn.PresentationFramework.Conventions;
+using DevExpress.Xpf.Bars;
 using ExceptionHandler;
 using log4net;
 using NServiceBus.Profiler.Desktop.Shell;
@@ -21,6 +24,13 @@ namespace NServiceBus.Profiler.Desktop.Startup
         {
             LoggingConfig.SetupLog4net();
             WireTaskExceptionHandler();
+        }
+
+        protected override void PrepareApplication()
+        {
+            base.PrepareApplication();
+            var convention = Container.GetInstance<IConventionManager>();
+            convention.AddElementConvention(new DefaultElementConvention<BarButtonItem>("ItemClick", BarButtonItem.IsVisibleProperty, (item, o) => item.DataContext = o, item => item.DataContext));
         }
 
         private void WireTaskExceptionHandler()

@@ -373,6 +373,14 @@
     <Compile Include="Models\Queue.cs" />
     <Compile Include="Models\QueueTypes.cs" />
     <Compile Include="Models\StoredMessage.cs" />
+    <Compile Include="Options\OptionTemplateSelector.cs" />
+    <Compile Include="Options\OptionPropertyValue.cs" />
+    <Compile Include="Options\OptionsView.xaml.cs">
+      <DependentUpon>OptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Options\OptionsViewModel.cs" />
+    <Compile Include="Options\PropertyValueConverter.cs" />
+    <Compile Include="Screens.cs" />
     <Compile Include="ScreenManager\FileDialogModel.cs" />
     <Compile Include="ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
@@ -380,10 +388,12 @@
     <Compile Include="Settings\ManagementSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
     <Compile Include="Settings\ReportingSettings.cs" />
+    <Compile Include="Settings\SettingBase.cs" />
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\AboutViewModel.cs" />
+    <Compile Include="Shell\BusyAutomationBehaviour.cs" />
     <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
@@ -483,6 +493,7 @@
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
+    <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
     <Page Include="Conversations\ConversationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -506,6 +517,10 @@
     <Page Include="MessageViewers\JsonViewer\JsonMessageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Options\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shell\About.xaml">
       <SubType>Designer</SubType>
@@ -607,6 +622,8 @@
     <Resource Include="Images\ErrorStatus.png" />
     <Resource Include="Images\Log-Large.png" />
     <Resource Include="Images\Log.png" />
+    <Resource Include="Images\Options.png" />
+    <Resource Include="Images\Alert.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

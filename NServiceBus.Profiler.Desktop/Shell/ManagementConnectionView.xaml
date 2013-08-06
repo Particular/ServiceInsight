@@ -63,8 +63,8 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" 
-                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
-                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
             <Image gif:ImageBehavior.AnimatedSource="/Images/AsyncProcess.gif"
                    gif:ImageBehavior.RepeatBehavior="Forever"
                    gif:ImageBehavior.AutoStart="True"

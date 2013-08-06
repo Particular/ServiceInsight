@@ -7,8 +7,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cal="http://www.caliburnproject.org"
+        xmlns:desktop="clr-namespace:NServiceBus.Profiler.Desktop"
         x:Class="NServiceBus.Profiler.Desktop.Shell.ShellView"
-        x:Uid="ShellWindow"
+        AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.Window}"
         mc:Ignorable="d" 
         MinWidth="500" MinHeight="300"
         d:DesignHeight="300" d:DesignWidth="300" Title="{Binding DisplayName}">
@@ -30,8 +31,9 @@
     </Window.Resources>
 
     <dxb:BarManager x:Name="BarManager" 
+                    AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.BarManager}"
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.1">
+                    dxc:DXSerializer.LayoutVersion="1.3">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -43,98 +45,138 @@
 
         <!--Menu/Toolbar Items-->
         <dxb:BarManager.Items>
-            <dxb:BarButtonItem Content="Exit Application" x:Name="itemExit" 
-                               CategoryName="File" Glyph="/Images/Exit.png" 
-                               cal:Message.Attach="[Event ItemClick]=[Action Shutdown]" />
-            <dxb:BarButtonItem Content="About" x:Name="itemAbout" 
-                               CategoryName="Help" Glyph="/Images/About.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ShowAbout]" />
-            <dxb:BarButtonItem Content="Help" x:Name="itemHelp" 
-                               CategoryName="Help" Glyph="/Images/Help.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ShowHelp]" />
-            <dxb:BarButtonItem Content="Connect To Machine" x:Name="itemConnectQueue" 
-                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ConnectToMachine]" />
-            <dxb:BarButtonItem Content="Connect To Management Service" x:Name="itemConnectService" 
-                               CategoryName="Tools" Glyph="/Images/ConnectService.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ConnectToManagementService]" />
-            <dxb:BarButtonItem Content="Delete Message(s)" x:Name="itemDeleteMessage" 
-                               CategoryName="Tools" Glyph="/Images/DeleteMessage.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action DeleteSelectedMessages]" />
-            <dxb:BarButtonItem Content="Purge Queue" x:Name="itemPurgeQueue" 
-                               CategoryName="Tools" Glyph="/Images/PurgeQueue.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action PurgeCurrentQueue]" />
-            <dxb:BarButtonItem Content="Delete Queue" x:Name="itemDeleteQueue" 
+            <dxb:BarButtonItem Content="Exit Application" 
+                               x:Name="ShutDown" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ShutdownMenu}"
+                               CategoryName="File" Glyph="/Images/Exit.png"/>
+            <dxb:BarButtonItem Content="About" 
+                               x:Name="About" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.AboutMenu}"
+                               CategoryName="Help" Glyph="/Images/About.png" />
+            <dxb:BarButtonItem Content="Help" 
+                               x:Name="Help" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.HelpMenu}"
+                               CategoryName="Help" Glyph="/Images/Help.png" />
+            <dxb:BarButtonItem Content="Connect To Machine" 
+                               x:Name="ConnectToMachine" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ConnectToMachineMenu}"
+                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png" />
+            <dxb:BarButtonItem Content="Connect To Management Service" 
+                               x:Name="ConnectToManagementService" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ConnectToManagementServiceMenu}"
+                               CategoryName="Tools" Glyph="/Images/ConnectService.png" />
+            <dxb:BarButtonItem Content="Delete Message(s)" 
+                               x:Name="DeleteSelectedMessages" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.DeleteSelectedMessagesMenu}"
+                               CategoryName="Tools" Glyph="/Images/DeleteMessage.png" />
+            <dxb:BarButtonItem Content="Purge Queue" 
+                               x:Name="PurgeCurrentQueue" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.PurgeCurrentQueueMenu}"
+                               CategoryName="Tools" Glyph="/Images/PurgeQueue.png" />
+            <dxb:BarButtonItem Content="Delete Queue" 
+                               x:Name="DeleteCurrentQueue" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.DeleteCurrentQueueMenu}"
                                KeyGesture="ALT+DEL"
-                               CategoryName="Tools" Glyph="/Images/DeleteQueue.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action DeleteCurrentQueue]" />
-            <dxb:BarButtonItem Content="Refresh" x:Name="itemRefresh" 
+                               CategoryName="Tools" Glyph="/Images/DeleteQueue.png" />
+            <dxb:BarButtonItem Content="Refresh" 
+                               x:Name="RefreshAll" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.RefreshAllMenu}"
                                CategoryName="Tools" Glyph="/Images/Refresh.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action RefreshQueues]"
                                KeyGesture="F5" />
-            <dxb:BarButtonItem Content="Create Queue" x:Name="itemCreateQueue" 
-                               CategoryName="Tools" Glyph="/Images/CreateQueue.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action CreateQueue]" />
+            <dxb:BarButtonItem Content="Create Queue" 
+                               x:Name="CreateQueue" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.CreateQueueMenu}"
+                               CategoryName="Tools" Glyph="/Images/CreateQueue.png" />
             <!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
             <!--                               CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->
             <!--                               cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />-->
-            <dxb:BarButtonItem Content="Import From File" x:Name="itemImportMessageToFile" 
-                               CategoryName="Tools" Glyph="/Images/Open.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ImportMessage]" />
-            <dxb:BarButtonItem Content="Export To File" x:Name="itemExportMessageToFile" 
-                               CategoryName="Tools" Glyph="/Images/Save.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action ExportMessage]" />
-            <dxb:BarButtonItem Content="Register..." x:Name="itemRegister"
-                               CategoryName="Help" Glyph="/Images/Key.png"
-                               cal:Message.Attach="[Event ItemClick]=[Action Register]"/>
-            <dxb:BarButtonItem Content="Restore default layout" x:Name="itemRestoreLayout"
-                               CategoryName="View"
-                               cal:Message.Attach="[Event ItemClick]=[Action ResetLayout]"/>
-            <dxb:BarCheckItem Content="Auto Refresh" x:Name="itemAutoRefresh"
+            <dxb:BarButtonItem Content="Import From File" 
+                               x:Name="ImportMessage" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ImportMessageMenu}"
+                               CategoryName="Tools" Glyph="/Images/Open.png" />
+            <dxb:BarButtonItem Content="Export To File" 
+                               x:Name="ExportMessage" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ExportMessageMenu}"
+                               CategoryName="Tools" Glyph="/Images/Save.png" />
+            <dxb:BarButtonItem Content="Register..." 
+                               x:Name="Register"
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.RegisterMenu}"
+                               CategoryName="Help" Glyph="/Images/Key.png" />
+            <dxb:BarButtonItem Content="Restore default layout" 
+                               x:Name="ResetLayout"
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ResetLayoutMenu}"
+                               CategoryName="View" />
+            <dxb:BarCheckItem Content="Auto Refresh"
+                              x:Name="AutoRefresh"
+                              AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.AutoRefreshMenu}"
                               CategoryName="View" 
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
-            <dxb:ToolbarListItem x:Name="itemToolbarList" Content="Toolbar List" BarItemDisplayMode="Content" />
+            <dxb:ToolbarListItem x:Name="ToolbarList" 
+                                 Content="Toolbar List" 
+                                 AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ToolbarListMenu}"
+                                 BarItemDisplayMode="Content" />
 
-            <dxb:BarSubItem x:Name="menuFile" CategoryName="File" Content="File">
-                <dxb:BarButtonItemLink BarItemName="itemExportMessageToFile" />
-                <dxb:BarButtonItemLink BarItemName="itemImportMessageToFile" />
+            <dxb:BarButtonItem Content="Options..." 
+                               x:Name="Options" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.OptionsMenu}"
+                               CategoryName="View" Glyph="/Images/Options.png" />
+
+            <dxb:BarSubItem x:Name="FileMenu" 
+                            AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.File}"
+                            CategoryName="File" 
+                            Content="File">
+                <dxb:BarButtonItemLink BarItemName="ExportMessage" />
+                <dxb:BarButtonItemLink BarItemName="ImportMessage" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="itemExit" />
+                <dxb:BarButtonItemLink BarItemName="ShutDown" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="menuTools" CategoryName="Tools" Content="Tools">
-                <dxb:BarButtonItemLink BarItemName="itemConnectQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemConnectService" />
-                <dxb:BarButtonItemLink BarItemName="itemRefresh" />
+            <dxb:BarSubItem x:Name="ToolsMenu" 
+                            AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.Tools}"
+                            CategoryName="Tools" 
+                            Content="Tools">
+                <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToManagementService" />
+                <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="itemCreateQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemPurgeQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemDeleteQueue" />
+                <dxb:BarButtonItemLink BarItemName="CreateQueue" />
+                <dxb:BarButtonItemLink BarItemName="PurgeCurrentQueue" />
+                <dxb:BarButtonItemLink BarItemName="DeleteCurrentQueue" />
                 <dxb:BarItemLinkSeparator />
                 <!--                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
-                <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
+                <dxb:BarButtonItemLink BarItemName="DeleteSelectedMessages" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="menuView" CategoryName="View" Content="View">
-                <dxb:BarCheckItemLink BarItemName="itemAutoRefresh" />
+            <dxb:BarSubItem x:Name="ViewMenu" 
+                            AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.View}"
+                            CategoryName="View" 
+                            Content="View">
+                <dxb:BarCheckItemLink BarItemName="AutoRefresh" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:ToolbarListItemLink BarItemName="itemToolbarList" />
-                <dxb:BarButtonItemLink BarItemName="itemRestoreLayout" />
+                <dxb:ToolbarListItemLink BarItemName="ToolbarList" />
+                <dxb:BarButtonItemLink BarItemName="ResetLayout" />
+                <dxb:BarItemLinkSeparator />
+                <dxb:BarButtonItemLink BarItemName="Options" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="menuHelp" CategoryName="Help" Content="Help">
-                <dxb:BarButtonItemLink BarItemName="itemHelp" />
-                <dxb:BarButtonItemLink BarItemName="itemAbout" />
-                <dxb:BarButtonItemLink BarItemName="itemRegister" />
+            <dxb:BarSubItem x:Name="HelpMenu" 
+                            AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.Help}"
+                            CategoryName="Help" 
+                            Content="Help">
+                <dxb:BarButtonItemLink BarItemName="Help" />
+                <dxb:BarButtonItemLink BarItemName="About" />
+                <dxb:BarButtonItemLink BarItemName="Register" />
             </dxb:BarSubItem>
 
-            <dxb:BarStaticItem x:Name="menuRegistration"
+            <dxb:BarStaticItem x:Name="Registration"
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.RegistrationStatus}"
                                CategoryName="Status"
                                Content="{Binding StatusBarManager.Registration, Mode=TwoWay}" 
                                AutoSizeMode="Content" 
                                Alignment="Far" />
 
-            <dxb:BarStaticItem x:Name="menuStatus" 
+            <dxb:BarStaticItem x:Name="Status" 
+                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.StatusMessage}"
                                CategoryName="Status"
                                AutoSizeMode="Fill" 
                                ShowBorder="False"
@@ -153,43 +195,59 @@
 
         <!--Create two bars-->
         <dxb:BarManager.Bars>
-            <dxb:Bar Caption="Menu" IsMainMenu="True" UseWholeRow="True">
-                <dxb:BarSubItemLink BarItemName="menuFile" />
-                <dxb:BarSubItemLink BarItemName="menuTools" />
-                <dxb:BarSubItemLink BarItemName="menuView" />
-                <dxb:BarSubItemLink BarItemName="menuHelp" />
+            <dxb:Bar x:Name="MainMenu"
+                     Caption="Menu" 
+                     IsMainMenu="True" 
+                     UseWholeRow="True"
+                     AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.MenuBar}">
+                <dxb:BarSubItemLink BarItemName="FileMenu" />
+                <dxb:BarSubItemLink BarItemName="ToolsMenu" />
+                <dxb:BarSubItemLink BarItemName="ViewMenu" />
+                <dxb:BarSubItemLink BarItemName="HelpMenu" />
             </dxb:Bar>
-            <dxb:Bar UseWholeRow="True" Caption="Toolbar" AllowHide="True" AllowCollapse="True">
-                <dxb:BarButtonItemLink BarItemName="itemConnectQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemConnectService" />
-                <dxb:BarButtonItemLink BarItemName="itemRefresh" />
+            <dxb:Bar x:Name="MainToolbar"
+                     AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ToolBar}"
+                     UseWholeRow="True" 
+                     Caption="Toolbar" 
+                     AllowHide="True" 
+                     AllowCollapse="True">
+                <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToManagementService" />
+                <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="itemCreateQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemPurgeQueue" />
-                <dxb:BarButtonItemLink BarItemName="itemDeleteQueue" />
+                <dxb:BarButtonItemLink BarItemName="CreateQueue" />
+                <dxb:BarButtonItemLink BarItemName="PurgeCurrentQueue" />
+                <dxb:BarButtonItemLink BarItemName="DeleteCurrentQueue" />
                 <dxb:BarItemLinkSeparator />
                 <!--<dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
-                <dxb:BarButtonItemLink BarItemName="itemDeleteMessage" />
+                <dxb:BarButtonItemLink BarItemName="DeleteSelectedMessages" />
             </dxb:Bar>
-            <dxb:Bar IsStatusBar="True" Caption="Statusbar" AllowHide="True" AllowCollapse="True" >
+            <dxb:Bar x:Name="StatusBar" 
+                     AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.StatusBar}"
+                     IsStatusBar="True" 
+                     Caption="Statusbar" 
+                     AllowHide="True" 
+                     AllowCollapse="True" >
                 <dxb:Bar.DockInfo>
                     <dxb:BarDockInfo ContainerType="Bottom" />
                 </dxb:Bar.DockInfo>
                 <dxb:Bar.ItemLinks>
-                    <dxb:BarStaticItemLink BarItemName="menuStatus" />
+                    <dxb:BarStaticItemLink BarItemName="Status" />
                     <dxb:BarItemLinkSeparator />
-                    <dxb:BarStaticItemLink BarItemName="menuRegistration" />
+                    <dxb:BarStaticItemLink BarItemName="Registration" />
                 </dxb:Bar.ItemLinks>
             </dxb:Bar>
         </dxb:BarManager.Bars>
 
         <!--Dock Windows-->
         <Grid>
-            <dxd:DockLayoutManager x:Name="DockManager">
+            <dxd:DockLayoutManager x:Name="DockManager"
+                                   AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.DockManager}">
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200">
                         <dxd:LayoutPanel x:Name="EndpointExplorer" 
+                                         AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.EndpointExplorer}"
                                          Caption="Endpoint Explorer"
                                          AllowClose="False" 
                                          ShowBorder="False" 
@@ -198,6 +256,7 @@
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
                         <dxd:LayoutPanel x:Name="QueueExplorer" 
+                                         AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.QueueExplorer}"
                                          Caption="Queue Explorer" 
                                          AllowClose="False" 
                                          ShowBorder="False" 
@@ -213,6 +272,7 @@
                 <dxd:LayoutGroup>
                     <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
                         <dxd:LayoutPanel x:Name="Messages" 
+                                         AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.MessageList}"
                                          Caption="Messages" 
                                          AllowClose="False"
                                          AllowFloat="False"
@@ -228,6 +288,7 @@
                                              GroupBorderStyle="Tabbed">
 
                                 <dxd:LayoutPanel x:Name="FlowDiagram" 
+                                                 AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.FlowDiagram}"
                                                  Caption="Flow Diagram"  
                                                  AllowClose="False"
                                                  AllowFloat="False"
@@ -237,6 +298,7 @@
                                 </dxd:LayoutPanel>
 
                                 <dxd:LayoutPanel x:Name="MessageBody"
+                                                 AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.MessageBody}"
                                                  Caption="Body"  
                                                  AllowClose="False"
                                                  AllowFloat="False"
@@ -246,6 +308,7 @@
                                 </dxd:LayoutPanel>
                                 
                                 <dxd:LayoutPanel x:Name="LogWindow"
+                                                 AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.LogWindow}"
                                                  Caption="Logs"
                                                  AllowClose="False"
                                                  AllowFloat="False"
@@ -257,6 +320,7 @@
                             </dxd:TabbedGroup>
 
                             <dxd:LayoutPanel x:Name="MessageProperties" 
+                                             AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.Properties}"
                                              Caption="Message Properties" 
                                              ItemWidth="1*"
                                              AllowClose="False"

@@ -9,6 +9,7 @@ using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.Shell;
@@ -44,6 +45,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
+            builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
 //            builder.RegisterType<BitBucketIssueTracker>().As<IIssueTracker>();
 //            builder.RegisterType<BitBucketIssueRelayApi>();
@@ -58,6 +60,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (ConnectToMachineView);
                 yield return typeof (LicenseRegistrationView);
                 yield return typeof (ManagementConnectionView);
+                yield return typeof (OptionsView);
                 yield return typeof (ShellView);
             }
         }

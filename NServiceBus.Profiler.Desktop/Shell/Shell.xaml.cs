@@ -38,7 +38,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             return BarManager;
         }
 
-        public void SaveLayout(ISettingsProvider settingProvider)
+        public void OnSaveLayout(ISettingsProvider settingProvider)
         {
             var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>();
 
@@ -56,7 +56,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             settingProvider.SaveSettings(layoutSetting);
         }
 
-        public void RestoreLayout(ISettingsProvider settingsProvider)
+        public void OnRestoreLayout(ISettingsProvider settingsProvider)
         {
             var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>(true);
             var currentLayoutVersion = GetCurrentLayoutVersion();
@@ -68,7 +68,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public void ResetLayout(ISettingsProvider settingsProvider)
+        public void OnResetLayout(ISettingsProvider settingsProvider)
         {
             var layoutSettings = settingsProvider.GetSettings<ShellLayoutSettings>(true);
 
