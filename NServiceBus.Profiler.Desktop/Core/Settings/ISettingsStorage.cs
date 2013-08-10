@@ -4,9 +4,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
 {
     public interface ISettingsStorage
     {
-        string SerializeList(List<string> listOfItems);
-        List<string> DeserializeList(string serializedList);
-        void Save(string key, Dictionary<string, string> settings);
-        Dictionary<string, string> Load(string key);
+        void Save<T>(string key, T settings);
+        T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new();
     }
 }

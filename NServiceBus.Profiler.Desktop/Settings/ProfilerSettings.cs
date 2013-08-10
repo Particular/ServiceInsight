@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Caliburn.PresentationFramework;
 
 namespace NServiceBus.Profiler.Desktop.Settings
 {
@@ -8,8 +7,8 @@ namespace NServiceBus.Profiler.Desktop.Settings
     {
         public ProfilerSettings()
         {
-            RecentSearchEntries = new List<string>();
-            RecentManagementApiEntries = new List<string>();
+            RecentSearchEntries = new ObservableCollection<string>();
+            RecentManagementApiEntries = new ObservableCollection<string>();
         }
 
         [DefaultValue(15)]
@@ -29,11 +28,11 @@ namespace NServiceBus.Profiler.Desktop.Settings
 
         [DisplayName("Recent Search Entries")]
         [Description("List of recent keywords used in search box")]
-        public List<string> RecentSearchEntries { get; set; }
+        public ObservableCollection<string> RecentSearchEntries { get; set; }
 
         [DisplayName("Recent Management API Entries")]
         [Description("List of recently connected service URLs for Management API")]
-        public List<string> RecentManagementApiEntries { get; set; }
+        public ObservableCollection<string> RecentManagementApiEntries { get; set; }
 
         [DisplayName("Management URL")]
         [Description("Last used Management API address")]

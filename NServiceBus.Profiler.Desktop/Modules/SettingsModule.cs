@@ -12,14 +12,14 @@ namespace NServiceBus.Profiler.Desktop.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<RegistrySettingsStore>().Named<ISettingsStorage>("Registry").WithParameter("registryKey", @"Software\ParticularSoftware\ServiceBus");
-            builder.RegisterType<IsolatedStorageSettingsStore>().Named<ISettingsStorage>("IsolatedStore");
-            builder.RegisterType<SettingProviderProxy>().As<ISettingsProvider>();
+            builder.RegisterType<RegistrySettingsStore>().Named<ISettingsStorage>("Registry").WithParameter("registryKey", @"Software\ParticularSoftware\ServiceBus").SingleInstance();
+            builder.RegisterType<IsolatedStorageSettingsStore>().Named<ISettingsStorage>("IsolatedStore").SingleInstance();
+            builder.RegisterType<SettingProviderProxy>().As<ISettingsProvider>().SingleInstance();
 
             base.Load(builder);
         }
 
-        private class SettingProviderProxy : Core.Settings.SettingsProvider
+        private class SettingProviderProxy : SettingsProvider
         {
             private readonly IContainer _container;
 
@@ -28,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 _container = container;
             }
 
-            protected override Dictionary<string, string> LoadSettings<T>()
+            protected override T LoadSettings<T>(IList<SettingDescriptor> metadata)
             {
                 var storageProvider = typeof(T).GetAttributes<SettingsProviderAttribute>(false).FirstOrDefault();
                 if (storageProvider != null)
@@ -36,10 +36,10 @@ namespace NServiceBus.Profiler.Desktop.Modules
                     var storageName = storageProvider.ProviderTypeName;
                     var storage = _container.ResolveNamed<ISettingsStorage>(storageName);
 
-                    return storage.Load(GetKey<T>());
+                    return storage.Load<T>(GetKey<T>(), metadata);
                 }
 
-                return base.LoadSettings<T>();
+                return base.LoadSettings<T>(metadata);
             }
         }
     }

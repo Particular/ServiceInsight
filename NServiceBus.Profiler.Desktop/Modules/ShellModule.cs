@@ -46,6 +46,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
+            builder.RegisterType<ExceptionView>().As<ExceptionView>().InstancePerDependency();
             builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
 //            builder.RegisterType<BitBucketIssueTracker>().As<IIssueTracker>();
 //            builder.RegisterType<BitBucketIssueRelayApi>();
@@ -62,6 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (ManagementConnectionView);
                 yield return typeof (OptionsView);
                 yield return typeof (ShellView);
+                yield return typeof (ExceptionView);
             }
         }
     }

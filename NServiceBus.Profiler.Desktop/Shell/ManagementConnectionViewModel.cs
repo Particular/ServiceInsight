@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Caliburn.PresentationFramework.Filters;
@@ -43,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private List<string> GetRecentServiceEntries()
         {
-            return _appSettings.RecentManagementApiEntries ?? new List<string>();
+            return _appSettings.RecentManagementApiEntries.ToList();
         }
 
         public virtual void Close()
@@ -75,7 +76,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private void StoreConnectionAddress()
         {
-            var existingEntry = _appSettings.RecentManagementApiEntries.Find(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
+            var existingEntry = _appSettings.RecentManagementApiEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
                 _appSettings.RecentManagementApiEntries.Remove(existingEntry);
 

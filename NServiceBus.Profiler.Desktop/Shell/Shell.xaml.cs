@@ -24,8 +24,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
             BarManager.CheckBarItemNames = false;
 
             // Maximize window
-            this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            this.SourceInitialized += (s, a) => this.WindowState = System.Windows.WindowState.Maximized;
+            //TODO: Save size and location to settings
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            SourceInitialized += (s, a) => this.WindowState = System.Windows.WindowState.Maximized;
         }
 
         public void ChangeTheme(string name)
@@ -58,7 +59,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void OnRestoreLayout(ISettingsProvider settingsProvider)
         {
-            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>(true);
+            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>();
             var currentLayoutVersion = GetCurrentLayoutVersion();
 
             if (layoutSetting.LayoutVersion == currentLayoutVersion)
@@ -70,7 +71,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void OnResetLayout(ISettingsProvider settingsProvider)
         {
-            var layoutSettings = settingsProvider.GetSettings<ShellLayoutSettings>(true);
+            var layoutSettings = settingsProvider.GetSettings<ShellLayoutSettings>();
 
             layoutSettings.ResetLayout = true;
             layoutSettings.MenuLayout = null;

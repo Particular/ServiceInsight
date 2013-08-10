@@ -268,7 +268,6 @@
     <Compile Include="Core\NetworkOperations.cs" />
     <Compile Include="Core\QueueManager.cs" />
     <Compile Include="Core\QueueManagerException.cs" />
-    <Compile Include="Core\Settings\EnumHelper.cs" />
     <Compile Include="Core\Settings\ISettingsProvider.cs" />
     <Compile Include="Core\Settings\ISettingsStorage.cs" />
     <Compile Include="Core\Settings\IsolatedStorageSettingsStore.cs" />
@@ -373,6 +372,9 @@
     <Compile Include="Models\Queue.cs" />
     <Compile Include="Models\QueueTypes.cs" />
     <Compile Include="Models\StoredMessage.cs" />
+    <Compile Include="Options\EditableListBox.xaml.cs">
+      <DependentUpon>EditableListBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Options\OptionTemplateSelector.cs" />
     <Compile Include="Options\OptionPropertyValue.cs" />
     <Compile Include="Options\OptionsView.xaml.cs">
@@ -518,6 +520,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Options\EditableListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Options\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -624,6 +630,8 @@
     <Resource Include="Images\Log.png" />
     <Resource Include="Images\Options.png" />
     <Resource Include="Images\Alert.png" />
+    <Resource Include="Images\Add-Small.png" />
+    <Resource Include="Images\Delete-Small.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -1,56 +1,32 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace NServiceBus.Profiler.Desktop.Core.Settings
 {
     public abstract class JsonSettingsStoreBase : ISettingsStorage
     {
-        public string SerializeList(List<string> listOfItems)
-        {
-            var ms = new MemoryStream();
-            var writer = JsonReaderWriterFactory.CreateJsonWriter(ms);
-            new DataContractJsonSerializer(typeof(List<string>)).WriteObject(ms, listOfItems);
-            writer.Flush();
-            var jsonString = Encoding.Default.GetString(ms.ToArray());
-
-            return jsonString;
-        }
-
-        public List<string> DeserializeList(string serializedList)
-        {
-            return (List<string>)new DataContractJsonSerializer(typeof(List<string>))
-                                     .ReadObject(new MemoryStream(Encoding.Default.GetBytes(serializedList)));
-        }
-
-        public void Save(string key, Dictionary<string, string> settings)
+        public void Save<T>(string key, T settings)
         {
             var filename = key + ".settings";
+            var serialized = JsonConvert.SerializeObject(settings);
 
-            var serializer = new DataContractJsonSerializer(typeof(Dictionary<string, string>));
-            var ms = new MemoryStream();
-            var writer = JsonReaderWriterFactory.CreateJsonWriter(ms);
-            serializer.WriteObject(ms, settings);
-            writer.Flush();
-            var jsonString = Encoding.Default.GetString(ms.ToArray());
-            WriteTextFile(filename, jsonString);
+            WriteTextFile(filename, serialized);
         }
 
         protected abstract void WriteTextFile(string filename, string fileContents);
 
-        public Dictionary<string, string> Load(string key)
+        public T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new()
         {
             var filename = key + ".settings";
 
             var readTextFile = ReadTextFile(filename);
             if (!string.IsNullOrEmpty(readTextFile))
             {
-                var serializer = new DataContractJsonSerializer(typeof(Dictionary<string, string>));
-                return (Dictionary<string, string>)serializer.ReadObject(new MemoryStream(Encoding.Default.GetBytes(readTextFile)));
+                var serialized = JsonConvert.DeserializeObject<T>(readTextFile);
+                return serialized;
             }
 
-            return new Dictionary<string, string>();
+            return new T();
         }
 
         protected abstract string ReadTextFile(string filename);

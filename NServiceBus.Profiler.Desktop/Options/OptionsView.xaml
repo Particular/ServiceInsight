@@ -6,9 +6,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.Options"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              ResizeMode="NoResize" ShowInTaskbar="False"
              mc:Ignorable="d" 
-             Width="500" Height="300"
+             Width="570" Height="400"
              d:DesignHeight="300" d:DesignWidth="300">
     <dxc:DXWindow.Resources>
         <local:PropertyValueConverter x:Key="PropertyValueConverter" />
@@ -21,7 +23,7 @@
             <dxe:TextEdit EditValue="{Binding Value, ValidatesOnExceptions=True}"/>
         </DataTemplate>
         <DataTemplate x:Key="ListTemplate">
-            <dxc:DXListBox ItemsSource="{Binding Value}" />
+            <local:EditableListBox ItemsSource="{Binding Value}" />
         </DataTemplate>
         <Style x:Key="EditControlStyle" TargetType="ContentControl">
             <Setter Property="ContentTemplateSelector" Value="{StaticResource TemplateSelector}" />
@@ -72,9 +74,11 @@
             <Button Style="{StaticResource DialogButton}"
                     x:Name="Save"
                     Content="Save"
+                    IsDefault="True"
                     Grid.Column="1" />
 
             <Button Style="{StaticResource DialogButton}"
+                    IsCancel="True"
                     x:Name="Close"
                     Content="Close"
                     Grid.Column="2">
@@ -98,16 +102,16 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto">
             <dxc:DXTabItem Header="Application">
                 <dxc:DXTabItem.Content>
-                    <ScrollViewer>
-                        <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True"
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Grid.IsSharedSizeScope="True"
                                       ItemsSource="{Binding Application, Converter={StaticResource PropertyValueConverter}}" />
                     </ScrollViewer>
                 </dxc:DXTabItem.Content>
             </dxc:DXTabItem>
             <dxc:DXTabItem Header="Usage Reporting" >
                 <dxc:DXTabItem.Content>
-                    <ScrollViewer>
-                        <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" 
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Grid.IsSharedSizeScope="True" 
                                       ItemsSource="{Binding UsageReporting, Converter={StaticResource PropertyValueConverter}}" />
                     </ScrollViewer>
                 </dxc:DXTabItem.Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Win32;
 
 namespace NServiceBus.Profiler.Desktop.Core.Settings
@@ -19,49 +20,16 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
                 _registryKey += "\\";
         }
 
-        public string SerializeList(List<string> listOfItems)
+        public void Save<T>(string key, T settings)
         {
-            return string.Empty;
+            throw new NotImplementedException(); //Do we even need this??
         }
 
-        public List<string> DeserializeList(string serializedList)
-        {
-            return new List<string>();
-        }
-
-        public void Save(string key, Dictionary<string, string> settings)
-        {
-            RegistryKey settingsRoot = null;
-
-            try
-            {
-                using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
-                {
-                    var permission = RegistryKeyPermissionCheck.ReadWriteSubTree;
-                    var settingKey = _registryKey + key.Replace('.', '\\');
-
-                    settingsRoot = registry.OpenSubKey(settingKey, true) ?? registry.CreateSubKey(settingKey, permission, RegistryOptions.None);
-
-                    foreach (var setting in settings)
-                    {
-                        settingsRoot.SetValue(setting.Key, setting.Value, RegistryValueKind.String);
-                    }
-                }
-            }
-            finally
-            {
-                if (settingsRoot != null)
-                {
-                    settingsRoot.Close();
-                    settingsRoot.Dispose();
-                }
-            }
-        }
-
-        public Dictionary<string, string> Load(string key)
+        public T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new()
         {
             var dictionary = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var settingKey = _registryKey + key.Replace('.', '\\');
+            var setting = new T();
 
             using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
             using (var settingsRoot = registry.OpenSubKey(settingKey))
@@ -72,12 +40,43 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
 
                     foreach (var name in valueNames)
                     {
-                        dictionary.Add(string.Format("{0}.{1}", key, name), settingsRoot.GetValue(name).ToString());
+                        dictionary.Add(name, settingsRoot.GetValue(name).ToString());
                     }
                 }
             }
 
-            return dictionary;
+            PopulateSetting(setting, metadata, dictionary);
+
+            return setting;
+        }
+
+        private void PopulateSetting(object setting, IList<SettingDescriptor> metadata, Dictionary<string, string> data)
+        {
+            foreach (var property in metadata)
+            {
+                var value = data.ContainsKey(property.Property.Name)
+                    ? data[property.Property.Name]
+                    : property.DefaultValue;
+
+                var typedValue = TryCastOrDefault(value, property);
+
+                if (typedValue != null)
+                {
+                    property.Write(setting, typedValue);
+                }
+            }
+        }
+
+        private static object TryCastOrDefault(object value, SettingDescriptor property)
+        {
+            try
+            {
+                return Convert.ChangeType(value, property.Property.PropertyType);
+            }
+            catch
+            {
+                return property.DefaultValue;
+            }
         }
     }
 }

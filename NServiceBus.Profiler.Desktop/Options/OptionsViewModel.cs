@@ -24,8 +24,8 @@ namespace NServiceBus.Profiler.Desktop.Options
 
         private void LoadSettings()
         {
-            Application = _settingsProvider.GetSettings<ProfilerSettings>(true);
-            UsageReporting = _settingsProvider.GetSettings<ReportingSettings>(true);
+            Application = _settingsProvider.GetSettings<ProfilerSettings>();
+            UsageReporting = _settingsProvider.GetSettings<ReportingSettings>();
             Application.PropertyChanged += OnSettingChanged;
         }
 
