@@ -341,7 +341,9 @@
     <Compile Include="MessageHeaders\HeaderInfoTypeConverter.cs" />
     <Compile Include="MessageHeaders\Editors\SelectableTextBoxEditor.cs" />
     <Compile Include="MessageList\ContextMenuModel.cs" />
+    <Compile Include="MessageList\GridSelectionPreserver.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
+    <Compile Include="MessageList\IViewWithGrid.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
       <DependentUpon>HexContentView.xaml</DependentUpon>

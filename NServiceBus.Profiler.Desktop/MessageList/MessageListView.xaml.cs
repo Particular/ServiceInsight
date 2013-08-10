@@ -161,5 +161,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 HideIndicator(header);
             }
         }
+
+        public TableView Table
+        {
+            get { return (TableView)grid.View; }
+        }
     }
 }

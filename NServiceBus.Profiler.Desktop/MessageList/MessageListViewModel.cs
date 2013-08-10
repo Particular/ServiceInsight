@@ -1,6 +1,8 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
+using Caliburn.PresentationFramework.Views;
+using DevExpress.Data.Filtering.Helpers;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Events;
@@ -212,9 +214,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                                         searchQuery: searchQuery,
                                                                         orderBy: _lastSortColumn,
                                                                         ascending: _lastSortOrderAscending);
-
-            Messages.Clear();
-            Messages.AddRange(pagedResult.Result);
+            using (new GridSelectionPreserver(_view))
+            {
+                Messages.Clear();
+                Messages.AddRange(pagedResult.Result);
+            }
 
             SearchBar.IsVisible = true;
             SearchBar.SetupPaging(new PagedResult<MessageInfo>
@@ -232,7 +236,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", queue)));
 
             await RefreshQueueMessages(queue);
-            await RefreshQueueMessageCount(queue);
+            //await RefreshQueueMessageCount(queue);
 
             _eventAggregator.Publish(new WorkFinished());
         }
@@ -241,8 +245,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             var messages = await _asyncQueueManager.GetMessages(queue);
 
-            Messages.Clear();
-            Messages.AddRange(messages);
+            using (new GridSelectionPreserver(_view))
+            {
+                Messages.Clear();
+                Messages.AddRange(messages);
+            }
 
             SearchBar.IsVisible = false;
             SearchBar.SetupPaging(new PagedResult<MessageInfo>
@@ -264,19 +271,22 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             var removedMessages = existingMessages.Union(updatedMessages).Except(updatedMessages).ToList();
             var newMessages = updatedMessages.Except(existingMessages).ToList();
 
-            foreach (var removedMessageId in removedMessages)
+            using (new GridSelectionPreserver(_view))
             {
-                var message = Messages.SingleOrDefault(m => m.Id == removedMessageId);
-                if (message != null)
+                foreach (var removedMessageId in removedMessages)
                 {
-                    Messages.Remove(message);
+                    var message = Messages.SingleOrDefault(m => m.Id == removedMessageId);
+                    if (message != null)
+                    {
+                        Messages.Remove(message);
+                    }
                 }
-            }
 
-            foreach (var newMessagesId in newMessages)
-            {
-                var message = messages.FirstOrDefault(m => m.Id == newMessagesId);
-                Messages.Add(message);
+                foreach (var newMessagesId in newMessages)
+                {
+                    var message = messages.FirstOrDefault(m => m.Id == newMessagesId);
+                    Messages.Add(message);
+                }
             }
         }
 

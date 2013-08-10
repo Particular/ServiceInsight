@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    public interface IMessageListView
+    public interface IMessageListView : IViewWithGrid
     {
         void SetupContextMenu();
     }
