@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Serialization;
@@ -22,11 +23,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             ChangeTheme(Theme.VS2010Name);
             InitializeComponent();
             BarManager.CheckBarItemNames = false;
-
-            // Maximize window
-            //TODO: Save size and location to settings
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            SourceInitialized += (s, a) => this.WindowState = System.Windows.WindowState.Maximized;
         }
 
         public void ChangeTheme(string name)
@@ -48,6 +44,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 layoutSetting.LayoutVersion = GetCurrentLayoutVersion();
                 layoutSetting.DockLayout = GetLayout(DockManager);
                 layoutSetting.MenuLayout = GetLayout(BarManager);
+                layoutSetting.MainWindowHeight = Height;
+                layoutSetting.MainWindowWidth = Width;
+                layoutSetting.MainWindowTop = Top;
+                layoutSetting.MainWindowLeft = Left;
+                layoutSetting.MainWindowState = WindowState;
             }
             else
             {
@@ -67,6 +68,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 SetLayout(DockManager, layoutSetting.DockLayout.GetAsStream());
                 SetLayout(BarManager, layoutSetting.MenuLayout.GetAsStream());
             }
+
+            Top = layoutSetting.MainWindowTop;
+            Left = layoutSetting.MainWindowLeft;
+            Width = layoutSetting.MainWindowWidth;
+            Height = layoutSetting.MainWindowHeight;
+            WindowState = layoutSetting.MainWindowState;
         }
 
         public void OnResetLayout(ISettingsProvider settingsProvider)
@@ -76,7 +83,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             layoutSettings.ResetLayout = true;
             layoutSettings.MenuLayout = null;
             layoutSettings.DockLayout = null;
-            
+            layoutSettings.MainWindowState = WindowState.Maximized;
+            layoutSettings.MainWindowTop = SystemParameters.VirtualScreenTop;
+            layoutSettings.MainWindowLeft = SystemParameters.VirtualScreenLeft;
+            layoutSettings.MainWindowWidth = SystemParameters.VirtualScreenWidth;
+            layoutSettings.MainWindowHeight = SystemParameters.VirtualScreenHeight;
+
             settingsProvider.SaveSettings(layoutSettings);
         }
 

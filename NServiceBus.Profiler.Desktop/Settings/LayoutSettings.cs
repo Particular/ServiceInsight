@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Configuration;
+using System.Windows;
 
 namespace NServiceBus.Profiler.Desktop.Settings
 {
@@ -17,5 +18,20 @@ namespace NServiceBus.Profiler.Desktop.Settings
 
         [DefaultValue(false)]
         public bool ResetLayout { get; set; }
+
+        [DefaultValue(0)]
+        public double MainWindowTop { get; set; }
+
+        [DefaultValue(0)]
+        public double MainWindowLeft { get; set; }
+
+        [DefaultValue(400)]
+        public double MainWindowHeight { get; set; }
+
+        [DefaultValue(600)]
+        public double MainWindowWidth { get; set; }
+
+        [DefaultValue(typeof(WindowState), "Maximized")]
+        public WindowState MainWindowState { get; set; }
     }
 }
