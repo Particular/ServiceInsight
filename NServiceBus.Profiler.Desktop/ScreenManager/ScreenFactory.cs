@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public class ScreenFactory : IScreenFactory
     {

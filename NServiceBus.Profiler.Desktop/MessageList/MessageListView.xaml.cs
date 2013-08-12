@@ -5,11 +5,11 @@ using DevExpress.Data;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
     /// <summary>
     /// Interaction logic for MessageListView.xaml

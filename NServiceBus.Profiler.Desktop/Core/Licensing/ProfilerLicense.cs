@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     public class ProfilerLicense
     {

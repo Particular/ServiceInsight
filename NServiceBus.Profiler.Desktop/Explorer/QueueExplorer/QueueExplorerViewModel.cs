@@ -7,13 +7,14 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
 using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.ScreenManager;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
     [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel

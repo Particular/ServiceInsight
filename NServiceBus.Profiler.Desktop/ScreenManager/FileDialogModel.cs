@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public class FileDialogModel
     {

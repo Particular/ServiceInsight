@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Management
+﻿namespace Particular.ServiceInsight.Desktop.Management
 {
     public interface IManagementConnectionProvider
     {

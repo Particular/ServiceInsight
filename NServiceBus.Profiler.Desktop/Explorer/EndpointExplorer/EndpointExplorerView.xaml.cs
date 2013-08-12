@@ -1,8 +1,8 @@
 ﻿using System;
 using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     /// <summary>
     /// Interaction logic for QueuesListView.xaml

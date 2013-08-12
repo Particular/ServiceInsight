@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
 using NSubstitute;
 using System.Linq;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Queues
 {

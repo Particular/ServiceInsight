@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     public class InvalidLicenseException : ApplicationException
     {

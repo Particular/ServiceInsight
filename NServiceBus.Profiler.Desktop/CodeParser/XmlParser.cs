@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Particular.ServiceInsight.Desktop.CodeParser;
 
-namespace NServiceBus.Profiler.Desktop.CodeParser
+namespace Particular.ServiceInsight.Desktop.CodeParser
 {
     public class XmlParser : BaseParser
     {

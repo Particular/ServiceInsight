@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Desktop.Logging;
+using Particular.ServiceInsight.Desktop.Logging;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class LoggerModule : Module
     {

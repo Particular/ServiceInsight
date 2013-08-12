@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.CodeParser;
+using Particular.ServiceInsight.Desktop.CodeParser;
 
-namespace NServiceBus.Profiler.Tests.Parsers
+namespace Particular.ServiceInsight.Tests.Parsers
 {
     [Subject("Json parser")]
     public class when_parsing_simple_json_string

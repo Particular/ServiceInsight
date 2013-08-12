@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
     public class MessageErrorInfo : IComparable
     {

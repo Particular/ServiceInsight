@@ -5,12 +5,13 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.ViewModels;
 using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Core.Licensing;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Shell;
 using Rhino.Licensing;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class DefaultExceptionHandler : WpfExceptionHandler
     {

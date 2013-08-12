@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Conversations
+﻿namespace Particular.ServiceInsight.Desktop.Conversations
 {
     public interface IConversationView
     {

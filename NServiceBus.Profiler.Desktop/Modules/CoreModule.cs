@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using Autofac;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Core.Licensing;
+using Particular.ServiceInsight.Desktop.Core.MessageDecoders;
+using Particular.ServiceInsight.Desktop.Management;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class CoreModule : Module
     {

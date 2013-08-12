@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Caliburn.PresentationFramework;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public abstract class ExplorerItem : PropertyChangedBase
     {

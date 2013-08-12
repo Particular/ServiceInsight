@@ -1,6 +1,6 @@
 ﻿using DevExpress.Xpf.Bars;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public interface IShellView : IPersistableLayout
     {

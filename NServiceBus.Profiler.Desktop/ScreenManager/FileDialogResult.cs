@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public class FileDialogResult
     {

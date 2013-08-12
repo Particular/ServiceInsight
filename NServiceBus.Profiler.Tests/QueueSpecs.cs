@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Queues
 {

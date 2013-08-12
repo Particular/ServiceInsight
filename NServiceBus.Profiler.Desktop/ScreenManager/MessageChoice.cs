@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     [Flags]
     public enum MessageChoice

@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Management;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Management;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class AboutViewModel : Screen
     {

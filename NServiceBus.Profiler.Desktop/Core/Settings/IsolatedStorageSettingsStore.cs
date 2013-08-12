@@ -1,7 +1,7 @@
 using System.IO;
 using System.IO.IsolatedStorage;
 
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
     public class IsolatedStorageSettingsStore : JsonSettingsStoreBase
     {

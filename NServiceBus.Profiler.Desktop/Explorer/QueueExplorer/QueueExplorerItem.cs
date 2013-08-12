@@ -1,9 +1,9 @@
 using System.Drawing;
 using System.Globalization;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
     public class QueueExplorerItem : ExplorerItem
     {

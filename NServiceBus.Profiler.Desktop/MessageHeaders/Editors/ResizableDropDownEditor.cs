@@ -6,7 +6,7 @@ using DevExpress.Xpf.Editors;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders.Editors
+namespace Particular.ServiceInsight.Desktop.MessageHeaders.Editors
 {
     public class ResizableDropDownEditor : ITypeEditor
     {

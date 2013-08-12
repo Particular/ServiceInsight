@@ -1,7 +1,7 @@
 ﻿using System.Windows.Documents;
-using NServiceBus.Profiler.Desktop.CodeParser;
+using Particular.ServiceInsight.Desktop.CodeParser;
 
-namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
+namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
     /// <summary>
     /// Interaction logic for XmlMessageView.xaml

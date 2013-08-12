@@ -3,17 +3,16 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Autofac;
-using Caliburn.Core.Configuration;
 using Caliburn.Core.InversionOfControl;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Conventions;
 using DevExpress.Xpf.Bars;
 using ExceptionHandler;
+using Particular.ServiceInsight.Desktop.Shell;
 using log4net;
-using NServiceBus.Profiler.Desktop.Shell;
 using IContainer = Autofac.IContainer;
 
-namespace NServiceBus.Profiler.Desktop.Startup
+namespace Particular.ServiceInsight.Desktop.Startup
 {
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {

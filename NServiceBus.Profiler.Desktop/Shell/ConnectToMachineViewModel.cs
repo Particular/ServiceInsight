@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class ConnectToMachineViewModel : Screen, IWorkTracker
     {

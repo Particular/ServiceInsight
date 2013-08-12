@@ -2,9 +2,9 @@
 using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {

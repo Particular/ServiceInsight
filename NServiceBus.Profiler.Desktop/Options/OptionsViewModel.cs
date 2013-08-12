@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Settings;
 
-namespace NServiceBus.Profiler.Desktop.Options
+namespace Particular.ServiceInsight.Desktop.Options
 {
     public class OptionsViewModel : Screen
     {

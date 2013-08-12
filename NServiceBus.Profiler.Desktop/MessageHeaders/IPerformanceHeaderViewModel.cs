@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     public interface IPerformanceHeaderViewModel : IHeaderInfoViewModel
     {

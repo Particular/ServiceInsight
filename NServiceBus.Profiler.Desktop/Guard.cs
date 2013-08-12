@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace NServiceBus.Profiler.Desktop
+namespace Particular.ServiceInsight.Desktop
 {
     public static class Guard
     {

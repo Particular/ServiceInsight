@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
 using NServiceBus.Profiler.Desktop.Models;
 using NSubstitute;
+using Particular.ServiceInsight.Desktop.Core.MessageDecoders;
 
 namespace NServiceBus.Profiler.Tests.JsonViewer
 {

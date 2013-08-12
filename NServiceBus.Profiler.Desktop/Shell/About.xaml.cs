@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     /// <summary>
     /// Interaction logic for About.xaml

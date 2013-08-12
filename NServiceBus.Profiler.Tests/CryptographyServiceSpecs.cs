@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
+using Particular.ServiceInsight.Desktop.Core.Licensing;
 
 namespace NServiceBus.Profiler.Tests.Cryptography
 {

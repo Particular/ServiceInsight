@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     public class PagedResult<T>
     {

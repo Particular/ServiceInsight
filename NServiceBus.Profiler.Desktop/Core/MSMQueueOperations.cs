@@ -4,11 +4,13 @@ using System.Linq;
 using System.Messaging;
 using System.Threading.Tasks;
 using System.Transactions;
+using NServiceBus.Profiler.Desktop.Core;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Models;
 using log4net;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Core
+
+namespace Particular.ServiceInsight.Desktop.Core
 {
     public class MSMQueueOperations : IQueueOperationsAsync
     {

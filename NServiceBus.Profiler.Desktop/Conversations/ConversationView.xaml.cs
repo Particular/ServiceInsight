@@ -1,7 +1,8 @@
 ﻿using System;
+using Particular.ServiceInsight.Desktop.Conversations;
 using WPFExtensions.Controls;
 
-namespace NServiceBus.Profiler.Desktop.Conversations
+namespace Particular.ServiceInsight.Desktop.Conversations
 {
     /// <summary>
     /// Interaction logic for ConversationView.xaml

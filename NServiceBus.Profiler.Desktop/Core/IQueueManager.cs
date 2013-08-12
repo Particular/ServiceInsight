@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Core
+namespace Particular.ServiceInsight.Desktop.Core
 {
     public interface IQueueManager
     {

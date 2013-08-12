@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
 
-namespace NServiceBus.Profiler.Desktop.Options
+namespace Particular.ServiceInsight.Desktop.Options
 {
     public class PropertyValueConverter : IValueConverter
     {

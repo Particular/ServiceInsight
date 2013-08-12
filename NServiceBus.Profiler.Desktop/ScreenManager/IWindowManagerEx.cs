@@ -7,7 +7,7 @@ using Caliburn.PresentationFramework.ViewModels;
 using Caliburn.PresentationFramework.Views;
 using Application = System.Windows.Application;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public interface IDialogManager
     {

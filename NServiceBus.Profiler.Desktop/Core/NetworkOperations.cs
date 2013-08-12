@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading.Tasks;
 
-namespace NServiceBus.Profiler.Desktop.Core
+namespace Particular.ServiceInsight.Desktop.Core
 {
     public class NetworkOperations : INetworkOperations
     {

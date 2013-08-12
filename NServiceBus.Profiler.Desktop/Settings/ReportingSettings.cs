@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NServiceBus.Profiler.Desktop.Settings
+namespace Particular.ServiceInsight.Desktop.Settings
 {
     public class ReportingSettings
     {

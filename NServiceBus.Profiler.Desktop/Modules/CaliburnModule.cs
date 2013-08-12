@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Invocation;
-using NServiceBus.Profiler.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.ScreenManager;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class CaliburnModule : Module
     {

@@ -1,6 +1,6 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
+﻿using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     public abstract class EndpointExplorerItem : ExplorerItem
     {

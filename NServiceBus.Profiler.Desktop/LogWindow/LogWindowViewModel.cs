@@ -1,8 +1,8 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.MessageList;
 
-namespace NServiceBus.Profiler.Desktop.LogWindow
+namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     public class LogWindowViewModel : Screen, ILogWindowViewModel
     {

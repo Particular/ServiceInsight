@@ -2,7 +2,7 @@
 using Autofac.Core;
 using Caliburn.PresentationFramework.ApplicationModel;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsightDesktop.Modules
 {
     public class EventAggregationAutoSubscriptionModule : Module
     {

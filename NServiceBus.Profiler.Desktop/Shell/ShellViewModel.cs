@@ -5,23 +5,24 @@ using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Conversations;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageHeaders;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageViewers;
-using NServiceBus.Profiler.Desktop.Options;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Conversations;
+using Particular.ServiceInsight.Desktop.Core.Licensing;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Explorer;
+using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+using Particular.ServiceInsight.Desktop.Explorer.QueueExplorer;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.LogWindow;
+using Particular.ServiceInsight.Desktop.MessageHeaders;
+using Particular.ServiceInsight.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.MessageViewers;
+using Particular.ServiceInsight.Desktop.Options;
+using Particular.ServiceInsight.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {

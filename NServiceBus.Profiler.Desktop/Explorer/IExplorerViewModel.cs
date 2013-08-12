@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public interface IExplorerViewModel
     {

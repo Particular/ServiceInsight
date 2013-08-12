@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class GrammerExtensions
     {

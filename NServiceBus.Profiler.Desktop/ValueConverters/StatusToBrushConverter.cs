@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
     public class StatusToBrushConverter : IValueConverter
     {

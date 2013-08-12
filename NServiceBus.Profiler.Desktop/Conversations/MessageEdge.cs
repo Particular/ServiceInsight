@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
+﻿using Particular.ServiceInsight.Desktop.Models;
 using QuickGraph;
 
-namespace NServiceBus.Profiler.Desktop.Conversations
+namespace Particular.ServiceInsight.Desktop.Conversations
 {
     public class MessageEdge : Edge<DiagramNode>
     {

@@ -2,13 +2,13 @@ using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Explorer;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Search;
+using Particular.ServiceInsight.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
     public interface IMessageListViewModel : IScreen, 
         IWorkTracker,

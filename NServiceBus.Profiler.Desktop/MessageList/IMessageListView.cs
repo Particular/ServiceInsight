@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
     public interface IMessageListView : IViewWithGrid
     {

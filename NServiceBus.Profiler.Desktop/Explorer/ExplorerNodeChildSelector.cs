@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using DevExpress.Xpf.Grid;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public class ExplorerNodeChildSelector : IChildNodesSelector
     {

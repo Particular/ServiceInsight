@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Configuration;
 
-namespace NServiceBus.Profiler.Desktop.Settings
+namespace Particular.ServiceInsight.Desktop.Settings
 {
     [SettingsProvider("IsolatedStore")]
     public class LicenseSettings

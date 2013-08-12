@@ -1,6 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
 namespace NServiceBus.Profiler.Tests.TimeSpans
 {

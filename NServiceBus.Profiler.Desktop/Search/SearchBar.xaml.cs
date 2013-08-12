@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace NServiceBus.Profiler.Desktop.Search
+namespace Particular.ServiceInsight.Desktop.Search
 {
     /// <summary>
     /// Interaction logic for SearchBar.xaml

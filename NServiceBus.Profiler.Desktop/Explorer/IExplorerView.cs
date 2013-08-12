@@ -1,7 +1,7 @@
 using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public interface IExplorerView : 
         IHandle<WorkStarted>, 

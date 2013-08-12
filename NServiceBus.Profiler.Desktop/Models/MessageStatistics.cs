@@ -1,7 +1,7 @@
 ﻿using System;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     public class MessageStatistics
     {

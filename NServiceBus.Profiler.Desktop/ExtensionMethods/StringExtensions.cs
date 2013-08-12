@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class StringExtensions
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using Caliburn.PresentationFramework;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     [Serializable]
     public class MessageInfo : PropertyChangedBase

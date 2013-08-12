@@ -7,13 +7,13 @@ using System.Xml.Serialization;
 using Caliburn.PresentationFramework.ApplicationModel;
 using DevExpress.Xpf.Core;
 using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageHeaders.Editors;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Core.MessageDecoders;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.MessageHeaders.Editors;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     [TypeConverter(typeof(HeaderInfoTypeConverter))]
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel

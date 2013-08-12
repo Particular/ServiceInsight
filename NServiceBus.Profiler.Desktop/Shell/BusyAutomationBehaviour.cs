@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Automation;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public static class BusyAutomationBehaviour
     {

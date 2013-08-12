@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Explorer;
+using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+using Particular.ServiceInsight.Desktop.Explorer.QueueExplorer;
+using Particular.ServiceInsight.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Search
+namespace Particular.ServiceInsight.Desktop.Search
 {
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {

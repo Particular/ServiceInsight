@@ -1,8 +1,8 @@
-﻿using log4net;
+﻿using Particular.ServiceInsight.Desktop.Shell;
+using log4net;
 using log4net.Repository.Hierarchy;
-using NServiceBus.Profiler.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.LogWindow
+namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     public interface ILogWindowView
     {

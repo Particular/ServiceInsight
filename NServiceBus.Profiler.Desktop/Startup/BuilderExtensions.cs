@@ -7,7 +7,7 @@ using Autofac;
 using log4net;
 using Module = Autofac.Module;
 
-namespace NServiceBus.Profiler.Desktop.Startup
+namespace Particular.ServiceInsight.Desktop.Startup
 {
     public static class BuilderExtensions
     {

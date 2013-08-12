@@ -2,11 +2,11 @@ using System.Windows;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.RoutedMessaging;
 using DevExpress.Xpf.Bars;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.MessageList;
 using ActionFactory = Caliburn.PresentationFramework.Actions.Action;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class MenuManager : IMenuManager
     {

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public class DialogViewModel : Screen
     {

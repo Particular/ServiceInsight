@@ -1,6 +1,6 @@
 ﻿using System.Windows.Documents;
 
-namespace NServiceBus.Profiler.Desktop.CodeParser
+namespace Particular.ServiceInsight.Desktop.CodeParser
 {
     public class CodeBlockPresenter
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class ReflectionHelper
     {

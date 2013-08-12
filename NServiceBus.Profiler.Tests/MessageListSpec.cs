@@ -3,21 +3,12 @@ using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using ExceptionHandler;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.MessageHeaders;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
+using Particular.ServiceInsight.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.Shell;
+using Particular.ServiceInsight.Tests.Helpers;
 
-namespace NServiceBus.Profiler.Tests
+namespace Particular.ServiceInsight.Tests
 {
     [Subject("message list")]
     public abstract class with_the_message_list

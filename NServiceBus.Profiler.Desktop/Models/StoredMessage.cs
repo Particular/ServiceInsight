@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody

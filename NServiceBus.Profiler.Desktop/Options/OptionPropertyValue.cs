@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace NServiceBus.Profiler.Desktop.Options
+namespace Particular.ServiceInsight.Desktop.Options
 {
     public class OptionPropertyValue : IDataErrorInfo
     {

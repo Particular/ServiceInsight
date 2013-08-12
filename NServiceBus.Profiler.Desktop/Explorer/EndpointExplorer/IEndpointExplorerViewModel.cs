@@ -3,9 +3,9 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     public interface IEndpointExplorerViewModel :
         IExplorerViewModel,

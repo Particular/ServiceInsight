@@ -1,7 +1,7 @@
 using System;
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Tests.Helpers
+namespace Particular.ServiceInsight.Tests.Helpers
 {
     public class TestConductorScreen : Conductor<IScreen>
     {

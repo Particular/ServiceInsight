@@ -6,16 +6,16 @@ using Autofac;
 using ExceptionHandler;
 using ExceptionHandler.Settings;
 using ExceptionHandler.Wpf;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Options;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
+using Particular.ServiceInsight.Desktop.Explorer;
+using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+using Particular.ServiceInsight.Desktop.Explorer.QueueExplorer;
+using Particular.ServiceInsight.Desktop.Options;
+using Particular.ServiceInsight.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Search;
+using Particular.ServiceInsight.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.Startup;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class ShellModule : Module
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
+namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
     public class HexPart
     {

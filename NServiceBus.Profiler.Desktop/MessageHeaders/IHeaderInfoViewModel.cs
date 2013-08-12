@@ -1,8 +1,8 @@
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     public interface IHeaderInfoViewModel : 
         IScreen,

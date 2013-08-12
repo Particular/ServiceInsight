@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media;
 using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.Grid.TreeList;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public class ExplorerNodeImageSelector : TreeListNodeImageSelector
     {

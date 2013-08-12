@@ -2,10 +2,10 @@
 using System.Text;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
-namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
+namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
     public class HexContentViewModel : Screen, IHexContentViewModel
     {

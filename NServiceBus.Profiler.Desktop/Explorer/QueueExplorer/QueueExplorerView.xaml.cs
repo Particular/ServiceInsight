@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Documents;
 using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Events;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
     /// <summary>
     /// Interaction logic for QueuesListView.xaml

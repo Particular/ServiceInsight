@@ -1,6 +1,6 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
+﻿using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Events
+namespace Particular.ServiceInsight.Desktop.Events
 {
     public class MessageRemovedFromQueue
     {

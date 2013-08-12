@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NServiceBus.Profiler.Desktop.Models;
 using NSubstitute;
 using System.Linq;
+using Particular.ServiceInsight.Desktop.Events;
 
 namespace NServiceBus.Profiler.Tests.HexViewer
 {

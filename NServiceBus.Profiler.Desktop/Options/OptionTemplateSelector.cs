@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.PresentationFramework;
 
-namespace NServiceBus.Profiler.Desktop.Options
+namespace Particular.ServiceInsight.Desktop.Options
 {
     public class OptionTemplateSelector : DataTemplateSelector
     {

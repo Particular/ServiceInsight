@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Settings;
 using log4net;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Settings;
 using Rhino.Licensing;
 
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     public class AppLicenseManager : ILicenseManager
     {

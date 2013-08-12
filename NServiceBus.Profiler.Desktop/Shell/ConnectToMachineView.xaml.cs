@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     /// <summary>
     /// Interaction logic for ConnectToMachineView.xaml

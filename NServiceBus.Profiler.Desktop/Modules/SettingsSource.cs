@@ -5,7 +5,7 @@ using Autofac.Builder;
 using Autofac.Core;
 using ExceptionHandler.Settings;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class SettingsSource : IRegistrationSource
     {

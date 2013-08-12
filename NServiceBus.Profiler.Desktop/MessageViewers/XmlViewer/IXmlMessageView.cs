@@ -1,4 +1,4 @@
-namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
+namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
     public interface IXmlMessageView
     {

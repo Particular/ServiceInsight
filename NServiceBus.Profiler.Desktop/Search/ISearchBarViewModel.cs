@@ -1,10 +1,10 @@
 ﻿using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.Search
+namespace Particular.ServiceInsight.Desktop.Search
 {
     public interface ISearchBarViewModel : 
         IScreen,

@@ -1,9 +1,9 @@
 ﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
+using Particular.ServiceInsight.Desktop.MessageViewers.HexViewer;
+using Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer;
+using Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer;
 
-namespace NServiceBus.Profiler.Desktop.MessageViewers
+namespace Particular.ServiceInsight.Desktop.MessageViewers
 {
     public interface IMessageBodyViewModel : 
         IScreen

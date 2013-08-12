@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.MessageHeaders.Editors;
+using Particular.ServiceInsight.Desktop.MessageHeaders.Editors;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     public class HeaderInfoPropertyDescriptor : PropertyDescriptor
     {

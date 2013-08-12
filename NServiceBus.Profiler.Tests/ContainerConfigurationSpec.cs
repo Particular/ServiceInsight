@@ -1,8 +1,8 @@
 ﻿using System;
 using Autofac;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
+using Particular.ServiceInsight.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Tests.Container
 {

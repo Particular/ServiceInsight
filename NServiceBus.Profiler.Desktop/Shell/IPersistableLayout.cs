@@ -1,6 +1,6 @@
-﻿using NServiceBus.Profiler.Desktop.Core.Settings;
+﻿using Particular.ServiceInsight.Desktop.Core.Settings;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public interface IPersistableLayout
     {

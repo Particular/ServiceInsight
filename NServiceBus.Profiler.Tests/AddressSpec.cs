@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Machine.Specifications;
 using System.Linq;
 using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
 namespace NServiceBus.Profiler.Tests.Queues
 {

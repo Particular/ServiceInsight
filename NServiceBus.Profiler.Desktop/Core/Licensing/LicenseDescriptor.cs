@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.Win32;
 
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     public class LicenseDescriptor
     {

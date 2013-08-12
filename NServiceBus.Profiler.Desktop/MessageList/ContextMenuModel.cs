@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
     public class ContextMenuModel
     {

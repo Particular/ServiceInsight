@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NServiceBus.Profiler.Desktop.Settings
+namespace Particular.ServiceInsight.Desktop.Settings
 {
     public class SettingBase : INotifyPropertyChanged
     {

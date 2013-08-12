@@ -1,8 +1,8 @@
 ﻿using System;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop;
+using Particular.ServiceInsight.Desktop;
 
-namespace NServiceBus.Profiler.Tests.Utilities
+namespace Particular.ServiceInsight.Tests.Utilities
 {
     [Subject("guard")]
     public abstract class with_a_guard_check

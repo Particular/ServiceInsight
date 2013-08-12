@@ -1,6 +1,6 @@
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     public interface IGatewayHeaderViewModel : IScreen
     {

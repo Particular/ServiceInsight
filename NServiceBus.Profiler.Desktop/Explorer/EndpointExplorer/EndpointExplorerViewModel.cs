@@ -4,13 +4,13 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Management;
+using Particular.ServiceInsight.Desktop.Settings;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel

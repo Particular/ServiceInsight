@@ -2,23 +2,23 @@
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.MessageHeaders;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using NServiceBus.Profiler.Desktop.Shell;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Explorer;
+using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+using Particular.ServiceInsight.Desktop.Explorer.QueueExplorer;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Management;
+using Particular.ServiceInsight.Desktop.MessageHeaders;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Search;
+using Particular.ServiceInsight.Desktop.Shell;
 
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
@@ -187,7 +187,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 await RefreshEndpoint(endpointNode.Endpoint, 
                                       searchQuery: SearchBar.SearchQuery,
                                       orderBy: columnName, 
-                                      ascending: ascending);
+                                      @ascending: ascending);
             }
 
             var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
@@ -211,7 +211,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                                         pageIndex: pageIndex,
                                                                         searchQuery: searchQuery,
                                                                         orderBy: _lastSortColumn,
-                                                                        ascending: _lastSortOrderAscending);
+                                                                        @ascending: _lastSortOrderAscending);
             using (new GridSelectionPreserver(_view))
             {
                 Messages.Clear();

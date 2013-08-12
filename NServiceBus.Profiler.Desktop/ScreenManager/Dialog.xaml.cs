@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     /// <summary>
     /// Interaction logic for Dialog.xaml

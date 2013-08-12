@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     public interface ICryptoService
     {

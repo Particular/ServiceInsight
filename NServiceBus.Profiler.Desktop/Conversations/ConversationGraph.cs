@@ -1,6 +1,6 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
+﻿using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Conversations
+namespace Particular.ServiceInsight.Desktop.Conversations
 {
     public class ConversationGraph : QuickGraph.BidirectionalGraph<DiagramNode, MessageEdge>
     {

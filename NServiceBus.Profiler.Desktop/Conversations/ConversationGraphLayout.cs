@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using GraphSharp.Controls;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Conversations
+namespace Particular.ServiceInsight.Desktop.Conversations
 {
     public class ConversationGraphLayout : GraphLayout<DiagramNode, MessageEdge, ConversationGraph>
     {

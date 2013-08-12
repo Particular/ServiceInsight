@@ -1,6 +1,6 @@
 ﻿using Xceed.Wpf.Toolkit.PropertyGrid;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     /// <summary>
     /// Interaction logic for MessagePropertiesView.xaml

@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.Conversations.ConversationView"
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.Conversations.ConversationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.Conversations"
+             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.Conversations"
              xmlns:zoom="http://hightech.ir/controls"
              xmlns:graph="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
              xmlns:tree="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
-             xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
+             xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     

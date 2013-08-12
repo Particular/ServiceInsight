@@ -4,15 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Events;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Settings;
 using RestSharp;
 using RestSharp.Contrib;
 using log4net;
 
-namespace NServiceBus.Profiler.Desktop.Management
+namespace Particular.ServiceInsight.Desktop.Management
 {
     public class DefaultManagementService : IManagementService
     {

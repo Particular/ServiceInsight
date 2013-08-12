@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop
+﻿namespace Particular.ServiceInsight.Desktop
 {
     public class Screens
     {

@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.ScreenManager;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Desktop.Core.Licensing;
+using Particular.ServiceInsight.Desktop.ScreenManager;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {

@@ -4,12 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Particular.ServiceInsight.Desktop.Startup;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Layout;
-using NServiceBus.Profiler.Desktop.Startup;
 
-namespace NServiceBus.Profiler.Desktop.LogWindow
+namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     public class RichTextBoxAppender : AppenderSkeleton
     {

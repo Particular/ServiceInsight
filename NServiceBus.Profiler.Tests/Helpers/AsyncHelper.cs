@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NServiceBus.Profiler.Tests.Helpers
+namespace Particular.ServiceInsight.Tests.Helpers
 {
     public static class AsyncHelper
     {

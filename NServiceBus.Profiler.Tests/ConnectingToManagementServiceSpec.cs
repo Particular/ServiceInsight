@@ -2,12 +2,9 @@
 using Autofac;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
+using Particular.ServiceInsight.Desktop.Shell;
+using Particular.ServiceInsight.Tests.Helpers;
 
 namespace NServiceBus.Profiler.Tests.Shell.Dialog
 {

@@ -6,13 +6,12 @@ using System.Windows.Media;
 using DevExpress.Xpf.Editors;
 using ExceptionHandler;
 using ExceptionHandler.Wpf;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.Models;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders.Editors
+namespace Particular.ServiceInsight.Desktop.MessageHeaders.Editors
 {
     public class SelectableTextBoxEditor : ITypeEditor
     {

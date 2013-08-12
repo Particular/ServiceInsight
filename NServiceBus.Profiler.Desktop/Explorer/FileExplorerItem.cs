@@ -1,7 +1,7 @@
 using System.Drawing;
-using NServiceBus.Profiler.Desktop.Properties;
+using Particular.ServiceInsight.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public class FileExplorerItem : ExplorerItem
     {

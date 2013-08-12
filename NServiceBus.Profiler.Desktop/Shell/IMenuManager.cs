@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using Caliburn.PresentationFramework;
-using NServiceBus.Profiler.Desktop.MessageList;
+using Particular.ServiceInsight.Desktop.MessageList;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public interface IMenuManager
     {

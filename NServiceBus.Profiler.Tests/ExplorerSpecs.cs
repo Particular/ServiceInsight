@@ -5,15 +5,10 @@ using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using System.Linq;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Tests.Helpers;
 
 namespace NServiceBus.Profiler.Tests.Explorer
 {

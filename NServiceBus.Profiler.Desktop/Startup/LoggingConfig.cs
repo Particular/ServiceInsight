@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace NServiceBus.Profiler.Desktop.Startup
+namespace Particular.ServiceInsight.Desktop.Startup
 {
     public static class LoggingConfig
     {

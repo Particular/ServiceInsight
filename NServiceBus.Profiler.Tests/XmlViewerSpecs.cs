@@ -2,11 +2,11 @@
 using System.Xml;
 using ExceptionHandler;
 using Machine.Specifications;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
 using NServiceBus.Profiler.Desktop.Models;
 using NSubstitute;
+using Particular.ServiceInsight.Desktop.Core.MessageDecoders;
+using Particular.ServiceInsight.Desktop.Events;
 
 namespace NServiceBus.Profiler.Tests.XmlViewer
 {

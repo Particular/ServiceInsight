@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Xml;
 
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
     public class XmlContentDecoder : IContentDecoder<XmlDocument>
     {

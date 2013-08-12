@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
-namespace NServiceBus.Profiler.Desktop.Logging
+namespace Particular.ServiceInsight.Desktop.Logging
 {
     public class CompositeLogger : ILog
     {

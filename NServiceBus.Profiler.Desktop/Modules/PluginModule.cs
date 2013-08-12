@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Autofac;
-using NServiceBus.Profiler.Desktop.Startup;
+using Particular.ServiceInsight.Desktop.Startup;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsight.Desktop.Modules
 {
     public class PluginModule : Module
     {

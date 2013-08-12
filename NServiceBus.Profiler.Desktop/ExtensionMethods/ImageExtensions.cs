@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class ImageExtensions
     {

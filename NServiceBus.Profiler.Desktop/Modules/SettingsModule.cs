@@ -3,10 +3,10 @@ using System.Configuration;
 using System.Linq;
 using Autofac;
 using Caliburn.Core;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using SettingsProvider = NServiceBus.Profiler.Desktop.Core.Settings.SettingsProvider;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using SettingsProvider = Particular.ServiceInsight.Desktop.Core.Settings.SettingsProvider;
 
-namespace NServiceBus.Profiler.Desktop.Modules
+namespace Particular.ServiceInsightDesktop.Modules
 {
     public class SettingsModule : Module
     {
@@ -19,7 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             base.Load(builder);
         }
 
-        private class SettingProviderProxy : SettingsProvider
+        private class SettingProviderProxy : Particular.ServiceInsight.Desktop.Core.Settings.SettingsProvider
         {
             private readonly IContainer _container;
 

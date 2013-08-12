@@ -1,4 +1,4 @@
-﻿<dxc:DXWindow x:Class="NServiceBus.Profiler.Desktop.Shell.ConnectToMachineView"
+﻿<dxc:DXWindow x:Class="Particular.ServiceInsight.Desktop.Shell.ConnectToMachineView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:cal="http://www.caliburnproject.org"

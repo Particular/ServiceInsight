@@ -1,6 +1,7 @@
 ﻿using System;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     [Serializable]
     public class MessageBody : MessageInfo

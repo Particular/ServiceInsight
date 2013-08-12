@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+﻿using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+using Particular.ServiceInsight.Desktop.Explorer.QueueExplorer;
 
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
     public static class ExplorerItemExtensions
     {

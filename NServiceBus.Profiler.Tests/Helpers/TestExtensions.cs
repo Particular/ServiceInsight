@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace NServiceBus.Profiler.Tests.Helpers
+namespace Particular.ServiceInsight.Tests.Helpers
 {
     public static class TestExtensions
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using NServiceBus.Profiler.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class DateTimeExtensions
     {

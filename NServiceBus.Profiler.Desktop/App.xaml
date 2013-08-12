@@ -1,20 +1,21 @@
-﻿<Application x:Class="NServiceBus.Profiler.Desktop.App"
+﻿<Application x:Class="Particular.ServiceInsight.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:xh="clr-namespace:ExceptionHandler.Wpf.Converters;assembly=ExceptionHandler.Wpf"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
+             xmlns:startup="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
              xmlns:zoom="http://hightech.ir/controls"
-             xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:graph="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
-             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop"
+             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop"
+             xmlns:startup2="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <startup:AppBootstrapper x:Key="Bootstrapper" />
+                    <startup2:AppBootstrapper x:Key="Bootstrapper" />
                     
                     <!-- Converters -->
                     <dx:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />

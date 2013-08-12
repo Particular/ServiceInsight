@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     public static class ElementExtensions
     {

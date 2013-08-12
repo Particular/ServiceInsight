@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Autofac;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Management;
-using NServiceBus.Profiler.Desktop.Settings;
+using Particular.ServiceInsight.Desktop.Core.Settings;
+using Particular.ServiceInsight.Desktop.Management;
+using Particular.ServiceInsight.Desktop.Settings;
 
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
     public class ManagementConnectionViewModel : Screen
     {

@@ -2,7 +2,7 @@
 using Caliburn.PresentationFramework.Screens;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     [TypeConverter(typeof(HeaderInfoTypeConverter))]
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel

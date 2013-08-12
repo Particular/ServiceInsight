@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using System.Linq;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
+using Particular.ServiceInsight.Desktop.Models;
+using Particular.ServiceInsight.Desktop.Properties;
 
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     public class ServiceExplorerItem : ExplorerItem
     {

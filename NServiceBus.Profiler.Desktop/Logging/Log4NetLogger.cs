@@ -1,7 +1,7 @@
 ﻿using System;
 using Caliburn.Core.Logging;
 
-namespace NServiceBus.Profiler.Desktop.Logging
+namespace Particular.ServiceInsight.Desktop.Logging
 {
     public class Log4NetLogger : ILog
     {

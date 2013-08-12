@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     [DebuggerDisplay("MessageType={MessageType},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class DiagramNode : StoredMessage

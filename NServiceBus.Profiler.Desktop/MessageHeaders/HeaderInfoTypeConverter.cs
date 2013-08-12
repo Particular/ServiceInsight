@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Caliburn.PresentationFramework.Screens;
 
-namespace NServiceBus.Profiler.Desktop.MessageHeaders
+namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     public class HeaderInfoTypeConverter : TypeConverter
     {

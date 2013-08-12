@@ -5,10 +5,11 @@ using Caliburn.PresentationFramework.Screens;
 using Machine.Specifications;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
+using Particular.ServiceInsight.Desktop.Core;
+using Particular.ServiceInsight.Tests.Helpers;
 
-namespace NServiceBus.Profiler.Tests.Shell.Dialog
+namespace Particular.ServiceInsight.Tests.Shell.Dialog
 {
     [Subject("connection dialog")]
     public abstract class with_a_connection_dialog

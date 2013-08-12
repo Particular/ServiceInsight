@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Caliburn.PresentationFramework;
 
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+namespace Particular.ServiceInsight.Desktop.ScreenManager
 {
     public delegate void ButtonCommandHandler(object target);
 

@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.Settings
+namespace Particular.ServiceInsight.Desktop.Settings
 {
     [SettingsProvider("IsolatedStore")]
     public class ShellLayoutSettings

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NServiceBus.Profiler.Desktop.Models
+namespace Particular.ServiceInsight.Desktop.Models
 {
     public enum MessageStatus
     {

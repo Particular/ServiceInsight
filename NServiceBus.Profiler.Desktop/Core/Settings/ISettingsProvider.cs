@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
     public interface ISettingsProvider
     {
