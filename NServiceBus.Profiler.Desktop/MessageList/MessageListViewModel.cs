@@ -1,8 +1,6 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using DevExpress.Data.Filtering.Helpers;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Events;
@@ -235,8 +233,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", queue)));
 
-            await RefreshQueueMessages(queue);
-            //await RefreshQueueMessageCount(queue);
+            //await RefreshQueueMessages(queue); //TODO: Do we even need this anymore?? Seems to be doing the same thing as the other!
+            await RefreshQueueMessageCount(queue);
 
             _eventAggregator.Publish(new WorkFinished());
         }

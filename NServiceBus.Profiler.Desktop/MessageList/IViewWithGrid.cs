@@ -1,9 +1,11 @@
-﻿using DevExpress.Xpf.Grid;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace NServiceBus.Profiler.Desktop.MessageList
 {
     public interface IViewWithGrid
     {
-        TableView Table { get; }
+        int[] GetSelectedRowsIndex();
+        void BeginSelection();
+        void EndSelection();
+        void SelectRow(int rowIndex);
+        bool IsRowSelected(int rowIndex);
     }
 }

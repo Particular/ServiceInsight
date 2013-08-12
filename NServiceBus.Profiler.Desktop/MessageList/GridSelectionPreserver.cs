@@ -11,24 +11,24 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public GridSelectionPreserver(IViewWithGrid view)
         {
             _view = view;
-            _selectedrows = _view.Table.GetSelectedRowHandles();
+            _selectedrows = _view.GetSelectedRowsIndex();
         }
 
         public void Dispose()
         {
             try
             {
-                _view.Table.BeginSelection();
+                _view.BeginSelection();
 
                 foreach (var row in _selectedrows)
                 {
-                    if(!_view.Table.IsRowSelected(row))
-                        _view.Table.SelectRow(row);
+                    if (!_view.IsRowSelected(row))
+                        _view.SelectRow(row);
                 }
             }
             finally
             {
-                _view.Table.EndSelection();
+                _view.EndSelection();
             }
         }
     }

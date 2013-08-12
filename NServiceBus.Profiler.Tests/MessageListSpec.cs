@@ -34,6 +34,7 @@ namespace NServiceBus.Profiler.Tests
         protected static IStatusBarManager StatusBarManager;
         protected static Dictionary<Queue, List<MessageInfo>> MessageStore;
         protected static MessageListViewModel MessageList;
+        protected static IMessageListView View;
         
         Establish context = () =>
         {
@@ -45,7 +46,9 @@ namespace NServiceBus.Profiler.Tests
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             StatusBarManager = Substitute.For<IStatusBarManager>();
+            View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, QueueManager, SearchBar, ErrorDisplay, GeneralDisplay, Clipboard, StatusBarManager);
+            MessageList.AttachView(View, null);
         };
     }
 
