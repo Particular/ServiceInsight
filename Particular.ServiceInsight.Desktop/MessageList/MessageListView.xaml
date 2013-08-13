@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageList.MessageListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:m="clr-namespace:Particular.ServiceInsight.Desktop.MessageList"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="500">
+    
+    <UserControl.Resources>
+        <m:DeletedMessageConverter x:Key="conv"/>
+    </UserControl.Resources>
+
+    <Grid>
+    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl Grid.Row="0"
+                        cal:View.Model="{Binding SearchBar}" />
+    
+        <dxg:GridControl x:Name="grid"
+                         ShowLoadingPanel="{Binding WorkInProgress}"
+                         IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
+                         Grid.Row="1"
+                         ItemsSource="{Binding Messages}"
+                         PreviewMouseLeftButtonDown="OnGridControlClicked"
+                         CustomUnboundColumnData="OnRequestAdvancedMessageData">
+
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn AllowSorting="False" 
+                                AllowColumnFiltering="False"
+                                FieldName="IsFaulted" 
+                                Header="Status" 
+                                UnboundType="Object" 
+                                Width="16">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="16" Height="16" 
+                                   Source="{Binding Value.Image}"
+                                   ToolTip="{Binding Value.Description}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Identifier" 
+                                Tag="id" 
+                                AllowColumnFiltering="False"
+                                UnboundType="String"
+                                Header="Message ID">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="FriendlyMessageType" 
+                                AllowColumnFiltering="False"
+                                Tag="message_type" 
+                                Header="Message Type">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="TimeSent" 
+                                Tag="time_sent" 
+                                AllowColumnFiltering="False"
+                                Header="Time Sent">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="G" />
+                    </dxg:GridColumn.EditSettings>
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="CriticalTime" 
+                                Tag="critical_time"
+                                AllowColumnFiltering="False"
+                                AllowSorting="True"
+                                UnboundType="String" 
+                                Header="Critical Time">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ProcessingTime" 
+                                Tag="processing_time"
+                                AllowColumnFiltering="False"
+                                AllowSorting="True"
+                                UnboundType="String" 
+                                Header="Processing Time">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+            </dxg:GridControl.Columns>
+
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gridView" 
+                               BeforeLayoutRefresh="OnBeforeLayoutRefresh"
+                               FocusedRowChanged="OnFocusedMessageChanged"
+                               SelectionChanged="OnSelectedMessagesChanged"
+                               ShowIndicator="False"
+                               MultiSelectMode="Row"
+                               AllowCascadeUpdate="True" 
+                               AllowPerPixelScrolling="True" 
+                               AutoWidth="True" 
+                               AllowSorting="False"
+                               AllowEditing="False" 
+                               AllowGrouping="True" 
+                               ShowGroupPanel="False"
+                               NavigationStyle="Row" 
+                               FadeSelectionOnLostFocus="False">
+
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

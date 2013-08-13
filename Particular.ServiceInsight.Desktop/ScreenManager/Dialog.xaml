@@ -1,0 +1,68 @@
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.ScreenManager.Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{StaticResource DialogBackgroundBrush}"
+        ResizeMode="NoResize" 
+        ShowInTaskbar="false" 
+        SizeToContent="WidthAndHeight" 
+        WindowStartupLocation="CenterOwner" 
+        MaxWidth="800" 
+        Title="{Binding Path=Title}" 
+        Icon="{Binding ElementName=MessageIcon, Path=Source}">
+    
+    <Border Style="{StaticResource DialogRootContainer}">
+        <StackPanel Orientation="Vertical">
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="MessageIcon" Width="32" Height="32" Margin="0,0,8,0" VerticalAlignment="Center" Visibility="{Binding Path=ShowIcon, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Value="Error" Binding="{Binding Path=Icon}">
+                                    <Setter Property="Source" Value="/Images/Msg_Error.png" />
+                                </DataTrigger>
+                                <DataTrigger Value="Warning" Binding="{Binding Path=Icon}">
+                                    <Setter Property="Source" Value="/Images/Msg_Warning.png" />
+                                </DataTrigger>
+                                <DataTrigger Value="Information" Binding="{Binding Path=Icon}">
+                                    <Setter Property="Source" Value="/Images/Msg_Info.png" />
+                                </DataTrigger>
+                                <DataTrigger Value="Question" Binding="{Binding Path=Icon}">
+                                    <Setter Property="Source" Value="/Images/Msg_Help.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Content}" />
+            </Grid>
+            
+            <CheckBox x:Name="DontAskAgain" 
+                      Content="Don't show this again" 
+                      Margin="0,15,0,0" 
+                      IsChecked="{Binding DontAskAgain , Mode=TwoWay}" 
+                      Visibility="{Binding EnableDontAskAgain, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+            
+            <ItemsControl HorizontalAlignment="Center" Focusable="false" Margin="-4,16,0,0" ItemsSource="{Binding Choices}">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <UniformGrid Rows="1" IsItemsHost="true" />
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource DialogButton}"
+                                IsDefault="{Binding Path=IsDefault}" 
+                                IsCancel="{Binding Path=IsCancel}" 
+                                Content="{Binding Path=Label}" 
+                                Command="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
+    
+</Window>
