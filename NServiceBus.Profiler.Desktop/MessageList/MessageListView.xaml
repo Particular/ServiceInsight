@@ -37,6 +37,7 @@
                                 AllowColumnFiltering="False"
                                 FieldName="IsFaulted" 
                                 Header="Status" 
+                                Tag="message_status"
                                 UnboundType="Object" 
                                 Width="16">
                     <dxg:GridColumn.CellTemplate>
