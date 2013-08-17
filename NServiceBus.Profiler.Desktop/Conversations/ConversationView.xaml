@@ -99,6 +99,14 @@
                                 <Run Text="Critical Time: " />
                                 <Run Text="{Binding Statistics.ElapsedCriticalTime, Mode=OneWay}" />
                             </TextBlock>
+                            <TextBlock>
+                                <Run Text="Originating: " />
+                                <Run Text="{Binding OriginatingEndpoint.Name, Mode=OneWay}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Processing: " />
+                                <Run Text="{Binding ReceivingEndpoint.Name, Mode=OneWay}" />
+                            </TextBlock>
                         </StackPanel>
                     </ToolTip>
                 </Setter.Value>
