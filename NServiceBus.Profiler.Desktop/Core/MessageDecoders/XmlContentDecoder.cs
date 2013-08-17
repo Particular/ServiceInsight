@@ -14,11 +14,15 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
             if (content != null && content.Length > 0)
             {
                 xml = Encoding.UTF8.GetString(content);
-                if (!TryLoadIntoDocument(xml, doc))
+                if (TryLoadIntoDocument(xml, doc))
+                {
+                    return new DecoderResult<XmlDocument>(doc);
+                }
+                else
                 {
                     //TODO: Issues RESTSharp deserializer when reading byte array as string
                     xml = GetFromBase64String(content);
-                    if(TryLoadIntoDocument(xml, doc))
+                    if (TryLoadIntoDocument(xml, doc))
                     {
                         return new DecoderResult<XmlDocument>(doc);
                     }

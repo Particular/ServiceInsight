@@ -14,6 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public bool IsDeferredMessage { get; set; }
         public string RelatedToMessageId { get; set; }
         public string ConversationId { get; set; }
+        public string ContentType { get; set; }
         public string MessageId { get; set; }
     }
 }

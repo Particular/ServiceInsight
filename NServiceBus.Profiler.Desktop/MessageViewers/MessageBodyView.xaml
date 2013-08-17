@@ -17,10 +17,10 @@
                         <Setter Property="Padding" Value="1"/>
                     </Style>
                 </dxlc:LayoutGroup.TabsStyle>
-                <dxlc:LayoutGroup Header="JSON">
+                <dxlc:LayoutGroup Header="JSON" Visibility="{Binding Path=JsonViewerVisibile, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=JsonViewer}" />
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Header="XML">
+                <dxlc:LayoutGroup Header="XML" Visibility="{Binding Path=XmlViewerVisibile, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=XmlViewer}" />
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Header="Hex">
