@@ -22,7 +22,7 @@
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
     <ROW Property="ProductCode" Value="1033:{6F29C354-F8C6-4F8B-BD85-63BB59E5E3FD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="Particular Software ServiceInsight 4.0.0"/>
+    <ROW Property="ProductName" Value="Particular Software ServiceInsight [|ProductVersion]"/>
     <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{4A0F46A8-6E69-4384-A327-A06350EF00EB}"/>
@@ -339,7 +339,7 @@
     <ROW Action="GetTrialDate" Type="1" Source="Particular.CustomActions.CA.dll" Target="GetTrialStartDate"/>
     <ROW Action="InstallDtc" Type="1025" Source="Particular.CustomActions.CA.dll" Target="InstallDtc"/>
     <ROW Action="InstallMsmq" Type="1025" Source="Particular.CustomActions.CA.dll" Target="InstallMsmq"/>
-    <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=ServiceInsight" Options="1"/>
+    <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=ServiceInsight&amp;version=[ProductVersion]" Options="1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder]Particular Software\"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="DefaultBuild:[ProgramMenuFolder]Particular Software\ServiceInsight\v[MY_VERSION]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
