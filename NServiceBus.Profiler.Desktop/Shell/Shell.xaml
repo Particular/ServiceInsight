@@ -85,7 +85,7 @@
                                KeyGesture="F5" />
             <dxb:BarButtonItem Content="Create Queue" 
                                x:Name="CreateQueue" 
-                               AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.CreateQueueMenu}"
+                               AutomationProperties.AutomationId="CreateQueue"
                                CategoryName="Tools" Glyph="/Images/CreateQueue.png" />
             <!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
             <!--                               CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->

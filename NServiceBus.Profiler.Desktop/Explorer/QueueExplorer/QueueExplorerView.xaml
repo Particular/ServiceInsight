@@ -19,7 +19,7 @@
     </UserControl.Resources>
     
     <Grid>
-        <dxg:TreeListControl x:Name="treeList" ItemsSource="{Binding Path=Items}" Visibility="{Binding IsMSMQInstalled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        <dxg:TreeListControl x:Name="treeList" AutomationProperties.AutomationId="QueueExplorerTree" ItemsSource="{Binding Path=Items}" Visibility="{Binding IsMSMQInstalled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <dxg:TreeListControl.Columns>
                 <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False">
                     <dxg:TreeListColumn.EditSettings>

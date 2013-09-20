@@ -38,6 +38,7 @@
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
       
         <dxe:ComboBoxEdit x:Name="name" 
+                          AutomationProperties.AutomationId="MachineName"
                           AutoComplete="True" 
                           ItemsSource="{Binding Path=Machines}"
                           Text="{Binding SelectedMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -46,11 +47,13 @@
 
         <TextBox Text="{Binding QueueName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  x:Name="QueueName"
+                 AutomationProperties.AutomationId="QueueName"
                  Grid.Row="1" Grid.Column="1" Margin="5"
                  KeyboardNavigation.TabIndex="1"/>
 
         <CheckBox Grid.Row="2" Grid.Column="1"
                   IsChecked="{Binding IsTransactional, Mode=TwoWay}"
+                  AutomationProperties.AutomationId="IsTransactional"
                   Margin="5"
                   HorizontalAlignment="Left" VerticalAlignment="Center"
                   KeyboardNavigation.TabIndex="2"/>
@@ -64,8 +67,8 @@
                    Visibility="{Binding WorkInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
                    Width="16" Height="16" Margin="0,0,5,0" />
 
-            <Button Width="80" Content="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" />
-            <Button Width="80" Content="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
+            <Button Width="80" Content="OK" AutomationProperties.AutomationId="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" />
+            <Button Width="80" Content="Cancel" AutomationProperties.AutomationId="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
         </StackPanel>
 
     </Grid>
