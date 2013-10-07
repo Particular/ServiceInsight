@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace NServiceBus.Profiler.Desktop.Settings
 {
     public class ProfilerSettings : SettingBase
     {
+        private int _autoRefresh;
+
         public ProfilerSettings()
         {
             RecentSearchEntries = new ObservableCollection<string>();
@@ -14,7 +17,11 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [DefaultValue(15)]
         [DisplayName("AutoRefresh Timer")]
         [Description("Auto refresh time in seconds")]
-        public int AutoRefreshTimer { get; set; }
+        public int AutoRefreshTimer
+        {
+            get { return Math.Max(10, _autoRefresh); }
+            set { _autoRefresh = value; }
+        }
 
         [DefaultValue(false)]
         [DisplayName("Display System Messages")]

@@ -5,7 +5,6 @@ using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Conversations;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
@@ -14,8 +13,9 @@ using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageHeaders;
+using NServiceBus.Profiler.Desktop.MessageFlow;
 using NServiceBus.Profiler.Desktop.MessageList;
+using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -334,7 +334,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         private void InitializeIdleTimer()
         {
-            _idleTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle) {Interval = TimeSpan.FromSeconds(0)};
+            _idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
             _idleTimer.Tick += (s, e) => OnApplicationIdle();
             _idleTimer.Start();
         }

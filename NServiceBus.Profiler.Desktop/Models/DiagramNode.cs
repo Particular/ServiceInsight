@@ -1,27 +1,33 @@
 ﻿using System;
 using System.Diagnostics;
+using Mindscape.WpfDiagramming;
 
 namespace NServiceBus.Profiler.Desktop.Models
 {
     [DebuggerDisplay("MessageType={MessageType},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
-    public class DiagramNode : StoredMessage
+    public class FlowDiagramNode : DiagramNode
     {
-        public DiagramNode(StoredMessage msg)
+        public FlowDiagramNode(StoredMessage msg)
         {
-            ConversationId = msg.ConversationId;
-            CorrelationId = msg.CorrelationId;
-            Destination = msg.Destination;
-            FailureDetails = msg.FailureDetails;
+//            ConversationId = msg.ConversationId;
+//            CorrelationId = msg.CorrelationId;
+//            Destination = msg.Destination;
+//            FailureDetails = msg.FailureDetails;
             Id = msg.Id;
-            MessageId = msg.MessageId;
-            IsDeferredMessage = msg.IsDeferredMessage;
-            MessageType = msg.MessageType;
-            OriginatingEndpoint = msg.OriginatingEndpoint;
-            ReceivingEndpoint = msg.ReceivingEndpoint;
-            RelatedToMessageId = msg.RelatedToMessageId;
-            Status = msg.Status;
-            TimeSent = msg.TimeSent;
-            Statistics = msg.Statistics;
+//            MessageId = msg.MessageId;
+//            IsDeferredMessage = msg.IsDeferredMessage;
+//            MessageType = msg.MessageType;
+//            OriginatingEndpoint = msg.OriginatingEndpoint;
+//            ReceivingEndpoint = msg.ReceivingEndpoint;
+//            RelatedToMessageId = msg.RelatedToMessageId;
+//            Status = msg.Status;
+//            TimeSent = msg.TimeSent;
+//            Statistics = msg.Statistics;
+        }
+
+        public string Id
+        {
+            get; set;
         }
 
         public string ShortMessageId

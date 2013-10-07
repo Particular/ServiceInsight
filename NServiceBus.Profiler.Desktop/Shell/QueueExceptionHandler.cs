@@ -3,6 +3,7 @@ using System.Messaging;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.ViewModels;
+using ExceptionHandler;
 using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
@@ -25,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IAppCommands appCommands, 
             IEventAggregator eventAggregator,
             IShellViewModel shell) 
-            : base(windowManager, screenFactory)
+            : base(screenFactory.Create<IExceptionViewModel>())
         {
             _windowManager = windowManager;
             _appCommands = appCommands;

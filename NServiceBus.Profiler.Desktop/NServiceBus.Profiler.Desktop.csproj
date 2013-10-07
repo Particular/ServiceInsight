@@ -73,68 +73,69 @@
     <Reference Include="Caliburn.PresentationFramework">
       <HintPath>..\packages\Caliburn.2.0\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Data.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Data.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Utils.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Utils.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Utils.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Controls.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Controls.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Controls.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Mvvm.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Core.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Docking.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v12.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.NavBar.v12.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v12.1.Core, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Docking.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v12.1.Core.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.NavBar.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Printing.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v12.1.Core, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Grid.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v12.1.Core.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v12.1.Core, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Layout.v12.1.Core.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v12.1, Version=12.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.VS2010.v12.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.VS2010.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.VS2010.v13.1.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
@@ -145,15 +146,15 @@
     <Reference Include="ExceptionHandler.Wpf">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="GraphSharp">
-      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphSharp.Controls">
-      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams">
+      <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.WpfDiagramming.Foundation">
+      <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -161,18 +162,6 @@
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.38.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="QuickGraph">
-      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph.Data">
-      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph.Graphviz">
-      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph.Serialization">
-      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -211,14 +200,6 @@
     <Reference Include="WpfAnimatedGif">
       <HintPath>..\packages\WpfAnimatedGif.1.4.2\lib\net\WpfAnimatedGif.dll</HintPath>
     </Reference>
-    <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WPFExtensions.1.0.0-Custom\WPFExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=1.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -233,15 +214,12 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="Conversations\ConversationGraph.cs" />
-    <Compile Include="Conversations\ConversationGraphLayout.cs" />
-    <Compile Include="Conversations\ConversationView.xaml.cs">
+    <Compile Include="MessageFlow\ConversationView.xaml.cs">
       <DependentUpon>ConversationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Conversations\ConversationViewModel.cs" />
-    <Compile Include="Conversations\IConversationView.cs" />
-    <Compile Include="Conversations\IConversationViewModel.cs" />
-    <Compile Include="Conversations\MessageEdge.cs" />
+    <Compile Include="MessageFlow\ConversationViewModel.cs" />
+    <Compile Include="MessageFlow\FlowDiagramConnection.cs" />
+    <Compile Include="MessageFlow\IConversationView.cs" />
     <Compile Include="Core\DefaultMapper.cs" />
     <Compile Include="Core\IMapper.cs" />
     <Compile Include="Core\INetworkOperations.cs" />
@@ -318,24 +296,26 @@
     <Compile Include="Management\DefaultManagementService.cs" />
     <Compile Include="Management\IManagementService.cs" />
     <Compile Include="Management\IManagementServiceConnection.cs" />
-    <Compile Include="MessageHeaders\Editors\EmptyTypeEditor.cs" />
-    <Compile Include="MessageHeaders\GatewayHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\IErrorHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\IGatewayHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\IGeneralHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\IMessagePropertiesViewModel.cs" />
-    <Compile Include="MessageHeaders\IPerformanceHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\ISagaHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\MessagePropertiesView.xaml.cs">
+    <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
+    <Compile Include="MessageFlow\MessageNode.cs" />
+    <Compile Include="MessageProperties\Editors\EmptyTypeEditor.cs" />
+    <Compile Include="MessageProperties\GatewayHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\IErrorHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\IGatewayHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\IGeneralHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
+    <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\ISagaHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
       <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MessageHeaders\MessagePropertiesViewModel.cs" />
-    <Compile Include="MessageHeaders\PerformanceHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\Editors\ResizableDropDownEditor.cs" />
-    <Compile Include="MessageHeaders\SagaHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\HeaderInfoPropertyDescriptor.cs" />
-    <Compile Include="MessageHeaders\HeaderInfoTypeConverter.cs" />
-    <Compile Include="MessageHeaders\Editors\SelectableTextBoxEditor.cs" />
+    <Compile Include="MessageProperties\MessagePropertiesViewModel.cs" />
+    <Compile Include="MessageProperties\PerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\Editors\ResizableDropDownEditor.cs" />
+    <Compile Include="MessageProperties\SagaHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\HeaderInfoPropertyDescriptor.cs" />
+    <Compile Include="MessageProperties\HeaderInfoTypeConverter.cs" />
+    <Compile Include="MessageProperties\Editors\SelectableTextBoxEditor.cs" />
     <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\GridSelectionPreserver.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
@@ -402,10 +382,10 @@
       <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\ManagementConnectionViewModel.cs" />
-    <Compile Include="MessageHeaders\ErrorHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\GeneralHeaderViewModel.cs" />
-    <Compile Include="MessageHeaders\HeaderInfoViewModelBase.cs" />
-    <Compile Include="MessageHeaders\IHeaderInfoViewModel.cs" />
+    <Compile Include="MessageProperties\ErrorHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
+    <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
     <Compile Include="MessageList\DeletedMessageConverter.cs" />
     <Compile Include="MessageList\FileSizeFormatProvider.cs" />
     <Compile Include="MessageList\FileSizeValueConverter.cs" />
@@ -494,7 +474,7 @@
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
-    <Page Include="Conversations\ConversationView.xaml">
+    <Page Include="MessageFlow\ConversationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -506,7 +486,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MessageHeaders\MessagePropertiesView.xaml">
+    <Page Include="MessageProperties\MessagePropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -630,10 +610,20 @@
     <Resource Include="Images\Alert.png" />
     <Resource Include="Images\Add-Small.png" />
     <Resource Include="Images\Delete-Small.png" />
+    <Resource Include="Images\CommandIcon.png" />
+    <Resource Include="Images\BlackArrowIcon.png" />
+    <Resource Include="Images\Clear.png" />
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\DiagramEndpointIcon.png" />
+    <Resource Include="Images\DiagramTimeView.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="License.lic" />
+    <None Include="Mindscape.WpfDiagramming.DiagramSurface.lic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
