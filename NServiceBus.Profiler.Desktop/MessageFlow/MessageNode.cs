@@ -19,6 +19,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Data as StoredMessage; }
         }
 
+        public bool DisplayEndpointInformation
+        {
+            get; set;
+        }
+
         public bool IsCurrentMessage { get; set; }
     }
 }

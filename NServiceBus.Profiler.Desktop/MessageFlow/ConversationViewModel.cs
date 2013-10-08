@@ -46,6 +46,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _view = (IConversationView)view;
         }
 
+        public void ToggleEndpointData()
+        {
+            ShowEndpoints = !ShowEndpoints;
+        }
+
         public async void Handle(MessageBodyLoaded @event)
         {
             var storedMessage = @event.Message as StoredMessage;
@@ -57,7 +62,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var relatedMessagesTask = await _managementService.GetConversationById(conversationId);
-                var nodes = relatedMessagesTask.ConvertAll(x => new MessageNode(x));
+                var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
                 CreateConversationNodes(storedMessage.Id, nodes);
                 LinkConversationNodes(nodes);
@@ -65,6 +70,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
                 _eventAggregator.Publish(new WorkFinished());
             }
+        }
+
+        private MessageNode CreateMessageNode(StoredMessage x)
+        {
+            return new MessageNode(x) { DisplayEndpointInformation = ShowEndpoints };
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -90,8 +100,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         private void AddConnection(MessageNode from, MessageNode to)
         {
-            var fromPoint = new DiagramConnectionPoint(from, Edge.Right);
-            var toPoint = new DiagramConnectionPoint(to, Edge.Left);
+            var fromPoint = new DiagramConnectionPoint(from, Edge.Bottom);
+            var toPoint = new DiagramConnectionPoint(to, Edge.Top);
             
             from.ConnectionPoints.Add(fromPoint);
             to.ConnectionPoints.Add(toPoint);
@@ -110,6 +120,19 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
                 _nodeMap.TryAdd(node.Message.Id, node);
                 Diagram.Nodes.Add(node);
+            }
+        }
+
+        public bool ShowEndpoints
+        {
+            get; set;
+        }
+
+        public void OnShowEndpointsChanged()
+        {
+            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
+            {
+                node.DisplayEndpointInformation = ShowEndpoints;
             }
         }
 

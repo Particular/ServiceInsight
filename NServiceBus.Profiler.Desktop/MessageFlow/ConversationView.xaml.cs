@@ -34,7 +34,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm
             {
                 Info = new FlowDiagramLayoutAlgorithmInfo(),
-                LayoutDirection = LayoutDirection.LeftToRight,
+                LayoutDirection = LayoutDirection.TopToBottom,
             });
             Surface.SizeToFit();
         }
