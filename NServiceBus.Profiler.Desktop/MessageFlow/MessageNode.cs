@@ -1,14 +1,16 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using Mindscape.WpfDiagramming;
 using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
+    [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
         public MessageNode(StoredMessage input)
         {
-            Bounds = new Rect(100, 100, 300, 90);
+            Bounds = new Rect(100, 100, 203, 75);
             ZOrder = 1;
             Data = input;
             IsResizable = true;
@@ -22,6 +24,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public bool DisplayEndpointInformation
         {
             get; set;
+        }
+
+        public bool IsPublished
+        {
+            get { return Message.MessageIntent == MessageIntent.Publish; }
         }
 
         public bool IsCurrentMessage { get; set; }

@@ -4,5 +4,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     public class MessageFlowDiagram : FlowDiagramModel
     {
+        public MessageFlowDiagram()
+        {
+            DefaultConnectionBuilder = new FlowDiagramConnectionBuilder();
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         private MessageNode CreateMessageNode(StoredMessage x)
         {
-            return new MessageNode(x) { DisplayEndpointInformation = ShowEndpoints };
+            return new MessageNode(x) { DisplayEndpointInformation = ShowEndpoints};
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -98,15 +98,26 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        private void AddConnection(MessageNode from, MessageNode to)
+        private void AddConnection(MessageNode parentNode, MessageNode childNode)
         {
-            var fromPoint = new DiagramConnectionPoint(from, Edge.Bottom);
-            var toPoint = new DiagramConnectionPoint(to, Edge.Top);
+            var fromPoint = new DiagramConnectionPoint(parentNode, Edge.Bottom);
+            var toPoint = new DiagramConnectionPoint(childNode, Edge.Top);
             
-            from.ConnectionPoints.Add(fromPoint);
-            to.ConnectionPoints.Add(toPoint);
+            parentNode.ConnectionPoints.Add(fromPoint);
+            childNode.ConnectionPoints.Add(toPoint);
 
-            Diagram.Connections.Add(new FlowDiagramConnection(fromPoint, toPoint));
+            DiagramConnection connection;
+
+            if (childNode.IsPublished)
+            {
+                connection = new EventConnection(fromPoint, toPoint);
+            }
+            else
+            {
+                connection = new CommandConnection(fromPoint, toPoint);
+            }
+
+            Diagram.Connections.Add(connection);
         }
 
         private void CreateConversationNodes(string selectedId, IEnumerable<MessageNode> relatedNodes)

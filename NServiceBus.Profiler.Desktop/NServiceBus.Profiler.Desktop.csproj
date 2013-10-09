@@ -214,11 +214,12 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageFlowView.xaml.cs">
       <DependentUpon>MessageFlowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
-    <Compile Include="MessageFlow\FlowDiagramConnection.cs" />
+    <Compile Include="MessageFlow\CommandConnection.cs" />
     <Compile Include="MessageFlow\IMessageFlowView.cs" />
     <Compile Include="Core\DefaultMapper.cs" />
     <Compile Include="Core\IMapper.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="Models\HeaderInfo.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageInfo.cs" />
+    <Compile Include="Models\MessageIntent.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Models\MessageStatus.cs" />
     <Compile Include="Models\PagedResult.cs" />
@@ -617,6 +619,7 @@
     <Resource Include="Images\DiagramEndpointToIcon.png" />
     <Resource Include="Images\DiagramTimeView.png" />
     <Resource Include="Images\DiagramEndpointFromIcon.png" />
+    <Resource Include="Images\EventIcon.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

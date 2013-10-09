@@ -6,6 +6,7 @@ namespace NServiceBus.Profiler.Desktop.Models
     public class StoredMessage : MessageBody
     {
         public MessageStatus Status { get; set; }
+        public MessageIntent MessageIntent { get; set; }
         public FailureDetails FailureDetails { get; set; }
         public Endpoint OriginatingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
