@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IMessageListViewModel Messages { get; }
         IStatusBarManager StatusBarManager { get; }
         ILogWindowViewModel LogWindow { get; }
-        IConversationViewModel Conversation { get; }
+        IMessageFlowViewModel MessageFlow { get; }
         IMessageBodyViewModel MessageBody { get; }
         IMessagePropertiesViewModel MessageProperties { get; }
         IShellView View { get; }

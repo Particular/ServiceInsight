@@ -214,12 +214,12 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="MessageFlow\ConversationView.xaml.cs">
-      <DependentUpon>ConversationView.xaml</DependentUpon>
+    <Compile Include="MessageFlow\MessageFlowView.xaml.cs">
+      <DependentUpon>MessageFlowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MessageFlow\ConversationViewModel.cs" />
+    <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnection.cs" />
-    <Compile Include="MessageFlow\IConversationView.cs" />
+    <Compile Include="MessageFlow\IMessageFlowView.cs" />
     <Compile Include="Core\DefaultMapper.cs" />
     <Compile Include="Core\IMapper.cs" />
     <Compile Include="Core\INetworkOperations.cs" />
@@ -474,7 +474,7 @@
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
-    <Page Include="MessageFlow\ConversationView.xaml">
+    <Page Include="MessageFlow\MessageFlowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -614,8 +614,9 @@
     <Resource Include="Images\BlackArrowIcon.png" />
     <Resource Include="Images\Clear.png" />
     <Resource Include="Images\Copy.png" />
-    <Resource Include="Images\DiagramEndpointIcon.png" />
+    <Resource Include="Images\DiagramEndpointToIcon.png" />
     <Resource Include="Images\DiagramTimeView.png" />
+    <Resource Include="Images\DiagramEndpointFromIcon.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

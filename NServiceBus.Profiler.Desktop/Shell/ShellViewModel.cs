@@ -48,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             ILicenseManager licenseManager,
-            IConversationViewModel conversation,
+            IMessageFlowViewModel messageFlow,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
@@ -61,7 +61,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _licenseManager = licenseManager;
             _settingsProvider = settingsProvider;
             MessageProperties = messageProperties;
-            Conversation = conversation;
+            MessageFlow = messageFlow;
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
@@ -71,7 +71,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             Items.Add(endpointExplorer);
             Items.Add(messageBodyViewer);
-            Items.Add(conversation);
+            Items.Add(messageFlow);
             Items.Add(queueExplorer);
             Items.Add(messages);
 
@@ -123,7 +123,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual IMessageListViewModel Messages { get; private set; }
 
-        public virtual IConversationViewModel Conversation { get; private set; }
+        public virtual IMessageFlowViewModel MessageFlow { get; private set; }
 
         public virtual IMessageBodyViewModel MessageBody { get; private set; }
 

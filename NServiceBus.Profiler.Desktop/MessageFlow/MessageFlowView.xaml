@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageFlow.ConversationView"
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageFlow.MessageFlowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -37,11 +37,17 @@
                                             <StackPanel VerticalAlignment="Top" 
                                                         Grid.Row="0" Grid.ColumnSpan="3" 
                                                         Margin="1">
-                                                <TextBlock Background="#4D4D4D" 
-                                                           Text="{Binding Data.OriginatingEndpoint}"
-                                                           FontSize="15"
-                                                           Foreground="White" 
-                                                           Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+                                                <StackPanel Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                            Orientation="Horizontal"
+                                                            Background="#4D4D4D">
+                                                    <Image Source="/Images/DiagramEndpointFromIcon.png" 
+                                                           Width="20" Margin="2,0,2,0"
+                                                           Stretch="Uniform" />
+                                                    <TextBlock Text="{Binding Data.OriginatingEndpoint}"
+                                                               FontSize="12"
+                                                               Foreground="White" 
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
                                             </StackPanel>
                                             
                                             <Image Source="pack://application:,,,/Images/CommandIcon.png" 
@@ -67,11 +73,17 @@
                                             <StackPanel VerticalAlignment="Bottom" 
                                                         Grid.Row="2" Grid.ColumnSpan="3" 
                                                         Margin="1">
-                                                <TextBlock Background="#4D4D4D" 
-                                                           Text="{Binding Data.ReceivingEndpoint}"
-                                                           Foreground="White"
-                                                           FontSize="15" 
-                                                           Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+                                                <StackPanel Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                            Orientation="Horizontal"
+                                                            Background="#4D4D4D">
+                                                    <Image Source="/Images/DiagramEndpointToIcon.png" 
+                                                           Width="20" Margin="2,0,2,0"
+                                                           Stretch="Uniform" />
+                                                    <TextBlock Text="{Binding Data.ReceivingEndpoint}"
+                                                               Foreground="White"
+                                                               FontSize="12"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
                                             </StackPanel>
 
                                         </Grid>

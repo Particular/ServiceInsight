@@ -42,7 +42,7 @@ namespace NServiceBus.Profiler.Tests.Shell
         protected static IMessageListViewModel MessageList;
         protected static ConnectToMachineViewModel ConnectToViewModel;
         protected static INetworkOperations NetworkOperations;
-        protected static IConversationViewModel Conversation;
+        protected static IMessageFlowViewModel MessageFlow;
         protected static IEventAggregator EventAggregator;
         protected static IExceptionHandler ExceptionHandler;
         protected static IStatusBarManager StatusbarManager;
@@ -65,7 +65,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             ExceptionHandler = Substitute.For<IExceptionHandler>();
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
-            Conversation = Substitute.For<IConversationViewModel>();
+            MessageFlow = Substitute.For<IMessageFlowViewModel>();
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
@@ -76,7 +76,7 @@ namespace NServiceBus.Profiler.Tests.Shell
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
-                                       StatusbarManager, EventAggregator, LicenseManager, Conversation, MessageBodyView,
+                                       StatusbarManager, EventAggregator, LicenseManager, MessageFlow, MessageBodyView,
                                        SettingsProvider, MessageProperties, LogWindow);
 
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);

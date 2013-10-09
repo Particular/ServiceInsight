@@ -5,20 +5,15 @@ using Mindscape.WpfDiagramming.Foundation;
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     /// <summary>
-    /// Interaction logic for ConversationView.xaml
+    /// Interaction logic for MessageFlowView.xaml
     /// </summary>
-    public partial class ConversationView : IConversationView
+    public partial class MessageFlowView : IMessageFlowView
     {
-        public ConversationView()
+        public MessageFlowView()
         {
             InitializeComponent();
         }
-
-        private IConversationViewModel Model
-        {
-            get { return DataContext as IConversationViewModel; }
-        }
-
+    
         public void ZoomToDefault()
         {
             
@@ -44,15 +39,4 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return ds; }
         }
     }
-
-/*
-    public class MyLayoutAlgorithmInfo : ILayoutAlgorithmInfo
-    {
-        public bool IsIncluded(IDiagramNode node)
-        {
-            return node is MessageNode;
-        }
-    }
-
-*/
 }

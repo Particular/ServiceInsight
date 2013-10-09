@@ -11,21 +11,21 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
-    public interface IConversationViewModel : IScreen, 
+    public interface IMessageFlowViewModel : IScreen, 
         IHandle<MessageBodyLoaded>,
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
     }
 
-    public class ConversationViewModel : Screen, IConversationViewModel
+    public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         private readonly IManagementService _managementService;
         private readonly IEventAggregator _eventAggregator;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
-        private IConversationView _view;
+        private IMessageFlowView _view;
 
-        public ConversationViewModel(
+        public MessageFlowViewModel(
             IManagementService managementService,
             IEventAggregator eventAggregator)
         {
@@ -43,7 +43,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = (IConversationView)view;
+            _view = (IMessageFlowView)view;
         }
 
         public void ToggleEndpointData()

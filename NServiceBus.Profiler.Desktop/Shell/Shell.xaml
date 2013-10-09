@@ -294,7 +294,7 @@
                                                  AllowFloat="False"
                                                  ShowBorder="False"
                                                  CaptionImage="/Images/Diagram.png">
-                                    <ContentControl cal:View.Model="{Binding Conversation}" />
+                                    <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
 
                                 <dxd:LayoutPanel x:Name="MessageBody"

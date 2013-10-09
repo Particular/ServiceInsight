@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
-    public interface IConversationView
+    public interface IMessageFlowView
     {
         void ZoomToDefault();
         void ZoomToFill();
