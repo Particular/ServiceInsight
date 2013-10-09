@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageFlow"
+             xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
     
@@ -15,6 +16,12 @@
                 <ms:FlowDiagramStyles />
                 <ResourceDictionary>
 
+                    <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
+                    <cnv:StartSegmentValueConverter x:Key="StartSegmentConverter" />
+                    <cnv:EndSegmentValueConverter x:Key="EndSegmentConverter" />
+                    <ms:SegmentsToAngleConverter x:Key="EndArrowRotationConverter" ConnectionEnd="Finish" />
+                    <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
+                    
                     <Style x:Key="MessageEndpointText" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="9" />
                         <Setter Property="Foreground" Value="White" />
@@ -28,13 +35,91 @@
                         <Setter Property="VerticalAlignment" Value="Center" />
                         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                     </Style>
+
+                    <Style x:Key="ConnectionPointRelocatorStyle" TargetType="ms:ConnectionRelocatorThumb">
+                        <Setter Property="Width" Value="18" />
+                        <Setter Property="Height" Value="18" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ms:ConnectionRelocatorThumb">
+                                    <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="#800000FF" Stroke="Blue" StrokeThickness="3">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform X="-9" Y="-9"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    
+                    <ControlTemplate x:Key="ConnectionStyleTemplate" TargetType="{x:Type ms:DiagramConnectionElement}">
+                        <Canvas>
+                            <!-- Path: -->
+                            <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Gray" StrokeThickness="4" />
+                            <Path Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="#00FFFFFF" StrokeThickness="4" />
+                            <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" />
+
+                            <!-- Middle arrow: -->
+                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Left" ContentTemplate="{TemplateBinding EndArrowTemplate}">
+                                <ContentControl.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="{Binding Connection.Segments, Converter={StaticResource EndArrowRotationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <TranslateTransform>
+                                            <TranslateTransform.X>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.X>
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TransformGroup>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
+
+                            <!-- Relocator thumbs and connection point thumb: -->
+                            <ms:ConnectionRelocatorThumb Name="toPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Finish" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         RenderTransform="{Binding ToConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ms:ConnectionRelocatorThumb Name="fromPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Start" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         RenderTransform="{Binding FromConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Canvas>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="SelectionHighlight" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="True" />
+                                    <Condition Binding="{Binding ReadOnlyCanSelect, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="SelectionHighlight" Property="Visibility" Value="Collapsed" />
+                            </MultiDataTrigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="toPoint" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="fromPoint" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainPath" Property="Stroke" Value="#007AC5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                     
                     <Style x:Key="MessageNodeStyle" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Foreground" Value="Black" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Grid>
+                                    <Grid x:Name="RootGrid">
                                         <Border Background="#CCCCCC" BorderBrush="#666666" BorderThickness="0" IsHitTestVisible="False" />
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -48,18 +133,16 @@
                                                 <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
 
-                                            <StackPanel VerticalAlignment="Top" 
-                                                        Grid.Row="0" Grid.ColumnSpan="3" 
-                                                        Margin="0">
-                                                <StackPanel Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
-                                                            Orientation="Horizontal"
-                                                            Background="#4D4D4D">
-                                                    <Image Source="/Images/DiagramEndpointFromIcon.png" 
-                                                           Width="12" Margin="3,0,3,0"
-                                                           Stretch="Uniform" />
-                                                    <TextBlock Text="{Binding Data.OriginatingEndpoint}"
-                                                               Style="{StaticResource MessageEndpointText}" />
-                                                </StackPanel>
+                                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                        Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Orientation="Horizontal"
+                                                        VerticalAlignment="Center"
+                                                        Background="#4D4D4D">
+                                                <Image Source="/Images/DiagramEndpointFromIcon.png" 
+                                                        Width="12" Margin="3,0,3,0"
+                                                        Stretch="Uniform" />
+                                                <TextBlock Text="{Binding Data.OriginatingEndpoint}"
+                                                           Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
                                             
                                             <Image Source="pack://application:,,,/Images/CommandIcon.png" 
@@ -83,30 +166,43 @@
                                                        Grid.Column="1" Grid.Row="1"
                                                        Text="{Binding Data.FriendlyMessageType}"
                                                        Style="{StaticResource MessageTypeText}"/>
+
+                                            <ToggleButton x:Name="MenuContainer" Grid.Column="2" Grid.Row="1"
+                                                          Width="20" Height="20"
+                                                          HorizontalContentAlignment="Center"
+                                                          VerticalContentAlignment="Center"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center">
+                                                <Image Source="/Images/BlackArrowIcon.png" Stretch="UniformToFill" />
+                                            </ToggleButton>
+                                            <Popup 
+                                                   IsOpen="{Binding IsChecked, ElementName=MenuContainer}" 
+                                                   StaysOpen="False"
+                                                   Placement="Bottom"
+                                                   PlacementTarget="{Binding ElementName=MenuContainer}">
+                                                <Button>Here I am</Button>
+                                            </Popup>
                                             
-                                            <Image Source="/Images/BlackArrowIcon.png" 
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Margin="5"
-                                                   Width="12"
-                                                   Grid.Column="2" Grid.Row="1" />
-
-                                            <StackPanel VerticalAlignment="Bottom" 
-                                                        Grid.Row="2" Grid.ColumnSpan="3" 
-                                                        Margin="0">
-                                                <StackPanel Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
-                                                            Orientation="Horizontal"
-                                                            Background="#4D4D4D">
-                                                    <Image Source="/Images/DiagramEndpointToIcon.png" 
-                                                           Width="12" Margin="3,0,3,0"
-                                                           Stretch="Uniform" />
-                                                    <TextBlock Text="{Binding Data.ReceivingEndpoint}"
-                                                               Style="{StaticResource MessageEndpointText}" />
-                                                </StackPanel>
+                                            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
+                                                        Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Background="#4D4D4D">
+                                                <Image Source="/Images/DiagramEndpointToIcon.png" 
+                                                        Width="12" Margin="3,0,3,0"
+                                                        Stretch="Uniform" />
+                                                <TextBlock Text="{Binding Data.ReceivingEndpoint}"
+                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
-
                                         </Grid>
                                     </Grid>
+<!--                                    <DataTemplate.Triggers>-->
+<!--                                        <DataTrigger Binding="{Binding DisplayEndpointInformation}" Value="True">-->
+<!--                                            <DataTrigger.Setters>-->
+<!--                                                <Setter Property="Height" TargetName="RootGrid" Value="75"/>-->
+<!--                                            </DataTrigger.Setters>-->
+<!--                                        </DataTrigger>-->
+<!--                                    </DataTemplate.Triggers>-->
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -147,22 +243,24 @@
                         <Setter Property="PathStyle" Value="{StaticResource CommandConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </DataTrigger>
-                        </Style.Triggers>
+                        <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
+<!--                        <Style.Triggers>-->
+<!--                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">-->
+<!--                                <Setter Property="Visibility" Value="Hidden" />-->
+<!--                            </DataTrigger>-->
+<!--                        </Style.Triggers>-->
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </DataTrigger>
-                        </Style.Triggers>
+                        <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
+<!--                        <Style.Triggers>-->
+<!--                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">-->
+<!--                                <Setter Property="Visibility" Value="Hidden" />-->
+<!--                            </DataTrigger>-->
+<!--                        </Style.Triggers>-->
                     </Style>
 
                     <ms:DiagramConnectionStyleSelector x:Key="ConnectionStyleSelector">

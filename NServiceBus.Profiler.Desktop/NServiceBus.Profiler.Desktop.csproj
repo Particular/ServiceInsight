@@ -474,6 +474,9 @@
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
+    <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
+    <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
+    <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
     <Page Include="MessageFlow\MessageFlowView.xaml">
@@ -620,6 +623,7 @@
     <Resource Include="Images\DiagramTimeView.png" />
     <Resource Include="Images\DiagramEndpointFromIcon.png" />
     <Resource Include="Images\EventIcon.png" />
+    <Resource Include="Images\DiagramEndpointIcon.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
