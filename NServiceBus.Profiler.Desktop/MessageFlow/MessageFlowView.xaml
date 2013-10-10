@@ -21,6 +21,24 @@
                     <cnv:EndSegmentValueConverter x:Key="EndSegmentConverter" />
                     <ms:SegmentsToAngleConverter x:Key="EndArrowRotationConverter" ConnectionEnd="Finish" />
                     <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
+
+                    <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
+                    <SolidColorBrush x:Key="FailedMessageBackground" Color="#FFA4A8" />
+                    
+                    <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
+                        <Setter Property="Text" Value="!" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Margin" Value="7,5,5,5" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DisplayEndpointInformation}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Margin" Value="7,15,5,5" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
                     
                     <Style x:Key="MessageEndpointText" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="9" />
@@ -120,7 +138,9 @@
                             <Setter.Value>
                                 <DataTemplate>
                                     <Grid x:Name="RootGrid">
-                                        <Border Background="#CCCCCC" BorderBrush="#666666" BorderThickness="0" IsHitTestVisible="False" />
+                                        <Border x:Name="MessageRectangle" Background="{StaticResource MessageBackground}" BorderBrush="#666666" BorderThickness="0" IsHitTestVisible="False" />
+                                        <TextBlock Style="{StaticResource FailedMessageMarker}"
+                                                   Visibility="{Binding HasFailed, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -167,22 +187,13 @@
                                                        Text="{Binding Data.FriendlyMessageType}"
                                                        Style="{StaticResource MessageTypeText}"/>
 
-                                            <ToggleButton x:Name="MenuContainer" Grid.Column="2" Grid.Row="1"
-                                                          Width="20" Height="20"
-                                                          HorizontalContentAlignment="Center"
-                                                          VerticalContentAlignment="Center"
-                                                          HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center">
-                                                <Image Source="/Images/BlackArrowIcon.png" Stretch="UniformToFill" />
-                                            </ToggleButton>
-                                            <Popup 
-                                                   IsOpen="{Binding IsChecked, ElementName=MenuContainer}" 
-                                                   StaysOpen="False"
-                                                   Placement="Bottom"
-                                                   PlacementTarget="{Binding ElementName=MenuContainer}">
-                                                <Button>Here I am</Button>
-                                            </Popup>
-                                            
+                                            <Image Grid.Column="2" Grid.Row="1"
+                                                   Margin="5"
+                                                   Width="12"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Source="/Images/BlackArrowIcon.png" Stretch="Uniform" />
+
                                             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         VerticalAlignment="Center"
@@ -196,13 +207,18 @@
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
-<!--                                    <DataTemplate.Triggers>-->
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding HasFailed}" Value="True">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
 <!--                                        <DataTrigger Binding="{Binding DisplayEndpointInformation}" Value="True">-->
 <!--                                            <DataTrigger.Setters>-->
 <!--                                                <Setter Property="Height" TargetName="RootGrid" Value="75"/>-->
 <!--                                            </DataTrigger.Setters>-->
 <!--                                        </DataTrigger>-->
-<!--                                    </DataTemplate.Triggers>-->
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>

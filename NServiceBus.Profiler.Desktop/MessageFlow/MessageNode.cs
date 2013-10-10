@@ -31,6 +31,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Message.MessageIntent == MessageIntent.Publish; }
         }
 
+        public bool HasFailed
+        {
+            get { return Message.Status == MessageStatus.Failed; }
+        }
+
         public bool IsCurrentMessage { get; set; }
     }
 }
