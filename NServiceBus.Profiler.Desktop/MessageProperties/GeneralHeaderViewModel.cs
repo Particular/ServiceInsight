@@ -1,52 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
 using Caliburn.PresentationFramework.ApplicationModel;
-using DevExpress.Xpf.Core;
-using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageProperties.Editors;
 using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
     {
-        private readonly IClipboard _clipboard;
+
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager, 
-            IClipboard clipboard) 
+            IQueueManagerAsync queueManager)
             : base(eventAggregator, decoder, queueManager)
         {
-            _clipboard = clipboard;
             _decoder = decoder;
             DisplayName = "General";
-        }
-
-        public virtual bool CanCopyHeaderInfo()
-        {
-            return !Headers.IsEmpty();
-        }
-
-        public virtual void CopyHeaderInfo()
-        {
-            var serializer = new XmlSerializer(typeof(HeaderInfo[]));
-            using (var stream = new MemoryStream())
-            {
-                var headers = new List<HeaderInfo>(Headers);
-                serializer.Serialize(stream, headers.ToArray());
-                var content = stream.ReadString();
-                _clipboard.CopyTo(content);
-            }
         }
 
         [Description("NServiceBus version")]
@@ -70,27 +44,26 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         [Description("Conversation Identifier")]
         public string ConversationId { get; private set; }
 
-        //[Editor(typeof(ResizableDropDownEditor), typeof(ResizableDropDownEditor))]
         [Description("Raw header information")]
         public string HeaderContent { get; private set; }
 
         protected override IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
-            HeaderContent = Encoding.UTF8.GetString(message.Headers);
+            var headerDecoder = new MessageHeaderDecoder(_decoder, message);
+            HeaderContent = headerDecoder.RawHeader;
 
-            var decodedResult = _decoder.Decode(message.Headers);
-            return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
+            return headerDecoder.DecodedHeaders;
         }
 
         protected override void MapHeaderKeys()
         {
-            ConditionsMap.Add(h => h.Key.EndsWith("Version", StringComparison.OrdinalIgnoreCase), h => Version = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("EnclosedMessageTypes", StringComparison.OrdinalIgnoreCase), h => EnclosedMessageTypes = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("Retries", StringComparison.OrdinalIgnoreCase), h => Retries = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("RelatedTo", StringComparison.OrdinalIgnoreCase), h => RelatedTo = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("ContentType", StringComparison.OrdinalIgnoreCase), h => ContentType = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("IsDeferedMessage", StringComparison.OrdinalIgnoreCase), h => IsDeferedMessage = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith("ConversationId", StringComparison.OrdinalIgnoreCase), h => ConversationId = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.Version, StringComparison.OrdinalIgnoreCase), h => Version = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.EnclosedMessageTypes, StringComparison.OrdinalIgnoreCase), h => EnclosedMessageTypes = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.Retries, StringComparison.OrdinalIgnoreCase), h => Retries = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.RelatedTo, StringComparison.OrdinalIgnoreCase), h => RelatedTo = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.ContentType, StringComparison.OrdinalIgnoreCase), h => ContentType = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.IsDeferedMessage, StringComparison.OrdinalIgnoreCase), h => IsDeferedMessage = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.ConversationId, StringComparison.OrdinalIgnoreCase), h => ConversationId = h.Value);
         }
 
         protected override void ClearHeaderValues()

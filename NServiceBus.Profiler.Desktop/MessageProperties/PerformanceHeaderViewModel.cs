@@ -9,7 +9,6 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
-    //[TypeConverter(typeof(HeaderInfoTypeConverter))]
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPerformanceHeaderViewModel
     {
         public PerformanceHeaderViewModel(

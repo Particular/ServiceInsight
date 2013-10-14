@@ -2,12 +2,17 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
+using ExceptionHandler;
 using Mindscape.WpfDiagramming;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -16,21 +21,39 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
+        void CopyConversationId(StoredMessage message);
+        void CopyMessageHeaders(StoredMessage message);
+        Task RetryMessage(StoredMessage message);
+        void ShowMessageBody(StoredMessage message);
+        void ToggleEndpointData();
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         private readonly IManagementService _managementService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
+        private readonly IHeaderInfoSerializer _headerInfoSerializer;
+        private readonly IClipboard _clipboard;
+        private readonly IStatusBarManager _statusBar;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
 
         public MessageFlowViewModel(
             IManagementService managementService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder,
+            IHeaderInfoSerializer headerInfoSerializer,
+            IClipboard clipboard, 
+            IStatusBarManager statusBar)
         {
             _managementService = managementService;
             _eventAggregator = eventAggregator;
+            _decoder = decoder;
+            _headerInfoSerializer = headerInfoSerializer;
+            _clipboard = clipboard;
+            _statusBar = statusBar;
+
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
@@ -46,9 +69,34 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _view = (IMessageFlowView)view;
         }
 
+        public void ShowMessageBody(StoredMessage message)
+        {
+            _eventAggregator.Publish(new SwitchToMessageBody());
+        }
+
         public void ToggleEndpointData()
         {
             ShowEndpoints = !ShowEndpoints;
+        }
+
+        public void CopyConversationId(StoredMessage message)
+        {
+            _clipboard.CopyTo(message.ConversationId);
+        }
+
+        public void CopyMessageHeaders(StoredMessage message)
+        {
+            var decodedHeader = new MessageHeaderDecoder(_decoder, message);
+            var serializedHeaders = _headerInfoSerializer.Serialize(decodedHeader.DecodedHeaders);
+            _clipboard.CopyTo(serializedHeaders);
+        }
+
+        public async Task RetryMessage(StoredMessage message)
+        {
+            _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", message.OriginatingEndpoint);
+            await _managementService.RetryMessage(message.Id);
+            _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
+            _statusBar.Done();
         }
 
         public async void Handle(MessageBodyLoaded @event)
@@ -74,7 +122,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         private MessageNode CreateMessageNode(StoredMessage x)
         {
-            return new MessageNode(x) { DisplayEndpointInformation = ShowEndpoints};
+            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints};
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -143,7 +191,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
-                node.DisplayEndpointInformation = ShowEndpoints;
+                node.ShowEndpoints = ShowEndpoints;
             }
         }
 

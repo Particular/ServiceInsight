@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Serialization;
+using DevExpress.Xpf.Docking;
 using log4net;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
@@ -33,6 +35,15 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public BarManager GetMenuManager()
         { 
             return BarManager;
+        }
+
+        public void SelectTab(string name)
+        {
+            var tab = DockManager.GetItem(name);
+            if (tab != null)
+            {
+                DockManager.Activate(tab);
+            }
         }
 
         public void OnSaveLayout(ISettingsProvider settingProvider)

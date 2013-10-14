@@ -122,7 +122,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public virtual void CopyHeaders()
         {
-            _generalHeaderDisplay.CopyHeaderInfo();
+            //_generalHeaderDisplay.CopyHeaderInfo();
         }
 
         public bool CanRetryMessage
@@ -141,7 +141,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public bool CanCopyHeaders
         {
-            get { return _generalHeaderDisplay.CanCopyHeaderInfo(); }
+            get
+            {
+                return false;
+            } //_generalHeaderDisplay.CanCopyHeaderInfo(); }
         }
 
         public bool CanCopyMessageId
@@ -421,6 +424,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _workCount = 0;
             NotifyOfPropertyChange(() => WorkInProgress);
+        }
+
+        public void Handle(MessageStatusChanged message)
+        {
+            var msg = Messages.OfType<StoredMessage>().FirstOrDefault(x => x.MessageId == message.MessageId);
+            if (msg != null)
+            {
+                msg.Status = MessageStatus.RetryIssued;
+            }
         }
     }
 }

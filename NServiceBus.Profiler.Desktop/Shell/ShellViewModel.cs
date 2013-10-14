@@ -312,6 +312,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
+        public int SelectedMessageTabItem { get; set; }
+
         public virtual bool CanConnectToMachine
         {
             get { return !WorkInProgress; }
@@ -441,6 +443,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual void Handle(AsyncOperationFailedEvent message)
         {
             StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
+        }
+
+        public virtual void Handle(SwitchToMessageBody @event)
+        {
+            View.SelectTab("MessageBody");
         }
     }
 }

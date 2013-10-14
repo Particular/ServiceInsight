@@ -19,6 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<AsyncOperationFailedEvent>,
+        IHandle<SwitchToMessageBody>,
         IWorkTracker
     {
         IQueueExplorerViewModel QueueExplorer { get; }

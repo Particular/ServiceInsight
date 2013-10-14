@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.RoutedMessaging;
 using DevExpress.Xpf.Bars;
@@ -21,7 +22,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             var contextMenu = new PopupMenu { Manager = _shell.GetMenuManager() };
             BarManager.SetDXContextMenu(view, contextMenu);
-
+            BarManager.SetDXContextMenuPlacement(view, PlacementMode.MousePoint);
+            BarManager.SetBarManager(view, _shell.GetMenuManager());
             foreach (var item in contextMenuItems)
             {
                 AddContextMenuItem(contextMenu, item);

@@ -87,9 +87,6 @@
                                x:Name="CreateQueue" 
                                AutomationProperties.AutomationId="CreateQueue"
                                CategoryName="Tools" Glyph="/Images/CreateQueue.png" />
-            <!--            <dxb:BarButtonItem Content="Create Message" x:Name="itemCreateMessage" -->
-            <!--                               CategoryName="Tools" Glyph="/Images/CreateMessage.png"-->
-            <!--                               cal:Message.Attach="[Event ItemClick]=[Action CreateMessage]" />-->
             <dxb:BarButtonItem Content="Import From File" 
                                x:Name="ImportMessage" 
                                AutomationProperties.AutomationId="{x:Static desktop:Screens+Shell.ImportMessageMenu}"

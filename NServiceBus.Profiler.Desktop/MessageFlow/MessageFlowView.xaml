@@ -24,7 +24,7 @@
 
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="FailedMessageBackground" Color="#FFA4A8" />
-                    
+
                     <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
                         <Setter Property="Text" Value="!" />
                         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -32,14 +32,33 @@
                         <Setter Property="FontWeight" Value="Bold" />
                         <Setter Property="Margin" Value="7,5,5,5" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding DisplayEndpointInformation}" Value="True">
+                            <DataTrigger Binding="{Binding ShowEndpoints}" Value="True">
                                 <DataTrigger.Setters>
                                     <Setter Property="Margin" Value="7,15,5,5" />
                                 </DataTrigger.Setters>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                    
+
+                    <Style x:Key="MessageMenuIndicator" TargetType="{x:Type CheckBox}">
+                        <Setter Property="FontFamily" Value="Verdana" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type CheckBox}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Width="8" Height="8"
+                                              Margin="-10,0,0,0"
+                                              x:Name="ChevronDown" 
+                                              Stretch="Fill" 
+                                              Fill="#FF000000" 
+                                              Data="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
                     <Style x:Key="MessageEndpointText" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="9" />
                         <Setter Property="Foreground" Value="White" />
@@ -154,7 +173,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
-                                                        Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Background="#4D4D4D">
@@ -187,15 +206,19 @@
                                                        Text="{Binding Data.FriendlyMessageType}"
                                                        Style="{StaticResource MessageTypeText}"/>
 
-                                            <Image Grid.Column="2" Grid.Row="1"
-                                                   Margin="5"
-                                                   Width="12"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Source="/Images/BlackArrowIcon.png" Stretch="Uniform" />
+                                            <CheckBox Grid.Column="2" Grid.Row="1" 
+                                                      x:Name="MenuContainer"
+                                                      Style="{StaticResource MessageMenuIndicator}" />
+                                            <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                                       DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
+                                                                       Placement="MousePoint"
+                                                                       AllowsTransparency="True"
+                                                                       StaysOpen="False">
+                                                <local:MessageActionPopup />
+                                            </local:MessagePopupControl>
 
                                             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
-                                                        Visibility="{Binding DisplayEndpointInformation, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         VerticalAlignment="Center"
                                                         Orientation="Horizontal"
                                                         Background="#4D4D4D">
@@ -213,11 +236,6 @@
                                                 <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
-<!--                                        <DataTrigger Binding="{Binding DisplayEndpointInformation}" Value="True">-->
-<!--                                            <DataTrigger.Setters>-->
-<!--                                                <Setter Property="Height" TargetName="RootGrid" Value="75"/>-->
-<!--                                            </DataTrigger.Setters>-->
-<!--                                        </DataTrigger>-->
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
                             </Setter.Value>
@@ -260,11 +278,6 @@
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
-<!--                        <Style.Triggers>-->
-<!--                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">-->
-<!--                                <Setter Property="Visibility" Value="Hidden" />-->
-<!--                            </DataTrigger>-->
-<!--                        </Style.Triggers>-->
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
@@ -272,11 +285,6 @@
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
-<!--                        <Style.Triggers>-->
-<!--                            <DataTrigger Binding="{Binding Connection.IsVisible, RelativeSource={RelativeSource Self}}" Value="False">-->
-<!--                                <Setter Property="Visibility" Value="Hidden" />-->
-<!--                            </DataTrigger>-->
-<!--                        </Style.Triggers>-->
                     </Style>
 
                     <ms:DiagramConnectionStyleSelector x:Key="ConnectionStyleSelector">
@@ -297,7 +305,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="Root">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />

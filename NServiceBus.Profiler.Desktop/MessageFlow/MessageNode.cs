@@ -8,12 +8,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        public MessageNode(StoredMessage input)
+        public MessageNode(IMessageFlowViewModel owner, StoredMessage message)
         {
+            Owner = owner;
             Bounds = new Rect(100, 100, 203, 75);
             ZOrder = 1;
-            Data = input;
+            Data = message;
             IsResizable = true;
+            ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
         }
 
         public StoredMessage Message
@@ -21,9 +23,61 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Data as StoredMessage; }
         }
 
-        public bool DisplayEndpointInformation
+        public IMessageFlowViewModel Owner
+        {
+            get; private set;
+        }
+
+        public void CopyConversationId()
+        {
+            Owner.CopyConversationId(Message);
+        }
+
+        public void CopyHeaders()
+        {
+            Owner.CopyMessageHeaders(Message);
+        }
+
+        public async void Retry()
+        {
+            await Owner.RetryMessage(Message);
+            Message.Status = MessageStatus.RetryIssued;
+            base.OnPropertyChanged("HasFailed");
+        }
+
+        public bool CanRetry()
+        {
+            return HasFailed;
+
+        }
+
+        public void ShowBody()
+        {
+            Owner.ShowMessageBody(Message);
+        }
+
+        public void Refresh()
+        {
+        }
+
+        public bool ShowEndpoints
         {
             get; set;
+        }
+
+        public bool ShowExceptionInfo
+        {
+            get { return !string.IsNullOrEmpty(ExceptionMessage); }
+        }
+
+        public string NSBVersion
+        {
+            get { return Message.GetHeaderByKey(MessageHeaderKeys.Version); }
+        }
+
+        public string SecondLevelRetries
+        {
+            get { return Message.GetHeaderByKey(MessageHeaderKeys.Retries); }
         }
 
         public bool IsPublished
@@ -33,7 +87,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public bool HasFailed
         {
-            get { return Message.Status == MessageStatus.Failed; }
+            get
+            {
+                return Message.Status == MessageStatus.Failed ||
+                       Message.Status == MessageStatus.RepeatedFailures;
+            }
+        }
+
+        public string ExceptionMessage
+        {
+            get; set;
         }
 
         public bool IsCurrentMessage { get; set; }

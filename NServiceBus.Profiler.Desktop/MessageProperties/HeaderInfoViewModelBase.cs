@@ -59,7 +59,7 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         protected virtual IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
-            var headers = message.Headers;
+            var headers = message.HeaderRaw;
             var decodedResult = _decoder.Decode(headers);
             
             return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];

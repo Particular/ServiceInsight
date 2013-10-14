@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
+using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Models;
@@ -146,7 +147,14 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private IRestClient CreateClient()
         {
-            return new RestClient(_connection.Url);
+            var client = new RestClient(_connection.Url);
+            var deserializer = new JsonMessageDeserializer();
+            client.ClearHandlers();
+            client.AddHandler("application/json", deserializer);
+            client.AddHandler("text/json", deserializer);
+            client.AddHandler("text/x-json", deserializer);
+            client.AddHandler("text/javascript", deserializer);
+            return client;
         }
 
         private static string CreateBaseUrl(string endpointName, string searchQuery)
@@ -281,7 +289,7 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         private static bool HasSucceeded(IRestResponse response)
         {
-            return SuccessCodes.Any(x => x == response.StatusCode);
+            return SuccessCodes.Any(x => x == response.StatusCode && response.ErrorException == null);
         }
 
         private void RaiseAsyncOperationFailed(string errorMessage)

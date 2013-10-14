@@ -6,5 +6,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
     {
         void ChangeTheme(string name);
         BarManager GetMenuManager();
+        void SelectTab(string name);
     }
 }

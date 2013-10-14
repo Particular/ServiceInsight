@@ -34,7 +34,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             var m = new MessageBody(source.Id, source.Label, source.SentTime)
             {
                 BodyRaw = source.BodyStream.GetAsBytes(),
-                Headers = source.Extension,
+                HeaderRaw = source.Extension,
                 CorrelationId = source.CorrelationId,
                 TransactionId = source.TransactionId,
                 Destination = source.DestinationQueue == null ? null : MapQueue(source.DestinationQueue),

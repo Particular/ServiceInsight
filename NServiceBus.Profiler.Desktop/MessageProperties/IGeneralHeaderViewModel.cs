@@ -12,8 +12,5 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         string IsDeferedMessage { get; }
         string ConversationId { get; }
         string HeaderContent { get; }
-
-        bool CanCopyHeaderInfo();
-        void CopyHeaderInfo();
     }
 }

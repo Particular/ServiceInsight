@@ -150,10 +150,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams">
+    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1679.23027, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.Foundation">
+    <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1679.23027, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -163,9 +165,9 @@
       <HintPath>..\packages\PropertyChanged.Fody.1.38.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RestSharp, Version=104.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RestSharp.104.1-Custom\RestSharp.dll</HintPath>
+      <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Licensing, Version=1.3.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,7 +216,13 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
+    <Compile Include="Events\MessageStatusChanged.cs" />
+    <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
+    <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">
+      <DependentUpon>MessageActionPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageFlow\MessageFlowView.xaml.cs">
       <DependentUpon>MessageFlowView.xaml</DependentUpon>
     </Compile>
@@ -299,24 +307,22 @@
     <Compile Include="Management\IManagementServiceConnection.cs" />
     <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
     <Compile Include="MessageFlow\MessageNode.cs" />
-    <Compile Include="MessageProperties\Editors\EmptyTypeEditor.cs" />
+    <Compile Include="MessageFlow\MessagePopupControl.cs" />
     <Compile Include="MessageProperties\GatewayHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\HeaderInfoSerializer.cs" />
     <Compile Include="MessageProperties\IErrorHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IGatewayHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IGeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\ISagaHeaderViewModel.cs" />
+    <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
       <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageProperties\MessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\PerformanceHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\Editors\ResizableDropDownEditor.cs" />
     <Compile Include="MessageProperties\SagaHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\HeaderInfoPropertyDescriptor.cs" />
-    <Compile Include="MessageProperties\HeaderInfoTypeConverter.cs" />
-    <Compile Include="MessageProperties\Editors\SelectableTextBoxEditor.cs" />
     <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\GridSelectionPreserver.cs" />
     <Compile Include="MessageList\IMessageListView.cs" />
@@ -339,7 +345,6 @@
     <Compile Include="Models\AccessMode.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressMode.cs" />
-    <Compile Include="Models\DiagramNode.cs" />
     <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\FailureDetails.cs" />
     <Compile Include="Models\HeaderInfo.cs" />
@@ -479,6 +484,10 @@
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
+    <Page Include="MessageFlow\MessageActionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageFlow\MessageFlowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -575,6 +584,7 @@
     <None Include="Images\HeaderPerformance.png" />
     <None Include="Images\HeaderGeneral.png" />
     <None Include="Images\HeaderGateway.png" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -624,14 +634,12 @@
     <Resource Include="Images\DiagramEndpointFromIcon.png" />
     <Resource Include="Images\EventIcon.png" />
     <Resource Include="Images\DiagramEndpointIcon.png" />
+    <Resource Include="Images\Exclamation.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <None Include="License.lic" />
-    <None Include="Mindscape.WpfDiagramming.DiagramSurface.lic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

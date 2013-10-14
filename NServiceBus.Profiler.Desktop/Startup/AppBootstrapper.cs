@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Autofac;
-using Caliburn.Core.Configuration;
 using Caliburn.Core.InversionOfControl;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Conventions;
@@ -35,7 +34,11 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
         private void WireTaskExceptionHandler()
         {
-            TaskScheduler.UnobservedTaskException += (s, e) => TryDisplayUnhandledException(e.Exception);
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                e.SetObserved();
+                LogException(e.Exception);
+            };
         }
 
         public IContainer GetContainer()
@@ -62,15 +65,22 @@ namespace NServiceBus.Profiler.Desktop.Startup
         {
             try
             {
-                Logger.Error(exception);
+                LogException(exception);
                 var handler = _container.Resolve<IExceptionHandler>();
                 handler.Handle(exception);
             }
             catch(Exception ex)
             {
-                Logger.Error("Failed to display exception dialog", ex);
-                Environment.Exit(-1);
+                LogException(ex);
             }
+        }
+
+        private static void LogException(Exception ex)
+        {
+            var baseError = ex.GetBaseException();
+            var message = string.Format("An unhandled exception occurred. Error message is {0}.", baseError.Message);
+
+            Logger.Error(message, ex);
         }
     }
 }
