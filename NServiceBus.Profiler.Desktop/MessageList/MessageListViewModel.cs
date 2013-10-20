@@ -60,7 +60,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             Items.Add(SearchBar);
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
-            ContextMenuItems = new BindableCollection<ContextMenuModel>();
+            ContextMenuItems = new BindableCollection<ContextMenuModel>
+            {
+                new ContextMenuModel(this, "ReturnToSource", "Return To Source", Properties.Resources.MessageReturn),
+                new ContextMenuModel(this, "RetryMessage", "Retry Message", Properties.Resources.MessageReturn),
+                new ContextMenuModel(this, "CopyMessageId", "Copy Message Identifier"),
+                new ContextMenuModel(this, "CopyHeaders", "Copy Headers")
+            };
         }
 
         public virtual IObservableCollection<ContextMenuModel> ContextMenuItems { get; private set; }
@@ -88,16 +94,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             base.AttachView(view, context);
             _view = (IMessageListView) view;
-            _view.SetupContextMenu();
-        }
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            ContextMenuItems.Add(new ContextMenuModel(this, "ReturnToSource", "Return To Source", Properties.Resources.MessageReturn));
-            ContextMenuItems.Add(new ContextMenuModel(this, "RetryMessage", "Retry Message", Properties.Resources.MessageReturn));
-            ContextMenuItems.Add(new ContextMenuModel(this, "CopyMessageId", "Copy Message Identifier"));
-            ContextMenuItems.Add(new ContextMenuModel(this, "CopyHeaders", "Copy Headers"));
         }
 
         public virtual void ReturnToSource()

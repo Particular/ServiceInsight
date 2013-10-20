@@ -10,7 +10,11 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         public LogWindowViewModel()
         {
-            ContextMenuItems = new BindableCollection<ContextMenuModel>();
+            ContextMenuItems = new BindableCollection<ContextMenuModel>
+            {
+                new ContextMenuModel(this, "Clear", "Clear All", Properties.Resources.Clear),
+                new ContextMenuModel(this, "CopyToClipboard", "Copy", Properties.Resources.Copy)
+            };
         }
 
         public override void AttachView(object view, object context)
@@ -18,11 +22,6 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
             base.AttachView(view, context);
             _view = (ILogWindowView)view;
             _view.Initialize();
-
-            ContextMenuItems.Add(new ContextMenuModel(this, "Clear", "Clear All", Properties.Resources.Clear));
-            ContextMenuItems.Add(new ContextMenuModel(this, "CopyToClipboard", "Copy", Properties.Resources.Copy));
-
-            _view.SetupContextMenu();
         }
 
         public void Clear()
@@ -41,6 +40,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
     public interface ILogWindowViewModel : IScreen
     {
         void Clear();
+        void CopyToClipboard();
         IObservableCollection<ContextMenuModel> ContextMenuItems { get; }
     }
 }

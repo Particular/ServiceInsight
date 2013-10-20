@@ -40,7 +40,6 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBar>().As<ISearchBarView>().SingleInstance();
-            builder.RegisterType<MenuManager>().As<IMenuManager>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
             builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();

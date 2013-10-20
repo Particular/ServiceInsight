@@ -73,75 +73,76 @@
     <Reference Include="Caliburn.PresentationFramework">
       <HintPath>..\packages\Caliburn.2.0\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Data.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Utils.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Utils.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Controls.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Controls.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Mvvm.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Core.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Core.v13.1.Extensions, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v13.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Grid.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Extensions, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.LayoutControl.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Mvvm.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Mvvm.v13.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.NavBar.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v13.1.Service, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Themes.VS2010.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.VS2010.v13.1.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="ExceptionHandler.IssueReporter.BitBucket">
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.IssueReporter.BitBucket.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler.Wpf">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
@@ -325,7 +326,6 @@
     <Compile Include="MessageProperties\SagaHeaderViewModel.cs" />
     <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\GridSelectionPreserver.cs" />
-    <Compile Include="MessageList\IMessageListView.cs" />
     <Compile Include="MessageList\IViewWithGrid.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
@@ -429,13 +429,11 @@
     <Compile Include="ScreenManager\DialogViewModel.cs" />
     <Compile Include="ScreenManager\MessageChoice.cs" />
     <Compile Include="ScreenManager\MessageIcon.cs" />
-    <Compile Include="Shell\IMenuManager.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IShellViewModel.cs" />
     <Compile Include="Shell\IStatusBarManager.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
-    <Compile Include="Shell\MenuManager.cs" />
     <Compile Include="Shell\QueueCreationView.xaml.cs">
       <DependentUpon>QueueCreationView.xaml</DependentUpon>
     </Compile>
@@ -479,6 +477,8 @@
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
+    <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
+    <Compile Include="ValueConverters\ContextMenuActionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />

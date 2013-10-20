@@ -7,6 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
     
@@ -31,7 +32,10 @@
                          ItemsSource="{Binding Messages}"
                          PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
-
+            <dxb:BarManager.DXContextMenu>
+                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                                       ItemTemplate="{StaticResource ContextMenuTemplate}" />
+            </dxb:BarManager.DXContextMenu>
             <dxg:GridControl.Columns>
                 <dxg:GridColumn AllowSorting="False" 
                                 AllowColumnFiltering="False"
@@ -125,7 +129,6 @@
                                ShowGroupPanel="False"
                                NavigationStyle="Row" 
                                FadeSelectionOnLostFocus="False">
-
                 </dxg:TableView>
             </dxg:GridControl.View>
         </dxg:GridControl>

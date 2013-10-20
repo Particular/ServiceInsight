@@ -7,6 +7,9 @@
              xmlns:startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:model="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -21,6 +24,8 @@
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
                     <cnv:StringEmptyOrNullToVisibilityConverter x:Key="StringEmptyOrNullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+                    <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
+                    <cnv:ContextMenuActionConverter x:Key="ContextMenuActionConverter" />
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -242,7 +247,17 @@
                                       PopupFooterButtons="Close"
                                       Height="22" />
                     </DataTemplate>
+                    
                     <DataTemplate x:Key="PropertyGridEmptyTextTemplate">
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="ContextMenuTemplate" DataType="model:ContextMenuModel">
+                        <ContentControl>
+                            <dxb:BarButtonItem cal:Message.Attach="{Binding Converter={StaticResource ContextMenuActionConverter}}" 
+                                               cal:Action.TargetWithoutContext="{Binding Owner}"
+                                               Content="{Binding DisplayName}"
+                                               Glyph="{Binding Image, Converter={StaticResource BitmapToGlyphConverter}}" />
+                        </ContentControl>
                     </DataTemplate>
 
 

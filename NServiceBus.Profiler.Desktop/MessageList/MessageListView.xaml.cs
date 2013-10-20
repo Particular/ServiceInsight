@@ -7,13 +7,13 @@ using DevExpress.Xpf.Core.Native;
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    /// <summary>
-    /// Interaction logic for MessageListView.xaml
-    /// </summary>
+    public interface IMessageListView : IViewWithGrid
+    {
+    }
+
     public partial class MessageListView : IMessageListView
     {
         private static class AdvancedEndpointColumns
@@ -24,7 +24,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             public const string MessageId = "Identifier";
         }
 
-        private readonly IMenuManager _menuManager;
         private readonly PropertyInfo _sortUpProperty;
         private readonly PropertyInfo _sortDownProperty;
 
@@ -35,17 +34,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        public MessageListView(IMenuManager menuManager)
-            : this()
-        {
-            _menuManager = menuManager;
-        }
-
-        public void SetupContextMenu()
-        {
-            _menuManager.CreateContextMenu(grid.View, Model.ContextMenuItems);
-        }
-
         private void OnFocusedMessageChanged(object sender, FocusedRowChangedEventArgs e)
         {
             if (Model != null)
@@ -53,7 +41,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 Model.FocusedMessage = e.NewRow as MessageInfo;
             }
         }
-
+        
         private IMessageListViewModel Model
         {
             get { return (IMessageListViewModel)DataContext; }
