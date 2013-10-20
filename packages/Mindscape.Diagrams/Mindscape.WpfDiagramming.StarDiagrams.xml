@@ -1,0 +1,743 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mindscape.WpfDiagramming.StarDiagrams</name>
+    </assembly>
+    <members>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.ConnectionRelocatorPositionConverter">
+            <summary>
+            Determines the offset of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionRelocator"/> from its
+            connection points.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.ConnectionRelocatorPositionConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Determines the offset of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionRelocator"/> from its
+            connection points.
+            </summary>
+            <param name="values">The values produced by the binding source.  The first value is the
+            destination connection point.  The second value is the origin connection point.
+            The third is the <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectable"/> to which the destination connection
+            point is attached.</param>
+            <param name="targetType">The type of the binding target property.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the conversion.</param>
+            <returns>A <see cref="T:System.Windows.Media.TranslateTransform"/> representing the offset of the connection
+            relocator.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.ConnectionRelocatorPositionConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Throws a <see cref="T:System.NotImplementedException"/>.
+            </summary>
+            <param name="value">The value produced by the binding target.</param>
+            <param name="targetTypes">The type to convert to.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the conversion.</param>
+            <returns>This conversion direction is not implemented by this converter.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverterBase">
+            <summary>
+            Provides common functionality for value converters which convert node
+            levels to brushes.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverterBase.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Picks a color from an array of colors according to the given integer. A SolidColourBrush
+            with the picked color is then returned.
+            </summary>
+            <param name="value">The int value produced by the binding source.</param>
+            <param name="targetType">The type of the binding target property.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the conversion.</param>
+            <returns>A <see cref="T:System.Windows.Media.SolidColorBrush"/> picked according to the given integer.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverterBase.ConvertLevelToBrush(System.Int32)">
+            <summary>
+            When overridden in a derived class, converts a node level to a <see cref="T:System.Windows.Media.Brush"/>.
+            </summary>
+            <param name="level">The level of the node in the diagram.</param>
+            <returns>A brush that can be used to draw the node.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverterBase.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts a value from a binding target for writing to a binding source.
+            </summary>
+            <param name="value">The value produced by the binding target.</param>
+            <param name="targetType">The type to convert to.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the conversion.</param>
+            <returns>This conversion direction is not implemented by this converter.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter">
+            <summary>
+            Converts the level value of a star diagram node into a <see cref="T:System.Windows.Media.LinearGradientBrush"/>. The level value
+            indicates what color will be used in the brush.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter.ConvertLevelToBrush(System.Int32)">
+            <summary>
+            Gets the gradient brush for nodes of the specified level.
+            </summary>
+            <param name="level">The level of the node in the diagram.</param>
+            <returns>A brush that can be used to draw the node.</returns>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter.Colors">
+            <summary>
+            Gets the list of colors to be used for drawing the nodes, in level order.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter.ColorFactor">
+            <summary>
+            Gets or sets the factor that is used to derive the two gradient colors. This value should
+            typically be between 0-1, and the smaller the value, the larger the distance between the
+            two colors.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter.StartPoint">
+            <summary>
+            Gets or sets the starting point of the gradient.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.LevelToGradientBrushConverter.EndPoint">
+            <summary>
+            Gets or sets the ending point of the gradient.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverter">
+            <summary>
+            An <see cref="T:System.Windows.Data.IValueConverter"/> that selects a <see cref="T:System.Windows.Media.SolidColorBrush"/> based on
+            the given integer value.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverter.ConvertLevelToBrush(System.Int32)">
+            <summary>
+            Gets the solid color brush for nodes of the specified level.
+            </summary>
+            <param name="level">The level of the node in the diagram.</param>
+            <returns>A brush that can be used to draw the node.</returns>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.LevelToBrushConverter.Colors">
+            <summary>
+            Gets the list of colors to be used for drawing the nodes, in level order.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramLayoutAlgorithmInfo">
+            <summary>
+            An <see cref="T:Mindscape.WpfDiagramming.Foundation.ILayoutAlgorithmInfo"/> implementation containing Star Diagram specific layout logic.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramLayoutAlgorithmInfo.IsIncluded(Mindscape.WpfDiagramming.Foundation.IDiagramNode)">
+            <summary>
+            Returns false if the given node is either a <see cref="T:Mindscape.WpfDiagramming.CommentNode"/> or a <see cref="T:Mindscape.WpfDiagramming.TitleNode"/>.
+            </summary>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNode"/> to test.</param>
+            <returns>True if the given node can be affected by the layout algorithm. False otherwise.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.ILayoutAlgorithm"/> that uses physics equations revolving around spring theory and
+            particle theory to force all the nodes of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> into a sutable position.
+            The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout"/> does not modify the positions of <see cref="T:Mindscape.WpfDiagramming.CommentNode"/>
+            or <see cref="T:Mindscape.WpfDiagramming.TitleNode"/> objects within the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.Run(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramNode)">
+            <summary>
+            Runs this layout algorithm on the given model while making sure the given node is not affected.
+            This is useful when the user is dragging a node.
+            </summary>
+            <param name="model">The diagram model to apply this layout algorithm to.</param>
+            <param name="node">The node that should not be affected by this algorithm.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.Run(Mindscape.WpfDiagramming.Foundation.IDiagramModel)">
+            <summary>
+            Runs the force-based layout algorithm on the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> for the number of iterations
+            defined by <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.MaxIterations"/> or until a suitable layout has been reached.
+            </summary>
+            <param name="model">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> to apply the force-based layout algorithm to.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.MaxIterations">
+            <summary>
+            Gets or sets the maximum number of iterations of the algorithm within one
+            call to the Run method.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.Damping">
+            <summary>
+            Gets or sets the damping of the force-based layout algorithm. This is typically between 0 - 1.
+            The higher the value, the faster the algorithm can run.
+            The lower the value, the more stable the algorithm will be.
+            A relatively good value for this is 0.6f.
+            0.9f is ideal if the <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.MaxIterations"/> is 1.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout.SeparationDistance">
+            <summary>
+            Gets or sets the distance that this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramForceBasedLayout"/> uses to separate different collections
+            of <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects within a diagram.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode">
+            <summary>
+            Represents the general type of <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> which simply holds some data.
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> objects have a single <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> attached to them.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode">
+            <summary>
+            Represents a node in a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.DefaultMass">
+            <summary>
+            The default value for the <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Mass"/> property.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Clone">
+            <summary>
+            Gets a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState"/> holding information about this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            </summary>
+            <returns>A <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState"/> representing this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.SetAs(Mindscape.WpfDiagramming.Foundation.IDiagramNodeState)">
+            <summary>
+            Unloads all the information from the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeState"/> and applies it to this
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            </summary>
+            <param name="state">An <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeState"/> holding information about a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.IsAncestorOf(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode)">
+            <summary>
+            Returns true if this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> is higher up in the star diagram parent
+            hierachy than the given node. That is, this method returns true if the given node is a child or sub-child
+            of this node. Returns false otherwise.
+            </summary>
+            <param name="node">A <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that may or may not be a child of this node.</param>
+            <returns>True if this node is an ancestor of the given node. False otherwise.</returns>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Mass">
+            <summary>
+            Gets or sets the mass of this node.
+            This is useful for layout algorithms.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Velocity">
+            <summary>
+            Gets or sets the velocity vector of this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            This is useful for layout algorithms.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.MainConnectionPoint">
+            <summary>
+            Gets the main <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> situated on this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            Generally this will either be the only found <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/>.
+            null is obtained if there are no connection points situated on this node.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.DefaultConnectionPoint">
+            <summary>
+            Gets the <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.MainConnectionPoint"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.StarDiagramParent">
+            <summary>
+            Gets the star diagram parent of this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            This parent is the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> at the 'source' end of a connection that this
+            node is the destination of.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.IsRoot">
+            <summary>
+            Gets or sets whether or not this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> is a central root of a collection
+            of nodes.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Level">
+            <summary>
+            Gets the level that this node sits in the star diagram node hierarchy.
+            A <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that has no <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.StarDiagramParent"/> is at level 0.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Root">
+            <summary>
+            Gets the absolute root of this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            The absolute root is the recursive star diagram parent of this one that has a null
+            <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.StarDiagramParent"/>. A <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that has a null
+            star diagram parent is the root of itself.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.Children">
+            <summary>
+            Gets a list of all the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects that this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> is
+            a <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.StarDiagramParent"/> of.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.NumberOfChildren">
+            <summary>
+            Gets the number of nodes that this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> is a <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.StarDiagramParent"/> of.
+            This value is calculated on the fly.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.CanOriginateNewConnections">
+            <summary>
+            Gets whether or not this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> can originate new connections.
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects can originate any number of connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode.CanReceiveNewConnections">
+            <summary>
+            Gets whether or not this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> can recieve new connection.
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects can accept any number of inbound connections.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.DataNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> class.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.DataStarDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> used to build <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> objects
+            and add them to a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.DataStarDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Creates a new <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> with the given position and dimensions, and then adds
+            it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> will be added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.DataStarDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Gets the default size of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> considers the default size of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> to be 60 x 60.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection">
+            <summary>
+            Represents a connection in a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> that connects between two
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.DefaultDesiredLength">
+            <summary>
+            The default value for the <see cref="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.DesiredLength"/> property.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.#ctor(Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> class.
+            </summary>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> at the start of the connection.</param>
+            <param name="toConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> at the end of the connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.#ctor(Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint,System.Collections.Generic.IList{Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> class.
+            </summary>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> at the start of the connection.</param>
+            <param name="toConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> at the end of the connection.</param>
+            <param name="segments">The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment"/> objects within this connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.AddConnectionPoint(System.Windows.Point,System.Double)">
+            <summary>
+            Throws a <see cref="T:System.NotSupportedException"/>. <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> objects do not support
+            mounted connections.
+            </summary>
+            <param name="point">Not used.</param>
+            <param name="buffer">Not used.</param>
+            <returns>Throws a <see cref="T:System.NotSupportedException"/>.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.Clone">
+            <summary>
+            Returns a <see cref="T:Mindscape.WpfDiagramming.Foundation.ConnectionState"/> holding information about this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            </summary>
+            <returns>A <see cref="T:Mindscape.WpfDiagramming.Foundation.ConnectionState"/> representing this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.</returns>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.ParentNode">
+            <summary>
+            Gets the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> is attached to
+            of which is the star-diagram-parent of the other node that this connection is attached to.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.ChildNode">
+            <summary>
+            Gets the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> is attached to
+            of which is the child of the other node that this connection is attached to.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.DesiredLength">
+            <summary>
+            Gets or sets the desired length of this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            This property is useful for layout algorithms which can atempt to allow the length of this
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> to get as close to the desired length as possible.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.Length">
+            <summary>
+            Gets the distance between the positions of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> objects
+            at each end of this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.CanOriginateNewConnections">
+            <summary>
+            Returns false. <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> objects can not originate connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.CanReceiveNewConnections">
+            <summary>
+            Returns false. <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> objects can not receive connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection.Pathfinder">
+            <summary>
+            Gets a <see cref="T:Mindscape.WpfDiagramming.Foundation.StraightLinePathfinder"/>.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionBuilder"/> that can build <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> objects
+            between two <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> objects and adds them to a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionBuilder.CreateConnection(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint)">
+            <summary>
+            Creates a new <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> between the two given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/>
+            objects. The connection is then added to this given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> that the new connection will be added to.</param>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> to be the source of the new connection.</param>
+            <param name="toConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> to be the destination of the new connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionBuilder.Mindscape#WpfDiagramming#Foundation#IDiagramConnectionBuilder#CreateConnection(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint)">
+            <summary>
+            Creates a new <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> between the two given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/>
+            objects. The new connection is then added to the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            Note that the given parameters will be cast into there appropriate star diagram equivilents.
+            </summary>
+            <param name="diagram">The diagram that the new connection will be added to.</param>
+            <param name="fromConnectionPoint">the connection point to be the source of the new connection.</param>
+            <param name="toConnectionPoint">The connection point to be the destination of the new connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionBuilder.CanCreateConnection(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint,Mindscape.WpfDiagramming.Foundation.ConnectionDropTarget)">
+            <summary>
+            This method can be overriden to provide additional logic for allowing a connection to be made between the given connection point and destination.
+            This implementation always returns true.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the connection will belong to.</param>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/> that represents the start of the connection.</param>
+            <param name="destination">Information about the potential destination of the connection.</param>
+            <returns>Whether or not a connection can be made.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint">
+            <summary>
+            Represents a point on a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> where a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>
+            can connect.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> class.
+            </summary>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that this connection point is to be situated on.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint.AddConnection(Mindscape.WpfDiagramming.Foundation.IDiagramConnection)">
+            <summary>
+            Attaches the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> to this <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/>.
+            </summary>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> to attach.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint.RemoveConnection(Mindscape.WpfDiagramming.Foundation.IDiagramConnection)">
+            <summary>
+            Removes the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> from this <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/>.
+            </summary>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> to remove.</param>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionRelocator">
+            <summary>
+            Provides connection validation logic for star diagrams.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionRelocator.CanRelocateConnection(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramConnection,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint,Mindscape.WpfDiagramming.Foundation.ConnectionDropTarget)">
+            <summary>
+            Returns true if a connection can be made between the given source and destination. Returns false otherwise.
+            Star diagram connection validation logic prevents any kind of cycles or loops being created.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> where the connection relocation is taking place.</param>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> that is being relocated.</param>
+            <param name="connectionPoint">The connection point at the end of the connection that is not being moved.</param>
+            <param name="dropTarget">Information about the possible destination of the connection.</param>
+            <returns>True if a connection is allowed to be made. False otherwise.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState">
+            <summary>
+            An extension of <see cref="T:Mindscape.WpfDiagramming.Foundation.ConnectionState"/> that holds extra information specific to
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState.#ctor(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState"/> by storing all the
+            important property values of the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            </summary>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> that this state will hold information about.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState.Apply(Mindscape.WpfDiagramming.Foundation.IDiagramConnection)">
+            <summary>
+            Applies the property values stored in this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState"/> on to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/>.
+            Note that because the Data property is readonly, it must be set by the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/>
+            itself if neccessary.
+            This method throws an <see cref="T:System.InvalidOperationException"/> if the given connection is not an instance of
+            <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            </summary>
+            <param name="connection">The connection onto which the state is being restored.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionState.DesiredLength">
+            <summary>
+            Gets the stored value for the DesiredLength property of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> object.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel">
+            <summary>
+            Represents a star diagram.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> class.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState">
+            <summary>
+            An extension of <see cref="T:Mindscape.WpfDiagramming.Foundation.NodeState"/> which holds extra information about a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState.#ctor(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState"/> class.
+            </summary>
+            <param name="node">The node whose state is to be snapshotted.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState.Apply(Mindscape.WpfDiagramming.Foundation.IDiagramNode)">
+            <summary>
+            Applies the property values stored in this <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState"/> on to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNode"/>.
+            Note that because the Data and Parent properties are readonly, these must be set by the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNode"/>
+            itself if neccessary.
+            </summary>
+            <param name="node">The node onto which the state is being restored.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNodeState.Mass">
+            <summary>
+            Gets the stored value for the mass property of a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer">
+            <summary>
+            Serializes or deserializes a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/> using an XML stream.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.SerializeNodeCore(Mindscape.WpfDiagramming.DiagramNode)">
+            <summary>
+            Returns an <see cref="T:System.Xml.Linq.XElement"/> for serializing the given node.
+            </summary>
+            <param name="node">The node to be serialized.</param>
+            <returns>The serialized node.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.AddStarDiagramNodeAttributes(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode)">
+            <summary>
+            Adds star diagram node specific attributes to the given <see cref="T:System.Xml.Linq.XElement"/> for the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            This can be called when serializing custom star diagram nodes.
+            </summary>
+            <param name="element">The <see cref="T:System.Xml.Linq.XElement"/> to add the attributes to.</param>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> being serialized.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.SerializeConnectionCore(Mindscape.WpfDiagramming.DiagramConnection)">
+            <summary>
+            Returns an <see cref="T:System.Xml.Linq.XElement"/> for serializing the given connection.
+            </summary>
+            <param name="connection">The connection to be serialized.</param>
+            <returns>The serialized connection.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.AddStarDiagramConnectionAttributes(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection)">
+            <summary>
+            Adds star diagram connection specific attributes to the given <see cref="T:System.Xml.Linq.XElement"/> for the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            This can be called when serializing custom star diagram connections.
+            </summary>
+            <param name="element">The <see cref="T:System.Xml.Linq.XElement"/> to add the attributes to.</param>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> being deserialized.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.CreateDiagram">
+            <summary>
+            Returns a new instance of <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+            <returns>A new <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.CreateNode(System.Xml.Linq.XElement)">
+            <summary>
+            Returns a deserialized node based on the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="xml">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the node.</param>
+            <returns>The deserialized node.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.SetStarDiagramNodeProperties(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode)">
+            <summary>
+            Deserializes the star diagram node specific attributes on the given <see cref="T:System.Xml.Linq.XElement"/> to set properties
+            on the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/>.
+            This can be called when deserializing custom star diagram nodes.
+            </summary>
+            <param name="element">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the attributes.</param>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> being deserialized.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.CreateConnection(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint,System.Collections.Generic.IList{Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment})">
+            <summary>
+            Returns a deserialized connection based on the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="xml">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the connection.</param>
+            <param name="source">The source connection point of the connection.</param>
+            <param name="destination">The destination connection point of the connection.</param>
+            <param name="segments">The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment"/> objects that make up the connection.</param>
+            <returns>The deserialized connection.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramXmlSerializer.SetStarDiagramConnectionProperties(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection)">
+            <summary>
+            Deserializes the star diagram connection specific attributes on the given <see cref="T:System.Xml.Linq.XElement"/> to set properties
+            on the given <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/>.
+            This can be called when deserializing custom star diagram connections.
+            </summary>
+            <param name="element">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the attributes.</param>
+            <param name="connection">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnection"/> being deserialized.</param>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.StandardStarDiagramToolBoxItems">
+            <summary>
+            Provides standard toolbox item resources.
+            </summary>
+            <summary>
+            StandardStarDiagramToolBoxItems
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StandardStarDiagramToolBoxItems.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StandardStarDiagramToolBoxItems"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StandardStarDiagramToolBoxItems.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.StandardStarDiagramToolBoxItems.DataNodeToolKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the standard <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>
+            used to add <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.DataNode"/> objects to a <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle">
+            <summary>
+            GradientStyle
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle.ConnectionStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle"/> style uses
+            to select connection styles.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle.NodeTemplateSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.DataTemplateSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle"/> style uses
+            to select node templates.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle.NodeStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.GradientStyle"/> style uses
+            to select node styles.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles">
+            <summary>
+            A <see cref="T:System.Windows.ResourceDictionary"/> containing standard visual styles for
+            flow diagrams.
+            </summary>
+            <summary>
+            StarDiagramStyles
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles.WhalesongFormatterKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the Whalesong diagram formatter.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.StarDiagramStyles.GradientStyleFormatterKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the GradientStyle diagram formatter.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong">
+            <summary>
+            Whalesong
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong.ConnectionStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong"/> style uses
+            to select connection styles.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong.NodeTemplateSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.DataTemplateSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong"/> style uses
+            to select node templates.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong.NodeStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.Styles.Whalesong"/> style uses
+            to select node styles.
+            </summary>
+        </member>
+    </members>
+</doc>

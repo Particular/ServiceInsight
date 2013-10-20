@@ -1,0 +1,604 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mindscape.WpfDiagramming.FlowDiagrams</name>
+    </assembly>
+    <members>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode">
+            <summary>
+            A <see cref="T:Mindscape.WpfDiagramming.DiagramNode"/> representing a decision in a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> class.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode.CanOriginateNewConnections">
+            <summary>
+            Returns true if there are at least two outbound connection points available. Returns false if there is only one available.
+            This ensures that one side of this DecisionNode is available for a connection to enter this node.
+            That is, a DescisionNode can not be fully taken up by outgoing connections, it must have at least one connection leading
+            into it or the flow chart diagram wouldn't be 'valid'.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode.CanReceiveNewConnections">
+            <summary>
+            Returns true.
+            <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> objects can accept any number of incomming connections.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode">
+            <summary>
+            A <see cref="T:Mindscape.WpfDiagramming.DiagramNode"/> representing the end of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.EndNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> class.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.EndNode.CanOriginateNewConnections">
+            <summary>
+            Returns false.
+            <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> objects can never originate new connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.EndNode.CanReceiveNewConnections">
+            <summary>
+            Returns true.
+            <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> objects can accept any number of incomming connections.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection">
+            <summary>
+            Represents a connection in a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection.#ctor(Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> class.
+            </summary>
+            <param name="fromConnectionPoint">The source of the connection.</param>
+            <param name="toConnectionPoint">The destination of the connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection.#ctor(Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint,System.Collections.Generic.IList{Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> class.
+            </summary>
+            <param name="fromConnectionPoint">The source of the connection.</param>
+            <param name="toConnectionPoint">The destination of the connection.</param>
+            <param name="segments">The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment"/> objects within this <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection.CanOriginateNewConnections">
+            <summary>
+            Gets whether the connection can be the source of a new outgoing connection.
+            For <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> objects, this will be false.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionBuilder"/> that can build <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> objects
+            between two <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> objects and add them to a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionBuilder.CreateConnection(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint)">
+            <summary>
+            Constructs a new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> between the two given <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> objects and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>. If the new connection is originating from a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/>, then
+            this method will also set its Data property by looking at the other connections comming from the node and predicting what the
+            label should be. This method can identify and predict (Yes, No, Maybe), (Y, N), (True, False), and (T, F) in both upper and lower case.
+            If no appropriate label can be predicted, then the Data will be set to be a number following the text "Decision".
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> will be added to.</param>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/> that is to be the start of the created connection.</param>
+            <param name="toConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/> that is to be the end of the created connection.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionBuilder.CanCreateConnection(Mindscape.WpfDiagramming.Foundation.IDiagramModel,Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint,Mindscape.WpfDiagramming.Foundation.ConnectionDropTarget)">
+            <summary>
+            This method can be overriden to provide additional logic for allowing a connection to be made between the given connection point and destination.
+            This implementation always returns true.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the connection will belong to.</param>
+            <param name="fromConnectionPoint">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/> that represents the start of the connection.</param>
+            <param name="dropTarget">Information about the potential destination of the connection.</param>
+            <returns>Whether or not a connection can be made.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint">
+            <summary>
+            Represents a point on a <see cref="T:Mindscape.WpfDiagramming.DiagramNode"/> where a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/>
+            can connect.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.Foundation.IDiagramConnectable,Mindscape.WpfDiagramming.Edge)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> class.
+            </summary>
+            <param name="connectable">The connectable object (node or connection) on which the connection point is situated.</param>
+            <param name="edge">The <see cref="T:Mindscape.WpfDiagramming.Edge"/> of the connectable that this point is situated on.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.Foundation.IDiagramConnectable,Mindscape.WpfDiagramming.Edge,Mindscape.WpfDiagramming.Foundation.ConnectionPointDirection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> class.
+            </summary>
+            <param name="connectable">The connectable object (node or connection) on which the connection point is situated.</param>
+            <param name="edge">The <see cref="T:Mindscape.WpfDiagramming.Edge"/> of the connectable that this point is situated on.</param>
+            <param name="flowDirection">Specifies whether the connection point supports inbound connections, outbound connections or both.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.Foundation.IDiagramConnectable,Mindscape.WpfDiagramming.Edge,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> class.
+            </summary>
+            <param name="connectable">The connectable object (node or connection) on which the connection point is situated.</param>
+            <param name="edge">The <see cref="T:Mindscape.WpfDiagramming.Edge"/> of the connectable that this point is situated on.</param>
+            <param name="index">The index identifier for this connection point.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint.CanOriginateNewConnections">
+            <summary>
+            Gets whether this <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> can originate new connections.
+            This will be true if this connection point currently has no connections attached to it, and
+            the diagram node can also originate new connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint.CanReceiveNewConnections">
+            <summary>
+            Gets whether this <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionPoint"/> can recieve new connections.
+            This will be true if this connection point does not currently have any outbound connections.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramLayoutAlgorithmInfo">
+            <summary>
+            An <see cref="T:Mindscape.WpfDiagramming.Foundation.ILayoutAlgorithmInfo"/> implementation containing Flow Diagram specific layout logic.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramLayoutAlgorithmInfo.IsIncluded(Mindscape.WpfDiagramming.Foundation.IDiagramNode)">
+            <summary>
+            Returns false if the given node is either a <see cref="T:Mindscape.WpfDiagramming.CommentNode"/> or a <see cref="T:Mindscape.WpfDiagramming.TitleNode"/>.
+            </summary>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNode"/> to test.</param>
+            <returns>True if the given node can be affected by the layout algorithm. False otherwise.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel">
+            <summary>
+            Represents a flow diagram.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/> class.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StartFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StartFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> with the given dropPosition as its bounds
+            and adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> as added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StartFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Gest the dafault size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartFlowDiagramNodeBuilder"/> considers the default size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> to be 100x40.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> with the given dropPosition as its bounds and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> is added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Gets the default size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StepFlowDiagramNodeBuilder.Shape">
+            <summary>
+            Gets or sets the shape to be used by the node.
+            The default is DiagramShapes.Process.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.DecisionFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> with the given dropPosition as its bounds and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> is added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.DecisionFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Gets the default size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionFlowDiagramNodeBuilder"/> considers the default size to be 120x80.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.EndFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.EndFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> with the given dropPosition as its bounds and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> is added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.EndFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Gets the default size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndFlowDiagramNodeBuilder"/> considers the default size of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> to be 100x40.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.CommentFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.CommentNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.CommentFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.CommentNode"/> with the given dropPosition as its bounds and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.CommentNode"/> is added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.CommentNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.CommentFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Returns the default size of a <see cref="T:Mindscape.WpfDiagramming.CommentNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.CommentFlowDiagramNodeBuilder"/> considers the default size of a <see cref="T:Mindscape.WpfDiagramming.CommentNode"/>
+            to be 200x40.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.TitleFlowDiagramNodeBuilder">
+            <summary>
+            A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNodeBuilder"/> for building <see cref="T:Mindscape.WpfDiagramming.TitleNode"/> objects.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.TitleFlowDiagramNodeBuilder.CreateNode(Mindscape.WpfDiagramming.Foundation.IDiagramModel,System.Windows.Rect)">
+            <summary>
+            Builds a new <see cref="T:Mindscape.WpfDiagramming.TitleNode"/> with the given dropPosition as its bounds and
+            adds it to the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/>.
+            </summary>
+            <param name="diagram">The <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramModel"/> that the new <see cref="T:Mindscape.WpfDiagramming.TitleNode"/> is added to.</param>
+            <param name="bounds">The position and dimensions of the newly created <see cref="T:Mindscape.WpfDiagramming.TitleNode"/>.</param>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.TitleFlowDiagramNodeBuilder.DefaultSize">
+            <summary>
+            Returns the default size of a <see cref="T:Mindscape.WpfDiagramming.TitleNode"/>.
+            This <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.TitleFlowDiagramNodeBuilder"/> considers the default size of a <see cref="T:Mindscape.WpfDiagramming.TitleNode"/>
+            to be 450x130
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode">
+            <summary>
+            A <see cref="T:Mindscape.WpfDiagramming.DiagramNode"/> representing a step in a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            A <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> can have any number if incomming connections but only allows for a single
+            outbound connection.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepNode.BuildConnectionPoint(Mindscape.WpfDiagramming.Edge)">
+            <summary>
+            Builds a connection point that can be added to this node.
+            </summary>
+            <param name="edge">The <see cref="T:Mindscape.WpfDiagramming.Edge"/> of the connection point.</param>
+            <returns>The connection point.</returns>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StepNode.CanOriginateNewConnections">
+            <summary>
+            Returns false if this <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> already has one outbound connection. Returns true otherwise.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StepNode.CanReceiveNewConnections">
+            <summary>
+            Returns true.
+            <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> objects can accept any number of incomming connections.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode">
+            <summary>
+            A <see cref="T:Mindscape.WpfDiagramming.DiagramNode"/> representing the start node of a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StartNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> class.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StartNode.CanReceiveNewConnections">
+            <summary>
+            Returns false.
+            <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> objects can never receive new connections.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StartNode.CanOriginateNewConnections">
+            <summary>
+            Returns false if this <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> already has one outbound connection. Returns true otherwise.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNodeTool">
+            <summary>
+            Provides attached properties which configure a <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>
+            to create <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/> objects with a specified <see cref="T:Mindscape.WpfDiagramming.DiagramShape"/>.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepNodeTool.GetShape(Mindscape.WpfDiagramming.DiagramNodeTool)">
+            <summary>
+            Gets the <see cref="T:Mindscape.WpfDiagramming.DiagramShape"/> for this <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>.
+            </summary>
+            <param name="obj">The element from which the property value is read.</param>
+            <returns>The DiagramShape of the specified DiagramNodeTool.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StepNodeTool.SetShape(Mindscape.WpfDiagramming.DiagramNodeTool,Mindscape.WpfDiagramming.DiagramShape)">
+            <summary>
+            Sets the <see cref="T:Mindscape.WpfDiagramming.DiagramShape"/> for this <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>.
+            </summary>
+            <param name="obj">The element to which the property value is written.</param>
+            <param name="value">The DiagramShape of the specified DiagramNodeTool.</param>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.FlowDiagrams.StepNodeTool.ShapeProperty">
+            <summary>
+            Identifies the Shape attached property.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Properties.Resources.CannotConnectToSourceNode">
+            <summary>
+              Looks up a localized string similar to A connection can not start and end in the same node.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer">
+            <summary>
+            Serializes and deserializes <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/> objects as XML.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer.SerializeNodeCore(Mindscape.WpfDiagramming.DiagramNode)">
+            <summary>
+            Returns an <see cref="T:System.Xml.Linq.XElement"/> for serializing the given node.
+            </summary>
+            <param name="node">The node to be serialized.</param>
+            <returns>The serialized node.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer.SerializeConnectionCore(Mindscape.WpfDiagramming.DiagramConnection)">
+            <summary>
+            Returns an <see cref="T:System.Xml.Linq.XElement"/> for serializing the given connection.
+            </summary>
+            <param name="connection">The connection to be serialized.</param>
+            <returns>The serialized connection.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer.CreateDiagram">
+            <summary>
+            Returns a new instance of <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+            <returns>A new <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer.CreateNode(System.Xml.Linq.XElement)">
+            <summary>
+            Returns a deserialized node based on the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="xml">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the node.</param>
+            <returns>The deserialized node.</returns>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramXmlSerializer.CreateConnection(System.Xml.Linq.XElement,Mindscape.WpfDiagramming.DiagramConnectionPoint,Mindscape.WpfDiagramming.DiagramConnectionPoint,System.Collections.Generic.IList{Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment})">
+            <summary>
+            Returns a deserialized connection based on the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="xml">The <see cref="T:System.Xml.Linq.XElement"/> for deserializing the connection.</param>
+            <param name="source">The source connection point of the connection.</param>
+            <param name="destination">The destination connection point of the connection.</param>
+            <param name="segments">The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramConnectionSegment"/> objects that make up the connection.</param>
+            <returns>The deserialized connection.</returns>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems">
+            <summary>
+            Provides standard toolbox item resources.
+            </summary>
+            <summary>
+            StandardFlowDiagramToolBoxItems
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems.StartNodeToolKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the standard <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>
+            used to add <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/> objects to a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems.DecisionNodeToolKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the standard <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>
+            used to add <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/> objects to a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.StandardFlowDiagramToolBoxItems.EndNodeToolKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the standard <see cref="T:Mindscape.WpfDiagramming.DiagramNodeTool"/>
+            used to add <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/> objects to a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramModel"/>.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles">
+            <summary>
+            A <see cref="T:System.Windows.ResourceDictionary"/> containing standard visual styles for
+            flow diagrams.
+            </summary>
+            <summary>
+            FlowDiagramStyles
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles.WhalesongFormatterKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for the Whalesong diagram formatter.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.FlowDiagramStyles.GradientStyleFormatterKey">
+            <summary>
+            Gets the <see cref="T:System.Windows.ResourceKey"/> for Gradient diagram formatter.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle">
+            <summary>
+            A <see cref="T:System.Windows.ResourceDictionary"/> containing a pretty visual style for
+            flow diagrams involving gradient brushes.
+            </summary>
+            <summary>
+            GradientStyle
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.StartNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.DecisionNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.EndNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.StepNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.ConnectionStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses
+            to select connection styles.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle.NodeStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.GradientStyle"/> uses
+            to select node styles.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong">
+            <summary>
+            A <see cref="T:System.Windows.ResourceDictionary"/> containing a standard visual style for
+            flow diagrams.
+            </summary>
+            <summary>
+            Whalesong
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> class.
+            </summary>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.StartNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StartNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.DecisionNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.DecisionNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.EndNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.EndNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.StepNodeStyleKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Style"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> uses for styling a <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.StepNode"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.ConnectionStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> style uses
+            to select connection styles.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong.NodeStyleSelectorKey">
+            <summary>
+            Returns the <see cref="T:System.Windows.ResourceKey"/> for the <see cref="T:System.Windows.Controls.StyleSelector"/> that the <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.Styles.Whalesong"/> style uses
+            to select node styles.
+            </summary>
+        </member>
+    </members>
+</doc>
