@@ -24,6 +24,9 @@
 
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="FailedMessageBackground" Color="#FFA4A8" />
+                    <SolidColorBrush x:Key="SelectedMessageBorder" Color="#0066CC" />
+                    <SolidColorBrush x:Key="SelectedMessageBackground" Color="#99CAE8" />
+                    <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="#FF1D25" />
 
                     <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
                         <Setter Property="Text" Value="!" />
@@ -157,7 +160,10 @@
                             <Setter.Value>
                                 <DataTemplate>
                                     <Grid x:Name="RootGrid">
-                                        <Border x:Name="MessageRectangle" Background="{StaticResource MessageBackground}" BorderBrush="#666666" BorderThickness="0" IsHitTestVisible="False" />
+                                        <Border x:Name="MessageRectangle" 
+                                                Background="{StaticResource MessageBackground}" 
+                                                BorderBrush="#666666" 
+                                                BorderThickness="0" IsHitTestVisible="False" />
                                         <TextBlock Style="{StaticResource FailedMessageMarker}"
                                                    Visibility="{Binding HasFailed, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
                                         <Grid>
@@ -172,7 +178,8 @@
                                                 <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
 
-                                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                                            <StackPanel x:Name="OriginatingEndPoint" 
+                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
@@ -217,7 +224,8 @@
                                                 <local:MessageActionPopup />
                                             </local:MessagePopupControl>
 
-                                            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
+                                            <StackPanel x:Name="ReceivingEndPoint" 
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         VerticalAlignment="Center"
                                                         Orientation="Horizontal"
@@ -236,6 +244,28 @@
                                                 <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding HasFailed}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
+                                            <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
+                                            <Setter TargetName="OriginatingEndPoint" Property="Background" Value="{StaticResource SelectedFailedMessageBorder}" />
+                                            <Setter TargetName="ReceivingEndPoint" Property="Background" Value="{StaticResource SelectedFailedMessageBorder}" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding HasFailed}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource SelectedMessageBackground}" />
+                                            <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
+                                            <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
+                                            <Setter TargetName="OriginatingEndPoint" Property="Background" Value="{StaticResource SelectedMessageBorder}" />
+                                            <Setter TargetName="ReceivingEndPoint" Property="Background" Value="{StaticResource SelectedMessageBorder}" />
+                                        </MultiDataTrigger>
+
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
                             </Setter.Value>
@@ -330,6 +360,8 @@
         <ms:DiagramSurface x:Name="ds" Background="White"
                            Grid.Row="1"
                            Diagram="{Binding Diagram}"
+                           IsReadOnly="True" 
+                           ReadOnlyCanSelect="True"
                            ZoomMode="MouseWheel"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"
