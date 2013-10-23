@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
@@ -22,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public ShellView()
         {
-            ChangeTheme(Theme.VS2010Name);
+            ChangeTheme(Theme.Office2013Name);
             InitializeComponent();
             BarManager.CheckBarItemNames = false;
         }

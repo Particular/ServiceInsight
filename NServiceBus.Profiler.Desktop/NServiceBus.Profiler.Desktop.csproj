@@ -137,9 +137,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.VS2010.v13.1.dll</HintPath>
+      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
       <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
