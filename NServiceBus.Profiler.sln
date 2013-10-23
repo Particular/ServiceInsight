@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Desktop", "NServiceBus.Profiler.Desktop\NServiceBus.Profiler.Desktop.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.Tests", "NServiceBus.Profiler.Tests\NServiceBus.Profiler.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{65414F37-1718-43AC-A985-1DE095C427E1}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Profiler.FunctionalTests", "NServiceBus.Profiler.FunctionalTests\NServiceBus.Profiler.FunctionalTests.csproj", "{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}"
 EndProject
