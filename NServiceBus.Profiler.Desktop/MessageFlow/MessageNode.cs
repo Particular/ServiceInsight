@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message)
         {
             Owner = owner;
-            Bounds = new Rect(100, 100, 203, 75);
+            Bounds = new Rect(100, 100, 203, 40);
             ZOrder = 1;
             Data = message;
             IsResizable = false;
@@ -63,6 +63,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public bool ShowEndpoints
         {
             get; set;
+        }
+
+        public void OnShowEndpointsChanged()
+        {
+            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, ShowEndpoints ? 75 : 40));
         }
 
         public bool ShowExceptionInfo

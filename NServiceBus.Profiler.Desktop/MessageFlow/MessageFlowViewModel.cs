@@ -192,7 +192,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
+                _view.UpdateNode(node);
             }
+
+            _view.UpdateConnections();
+            _view.ApplyLayout();
         }
 
         private void UpdateLayout()
@@ -200,6 +204,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             if (_view != null)
             {
                 _view.ApplyLayout();
+                _view.SizeToFit();
             }
         }
 

@@ -13,13 +13,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             InitializeComponent();
         }
-    
-        public void ZoomToDefault()
-        {
-            
-        }
 
-        public void ZoomToFill()
+        public void SizeToFit()
         {
             Surface.SizeToFit();
         }
@@ -31,12 +26,21 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 Info = new FlowDiagramLayoutAlgorithmInfo(),
                 LayoutDirection = LayoutDirection.TopToBottom,
             });
-            Surface.SizeToFit();
         }
 
         public DiagramSurface Surface
         {
             get { return ds; }
+        }
+
+        public void UpdateNode(IDiagramNode node)
+        {
+            Surface.Formatter.Layout.SetNodeBounds(node, node.Bounds);
+        }
+
+        public void UpdateConnections()
+        {
+            Surface.UpdateLayout();
         }
     }
 }
