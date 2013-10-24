@@ -217,6 +217,7 @@
                                                       x:Name="MenuContainer"
                                                       Style="{StaticResource MessageMenuIndicator}" />
                                             <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                                       RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                        DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                        Placement="MousePoint"
                                                                        AllowsTransparency="True"

@@ -26,6 +26,7 @@
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
                     <cnv:ContextMenuActionConverter x:Key="ContextMenuActionConverter" />
+                    <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
