@@ -17,6 +17,10 @@
                 <ResourceDictionary>
                     <startup:AppBootstrapper x:Key="Bootstrapper" />
                     
+                    <!--Fonts-->
+                    <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
+                    <sys:Double x:Key="MessageBodyFontSize">12</sys:Double>
+                    
                     <!-- Converters -->
                     <dx:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
                     <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />

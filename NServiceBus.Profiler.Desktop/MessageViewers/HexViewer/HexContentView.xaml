@@ -15,7 +15,11 @@
                     <ColumnDefinition MinWidth="350" Width="520" />
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding LineNumber, Mode=OneWay}" FontFamily="Courier New" Foreground="DarkCyan" Grid.Column="0"/>
+                <TextBlock Text="{Binding LineNumber, Mode=OneWay}"
+                           Margin="5"
+                           FontFamily="{StaticResource MessageBodyFontFamily}" 
+                           FontSize="{StaticResource MessageBodyFontSize}" 
+                           Foreground="DarkCyan" Grid.Column="0"/>
 
                 <!--Hex display of the byte Representative of the Hex char-->
                 <ItemsControl ItemsSource="{Binding Numbers}" 
@@ -32,13 +36,16 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="5" Text="{Binding Hex}" FontFamily="Courier New" Foreground="Black" />
+                            <TextBlock Margin="5" Text="{Binding Hex}" 
+                                       FontFamily="{StaticResource MessageBodyFontFamily}" 
+                                       FontSize="{StaticResource MessageBodyFontSize}" 
+                                       Foreground="Black" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
                 <!--Text display of the byte-->
-                <ItemsControl ItemsSource="{Binding Numbers}" Grid.Column="2" BorderBrush="{x:Null}">
+                <ItemsControl ItemsSource="{Binding Numbers}" Grid.Column="2" Margin="20,0,0,0" BorderBrush="{x:Null}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -46,7 +53,10 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" Background="Transparent" Text="{Binding Text}" FontFamily="Courier New" Foreground="Gray" />
+                            <TextBlock Margin="5" Background="Transparent" Text="{Binding Text}" 
+                                       FontFamily="{StaticResource MessageBodyFontFamily}" 
+                                       FontSize="{StaticResource MessageBodyFontSize}" 
+                                       Foreground="Gray" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

@@ -9,7 +9,10 @@
 
     <ScrollViewer>
         <RichTextBox x:Name="document"
-                     TextOptions.TextFormattingMode="Ideal"
+                     FontFamily="{StaticResource MessageBodyFontFamily}"
+                     FontSize="{StaticResource MessageBodyFontSize}"
+                     SnapsToDevicePixels="True"
+                     TextOptions.TextFormattingMode="Display"
                      UseLayoutRounding="True"
                      IsReadOnly="True"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
