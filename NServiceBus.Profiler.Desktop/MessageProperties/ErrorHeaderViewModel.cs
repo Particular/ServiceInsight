@@ -56,7 +56,7 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         protected override void MapHeaderKeys()
         {
-            ConditionsMap.Add(h => h.Key.StartsWith(MessageHeaderKeys.ExceptionStackTrace, StringComparison.OrdinalIgnoreCase), h => ExceptionInfo = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.ExceptionStackTrace, StringComparison.OrdinalIgnoreCase), h => ExceptionInfo = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.FailedQueue, StringComparison.OrdinalIgnoreCase), h => FailedQueue = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.TimeOfFailure, StringComparison.OrdinalIgnoreCase), h => TimeOfFailure = h.Value.ParseHeaderDate().ToString());
         }
