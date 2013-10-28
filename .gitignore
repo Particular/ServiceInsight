@@ -25,3 +25,7 @@ Release
 ![Pp]ackages/DevExpress
 ![Pp]ackages/ExceptionHandler
 ![Pp]ackages/Mindscape.Diagrams
+/Setup/bundles
+/Setup/binaries
+/Setup/Output Package
+/Setup/res-binary

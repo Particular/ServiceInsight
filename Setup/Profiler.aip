@@ -39,19 +39,25 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_CustomARPName" ComponentId="{ED484AE3-C508-4860-948D-0088E30435C0}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{3D290727-E7AA-440A-8E47-A840D3F9EE77}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="Particular.ServiceInsight.exe" ComponentId="{7E06D977-205F-4771-934A-D83EA04E273D}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Particular.ServiceInsight.exe"/>
     <ROW Component="Path" ComponentId="{AD0D258A-2196-4EE4-A030-632F9495900C}" Directory_="APPDIR" Attributes="4" Condition="DESK_SH" KeyPath="Path"/>
     <ROW Component="ProductInformation" ComponentId="{EDE6C5EB-DE0A-4FC2-9A69-9F35F16EBADE}" Directory_="APPDIR" Attributes="4" Condition="ALL_PROGRAMS_SH" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{EA7996F1-7FA9-4A26-A0CD-53C695E5EDBE}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="ServiceControl1.0.0" ComponentId="{D8032611-3302-4864-A7F9-C0377C3F22AD}" Directory_="APPDIR" Attributes="4" KeyPath="ServiceControl1.0.0" Options="2"/>
-    <ROW Component="ServiceInsight" ComponentId="{100AA272-A179-4390-B982-7EF90DE792A4}" Directory_="Profiler_Dir" Attributes="0"/>
     <ROW Component="TrialStart" ComponentId="{B3C3A924-2FB0-4B65-BEB8-01C0390A6F83}" Directory_="APPDIR" Attributes="260" Condition="NOT TRIAL_DATE_SEARCH" KeyPath="TrialStart"/>
+    <ROW Component="log4net.config" ComponentId="{459829B4-1DF2-46DD-A222-8E88FC53BE45}" Directory_="Profiler_Dir" Attributes="0" KeyPath="log4net.config" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="DTC" Title="DTC" Description="Install the Microsoft Distributed Transaction Coordinator (required for MSMQ)" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ROW Feature="MSMQ" Feature_Parent="DTC" Title="MSMQ" Description="Install Microsoft Message Queuing (requires DTC)" Display="3" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="ServiceControl1.0.0" Title="ServiceControl 1.0.0" Description="ServiceControl 1.0.0" Display="0" Level="32767" Attributes="0" Options="32" Components="ServiceControl1.0.0"/>
-    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_ExePath Path ProductInformation SHORTCUTDIR ServiceInsight TrialStart"/>
+    <ROW Feature="ServiceControl1.0.0" Title="ServiceControl" Description="ServiceControl" Display="0" Level="32767" Attributes="0" Options="32" Components="ServiceControl1.0.0"/>
+    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_ExePath Particular.ServiceInsight.exe Path ProductInformation SHORTCUTDIR TrialStart log4net.config"/>
     <ATTRIBUTE name="CurrentFeature" value="ServiceInsight"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Particular.ServiceInsight.exe" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.exe|Particular.ServiceInsight.exe" Attributes="0" SourcePath="binaries\Particular.ServiceInsight.exe" SelfReg="false" NextFile="Particular.ServiceInsight.pdb" DigSign="true"/>
+    <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.pdb|Particular.ServiceInsight.pdb" Attributes="0" SourcePath="binaries\Particular.ServiceInsight.pdb" SelfReg="false"/>
+    <ROW File="log4net.config" Component_="log4net.config" FileName="log4ne~1.con|log4net.config" Attributes="0" SourcePath="binaries\log4net.config" SelfReg="false" NextFile="Particular.ServiceInsight.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="Particular.ServiceInsight-[|ProductVersion][|OPT_PRERELEASE_NAME]"/>
@@ -230,14 +236,14 @@
     <ROW Dialog_="ServiceControlDialog" Control="CompanyText" Type="Text" X="83" Y="16" Width="191" Height="12" Attributes="196611" Text="[Manufacturer]" TextStyle="[ManufacturerFont]" Order="700"/>
     <ROW Dialog_="ServiceControlDialog" Control="ProductLogo" Type="Bitmap" X="17" Y="5" Width="59" Height="63" Attributes="1" Text="[AppLogoIcon]" Order="800"/>
     <ROW Dialog_="ServiceControlDialog" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="196611" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="900"/>
-    <ROW Dialog_="ServiceControlDialog" Control="Edit_1" Type="Edit" X="185" Y="168" Width="132" Height="18" Attributes="19" Property="PORT_VAL" Text="{260}" Order="1000"/>
+    <ROW Dialog_="ServiceControlDialog" Control="Edit_1" Type="Edit" X="163" Y="168" Width="154" Height="18" Attributes="19" Property="PORT_VAL" Text="{260}" Order="1000"/>
     <ROW Dialog_="ServiceControlDialog" Control="Text_1" Type="Text" X="28" Y="168" Width="125" Height="18" Attributes="65539" Property="TEXT_1_PROP_2_1" Text="ServiceControl Port:" Order="1100"/>
     <ROW Dialog_="ServiceControlDialog" Control="Text_2" Type="Text" X="28" Y="202" Width="125" Height="18" Attributes="65539" Property="TEXT_1_PROP_1_1" Text="Transport type:" Order="1200"/>
     <ROW Dialog_="ServiceControlDialog" Control="Text_3" Type="Text" X="28" Y="235" Width="125" Height="18" Attributes="65539" Property="TEXT_1_PROP_1_1_1" Text="Instance name:" Order="1300"/>
     <ROW Dialog_="ServiceControlDialog" Control="Text_4" Type="Text" X="28" Y="268" Width="125" Height="18" Attributes="65539" Property="TEXT_1_PROP_1_1_1_1" Text="Instance description:" Order="1400"/>
-    <ROW Dialog_="ServiceControlDialog" Control="Edit_2" Type="Edit" X="185" Y="235" Width="132" Height="18" Attributes="3" Property="INST_NAME" Text="{260}" Order="1500"/>
-    <ROW Dialog_="ServiceControlDialog" Control="Edit_3" Type="Edit" X="185" Y="268" Width="132" Height="18" Attributes="3" Property="INST_DESCRIPTION" Text="{260}" Order="1600"/>
-    <ROW Dialog_="ServiceControlDialog" Control="ComboBox_1" Type="ComboBox" X="185" Y="202" Width="132" Height="16" Attributes="196611" Property="TRANSPORT_TYPE" Text="{260}" Order="1700"/>
+    <ROW Dialog_="ServiceControlDialog" Control="Edit_2" Type="Edit" X="163" Y="235" Width="154" Height="18" Attributes="3" Property="INST_NAME" Text="{260}" Order="1500"/>
+    <ROW Dialog_="ServiceControlDialog" Control="Edit_3" Type="Edit" X="163" Y="268" Width="154" Height="18" Attributes="3" Property="INST_DESCRIPTION" Text="{260}" Order="1600"/>
+    <ROW Dialog_="ServiceControlDialog" Control="ComboBox_1" Type="ComboBox" X="163" Y="202" Width="154" Height="16" Attributes="196611" Property="TRANSPORT_TYPE" Text="{260}" Order="1700"/>
     <ROW Dialog_="UserExit" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="65539" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="700" MsiKey="UserExit#AdvInst"/>
     <ROW Dialog_="UserExit" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="800"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="VerifyReadyDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
@@ -346,7 +352,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
-    <ROW Directory_="Profiler_Dir" Component_="ServiceInsight"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
@@ -355,7 +360,7 @@
     <ROW Action="AI_CleanPrereq" Type="65" Source="Prereq.dll" Target="CleanPrereq" WithoutSeq="true"/>
     <ROW Action="AI_ConfigureChainer" Type="1" Source="Prereq.dll" Target="ConfigurePrereqLauncher"/>
     <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_ExtractFiles" Target="[AI_SETUPEXEPATH]"/>
-    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="Particular.Management"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="Particular.ServiceControl"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
@@ -445,9 +450,9 @@
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102"/>
     <ROW Action="ExecuteAction" Sequence="1298" SeqType="0" MsiKey="ExecuteAction"/>
-    <ROW Action="DetectService" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) )" Sequence="202"/>
+    <ROW Action="DetectService" Sequence="202"/>
     <ROW Action="UpdateFeaturesInstallStates" Condition="( NOT Installed )" Sequence="1279"/>
-    <ROW Action="AI_DATA_SETTER_1" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) )" Sequence="201"/>
+    <ROW Action="AI_DATA_SETTER_1" Sequence="201"/>
     <ROW Action="AI_DownloadPrereq" Sequence="1295"/>
     <ROW Action="AI_ExtractPrereq" Sequence="1296"/>
     <ROW Action="AI_InstallPrerequisite" Sequence="1297"/>
@@ -500,13 +505,13 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="ServiceControl1.0.0" DisplayName="ServiceControl 1.0.0" VersionMin="1.0.0.0" SetupFileUrl="bundles\ServiceControl 1.0.0.exe" Location="0" ExactSize="0" Win9xVersions="Windows 9x/ME" Operator="1" ComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" BasicUiComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" NoUiComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" Options="i" TargetName="ServiceControl 1.0.0.exe" Type="1" Feature="ServiceControl1.0.0"/>
+    <ROW PrereqKey="ServiceControl1.0.0" DisplayName="ServiceControl" VersionMin="1.0.0.0" SetupFileUrl="bundles\Particular.ServiceControl.exe" Location="0" ExactSize="0" Win9xVersions="Windows 9x/ME" Operator="1" ComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" BasicUiComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" NoUiComLine="/exenoui /qn PORT_VAL=&quot;[PORT_VAL]&quot; TRANSPORT_TYPE=&quot;[TRANSPORT_TYPE]&quot; INST_NAME=&quot;[INST_NAME]&quot; INST_DESCRIPTION=&quot;[INST_DESCRIPTION]&quot;" Options="i" TargetName="Particular.ServiceControl.exe" Type="1" Feature="ServiceControl1.0.0"/>
     <ATTRIBUTE name="PrereqsOrder" value="ServiceControl1.0.0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
     <ROW SearchKey="SystemFolderfile.dll" Prereq="ServiceControl1.0.0" SearchType="1" SearchString="HKLM\Software\KeyName" Order="1" Property="PREREQSEARCH"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
-    <ROW Directory_="Profiler_Dir" SourcePath="Files" Feature="ServiceInsight" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
+    <ROW Directory_="Profiler_Dir" SourcePath="binaries" Feature="ServiceInsight" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
   </COMPONENT>
 </DOCUMENT>
