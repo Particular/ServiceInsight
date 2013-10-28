@@ -32,6 +32,8 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public static Address ParseFormatName(string formatName)
         {
+            Guard.NotNull(() => formatName, formatName);
+
             var queueParts = formatName.Split('\\');
 
             if (queueParts.Length <= 1)

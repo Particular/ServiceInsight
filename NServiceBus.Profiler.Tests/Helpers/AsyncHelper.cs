@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Tests.Helpers
 {
-    public static class AsyncHelper
+    public class AsyncHelper
     {
         public static void Run(Action asyncMethod)
         {

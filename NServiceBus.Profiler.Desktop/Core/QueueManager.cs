@@ -44,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.Core
     {
         private readonly IQueueOperations _queueOperations;
 
-        public QueueManager() : this(new MSMQueueOperations())
+        public QueueManager() : this(new MSMQueueOperations(new DefaultMapper()))
         {
         }
 

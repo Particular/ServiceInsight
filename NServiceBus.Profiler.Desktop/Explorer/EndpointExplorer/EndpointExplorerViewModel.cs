@@ -145,7 +145,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public async Task FullRefresh()
         {
-            
+            await Task.Run(() => { });
         }
 
         public async Task PartialRefresh()

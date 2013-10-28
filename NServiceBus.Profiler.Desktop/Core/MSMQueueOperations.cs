@@ -14,10 +14,6 @@ namespace NServiceBus.Profiler.Desktop.Core
     {
         private readonly IMapper _mapper;
 
-        public MSMQueueOperations() : this(new DefaultMapper())
-        {
-        }
-
         public MSMQueueOperations(IMapper mapper)
         {
             _mapper = mapper;
@@ -36,7 +32,7 @@ namespace NServiceBus.Profiler.Desktop.Core
 
                 return mapped;
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 return new List<Queue>();
             }
@@ -157,7 +153,6 @@ namespace NServiceBus.Profiler.Desktop.Core
         public virtual void DeleteQueue(Queue queue)
         {
             var format = queue.Address.ToFormatName();
-
             MessageQueue.Delete(format);
         }
 

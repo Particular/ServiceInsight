@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
@@ -44,7 +45,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         void RefreshAll();
         void ImportMessage();
         void ExportMessage();
-        void CreateQueue();
+        Task CreateQueue();
         void CreateMessage();
     }
 }

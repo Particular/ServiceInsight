@@ -234,14 +234,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void CreateQueue()
+        public virtual async Task CreateQueue()
         {
             var screen = _screenFactory.CreateScreen<IQueueCreationViewModel>();
             var result = _windowManager.ShowDialog(screen);
 
             if(result.GetValueOrDefault(false))
             {
-                QueueExplorer.FullRefresh();
+                await QueueExplorer.FullRefresh();
             }
         }
 
