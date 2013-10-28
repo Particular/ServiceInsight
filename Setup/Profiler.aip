@@ -60,7 +60,7 @@
     <ROW File="log4net.config" Component_="log4net.config" FileName="log4ne~1.con|log4net.config" Attributes="0" SourcePath="binaries\log4net.config" SelfReg="false" NextFile="Particular.ServiceInsight.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="Particular.ServiceInsight-[|ProductVersion][|OPT_PRERELEASE_NAME]"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="Particular.ServiceInsight-[|ProductVersion][|OPT_PRERELEASE_NAME]" UACExecutionLevel="2"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
