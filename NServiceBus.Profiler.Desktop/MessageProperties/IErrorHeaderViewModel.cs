@@ -1,8 +1,6 @@
-﻿using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
-    public interface IErrorHeaderViewModel : IScreen
+    public interface IErrorHeaderViewModel : IPropertyDataProvider
     {
         string ExceptionInfo { get; }
         string FailedQueue { get; }

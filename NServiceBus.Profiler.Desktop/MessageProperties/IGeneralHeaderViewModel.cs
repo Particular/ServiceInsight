@@ -1,8 +1,6 @@
-﻿using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
-    public interface IGeneralHeaderViewModel : IScreen
+    public interface IGeneralHeaderViewModel : IPropertyDataProvider
     {
         string Version { get; }
         string EnclosedMessageTypes { get; }

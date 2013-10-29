@@ -316,6 +316,7 @@
     <Compile Include="MessageProperties\IGeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
+    <Compile Include="MessageProperties\IPropertyDataProvider.cs" />
     <Compile Include="MessageProperties\ISagaHeaderViewModel.cs" />
     <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
@@ -581,7 +582,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="ServiceInsight-About.png" />
-    <None Include="ServiceInsight-Splash.png" />
     <None Include="Images\HeaderError.png" />
     <None Include="Images\HeaderPerformance.png" />
     <None Include="Images\HeaderGeneral.png" />

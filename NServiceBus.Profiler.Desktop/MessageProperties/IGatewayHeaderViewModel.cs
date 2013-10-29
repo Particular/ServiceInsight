@@ -1,8 +1,6 @@
-using Caliburn.PresentationFramework.Screens;
-
 namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
-    public interface IGatewayHeaderViewModel : IScreen
+    public interface IGatewayHeaderViewModel : IPropertyDataProvider
     {
         string From { get; }
         string To { get; }

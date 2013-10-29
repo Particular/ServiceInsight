@@ -2,7 +2,7 @@
 
 namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
-    public interface IPerformanceHeaderViewModel : IHeaderInfoViewModel
+    public interface IPerformanceHeaderViewModel : IHeaderInfoViewModel, IPropertyDataProvider
     {
         DateTime? TimeSent { get; }
         DateTime? ProcessingStarted { get; }

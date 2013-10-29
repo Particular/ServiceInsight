@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -53,6 +53,11 @@
             <dxprg:PropertyDefinition Path="IsSagaTimeoutMessage" />
             <dxprg:PropertyDefinition Path="SagaId" />
         </dxprg:PropertyDefinition>
+        <dxprg:PropertyGridControl.MenuCustomizations>
+            <dxb:BarButtonItem Content="Copy" ItemClick="OnPropertyContentCopy" />
+            <dxb:RemoveBarItemAndLinkAction ItemName="{x:Static dxprg:BarItemNames.Refresh}" />
+            <dxb:RemoveBarItemAndLinkAction ItemName="{x:Static dxprg:BarItemNames.Reset}" />
+        </dxprg:PropertyGridControl.MenuCustomizations>
     </dxprg:PropertyGridControl>
 
 </UserControl>

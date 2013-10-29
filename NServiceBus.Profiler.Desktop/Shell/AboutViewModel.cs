@@ -59,6 +59,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void NavigateToSite()
         {
+            if (IsSplash) return;
+
             var supportUrl = GetType().Assembly.GetAttribute<SupportWebUrlAttribute>();
             _networkOperations.Browse(supportUrl.WebUrl);
         }

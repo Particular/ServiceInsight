@@ -1,17 +1,22 @@
 ﻿using System.ComponentModel;
 using Caliburn.PresentationFramework.Screens;
+using ExceptionHandler;
 
 namespace NServiceBus.Profiler.Desktop.MessageProperties
 {
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
     {
+        private readonly IClipboard _clipboard;
+
         public MessagePropertiesViewModel(
             IErrorHeaderViewModel error,
             IGeneralHeaderViewModel general,
             ISagaHeaderViewModel saga,
             IPerformanceHeaderViewModel performance,
-            IGatewayHeaderViewModel gateway)
+            IGatewayHeaderViewModel gateway,
+            IClipboard clipboard)
         {
+            _clipboard = clipboard;
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
@@ -33,5 +38,10 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ISagaHeaderViewModel Saga { get; private set; }
+
+        public void CopyPropertyValue(object value)
+        {
+            _clipboard.CopyTo(value.ToString());
+        }
     }
 }

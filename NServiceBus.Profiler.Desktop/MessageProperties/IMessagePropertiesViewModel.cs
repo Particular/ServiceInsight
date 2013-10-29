@@ -9,5 +9,6 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         ISagaHeaderViewModel Saga { get; }
         IPerformanceHeaderViewModel Performance { get; }
         IGatewayHeaderViewModel Gateway { get; }
+        void CopyPropertyValue(object value);
     }
 }
