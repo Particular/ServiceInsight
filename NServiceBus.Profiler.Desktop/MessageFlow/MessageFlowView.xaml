@@ -363,7 +363,7 @@
                            Diagram="{Binding Diagram}"
                            IsReadOnly="True" 
                            ReadOnlyCanSelect="True"
-                           ZoomMode="MouseWheel"
+                           ZoomMode="ControlMouseWheel"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"
                            HorizontalSnapSpecifier="{ms:SnapToInterval 20}"
