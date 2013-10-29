@@ -11,16 +11,25 @@
             <Setter Property="FontSize" Value="11" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="Black" />
-        </Style>        
+        </Style>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="Foreground" Value="#00A8E1" />
+            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+        </Style>
     </Window.Resources>
     <Canvas Background="White">
-        <Image Source="/ServiceInsight-About.png" Cursor="Hand" MouseDown="OnImageMouseDown" Stretch="None" />
+        <Image Source="/ServiceInsight-About.png" Stretch="None" />
 
         <TextBlock Style="{StaticResource InfoText}"
                    Margin="38"
                    Visibility="{Binding HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <Run Text="Registered to:" FontWeight="Bold" />
             <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
+        </TextBlock>
+
+        <TextBlock Margin="38 245"
+                   FontWeight="Bold" FontFamily="Tahoma" FontSize="10">
+            <Hyperlink Click="OnLinkClicked">www.particular.net</Hyperlink>
         </TextBlock>
 
         <StackPanel Margin="38 224" Orientation="Horizontal">

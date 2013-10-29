@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             get { return (AboutViewModel) DataContext; }
         }
 
-        private void OnImageMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnLinkClicked(object sender, RoutedEventArgs e)
         {
             Model.NavigateToSite();
         }
