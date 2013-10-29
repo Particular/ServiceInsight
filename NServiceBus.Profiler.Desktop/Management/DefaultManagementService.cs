@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
@@ -18,6 +17,12 @@ namespace NServiceBus.Profiler.Desktop.Management
 {
     public class DefaultManagementService : IManagementService
     {
+        public class ServiceControlHeaders
+        {
+            public const string ParticularVersion = "X-Particular-Version";
+            public const string TotalCount = "Total-Count";
+        }
+
         private readonly IManagementConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
         private readonly ProfilerSettings _settings;
@@ -92,7 +97,6 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         public async Task<string> GetVersion()
         {
-            Thread.Sleep(3000);
             var request = new RestRequest();
 
             LogRequest(request);
@@ -103,7 +107,7 @@ namespace NServiceBus.Profiler.Desktop.Management
                               response =>
                               ProcessResponse(
                                   restResponse =>
-                                  restResponse.Headers.First(x => x.Name == "X-Particular-Version").Value.ToString(),
+                                  restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(),
                                   response, completionSource));
 
             return await completionSource.Task;
@@ -180,7 +184,7 @@ namespace NServiceBus.Profiler.Desktop.Management
                     completionSource.SetResult(new PagedResult<T>
                     {
                         Result = response.Data,
-                        TotalCount = int.Parse(response.Headers.First(x => x.Name == "Total-Count").Value.ToString())
+                        TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
                     });
                 }
                 else

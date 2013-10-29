@@ -3,7 +3,8 @@ using Autofac;
 using Castle.Core.Logging;
 using NServiceBus.Profiler.Desktop.Modules;
 using NServiceBus.Profiler.FunctionalTests.Infrastructure;
-using NServiceBus.Profiler.FunctionalTests.Screens;
+using NServiceBus.Profiler.FunctionalTests.Parts;
+using NServiceBus.Profiler.FunctionalTests.ServiceControlStub;
 using NUnit.Framework;
 using TestStack.White;
 using TestStack.White.Configuration;
@@ -18,6 +19,8 @@ namespace NServiceBus.Profiler.FunctionalTests
         protected IMainWindow MainWindow;
         protected Application Application;
         protected IContainer Container;
+        protected Waiter Wait;
+        protected ServiceControl ServiceControlStub;
 
         public ICoreConfiguration Configuration { get; set; }
         public IMouse Mouse { get; set; }
@@ -30,6 +33,8 @@ namespace NServiceBus.Profiler.FunctionalTests
             {
                 var configuration = new ProfilerConfiguration();
                 
+                Wait = new Waiter();
+                ServiceControlStub = ServiceControl.Start();
                 Application = configuration.LaunchApplication();
                 MainWindow = configuration.GetMainWindow(Application);
                 Container = CreateContainer();
@@ -73,6 +78,7 @@ namespace NServiceBus.Profiler.FunctionalTests
         [TestFixtureTearDown]
         public void CleanUpTest()
         {
+            ServiceControlStub.Stop();
             Container.Dispose();
             Application.KillAndSaveState();
         }

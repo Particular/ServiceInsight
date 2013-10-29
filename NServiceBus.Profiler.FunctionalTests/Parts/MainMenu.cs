@@ -1,11 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-using TestStack.White.UIItems;
+﻿using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowStripControls;
 using TestStack.White.UIItems.WPFUIItems;
 
-namespace NServiceBus.Profiler.FunctionalTests.Screens
+namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
     public class MainMenu : ProfilerElement
     {
@@ -38,6 +36,11 @@ namespace NServiceBus.Profiler.FunctionalTests.Screens
             get { return GetMenuItem(ToolsMenu, Desktop.Screens.Shell.CreateQueueMenu); }
         }
 
+        public Button ConnectToManagementService
+        {
+            get { return GetMenuItem(ToolsMenu, Desktop.Screens.Shell.ConnectToManagementServiceMenu); }
+        }
+
         public GroupBox BarManager
         {
             get { return GetByAutomationId<GroupBox>(Desktop.Screens.Shell.BarManager); }
@@ -45,12 +48,12 @@ namespace NServiceBus.Profiler.FunctionalTests.Screens
 
         private MenuBar GetMenu(string name)
         {
-            return BarManager.Get<MenuBar>(name + name);
+            return BarManager.Get<MenuBar>(name);
         }
 
         private Button GetMenuItem(MenuBar menu, string name)
         {
-            return menu.Get<Button>(SearchCriteria.ByAutomationId(name + name));
+            return menu.Get<Button>(SearchCriteria.ByAutomationId(name));
         }
     }
 }

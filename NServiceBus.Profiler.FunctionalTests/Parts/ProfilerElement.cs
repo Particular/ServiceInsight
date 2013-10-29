@@ -1,7 +1,7 @@
 ﻿using TestStack.White.InputDevices;
 using TestStack.White.UIItems.Finders;
 
-namespace NServiceBus.Profiler.FunctionalTests.Screens
+namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
     public abstract class ProfilerElement
     {

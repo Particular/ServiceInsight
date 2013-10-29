@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             AutomationProperties.AutomationId="ServiceControlConnectionDialog"
              WindowStartupLocation="CenterOwner"
              ShowInTaskbar="False"
              ShowTitle="True"
@@ -38,6 +39,7 @@
                            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
         </StackPanel>
         <dxe:ComboBoxEdit x:Name="name" 
+                          AutomationProperties.AutomationId="ServiceUrl"
                           AutoComplete="True" 
                           ItemsSource="{Binding Path=RecentEntries}"
                           Text="{Binding ServiceUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -70,8 +72,15 @@
                    gif:ImageBehavior.AutoStart="True"
                    Visibility="{Binding WorkInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
                    Width="16" Height="16" Margin="0,0,5,0" />
-            <Button Width="80" Content="OK" IsDefault="True" Margin="5" cal:Message.Attach="Accept" IsEnabled="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}" />
-            <Button Width="80" Content="Cancel" IsCancel="True" Margin="5" cal:Message.Attach="Close" />
+            <Button Width="80" Content="OK" 
+                    IsDefault="True" Margin="5" 
+                    AutomationProperties.AutomationId="OK"
+                    cal:Message.Attach="Accept" 
+                    IsEnabled="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}" />
+            <Button Width="80" Content="Cancel" 
+                    IsCancel="True" Margin="5" 
+                    AutomationProperties.AutomationId="Cancel"
+                    cal:Message.Attach="Close" />
         </StackPanel>
     </Grid>
 

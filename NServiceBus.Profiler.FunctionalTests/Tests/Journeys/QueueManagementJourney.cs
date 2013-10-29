@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
+﻿using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.FunctionalTests.Screens;
+using NServiceBus.Profiler.FunctionalTests.Parts;
 using NUnit.Framework;
 using Shouldly;
 
-namespace NServiceBus.Profiler.FunctionalTests.Tests.QueueManagement
+namespace NServiceBus.Profiler.FunctionalTests.Tests.Journeys
 {
     public class QueueManagementJourney : ProfilerTests
     {
@@ -20,6 +19,7 @@ namespace NServiceBus.Profiler.FunctionalTests.Tests.QueueManagement
             var expectedAddress = new Address(queueName);
 
             Shell.MainMenu.ToolsMenu.Click();
+            //TODO: Activate Queue window first
             Shell.MainMenu.CreateQueue.Click();
             
             QueueCreationDialog.Activate();
@@ -27,8 +27,6 @@ namespace NServiceBus.Profiler.FunctionalTests.Tests.QueueManagement
             QueueCreationDialog.Okay.Click();
 
             QueueManager.GetQueues().ShouldContain(q => q.Address == expectedAddress);
-
-
         }
     }
 }

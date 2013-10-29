@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             AutomationProperties.AutomationId="QueueConnectionDialog"
              mc:Ignorable="d" 
              Width="380" Height="180"
              WindowStartupLocation="CenterOwner"

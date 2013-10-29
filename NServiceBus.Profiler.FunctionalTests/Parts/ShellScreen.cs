@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Windows.Automation;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Models;
-using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.TreeItems;
 using TestStack.White.Utility;
 
-namespace NServiceBus.Profiler.FunctionalTests.Screens
+namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
     public class ShellScreen : ProfilerElement
     {

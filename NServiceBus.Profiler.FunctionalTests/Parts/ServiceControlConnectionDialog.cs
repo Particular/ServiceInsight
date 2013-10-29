@@ -1,25 +1,26 @@
 ﻿using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.ListBoxItems;
 using TestStack.White.UIItems.WindowItems;
 
 namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
-    public class QueueCreationDialog : ProfilerElement
+    public class ServiceControlConnectionDialog : ProfilerElement
     {
         private Window dialog;
 
-        public QueueCreationDialog(IMainWindow mainWindow) : base(mainWindow)
+        public ServiceControlConnectionDialog(IMainWindow mainWindow) : base(mainWindow)
         {
         }
 
         public void Activate()
         {
-            dialog = MainWindow.ModalWindow(SearchCriteria.ByAutomationId("QueueConnectionDialog"));
+            dialog = MainWindow.ModalWindow(SearchCriteria.ByAutomationId("ServiceControlConnectionDialog"));
         }
 
-        public TextBox QueueName
+        public ComboBox ServiceUrl
         {
-            get { return dialog.Get<TextBox>("QueueName"); }
+            get { return dialog.Get<ComboBox>("ServiceUrl"); }
         }
 
         public Button Okay
@@ -30,6 +31,11 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
         public Button Cancel
         {
             get { return dialog.Get<Button>(SearchCriteria.ByAutomationId("Cancel")); }
+        }
+
+        public bool IsClosed
+        {
+            get { return dialog.IsClosed; }
         }
     }
 }

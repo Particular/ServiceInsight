@@ -1,5 +1,4 @@
 ﻿using System;
-using NServiceBus.Profiler.FunctionalTests.Screens;
 
 namespace NServiceBus.Profiler.FunctionalTests
 {
