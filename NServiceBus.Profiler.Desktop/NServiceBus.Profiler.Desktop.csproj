@@ -478,6 +478,7 @@
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
+    <Compile Include="ValueConverters\BoolToWindowBorderConverter.cs" />
     <Compile Include="ValueConverters\ContextMenuActionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
@@ -580,7 +581,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="ServiceInsight-About.png" />
-    <SplashScreen Include="ServiceInsight-Splash.png" />
+    <None Include="ServiceInsight-Splash.png" />
     <None Include="Images\HeaderError.png" />
     <None Include="Images\HeaderPerformance.png" />
     <None Include="Images\HeaderGeneral.png" />

@@ -41,6 +41,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBar>().As<ISearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
+            builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
@@ -60,6 +61,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (OptionsView);
                 yield return typeof (ShellView);
                 yield return typeof (ExceptionView);
+                yield return typeof (AboutView);
             }
         }
     }

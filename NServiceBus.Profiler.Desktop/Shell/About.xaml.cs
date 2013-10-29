@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -10,6 +11,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public AboutView()
         {
             InitializeComponent();
+        }
+
+        public static Window AsSplashScreen()
+        {
+            var vm = AboutViewModel.AsSplashScreenModel();
+            var view = new AboutView {DataContext = vm};
+
+            return view;
         }
 
         private AboutViewModel Model 

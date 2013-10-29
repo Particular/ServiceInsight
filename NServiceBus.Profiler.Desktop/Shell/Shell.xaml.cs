@@ -24,6 +24,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             ChangeTheme(Theme.Office2013Name);
             InitializeComponent();
             BarManager.CheckBarItemNames = false;
+            Loaded += OnShellLoaded;
+        }
+
+        private void OnShellLoaded(object sender, RoutedEventArgs e)
+        {
+            DXSplashScreen.Close();
         }
 
         public void ChangeTheme(string name)

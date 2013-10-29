@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Forms;
 using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
 using Caliburn.PresentationFramework.ViewModels;
 using Caliburn.PresentationFramework.Views;
 using Application = System.Windows.Application;
@@ -17,7 +16,8 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
     public interface IWindowManagerEx : IWindowManager
     {
         MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
-        bool? ShowDialog<T>() where T : IScreen;
+        bool? ShowDialog<T>() where T : class;
+        bool? ShowDialog<T>(T instance) where T : class;
     }
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
@@ -96,10 +96,15 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return MessageBoxResult.None;
         }
 
-        public bool? ShowDialog<T>() where T : IScreen
+        public bool? ShowDialog<T>() where T : class
         {
             var screen = _screenFactory.CreateScreen<T>();
             return base.ShowDialog(screen, null);
+        }
+
+        public bool? ShowDialog<T>(T instance) where T : class
+        {
+            return base.ShowDialog(instance, null);
         }
 
         protected override Window EnsureWindow(object model, object view, bool isDialog)

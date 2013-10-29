@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Caliburn.PresentationFramework.Screens;
 
 namespace NServiceBus.Profiler.Desktop.ScreenManager
 {
@@ -12,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             _container = container;
         }
 
-        public T CreateScreen<T>() where T : IScreen
+        public T CreateScreen<T>() where T : class
         {
             return _container.Resolve<T>();
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
@@ -91,6 +92,7 @@ namespace NServiceBus.Profiler.Desktop.Management
 
         public async Task<string> GetVersion()
         {
+            Thread.Sleep(3000);
             var request = new RestRequest();
 
             LogRequest(request);

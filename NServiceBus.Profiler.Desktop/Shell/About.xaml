@@ -1,24 +1,39 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.Shell.AboutView"
+﻿<Window x:Class="NServiceBus.Profiler.Desktop.Shell.AboutView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Height="319" Width="640">
-    <Grid Background="White">
+        Height="340" Width="640"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="{Binding Path=IsSplash, Converter={StaticResource BoolToWindowBorderConverter}}"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="InfoText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Tahoma" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>        
+    </Window.Resources>
+    <Canvas Background="White">
         <Image Source="/ServiceInsight-About.png" Cursor="Hand" MouseDown="OnImageMouseDown" Stretch="None" />
-        
-        <TextBlock FontFamily="Tahoma" FontSize="11" 
+
+        <TextBlock Style="{StaticResource InfoText}"
                    Margin="38"
-                   Visibility="{Binding License.HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                   Visibility="{Binding HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <Run Text="Registered to:" FontWeight="Bold" />
             <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
         </TextBlock>
-        
-        <TextBlock Padding="38 224" FontFamily="Tahoma" FontSize="11" FontWeight="Bold">
-            <Run Text="Version " />
-            <Run Text="{Binding AppVersion}" />
-            <Run Text=" / " />
-            <Run Text="Management API Version " />
-            <Run Text="{Binding ManagementApiVersion}" />
-        </TextBlock>
-        
-    </Grid>
-</UserControl>
+
+        <StackPanel Margin="38 224" Orientation="Horizontal">
+            <TextBlock Style="{StaticResource InfoText}">
+                <Run Text="Version " />
+                <Run Text="{Binding AppVersion}" />
+            </TextBlock>
+
+            <TextBlock Style="{StaticResource InfoText}" Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
+                <Run Text=" / " />
+                <Run Text="Management API Version " />
+                <Run Text="{Binding ServiceControlVersion}" />
+            </TextBlock>
+        </StackPanel>
+    </Canvas>
+</Window>
