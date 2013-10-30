@@ -368,7 +368,6 @@
     </Compile>
     <Compile Include="Options\OptionsViewModel.cs" />
     <Compile Include="Options\PropertyValueConverter.cs" />
-    <Compile Include="Screens.cs" />
     <Compile Include="ScreenManager\FileDialogModel.cs" />
     <Compile Include="ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />

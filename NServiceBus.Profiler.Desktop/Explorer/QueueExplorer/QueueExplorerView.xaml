@@ -30,6 +30,7 @@
             <dxg:TreeListControl.View>
                 <dxg:TreeListView x:Name="view" 
                                   TreeDerivationMode="ChildNodesSelector"
+                                  MouseLeftButtonUp="OnTreeClicked"
                                   FocusedRowChanged="OnFocusedRowChanged"
                                   NodeImageSelector="{StaticResource ExplorerImageSelector}"
                                   ChildNodesSelector="{StaticResource ChildSelector}"

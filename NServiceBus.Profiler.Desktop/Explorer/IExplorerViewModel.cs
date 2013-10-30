@@ -6,6 +6,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
     {
         int SelectedRowHandle { get; set; }
         ExplorerItem SelectedNode { get; set; }
+        void OnSelectedNodeChanged();
         Task FullRefresh();
         Task PartialRefresh();
         void Navigate(string navigateUri);
