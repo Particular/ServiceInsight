@@ -43,18 +43,37 @@
                         </Style.Triggers>
                     </Style>
 
+                    <Style x:Key="MessageTypeText" TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value="Arial Black" />
+                        <Setter Property="FontSize" Value="11" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="TextDecorations" Value="Underline" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
                     <Style x:Key="MessageMenuIndicator" TargetType="{x:Type CheckBox}">
                         <Setter Property="FontFamily" Value="Verdana" />
                         <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
                                     <StackPanel Orientation="Horizontal">
-                                        <Path Width="8" Height="8"
+                                        <TextBlock Text="{Binding Data.FriendlyMessageType}"
+                                                           MaxWidth="140"
+                                                           Style="{StaticResource MessageTypeText}"/>
+
+                                        <Path Width="5" Height="5"
+                                              Margin="4,8,4,4"
                                               x:Name="ChevronDown" 
                                               Stretch="Fill" 
                                               Fill="#FF000000" 
-                                              Data="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
+                                              Data="M 0 0 L 4 4 L 8 0 Z"/>
                                     </StackPanel>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -65,14 +84,6 @@
                         <Setter Property="FontSize" Value="9" />
                         <Setter Property="Foreground" Value="White" />
                         <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-
-                    <Style x:Key="MessageTypeText" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Arial Black" />
-                        <Setter Property="FontSize" Value="11" />
-                        <Setter Property="Foreground" Value="Black" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                     </Style>
 
                     <Style x:Key="ConnectionPointRelocatorStyle" TargetType="ms:ConnectionRelocatorThumb">
@@ -172,9 +183,8 @@
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="35" />
-                                                <ColumnDefinition Width="150" />
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel x:Name="OriginatingEndPoint" 
@@ -206,24 +216,20 @@
                                                    Stretch="Uniform"
                                                    Grid.Column="0" Grid.Row="1"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
-                                            
-                                            <TextBlock Padding="5,0,5,0" 
-                                                       Grid.Column="1" Grid.Row="1"
-                                                       Text="{Binding Data.FriendlyMessageType}"
-                                                       Width="140"
-                                                       Style="{StaticResource MessageTypeText}"/>
 
-                                            <CheckBox Grid.Column="2" Grid.Row="1" 
-                                                      x:Name="MenuContainer"
-                                                      Style="{StaticResource MessageMenuIndicator}" />
-                                            <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
-                                                                       RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
-                                                                       DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
-                                                                       Placement="MousePoint"
-                                                                       AllowsTransparency="True"
-                                                                       StaysOpen="False">
-                                                <local:MessageActionPopup />
-                                            </local:MessagePopupControl>
+                                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                                                                                                
+                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
+                                                
+                                                <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                                           RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
+                                                                           DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
+                                                                           Placement="MousePoint"
+                                                                           AllowsTransparency="True"
+                                                                           StaysOpen="False">
+                                                    <local:MessageActionPopup />
+                                                </local:MessagePopupControl>
+                                            </StackPanel>
 
                                             <StackPanel x:Name="ReceivingEndPoint" 
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
