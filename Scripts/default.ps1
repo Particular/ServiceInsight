@@ -8,7 +8,7 @@ properties {
   $buildartifacts_dir = "$build_dir\" 
   $sln_file = "$base_dir\NServiceBus.Profiler.sln" 
   $version = "4.0.0.0"
-  $humanReadableversion = "v4.0-BETA"
+  $humanReadableversion = Get-HumanReadable-Format
   $tools_dir = "$base_dir\Tools"
   $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
   $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
@@ -28,18 +28,15 @@ task Clean {
 } 
 
 task Init -depends Clean { 
-	
-	$commit = Commit-Hash
-	Write-Host "Commit hash is $comit"
-	
+		
 	Generate-Assembly-Info `
 		-file "$base_dir\NServiceBus.Profiler.Desktop\Properties\AssemblyInfo.cs" `
 		-title "ServiceInsight for NServiceBus" `
 		-description "ServiceInsight for NServiceBus" `
 		-company "Particular Software Incorporated" `
-		-product "ServiceInsight for NServiceBus $humanReadableversion ($commit)" `
+		-product "ServiceInsight for NServiceBus $humanReadableversion" `
 		-version $version `
-		-infoVersion "$humanReadableversion ($commit)" `
+		-infoVersion "$humanReadableversion" `
 		-clsCompliant "false" `
 		-internalsVisibleTo $test_assembly_name `
 		-copyright "Copyright © 2013 Particular Software Incorporated. All rights reserved" `

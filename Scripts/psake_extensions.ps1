@@ -13,6 +13,24 @@ function Commit-Hash
 	}
 }
 
+function Get-HumanReadable-Format
+{
+	Write-Host "Getting humman readable product format..."
+	$PatchVersion = $env:PatchVersion
+	$PreRelease = $env:PreRelease
+	$ProductVersion = $env:ProductVersion
+	$commit = Commit-Hash
+
+	if($ProductVersion)
+	{
+		Return "v$ProductVersion.$PatchVersion $PreRelease"
+	}
+	else
+	{
+    	Return "ChangeSet $commit"
+	}
+}
+
 function Get-Git-Commit
 {
 	$gitLog = git log --oneline -1
