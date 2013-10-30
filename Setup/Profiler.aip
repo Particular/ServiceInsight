@@ -19,6 +19,7 @@
     <ROW Property="MY_VERSION" Value="4.0"/>
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
     <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
+    <ROW Property="PORT_VAL" Value="33333" Type="4"/>
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
     <ROW Property="ProductCode" Value="1033:{6F29C354-F8C6-4F8B-BD85-63BB59E5E3FD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
@@ -287,6 +288,8 @@
     <ROW Dialog_="ManagementPackDialog" Control_="Edit_2" Action="Hide" Condition="(&amp;ManagementAPI = 2)"/>
     <ROW Dialog_="ManagementPackDialog" Control_="Text_5" Action="Show" Condition="((&amp;ManagementAPI = 3) AND NOT (!ManagementAPI = 3))"/>
     <ROW Dialog_="ManagementPackDialog" Control_="Text_5" Action="Hide" Condition="(&amp;ManagementAPI = 2)"/>
+    <ROW Dialog_="ServiceControlDialog" Control_="Next" Action="Disable" Condition="NOT PORT_VAL OR NOT TRANSPORT_TYPE OR NOT INST_NAME OR NOT INST_DESCRIPTION"/>
+    <ROW Dialog_="ServiceControlDialog" Control_="Next" Action="Enable" Condition="PORT_VAL AND TRANSPORT_TYPE AND INST_NAME AND INST_DESCRIPTION"/>
     <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@PrepareDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfRbDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRemoveDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminInstallPointDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ProgressDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ExitDialog#ProductNameTitle#Hide#NOT AIEXTERNALUI@ResumeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@BrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRepairDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminWelcomeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@CustomizeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@FatalError#ProductNameTitle#Hide#NOT AIEXTERNALUI@UserExit#ProductNameTitle#Hide#NOT AIEXTERNALUI"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
