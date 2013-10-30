@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Autofac;
 using Castle.Core.Logging;
 using NServiceBus.Profiler.Desktop.Modules;
@@ -9,20 +10,24 @@ using NUnit.Framework;
 using TestStack.White;
 using TestStack.White.Configuration;
 using TestStack.White.InputDevices;
+using TestStack.White.UIItems.WindowItems;
 
 namespace NServiceBus.Profiler.FunctionalTests
 {
     [TestFixture]
     public abstract class TestBase
     {
-        protected readonly ILogger Logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(TestBase));
-        protected IMainWindow MainWindow;
+        protected LoggerLevel TestLoggerLevel = LoggerLevel.Debug;
+        protected Window MainWindow;
         protected Application Application;
+        protected ProfilerConfiguration Configuration;
         protected IContainer Container;
         protected Waiter Wait;
+        protected NameGenerator NameGenerator;
         protected ServiceControl ServiceControlStub;
+        protected ILogger Logger;
 
-        public ICoreConfiguration Configuration { get; set; }
+        public ICoreConfiguration CoreConfiguration { get; set; }
         public IMouse Mouse { get; set; }
         public IKeyboard Keyboard { get; set; }
 
@@ -31,14 +36,16 @@ namespace NServiceBus.Profiler.FunctionalTests
         {
             try
             {
-                var configuration = new ProfilerConfiguration();
-                
+                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof (TestBase));
                 Wait = new Waiter();
+                NameGenerator = new NameGenerator();
                 ServiceControlStub = ServiceControl.Start();
-                Application = configuration.LaunchApplication();
-                MainWindow = configuration.GetMainWindow(Application);
+                Configuration = new ProfilerConfiguration();
+                Application = Configuration.LaunchApplication();
+                MainWindow = Configuration.GetMainWindow(Application);
                 Container = CreateContainer();
                 OnApplicationInitialized();
+                OnSetupUI();
             }
             catch (Exception ex)
             {
@@ -46,6 +53,10 @@ namespace NServiceBus.Profiler.FunctionalTests
                 TryCloseApplication();
                 throw;
             }
+        }
+
+        protected virtual void OnSetupUI()
+        {
         }
 
         private IContainer CreateContainer()
@@ -61,6 +72,8 @@ namespace NServiceBus.Profiler.FunctionalTests
             builder.RegisterInstance(TestStack.White.InputDevices.Keyboard.Instance).As<IKeyboard>();
             builder.RegisterInstance(TestStack.White.InputDevices.Mouse.Instance).As<IMouse>();
             builder.RegisterInstance(CoreAppXmlConfiguration.Instance).As<ICoreConfiguration>();
+            builder.RegisterInstance(Application);
+            builder.RegisterInstance(Logger);
 
             builder.RegisterModule<CoreModule>();
 
@@ -70,9 +83,9 @@ namespace NServiceBus.Profiler.FunctionalTests
         protected void OnApplicationInitialized()
         {
             Container.InjectProperties(this);
-            Configuration.WaitBasedOnHourGlass = false;
-            Configuration.InProc = true;
-            Configuration.FindWindowTimeout = 60000;
+            CoreConfiguration.WaitBasedOnHourGlass = false;
+            CoreConfiguration.InProc = true;
+            CoreConfiguration.FindWindowTimeout = 60000;
         }
 
         [TestFixtureTearDown]
@@ -80,21 +93,37 @@ namespace NServiceBus.Profiler.FunctionalTests
         {
             ServiceControlStub.Stop();
             Container.Dispose();
-            Application.KillAndSaveState();
+            TryCloseApplication();
         }
 
         private void TryCloseApplication()
         {
             try
             {
-                if (Application != null && !Application.HasExited)
+                if (IsApplicationRunning())
                 {
-                    Application.KillAndSaveState();
+                    Application.ApplicationSession.Save();
+//                    if (!Debugger.IsAttached)
+//                    {
+//                        Application.Kill();
+//                    }
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error("Could not close application gracefully.", ex);
+            }
+        }
+
+        private bool IsApplicationRunning()
+        {
+            try
+            {
+                return Application != null && !Application.HasExited;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Windows.Automation;
-using TestStack.White.UIItems.TreeItems;
+using TestStack.White.UIItems.WindowItems;
 using TestStack.White.Utility;
 
 namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
     public class ShellScreen : ProfilerElement
     {
-        public ShellScreen(IMainWindow mainWindow) : base(mainWindow)
+        public ShellScreen(Window mainWindow) : base(mainWindow)
         {
         }
 
-        public Tree QueueExplorerTree { get; private set; }
         public MainMenu MainMenu { get; set; }
+
+        public LayoutManager LayoutManager { get; set; }
 
         public void WaitWhileBusy()
         {

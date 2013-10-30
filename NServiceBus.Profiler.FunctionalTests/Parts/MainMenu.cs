@@ -1,5 +1,6 @@
 ﻿using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems.WindowStripControls;
 using TestStack.White.UIItems.WPFUIItems;
 
@@ -7,43 +8,43 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
 {
     public class MainMenu : ProfilerElement
     {
-        public MainMenu(IMainWindow mainWindow) : base(mainWindow)
+        public MainMenu(Window mainWindow) : base(mainWindow)
         {
         }
 
         public MenuBar ToolsMenu
         {
-            get { return GetMenu(Desktop.Screens.Shell.Tools); }
+            get { return GetMenu("ToolsMenu"); }
         }
 
         public MenuBar FileMenu
         {
-            get { return GetMenu(Desktop.Screens.Shell.File); }
+            get { return GetMenu("FileMenu"); }
         }
 
         public MenuBar ViewMenu
         {
-            get { return GetMenu(Desktop.Screens.Shell.View); }
+            get { return GetMenu("ViewMenu"); }
         }
 
         public MenuBar HelpMenu
         {
-            get { return GetMenu(Desktop.Screens.Shell.Help); }
+            get { return GetMenu("HelpMenu"); }
         }
 
         public Button CreateQueue
         {
-            get { return GetMenuItem(ToolsMenu, Desktop.Screens.Shell.CreateQueueMenu); }
+            get { return GetMenuItem(ToolsMenu, "CreateQueueMenuItem"); }
         }
 
         public Button ConnectToManagementService
         {
-            get { return GetMenuItem(ToolsMenu, Desktop.Screens.Shell.ConnectToManagementServiceMenu); }
+            get { return GetMenuItem(ToolsMenu, "ConnectToManagementServiceMenuItem"); }
         }
 
         public GroupBox BarManager
         {
-            get { return GetByAutomationId<GroupBox>(Desktop.Screens.Shell.BarManager); }
+            get { return GetByAutomationId<GroupBox>("BarManager"); }
         }
 
         private MenuBar GetMenu(string name)

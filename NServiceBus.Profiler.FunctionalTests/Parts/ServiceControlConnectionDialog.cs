@@ -9,7 +9,7 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
     {
         private Window dialog;
 
-        public ServiceControlConnectionDialog(IMainWindow mainWindow) : base(mainWindow)
+        public ServiceControlConnectionDialog(Window mainWindow) : base(mainWindow)
         {
         }
 

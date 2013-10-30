@@ -8,7 +8,7 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
     {
         private Window dialog;
 
-        public QueueCreationDialog(IMainWindow mainWindow) : base(mainWindow)
+        public QueueCreationDialog(Window mainWindow) : base(mainWindow)
         {
         }
 

@@ -5,16 +5,16 @@ using Shouldly;
 
 namespace NServiceBus.Profiler.FunctionalTests.Tests.Journeys
 {
-    public class EndpointManagementJourney : ProfilerTests
+    public class EndpointManagementJourney : ProfilerTestBase
     {
-        public ShellScreen Shell { get; set; }
         public ServiceControlConnectionDialog Dialog { get; set; }
 
         [Test]
         public void Can_connect_to_service_control_stub()
         {
+            Shell.LayoutManager.ActivateQueueExplorer();
+
             Shell.MainMenu.ToolsMenu.Click();
-            //TODO: Activate Endpoint window first
             Shell.MainMenu.ConnectToManagementService.Click();
 
             Dialog.Activate();

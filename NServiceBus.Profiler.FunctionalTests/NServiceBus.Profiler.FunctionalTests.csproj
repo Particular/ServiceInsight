@@ -83,13 +83,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ScreenRepositoryExtensions.cs" />
+    <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Infrastructure\ForwardIfExistsInterceptor.cs" />
-    <Compile Include="IMainWindow.cs" />
     <Compile Include="ApplicationShellTests.cs" />
+    <Compile Include="Infrastructure\NameGenerator.cs" />
     <Compile Include="Infrastructure\ProfilerConfiguration.cs" />
     <Compile Include="Infrastructure\Waiter.cs" />
+    <Compile Include="Parts\LayoutManager.cs" />
     <Compile Include="Parts\ServiceControlConnectionDialog.cs" />
-    <Compile Include="ProfilerTests.cs" />
+    <Compile Include="ProfilerTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parts\MainMenu.cs" />
     <Compile Include="Parts\ProfilerElement.cs" />

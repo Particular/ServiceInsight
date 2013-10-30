@@ -2,16 +2,16 @@
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using Castle.DynamicProxy;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 
 namespace NServiceBus.Profiler.FunctionalTests.Infrastructure
 {
     public class ProfilerConfiguration
     {
-        private const int ExtraIdleWaitSecs = 5;
+        private const int ExtraIdleWaitSecs = 3;
         private const string MainWindowTitle = "ServiceInsight for NServiceBus";
         private const string ApplicationProcess = "Particular.ServiceInsight.exe";
 
@@ -24,17 +24,18 @@ namespace NServiceBus.Profiler.FunctionalTests.Infrastructure
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
             };
             return Application.AttachOrLaunch(processStartInfo);
         }
 
-        public IMainWindow GetMainWindow(Application application)
+        public Window GetMainWindow(Application application)
         {
             WaitForApplicationIdle(application);
             var mainWindow = application.GetWindow(SearchCriteria.ByAutomationId("ShellWindow"), InitializeOption.WithCache);
-            var mainWindowAdapter = new ProxyGenerator().CreateInterfaceProxyWithoutTarget<IMainWindow>(new ForwardIfExistsInterceptor(mainWindow));
-            return mainWindowAdapter;
+            //var mainWindowAdapter = new ProxyGenerator().CreateInterfaceProxyWithoutTarget<IMainWindow>(new ForwardIfExistsInterceptor(mainWindow));
+            //return mainWindowAdapter;
+            return mainWindow;
         }
 
         private void WaitForApplicationIdle(Application application)
