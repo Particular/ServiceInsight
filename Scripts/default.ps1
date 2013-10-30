@@ -7,7 +7,7 @@ properties {
   $build_dir = "$base_dir\build" 
   $buildartifacts_dir = "$build_dir\" 
   $sln_file = "$base_dir\NServiceBus.Profiler.sln" 
-  $version = "4.0.0.0"
+  $version = "1.0.0.0"
   $humanReadableversion = Get-HumanReadable-Format
   $tools_dir = "$base_dir\Tools"
   $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
@@ -28,6 +28,8 @@ task Clean {
 } 
 
 task Init -depends Clean { 
+
+    Write-Host "Humman readable product version is $humanReadableversion"
 		
 	Generate-Assembly-Info `
 		-file "$base_dir\NServiceBus.Profiler.Desktop\Properties\AssemblyInfo.cs" `

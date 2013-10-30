@@ -15,10 +15,6 @@ function Commit-Hash
 
 function Get-HumanReadable-Format
 {
-	Write-Host "Getting humman readable product format..."
-	$PatchVersion = $env:PatchVersion
-	$PreRelease = $env:PreRelease
-	$ProductVersion = $env:ProductVersion
 	$commit = Commit-Hash
 
 	if($ProductVersion)
