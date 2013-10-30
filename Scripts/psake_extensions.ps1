@@ -16,6 +16,9 @@ function Commit-Hash
 function Get-HumanReadable-Format
 {
 	$commit = Commit-Hash
+	$ProductVersion = $env:ProductVersion
+	$PatchVersion = $env:PatchVersion
+	$PreRelease = $env:PreRelease
 
 	if($ProductVersion)
 	{
