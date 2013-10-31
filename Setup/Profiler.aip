@@ -228,6 +228,7 @@
     <ROW Dialog_="ProgressDlg" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="65539" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="900" MsiKey="ProgressDlg#AdvInst"/>
     <ROW Dialog_="ProgressDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="1000"/>
     <ROW Dialog_="ResumeDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="63" Attributes="1" Text="[AppLogoIcon]" Order="700"/>
+    <ROW Dialog_="ServiceControlDialog" Control="ServiceControlDialogDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
     <ROW Dialog_="ServiceControlDialog" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
     <ROW Dialog_="ServiceControlDialog" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="345" Height="400" Attributes="1" Text="[Background]" Order="200"/>
     <ROW Dialog_="ServiceControlDialog" Control="Next" Type="ImageButton" X="251" Y="359" Width="78" Height="28" Attributes="3" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="300" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Next]" ExtDataLocId="-"/>
@@ -352,6 +353,8 @@
     <ROW Dialog_="ServiceControlDialog" Control_="Next" Event="NewDialog" Argument="CustomizeDialog" Condition="AI_INSTALL AND AI_SERVICE_STATE=&quot;Not Found&quot;" Ordering="1"/>
     <ROW Dialog_="CustomizeDialog" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="3"/>
     <ROW Dialog_="ServiceControlDialog" Control_="Back" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL AND AI_SERVICE_STATE=&quot;Not Found&quot;" Ordering="1"/>
+    <ROW Dialog_="ServiceControlDialog" Control_="ServiceControlDialogDialogInitializer" Event="[INST_NAME]" Argument="ServiceControl@[ComputerName]" Condition="AI_INSTALL" Ordering="0"/>
+    <ROW Dialog_="ServiceControlDialog" Control_="ServiceControlDialogDialogInitializer" Event="[INST_DESCRIPTION]" Argument="ServiceControl on [ComputerName]" Condition="AI_INSTALL" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
