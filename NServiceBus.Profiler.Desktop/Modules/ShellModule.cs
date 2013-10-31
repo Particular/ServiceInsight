@@ -32,7 +32,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<QueueCreationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ConnectToMachineView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<ManagementConnectionView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<QueueExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
@@ -57,7 +57,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (QueueCreationView);
                 yield return typeof (ConnectToMachineView);
                 yield return typeof (LicenseRegistrationView);
-                yield return typeof (ManagementConnectionView);
+                yield return typeof (ServiceControlConnectionView);
                 yield return typeof (OptionsView);
                 yield return typeof (ShellView);
                 yield return typeof (ExceptionView);

@@ -220,6 +220,7 @@
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
+    <Compile Include="ServiceControl\ServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">
       <DependentUpon>MessageActionPopup.xaml</DependentUpon>
@@ -303,9 +304,9 @@
     </Compile>
     <Compile Include="LogWindow\LogWindowViewModel.cs" />
     <Compile Include="LogWindow\RichTextBoxAppender.cs" />
-    <Compile Include="Management\DefaultManagementService.cs" />
-    <Compile Include="Management\IManagementService.cs" />
-    <Compile Include="Management\IManagementServiceConnection.cs" />
+    <Compile Include="ServiceControl\DefaultServiceControl.cs" />
+    <Compile Include="ServiceControl\IServiceControl.cs" />
+    <Compile Include="ServiceControl\IServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
     <Compile Include="MessageFlow\MessageNode.cs" />
     <Compile Include="MessageFlow\MessagePopupControl.cs" />
@@ -385,10 +386,10 @@
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
-    <Compile Include="Shell\ManagementConnectionView.xaml.cs">
-      <DependentUpon>ManagementConnectionView.xaml</DependentUpon>
+    <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
+      <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\ManagementConnectionViewModel.cs" />
+    <Compile Include="Shell\ServiceControlConnectionViewModel.cs" />
     <Compile Include="MessageProperties\ErrorHeaderViewModel.cs" />
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
@@ -530,7 +531,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Shell\ManagementConnectionView.xaml">
+    <Page Include="Shell\ServiceControlConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -171,9 +171,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual async void ConnectToManagementService()
+        public virtual async void ConnectToServiceControl()
         {
-            var connectionViewModel = _screenFactory.CreateScreen<ManagementConnectionViewModel>();
+            var connectionViewModel = _screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
             var result = _windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
@@ -319,7 +319,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             get { return !WorkInProgress; }
         }
 
-        public virtual bool CanConnectToManagementService
+        public virtual bool CanConnectToServiceControl
         {
             get { return !WorkInProgress; }
         }
@@ -403,7 +403,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             NotifyOfPropertyChange(() => WorkInProgress);
             NotifyOfPropertyChange(() => CanConnectToMachine);
-            NotifyOfPropertyChange(() => CanConnectToManagementService);
+            NotifyOfPropertyChange(() => CanConnectToServiceControl);
             NotifyOfPropertyChange(() => CanCreateMessage);
             NotifyOfPropertyChange(() => CanCreateQueue);
             NotifyOfPropertyChange(() => CanDeleteCurrentQueue);

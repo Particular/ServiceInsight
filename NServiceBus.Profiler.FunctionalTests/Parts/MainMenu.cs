@@ -37,9 +37,9 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
             get { return GetMenuItem(ToolsMenu, "CreateQueueMenuItem"); }
         }
 
-        public Button ConnectToManagementService
+        public Button ConnectToServiceControl
         {
-            get { return GetMenuItem(ToolsMenu, "ConnectToManagementServiceMenuItem"); }
+            get { return GetMenuItem(ToolsMenu, "ConnectToServiceControlMenuItem"); }
         }
 
         public GroupBox BarManager

@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
     public class AboutViewModel : INotifyPropertyChanged, IActivate
     {
         private readonly INetworkOperations _networkOperations;
-        private readonly IManagementService _managementService;
+        private readonly IServiceControl _serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -28,11 +28,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public AboutViewModel(
             INetworkOperations networkOperations, 
-            IManagementService managementService,
+            IServiceControl serviceControl,
             ILicenseRegistrationViewModel licenseInfo)
         {
             _networkOperations = networkOperations;
-            _managementService = managementService;
+            _serviceControl = serviceControl;
             
             License = licenseInfo;
             IsSplash = false;
@@ -89,7 +89,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             ServiceControlVersion = "(Detecting...)";
 
-            var version = await _managementService.GetVersion();
+            var version = await _serviceControl.GetVersion();
             ServiceControlVersion = version ?? "(Not Connected)";
         }
 

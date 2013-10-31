@@ -11,13 +11,13 @@ using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class ManagementConnectionViewModel : Screen //TODO: Rename the view/viewmodel to ServiceControl
+    public class ServiceControlConnectionViewModel : Screen
     {
         private readonly ISettingsProvider _settingsProvider;
         private readonly ProfilerSettings _appSettings;
         private readonly IContainer _container;
 
-        public ManagementConnectionViewModel(
+        public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
             IContainer container)
         {
@@ -92,8 +92,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 using (var scope = _container.BeginLifetimeScope())
                 {
-                    var connection = scope.Resolve<IManagementConnectionProvider>();
-                    var service = scope.Resolve<IManagementService>();
+                    var connection = scope.Resolve<IServiceControlConnectionProvider>();
+                    var service = scope.Resolve<IServiceControl>();
 
                     connection.ConnectTo(serviceUrl);
                     Version = await service.GetVersion();

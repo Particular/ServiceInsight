@@ -61,8 +61,8 @@
                                AutomationProperties.AutomationId="ConnectToMachineMenuItem"
                                CategoryName="Tools" Glyph="/Images/ConnectQueue.png" />
             <dxb:BarButtonItem Content="Connect To Service Control" 
-                               x:Name="ConnectToManagementService" 
-                               AutomationProperties.AutomationId="ConnectToManagementServiceMenuItem"
+                               x:Name="ConnectToServiceControl" 
+                               AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
                                CategoryName="Tools" Glyph="/Images/ConnectService.png" />
             <dxb:BarButtonItem Content="Delete Message(s)" 
                                x:Name="DeleteSelectedMessages" 

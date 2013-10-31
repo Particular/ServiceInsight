@@ -27,7 +27,7 @@ namespace NServiceBus.Profiler.Tests
         private IQueueManagerAsync QueueManager;
         private IWindowManagerEx WindowManager;
         private IEventAggregator EventAggregator;
-        private IManagementService ManagementService;
+        private IServiceControl ServiceControl;
         private ISearchBarViewModel SearchBar;
         private IStatusBarManager StatusBarManager;
         private Dictionary<Queue, List<MessageInfo>> MessageStore;
@@ -38,14 +38,14 @@ namespace NServiceBus.Profiler.Tests
         public void TestInitialize()
         {
             EventAggregator = Substitute.For<IEventAggregator>();
-            ManagementService = Substitute.For<IManagementService>();
+            ServiceControl = Substitute.For<IServiceControl>();
             MessageStore = new Dictionary<Queue, List<MessageInfo>>();
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             StatusBarManager = Substitute.For<IStatusBarManager>();
             View = Substitute.For<IMessageListView>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ManagementService, 
+            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ServiceControl, 
                                                    QueueManager, SearchBar, 
                                                    Substitute.For<IErrorHeaderViewModel>(), 
                                                    Substitute.For<IGeneralHeaderViewModel>(), 
@@ -58,7 +58,7 @@ namespace NServiceBus.Profiler.Tests
         public void should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Machine = "localhost", Name = "Service" };
-            ManagementService.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
+            ServiceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
                              .Returns(x => Task.Run(() => new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,

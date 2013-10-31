@@ -17,24 +17,24 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly ISettingsProvider _settingsProvider;
-        private readonly IManagementService _managementService;
+        private readonly IServiceControl _serviceControl;
         private readonly INetworkOperations _networkOperations;
-        private readonly IManagementConnectionProvider _managementConnection;
+        private readonly IServiceControlConnectionProvider _connectionProvider;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
-            IManagementConnectionProvider managementConnection,
-            IManagementService managementService,
+            IServiceControlConnectionProvider connectionProvider,
+            IServiceControl serviceControl,
             INetworkOperations networkOperations)
         {
             _eventAggregator = eventAggregator;
             _settingsProvider = settingsProvider;
-            _managementService = managementService;
+            _serviceControl = serviceControl;
             _networkOperations = networkOperations;
-            _managementConnection = managementConnection;
+            _connectionProvider = connectionProvider;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -90,7 +90,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if (IsConnected) return;
 
             var configuredAddress = GetConfiguredAddress();
-            var existingUrl = _managementConnection.Url;
+            var existingUrl = _connectionProvider.Url;
             var available = await ServiceAvailable(configuredAddress);
             var connectTo = available ? configuredAddress : existingUrl;
 
@@ -113,9 +113,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
         {
-            _managementConnection.ConnectTo(serviceUrl);
+            _connectionProvider.ConnectTo(serviceUrl);
 
-            var connected = await _managementService.IsAlive();
+            var connected = await _serviceControl.IsAlive();
 
             return connected;
         }
@@ -136,7 +136,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if(url == null)
                 return;
 
-            _managementConnection.ConnectTo(url);
+            _connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
             await RefreshEndpoints();
@@ -165,7 +165,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task RefreshEndpoints()
         {
-            var endpoints = await _managementService.GetEndpoints();
+            var endpoints = await _serviceControl.GetEndpoints();
 
             if (endpoints == null)
                 return;

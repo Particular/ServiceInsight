@@ -3,11 +3,11 @@
 namespace NServiceBus.Profiler.Desktop.Shell
 {
     /// <summary>
-    /// Interaction logic for ManagementConnectionView.xaml
+    /// Interaction logic for ServiceControlConnectionView.xaml
     /// </summary>
-    public partial class ManagementConnectionView
+    public partial class ServiceControlConnectionView
     {
-        public ManagementConnectionView()
+        public ServiceControlConnectionView()
         {
             InitializeComponent();
         }

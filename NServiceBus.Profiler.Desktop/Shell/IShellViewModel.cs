@@ -39,7 +39,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         void Help();
         void DeleteCurrentQueue();
         void ConnectToMachine();
-        void ConnectToManagementService();
+        void ConnectToServiceControl();
         void DeleteSelectedMessages();
         void PurgeCurrentQueue();
         void RefreshAll();

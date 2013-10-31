@@ -15,7 +15,7 @@ namespace NServiceBus.Profiler.FunctionalTests.Tests.Journeys
             Shell.LayoutManager.ActivateQueueExplorer();
 
             Shell.MainMenu.ToolsMenu.Click();
-            Shell.MainMenu.ConnectToManagementService.Click();
+            Shell.MainMenu.ConnectToServiceControl.Click();
 
             Dialog.Activate();
             Dialog.ServiceUrl.EditableText = ServiceControl.StubServiceUrl + "/api";

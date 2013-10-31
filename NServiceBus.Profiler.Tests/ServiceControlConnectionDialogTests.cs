@@ -12,27 +12,27 @@ using Shouldly;
 namespace NServiceBus.Profiler.Tests
 {
     [TestFixture]
-    public class ManagementServiceConnectionDialogTests
+    public class ServiceControlConnectionDialogTests
     {
-        private IManagementService managementService;
+        private IServiceControl serviceControl;
         private IShellViewModel shell;
         private ISettingsProvider settingsProvider;
         private IContainer container;
-        private IManagementConnectionProvider connection;
+        private IServiceControlConnectionProvider connection;
         private ProfilerSettings storedSetting;
-        private ManagementConnectionViewModel connectTo;
+        private ServiceControlConnectionViewModel connectTo;
 
         [SetUp]
         public void TestInitialize()
         {
             shell = Substitute.For<IShellViewModel>();
-            managementService = Substitute.For<IManagementService>();
+            serviceControl = Substitute.For<IServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            connection = Substitute.For<IManagementConnectionProvider>();
+            connection = Substitute.For<IServiceControlConnectionProvider>();
             container = RegisterContainer();
             storedSetting = GetReloadedSettings();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(storedSetting);
-            connectTo = new ManagementConnectionViewModel(settingsProvider, container) { Parent = shell }; //TODO: Do we need to pass the full container here?
+            connectTo = new ServiceControlConnectionViewModel(settingsProvider, container) { Parent = shell }; //TODO: Do we need to pass the full container here?
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace NServiceBus.Profiler.Tests
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterInstance(managementService);
+            builder.RegisterInstance(serviceControl);
             builder.RegisterInstance(connection);
 
             return builder.Build();

@@ -24,7 +24,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManagerEx _windowManager;
-        private readonly IManagementService _managementService;
+        private readonly IServiceControl _serviceControl;
         private readonly IQueueManagerAsync _asyncQueueManager;
         private readonly IErrorHeaderViewModel _errorHeaderDisplay;
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
@@ -38,7 +38,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public MessageListViewModel(
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            IManagementService managementService,
+            IServiceControl serviceControl,
             IQueueManagerAsync asyncQueueManager,
             ISearchBarViewModel searchBarViewModel,
             IErrorHeaderViewModel errorHeaderDisplay,
@@ -48,7 +48,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
-            _managementService = managementService;
+            _serviceControl = serviceControl;
             _asyncQueueManager = asyncQueueManager;
             _errorHeaderDisplay = errorHeaderDisplay;
             _generalHeaderDisplay = generalHeaderDisplay;
@@ -105,7 +105,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         {
             _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
-            await _managementService.RetryMessage(FocusedMessage.Id);
+            await _serviceControl.RetryMessage(FocusedMessage.Id);
             Messages.Remove(msg);
             _statusBar.Done();
         }
@@ -206,7 +206,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _lastSortOrderAscending = ascending;
             }
 
-            var pagedResult = await _managementService.GetAuditMessages(endpoint,
+            var pagedResult = await _serviceControl.GetAuditMessages(endpoint,
                                                                         pageIndex: pageIndex,
                                                                         searchQuery: searchQuery,
                                                                         orderBy: _lastSortColumn,

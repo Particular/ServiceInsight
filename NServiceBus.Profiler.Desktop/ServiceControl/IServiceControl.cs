@@ -4,7 +4,7 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Management
 {
-    public interface IManagementService
+    public interface IServiceControl
     {
         Task<PagedResult<StoredMessage>> GetErrorMessages();
         Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);

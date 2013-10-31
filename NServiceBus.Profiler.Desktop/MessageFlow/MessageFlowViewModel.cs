@@ -30,7 +30,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
-        private readonly IManagementService _managementService;
+        private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
         private readonly IHeaderInfoSerializer _headerInfoSerializer;
@@ -40,14 +40,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private IMessageFlowView _view;
 
         public MessageFlowViewModel(
-            IManagementService managementService,
+            IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
             IStatusBarManager statusBar)
         {
-            _managementService = managementService;
+            _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
             _decoder = decoder;
             _headerInfoSerializer = headerInfoSerializer;
@@ -94,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public async Task RetryMessage(StoredMessage message)
         {
             _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", message.OriginatingEndpoint);
-            await _managementService.RetryMessage(message.Id);
+            await _serviceControl.RetryMessage(message.Id);
             _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
             _statusBar.Done();
         }
@@ -109,7 +109,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
-                var relatedMessagesTask = await _managementService.GetConversationById(conversationId);
+                var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
                 CreateConversationNodes(storedMessage.Id, nodes);
