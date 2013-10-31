@@ -60,7 +60,7 @@
                                x:Name="ConnectToMachine" 
                                AutomationProperties.AutomationId="ConnectToMachineMenuItem"
                                CategoryName="Tools" Glyph="/Images/ConnectQueue.png" />
-            <dxb:BarButtonItem Content="Connect To Management Service" 
+            <dxb:BarButtonItem Content="Connect To Service Control" 
                                x:Name="ConnectToManagementService" 
                                AutomationProperties.AutomationId="ConnectToManagementServiceMenuItem"
                                CategoryName="Tools" Glyph="/Images/ConnectService.png" />

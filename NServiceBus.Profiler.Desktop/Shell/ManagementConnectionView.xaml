@@ -32,7 +32,7 @@
         <StackPanel Orientation="Horizontal" Margin="3">
             <Image Source="/Images/Information.png" Margin="5" VerticalAlignment="Center" Width="16" Height="16">
                 <Image.ToolTip>
-                    <TextBlock Text="Please enter management service url or IP address." />
+                    <TextBlock Text="Please enter Service Control url or IP address." />
                 </Image.ToolTip>
             </Image>
             <TextBlock Text="Service Url:" Grid.Row="0" Grid.Column="0" 
@@ -57,7 +57,7 @@
             </Image>
 
             <TextBlock Grid.Column="1" 
-                           Text="There was an error connecting to management service. Either the address is not valid or the service is down."
+                           Text="There was an error connecting to Service Control. Either the address is not valid or the service is down."
                            TextWrapping="Wrap" 
                            TextAlignment="Left"
                            Margin="5" />

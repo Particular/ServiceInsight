@@ -179,7 +179,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (result.GetValueOrDefault(false))
             {
                 await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                _eventAggregator.Publish(new WorkFinished("Connected to Management API Version {0}", connectionViewModel.Version));
+                _eventAggregator.Publish(new WorkFinished("Connected to Service Control Version {0}", connectionViewModel.Version));
             }
         }
 

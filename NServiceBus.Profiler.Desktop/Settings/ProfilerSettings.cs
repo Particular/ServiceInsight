@@ -37,12 +37,12 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [Description("List of recent keywords used in search box")]
         public ObservableCollection<string> RecentSearchEntries { get; set; }
 
-        [DisplayName("Recent Management API Entries")]
-        [Description("List of recently connected service URLs for Management API")]
+        [DisplayName("Recent Service Control Entries")]
+        [Description("List of recently connected service URLs for Service Control")]
         public ObservableCollection<string> RecentManagementApiEntries { get; set; }
 
-        [DisplayName("Management URL")]
-        [Description("Last used Management API address")]
+        [DisplayName("Service Control URL")]
+        [Description("Last used Service Control address")]
         public string LastUsedManagementApi { get; set; }
     }
 }

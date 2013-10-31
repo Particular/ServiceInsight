@@ -11,7 +11,7 @@ using NServiceBus.Profiler.Desktop.Settings;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class ManagementConnectionViewModel : Screen
+    public class ManagementConnectionViewModel : Screen //TODO: Rename the view/viewmodel to ServiceControl
     {
         private readonly ISettingsProvider _settingsProvider;
         private readonly ProfilerSettings _appSettings;
@@ -24,7 +24,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _settingsProvider = settingsProvider;
             _container = container;
             _appSettings = settingsProvider.GetSettings<ProfilerSettings>();
-            DisplayName = "Connect To Management Service";
+            DisplayName = "Connect To Service Control";
         }
 
         public string ServiceUrl { get; set; }
