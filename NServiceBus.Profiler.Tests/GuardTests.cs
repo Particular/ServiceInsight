@@ -2,6 +2,7 @@
 using NServiceBus.Profiler.Desktop;
 using NUnit.Framework;
 using Shouldly;
+using Guard = NServiceBus.Profiler.Desktop.Guard;
 
 namespace NServiceBus.Profiler.Tests
 {

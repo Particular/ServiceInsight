@@ -10,7 +10,7 @@ properties {
   $version = "1.0.0.0"
   $humanReadableversion = Get-HumanReadable-Format
   $tools_dir = "$base_dir\Tools"
-  $mspec = "$lib_dir\Machine.Specifications.0.5.11\tools\mspec-x86-clr4.exe"
+  $testrunner = "$lib_dir\NUnit.Runners.2.6.3\tools\nunit-console-x86.exe"
   $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "NServiceBus.Profiler"
@@ -56,7 +56,7 @@ task Test -depends Compile {
   $old = pwd
   cd $build_dir
   
-  exec { invoke-expression "$mspec $build_dir\$test_assembly_name.dll" }  
+  exec { invoke-expression "$testrunner $build_dir\$test_assembly_name.dll" }  
   
   cd $old
 }
