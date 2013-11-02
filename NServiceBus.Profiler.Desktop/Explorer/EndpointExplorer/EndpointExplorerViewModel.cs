@@ -94,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             var available = await ServiceAvailable(configuredAddress);
             var connectTo = available ? configuredAddress : existingUrl;
 
-            _eventAggregator.Publish(new WorkStarted("Trying to connect to Service Control at {0}", connectTo));
+            _eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
 

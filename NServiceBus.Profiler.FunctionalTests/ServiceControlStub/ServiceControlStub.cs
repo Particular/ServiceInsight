@@ -22,7 +22,7 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
             _server = new HttpSelfHostServer(config);
             _server.OpenAsync().Wait();
 
-            _logger.DebugFormat("Service Control stub started at {0}", StubServiceUrl);
+            _logger.DebugFormat("ServiceControl stub started at {0}", StubServiceUrl);
         }
 
         private static void Configure(HttpSelfHostConfiguration config)

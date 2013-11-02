@@ -24,7 +24,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _settingsProvider = settingsProvider;
             _container = container;
             _appSettings = settingsProvider.GetSettings<ProfilerSettings>();
-            DisplayName = "Connect To Service Control";
+            DisplayName = "Connect To ServiceControl";
         }
 
         public string ServiceUrl { get; set; }

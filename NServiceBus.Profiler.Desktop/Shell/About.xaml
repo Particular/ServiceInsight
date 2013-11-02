@@ -40,7 +40,7 @@
 
             <TextBlock Style="{StaticResource InfoText}" Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
                 <Run Text=" / " />
-                <Run Text="Service Control Version " />
+                <Run Text="ServiceControl Version " />
                 <Run Text="{Binding ServiceControlVersion}" />
             </TextBlock>
         </StackPanel>

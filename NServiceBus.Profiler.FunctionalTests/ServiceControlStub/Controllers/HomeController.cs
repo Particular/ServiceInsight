@@ -9,8 +9,8 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
         {
             return Json(new HomeModel
             {
-                Name = "Particular Service Control Stub",
-                Description = "This is a Particular Service Control stub interface for testing purpose."
+                Name = "Particular ServiceControl Stub",
+                Description = "This is a Particular ServiceControl stub interface for testing purpose."
             });
         }
     }
