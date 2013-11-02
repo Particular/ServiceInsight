@@ -32,7 +32,7 @@
     <dxb:BarManager x:Name="BarManager" 
                     AutomationProperties.AutomationId="BarManager"
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.3">
+                    dxc:DXSerializer.LayoutVersion="1.1">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -132,7 +132,7 @@
                             CategoryName="Tools" 
                             Content="Tools">
                 <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
-                <dxb:BarButtonItemLink BarItemName="ConnectToManagementService" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItemLink BarItemName="CreateQueue" />
