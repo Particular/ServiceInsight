@@ -32,7 +32,7 @@
     <dxb:BarManager x:Name="BarManager" 
                     AutomationProperties.AutomationId="BarManager"
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.1">
+                    dxc:DXSerializer.LayoutVersion="1.1.1">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -59,11 +59,35 @@
             <dxb:BarButtonItem Content="Connect To Machine" 
                                x:Name="ConnectToMachine" 
                                AutomationProperties.AutomationId="ConnectToMachineMenuItem"
-                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png" />
+                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png">
+                <dxb:BarButtonItem.SuperTip>
+                    <dxc:SuperTip>
+                        <dxc:SuperTipItem Content="Connect Queue Explorer to MSMQ">
+                            <dxc:SuperTipItem.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </dxc:SuperTipItem.ContentTemplate>
+                        </dxc:SuperTipItem>
+                    </dxc:SuperTip>
+                </dxb:BarButtonItem.SuperTip>
+            </dxb:BarButtonItem>
             <dxb:BarButtonItem Content="Connect To ServiceControl" 
                                x:Name="ConnectToServiceControl" 
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
-                               CategoryName="Tools" Glyph="/Images/ConnectService.png" />
+                               CategoryName="Tools" Glyph="/Images/ConnectService.png">
+                <dxb:BarButtonItem.SuperTip>
+                    <dxc:SuperTip>
+                        <dxc:SuperTipItem Content="Connect Endpoint Explorer to ServiceControl instance">
+                            <dxc:SuperTipItem.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </dxc:SuperTipItem.ContentTemplate>
+                        </dxc:SuperTipItem>
+                    </dxc:SuperTip>
+                </dxb:BarButtonItem.SuperTip>
+            </dxb:BarButtonItem>
             <dxb:BarButtonItem Content="Delete Message(s)" 
                                x:Name="DeleteSelectedMessages" 
                                AutomationProperties.AutomationId="DeleteSelectedMessagesMenuItem"
@@ -208,7 +232,7 @@
                      AllowHide="True" 
                      AllowCollapse="True">
                 <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
-                <dxb:BarButtonItemLink BarItemName="ConnectToManagementService" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItemLink BarItemName="CreateQueue" />
