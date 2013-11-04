@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Microsoft.Win32;
 
 namespace NServiceBus.Profiler.Desktop.Core.Settings

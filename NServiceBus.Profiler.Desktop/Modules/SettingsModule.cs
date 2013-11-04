@@ -12,7 +12,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<RegistrySettingsStore>().Named<ISettingsStorage>("Registry").WithParameter("registryKey", @"Software\ParticularSoftware\ServiceBus").SingleInstance();
+            builder.RegisterType<RegistrySettingsStore>().Named<ISettingsStorage>("Registry").WithParameter("registryKey", @"Software\ParticularSoftware\").SingleInstance();
             builder.RegisterType<IsolatedStorageSettingsStore>().Named<ISettingsStorage>("IsolatedStore").SingleInstance();
             builder.RegisterType<SettingProviderProxy>().As<ISettingsProvider>().SingleInstance();
 

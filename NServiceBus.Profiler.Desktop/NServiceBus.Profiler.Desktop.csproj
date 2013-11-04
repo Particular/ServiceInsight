@@ -373,7 +373,7 @@
     <Compile Include="ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
     <Compile Include="Settings\LicenseSettings.cs" />
-    <Compile Include="Settings\ManagementSettings.cs" />
+    <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
     <Compile Include="Settings\ReportingSettings.cs" />
     <Compile Include="Settings\SettingBase.cs" />

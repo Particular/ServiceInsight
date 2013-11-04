@@ -107,8 +107,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if (appSettings != null && appSettings.LastUsedManagementApi != null)
                 return appSettings.LastUsedManagementApi;
 
-            var managementConfig = _settingsProvider.GetSettings<ManagementSettings>();
-            return string.Format("http://{0}:{1}/api", managementConfig.Hostname, managementConfig.Port);
+            var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
+            return string.Format("http://localhost:{0}/api", managementConfig.Port);
         }
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
