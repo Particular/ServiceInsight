@@ -356,7 +356,7 @@
                     <TextBlock Text="Toggle Endpoint Visibility" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
-            <Button Margin="2">
+            <Button Margin="2" x:Name="ToggleTimelineData" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/DiagramTimeView.png" Margin="0,0,5,0" VerticalAlignment="Center" />
                     <TextBlock Text="Toggle Timeline Stretch" VerticalAlignment="Center" />
