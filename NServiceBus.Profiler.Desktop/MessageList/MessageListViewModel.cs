@@ -70,6 +70,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         }
 
         public virtual IObservableCollection<ContextMenuModel> ContextMenuItems { get; private set; }
+        
+        public void OnContextMenuOpening()
+        {
+            NotifyPropertiesChanged();
+        }
 
         public virtual IObservableCollection<MessageInfo> Messages { get; private set; }
 
@@ -116,9 +121,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _clipboard.CopyTo(msg.Id);
         }
 
+
         public virtual void CopyHeaders()
         {
-            //_generalHeaderDisplay.CopyHeaderInfo();
+            _clipboard.CopyTo(_generalHeaderDisplay.HeaderContent);
         }
 
         public bool CanRetryMessage
@@ -137,10 +143,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public bool CanCopyHeaders
         {
-            get
-            {
-                return false;
-            } //_generalHeaderDisplay.CanCopyHeaderInfo(); }
+            get { return !_generalHeaderDisplay.HeaderContent.IsEmpty(); }
         }
 
         public bool CanCopyMessageId
