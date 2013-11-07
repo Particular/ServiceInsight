@@ -39,7 +39,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 case MessageStatus.Failed:
                     return Resources.BulletYellow.ToBitmapImage();
-                case MessageStatus.RepeatedFailures:
+                case MessageStatus.RepeatedFailure:
                     return Resources.BulletRed.ToBitmapImage();
                 case MessageStatus.Successful:
                     return Resources.BulletGreen.ToBitmapImage();
@@ -73,7 +73,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 case MessageStatus.Failed:
                     return "Failed";
-                case MessageStatus.RepeatedFailures:
+                case MessageStatus.RepeatedFailure:
                     return "Faulted";
                 case MessageStatus.Successful:
                     return "Success";

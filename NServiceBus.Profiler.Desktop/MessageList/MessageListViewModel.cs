@@ -132,7 +132,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             get
             {
                 return StoredMessage != null &&
-                       (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailures);
+                       (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailure);
             }
         }
 

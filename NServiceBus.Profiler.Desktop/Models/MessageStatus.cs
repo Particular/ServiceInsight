@@ -8,7 +8,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         Failed = 1,
         
         [Description("Repeated Failures")]
-        RepeatedFailures = 2,
+        RepeatedFailure = 2,
 
         [Description("Successful")]
         Successful = 3,
