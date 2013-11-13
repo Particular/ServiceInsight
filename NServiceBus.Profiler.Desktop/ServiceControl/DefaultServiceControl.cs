@@ -160,6 +160,7 @@ namespace NServiceBus.Profiler.Desktop.Management
             client.AddHandler("text/json", deserializer);
             client.AddHandler("text/x-json", deserializer);
             client.AddHandler("text/javascript", deserializer);
+            client.AddDefaultHeader("Accept-Encoding", "gzip,deflate");
             return client;
         }
 
