@@ -8,13 +8,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        public MessageNode(IMessageFlowViewModel owner, StoredMessage message)
+        public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
+            IsResizable = false;
             Owner = owner;
-            Bounds = new Rect(100, 100, 203, 40);
+            Bounds = new Rect(0, 0, 203, 40);
             ZOrder = 1;
             Data = message;
-            IsResizable = false;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
         }
 

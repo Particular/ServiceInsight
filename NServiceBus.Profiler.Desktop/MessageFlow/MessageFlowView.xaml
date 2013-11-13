@@ -13,8 +13,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ms:DiagramShapes />
-                <ms:FlowDiagramStyles />
                 <ResourceDictionary>
 
                     <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
@@ -387,6 +385,8 @@
                            IsReadOnly="True" 
                            ReadOnlyCanSelect="True"
                            ZoomMode="ControlMouseWheel"
+                           Cursor="Hand"
+                           DragAction="Pan"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"
                            HorizontalSnapSpecifier="{ms:SnapToInterval 20}"
