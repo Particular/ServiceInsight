@@ -15,7 +15,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         private const string LicenseTypeKey = "LicenseType";
         private const string LicenseVersionKey = "LicenseVersion";
         private const string DateFormat = "M/d/yyyy"; 
-        private const int TrialDays = 30;
+        private const int TrialDays = 45;
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(ILicenseManager));
         private readonly LicenseSettings _licenseSettings;
