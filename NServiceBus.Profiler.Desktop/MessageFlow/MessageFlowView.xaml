@@ -226,19 +226,11 @@
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
-                                                                           Placement="RelativePoint"
-                                                                           VerticalAlignment="Top"
-                                                                           VerticalOffset="30"
-                                                                           HorizontalAlignment="Center"
+                                                                           Placement="MousePoint"
+                                                                           VerticalOffset="15"
+                                                                           HorizontalOffset="{Binding Path=Child.ActualWidth, Converter={StaticResource HalvingConverter}, RelativeSource={RelativeSource Self}}"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
-                                                    <local:MessagePopupControl.HorizontalOffset>
-                                                        <MultiBinding Converter="{StaticResource SubstractionConverter}">
-                                                            <Binding ElementName="MenuContainer" Path="ActualWidth"></Binding>
-                                                            <Binding ElementName="MenuContainer" Path="Parent.ActualWidth"></Binding>
-                                                            <Binding ElementName="MenuContainer" Path="Parent.ActualWidth" Converter="{StaticResource PercentConverter}" ConverterParameter="-10.0"></Binding>
-                                                        </MultiBinding>
-                                                    </local:MessagePopupControl.HorizontalOffset>
                                                     <local:MessageActionPopup />
                                                 </local:MessagePopupControl>
                                             </StackPanel>
@@ -334,6 +326,7 @@
                     <ms:CorneredPathBuilder x:Key="PathBuilder" EndOffset="4" />
 
                     <Style x:Key="CommandConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="Sent Command" />
                         <Setter Property="PathStyle" Value="{StaticResource CommandConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
@@ -341,6 +334,7 @@
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="Sent Event" />
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EventEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
