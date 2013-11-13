@@ -482,6 +482,8 @@
     <Compile Include="ValueConverters\BoolToWindowBorderConverter.cs" />
     <Compile Include="ValueConverters\ContextMenuActionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
+    <Compile Include="ValueConverters\PercentConverter.cs" />
+    <Compile Include="ValueConverters\SubstractionConverter.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />

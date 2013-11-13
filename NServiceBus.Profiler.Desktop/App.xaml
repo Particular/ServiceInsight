@@ -32,7 +32,9 @@
                     <cnv:ContextMenuActionConverter x:Key="ContextMenuActionConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
                     <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
-                    
+                    <cnv:SubstractionConverter x:Key="SubstractionConverter" />
+                    <cnv:PercentConverter x:Key="PercentConverter" />
+
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
                     <SolidColorBrush x:Key="WarningBrush" Color="#FFE52620" />

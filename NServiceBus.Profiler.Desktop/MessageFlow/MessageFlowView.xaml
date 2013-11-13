@@ -6,6 +6,7 @@
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageFlow"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:core="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
     
@@ -224,9 +225,20 @@
                                                 <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
-                                                                           Placement="MousePoint"
+                                                                           PlacementTarget="{Binding ElementName=MenuContainer}"
+                                                                           Placement="RelativePoint"
+                                                                           VerticalAlignment="Top"
+                                                                           VerticalOffset="30"
+                                                                           HorizontalAlignment="Center"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
+                                                    <local:MessagePopupControl.HorizontalOffset>
+                                                        <MultiBinding Converter="{StaticResource SubstractionConverter}">
+                                                            <Binding ElementName="MenuContainer" Path="ActualWidth"></Binding>
+                                                            <Binding ElementName="MenuContainer" Path="Parent.ActualWidth"></Binding>
+                                                            <Binding ElementName="MenuContainer" Path="Parent.ActualWidth" Converter="{StaticResource PercentConverter}" ConverterParameter="-10.0"></Binding>
+                                                        </MultiBinding>
+                                                    </local:MessagePopupControl.HorizontalOffset>
                                                     <local:MessageActionPopup />
                                                 </local:MessagePopupControl>
                                             </StackPanel>
@@ -292,7 +304,7 @@
                     <Style x:Key="EventConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="3" />
-                        <Setter Property="StrokeDashArray" Value="2,2" />
+                        <Setter Property="StrokeDashArray" Value="1,1" />
                         <Setter Property="BitmapEffect">
                             <Setter.Value>
                                 <DropShadowBitmapEffect Color="Black" Direction="-45" Opacity="0.6" />
@@ -301,11 +313,22 @@
                     </Style>
 
                     <Style x:Key="ArrowheadPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
                         <Setter Property="Fill" Value="Black" />
+                    </Style>
+
+                    <Style x:Key="EventArrowheadPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="Fill" Value="White" />
+                        <Setter Property="StrokeThickness" Value="2" />
                     </Style>
 
                     <DataTemplate x:Key="EndArrowTemplate">
                         <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="20" BackWidth="15" />
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="EventEndArrowTemplate">
+                        <ms:Arrowhead PathStyle="{StaticResource EventArrowheadPathStyle}" Length="20" BackWidth="15" />
                     </DataTemplate>
 
                     <ms:CorneredPathBuilder x:Key="PathBuilder" EndOffset="4" />
@@ -319,7 +342,7 @@
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
-                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource EventEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
                     </Style>
