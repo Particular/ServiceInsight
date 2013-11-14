@@ -44,6 +44,9 @@ namespace NServiceBus.Profiler.Desktop.Startup
                 case "endpointname":
                     options.SetEndpointName(value);
                     break;
+                case "autorefresh":
+                    options.SetAutoRefresh(value);
+                    break;
                 default:
                     throw new NotSupportedException(string.Format("Key {0} is not supported.", key));
             }

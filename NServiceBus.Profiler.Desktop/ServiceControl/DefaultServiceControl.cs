@@ -255,7 +255,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private static string Encode(string parameterValue)
         {
-            return HttpUtility.HtmlEncode(parameterValue);
+            return HttpUtility.UrlEncode(parameterValue);
         }
 
         private void LogRequest(IRestRequest request)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using RestSharp.Contrib;
 
 namespace NServiceBus.Profiler.Desktop.Models
 {
@@ -11,6 +12,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public Uri EndpointUri { get; private set; }
         public string SearchQuery { get; private set; }
         public string EndpointName { get; private set; }
+        public int AutoRefreshRate { get; private set; }
 
         public void SetEndpointUri(string value)
         {
@@ -31,12 +33,22 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public void SetEndpointName(string value)
         {
-            EndpointName = value;
+            EndpointName = Decode(value);
         }
 
         public void SetSearchQuery(string value)
         {
-            SearchQuery = value;
+            SearchQuery = Decode(value);
+        }
+
+        public void SetAutoRefresh(string value)
+        {
+            AutoRefreshRate = int.Parse(value);
+        }
+
+        private string Decode(string encodedString)
+        {
+            return HttpUtility.UrlDecode(encodedString);
         }
     }
 }
