@@ -6,7 +6,9 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using log4net.Appender;
 using log4net.Core;
+using log4net.Filter;
 using log4net.Layout;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
@@ -21,8 +23,15 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
         {
             _richtextBox = textbox;
             _paragraph = new Paragraph();
+            CreateFilters();
             Layout = CreateLogLayout();
             Document.Blocks.Add(_paragraph);
+        }
+
+        private void CreateFilters()
+        {
+            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = typeof (IServiceControl).FullName});
+            AddFilter(new DenyAllFilter());
         }
 
         private ILayout CreateLogLayout()
