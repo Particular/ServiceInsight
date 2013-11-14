@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
+using log4net;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
@@ -11,9 +12,8 @@ using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Settings;
 using RestSharp;
 using RestSharp.Contrib;
-using log4net;
 
-namespace NServiceBus.Profiler.Desktop.Management
+namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
     public class DefaultServiceControl : IServiceControl
     {

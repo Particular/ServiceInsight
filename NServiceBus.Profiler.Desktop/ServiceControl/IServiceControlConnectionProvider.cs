@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Management
+﻿namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
     public interface IServiceControlConnectionProvider
     {

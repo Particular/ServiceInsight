@@ -4,9 +4,10 @@ using Autofac;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Management;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.ServiceControl;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Modules
 {
@@ -27,6 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ServiceControlConnectionProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();
+            builder.RegisterType<CommandLineArgParser>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

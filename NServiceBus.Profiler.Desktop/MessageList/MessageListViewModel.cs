@@ -8,7 +8,6 @@ using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Management;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -16,6 +15,7 @@ using NServiceBus.Profiler.Desktop.Search;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageList

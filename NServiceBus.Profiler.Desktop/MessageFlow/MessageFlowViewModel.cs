@@ -9,9 +9,9 @@ using ExceptionHandler;
 using Mindscape.WpfDiagramming;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Management;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow

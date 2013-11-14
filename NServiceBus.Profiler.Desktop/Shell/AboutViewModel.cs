@@ -7,7 +7,7 @@ using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

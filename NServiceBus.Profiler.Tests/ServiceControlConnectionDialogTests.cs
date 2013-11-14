@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;

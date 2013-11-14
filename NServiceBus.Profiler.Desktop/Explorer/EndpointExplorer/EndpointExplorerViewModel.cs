@@ -7,8 +7,9 @@ using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Settings;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
@@ -20,6 +21,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private readonly IServiceControl _serviceControl;
         private readonly INetworkOperations _networkOperations;
         private readonly IServiceControlConnectionProvider _connectionProvider;
+        private readonly ICommandLineArgParser _commandLineParser;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
@@ -27,6 +29,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
             IServiceControlConnectionProvider connectionProvider,
+            ICommandLineArgParser commandLineParser,
             IServiceControl serviceControl,
             INetworkOperations networkOperations)
         {
@@ -35,6 +38,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _serviceControl = serviceControl;
             _networkOperations = networkOperations;
             _connectionProvider = connectionProvider;
+            _commandLineParser = commandLineParser;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -103,12 +107,18 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private string GetConfiguredAddress()
         {
-            var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
-            if (appSettings != null && appSettings.LastUsedManagementApi != null)
-                return appSettings.LastUsedManagementApi;
+            var startupOptions = _commandLineParser.GetCommandLineArgs();
+            if (startupOptions.EndpointUri == null)
+            {
+                var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
+                if (appSettings != null && appSettings.LastUsedManagementApi != null)
+                    return appSettings.LastUsedManagementApi;
 
-            var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
-            return string.Format("http://localhost:{0}/api", managementConfig.Port);
+                var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
+                return string.Format("http://localhost:{0}/api", managementConfig.Port);
+            }
+            
+            return startupOptions.EndpointUri.ToString();
         }
 
         private async Task<bool> ServiceAvailable(string serviceUrl)

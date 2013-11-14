@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Desktop.Models;
 
-namespace NServiceBus.Profiler.Desktop.Management
+namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
     public interface IServiceControl
     {

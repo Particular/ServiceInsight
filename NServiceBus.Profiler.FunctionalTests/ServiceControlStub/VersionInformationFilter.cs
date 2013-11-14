@@ -1,5 +1,5 @@
 ﻿using System.Web.Http.Filters;
-using NServiceBus.Profiler.Desktop.Management;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 
 namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
 {
