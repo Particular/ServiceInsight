@@ -1,12 +1,10 @@
 ﻿using System;
-using log4net;
 using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
     public class CommandLineArgParser : ICommandLineArgParser
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
@@ -23,7 +21,11 @@ namespace NServiceBus.Profiler.Desktop.Startup
             foreach (var token in tokens)
             {
                 var keyValue = token.Split(KeyValueSeparator);
-                if (keyValue.Length == 1)
+                if (keyValue.Length == 2)
+                {
+                    PopulateKeyValue(result, keyValue[0], keyValue[1]);
+                }
+                else
                 {
                     result.SetEndpointUri(token);
                 }
@@ -31,8 +33,23 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
             return result;
         }
+
+        private void PopulateKeyValue(CommandLineOptions options, string key, string value)
+        {
+            switch (key)
+            {
+                case "search":
+                    options.SetSearchQuery(value);
+                    break;
+                case "endpointname":
+                    options.SetEndpointName(value);
+                    break;
+                default:
+                    throw new NotSupportedException(string.Format("Key {0} is not supported.", key));
+            }
+        }
     }
-    
+
     public interface ICommandLineArgParser
     {
         CommandLineOptions GetCommandLineArgs();

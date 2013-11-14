@@ -18,7 +18,7 @@
         
     </UserControl.Resources>
     
-    <dxg:TreeListControl x:Name="treeList" ItemsSource="{Binding Path=Items}">
+    <dxg:TreeListControl x:Name="treeList" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
         <dxg:TreeListControl.Columns>
             <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False">
                 <dxg:TreeListColumn.EditSettings>
@@ -30,7 +30,6 @@
             <dxg:TreeListView x:Name="view" 
                                 TreeDerivationMode="ChildNodesSelector"
                                 MouseLeftButtonUp="OnTreeClicked"
-                                FocusedRowChanged="OnFocusedRowChanged"
                                 NodeImageSelector="{StaticResource ExplorerImageSelector}"
                                 ChildNodesSelector="{StaticResource ChildSelector}"
                                 ShowColumnHeaders="False"

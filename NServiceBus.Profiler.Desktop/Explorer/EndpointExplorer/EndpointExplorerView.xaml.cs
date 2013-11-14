@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
@@ -13,13 +12,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         public EndpointExplorerView()
         {
             InitializeComponent();
-        }
-
-        private void OnFocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-        {
-            var item = e.NewRow as ExplorerItem;
-            Model.SelectedNode = item;
-            Model.SelectedRowHandle = e.Source.FocusedRowHandle;
         }
 
         private void OnTreeClicked(object sender, MouseButtonEventArgs e)

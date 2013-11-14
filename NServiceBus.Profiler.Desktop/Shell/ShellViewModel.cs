@@ -69,11 +69,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Messages = messages;
             LogWindow = logWindow;
 
+            Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
+            Items.Add(messages);
             Items.Add(messageBodyViewer);
             Items.Add(messageFlow);
-            Items.Add(queueExplorer);
-            Items.Add(messages);
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();

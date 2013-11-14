@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -7,6 +8,8 @@ using Caliburn.PresentationFramework.Views;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
@@ -21,7 +24,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private readonly IServiceControl _serviceControl;
         private readonly INetworkOperations _networkOperations;
         private readonly IServiceControlConnectionProvider _connectionProvider;
-        private readonly ICommandLineArgParser _commandLineParser;
+        private readonly CommandLineOptions _startupOptions;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
@@ -38,7 +41,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _serviceControl = serviceControl;
             _networkOperations = networkOperations;
             _connectionProvider = connectionProvider;
-            _commandLineParser = commandLineParser;
+            _startupOptions = commandLineParser.GetCommandLineArgs();
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -58,8 +61,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         {
             get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
         }
-
-        public int SelectedRowHandle { get; set; }
 
         public virtual ExplorerItem SelectedNode { get; set; }
 
@@ -93,22 +94,23 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
             if (IsConnected) return;
 
-            var configuredAddress = GetConfiguredAddress();
-            var existingUrl = _connectionProvider.Url;
-            var available = await ServiceAvailable(configuredAddress);
-            var connectTo = available ? configuredAddress : existingUrl;
+            var configuredConnection = GetConfiguredAddress();
+            var existingConnection = _connectionProvider.Url;
+            var available = await ServiceAvailable(configuredConnection);
+            var connectTo = available ? configuredConnection : existingConnection;
 
             _eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
+            await SelectDefaultEndpoint();
 
             _eventAggregator.Publish(new WorkFinished());
         }
 
+
         private string GetConfiguredAddress()
         {
-            var startupOptions = _commandLineParser.GetCommandLineArgs();
-            if (startupOptions.EndpointUri == null)
+            if (_startupOptions.EndpointUri == null)
             {
                 var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
                 if (appSettings != null && appSettings.LastUsedManagementApi != null)
@@ -118,7 +120,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);
             }
             
-            return startupOptions.EndpointUri.ToString();
+            return _startupOptions.EndpointUri.ToString();
         }
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
@@ -139,6 +141,20 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         public virtual void OnSelectedNodeChanged()
         {
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+        }
+
+        private async Task SelectDefaultEndpoint()
+        {
+            if (ServiceRoot == null || _startupOptions.EndpointName.IsEmpty()) return;
+
+            foreach (var endpoint in ServiceRoot.Children)
+            {
+                if (endpoint.Name.Equals(_startupOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                {
+                    SelectedNode = endpoint;
+                    break;
+                }
+            }
         }
 
         public async Task ConnectToService(string url)

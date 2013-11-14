@@ -210,10 +210,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
 
             var pagedResult = await _serviceControl.GetAuditMessages(endpoint,
-                                                                        pageIndex: pageIndex,
-                                                                        searchQuery: searchQuery,
-                                                                        orderBy: _lastSortColumn,
-                                                                        ascending: _lastSortOrderAscending);
+                                                                     pageIndex: pageIndex,
+                                                                     searchQuery: searchQuery,
+                                                                     orderBy: _lastSortColumn,
+                                                                     ascending: _lastSortOrderAscending);
             using (new GridSelectionPreserver(_view))
             {
                 Messages.Clear();

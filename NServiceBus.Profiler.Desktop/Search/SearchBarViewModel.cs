@@ -8,16 +8,27 @@ using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Search
 {
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
+        private readonly ICommandLineArgParser _commandLineArgParser;
         private int _workCount;
 
-        public SearchBarViewModel()
+        public SearchBarViewModel(ICommandLineArgParser commandLineArgParser)
         {
+            _commandLineArgParser = commandLineArgParser;
             PageSize = 50; //NOTE: Do we need to change this?
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            var options = _commandLineArgParser.GetCommandLineArgs();
+
+            SearchQuery = options.SearchQuery;
         }
 
         public virtual void GoToFirstPage()

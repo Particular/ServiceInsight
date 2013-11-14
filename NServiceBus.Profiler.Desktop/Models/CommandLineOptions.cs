@@ -10,6 +10,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public Uri EndpointUri { get; private set; }
         public string SearchQuery { get; private set; }
+        public string EndpointName { get; private set; }
 
         public void SetEndpointUri(string value)
         {
@@ -26,6 +27,11 @@ namespace NServiceBus.Profiler.Desktop.Models
             {
                 EndpointUri = new Uri(address);
             }
+        }
+
+        public void SetEndpointName(string value)
+        {
+            EndpointName = value;
         }
 
         public void SetSearchQuery(string value)

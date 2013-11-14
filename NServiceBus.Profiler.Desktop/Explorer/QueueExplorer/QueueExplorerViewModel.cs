@@ -179,8 +179,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public virtual string ConnectedToAddress { get; private set; }
 
-        public int SelectedRowHandle { get; set; }
-
         public virtual Queue SelectedQueue
         {
             get

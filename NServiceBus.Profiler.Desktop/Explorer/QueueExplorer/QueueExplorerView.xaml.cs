@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Desktop.Events;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
@@ -15,13 +14,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
         public QueueExplorerView()
         {
             InitializeComponent();
-        }
-
-        private void OnFocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-        {
-            var item = e.NewRow as ExplorerItem;
-            Model.SelectedNode = item;
-            Model.SelectedRowHandle = e.Source.FocusedRowHandle;
         }
 
         private void OnTreeClicked(object sender, MouseButtonEventArgs e)
