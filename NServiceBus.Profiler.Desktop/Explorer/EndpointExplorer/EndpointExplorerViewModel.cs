@@ -9,7 +9,6 @@ using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
@@ -24,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private readonly IServiceControl _serviceControl;
         private readonly INetworkOperations _networkOperations;
         private readonly IServiceControlConnectionProvider _connectionProvider;
-        private readonly CommandLineOptions _startupOptions;
+        private readonly ICommandLineArgParser _commandLineParser;
         private bool _isFirstActivation = true;
         private IExplorerView _view;
 
@@ -41,7 +40,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _serviceControl = serviceControl;
             _networkOperations = networkOperations;
             _connectionProvider = connectionProvider;
-            _startupOptions = commandLineParser.GetCommandLineArgs();
+            _commandLineParser = commandLineParser;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -110,7 +109,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private string GetConfiguredAddress()
         {
-            if (_startupOptions.EndpointUri == null)
+            if (_commandLineParser.ParsedOptions.EndpointUri == null)
             {
                 var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
                 if (appSettings != null && appSettings.LastUsedManagementApi != null)
@@ -119,8 +118,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
                 var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);
             }
-            
-            return _startupOptions.EndpointUri.ToString();
+
+            return _commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
@@ -145,11 +144,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task SelectDefaultEndpoint()
         {
-            if (ServiceRoot == null || _startupOptions.EndpointName.IsEmpty()) return;
+            if (ServiceRoot == null || _commandLineParser.ParsedOptions.EndpointName.IsEmpty()) return;
 
             foreach (var endpoint in ServiceRoot.Children)
             {
-                if (endpoint.Name.Equals(_startupOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                 {
                     SelectedNode = endpoint;
                     break;

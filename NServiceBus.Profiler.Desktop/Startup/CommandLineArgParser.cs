@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Startup
@@ -8,12 +9,14 @@ namespace NServiceBus.Profiler.Desktop.Startup
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
-        public CommandLineOptions GetCommandLineArgs()
+        public CommandLineOptions ParsedOptions { get; private set; }
+
+        public void Start()
         {
             var args = Environment.GetCommandLineArgs();
-            var result = new CommandLineOptions();
+            ParsedOptions = new CommandLineOptions();
 
-            if (args.Length != 2) return result;
+            if (args.Length != 2) return;
 
             var parameters = args[1].ToLower();
             var tokens = parameters.Split(TokenSeparator);
@@ -23,29 +26,27 @@ namespace NServiceBus.Profiler.Desktop.Startup
                 var keyValue = token.Split(KeyValueSeparator);
                 if (keyValue.Length == 2)
                 {
-                    PopulateKeyValue(result, keyValue[0], keyValue[1]);
+                    PopulateKeyValue(keyValue[0], keyValue[1]);
                 }
                 else
                 {
-                    result.SetEndpointUri(token);
+                    ParsedOptions.SetEndpointUri(token);
                 }
             }
-
-            return result;
         }
 
-        private void PopulateKeyValue(CommandLineOptions options, string key, string value)
+        private void PopulateKeyValue(string key, string value)
         {
             switch (key)
             {
                 case "search":
-                    options.SetSearchQuery(value);
+                    ParsedOptions.SetSearchQuery(value);
                     break;
                 case "endpointname":
-                    options.SetEndpointName(value);
+                    ParsedOptions.SetEndpointName(value);
                     break;
                 case "autorefresh":
-                    options.SetAutoRefresh(value);
+                    ParsedOptions.SetAutoRefresh(value);
                     break;
                 default:
                     throw new NotSupportedException(string.Format("Key {0} is not supported.", key));
@@ -53,8 +54,8 @@ namespace NServiceBus.Profiler.Desktop.Startup
         }
     }
 
-    public interface ICommandLineArgParser
+    public interface ICommandLineArgParser : IStartable
     {
-        CommandLineOptions GetCommandLineArgs();
+        CommandLineOptions ParsedOptions { get; }
     }
 }

@@ -26,9 +26,8 @@ namespace NServiceBus.Profiler.Desktop.Search
         protected override void OnActivate()
         {
             base.OnActivate();
-            var options = _commandLineArgParser.GetCommandLineArgs();
 
-            SearchQuery = options.SearchQuery;
+            SearchQuery = _commandLineArgParser.ParsedOptions.SearchQuery;
         }
 
         public virtual void GoToFirstPage()

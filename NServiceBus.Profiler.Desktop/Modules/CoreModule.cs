@@ -28,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<ServiceControlConnectionProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();
-            builder.RegisterType<CommandLineArgParser>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<CommandLineArgParser>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }
