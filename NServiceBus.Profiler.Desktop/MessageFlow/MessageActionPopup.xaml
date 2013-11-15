@@ -375,7 +375,7 @@
                 <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
                 <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding SecondLevelRetries}" />
                 <TextBlock Grid.Column="1" Grid.Row="5" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
-                    <Hyperlink Foreground="Red"><TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" /></Hyperlink>
+                    <Hyperlink Foreground="Red" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowException]" cal:Action.TargetWithoutContext="{Binding}" ><TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" /></Hyperlink>
                 </TextBlock> 
             </Grid>
         </Grid>

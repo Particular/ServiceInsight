@@ -32,7 +32,7 @@ namespace NServiceBus.Profiler.Desktop.ValueConverters
 
         private static double AngleFromSegments(ObservableCollection<DiagramConnectionSegment> segments)
         {
-            return Math.Atan2(segments.Last().EndPoint.X - segments.First().EndPoint.X, segments.Last().EndPoint.Y - segments.First().EndPoint.Y);
+            return Math.Atan2(segments.Last().EndPoint.X - segments.First().StartPoint.X, segments.Last().EndPoint.Y - segments.First().StartPoint.Y);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

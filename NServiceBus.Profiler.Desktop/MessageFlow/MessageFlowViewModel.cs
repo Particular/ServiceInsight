@@ -13,6 +13,7 @@ using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
+using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -26,6 +27,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ToggleEndpointData();
+        void ShowException(IExceptionDetails exception);
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
@@ -36,6 +38,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private readonly IHeaderInfoSerializer _headerInfoSerializer;
         private readonly IClipboard _clipboard;
         private readonly IStatusBarManager _statusBar;
+        private readonly IWindowManagerEx _windowManager;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
 
@@ -45,7 +48,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IContentDecoder<IList<HeaderInfo>> decoder,
             IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
-            IStatusBarManager statusBar)
+            IStatusBarManager statusBar,
+            IWindowManagerEx windowManager)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
@@ -53,6 +57,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _headerInfoSerializer = headerInfoSerializer;
             _clipboard = clipboard;
             _statusBar = statusBar;
+            _windowManager = windowManager;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -72,6 +77,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public void ShowMessageBody(StoredMessage message)
         {
             _eventAggregator.Publish(new SwitchToMessageBody());
+        }
+
+        public void ShowException(IExceptionDetails exception)
+        {
+            _windowManager.ShowDialog<ExceptionDetailViewModel>(new ExceptionDetailViewModel(exception));
         }
 
         public void ToggleEndpointData()

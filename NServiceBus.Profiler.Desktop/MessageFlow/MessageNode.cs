@@ -10,7 +10,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     {
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
-            IsResizable = false;
+            base.IsResizable = false;
             Owner = owner;
             Bounds = new Rect(0, 0, 203, 40);
             ZOrder = 1;
@@ -54,6 +54,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public void ShowBody()
         {
             Owner.ShowMessageBody(Message);
+        }
+
+        public void ShowException()
+        {
+            Owner.ShowException(new ExceptionDetails(Message));
         }
 
         public void Refresh()
