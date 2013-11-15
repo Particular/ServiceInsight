@@ -62,7 +62,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Background="Transparent">
                                         <TextBlock Text="{Binding Data.FriendlyMessageType}"
                                                            MaxWidth="140"
                                                            Style="{StaticResource MessageTypeText}"/>
