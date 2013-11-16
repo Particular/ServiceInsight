@@ -73,6 +73,9 @@
     <Reference Include="Caliburn.PresentationFramework">
       <HintPath>..\packages\Caliburn.2.0\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Data.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
@@ -217,6 +220,7 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="Core\Infrastructure\CallForwarderInterceptor.cs" />
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
@@ -226,6 +230,7 @@
     <Compile Include="MessageFlow\ExceptionDetailViewModel.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
+    <Compile Include="Modules\InterfacesModule.cs" />
     <Compile Include="ServiceControl\ServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">

@@ -4,21 +4,33 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
+    public interface IEnvironment
+    {
+        string[] GetCommandLineArgs();
+    }
+
     public class CommandLineArgParser : ICommandLineArgParser
     {
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
+        private readonly IEnvironment _environment;
+
         public CommandLineOptions ParsedOptions { get; private set; }
+
+        public CommandLineArgParser(IEnvironment environment)
+        {
+            _environment = environment;
+            ParsedOptions = new CommandLineOptions();
+        }
 
         public void Start()
         {
-            var args = Environment.GetCommandLineArgs();
-            ParsedOptions = new CommandLineOptions();
+            var args = _environment.GetCommandLineArgs();
 
             if (args.Length != 2) return;
 
-            var parameters = args[1].ToLower();
+            var parameters = args[1];
             var tokens = parameters.Split(TokenSeparator);
 
             foreach (var token in tokens)
@@ -37,7 +49,9 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
         private void PopulateKeyValue(string key, string value)
         {
-            switch (key)
+            var parameter = key.ToLower();
+
+            switch (parameter)
             {
                 case "search":
                     ParsedOptions.SetSearchQuery(value);

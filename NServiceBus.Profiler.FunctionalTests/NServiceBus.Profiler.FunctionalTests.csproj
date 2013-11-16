@@ -85,7 +85,6 @@
   <ItemGroup>
     <Compile Include="Extensions\ScreenRepositoryExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="Infrastructure\ForwardIfExistsInterceptor.cs" />
     <Compile Include="ApplicationShellTests.cs" />
     <Compile Include="Infrastructure\NameGenerator.cs" />
     <Compile Include="Infrastructure\ProfilerConfiguration.cs" />
