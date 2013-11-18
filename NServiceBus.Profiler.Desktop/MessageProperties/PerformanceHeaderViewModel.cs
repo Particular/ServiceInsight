@@ -21,22 +21,22 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         }
 
         [Description("Time the message was sent")]
-        public DateTime? TimeSent { get; set; }
+        public DateTime? TimeSent { get; private set; }
 
         [Description("Time the processing started")]
-        public DateTime? ProcessingStarted { get; set; }
+        public DateTime? ProcessingStarted { get; private set; }
 
         [Description("Time the processing finished")]
-        public DateTime? ProcessingEnded { get; set; }
+        public DateTime? ProcessingEnded { get; private set; }
 
         [Description("Calculated duration of processing")]
-        public string ProcessingTime { get; set; }
+        public string ProcessingTime { get; private set; }
 
         [Description("Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint")]
-        public string DeliveryTime { get; set; }
+        public string DeliveryTime { get; private set; }
 
         [Description("Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint")]
-        public string CriticalTime { get; set; }
+        public string CriticalTime { get; private set; }
 
         protected override void OnMessagePropertiesLoaded()
         {

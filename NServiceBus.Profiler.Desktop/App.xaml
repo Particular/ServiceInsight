@@ -33,6 +33,7 @@
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
                     <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
+                    
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -256,6 +257,12 @@
                     </DataTemplate>
                     
                     <DataTemplate x:Key="PropertyGridEmptyTextTemplate">
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="PropertyGridDateTextTemplate">
+                        <dxe:TextEdit Name="PART_Editor" 
+                                      IsReadOnly="True"
+                                      DisplayFormatString="{Binding Source={x:Static cnv:MessageDateTimeFormatProvider.MessageDateFormat}}" />
                     </DataTemplate>
 
                     <DataTemplate x:Key="ContextMenuTemplate" DataType="model:ContextMenuModel">

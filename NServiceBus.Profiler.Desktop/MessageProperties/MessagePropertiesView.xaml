@@ -26,9 +26,9 @@
             <dxprg:PropertyDefinition Path="HeaderContent" CellTemplate="{StaticResource PropertyGridLongTextTemplate}" />
         </dxprg:PropertyDefinition>
         <dxprg:PropertyDefinition Path="Performance" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
-            <dxprg:PropertyDefinition Path="TimeSent" />
-            <dxprg:PropertyDefinition Path="ProcessingStarted" />
-            <dxprg:PropertyDefinition Path="ProcessingEnded" />
+            <dxprg:PropertyDefinition Path="TimeSent" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
+            <dxprg:PropertyDefinition Path="ProcessingStarted" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
+            <dxprg:PropertyDefinition Path="ProcessingEnded" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
             <dxprg:PropertyDefinition Path="ProcessingTime" />
             <dxprg:PropertyDefinition Path="DeliveryTime" />
             <dxprg:PropertyDefinition Path="CriticalTime" />
