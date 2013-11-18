@@ -239,9 +239,10 @@
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
-                                                                           Placement="MousePoint"
-                                                                           VerticalOffset="15"
+                                                                           Placement="Mouse"
+                                                                           VerticalOffset="5"
                                                                            HorizontalOffset="{Binding Path=Child.ActualWidth, Converter={StaticResource HalvingConverter}, RelativeSource={RelativeSource Self}}"
+                                                                           HorizontalAlignment="Stretch"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
                                                         <local:MessageActionPopup />
