@@ -23,16 +23,18 @@
 
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="FailedMessageBackground" Color="#FFA4A8" />
-                    <SolidColorBrush x:Key="SelectedMessageBorder" Color="#0066CC" />
-                    <SolidColorBrush x:Key="SelectedMessageBackground" Color="#99CAE8" />
-                    <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="#FF1D25" />
+                    <SolidColorBrush x:Key="SelectedMessageBorder" Color="Black" />
+                    <SolidColorBrush x:Key="SelectedMessageBackground" Color="#CCCCCC" />
+                    <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="Black" />
+                    <SolidColorBrush x:Key="EndpointBackground" Color="White" />
+                    <SolidColorBrush x:Key="EndpointForeground" Color="#C0C0C0" />
 
                     <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
                         <Setter Property="Text" Value="!" />
                         <Setter Property="FontFamily" Value="Segoe UI" />
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Margin" Value="7,5,5,5" />
+                        <Setter Property="Margin" Value="7,0,5,5" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ShowEndpoints}" Value="True">
                                 <DataTrigger.Setters>
@@ -43,7 +45,8 @@
                     </Style>
 
                     <Style x:Key="MessageTypeText" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Arial Black" />
+                        <Setter Property="FontFamily" Value="Arial" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
                         <Setter Property="FontSize" Value="11" />
                         <Setter Property="Foreground" Value="Black" />
                         <Setter Property="VerticalAlignment" Value="Center" />
@@ -59,8 +62,6 @@
                         <Setter Property="FontFamily" Value="Arial" />
                         <Setter Property="FontSize" Value="9" />
                         <Setter Property="Foreground" Value="Black" />
-                        <!--<Setter Property="HorizontalAlignment" Value="Left" />
-                        <Setter Property="VerticalAlignment" Value="Bottom" />-->
                         <Setter Property="ToolTip" Value="Time Sent" />
                     </Style>
 
@@ -93,7 +94,7 @@
 
                     <Style x:Key="MessageEndpointText" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="9" />
-                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
 
@@ -180,38 +181,40 @@
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Grid x:Name="RootGrid">
-                                        <Border x:Name="MessageRectangle" 
+                                    <Border x:Name="MessageRectangle" 
                                                 Background="{StaticResource MessageBackground}" 
-                                                BorderBrush="#666666" 
-                                                BorderThickness="0" IsHitTestVisible="False" />
-                                        <TextBlock Style="{StaticResource FailedMessageMarker}"
-                                                   Visibility="{Binding HasFailed, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                                BorderBrush="Transparent" 
+                                                BorderThickness="5" IsHitTestVisible="False" >
+                                        <Grid x:Name="RootGrid">
+                                            <TextBlock Style="{StaticResource FailedMessageMarker}"
+                                                   Visibility="{Binding HasFailed, Converter={StaticResource BoolToVisibilityCollapseConverter}}" 
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Top" />
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
 
-                                            <StackPanel x:Name="OriginatingEndPoint" 
+                                                <StackPanel x:Name="OriginatingEndPoint" 
                                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
-                                                        Background="#4D4D4D">
-                                                <Image Source="/Images/DiagramEndpointFromIcon.png" 
+                                                        Background="{StaticResource EndpointBackground}" >
+                                                    <Image Source="/Images/DiagramEndpointFromIcon.png" 
                                                         Width="12" Margin="3,0,3,0"
                                                         Stretch="Uniform" />
-                                                <TextBlock Text="{Binding Data.OriginatingEndpoint}"
+                                                    <TextBlock Text="{Binding Data.OriginatingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
-                                            </StackPanel>
-                                            
-                                            <Image Source="pack://application:,,,/Images/CommandIcon.png" 
+                                                </StackPanel>
+
+                                                <Image Source="pack://application:,,,/Images/CommandIcon.png" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="4"
@@ -219,7 +222,7 @@
                                                    Stretch="Uniform"
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                            <Image Source="pack://application:,,,/Images/EventIcon.png" 
+                                                <Image Source="pack://application:,,,/Images/EventIcon.png" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="4"
@@ -228,11 +231,11 @@
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
 
-                                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                                                                                                
-                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" VerticalAlignment="Center" />
-                                                
-                                                <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+
+                                                    <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" VerticalAlignment="Center" />
+
+                                                    <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
@@ -241,24 +244,25 @@
                                                                            HorizontalOffset="{Binding Path=Child.ActualWidth, Converter={StaticResource HalvingConverter}, RelativeSource={RelativeSource Self}}"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
-                                                    <local:MessageActionPopup />
-                                                </local:MessagePopupControl>
-                                            </StackPanel>
+                                                        <local:MessageActionPopup />
+                                                    </local:MessagePopupControl>
+                                                </StackPanel>
 
-                                            <StackPanel x:Name="ReceivingEndPoint" 
+                                                <StackPanel x:Name="ReceivingEndPoint" 
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         VerticalAlignment="Center"
                                                         Orientation="Horizontal"
-                                                        Background="#4D4D4D">
-                                                <Image Source="/Images/DiagramEndpointToIcon.png" 
+                                                        Background="{StaticResource EndpointBackground}" >
+                                                    <Image Source="/Images/DiagramEndpointToIcon.png" 
                                                         Width="12" Margin="3,0,3,0"
                                                         Stretch="Uniform" />
-                                                <TextBlock Text="{Binding Data.ReceivingEndpoint}"
+                                                    <TextBlock Text="{Binding Data.ReceivingEndpoint}"
                                                             Style="{StaticResource MessageEndpointText}" />
-                                            </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
+                                    </Border>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding HasFailed}" Value="True">
                                             <DataTrigger.Setters>
@@ -272,8 +276,6 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
-                                            <Setter TargetName="OriginatingEndPoint" Property="Background" Value="{StaticResource SelectedFailedMessageBorder}" />
-                                            <Setter TargetName="ReceivingEndPoint" Property="Background" Value="{StaticResource SelectedFailedMessageBorder}" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -283,10 +285,7 @@
                                             <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource SelectedMessageBackground}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
-                                            <Setter TargetName="OriginatingEndPoint" Property="Background" Value="{StaticResource SelectedMessageBorder}" />
-                                            <Setter TargetName="ReceivingEndPoint" Property="Background" Value="{StaticResource SelectedMessageBorder}" />
                                         </MultiDataTrigger>
-
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
                             </Setter.Value>
