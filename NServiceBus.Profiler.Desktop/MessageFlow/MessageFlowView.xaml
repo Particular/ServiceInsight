@@ -395,7 +395,6 @@
                            Grid.Row="1"
                            Diagram="{Binding Diagram}"
                            IsReadOnly="True" 
-                           ReadOnlyCanSelect="True"
                            ZoomMode="ControlMouseWheel"
                            Cursor="Hand"
                            DragAction="Pan"
