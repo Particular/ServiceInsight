@@ -2,6 +2,7 @@
 using System.Windows;
 using Mindscape.WpfDiagramming;
 using NServiceBus.Profiler.Desktop.Models;
+using System;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -93,6 +94,17 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public bool IsPublished
         {
             get { return Message.MessageIntent == MessageIntent.Publish; }
+        }
+
+        public DateTime? TimeSent
+        {
+            get 
+            { 
+                var timeString = Message.GetHeaderByKey(MessageHeaderKeys.TimeSent);
+                if (string.IsNullOrEmpty(timeString))
+                    return null;
+                return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture); 
+            }
         }
 
         public bool HasFailed

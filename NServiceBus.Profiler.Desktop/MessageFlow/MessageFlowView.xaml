@@ -55,6 +55,15 @@
                         </Style.Triggers>
                     </Style>
 
+                    <Style x:Key="TimeSentText" TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value="Arial" />
+                        <Setter Property="FontSize" Value="9" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <!--<Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="VerticalAlignment" Value="Bottom" />-->
+                        <Setter Property="ToolTip" Value="Time Sent" />
+                    </Style>
+
                     <Style x:Key="MessageMenuIndicator" TargetType="{x:Type CheckBox}">
                         <Setter Property="FontFamily" Value="Verdana" />
                         <Setter Property="FontSize" Value="14" />
@@ -62,17 +71,20 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                                    <StackPanel Orientation="Horizontal" Background="Transparent">
-                                        <TextBlock Text="{Binding Data.FriendlyMessageType}"
-                                                           MaxWidth="140"
-                                                           Style="{StaticResource MessageTypeText}"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                                            <TextBlock Text="{Binding Data.FriendlyMessageType}"
+                                                               MaxWidth="140"
+                                                               Style="{StaticResource MessageTypeText}"/>
 
-                                        <Path Width="5" Height="5"
-                                              Margin="4,8,4,4"
-                                              x:Name="ChevronDown" 
-                                              Stretch="Fill" 
-                                              Fill="#FF000000" 
-                                              Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                            <Path Width="5" Height="5"
+                                                  Margin="4,8,4,4"
+                                                  x:Name="ChevronDown" 
+                                                  Stretch="Fill" 
+                                                  Fill="#FF000000" 
+                                                  Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding TimeSent}" Style="{StaticResource TimeSentText}" />
                                     </StackPanel>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -205,7 +217,7 @@
                                                    Margin="4"
                                                    Width="20"
                                                    Stretch="Uniform"
-                                                   Grid.Column="0" Grid.Row="1"
+                                                   Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
                                             <Image Source="pack://application:,,,/Images/EventIcon.png" 
                                                    HorizontalAlignment="Center"
@@ -213,12 +225,12 @@
                                                    Margin="4"
                                                    Width="24"
                                                    Stretch="Uniform"
-                                                   Grid.Column="0" Grid.Row="1"
+                                                   Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
 
                                             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                                                                                                 
-                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
+                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" VerticalAlignment="Center" />
                                                 
                                                 <local:MessagePopupControl IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"

@@ -54,6 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string ExceptionSource = "ExceptionInfo.Source";
         public const string ExceptionStackTrace = "ExceptionInfo.StackTrace";
         public const string FailedQueue = "FailedQ";
+        public const string TimeSent = "TimeSent";
         public const string TimeOfFailure = "TimeOfFailure";
     }
 
