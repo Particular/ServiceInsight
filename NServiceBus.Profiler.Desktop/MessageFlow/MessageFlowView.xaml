@@ -22,12 +22,12 @@
                     <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
 
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
-                    <SolidColorBrush x:Key="FailedMessageBackground" Color="#FFA4A8" />
+                    <SolidColorBrush x:Key="FailedMessageBackground" Color="#F8916E" />
                     <SolidColorBrush x:Key="SelectedMessageBorder" Color="Black" />
                     <SolidColorBrush x:Key="SelectedMessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="Black" />
                     <SolidColorBrush x:Key="EndpointBackground" Color="White" />
-                    <SolidColorBrush x:Key="EndpointForeground" Color="#C0C0C0" />
+                    <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
                     <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
                         <Setter Property="Text" Value="!" />

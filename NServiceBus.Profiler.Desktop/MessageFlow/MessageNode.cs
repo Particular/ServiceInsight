@@ -11,10 +11,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     {
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
-            base.IsResizable = false;
+            IsResizable = false;
             Owner = owner;
             Bounds = new Rect(0, 0, 203, 40);
-            ZOrder = 1;
+            //ZOrder = 1;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
         }
