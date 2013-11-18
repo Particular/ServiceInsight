@@ -1,4 +1,5 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
+﻿using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,11 @@ using System.Text;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
-    class ExceptionDetailViewModel
+    class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
     {
         public IExceptionDetails Exception { get; set; }
+
+        public ExceptionDetailViewModel() { }
 
         public ExceptionDetailViewModel(IExceptionDetails exception)
         {
@@ -22,5 +25,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 return string.Format("{0} (@{1})", Exception.ExceptionType, Exception.Source);
             }
         }
+    }
+
+    interface IExceptionDetailViewModel : IScreen
+    {
+        IExceptionDetails Exception { get; set; }
+        string FormattedSource { get; }
     }
 }

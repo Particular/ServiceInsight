@@ -14,6 +14,7 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
+using NServiceBus.Profiler.Desktop.MessageFlow;
 
 namespace NServiceBus.Profiler.Desktop.Modules
 {
@@ -48,6 +49,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
             builder.RegisterType<SimpleSettingsReader>().As<ISettingsReader>().WithParameter(TypedParameter.From(ConfigurationManager.AppSettings));
+            builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
         }
 
         protected static IEnumerable<Type> ExcemptTypes
@@ -62,6 +64,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (ShellView);
                 yield return typeof (ExceptionView);
                 yield return typeof (AboutView);
+                yield return typeof (ExceptionDetailView);
             }
         }
     }

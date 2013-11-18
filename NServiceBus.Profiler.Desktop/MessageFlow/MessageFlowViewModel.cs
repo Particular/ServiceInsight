@@ -32,6 +32,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
+        private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
@@ -49,7 +50,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
             IStatusBarManager statusBar,
-            IWindowManagerEx windowManager)
+            IWindowManagerEx windowManager,
+            IScreenFactory screenFactory)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
@@ -58,6 +60,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _clipboard = clipboard;
             _statusBar = statusBar;
             _windowManager = windowManager;
+            _screenFactory = screenFactory;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -81,7 +84,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void ShowException(IExceptionDetails exception)
         {
-            _windowManager.ShowDialog<ExceptionDetailViewModel>(new ExceptionDetailViewModel(exception));
+            var model = _screenFactory.CreateScreen<IExceptionDetailViewModel>();
+            model.Exception = exception;
+            _windowManager.ShowDialog(model);
         }
 
         public void ToggleEndpointData()
