@@ -32,7 +32,7 @@
     <dxb:BarManager x:Name="BarManager" 
                     AutomationProperties.AutomationId="BarManager"
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.1.1">
+                    dxc:DXSerializer.LayoutVersion="1.1.2">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -56,9 +56,9 @@
                                x:Name="Help" 
                                AutomationProperties.AutomationId="HelpMenuItem"
                                CategoryName="Help" Glyph="/Images/Help.png" />
-            <dxb:BarButtonItem Content="Connect To Machine" 
-                               x:Name="ConnectToMachine" 
-                               AutomationProperties.AutomationId="ConnectToMachineMenuItem"
+            <dxb:BarButtonItem Content="Connect To MSMQ" 
+                               x:Name="ConnectToMessageQueue" 
+                               AutomationProperties.AutomationId="ConnectToMessageQueueMenuItem"
                                CategoryName="Tools" Glyph="/Images/ConnectQueue.png">
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
@@ -155,7 +155,7 @@
                             AutomationProperties.AutomationId="ToolsMenu"
                             CategoryName="Tools" 
                             Content="Tools">
-                <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToMessageQueue" />
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
@@ -231,7 +231,7 @@
                      Caption="Toolbar" 
                      AllowHide="True" 
                      AllowCollapse="True">
-                <dxb:BarButtonItemLink BarItemName="ConnectToMachine" />
+                <dxb:BarButtonItemLink BarItemName="ConnectToMessageQueue" />
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />

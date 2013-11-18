@@ -159,7 +159,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void ConnectToMachine()
+        public virtual void ConnectToMessageQueue()
         {
             var machineViewModel = _screenFactory.CreateScreen<ConnectToMachineViewModel>();
             var result = _windowManager.ShowDialog(machineViewModel);

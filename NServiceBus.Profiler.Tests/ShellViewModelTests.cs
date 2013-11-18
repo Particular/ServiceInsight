@@ -135,7 +135,7 @@ namespace NServiceBus.Profiler.Tests
             ConnectToViewModel.ComputerName.Returns("NewMachine");
             WindowManager.ShowDialog(Arg.Any<object>()).Returns(true);
 
-            shell.ConnectToMachine();
+            shell.ConnectToMessageQueue();
 
             ScreenFactory.Received().CreateScreen<ConnectToMachineViewModel>();
             WindowManager.Received().ShowDialog(ConnectToViewModel);

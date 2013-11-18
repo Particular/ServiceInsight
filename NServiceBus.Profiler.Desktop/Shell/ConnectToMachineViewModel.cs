@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             _networkOperations = networkOperations;
             Machines = new List<string>();
-            DisplayName = "Connect To Queue";
+            DisplayName = "Connect To MSMQ";
         }
 
         protected override async void OnActivate()
