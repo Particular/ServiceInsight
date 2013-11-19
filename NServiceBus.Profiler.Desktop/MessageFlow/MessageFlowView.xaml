@@ -6,6 +6,7 @@
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageFlow"
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
              xmlns:core="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
@@ -13,6 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
                 <ResourceDictionary>
 
                     <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
@@ -23,23 +25,29 @@
 
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="FailedMessageBackground" Color="#F8916E" />
+                    <SolidColorBrush x:Key="RetriedMessageBackground" Color="#666666" />
                     <SolidColorBrush x:Key="SelectedMessageBorder" Color="Black" />
                     <SolidColorBrush x:Key="SelectedMessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="Black" />
                     <SolidColorBrush x:Key="EndpointBackground" Color="White" />
                     <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
-                    <Style x:Key="FailedMessageMarker" TargetType="TextBlock">
-                        <Setter Property="Text" Value="!" />
-                        <Setter Property="FontFamily" Value="Segoe UI" />
-                        <Setter Property="FontSize" Value="14" />
-                        <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Margin" Value="7,0,5,5" />
+                    <Style x:Key="FailedMessageMarker" TargetType="ContentControl">
+                        <Setter Property="Margin" Value="7,5,5,5" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ShowEndpoints}" Value="True">
                                 <DataTrigger.Setters>
-                                    <Setter Property="Margin" Value="7,15,5,5" />
+                                    <Setter Property="Margin" Value="7,20,5,5" />
                                 </DataTrigger.Setters>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.Failed}">
+                                <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RepeatedFailure}">
+                                <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RetryIssued}">
+                                <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -186,8 +194,7 @@
                                                 BorderBrush="Transparent"
                                                 BorderThickness="5" >
                                         <Grid x:Name="RootGrid">
-                                            <TextBlock Style="{StaticResource FailedMessageMarker}"
-                                                   Visibility="{Binding HasFailed, Converter={StaticResource BoolToVisibilityCollapseConverter}}" 
+                                            <ContentControl Style="{StaticResource FailedMessageMarker}"
                                                        HorizontalAlignment="Right"
                                                        VerticalAlignment="Top" />
                                             <Grid>
@@ -268,6 +275,11 @@
                                         <DataTrigger Binding="{Binding HasFailed}" Value="True">
                                             <DataTrigger.Setters>
                                                 <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding HasRetried}" Value="True">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource RetriedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
                                         <MultiDataTrigger>

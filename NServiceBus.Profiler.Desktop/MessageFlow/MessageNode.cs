@@ -116,6 +116,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
+        public bool HasRetried
+        {
+            get
+            {
+                return Message.Status == MessageStatus.RetryIssued;
+            }
+        }
+
         public string ExceptionMessage
         {
             get; set;
