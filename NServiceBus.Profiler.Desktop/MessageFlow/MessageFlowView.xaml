@@ -227,25 +227,14 @@
                                                    Margin="4"
                                                    Width="20"
                                                    Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" >
-                                                    <ContentControl.RenderTransform>
-                                                        <ScaleTransform ScaleX=".7" ScaleY=".7" CenterY=".7" />
-                                                    </ContentControl.RenderTransform>
-                                                </ContentControl>
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
                                                 <ContentControl Template="{StaticResource EventIcon}" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="4"
                                                    Width="24"
                                                    Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
-                                                    <ContentControl.RenderTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform ScaleX=".7" ScaleY=".7"/>
-                                                            <TranslateTransform X="7" />
-                                                        </TransformGroup>
-                                                    </ContentControl.RenderTransform>
-                                                </ContentControl>
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
                                                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
 
