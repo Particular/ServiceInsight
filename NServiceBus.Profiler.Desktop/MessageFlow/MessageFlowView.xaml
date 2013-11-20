@@ -214,29 +214,38 @@
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Background="{StaticResource EndpointBackground}" >
-                                                    <Image Source="/Images/DiagramEndpointFromIcon.png" 
+                                                    <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                         Width="12" Margin="3,0,3,0"
-                                                        Stretch="Uniform" />
+                                                         />
                                                     <TextBlock Text="{Binding Data.OriginatingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
                                                 </StackPanel>
 
-                                                <Image Source="pack://application:,,,/Images/CommandIcon.png" 
+                                                <ContentControl Template="{StaticResource CommandIcon}" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="4"
                                                    Width="20"
-                                                   Stretch="Uniform"
                                                    Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                                <Image Source="pack://application:,,,/Images/EventIcon.png" 
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" >
+                                                    <ContentControl.RenderTransform>
+                                                        <ScaleTransform ScaleX=".7" ScaleY=".7" CenterY=".7" />
+                                                    </ContentControl.RenderTransform>
+                                                </ContentControl>
+                                                <ContentControl Template="{StaticResource EventIcon}" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="4"
                                                    Width="24"
-                                                   Stretch="Uniform"
                                                    Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
+                                                    <ContentControl.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleX=".7" ScaleY=".7"/>
+                                                            <TranslateTransform X="7" />
+                                                        </TransformGroup>
+                                                    </ContentControl.RenderTransform>
+                                                </ContentControl>
 
                                                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
 
@@ -262,9 +271,8 @@
                                                         VerticalAlignment="Center"
                                                         Orientation="Horizontal"
                                                         Background="{StaticResource EndpointBackground}" >
-                                                    <Image Source="/Images/DiagramEndpointToIcon.png" 
-                                                        Width="12" Margin="3,0,3,0"
-                                                        Stretch="Uniform" />
+                                                    <ContentControl Template="{StaticResource ReceivingEndpoint}" 
+                                                        Width="12" Margin="3,0,3,0" />
                                                     <TextBlock Text="{Binding Data.ReceivingEndpoint}"
                                                             Style="{StaticResource MessageEndpointText}" />
                                                 </StackPanel>

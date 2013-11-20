@@ -61,6 +61,44 @@
                         <PathGeometry FillRule="Nonzero" Figures="M4.275,11.018C6.166,12.256 8.68,12.369 10.727,11.099 13.543,9.353 14.41,5.655 12.664,2.839 10.918,0.0230000000000006 7.22,-0.843999999999999 4.404,0.902 2.665,1.98 1.67,3.798 1.573,5.697L0,5.697 2.522,9.232 5.057,5.697 3.499,5.697C3.591,4.439 4.263,3.25 5.417,2.535 7.33,1.348 9.844,1.938 11.03,3.851 12.217,5.765 11.627,8.278 9.714,9.465 8.4,10.28 6.805,10.257 5.549,9.544L4.275,11.018z" />
                     </Path.Data>
                 </Path>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
+    <ControlTemplate x:Key="CommandIcon">
+        <Canvas Name="Layer_1" Width="28.15" Height="12" ClipToBounds="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+            <Canvas>
+                <Canvas>
+                    <Ellipse Fill="#FF1A1A1A" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="0.655" />
+                    <Path Fill="#FF1A1A1A">
+                        <Path.Data>
+                            <PathGeometry FillRule="Nonzero" Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" />
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
+    <ControlTemplate x:Key="EventIcon">
+        <Canvas Name="Layer_1" Width="28.15" Height="32" ClipToBounds="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+            <Canvas>
+                <Canvas>
+                    <Ellipse Fill="#FF1A1A1A" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="10.655" />
+                    <Path Fill="#FF1A1A1A">
+                        <Path.Data>
+                            <PathGeometry FillRule="Nonzero" Figures="M11.749,2.569L13.696,4.48 8.413,9.664C9.849,10.313,11.027,11.413,11.754,12.785L16.957,7.68 18.904,9.59 21.521,0 11.749,2.569z" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#FF1A1A1A">
+                        <Path.Data>
+                            <PathGeometry FillRule="Nonzero" Figures="M28.15,16L19.997,11 19.997,13 12.186,13C12.424,14 12.558,15.24 12.558,16.016 12.558,16.78 12.429,18 12.198,19L19.998,19 19.998,21 28.15,16z" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#FF1A1A1A">
+                        <Path.Data>
+                            <PathGeometry FillRule="Nonzero" Figures="M21.521,32L18.903,22.41 16.956,24.32 11.753,19.215C11.025,20.586,9.848,21.687,8.412,22.336L13.695,27.52 11.748,29.431 21.521,32z" />
+                        </Path.Data>
+                    </Path>
+                </Canvas>
                 <Canvas />
                 <Canvas />
                 <Canvas />
@@ -76,7 +114,43 @@
                 <Canvas />
                 <Canvas />
                 <Canvas />
-                <Canvas />
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
+    <ControlTemplate x:Key="ReceivingEndpoint">
+        <Canvas Name="Layer_1" Width="14" Height="11" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="180" />
+                    <TranslateTransform X="8" Y="9"/>
+                    <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Canvas Name="g3048">
+                <Canvas>
+                    <Canvas Name="g3051">
+                        <Polygon Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " Name="polygon3053" FillRule="NonZero" Fill="#FF666666"/>
+                        <Polygon Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " Name="polygon3055" FillRule="NonZero" Fill="#FF666666"/>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SendingEndpoint">
+        <Canvas Name="Layer_1" Width="14" Height="11" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="8" Y="9"/>
+                    <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Canvas Name="g3106">
+                <Canvas>
+                    <Canvas Name="g3109">
+                        <Polygon Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " Name="polygon3111" FillRule="NonZero" Fill="#FF666666"/>
+                        <Polygon Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " Name="polygon3113" FillRule="NonZero" Fill="#FF666666"/>
+                    </Canvas>
+                </Canvas>
             </Canvas>
         </Canvas>
     </ControlTemplate>
