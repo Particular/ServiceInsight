@@ -77,6 +77,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                     return "Faulted";
                 case MessageStatus.Successful:
                     return "Success";
+                case MessageStatus.RetryIssued:
+                    return "Retried";
                 default:
                     throw new ArgumentOutOfRangeException();
             }

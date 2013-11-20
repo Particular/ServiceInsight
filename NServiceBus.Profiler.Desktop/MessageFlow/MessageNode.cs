@@ -9,11 +9,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
+        private const int heightNoEndpoints = 50;
+        private const int endpointsHeight = 25;
+
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
             IsResizable = false;
             Owner = owner;
-            Bounds = new Rect(0, 0, 203, 40);
+            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
             //ZOrder = 1;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
@@ -44,6 +47,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             await Owner.RetryMessage(Message);
             Message.Status = MessageStatus.RetryIssued;
             base.OnPropertyChanged("HasFailed");
+            base.OnPropertyChanged("HasRetried");
         }
 
         public bool CanRetry()
@@ -73,7 +77,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, ShowEndpoints ? 75 : 40));
+            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
