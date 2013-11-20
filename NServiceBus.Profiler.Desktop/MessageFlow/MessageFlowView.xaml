@@ -186,7 +186,7 @@
                                     <Border x:Name="MessageRectangle" 
                                                 Background="{StaticResource MessageBackground}" 
                                                 BorderBrush="Transparent"
-                                                BorderThickness="5" >
+                                                BorderThickness="1">
                                         <Grid x:Name="RootGrid">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition />
@@ -215,12 +215,14 @@
                                             <ContentControl Template="{StaticResource CommandIcon}" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
+                                                   Margin="0,4,0,0"
                                                    Width="20"
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
                                             <ContentControl Template="{StaticResource EventIcon}" 
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
+                                                   Margin="0,8,0,0"
                                                    Width="24"
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
@@ -298,22 +300,12 @@
                     <Style x:Key="CommandConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="3" />
-                        <Setter Property="BitmapEffect">
-                            <Setter.Value>
-                                <DropShadowBitmapEffect Color="Black" Direction="-45" Opacity="0.6" />
-                            </Setter.Value>
-                        </Setter>
                     </Style>
 
                     <Style x:Key="EventConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="3" />
                         <Setter Property="StrokeDashArray" Value="1,1" />
-                        <Setter Property="BitmapEffect">
-                            <Setter.Value>
-                                <DropShadowBitmapEffect Color="Black" Direction="-45" Opacity="0.6" />
-                            </Setter.Value>
-                        </Setter>
                     </Style>
 
                     <Style x:Key="ArrowheadPathStyle" TargetType="Path">
@@ -335,7 +327,7 @@
                         <ms:Arrowhead PathStyle="{StaticResource EventArrowheadPathStyle}" Length="20" BackWidth="15" />
                     </DataTemplate>
 
-                    <ms:CorneredPathBuilder x:Key="PathBuilder" EndOffset="4" />
+                    <ms:CorneredPathBuilder x:Key="PathBuilder"/>
 
                     <Style x:Key="CommandConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="Sent Command" />
