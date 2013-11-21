@@ -88,7 +88,7 @@
                                                                Style="{StaticResource MessageTypeText}"/>
 
                                             <Path Width="5" Height="5"
-                                                  Margin="4,8,4,4"
+                                                  Margin="4,6,4,4"
                                                   x:Name="ChevronDown" 
                                                   Stretch="Fill" 
                                                   Fill="#FF000000" 
