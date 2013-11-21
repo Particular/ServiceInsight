@@ -100,8 +100,8 @@
             <Canvas.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="180" />
-                    <TranslateTransform X="8" Y="10"/>
-                    <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                    <TranslateTransform X="9" Y="10"/>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Canvas Name="g3048">
@@ -118,8 +118,8 @@
         <Canvas Name="Layer_1" Width="14" Canvas.Left="0" Canvas.Top="0">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <TranslateTransform X="8" Y="10"/>
-                    <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                    <TranslateTransform X="9" Y="10"/>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Canvas Name="g3106">

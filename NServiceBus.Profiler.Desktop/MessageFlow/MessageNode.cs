@@ -10,7 +10,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     public class MessageNode : DiagramNode
     {
         private const int heightNoEndpoints = 50;
-        private const int endpointsHeight = 25;
+        private const int endpointsHeight = 16;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {

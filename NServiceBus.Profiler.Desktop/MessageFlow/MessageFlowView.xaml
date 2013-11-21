@@ -213,7 +213,8 @@
                                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
-                                                        Background="{StaticResource EndpointBackground}" >
+                                                        Background="{StaticResource EndpointBackground}" 
+                                                        Height="14">
                                                 <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                                 Margin="3,0,3,0" />
                                                 <TextBlock Text="{Binding Data.OriginatingEndpoint}"
@@ -257,7 +258,9 @@
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
-                                                        Background="{StaticResource EndpointBackground}" >
+                                                        VerticalAlignment="Center"
+                                                        Background="{StaticResource EndpointBackground}"
+                                                        Height="14">
                                                 <ContentControl Template="{StaticResource ReceivingEndpoint}" 
                                                                     Margin="3,0,3,0" />
                                                 <TextBlock Text="{Binding Data.ReceivingEndpoint}"
@@ -283,6 +286,7 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
+                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -291,6 +295,7 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
+                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -301,6 +306,7 @@
                                             <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource SelectedMessageBackground}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
+                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
