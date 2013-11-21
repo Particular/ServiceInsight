@@ -199,9 +199,11 @@
                                             </Grid.ColumnDefinitions>
                                             <ContentControl Style="{StaticResource FailedMessageMarker}"
                                                        HorizontalAlignment="Right"
-                                                       VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
+                                                       VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
+                                            </ContentControl>
 
                                             <StackPanel x:Name="OriginatingEndPoint" 
+                                                        ToolTip="Sending Endpoint"
                                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
@@ -213,6 +215,7 @@
                                             </StackPanel>
 
                                             <ContentControl Template="{StaticResource CommandIcon}" 
+                                                   ToolTip="Command"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,4,0,0"
@@ -220,6 +223,7 @@
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
                                             <ContentControl Template="{StaticResource EventIcon}" 
+                                                   ToolTip="Event"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,8,0,0"
@@ -243,6 +247,7 @@
                                             </local:MessagePopupControl>
 
                                             <StackPanel x:Name="ReceivingEndPoint" 
+                                                        ToolTip="Processing Endpoint"
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
