@@ -37,12 +37,15 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.Failed}">
                                 <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Failed" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RepeatedFailure}">
                                 <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Repeated Failures" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RetryIssued}">
                                 <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
+                                <Setter Property="ToolTip" Value="Retry Requested" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -72,13 +75,16 @@
                         <Setter Property="FontFamily" Value="Verdana" />
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Margin" Value="0,5,0,5" />
+                        <Setter Property="MaxWidth" Value="130" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
                                     <StackPanel Orientation="Vertical" Background="Transparent">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Data.FriendlyMessageType}"
-                                                               MaxWidth="140"
+                                                               MaxWidth="120"
                                                                Style="{StaticResource MessageTypeText}"/>
 
                                             <Path Width="5" Height="5"
@@ -231,7 +237,7 @@
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
-                                            <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" Grid.Column="1" Grid.Row="1" Margin="0,5,0,5" />
+                                            <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" Grid.Column="1" Grid.Row="1" />
 
                                             <local:MessagePopupControl Grid.Row="1" Grid.Column="1" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
