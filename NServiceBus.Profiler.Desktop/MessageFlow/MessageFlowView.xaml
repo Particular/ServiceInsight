@@ -84,6 +84,7 @@
                                     <StackPanel Orientation="Vertical" Background="Transparent">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Data.FriendlyMessageType}"
+                                                       ToolTip="{Binding Data.FriendlyMessageType}"
                                                                MaxWidth="120"
                                                                Style="{StaticResource MessageTypeText}"/>
 
