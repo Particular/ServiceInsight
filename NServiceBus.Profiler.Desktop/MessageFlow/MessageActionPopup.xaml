@@ -335,7 +335,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="36,7,0,0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontWeight="Bold" FontSize="14"/>
+            <TextBlock Margin="37,7,0,0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontWeight="Bold" />
             <StackPanel Margin="7" Grid.Column="0" Grid.Row="1">
                 <MenuItem Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />
                 <MenuItem Header="Retry Message" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action Retry]" cal:Action.TargetWithoutContext="{Binding}" />
