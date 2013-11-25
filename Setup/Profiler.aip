@@ -11,11 +11,13 @@
     <ROW Property="AI_PRODUCTNAME_ARP" Value="[|ProductName]"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ALL_PROGRAMS_SH" Value="Yes" Type="4"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="ARPPRODUCTICON" Value="ServiceInsights.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:ServiceInsightwhite.png" Type="1" MsiKey="AppLogoIcon"/>
+    <ROW Property="DESK_SH" Value="Yes" Type="4"/>
     <ROW Property="MY_VERSION" Value="4.0"/>
     <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
     <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
@@ -148,7 +150,7 @@
     <ROW Dialog_="CustomizeDialog" Control="ItemDescription" Type="Text" X="17" Y="226" Width="312" Height="32" Attributes="65539" Text="Multiline description of the currently selected item." Order="900" TextLocId="Control.Text.CustomizeDlg#ItemDescription"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_1" Type="ImageCheckBox" X="96" Y="324" Width="179" Height="14" Attributes="3" Property="DESK_SH" Text="[checkbox]" Order="1000" ExtType="ImageCheckBox" ExtData="Desktop" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
     <ROW Dialog_="CustomizeDialog" Control="ImageCheckBox_2" Type="ImageCheckBox" X="96" Y="304" Width="167" Height="14" Attributes="3" Property="ALL_PROGRAMS_SH" Text="[checkbox]" Order="1100" ExtType="ImageCheckBox" ExtData="All Programs" ExtDataLocId="Metro.Control.Text.WelcomeDlg.AgreeToLicense"/>
-    <ROW Dialog_="CustomizeDialog" Control="Text_2" Type="Text" X="17" Y="283" Width="180" Height="14" Attributes="65539" Property="TEXT_2_PROP" Text="Add ServiceInsight shortcuts to:" Order="1200"/>
+    <ROW Dialog_="CustomizeDialog" Control="Text_2" Type="Text" X="17" Y="282" Width="180" Height="15" Attributes="65539" Property="TEXT_2_PROP" Text="Add ServiceInsight shortcuts to:" Order="1200"/>
     <ROW Dialog_="CustomizeDlg" Control="CustomizeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
     <ROW Dialog_="CustomizeDlg" Control="QuickSelectionTree" Type="QuickSelectionTree" X="17" Y="143" Width="310" Height="101" Attributes="3" Property="CUSTOMIZEDLGQUICKSELECTIONTREE_1_PROP" Text="Control.Text.CustomizeDlg#QuickSelectionTree" Order="300" TextLocId="Control.Text.CustomizeDlg#QuickSelectionTree" MsiKey="CustomizeDlg#QuickSelectionTree" ExtType="QuickSelectionTree"/>
     <ROW Dialog_="CustomizeDlg" Control="SubTitle" Type="Text" X="17" Y="105" Width="310" Height="32" Attributes="65539" Text="Select which components of [ProductName] will be installed" Order="500" TextLocId="Azure.Control.Text.CustomizeDlg#Text" MsiKey="CustomizeDlg#SubTitle"/>
