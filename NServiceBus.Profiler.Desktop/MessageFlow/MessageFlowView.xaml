@@ -51,7 +51,6 @@
                     </Style>
 
                     <Style x:Key="MessageTypeText" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Arial" />
                         <Setter Property="FontWeight" Value="SemiBold" />
                         <Setter Property="FontSize" Value="11" />
                         <Setter Property="Foreground" Value="Black" />
@@ -65,14 +64,12 @@
                     </Style>
 
                     <Style x:Key="TimeSentText" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Arial" />
                         <Setter Property="FontSize" Value="9" />
                         <Setter Property="Foreground" Value="Black" />
                         <Setter Property="ToolTip" Value="Time Sent" />
                     </Style>
 
                     <Style x:Key="MessageMenuIndicator" TargetType="{x:Type CheckBox}">
-                        <Setter Property="FontFamily" Value="Verdana" />
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Margin" Value="0,5,0,5" />
