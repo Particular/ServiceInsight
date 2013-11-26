@@ -385,13 +385,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="5">
-            <Button Margin="2" x:Name="ToggleEndpointData">
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+        <StackPanel Orientation="Horizontal" Margin="5" >
+            <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
                     <TextBlock Text="Toggle Endpoint Visibility" VerticalAlignment="Center" />
                 </StackPanel>
-            </Button>
+                </ToggleButton>
             <Button Margin="2" x:Name="ToggleTimelineData" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/DiagramTimeView.png" Margin="0,0,5,0" VerticalAlignment="Center" />
@@ -399,6 +400,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+        </Border>
 
         <ms:DiagramSurface x:Name="ds" Background="White"
                            Grid.Row="1"
