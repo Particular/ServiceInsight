@@ -132,4 +132,35 @@
             </Canvas>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="Exception">
+        <Canvas Name="Layer_1" Width="17" Height="13" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas.Resources/>
+            <Canvas Name="g2990">
+                <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="0,13 8.526,-0.035 17,13   " Name="polygon2992" FillRule="NonZero" Fill="#FFFF0000"/>
+                <Canvas Name="g2994">
+                    <Canvas Name="g2996">
+                        <Canvas Name="g2998">
+                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="warning5icon_6_" Fill="#FFFFFFFF">
+                                <Path.Data>
+                                    <PathGeometry Figures="M8 5h1v4H8V5z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Canvas>
+                    <Canvas Name="g3001">
+                        <Canvas Name="g3003">
+                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="warning5icon_4_" Fill="#FFFFFFFF">
+                                <Path.Data>
+                                    <PathGeometry Figures="M8 10h1v1H8l0 0V10z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>
