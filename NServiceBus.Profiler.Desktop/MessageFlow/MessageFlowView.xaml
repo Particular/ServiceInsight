@@ -284,7 +284,6 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
-                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -293,7 +292,6 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
-                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -304,7 +302,6 @@
                                             <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource SelectedMessageBackground}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                             <Setter TargetName="MessageRectangle" Property="BorderThickness" Value="5" />
-                                            <Setter TargetName="MessageRectangle" Property="Margin" Value="-5,-5,-5,-5" />
                                         </MultiDataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
