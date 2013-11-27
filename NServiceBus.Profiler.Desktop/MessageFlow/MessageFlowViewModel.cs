@@ -28,6 +28,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void ShowMessageBody(StoredMessage message);
         void ToggleEndpointData();
         void ShowException(IExceptionDetails exception);
+        void ZoomIn();
+        void ZoomOut();
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
@@ -82,11 +84,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _eventAggregator.Publish(new SwitchToMessageBody());
         }
 
+        public void ShowSagaWindow(StoredMessage message)
+        {
+            _eventAggregator.Publish(new SwitchToSagaWindow());
+        }
+
         public void ShowException(IExceptionDetails exception)
         {
             var model = _screenFactory.CreateScreen<IExceptionDetailViewModel>();
             model.Exception = exception;
-            _windowManager.ShowDialog(model);
+            _windowManager.ShowWindow(model);
         }
 
         public void ToggleEndpointData()
@@ -233,6 +240,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             SelectedMessage = null;
             _nodeMap.Clear();
             Diagram = new MessageFlowDiagram();
+        }
+
+        public void ZoomIn()
+        {
+            _view.Surface.Zoom += 0.1;
+        }
+
+        public void ZoomOut()
+        {
+            _view.Surface.Zoom -= 0.1;
         }
     }
 }

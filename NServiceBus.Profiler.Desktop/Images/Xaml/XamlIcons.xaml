@@ -163,4 +163,33 @@
             </Canvas>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="ZoomInIcon">
+        <Canvas Name="Layer_1" Width="10.919" Height="11" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas Name="g3037">
+                <Canvas Name="Endpoint__x28_Send_x29_"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="magnifier6icon_1_" Fill="#FF007BC6">
+                    <Path.Data>
+                        <PathGeometry Figures="M10.919 9.57L8.006 6.658C8.432 5.987 8.679 5.192 8.679 4.34    C8.679 1.947 6.733 0 4.34 0C1.947 0 0 1.947 0 4.34s1.947 4.34 4.34 4.34c0.81 0 1.568-0.223 2.217-0.611L9.489 11L10.919 9.57z     M1.196 4.34c0-1.733 1.41-3.144 3.144-3.144c1.733 0 3.144 1.41 3.144 3.144c0 1.733-1.41 3.144-3.144 3.144    S1.196 6.073 1.196 4.34z M6.161 4.856H4.887V6.13H3.902V4.856H2.628V3.872h1.274V2.598h0.984v1.274h1.274V4.856z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
+    <ControlTemplate x:Key="ZoomOutIcon">
+        <Canvas Name="Layer_1" Width="10.919" Height="11" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas Name="g3131">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="magnifier7icon_1_" Fill="#FF007BC6">
+                    <Path.Data>
+                        <PathGeometry Figures="M10.919 9.57L8.006 6.658C8.432 5.987 8.679 5.192 8.679 4.34    C8.679 1.947 6.733 0 4.34 0C1.947 0 0 1.947 0 4.34s1.947 4.34 4.34 4.34c0.81 0 1.568-0.223 2.217-0.611L9.489 11L10.919 9.57z     M1.196 4.34c0-1.733 1.41-3.144 3.144-3.144c1.733 0 3.144 1.41 3.144 3.144c0 1.733-1.41 3.144-3.144 3.144    S1.196 6.073 1.196 4.34z M6.161 4.856H2.628V3.872h3.533V4.856z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>
