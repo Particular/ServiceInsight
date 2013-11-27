@@ -9,8 +9,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private const int heightNoEndpoints = 50;
-        private const int endpointsHeight = 16;
+        private const int heightNoEndpoints = 56;
+        private const int endpointsHeight = 25;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
