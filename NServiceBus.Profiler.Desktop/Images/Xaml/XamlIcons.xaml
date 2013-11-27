@@ -41,8 +41,8 @@
             </Canvas.RenderTransform>
             <Canvas>
                 <Canvas>
-                    <Ellipse Fill="#FF1A1A1A" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="0.655" />
-                    <Path Fill="#FF1A1A1A">
+                    <Ellipse Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="0.655" />
+                    <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                         <Path.Data>
                             <PathGeometry FillRule="Nonzero" Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" />
                         </Path.Data>
@@ -60,38 +60,23 @@
             </Canvas.RenderTransform>
             <Canvas>
                 <Canvas>
-                    <Ellipse Fill="#FF1A1A1A" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="10.655" />
-                    <Path Fill="#FF1A1A1A">
+                    <Ellipse Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="10.655" />
+                    <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                         <Path.Data>
                             <PathGeometry FillRule="Nonzero" Figures="M11.749,2.569L13.696,4.48 8.413,9.664C9.849,10.313,11.027,11.413,11.754,12.785L16.957,7.68 18.904,9.59 21.521,0 11.749,2.569z" />
                         </Path.Data>
                     </Path>
-                    <Path Fill="#FF1A1A1A">
+                    <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                         <Path.Data>
                             <PathGeometry FillRule="Nonzero" Figures="M28.15,16L19.997,11 19.997,13 12.186,13C12.424,14 12.558,15.24 12.558,16.016 12.558,16.78 12.429,18 12.198,19L19.998,19 19.998,21 28.15,16z" />
                         </Path.Data>
                     </Path>
-                    <Path Fill="#FF1A1A1A">
+                    <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                         <Path.Data>
                             <PathGeometry FillRule="Nonzero" Figures="M21.521,32L18.903,22.41 16.956,24.32 11.753,19.215C11.025,20.586,9.848,21.687,8.412,22.336L13.695,27.52 11.748,29.431 21.521,32z" />
                         </Path.Data>
                     </Path>
                 </Canvas>
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
-                <Canvas />
             </Canvas>
         </Canvas>
     </ControlTemplate>

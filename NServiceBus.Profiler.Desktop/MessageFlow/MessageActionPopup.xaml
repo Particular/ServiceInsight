@@ -341,14 +341,33 @@
             BorderThickness="0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="24" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="30,7,0,0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontSize="13px" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="30,7,0,0" >
+            <ContentControl Template="{StaticResource CommandIcon}" 
+                                                   ToolTip="Command"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="White"
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+                <ContentControl Template="{StaticResource EventIcon}" 
+                                                   ToolTip="Event"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="White"
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
+                    <ContentControl.RenderTransform>
+                        <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                    </ContentControl.RenderTransform>
+                </ContentControl>
+
+                <TextBlock Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontSize="13px" FontWeight="Bold" />
+            </StackPanel>
             <StackPanel Margin="0,7,0,0" Grid.Column="0" Grid.Row="1">
                 <Border BorderBrush="#1E1E1E" BorderThickness="0 1 0 0" >
                     <MenuItem Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />
