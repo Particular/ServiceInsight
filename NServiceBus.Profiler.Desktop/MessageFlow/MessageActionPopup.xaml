@@ -287,6 +287,7 @@
                     <Style x:Key="ContextMenuItem" TargetType="MenuItem">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
                         <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontSize" Value="12px" />
                         <Setter Property="Height" Value="30" />
                         <Style.Triggers>
                             <Trigger Property="Role" Value="TopLevelHeader">
@@ -307,22 +308,26 @@
 
                     <Style x:Key="MessagePropertyKey" TargetType="TextBlock">
                         <Setter Property="Margin" Value="4" />
+                        <Setter Property="FontSize" Value="13px" />
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                     <Style x:Key="MessagePropertyValue" TargetType="TextBlock">
                         <Setter Property="Margin" Value="4" />
                         <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="13px" />
                         <Setter Property="FontWeight" Value="Bold" />
                     </Style>
                     <Style x:Key="MessageExceptionKey" TargetType="TextBlock">
                         <Setter Property="Margin" Value="4" />
                         <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="13px" />
                         <Setter Property="Foreground" Value="Red" />
                     </Style>
                     <Style x:Key="MessageExceptionValue" TargetType="TextBlock">
                         <Setter Property="Margin" Value="4" />
                         <Setter Property="VerticalAlignment" Value="Top" />
                         <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="13px" />
                         <Setter Property="Foreground" Value="Red" />
                     </Style>
                 </ResourceDictionary>
@@ -343,7 +348,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="30,7,0,0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontWeight="Bold" />
+            <TextBlock Margin="30,7,0,0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontSize="13px" FontWeight="Bold" />
             <StackPanel Margin="0,7,0,0" Grid.Column="0" Grid.Row="1">
                 <Border BorderBrush="#1E1E1E" BorderThickness="0 1 0 0" >
                     <MenuItem Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />

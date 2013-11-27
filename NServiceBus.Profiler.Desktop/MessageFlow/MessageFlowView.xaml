@@ -78,11 +78,13 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                                    <StackPanel Orientation="Vertical" Background="Transparent">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Vertical" Background="Transparent">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Data.FriendlyMessageType}"
                                                        ToolTip="{Binding Data.FriendlyMessageType}"
                                                                MaxWidth="120"
+                                                               FontSize="14px"
+                                                               FontWeight="Bold"
                                                                Style="{StaticResource MessageTypeText}"/>
 
                                             <Path Width="5" Height="5"
@@ -215,7 +217,8 @@
                                                         Height="14">
                                                 <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                                 Margin="3,0,3,0" />
-                                                <TextBlock Text="{Binding Data.OriginatingEndpoint}"
+                                                <TextBlock FontSize="10px"
+                                                           Text="{Binding Data.OriginatingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
 
@@ -261,7 +264,8 @@
                                                         Height="14">
                                                 <ContentControl Template="{StaticResource ReceivingEndpoint}" 
                                                                     Margin="3,0,3,0" />
-                                                <TextBlock Text="{Binding Data.ReceivingEndpoint}"
+                                                <TextBlock FontSize="10px"
+                                                    Text="{Binding Data.ReceivingEndpoint}"
                                                             Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
                                         </Grid>
