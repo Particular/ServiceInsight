@@ -1,6 +1,9 @@
 ﻿using Mindscape.WpfDiagramming;
 using Mindscape.WpfDiagramming.FlowDiagrams;
 using Mindscape.WpfDiagramming.Foundation;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {

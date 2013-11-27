@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -11,6 +13,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public MessageActionPopup()
         {
             InitializeComponent();
+        }
+
+        private CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
+        {
+            var ret = new List<CustomPopupPlacement>();
+            var target = this.ContextMenu.PlacementTarget as FrameworkElement;
+
+            ret.Add(new CustomPopupPlacement(new Point(target.ActualHeight + 5, 0), PopupPrimaryAxis.Horizontal));
+
+            return ret.ToArray();
         }
 
         public event Action RequestToClose = () => { };
