@@ -205,6 +205,8 @@
     <Compile Include="CodeParser\XmlParser.cs" />
     <Compile Include="Core\Infrastructure\CallForwarderInterceptor.cs" />
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
+    <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
+    <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
@@ -320,7 +322,6 @@
     <Compile Include="MessageProperties\MessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\PerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\SagaHeaderViewModel.cs" />
-    <Compile Include="MessageList\ContextMenuModel.cs" />
     <Compile Include="MessageList\GridSelectionPreserver.cs" />
     <Compile Include="MessageList\IViewWithGrid.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
@@ -380,6 +381,12 @@
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
+    <Compile Include="Shell\Menu\IHaveContextMenu.cs" />
+    <Compile Include="Shell\Menu\IMenuItem.cs" />
+    <Compile Include="Shell\Menu\MenuItem.cs" />
+    <Compile Include="Shell\Menu\MenuItemBase.cs" />
+    <Compile Include="Shell\Menu\MenuItemDataTemplateSelector.cs" />
+    <Compile Include="Shell\Menu\SeparatorMenuItem.cs" />
     <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
       <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>
@@ -475,11 +482,11 @@
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
     <Compile Include="ValueConverters\BoolToWindowBorderConverter.cs" />
-    <Compile Include="ValueConverters\ContextMenuActionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\HalvingConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
+    <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
@@ -757,5 +764,4 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Fody.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitFlowVersion\Build\GitFlowVersionTask.targets" />
-  
 </Project>

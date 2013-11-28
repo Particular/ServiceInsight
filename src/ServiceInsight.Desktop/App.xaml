@@ -8,8 +8,7 @@
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:cal="http://www.caliburnproject.org"
-             xmlns:model="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
+             xmlns:menu="clr-namespace:NServiceBus.Profiler.Desktop.Shell.Menu"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -29,11 +28,14 @@
                     <cnv:StringEmptyOrNullToVisibilityConverter x:Key="StringEmptyOrNullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
-                    <cnv:ContextMenuActionConverter x:Key="ContextMenuActionConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
                     <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
+                    <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
                     
+                    <!--Template Selectors-->
+                    <menu:MenuItemDataTemplateSelector x:Key="ContextMenuSelector" />
+
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -242,6 +244,7 @@
                         </Setter>
                     </Style>
 
+                    <!--PropertyGrid DataTemplates-->
                     <DataTemplate x:Key="PropertyGridLongTextTemplate">
                         <dxe:MemoEdit Name="PART_Editor"
                                       IsTextEditable="False" 
@@ -265,14 +268,52 @@
                                       DisplayFormatString="{Binding Source={x:Static cnv:MessageDateTimeFormatProvider.MessageDateFormat}}" />
                     </DataTemplate>
 
-                    <DataTemplate x:Key="ContextMenuTemplate" DataType="model:ContextMenuModel">
+                    <!--Menu DataTemplates-->
+                    <DataTemplate x:Key="ButtonContextMenu" DataType="menu:IMenuItem">
                         <ContentControl>
-                            <dxb:BarButtonItem cal:Message.Attach="{Binding Converter={StaticResource ContextMenuActionConverter}}" 
-                                               cal:Action.TargetWithoutContext="{Binding Owner}"
-                                               Content="{Binding DisplayName}"
-                                               Glyph="{Binding Image, Converter={StaticResource BitmapToGlyphConverter}}" />
+                            <dxb:BarButtonItem Content="{Binding Caption}" 
+                                       Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
+                                       Command="{Binding Command}" 
+                                       CommandParameter="{Binding}"   
+                                       IsVisible="{Binding IsVisible}"  
+                                       IsEnabled="{Binding IsEnabled}" 
+                                       KeyGesture="{Binding KeyGesture}" 
+                                       ToolTip="{Binding ToolTip}"/>
                         </ContentControl>
                     </DataTemplate>
+
+                    <DataTemplate x:Key="SubButtonContextMenu" DataType="menu:IMenuItem">
+                        <ContentControl>
+                            <dxb:BarSubItem Content="{Binding Caption}" 
+                                    Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
+                                    ItemTemplateSelector="{StaticResource ContextMenuSelector}"
+                                    ItemLinksSource="{Binding SubMenuItems}" 
+                                    IsVisible="{Binding IsVisible}"  
+                                    IsEnabled="{Binding IsEnabled}" />
+                        </ContentControl>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="CheckButtonContextMenu" DataType="menu:IMenuItem">
+                        <ContentControl>
+                            <dxb:BarCheckItem Content="{Binding Caption}" 
+                                      Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
+                                      IsChecked="{Binding IsChecked}"
+                                      IsVisible="{Binding IsVisible}"  
+                                      IsEnabled="{Binding IsEnabled}"  
+                                      KeyGesture="{Binding KeyGesture}" 
+                                      ToolTip="{Binding ToolTip}"
+                                      Command="{Binding Command}" 
+                                      CommandParameter="{Binding}"   
+                                      CloseSubMenuOnClick="{Binding CloseSubMenuOnClick}" />
+                        </ContentControl>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="SeperatorContextMenu">
+                        <ContentControl>
+                            <dxb:BarItemSeparator/>
+                        </ContentControl>
+                    </DataTemplate>
+
 
 
                 </ResourceDictionary>

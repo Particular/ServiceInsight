@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -12,8 +13,11 @@
                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <dxb:BarManager.DXContextMenu>
-                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
-                               ItemTemplate="{StaticResource ContextMenuTemplate}" />
+                <dxb:PopupMenu Name="ContextMenuItems" 
+                               ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
+                               Visibility="{Binding ElementName=ContextMenuItems, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
+                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True" />
             </dxb:BarManager.DXContextMenu>
             <RichTextBox.Document>
                 <FlowDocument PageWidth="2000" />

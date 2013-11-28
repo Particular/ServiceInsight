@@ -8,6 +8,7 @@
              xmlns:m="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
     
@@ -33,8 +34,11 @@
                          PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
             <dxb:BarManager.DXContextMenu>
-                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
-                                       ItemTemplate="{StaticResource ContextMenuTemplate}" />
+                <dxb:PopupMenu Name="ContextMenuItems" 
+                               ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
+                               Visibility="{Binding ElementName=ContextMenuItems, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
+                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True"/>
             </dxb:BarManager.DXContextMenu>
             <dxg:GridControl.Columns>
                 <dxg:GridColumn AllowSorting="False" 

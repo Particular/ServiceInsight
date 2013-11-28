@@ -1,8 +1,12 @@
-﻿using Caliburn.PresentationFramework;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
+using NServiceBus.Profiler.Desktop.Core.UI;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
@@ -12,11 +16,9 @@ using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
+using NServiceBus.Profiler.Desktop.Shell.Menu;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -30,6 +32,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
         private readonly IStatusBarManager _statusBar;
+        private readonly IMenuItem _returnToSourceMenu;
+        private readonly IMenuItem _retryMessageMenu;
+        private readonly IMenuItem _copyMessageIdMenu;
+        private readonly IMenuItem _copyHeadersMenu;
         private IMessageListView _view;
         private string _lastSortColumn;
         private bool _lastSortOrderAscending;
@@ -56,23 +62,32 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _statusBar = statusBar;
 
             SearchBar = searchBarViewModel;
-
             Items.Add(SearchBar);
+
+            _returnToSourceMenu = new MenuItem("Return To Source", new RelayCommand(ReturnToSource, CanReturnToSource), Properties.Resources.MessageReturn);
+            _retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
+            _copyMessageIdMenu = new MenuItem("Copy Message Identifier", new RelayCommand(CopyMessageId, CanCopyMessageId));
+            _copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
+
             Messages = new BindableCollection<MessageInfo>();
             SelectedMessages = new BindableCollection<MessageInfo>();
-            ContextMenuItems = new BindableCollection<ContextMenuModel>
+            ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                new ContextMenuModel(this, "ReturnToSource", "Return To Source", Properties.Resources.MessageReturn),
-                new ContextMenuModel(this, "RetryMessage", "Retry Message", Properties.Resources.MessageReturn),
-                new ContextMenuModel(this, "CopyMessageId", "Copy Message Identifier"),
-                new ContextMenuModel(this, "CopyHeaders", "Copy Headers")
+                _returnToSourceMenu, 
+                _retryMessageMenu, 
+                _copyHeadersMenu, 
+                _copyMessageIdMenu
             };
         }
 
-        public virtual IObservableCollection<ContextMenuModel> ContextMenuItems { get; private set; }
+        public virtual IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
         
         public void OnContextMenuOpening()
         {
+            _returnToSourceMenu.IsVisible = CanReturnToSource();
+            _retryMessageMenu.IsVisible = CanRetryMessage();
+            _copyMessageIdMenu.IsEnabled = CanCopyMessageId();
+            _copyHeadersMenu.IsEnabled = CanCopyHeaders();
             NotifyPropertiesChanged();
         }
 
@@ -127,28 +142,25 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _clipboard.CopyTo(_generalHeaderDisplay.HeaderContent);
         }
 
-        public bool CanRetryMessage
+        public bool CanRetryMessage()
         {
-            get
-            {
-                return StoredMessage != null &&
-                       (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailure);
-            }
+            return StoredMessage != null &&
+                    (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailure);
         }
 
-        public bool CanReturnToSource
+        public bool CanReturnToSource()
         {
-            get { return _errorHeaderDisplay.CanReturnToSource(); }
+            return _errorHeaderDisplay.CanReturnToSource();
         }
 
-        public bool CanCopyHeaders
+        public bool CanCopyHeaders()
         {
-            get { return !_generalHeaderDisplay.HeaderContent.IsEmpty(); }
+            return !_generalHeaderDisplay.HeaderContent.IsEmpty();
         }
 
-        public bool CanCopyMessageId
+        public bool CanCopyMessageId()
         {
-            get { return FocusedMessage != null; }
+            return FocusedMessage != null;
         }
 
         public virtual void OnFocusedMessageChanged() 
@@ -407,10 +419,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
-            NotifyOfPropertyChange(() => CanCopyHeaders);
-            NotifyOfPropertyChange(() => CanCopyMessageId);
-            NotifyOfPropertyChange(() => CanReturnToSource);
-            NotifyOfPropertyChange(() => CanRetryMessage);
             SearchBar.NotifyPropertiesChanged();
         }
 

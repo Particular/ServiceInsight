@@ -1,6 +1,7 @@
 ﻿using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.MessageList;
+using NServiceBus.Profiler.Desktop.Core.UI;
+using NServiceBus.Profiler.Desktop.Shell.Menu;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
 {
@@ -10,10 +11,10 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         public LogWindowViewModel()
         {
-            ContextMenuItems = new BindableCollection<ContextMenuModel>
+            ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                new ContextMenuModel(this, "Clear", "Clear All", Properties.Resources.Clear),
-                new ContextMenuModel(this, "CopyToClipboard", "Copy", Properties.Resources.Copy)
+                new MenuItem("Clear All", new RelayCommand(Clear), Properties.Resources.Clear),
+                new MenuItem("Copy", new RelayCommand(CopyToClipboard), Properties.Resources.Copy)
             };
         }
 
@@ -29,7 +30,11 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
             _view.Clear();
         }
 
-        public IObservableCollection<ContextMenuModel> ContextMenuItems { get; private set; }
+        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
+
+        public void OnContextMenuOpening()
+        {
+        }
 
         public void CopyToClipboard()
         {
@@ -37,10 +42,9 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
         }
     }
 
-    public interface ILogWindowViewModel : IScreen
+    public interface ILogWindowViewModel : IScreen, IHaveContextMenu
     {
         void Clear();
         void CopyToClipboard();
-        IObservableCollection<ContextMenuModel> ContextMenuItems { get; }
     }
 }
