@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             Height="205" Width="500"
+             Height="215" MinWidth="450"
       >
     <Grid.Resources>
         <ResourceDictionary>
@@ -180,10 +180,10 @@
                     </ControlTemplate>
 
                     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}" TargetType="MenuItem">
-                        <Border Name="Border" >
+                        <Border Name="Border" BorderThickness="3,0,3,0" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="30" SharedSizeGroup="Icon"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut"/>
                                     <ColumnDefinition Width="13"/>
@@ -288,7 +288,7 @@
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
                         <Setter Property="Foreground" Value="White" />
                         <Setter Property="FontSize" Value="12px" />
-                        <Setter Property="Height" Value="30" />
+                        <Setter Property="Height" Value="26" />
                         <Style.Triggers>
                             <Trigger Property="Role" Value="TopLevelHeader">
                                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
@@ -336,19 +336,19 @@
 
     </Grid.Resources>
     <Border Name="Border"
-            Margin="0,10,0,0"
+            Margin="0,0,0,0"
             Background="Black"
-            BorderThickness="0">
+            BorderThickness="5">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="24" />
+                <RowDefinition Height="34" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="30,7,0,0" >
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="14,10,0,0" >
             <ContentControl Template="{StaticResource CommandIcon}" 
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
@@ -368,21 +368,9 @@
 
                 <TextBlock Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontSize="13px" FontWeight="Bold" />
             </StackPanel>
-            <StackPanel Margin="0,7,0,0" Grid.Column="0" Grid.Row="1">
-                <Border BorderBrush="#1E1E1E" BorderThickness="0 1 0 0" >
-                    <MenuItem Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />
-                </Border>
-                <MenuItem Header="Retry Message" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action Retry]" cal:Action.TargetWithoutContext="{Binding}" />
-                <MenuItem Header="Copy Conversation Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyConversationId]" cal:Action.TargetWithoutContext="{Binding}" />
-                <MenuItem Header="Copy Headers" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyHeaders]" cal:Action.TargetWithoutContext="{Binding}" />
-                <MenuItem Header="Show Message Body" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowBody]" cal:Action.TargetWithoutContext="{Binding}" />
-            </StackPanel>
-            <Grid Margin="0,7,0,0" Grid.Column="1" Grid.Row="1" Background="#1E1E1E" IsSharedSizeScope="True" TextBlock.Foreground="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
+            <Grid Margin="0,0,0,0" Grid.Column="0" Grid.Row="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="12" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -390,22 +378,45 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource MessagePropertyKey}" Text="Critical Time" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource MessagePropertyKey}" Text="Delivery Time"/>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource MessagePropertyKey}" Text="Processing Time" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource MessagePropertyKey}" Text="NSB Version" />
-                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource MessagePropertyKey}" Text="Second Level Retries" />
-                <StackPanel Grid.Column="0" Grid.Row="5" Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                <Border Grid.Row="0" BorderBrush="#1E1E1E" BorderThickness="0 1 0 0">
+                </Border>
+                <MenuItem Grid.Row="1" Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="2" Header="Retry Message" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action Retry]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="3" Header="Copy Conversation Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyConversationId]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="4" Header="Copy Headers" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyHeaders]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="5" Header="Show Message Body" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowBody]" cal:Action.TargetWithoutContext="{Binding}" />
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" Background="#1E1E1E" IsSharedSizeScope="True" TextBlock.Foreground="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="Auto" MaxWidth="280" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource MessagePropertyKey}" Text="Critical Time" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource MessagePropertyKey}" Text="Delivery Time"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource MessagePropertyKey}" Text="Processing Time" />
+                <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource MessagePropertyKey}" Text="NSB Version" />
+                <TextBlock Grid.Column="1" Grid.Row="5" Style="{StaticResource MessagePropertyKey}" Text="Second Level Retries" />
+                <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                     <ContentControl Template="{StaticResource Exception}" Width="16" Height="16" />
                     <TextBlock Text="Exception" Style="{StaticResource MessageExceptionKey}" />
                 </StackPanel>
 
-                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedCriticalTime}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedDeliveryTime}" />
-                <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedProcessingTime}" />
-                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
-                <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding SecondLevelRetries}" />
-                <TextBlock Grid.Column="1" Grid.Row="5" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedCriticalTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedDeliveryTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedProcessingTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
+                <TextBlock Grid.Column="2" Grid.Row="5" Style="{StaticResource MessagePropertyValue}" Text="{Binding SecondLevelRetries}" />
+                <TextBlock Grid.Column="2" Grid.Row="6" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}" MaxWidth="260" TextTrimming="CharacterEllipsis">
                     <Hyperlink Foreground="Red" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowException]" cal:Action.TargetWithoutContext="{Binding}" ><TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" /></Hyperlink>
                 </TextBlock>
             </Grid>
