@@ -15,7 +15,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         IHaveContextMenu,
         IWorkTracker,
         IHandle<MessageRemovedFromQueue>,
-        IHandle<AutoRefreshBeat>,
+        IHandle<EndpointAutoRefreshBeat>,
+        IHandle<QueueAutoRefreshBeat>,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
@@ -24,7 +25,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     {
         IObservableCollection<MessageInfo> Messages { get; }
         IObservableCollection<MessageInfo> SelectedMessages { get; }
-        IObservableCollection<IMenuItem> ContextMenuItems { get; }
         ISearchBarViewModel SearchBar { get; }
         ExplorerItem SelectedExplorerItem { get; }
         MessageInfo FocusedMessage { get; set; }

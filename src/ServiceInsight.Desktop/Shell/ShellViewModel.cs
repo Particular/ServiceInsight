@@ -362,7 +362,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (!AutoRefresh || WorkInProgress)
                 return;
 
-            _eventAggregator.Publish(new AutoRefreshBeat());
+            RefreshAll();
         }
         
         private void ValidateLicense()

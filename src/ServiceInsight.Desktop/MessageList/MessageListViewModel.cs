@@ -136,7 +136,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _clipboard.CopyTo(msg.Id);
         }
 
-
         public virtual void CopyHeaders()
         {
             _clipboard.CopyTo(_generalHeaderDisplay.HeaderContent);
@@ -195,25 +194,25 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async Task RefreshMessages(string columnName = null, bool ascending = false)
         {
-            var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
-            if (endpointNode != null)
-            {
-                await RefreshEndpoint(endpointNode.Endpoint, 
-                                      searchQuery: SearchBar.SearchQuery,
-                                      orderBy: columnName, 
-                                      ascending: ascending);
-            }
-
             var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
             if(queueNode != null)
             {
                 await RefreshQueue(queueNode.Queue);
             }
+            else
+            {
+                var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
+                var endpoint = endpointNode != null ? endpointNode.Endpoint : null;
+                await RefreshEndpoint(endpoint, 
+                                      searchQuery: SearchBar.SearchQuery,
+                                      orderBy: columnName, 
+                                      ascending: ascending);
+            }
         }
 
         public async Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", endpoint)));
+            _eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
             if (orderBy != null)
             {
@@ -221,11 +220,24 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _lastSortOrderAscending = ascending;
             }
 
-            var pagedResult = await _serviceControl.GetAuditMessages(endpoint,
+            PagedResult<StoredMessage> pagedResult;
+
+            if (endpoint == null)
+            {
+                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
+                                                           searchQuery: searchQuery,
+                                                           orderBy: _lastSortColumn,
+                                                           ascending: _lastSortOrderAscending);
+            }
+            else
+            {
+                pagedResult = await _serviceControl.GetAuditMessages(endpoint,
                                                                      pageIndex: pageIndex,
                                                                      searchQuery: searchQuery,
                                                                      orderBy: _lastSortColumn,
                                                                      ascending: _lastSortOrderAscending);
+            }
+
             using (new GridSelectionPreserver(_view))
             {
                 Messages.Clear();
@@ -245,7 +257,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async Task RefreshQueue(Queue queue)
         {
-            _eventAggregator.Publish(new WorkStarted(string.Format("Loading {0} messages...", queue)));
+            _eventAggregator.Publish(new WorkStarted("Loading {0} messages...", queue));
 
             //await RefreshQueueMessages(queue); //TODO: Do we even need this anymore?? Seems to be doing the same thing as the other!
             await RefreshQueueMessageCount(queue);
@@ -379,15 +391,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        public async void Handle(AutoRefreshBeat @event)
+        public async void Handle(EndpointAutoRefreshBeat @event)
         {
-            var queue = SelectedQueue;
-            if (queue != null)
-            {
-                await RefreshMessages();
-            }
+            await RefreshEndpoint(@event.SelectedEndpoint);
         }
-        
+
+        public async void Handle(QueueAutoRefreshBeat @event)
+        {
+            await RefreshMessages();
+        }
+
         public virtual void Handle(WorkStarted @event)
         {
             _workCount++;

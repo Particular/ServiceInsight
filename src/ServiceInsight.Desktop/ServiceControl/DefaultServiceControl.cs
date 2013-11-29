@@ -46,12 +46,14 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> Search(string searchKeyword, int pageIndex = 1)
+        public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
-            var request = new RestRequest("/messages/");
+            var request = new RestRequest(CreateBaseUrl());
             
-            AppendSearchQuery(request, searchKeyword);
+            AppendSystemMessages(request, searchQuery);
+            AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
+            AppendOrdering(request, orderBy, ascending);
 
             var result = await GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
@@ -61,7 +63,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         public async Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
-            var request = new RestRequest(CreateBaseUrl(endpoint.Name, searchQuery));
+            var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
             AppendSystemMessages(request, searchQuery);
             AppendSearchQuery(request, searchQuery);
@@ -164,9 +166,9 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return client;
         }
 
-        private static string CreateBaseUrl(string endpointName, string searchQuery)
+        private static string CreateBaseUrl(string endpointName = null)
         {
-            return searchQuery == null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
+            return endpointName != null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
         }
 
         private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
