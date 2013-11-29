@@ -49,15 +49,13 @@
       <HintPath>..\packages\Caliburn.2.0\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
+      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
     </Reference>
-    <Reference Include="ExceptionHandler.IssueReporter.BitBucket, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.IssueReporter.BitBucket.dll</HintPath>
+    <Reference Include="ExceptionHandler.IssueReporter.BitBucket">
+      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.IssueReporter.BitBucket.dll</HintPath>
     </Reference>
-    <Reference Include="ExceptionHandler.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
+    <Reference Include="ExceptionHandler.Wpf">
+      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>

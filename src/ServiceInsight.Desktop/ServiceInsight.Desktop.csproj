@@ -76,79 +76,62 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Utils.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Utils.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Controls.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Controls.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Controls.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Core.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1.Extensions, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Core.v13.1.Extensions.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Core.v13.1.Extensions">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Docking.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Extensions, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Grid.v13.1.Extensions.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Extensions">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Mvvm.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Mvvm.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Mvvm.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Mvvm.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.NavBar.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Printing.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1.Service, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Printing.v13.1.Service.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Printing.v13.1.Service">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.Service.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.dll</HintPath>
+      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler.Wpf">
-      <HintPath>..\packages\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
+      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -156,11 +139,11 @@
     </Reference>
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
+      <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
     <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
+      <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
