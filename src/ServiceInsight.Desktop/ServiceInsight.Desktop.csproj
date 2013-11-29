@@ -154,13 +154,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1679.23027, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
+      <HintPath>..\..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1679.23027, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+    <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
+      <HintPath>..\..\packages\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
