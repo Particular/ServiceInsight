@@ -16,6 +16,7 @@ namespace NServiceBus.Profiler.Desktop.Shell.Menu
             IsVisible = true;
             CloseSubMenuOnClick = true;
             IsChecked = false;
+            KeyGesture = string.Empty;
             SubMenuItems = new List<IMenuItem>();
         }
 

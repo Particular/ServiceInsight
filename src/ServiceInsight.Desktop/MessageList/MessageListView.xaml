@@ -34,10 +34,9 @@
                          PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
             <dxb:BarManager.DXContextMenu>
-                <dxb:PopupMenu Name="ContextMenuItems" 
-                               ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
                                ItemTemplateSelector="{StaticResource ContextMenuSelector}"
-                               Visibility="{Binding ElementName=ContextMenuItems, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
+                               Visibility="{Binding RelativeSource={RelativeSource Self}, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
                                ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True"/>
             </dxb:BarManager.DXContextMenu>
             <dxg:GridControl.Columns>
