@@ -348,7 +348,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void InitializeAutoRefreshTimer()
         {
             var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
-            var startupTime = _comandLineArgParser.IsProvided ? _comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
+            var startupTime = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? _comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
             _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
             _refreshTimer.Tick += (s, e) => OnAutoRefreshing();

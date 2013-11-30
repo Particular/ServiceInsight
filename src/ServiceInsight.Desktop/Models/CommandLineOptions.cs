@@ -22,7 +22,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
             if (value.StartsWith(ApplicationScheme, StringComparison.OrdinalIgnoreCase))
             {
-                address = value.Remove(0, ApplicationScheme.Length);
+                address = value.Replace(ApplicationScheme,  "http://");
             }
 
             var regex = new Regex(UriRegexPattern);

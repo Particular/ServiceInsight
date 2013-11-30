@@ -144,15 +144,22 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task SelectDefaultEndpoint()
         {
-            if (ServiceControlRoot == null || _commandLineParser.ParsedOptions.EndpointName.IsEmpty()) return;
+            if (ServiceControlRoot == null) return;
 
-            foreach (var endpoint in ServiceControlRoot.Children)
+            if (!_commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
-                if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                foreach (var endpoint in ServiceControlRoot.Children)
                 {
-                    SelectedNode = endpoint;
-                    break;
+                    if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        SelectedNode = endpoint;
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                SelectedNode = ServiceControlRoot;
             }
         }
 

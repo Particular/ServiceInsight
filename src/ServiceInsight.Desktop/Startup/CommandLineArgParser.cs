@@ -6,6 +6,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
 {
     public class CommandLineArgParser : ICommandLineArgParser
     {
+        private const char UriSeparator = '?';
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
@@ -13,13 +14,10 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
         public CommandLineOptions ParsedOptions { get; private set; }
 
-        public bool IsProvided { get; private set; }
-
         public CommandLineArgParser(IEnvironment environment)
         {
             _environment = environment;
             ParsedOptions = new CommandLineOptions();
-            IsProvided = false;
         }
 
         public void Start()
@@ -28,23 +26,29 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
             if (args.Length != 2) return;
 
-            var parameters = args[1];
-            var tokens = parameters.Split(TokenSeparator);
+            var uri = args[1].Split(UriSeparator);
 
-            foreach (var token in tokens)
+            if(uri.Length == 0) return;
+
+            if (uri.Length > 0)
             {
-                var keyValue = token.Split(KeyValueSeparator);
-                if (keyValue.Length == 2)
-                {
-                    PopulateKeyValue(keyValue[0], keyValue[1]);
-                }
-                else
-                {
-                    ParsedOptions.SetEndpointUri(token);
-                }
+                ParsedOptions.SetEndpointUri(uri[0]);
             }
 
-            IsProvided = true;
+            if (uri.Length > 1)
+            {
+                var parameters = uri[1];
+                var tokens = parameters.Split(TokenSeparator);
+
+                foreach (var token in tokens)
+                {
+                    var keyValue = token.Split(KeyValueSeparator);
+                    if (keyValue.Length == 2)
+                    {
+                        PopulateKeyValue(keyValue[0], keyValue[1]);
+                    }
+                }
+            }
         }
 
         private void PopulateKeyValue(string key, string value)
@@ -71,6 +75,5 @@ namespace NServiceBus.Profiler.Desktop.Startup
     public interface ICommandLineArgParser : IStartable
     {
         CommandLineOptions ParsedOptions { get; }
-        bool IsProvided { get; }
     }
 }
