@@ -37,11 +37,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             ThemeManager.ApplicationThemeName = name;
         }
 
-        public BarManager GetMenuManager()
-        { 
-            return BarManager;
-        }
-
         public void SelectTab(string name)
         {
             var tab = DockManager.GetItem(name);

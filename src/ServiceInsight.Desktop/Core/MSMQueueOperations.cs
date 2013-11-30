@@ -53,7 +53,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             return Task.Run(() => GetQueues(machineName));
         }
 
-        Task<bool> IQueueOperationsAsync.IsMsmqInstalled(string machineName)
+        Task<bool> IQueueOperationsAsync.IsMsmqInstalledAsync(string machineName)
         {
             return Task.Run(() => IsMsmqInstalled(machineName));
         }

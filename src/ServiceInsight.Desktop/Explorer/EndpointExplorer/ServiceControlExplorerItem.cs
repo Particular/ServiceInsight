@@ -5,9 +5,9 @@ using NServiceBus.Profiler.Desktop.Properties;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 {
-    public class ServiceExplorerItem : ExplorerItem
+    public class ServiceControlExplorerItem : ExplorerItem
     {
-        public ServiceExplorerItem(string name)
+        public ServiceControlExplorerItem(string name)
             : base(name)
         {
         }

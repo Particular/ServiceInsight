@@ -13,6 +13,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string SearchQuery { get; private set; }
         public string EndpointName { get; private set; }
         public int AutoRefreshRate { get; private set; }
+        public bool ShouldAutoRefresh { get; private set; }
 
         public void SetEndpointUri(string value)
         {
@@ -44,6 +45,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public void SetAutoRefresh(string value)
         {
             AutoRefreshRate = int.Parse(value);
+            ShouldAutoRefresh = true;
         }
 
         private string Decode(string encodedString)

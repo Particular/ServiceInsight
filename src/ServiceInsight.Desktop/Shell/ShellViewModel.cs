@@ -20,6 +20,7 @@ using NServiceBus.Profiler.Desktop.MessageViewers;
 using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -31,6 +32,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private readonly IEventAggregator _eventAggregator;
         private readonly ILicenseManager _licenseManager;
         private readonly ISettingsProvider _settingsProvider;
+        private readonly ICommandLineArgParser _comandLineArgParser;
         private int _workCounter;
         private DispatcherTimer _refreshTimer;
         private DispatcherTimer _idleTimer;
@@ -52,7 +54,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
-            ILogWindowViewModel logWindow)
+            ILogWindowViewModel logWindow,
+            ICommandLineArgParser comandLineArgParser)
         {
             _appCommander = appCommander;
             _screenFactory = screenFactory;
@@ -60,6 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _eventAggregator = eventAggregator;
             _licenseManager = licenseManager;
             _settingsProvider = settingsProvider;
+            _comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             StatusBarManager = statusBarManager;
@@ -257,9 +261,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
             DisplayRegistrationStatus();
         }
 
-        public void OnAutoRefreshQueuesChanged()
+        public void OnAutoRefreshChanged()
         {
-            
+            _refreshTimer.IsEnabled = AutoRefresh;
         }
 
         public virtual bool CanCreateMessage
@@ -344,9 +348,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void InitializeAutoRefreshTimer()
         {
             var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
-            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(appSetting.AutoRefreshTimer) };
+            var startupTime = _comandLineArgParser.IsProvided ? _comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
+
+            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
             _refreshTimer.Tick += (s, e) => OnAutoRefreshing();
-            _refreshTimer.Start();
+
+            AutoRefresh = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
 
         internal void OnApplicationIdle()

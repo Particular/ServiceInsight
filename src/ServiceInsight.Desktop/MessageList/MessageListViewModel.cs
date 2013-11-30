@@ -192,20 +192,37 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new MessageBodyLoaded(msg));
         }
 
-        public async Task RefreshMessages(string columnName = null, bool ascending = false)
+        public async Task RefreshMessages(string orderBy = null, bool ascending = false)
         {
             var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
             if(queueNode != null)
             {
                 await RefreshQueue(queueNode.Queue);
+                return;
             }
-            else
+
+            var queueServer = SelectedExplorerItem.As<QueueServerExplorerItem>();
+            if (queueServer != null)
             {
-                var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
-                var endpoint = endpointNode != null ? endpointNode.Endpoint : null;
-                await RefreshEndpoint(endpoint, 
-                                      searchQuery: SearchBar.SearchQuery,
-                                      orderBy: columnName, 
+                //TODO: Refresh all queues
+                return;
+            }
+
+            var serviceControl = SelectedExplorerItem.As<ServiceControlExplorerItem>();
+            if (serviceControl != null)
+            {
+                await RefreshEndpoint(searchQuery: SearchBar.SearchQuery,
+                                      endpoint: null,
+                                      orderBy: orderBy,
+                                      ascending: ascending);
+            }
+            
+            var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
+            if (endpointNode != null)
+            {
+                await RefreshEndpoint(searchQuery: SearchBar.SearchQuery,
+                                      endpoint: endpointNode.Endpoint,
+                                      orderBy: orderBy,
                                       ascending: ascending);
             }
         }
@@ -220,22 +237,22 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _lastSortOrderAscending = ascending;
             }
 
-            PagedResult<StoredMessage> pagedResult;
+            var pagedResult = new PagedResult<StoredMessage>();
 
-            if (endpoint == null)
-            {
-                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
-                                                           searchQuery: searchQuery,
-                                                           orderBy: _lastSortColumn,
-                                                           ascending: _lastSortOrderAscending);
-            }
-            else
+            if(endpoint != null)
             {
                 pagedResult = await _serviceControl.GetAuditMessages(endpoint,
                                                                      pageIndex: pageIndex,
                                                                      searchQuery: searchQuery,
                                                                      orderBy: _lastSortColumn,
                                                                      ascending: _lastSortOrderAscending);
+            }
+            else if (!searchQuery.IsEmpty())
+            {
+                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
+                                                           searchQuery: searchQuery,
+                                                           orderBy: _lastSortColumn,
+                                                           ascending: _lastSortOrderAscending);
             }
 
             using (new GridSelectionPreserver(_view))
@@ -389,16 +406,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 Messages.Remove(msg);
                 await RefreshQueueMessageCount(queue);
             }
-        }
-
-        public async void Handle(EndpointAutoRefreshBeat @event)
-        {
-            await RefreshEndpoint(@event.SelectedEndpoint);
-        }
-
-        public async void Handle(QueueAutoRefreshBeat @event)
-        {
-            await RefreshMessages();
         }
 
         public virtual void Handle(WorkStarted @event)

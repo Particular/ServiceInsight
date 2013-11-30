@@ -13,8 +13,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
         IScreen, 
         IViewAware,
         IQueueConnectionProvider,
-        IHandle<QueueMessageCountChanged>,
-        IHandle<AutoRefreshBeat>
+        IHandle<QueueMessageCountChanged>
     {
         IObservableCollection<ExplorerItem> Items { get; }
         ExplorerItem MachineRoot { get; }

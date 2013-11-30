@@ -19,7 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         public static bool IsEndpointExplorerSelected(this ExplorerItem explorerItem)
         {
             return explorerItem is EndpointExplorerItem ||
-                   explorerItem is ServiceExplorerItem;
+                   explorerItem is ServiceControlExplorerItem;
         }
     }
 }

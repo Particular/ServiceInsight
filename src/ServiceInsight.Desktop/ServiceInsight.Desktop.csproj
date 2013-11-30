@@ -256,7 +256,6 @@
     <Compile Include="Core\Settings\RegistrySettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailedEvent.cs" />
-    <Compile Include="Events\AutoRefreshBeat.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
     <Compile Include="Events\MessageBodyLoaded.cs" />
     <Compile Include="Events\MessageRemovedFromQueue.cs" />
@@ -282,7 +281,7 @@
     <Compile Include="Explorer\IExplorerView.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
     <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
-    <Compile Include="Explorer\EndpointExplorer\ServiceExplorerItem.cs" />
+    <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\ElementExtensions.cs" />
@@ -448,6 +447,7 @@
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
+    <Compile Include="Startup\IEnvironment.cs" />
     <Compile Include="Startup\LoggingConfig.cs" />
     <Compile Include="MessageList\IMessageListViewModel.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />

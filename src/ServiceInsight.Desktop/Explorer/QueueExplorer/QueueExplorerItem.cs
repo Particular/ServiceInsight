@@ -9,7 +9,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
     {
         private string _displayName;
         private readonly Queue _queue;
-        private string _queueName;
+        private readonly string _queueName;
 
         public QueueExplorerItem(Queue queue) : base(queue.Address.Queue)
         {

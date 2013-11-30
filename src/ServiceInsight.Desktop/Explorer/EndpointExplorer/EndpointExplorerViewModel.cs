@@ -46,19 +46,19 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
 
-        public virtual ServiceExplorerItem ServiceRoot
+        public virtual ServiceControlExplorerItem ServiceControlRoot
         {
-            get { return Items.OfType<ServiceExplorerItem>().FirstOrDefault(); }
+            get { return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); }
         }
 
         public virtual AuditEndpointExplorerItem AuditRoot
         {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
+            get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
         }
 
         public virtual ErrorEndpointExplorerItem ErrorRoot
         {
-            get { return ServiceRoot != null ? ServiceRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
+            get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
         }
 
         public virtual ExplorerItem SelectedNode { get; set; }
@@ -76,7 +76,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
             if (_isFirstActivation)
             {
-                _view.ExpandNode(ServiceRoot);
+                _view.ExpandNode(ServiceControlRoot);
                 _isFirstActivation = false;
             }
         }
@@ -134,7 +134,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private void AddServiceNode()
         {
             Items.Clear();
-            Items.Add(new ServiceExplorerItem(ServiceUrl));
+            Items.Add(new ServiceControlExplorerItem(ServiceUrl));
         }
 
         public virtual void OnSelectedNodeChanged()
@@ -144,9 +144,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         private async Task SelectDefaultEndpoint()
         {
-            if (ServiceRoot == null || _commandLineParser.ParsedOptions.EndpointName.IsEmpty()) return;
+            if (ServiceControlRoot == null || _commandLineParser.ParsedOptions.EndpointName.IsEmpty()) return;
 
-            foreach (var endpoint in ServiceRoot.Children)
+            foreach (var endpoint in ServiceControlRoot.Children)
             {
                 if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -183,11 +183,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _networkOperations.Browse(navigateUri);
         }
 
-        public async void Handle(AutoRefreshBeat message)
-        {
-            await PartialRefresh();
-        }
-
         private async Task RefreshEndpoints()
         {
             var endpoints = await _serviceControl.GetEndpoints();
@@ -197,16 +192,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
             foreach (var endpoint in endpoints)
             {
-                if (!ServiceRoot.EndpointExists(endpoint))
+                if (!ServiceControlRoot.EndpointExists(endpoint))
                 {
-                    ServiceRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                    ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
                 }
             }
         }
 
         private void ExpandServiceNode()
         {
-            _view.ExpandNode(ServiceRoot);
+            _view.ExpandNode(ServiceControlRoot);
         }
     }
 }

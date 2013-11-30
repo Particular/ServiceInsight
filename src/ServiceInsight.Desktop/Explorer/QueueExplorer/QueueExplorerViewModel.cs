@@ -264,10 +264,5 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
                 node.UpdateMessageCount(message.Count);
             }
         }
-
-        public void Handle(AutoRefreshBeat message)
-        {
-            PartialRefresh();
-        }
     }
 }

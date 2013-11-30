@@ -4,11 +4,6 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
-    public interface IEnvironment
-    {
-        string[] GetCommandLineArgs();
-    }
-
     public class CommandLineArgParser : ICommandLineArgParser
     {
         private const char TokenSeparator = '&';
@@ -18,10 +13,13 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
         public CommandLineOptions ParsedOptions { get; private set; }
 
+        public bool IsProvided { get; private set; }
+
         public CommandLineArgParser(IEnvironment environment)
         {
             _environment = environment;
             ParsedOptions = new CommandLineOptions();
+            IsProvided = false;
         }
 
         public void Start()
@@ -45,6 +43,8 @@ namespace NServiceBus.Profiler.Desktop.Startup
                     ParsedOptions.SetEndpointUri(token);
                 }
             }
+
+            IsProvided = true;
         }
 
         private void PopulateKeyValue(string key, string value)
@@ -71,5 +71,6 @@ namespace NServiceBus.Profiler.Desktop.Startup
     public interface ICommandLineArgParser : IStartable
     {
         CommandLineOptions ParsedOptions { get; }
+        bool IsProvided { get; }
     }
 }

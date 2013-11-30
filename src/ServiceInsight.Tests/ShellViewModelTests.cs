@@ -18,6 +18,7 @@ using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Shell;
+using NServiceBus.Profiler.Desktop.Startup;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
@@ -53,6 +54,7 @@ namespace NServiceBus.Profiler.Tests
         private IMessagePropertiesViewModel MessageProperties;
         private ILogWindowViewModel LogWindow;
         private IAppCommands App;
+        private ICommandLineArgParser CommandLineArgParser;
 
         [SetUp]
         public void TestInitialize()
@@ -76,13 +78,27 @@ namespace NServiceBus.Profiler.Tests
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
-            shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, EndpointExplorer, MessageList,
-                                       StatusbarManager, EventAggregator, LicenseManager, MessageFlow, MessageBodyView,
-                                       SettingsProvider, MessageProperties, LogWindow);
+            CommandLineArgParser = MockEmptyStartupOptions();
+
+            shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, 
+                                       EndpointExplorer, MessageList, StatusbarManager, 
+                                       EventAggregator, LicenseManager, MessageFlow, 
+                                       MessageBodyView, SettingsProvider, MessageProperties, 
+                                       LogWindow, CommandLineArgParser);
 
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
             shell.AttachView(View, null);
+        }
+
+        private ICommandLineArgParser MockEmptyStartupOptions()
+        {
+            var parser = Substitute.For<ICommandLineArgParser>();
+            
+            parser.IsProvided.Returns(false);
+            parser.ParsedOptions.Returns(new CommandLineOptions());
+
+            return parser;
         }
 
         [Test]

@@ -32,7 +32,9 @@
     <dxb:BarManager x:Name="BarManager" 
                     AutomationProperties.AutomationId="BarManager"
                     dxc:DXSerializer.SerializationID="BarManager"
-                    dxc:DXSerializer.LayoutVersion="1.1.2">
+                    AllowCustomization="True"
+                    AllowUIAutomationSupport="True"
+                    dxc:DXSerializer.LayoutVersion="1.1.4">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -127,10 +129,11 @@
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
                                CategoryName="View" />
             <dxb:BarCheckItem Content="Auto Refresh"
-                              x:Name="AutoRefresh"
-                              AutomationProperties.AutomationId="AutoRefreshMenuItem"
-                              CategoryName="View" 
-                              IsChecked="{Binding AutoRefresh, Mode=TwoWay}" />
+                              Name="DataAutoRefresh"
+                              AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
+                              IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
+                              CategoryName="View" />
+                              
             <dxb:ToolbarListItem x:Name="ToolbarList" 
                                  Content="Toolbar List" 
                                  AutomationProperties.AutomationId="ToolbarListMenuItem"
@@ -171,7 +174,7 @@
                             AutomationProperties.AutomationId="ViewMenu"
                             CategoryName="View" 
                             Content="View">
-                <dxb:BarCheckItemLink BarItemName="AutoRefresh" />
+                <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:ToolbarListItemLink BarItemName="ToolbarList" />
                 <dxb:BarButtonItemLink BarItemName="ResetLayout" />

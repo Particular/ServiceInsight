@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         private readonly IServiceControlConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
         private readonly ProfilerSettings _settings;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(IServiceControl));
+        private readonly ILog Logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
@@ -180,10 +180,10 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
             client.ExecuteAsync<List<T>>(request, response =>
             {
-                LogResponse(response);
-
                 if (HasSucceeded(response))
                 {
+                    LogResponse(response);
+
                     completionSource.SetResult(new PagedResult<T>
                     {
                         Result = response.Data,
@@ -226,10 +226,9 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
         {
-            LogResponse(response);
-
             if (HasSucceeded(response))
             {
+                LogResponse(response);
                 completionSource.SetResult(selector(response));
             }
             else
@@ -242,10 +241,9 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
             where T : class, new()
         {
-            LogResponse(response);
-
             if (HasSucceeded(response))
             {
+                LogResponse(response);
                 completionSource.SetResult(selector(response));
             }
             else
@@ -274,10 +272,10 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogResponse(IRestResponse response)
         {
-            Logger.DebugFormat("HTTP Status {0} ({1}) ({2})", 
-                                            response.StatusCode, 
-                                            (int)response.StatusCode, 
-                                            response.ResponseUri);
+            var code = response.StatusCode;
+            var uri = response.ResponseUri;
+
+            Logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
 
             foreach (var header in response.Headers)
             {

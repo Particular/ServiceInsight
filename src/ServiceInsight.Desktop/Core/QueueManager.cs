@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.Core
 
         Task<bool> IQueueManagerAsync.IsMsmqInstalled(string machineName)
         {
-            return _queueOperations.IsMsmqInstalled(machineName);
+            return _queueOperations.IsMsmqInstalledAsync(machineName);
         }
 
         Task<IList<Queue>> IQueueManagerAsync.GetQueues()

@@ -160,29 +160,6 @@ namespace NServiceBus.Profiler.Tests
         }
 
         [Test]
-        public void should_refresh_message_count_for_the_queue_when_auto_refresh_event_is_triggerred()
-        {
-            queueManager.GetMessageCount(Arg.Any<Queue>()).Returns(Task.FromResult(5));
-
-            queueManager.ClearReceivedCalls();
-            explorer.Handle(new AutoRefreshBeat());
-
-            queueManager.Received(1).GetMessageCount(Arg.Any<Queue>());
-            explorer.MachineRoot.Children.FirstOrDefault(x => x.DisplayName.Contains("(5)")).ShouldNotBe(null);
-        }
-
-        [Test]
-        public void should_not_refresh_any_message_count_when_auto_refresh_event_is_triggered_without_being_connected_to_any_machine()
-        {
-            explorer.Items.Clear();
-            queueManager.ClearReceivedCalls();
-
-            explorer.Handle(new AutoRefreshBeat());
-
-            queueManager.DidNotReceive().GetMessageCount(Arg.Any<Queue>());
-        }
-
-        [Test]
         public void should_throw_on_non_existing_machine_names()
         {
             Should.Throw<Exception>(() => AsyncHelper.Run(() => explorer.ConnectToQueue("NonExistingMachine")));
