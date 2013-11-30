@@ -16,6 +16,7 @@ _UpgradeReport.*
 *~
 *.swp
 *.user
+binaries
 [Oo]bj
 [Bb]in
 build
