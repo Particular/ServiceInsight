@@ -56,7 +56,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             Dispatcher.BeginInvoke((Action)(StopWorkInProgress));
         }
 
-        public void Handle(AsyncOperationFailedEvent message)
+        public void Handle(AsyncOperationFailed message)
         {
             Dispatcher.BeginInvoke((Action)(StopWorkInProgress));
         }

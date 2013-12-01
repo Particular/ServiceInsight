@@ -301,7 +301,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void RaiseAsyncOperationFailed(string errorMessage)
         {
-            _eventAggregator.Publish(new AsyncOperationFailedEvent
+            _eventAggregator.Publish(new AsyncOperationFailed
             {
                 Message = errorMessage
             });

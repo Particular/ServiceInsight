@@ -19,7 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
-        IHandle<AsyncOperationFailedEvent>,
+        IHandle<AsyncOperationFailed>,
         IHandle<SwitchToMessageBody>,
         IWorkTracker
     {

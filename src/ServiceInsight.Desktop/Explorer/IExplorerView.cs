@@ -6,7 +6,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer
     public interface IExplorerView : 
         IHandle<WorkStarted>, 
         IHandle<WorkFinished>,
-        IHandle<AsyncOperationFailedEvent>
+        IHandle<AsyncOperationFailed>
     {
         void Expand();
         void SelectRow(int rowHandle);

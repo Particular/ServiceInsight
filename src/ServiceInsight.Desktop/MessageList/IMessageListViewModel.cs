@@ -18,7 +18,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         IHandle<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
-        IHandle<AsyncOperationFailedEvent>,
+        IHandle<AsyncOperationFailed>,
         IHandle<MessageStatusChanged>
     {
         IObservableCollection<MessageInfo> Messages { get; }

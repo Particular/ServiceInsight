@@ -208,21 +208,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public virtual async void RefreshAll()
         {
+            await EndpointExplorer.RefreshData();
+            await QueueExplorer.RefreshData();
             await Messages.RefreshMessages();
-            await RefreshExplorer();
-        }
-
-        private async Task RefreshExplorer()
-        {
-            if (SelectedExplorerItem.IsEndpointExplorerSelected())
-            {
-                await EndpointExplorer.PartialRefresh();
-            }
-
-            if (SelectedExplorerItem.IsQueueExplorerSelected())
-            {
-                await QueueExplorer.PartialRefresh();
-            }
         }
 
         [AutoCheckAvailability]
@@ -245,7 +233,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             if(result.GetValueOrDefault(false))
             {
-                await QueueExplorer.FullRefresh();
+                await QueueExplorer.RefreshData();
             }
         }
 
@@ -447,7 +435,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public virtual void Handle(AsyncOperationFailedEvent message)
+        public virtual void Handle(AsyncOperationFailed message)
         {
             StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
         }

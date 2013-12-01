@@ -95,7 +95,6 @@ namespace NServiceBus.Profiler.Tests
         {
             var parser = Substitute.For<ICommandLineArgParser>();
             
-            parser.IsProvided.Returns(false);
             parser.ParsedOptions.Returns(new CommandLineOptions());
 
             return parser;
@@ -173,7 +172,7 @@ namespace NServiceBus.Profiler.Tests
 
             shell.OnAutoRefreshing();
 
-            QueueExplorer.DidNotReceive().PartialRefresh();
+            QueueExplorer.DidNotReceive().RefreshData();
         }
 
         [Test]
@@ -200,7 +199,7 @@ namespace NServiceBus.Profiler.Tests
 
             AsyncHelper.Run(() => shell.CreateQueue());
 
-            QueueExplorer.FullRefresh().ReceivedCalls(); //TODO: Comment?
+            QueueExplorer.RefreshData().ReceivedCalls(); //TODO: Comment?
         }
 
         [Test]

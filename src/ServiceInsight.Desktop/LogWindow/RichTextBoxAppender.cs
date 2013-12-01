@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,6 @@ using log4net.Appender;
 using log4net.Core;
 using log4net.Filter;
 using log4net.Layout;
-using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
@@ -30,7 +30,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         private void CreateFilters()
         {
-            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = typeof (IServiceControl).FullName});
+            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = "ServiceControl"});
             AddFilter(new DenyAllFilter());
         }
 
@@ -51,7 +51,14 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            _richtextBox.Dispatcher.Invoke(() => UpdateLog(loggingEvent));
+            if (_richtextBox.Dispatcher.CheckAccess())
+            {
+                UpdateLog(loggingEvent);
+            }
+            else
+            {
+                _richtextBox.Dispatcher.BeginInvoke((Action)(() => UpdateLog(loggingEvent)));
+            }
         }
 
         public void Clear()

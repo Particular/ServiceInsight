@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.Profiler.Desktop.Events
 {
-    public class AsyncOperationFailedEvent
+    public class AsyncOperationFailed
     {
         public string Message { get; set; }
     }

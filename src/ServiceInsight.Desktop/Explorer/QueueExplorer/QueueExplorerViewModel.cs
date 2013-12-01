@@ -114,18 +114,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public virtual async Task PartialRefresh()
-        {
-            if (MachineRoot == null)
-                return;
-
-            foreach (var explorerItem in MachineRoot.Children.OfType<QueueExplorerItem>())
-            {
-                var messageCount = await _queueManager.GetMessageCount(explorerItem.Queue);
-                explorerItem.UpdateMessageCount(messageCount);
-            }
-        }
-
         public void Navigate(string navigateUri)
         {
             _networkOperations.Browse(navigateUri);
@@ -160,10 +148,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
             ConnectedToAddress = ipv4;
             AddServerNode();
-            await FullRefresh();
+            await RefreshData();
         }
 
-        public async Task FullRefresh()
+        public async Task RefreshData()
         {
             if (MachineRoot == null)
                 return;
@@ -174,7 +162,12 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             var sortedQueues = queues.OrderBy(x => x.Address).ToList();
 
             SetupQueueNodes(sortedQueues);
-            await PartialRefresh();
+
+            foreach (var explorerItem in MachineRoot.Children.OfType<QueueExplorerItem>().ToList())
+            {
+                var messageCount = await _queueManager.GetMessageCount(explorerItem.Queue);
+                explorerItem.UpdateMessageCount(messageCount);
+            }
         }
 
         public virtual string ConnectedToAddress { get; private set; }

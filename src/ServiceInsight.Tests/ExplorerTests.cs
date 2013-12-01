@@ -115,7 +115,7 @@ namespace NServiceBus.Profiler.Tests
             queueManager.GetQueues(Arg.Any<string>()).Returns(Task.FromResult(queues));
 
             AsyncHelper.Run(() => explorer.ConnectToQueue(Environment.MachineName));
-            AsyncHelper.Run(() => explorer.PartialRefresh());
+            AsyncHelper.Run(() => explorer.RefreshData());
 
             explorer.Items[0].ShouldBeTypeOf<QueueServerExplorerItem>();
             explorer.Items.Count.ShouldBe(1);
@@ -173,7 +173,7 @@ namespace NServiceBus.Profiler.Tests
             queueManager.GetQueues().ReturnsForAnyArgs(Task.FromResult(unorderedQueueList));
             explorer = new QueueExplorerViewModel(queueManager, eventAggregator, windowManagerEx, networkOperations);
 
-            Should.NotThrow(() => explorer.FullRefresh());
+            Should.NotThrow(() => explorer.RefreshData());
         }
     }
 }

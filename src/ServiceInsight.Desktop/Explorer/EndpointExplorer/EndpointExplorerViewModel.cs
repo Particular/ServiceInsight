@@ -101,7 +101,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
-            await SelectDefaultEndpoint();
+            
+            SelectDefaultEndpoint();
 
             _eventAggregator.Publish(new WorkFinished());
         }
@@ -142,7 +143,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        private async Task SelectDefaultEndpoint()
+        private void SelectDefaultEndpoint()
         {
             if (ServiceControlRoot == null) return;
 
@@ -171,26 +172,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
-            await RefreshEndpoints();
+            await RefreshData();
             ExpandServiceNode();
         }
 
-        public async Task FullRefresh()
-        {
-            await Task.Run(() => { });
-        }
-
-        public async Task PartialRefresh()
-        {
-            await RefreshEndpoints();
-        }
-
-        public void Navigate(string navigateUri)
-        {
-            _networkOperations.Browse(navigateUri);
-        }
-
-        private async Task RefreshEndpoints()
+        public async Task RefreshData()
         {
             var endpoints = await _serviceControl.GetEndpoints();
 
@@ -204,6 +190,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
                     ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
                 }
             }
+        }
+
+        public void Navigate(string navigateUri)
+        {
+            _networkOperations.Browse(navigateUri);
         }
 
         private void ExpandServiceNode()
