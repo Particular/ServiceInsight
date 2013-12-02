@@ -339,7 +339,7 @@
                                                  CaptionImage="/Images/Log.png">
                                     <ContentControl cal:View.Model="{Binding LogWindow}" />
                                 </dxd:LayoutPanel>
-                                <dxd:LayoutPanel x:Name="SagaWindow"
+                                <!--<dxd:LayoutPanel x:Name="SagaWindow"
                                                  AutomationProperties.AutomationId="SagaWindow"
                                                  Caption="Saga"
                                                  AllowClose="False"
@@ -347,7 +347,7 @@
                                                  ShowBorder="False"
                                                  CaptionImage="/Images/Log.png">
                                         <ContentControl cal:View.Model="{Binding SagaWindow}" />
-                                    </dxd:LayoutPanel>
+                                    </dxd:LayoutPanel>-->
 
                             </dxd:TabbedGroup>
 
