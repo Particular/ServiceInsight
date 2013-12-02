@@ -209,6 +209,7 @@
     <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
+    <Compile Include="Events\SwitchToSagaWindow.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +217,11 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />
+    <Compile Include="Saga\ISagaWindowView.cs" />
+    <Compile Include="Saga\SagaWindowView.xaml.cs">
+      <DependentUpon>SagaWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Saga\SagaWindowViewModel.cs" />
     <Compile Include="ServiceControl\ServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">
@@ -532,6 +538,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

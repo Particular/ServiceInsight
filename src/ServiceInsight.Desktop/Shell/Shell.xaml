@@ -306,7 +306,7 @@
                         </dxd:LayoutPanel>
 
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
-                            <dxd:TabbedGroup ItemWidth="3*"
+                            <dxd:TabbedGroup ItemWidth="4*"
                                              AllowClose="False"
                                              AllowFloat="False"
                                              GroupBorderStyle="Tabbed">
@@ -330,7 +330,6 @@
                                                  CaptionImage="/Images/Document.png">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
-                                
                                 <dxd:LayoutPanel x:Name="LogWindow"
                                                  AutomationProperties.AutomationId="LogWindow"
                                                  Caption="Logs"
@@ -340,6 +339,15 @@
                                                  CaptionImage="/Images/Log.png">
                                     <ContentControl cal:View.Model="{Binding LogWindow}" />
                                 </dxd:LayoutPanel>
+                                <dxd:LayoutPanel x:Name="SagaWindow"
+                                                 AutomationProperties.AutomationId="SagaWindow"
+                                                 Caption="Saga"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
+                                                 CaptionImage="/Images/Log.png">
+                                        <ContentControl cal:View.Model="{Binding SagaWindow}" />
+                                    </dxd:LayoutPanel>
 
                             </dxd:TabbedGroup>
 
