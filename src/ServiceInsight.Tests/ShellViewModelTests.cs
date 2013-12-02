@@ -23,6 +23,7 @@ using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Tests
 {
@@ -53,6 +54,7 @@ namespace NServiceBus.Profiler.Tests
         private IShellViewStub View;
         private IMessagePropertiesViewModel MessageProperties;
         private ILogWindowViewModel LogWindow;
+        private ISagaWindowViewModel SagaWindow;
         private IAppCommands App;
         private ICommandLineArgParser CommandLineArgParser;
 
@@ -75,6 +77,7 @@ namespace NServiceBus.Profiler.Tests
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
+            SagaWindow = Substitute.For<ISagaWindowViewModel>();
             ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
@@ -84,7 +87,7 @@ namespace NServiceBus.Profiler.Tests
                                        EndpointExplorer, MessageList, StatusbarManager, 
                                        EventAggregator, LicenseManager, MessageFlow, 
                                        MessageBodyView, SettingsProvider, MessageProperties, 
-                                       LogWindow, CommandLineArgParser);
+                                       LogWindow, CommandLineArgParser, SagaWindow);
 
             ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
