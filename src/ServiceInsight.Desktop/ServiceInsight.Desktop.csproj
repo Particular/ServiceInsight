@@ -133,9 +133,9 @@
     <Reference Include="ExceptionHandler.Wpf">
       <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\log4net-1.2.13\build\bin\net\2.0\debug\log4net.dll</HintPath>
+      <HintPath>..\..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
