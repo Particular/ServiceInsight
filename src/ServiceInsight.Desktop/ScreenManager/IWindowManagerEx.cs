@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
     {
         MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
         bool? ShowDialog<T>() where T : class;
-        bool? ShowDialog<T>(T instance) where T : class;
+        bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class;
     }
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
@@ -96,21 +96,25 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return MessageBoxResult.None;
         }
 
+        private bool allowResize = false;
+
         public bool? ShowDialog<T>() where T : class
         {
+            this.allowResize = false;
             var screen = _screenFactory.CreateScreen<T>();
             return base.ShowDialog(screen, null);
         }
 
-        public bool? ShowDialog<T>(T instance) where T : class
+        public bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class
         {
+            this.allowResize = allowResize;
             return base.ShowDialog(instance, null);
         }
 
         protected override Window EnsureWindow(object model, object view, bool isDialog)
         {
             var window = base.EnsureWindow(model, view, isDialog);
-            window.ResizeMode = ResizeMode.NoResize;
+            window.ResizeMode = allowResize ? window.ResizeMode : ResizeMode.NoResize;
 
             SetParentToMain(window);
 

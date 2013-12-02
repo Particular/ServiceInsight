@@ -26,6 +26,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void CopyMessageHeaders(StoredMessage message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
+        void ShowSagaWindow(StoredMessage message);
         void ToggleEndpointData();
         void ShowException(IExceptionDetails exception);
         void ZoomIn();
@@ -93,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             var model = _screenFactory.CreateScreen<IExceptionDetailViewModel>();
             model.Exception = exception;
-            _windowManager.ShowWindow(model);
+            _windowManager.ShowDialog(model, true);
         }
 
         public void ToggleEndpointData()
