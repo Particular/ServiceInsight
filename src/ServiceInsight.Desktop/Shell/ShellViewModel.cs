@@ -21,7 +21,6 @@ using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
-using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -56,8 +55,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
             ILogWindowViewModel logWindow,
-            ICommandLineArgParser comandLineArgParser,
-            ISagaWindowViewModel sagaWindow)
+            ICommandLineArgParser comandLineArgParser)
         {
             _appCommander = appCommander;
             _screenFactory = screenFactory;
@@ -74,7 +72,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             MessageBody = messageBodyViewer;
             Messages = messages;
             LogWindow = logWindow;
-            SagaWindow = sagaWindow;
 
             Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
@@ -137,8 +134,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public virtual IStatusBarManager StatusBarManager { get; private set; }
 
         public virtual ILogWindowViewModel LogWindow { get; private set; }
-
-        public virtual ISagaWindowViewModel SagaWindow { get; private set; }
 
         public virtual ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -449,10 +444,5 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             View.SelectTab("MessageBody");
         }
-
-        //public virtual void Handle(SwitchToSagaWindow @event)
-        //{
-        //    View.SelectTab("SagaWindow");
-        //}
     }
 }
