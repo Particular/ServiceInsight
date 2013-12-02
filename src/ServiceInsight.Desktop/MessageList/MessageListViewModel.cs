@@ -80,7 +80,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             };
         }
 
-        public virtual IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
+        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
         
         public void OnContextMenuOpening()
         {
@@ -91,24 +91,26 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             NotifyPropertiesChanged();
         }
 
-        public virtual IObservableCollection<MessageInfo> Messages { get; private set; }
+        public new IShellViewModel Parent { get { return (IShellViewModel) base.Parent; } }
 
-        public virtual IObservableCollection<MessageInfo> SelectedMessages { get; private set; }
+        public IObservableCollection<MessageInfo> Messages { get; private set; }
 
-        public virtual ISearchBarViewModel SearchBar { get; private set; }
+        public IObservableCollection<MessageInfo> SelectedMessages { get; private set; }
 
-        public virtual MessageInfo FocusedMessage { get; set; }
+        public ISearchBarViewModel SearchBar { get; private set; }
 
-        public virtual StoredMessage StoredMessage
+        public MessageInfo FocusedMessage { get; set; }
+
+        public StoredMessage StoredMessage
         {
             get { return FocusedMessage as StoredMessage; }
         }
 
-        public virtual Queue SelectedQueue { get; private set; }
+        public Queue SelectedQueue { get; private set; }
+		
+        public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
 
-        public virtual bool WorkInProgress { get { return _workCount > 0; } }
-
-        public virtual ExplorerItem SelectedExplorerItem { get; private set; }
+        public ExplorerItem SelectedExplorerItem { get; private set; }
 
         public override void AttachView(object view, object context)
         {
@@ -116,12 +118,12 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _view = (IMessageListView) view;
         }
 
-        public virtual void ReturnToSource()
+        public void ReturnToSource()
         {
             _errorHeaderDisplay.ReturnToSource();
         }
 
-        public virtual async void RetryMessage()
+        public async void RetryMessage()
         {
             _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
             var msg = (StoredMessage)FocusedMessage;
@@ -130,13 +132,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _statusBar.Done();
         }
 
-        public virtual void CopyMessageId()
+        public void CopyMessageId()
         {
             var msg = FocusedMessage;
             _clipboard.CopyTo(msg.Id);
         }
 
-        public virtual void CopyHeaders()
+        public void CopyHeaders()
         {
             _clipboard.CopyTo(_generalHeaderDisplay.HeaderContent);
         }
@@ -162,7 +164,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return FocusedMessage != null;
         }
 
-        public virtual void OnFocusedMessageChanged() 
+        public void OnFocusedMessageChanged() 
         {
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
 
@@ -357,7 +359,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return new MessageErrorInfo(msg.Status);
         }
 
-        public virtual async Task DeleteSelectedMessages()
+        public async Task DeleteSelectedMessages()
         {
             if (SelectedQueue == null || SelectedMessages.Count <= 0)
                 return;
@@ -380,7 +382,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             await RefreshMessages();
         }
 
-        public virtual async Task PurgeQueue()
+        public async Task PurgeQueue()
         {
             if (SelectedQueue == null)
                 return;
@@ -408,13 +410,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        public virtual void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             _workCount++;
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
-        public virtual void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (_workCount > 0)
             {
@@ -442,12 +444,12 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             SearchBar.NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(SelectedExplorerItemChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public virtual void Handle(AsyncOperationFailed message)
+        public void Handle(AsyncOperationFailed message)
         {
             _workCount = 0;
             NotifyOfPropertyChange(() => WorkInProgress);

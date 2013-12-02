@@ -11,6 +11,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Settings;
+using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
@@ -44,26 +45,31 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             Items = new BindableCollection<ExplorerItem>();
         }
 
-        public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
+        public IObservableCollection<ExplorerItem> Items { get; private set; }
 
-        public virtual ServiceControlExplorerItem ServiceControlRoot
+        public ServiceControlExplorerItem ServiceControlRoot
         {
             get { return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); }
         }
 
-        public virtual AuditEndpointExplorerItem AuditRoot
+        public AuditEndpointExplorerItem AuditRoot
         {
             get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
         }
 
-        public virtual ErrorEndpointExplorerItem ErrorRoot
+        public ErrorEndpointExplorerItem ErrorRoot
         {
             get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
         }
 
-        public virtual ExplorerItem SelectedNode { get; set; }
+        public ExplorerItem SelectedNode { get; set; }
 
-        public virtual string ServiceUrl { get; private set; }
+        public string ServiceUrl { get; private set; }
+
+        public new IShellViewModel Parent
+        {
+            get { return (IShellViewModel)base.Parent; }
+        }
 
         private bool IsConnected
         {
@@ -138,7 +144,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             Items.Add(new ServiceControlExplorerItem(ServiceUrl));
         }
 
-        public virtual void OnSelectedNodeChanged()
+        public void OnSelectedNodeChanged()
         {
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }

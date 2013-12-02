@@ -12,6 +12,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 {
@@ -77,7 +78,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public virtual void DeleteSelectedQueue()
+        public void DeleteSelectedQueue()
         {
             if (SelectedQueue == null)
                 return;
@@ -106,6 +107,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             MachineRoot.Children.Remove(selectedItem);
         }
 
+        public new IShellViewModel Parent
+        {
+            get { return (IShellViewModel)base.Parent; }
+        }
+
         private void AddServerNode()
         {
             if (MachineRoot == null)
@@ -126,19 +132,19 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         public bool IsMSMQInstalled { get; private set; }
 
-        public virtual ExplorerItem FolderRoot
+        public ExplorerItem FolderRoot
         {
             get { return Items.FirstOrDefault(x => x is FolderExplorerItem); }
         }
 
-        public virtual ExplorerItem MachineRoot
+        public ExplorerItem MachineRoot
         {
             get { return Items.FirstOrDefault(x => x is QueueServerExplorerItem); }
         }
 
-        public virtual ExplorerItem SelectedNode { get; set; }
+        public ExplorerItem SelectedNode { get; set; }
 
-        public virtual async Task ConnectToQueue(string computerName)
+        public async Task ConnectToQueue(string computerName)
         {
             Guard.NotNull(() => computerName, computerName);
 
@@ -170,9 +176,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public virtual string ConnectedToAddress { get; private set; }
+        public string ConnectedToAddress { get; private set; }
 
-        public virtual Queue SelectedQueue
+        public Queue SelectedQueue
         {
             get
             {
@@ -186,14 +192,14 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
             }
         }
 
-        public virtual void OnSelectedNodeChanged()
+        public void OnSelectedNodeChanged()
         {
             _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        public virtual IObservableCollection<ExplorerItem> Items { get; private set; }
+        public IObservableCollection<ExplorerItem> Items { get; private set; }
 
-        public virtual void ExpandNodes()
+        public void ExpandNodes()
         {
             if (_view != null)
             {

@@ -65,12 +65,16 @@ namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
 
         private void StopWorkInProgress()
         {
+            if (Model.Parent.AutoRefresh) return;
+
             treeList.ShowLoadingPanel = false;
             treeList.IsHitTestVisible = true;
         }
 
         private void StartWorkInProgress()
         {
+            if(Model.Parent.AutoRefresh) return;
+
             treeList.IsHitTestVisible = false;
             treeList.ShowLoadingPanel = true;
         }

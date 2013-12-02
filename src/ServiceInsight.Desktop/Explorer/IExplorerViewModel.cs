@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using NServiceBus.Profiler.Desktop.Shell;
 
 namespace NServiceBus.Profiler.Desktop.Explorer
 {
@@ -8,5 +9,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer
         void OnSelectedNodeChanged();
         Task RefreshData();
         void Navigate(string navigateUri);
+        IShellViewModel Parent { get; }
     }
 }

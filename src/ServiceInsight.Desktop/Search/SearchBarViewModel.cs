@@ -5,6 +5,7 @@ using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.Explorer;
 using NServiceBus.Profiler.Desktop.Models;
@@ -28,6 +29,9 @@ namespace NServiceBus.Profiler.Desktop.Search
             base.OnActivate();
 
             SearchQuery = _commandLineArgParser.ParsedOptions.SearchQuery;
+            SearchInProgress = !SearchQuery.IsEmpty();
+            SearchEnabled = !SearchQuery.IsEmpty();
+            NotifyPropertiesChanged();
         }
 
         public virtual void GoToFirstPage()
@@ -201,6 +205,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyOfPropertyChange(() => CanGoToPreviousPage);
             NotifyOfPropertyChange(() => CanRefreshResult);
             NotifyOfPropertyChange(() => SearchEnabled);
+            NotifyOfPropertyChange(() => CanCancelSearch);
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 

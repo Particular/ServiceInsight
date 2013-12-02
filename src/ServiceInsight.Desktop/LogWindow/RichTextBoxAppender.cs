@@ -9,6 +9,7 @@ using log4net.Appender;
 using log4net.Core;
 using log4net.Filter;
 using log4net.Layout;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.LogWindow
@@ -30,7 +31,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         private void CreateFilters()
         {
-            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = "ServiceControl"});
+            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = typeof(IServiceControl).FullName});
             AddFilter(new DenyAllFilter());
         }
 

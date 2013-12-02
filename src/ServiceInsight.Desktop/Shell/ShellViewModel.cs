@@ -308,12 +308,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual bool CanConnectToMachine
         {
-            get { return !WorkInProgress; }
+            get { return !WorkInProgress || AutoRefresh; }
         }
 
         public virtual bool CanConnectToServiceControl
         {
-            get { return !WorkInProgress; }
+            get { return !WorkInProgress || AutoRefresh; }
         }
 
         public virtual bool CanExportMessage
