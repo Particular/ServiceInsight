@@ -13,6 +13,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public class ServiceControlConnectionViewModel : Screen
     {
+        public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
+
         private readonly ISettingsProvider _settingsProvider;
         private readonly ProfilerSettings _appSettings;
         private readonly IContainer _container;
@@ -64,14 +66,31 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public async virtual void Accept()
         {
-            WorkInProgress = true;
+            StartWorkInProgress();
             IsAddressValid = await IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 StoreConnectionAddress();
                 TryClose(true);
             }
+            StopWorkInProgress();
+        }
+
+        private void StartWorkInProgress()
+        {
+            ProgressMessage = ConnectingToServiceControl;
+            WorkInProgress = true;
+        }
+
+        private void StopWorkInProgress()
+        {
+            ProgressMessage = string.Empty;
             WorkInProgress = false;
+        }
+
+        public string ProgressMessage
+        {
+            get; set;
         }
 
         private void StoreConnectionAddress()

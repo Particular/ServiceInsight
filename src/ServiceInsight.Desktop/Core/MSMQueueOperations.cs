@@ -58,7 +58,12 @@ namespace NServiceBus.Profiler.Desktop.Core
             return Task.Run(() => IsMsmqInstalled(machineName));
         }
 
-        public virtual IList<MessageInfo> GetMessages(Queue queue)
+        Task<Queue> IQueueOperationsAsync.CreateQueueAsync(Queue queue, bool isTransactional)
+        {
+            return Task.Run(() => CreateQueue(queue, isTransactional));
+        }
+
+        public IList<MessageInfo> GetMessages(Queue queue)
         {
             using (var q = queue.AsMessageQueue())
             {
@@ -132,13 +137,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             }
         }
 
-        private bool QueueExists(Queue queue)
-        {
-            var allQueues = GetQueues(queue.Address.Machine);
-            return allQueues.Any(q => q.Address.Queue.Contains(queue.Address.Queue, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        public virtual Queue CreateQueue(Queue queue, bool transactional)
+        public Queue CreateQueue(Queue queue, bool transactional)
         {
             var path = queue.Address.ToShortFormatName();
             if(!QueueExists(queue)) //MessageQueue.Exist method does not accept format name
@@ -150,13 +149,13 @@ namespace NServiceBus.Profiler.Desktop.Core
             return _mapper.MapQueue(queue.AsMessageQueue());
         }
 
-        public virtual void DeleteQueue(Queue queue)
+        public void DeleteQueue(Queue queue)
         {
             var format = queue.Address.ToFormatName();
             MessageQueue.Delete(format);
         }
 
-        public virtual void Send(Queue queue, object message)
+        public void Send(Queue queue, object message)
         {
             using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
             {
@@ -164,7 +163,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             }
         }
 
-        public virtual void DeleteMessage(Queue queue, string messageId)
+        public void DeleteMessage(Queue queue, string messageId)
         {
             using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
             {
@@ -172,7 +171,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             }
         }
 
-        public virtual void PurgeQueue(Queue queue)
+        public void PurgeQueue(Queue queue)
         {
             using(var q = queue.AsMessageQueue(QueueAccessMode.ReceiveAndAdmin))
             {
@@ -180,7 +179,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             }
         }
 
-        public virtual void MoveMessage(Queue source, Queue destination, string messageId)
+        public void MoveMessage(Queue source, Queue destination, string messageId)
         {
             using(var tx = new TransactionScope())
             using(var queueDest = destination.AsMessageQueue(QueueAccessMode.SendAndReceive))
@@ -211,7 +210,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             }
         }
 
-        public virtual int GetMessageCount(Queue queue)
+        public int GetMessageCount(Queue queue)
         {
             var messageCount = 0;
 
@@ -229,6 +228,12 @@ namespace NServiceBus.Profiler.Desktop.Core
                 }
             }
             return messageCount;
+        }
+
+        private bool QueueExists(Queue queue)
+        {
+            var allQueues = GetQueues(queue.Address.Machine);
+            return allQueues.Any(q => q.Address.Queue.Contains(queue.Address.Queue, StringComparison.InvariantCultureIgnoreCase));
         }
     }   
 }

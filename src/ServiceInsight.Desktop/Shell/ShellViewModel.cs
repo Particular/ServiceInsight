@@ -163,9 +163,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void ConnectToMessageQueue()
+        public void ConnectToMessageQueue()
         {
-            var machineViewModel = _screenFactory.CreateScreen<ConnectToMachineViewModel>();
+            var machineViewModel = _screenFactory.CreateScreen<IConnectToMachineViewModel>();
             var result = _windowManager.ShowDialog(machineViewModel);
 
             if(result.GetValueOrDefault(false))
@@ -175,7 +175,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual async void ConnectToServiceControl()
+        public async void ConnectToServiceControl()
         {
             var connectionViewModel = _screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
             var result = _windowManager.ShowDialog(connectionViewModel);
@@ -188,25 +188,25 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual async void DeleteSelectedMessages()
+        public async void DeleteSelectedMessages()
         {
             await Messages.DeleteSelectedMessages();
         }
 
         [AutoCheckAvailability]
-        public virtual async void PurgeCurrentQueue()
+        public async void PurgeCurrentQueue()
         {
             await Messages.PurgeQueue();
         }
 
         [AutoCheckAvailability]
-        public virtual void DeleteCurrentQueue()
+        public void DeleteCurrentQueue()
         {
             QueueExplorer.DeleteSelectedQueue();
         }
 
         [AutoCheckAvailability]
-        public virtual async void RefreshAll()
+        public async void RefreshAll()
         {
             await EndpointExplorer.RefreshData();
             await QueueExplorer.RefreshData();
@@ -214,19 +214,19 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void ImportMessage()
+        public void ImportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
         [AutoCheckAvailability]
-        public virtual void ExportMessage()
+        public void ExportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
         [AutoCheckAvailability]
-        public virtual async Task CreateQueue()
+        public async Task CreateQueue()
         {
             var screen = _screenFactory.CreateScreen<IQueueCreationViewModel>();
             var result = _windowManager.ShowDialog(screen);
@@ -238,12 +238,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public virtual void CreateMessage()
+        public void CreateMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        public virtual void Register()
+        public void Register()
         {
             _windowManager.ShowDialog<ILicenseRegistrationViewModel>();
             DisplayRegistrationStatus();
@@ -254,17 +254,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _refreshTimer.IsEnabled = AutoRefresh;
         }
 
-        public virtual bool CanCreateMessage
+        public bool CanCreateMessage
         {
             get { return QueueExplorer.SelectedQueue != null && !WorkInProgress; }
         }
 
-        public virtual bool CanRefreshQueues
+        public bool CanRefreshQueues
         {
             get { return !WorkInProgress; }
         }
 
-        public virtual bool CanPurgeCurrentQueue
+        public bool CanPurgeCurrentQueue
         {
             get
             {
@@ -274,7 +274,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public virtual bool CanDeleteCurrentQueue
+        public bool CanDeleteCurrentQueue
         {
             get
             {
@@ -284,7 +284,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public virtual bool CanDeleteSelectedMessages
+        public bool CanDeleteSelectedMessages
         {
             get
             {
@@ -294,7 +294,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public virtual bool CanCreateQueue
+        public bool CanCreateQueue
         {
             get
             {
@@ -306,22 +306,22 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public int SelectedMessageTabItem { get; set; }
 
-        public virtual bool CanConnectToMachine
+        public bool CanConnectToMachine
         {
             get { return !WorkInProgress || AutoRefresh; }
         }
 
-        public virtual bool CanConnectToServiceControl
+        public bool CanConnectToServiceControl
         {
             get { return !WorkInProgress || AutoRefresh; }
         }
 
-        public virtual bool CanExportMessage
+        public bool CanExportMessage
         {
             get { return !WorkInProgress && Messages.SelectedMessages.Count > 0 && false; } //TODO: Implement message export
         }
 
-        public virtual bool CanImportMessage
+        public bool CanImportMessage
         {
             get { return !WorkInProgress && false; } //TODO: Implement message import
         }
@@ -415,13 +415,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             return productAttribute.Product;
         }
 
-        public virtual void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             _workCounter++;
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (_workCounter <= 0) 
                 return;
@@ -430,17 +430,17 @@ namespace NServiceBus.Profiler.Desktop.Shell
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(SelectedExplorerItemChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public virtual void Handle(AsyncOperationFailed message)
+        public void Handle(AsyncOperationFailed message)
         {
             StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
         }
 
-        public virtual void Handle(SwitchToMessageBody @event)
+        public void Handle(SwitchToMessageBody @event)
         {
             View.SelectTab("MessageBody");
         }

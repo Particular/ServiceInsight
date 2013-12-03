@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Core;
@@ -15,17 +16,19 @@ namespace NServiceBus.Profiler.Desktop.Shell
         bool IsTransactional { get; set; }
         List<string> Machines { get; }
         bool CanAccept();
-        bool CreateQueue();
+        Task<bool> CreateQueue();
     }
 
     public class QueueCreationViewModel : Screen, IQueueCreationViewModel
     {
-        private readonly IQueueManager _queueManager;
+        public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
+
+        private readonly IQueueManagerAsync _queueManager;
         private readonly IQueueExplorerViewModel _explorer;
         private readonly INetworkOperations _networkOperations;
 
         public QueueCreationViewModel(
-            IQueueManager queueManager, 
+            IQueueManagerAsync queueManager, 
             IQueueExplorerViewModel explorer,
             INetworkOperations networkOperations)
         {
@@ -37,52 +40,62 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IsTransactional = true;
         }
 
-        public virtual string QueueName { get; set; }
-
-        public virtual string SelectedMachine { get; set; }
-
-        public virtual bool IsTransactional { get; set; }
-
-        public virtual List<string> Machines { get; private set; }
+        public string ProgressMessage { get; private set; }
+        public bool WorkInProgress { get; private set; }
+        public string QueueName { get; set; }
+        public string SelectedMachine { get; set; }
+        public bool IsTransactional { get; set; }
+        public List<string> Machines { get; private set; }
 
         protected override async void OnActivate()
         {
             base.OnActivate();
 
-            WorkInProgress = true;
+            StartWorkInProgress(DiscoveringComputersOnNetwork);
             Machines.Clear();
             SelectedMachine = _explorer.ConnectedToAddress;
             var machines = await _networkOperations.GetMachines();
             Machines.AddRange(machines);
-            WorkInProgress = false;
+            StopWorkInProgress();
         }
 
-        public virtual void Close()
+        public void Close()
         {
             TryClose(false);
         }
 
-        public virtual bool CanAccept()
+        public bool CanAccept()
         {
             return !QueueName.IsEmpty() &&
                    !SelectedMachine.IsEmpty();
         }
 
         [AutoCheckAvailability]
-        public virtual void Accept()
+        public async void Accept()
         {
-            if (CreateQueue())
+            var created = await CreateQueue();
+            if (created)
             {
                 TryClose(true);
             }
         }
 
-        public bool CreateQueue()
+        public async Task<bool> CreateQueue()
         {
-            var queue = _queueManager.CreatePrivateQueue(new Queue(SelectedMachine, QueueName), IsTransactional);
+            var queue = await _queueManager.CreatePrivateQueueAsync(new Queue(SelectedMachine, QueueName), IsTransactional);
             return queue != null;
         }
 
-        public bool WorkInProgress { get; private set; }
+        private void StartWorkInProgress(string message)
+        {
+            ProgressMessage = message;
+            WorkInProgress = true;
+        }
+
+        private void StopWorkInProgress()
+        {
+            ProgressMessage = string.Empty;
+            WorkInProgress = false;
+        }
     }
 }

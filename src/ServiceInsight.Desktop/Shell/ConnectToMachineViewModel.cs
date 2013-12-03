@@ -6,8 +6,22 @@ using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class ConnectToMachineViewModel : Screen, IWorkTracker
+    public interface IConnectToMachineViewModel : IScreen, IWorkTracker
     {
+        string ComputerName { get; }
+        bool IsAddressValid { get; }
+        string ProgressMessage { get; }
+        IList<string> Machines { get; }
+
+        bool CanAccept();
+        void Accept();
+        void Close();
+    }
+
+    public class ConnectToMachineViewModel : Screen, IConnectToMachineViewModel
+    {
+        public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
+
         private readonly INetworkOperations _networkOperations;
 
         public ConnectToMachineViewModel(INetworkOperations networkOperations)
@@ -21,33 +35,33 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             base.OnActivate();
 
-            WorkInProgress = true;
+            StartWorkInProgress(DiscoveringComputersOnNetwork);
             IsAddressValid = true;
 
             var machines = await _networkOperations.GetMachines();
 
             Machines = new List<string>(machines);
-            WorkInProgress = false;
+            StopWorkInProgress();
         }
 
-        public virtual string ComputerName { get; set; }
+        public string ComputerName { get; set; }
+        public IList<string> Machines { get; private set; }
+        public bool IsAddressValid { get; set; }
+        public bool WorkInProgress { get; private set; }
+        public string ProgressMessage { get; set; }
 
-        public virtual void Close()
+        public void Close()
         {
             TryClose(false);
         }
 
-        public virtual bool CanAccept()
+        public bool CanAccept()
         {
             return !string.IsNullOrEmpty(ComputerName);
         }
 
-        public List<string> Machines { get; private set; }
-
-        public bool IsAddressValid { get; set; }
-
         [AutoCheckAvailability]
-        public virtual void Accept()
+        public void Accept()
         {
             IsAddressValid = Address.IsValidAddress(ComputerName);
             if (IsAddressValid)
@@ -56,6 +70,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public bool WorkInProgress { get; private set; }
+        private void StartWorkInProgress(string message)
+        {
+            ProgressMessage = message;
+            WorkInProgress = true;
+        }
+
+        private void StopWorkInProgress()
+        {
+            ProgressMessage = string.Empty;
+            WorkInProgress = false;
+        }
     }
 }

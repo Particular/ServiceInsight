@@ -196,6 +196,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
                     ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
                 }
             }
+
+            //TODO: Remove non-existing endpoints efficiently
         }
 
         public void Navigate(string navigateUri)

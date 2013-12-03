@@ -186,9 +186,6 @@
     <Reference Include="PresentationFramework" />
     <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />
-    <Reference Include="WpfAnimatedGif">
-      <HintPath>..\packages\WpfAnimatedGif.1.4.2\lib\net\WpfAnimatedGif.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -1,9 +1,7 @@
 ﻿using System;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
 using NServiceBus.Profiler.Desktop;
-using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.Events;
@@ -41,11 +39,9 @@ namespace NServiceBus.Profiler.Tests
         private IQueueExplorerViewModel QueueExplorer;
         private IEndpointExplorerViewModel EndpointExplorer;
         private IMessageListViewModel MessageList;
-        private ConnectToMachineViewModel ConnectToViewModel;
-        private INetworkOperations NetworkOperations;
+        private IConnectToMachineViewModel ConnectToViewModel;
         private IMessageFlowViewModel MessageFlow;
         private IEventAggregator EventAggregator;
-        private IExceptionHandler ExceptionHandler;
         private IStatusBarManager StatusbarManager;
         private IMessageBodyViewModel MessageBodyView;
         private ISettingsProvider SettingsProvider;
@@ -64,9 +60,7 @@ namespace NServiceBus.Profiler.Tests
             QueueExplorer = Substitute.For<IQueueExplorerViewModel>();
             EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
             MessageList = Substitute.For<IMessageListViewModel>();
-            NetworkOperations = Substitute.For<INetworkOperations>();
-            ExceptionHandler = Substitute.For<IExceptionHandler>();
-            StatusbarManager = Substitute.For<StatusBarManager>();
+            StatusbarManager = Substitute.For<IStatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<IMessageFlowViewModel>();
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();
@@ -75,7 +69,7 @@ namespace NServiceBus.Profiler.Tests
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
-            ConnectToViewModel = Substitute.For<ConnectToMachineViewModel>(NetworkOperations);
+            ConnectToViewModel = Substitute.For<IConnectToMachineViewModel>();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();
@@ -86,7 +80,7 @@ namespace NServiceBus.Profiler.Tests
                                        MessageBodyView, SettingsProvider, MessageProperties, 
                                        LogWindow, CommandLineArgParser);
 
-            ScreenFactory.CreateScreen<ConnectToMachineViewModel>().Returns(ConnectToViewModel);
+            ScreenFactory.CreateScreen<IConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
             shell.AttachView(View, null);
         }
@@ -152,7 +146,7 @@ namespace NServiceBus.Profiler.Tests
 
             shell.ConnectToMessageQueue();
 
-            ScreenFactory.Received().CreateScreen<ConnectToMachineViewModel>();
+            ScreenFactory.Received().CreateScreen<IConnectToMachineViewModel>();
             WindowManager.Received().ShowDialog(ConnectToViewModel);
             QueueExplorer.Received().ConnectToQueue("NewMachine");
         }
@@ -220,20 +214,19 @@ namespace NServiceBus.Profiler.Tests
             const string LicenseType = "Trial";
             const int NumberOfDaysRemainingFromTrial = 5;
 
-            var IssuedLicense = new ProfilerLicense
+            var issuedLicense = new ProfilerLicense
             {
                 LicenseType = LicenseType,
                 ExpirationDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
                 RegisteredTo = RegisteredUser
             };
 
-            LicenseManager.CurrentLicense.Returns(IssuedLicense);
+            LicenseManager.CurrentLicense.Returns(issuedLicense);
             LicenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
 
             shell.OnApplicationIdle();
 
-            StatusbarManager.Registration.ShouldContain(NumberOfDaysRemainingFromTrial.ToString());
-            StatusbarManager.Registration.ShouldContain("Unlicensed");
+            StatusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
         }
 
         [TearDown]

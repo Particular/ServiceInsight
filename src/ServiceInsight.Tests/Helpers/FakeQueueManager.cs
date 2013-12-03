@@ -41,6 +41,11 @@ namespace NServiceBus.Profiler.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<Queue> CreatePrivateQueueAsync(Queue queue, bool isTransactional = true)
+        {
+            throw new NotImplementedException();
+        }
+
         Task<IList<MessageInfo>> IQueueManagerAsync.GetMessages(Queue queue)
         {
             var t = new Task<IList<MessageInfo>>(() => MessageQueue[queue].ToArray());

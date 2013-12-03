@@ -77,6 +77,7 @@
                     <FontWeight x:Key="MessageFontWeight">Normal</FontWeight>
                     <FontFamily x:Key="CaptionFontFamily">Tahoma</FontFamily>
                     <FontWeight x:Key="CaptionFontWeight">Bold</FontWeight>
+                    <FontFamily x:Key="DialogFonts">Calibri</FontFamily>
 
                     <!-- Space, Margin and Padding -->
                     <sys:Double x:Key="NoSpacing">0</sys:Double>
@@ -146,6 +147,13 @@
                     <!--Effect-->
                     <DropShadowEffect x:Key="DiagramNodeShadow" BlurRadius="1" Color="{StaticResource DiagramShadowColor}" Opacity="0.1" Direction="315"/>
                     <DropShadowEffect x:Key="DiagramSelectedNodeShadow" BlurRadius="35" Color="{StaticResource DiagramSelectedShadowColor}" Opacity="1" ShadowDepth="0" Direction="0" />
+                    
+                    <!-- TextBlock Styles-->
+                    <Style x:Key="Informational" TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontFamily" Value="{StaticResource DialogFonts}" />
+                        <Setter Property="FontSize" Value="10" />
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                    </Style>
                     
                     <!-- Dialog Style -->
                     <Style x:Key="DialogRootContainer" TargetType="{x:Type Border}">

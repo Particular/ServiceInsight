@@ -16,7 +16,7 @@ namespace NServiceBus.Profiler.Tests
     public class QueueCreationViewModel : AsyncTestBase
     {
         private Desktop.Shell.QueueCreationViewModel Model;
-        private IQueueManager QueueManager;
+        private IQueueManagerAsync QueueManager;
         private IQueueExplorerViewModel Explorer;
         private INetworkOperations Network;
 
@@ -24,7 +24,7 @@ namespace NServiceBus.Profiler.Tests
         public void TestInitialize()
         {
             IList<string> machines = new List<string> { Environment.MachineName, "AnotherMachine" };
-            QueueManager = Substitute.For<IQueueManager>();
+            QueueManager = Substitute.For<IQueueManagerAsync>();
             Explorer = Substitute.For<IQueueExplorerViewModel>();
             Network = Substitute.For<INetworkOperations>();
             Model = new Desktop.Shell.QueueCreationViewModel(QueueManager, Explorer, Network);
@@ -70,7 +70,7 @@ namespace NServiceBus.Profiler.Tests
             Model.IsTransactional = true;
             Model.Accept();
 
-            QueueManager.Received().CreatePrivateQueue(Arg.Is<Queue>(q => q.Address.Equals("testqueue@.")), Arg.Is(true));
+            QueueManager.Received().CreatePrivateQueueAsync(Arg.Is<Queue>(q => q.Address.Equals("testqueue@.")), Arg.Is(true));
             Model.IsActive.ShouldBe(false);
         }
     }

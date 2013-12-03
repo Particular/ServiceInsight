@@ -34,6 +34,12 @@ namespace NServiceBus.Profiler.Desktop.Core
             return _queueOperations.GetQueuesAsync(Environment.MachineName);
         }
 
+        public Task<Queue> CreatePrivateQueueAsync(Queue queue, bool isTransactional = true)
+        {
+            Guard.NotNull(() => queue, queue);
+            return _queueOperations.CreateQueueAsync(queue, isTransactional);
+        }
+
         Task<int> IQueueManagerAsync.GetMessageCount(Queue queue)
         {
             return _queueOperations.GetMessageCountAsync(queue);
@@ -53,7 +59,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             _queueOperations = queueOperations;
         }
 
-        public virtual IList<Queue> GetQueues(string machineName = null)
+        public IList<Queue> GetQueues(string machineName = null)
         {
             if (machineName == null)
                 machineName = Environment.MachineName;
@@ -61,21 +67,21 @@ namespace NServiceBus.Profiler.Desktop.Core
             return _queueOperations.GetQueues(machineName);
         }
 
-        public virtual IList<MessageInfo> GetMessages(Queue queue)
+        public IList<MessageInfo> GetMessages(Queue queue)
         {
             Guard.NotNull(() => queue, queue);
             
             return _queueOperations.GetMessages(queue);
         }
 
-        public virtual MessageBody GetMessageBody(Queue queue, string messageId)
+        public MessageBody GetMessageBody(Queue queue, string messageId)
         {
             Guard.NotNull(() => queue, queue);
 
             return _queueOperations.GetMessageBody(queue, messageId);
         }
 
-        public virtual int GetMessageCount(Queue queue)
+        public int GetMessageCount(Queue queue)
         {
             Guard.NotNull(() => queue, queue);
 
@@ -87,14 +93,14 @@ namespace NServiceBus.Profiler.Desktop.Core
             return _queueOperations.IsMsmqInstalled(machineName);
         }
 
-        public virtual Queue CreatePrivateQueue(Queue queue, bool transactional = true)
+        public Queue CreatePrivateQueue(Queue queue, bool transactional = true)
         {
             Guard.NotNull(() => queue, queue);
 
             return _queueOperations.CreateQueue(queue, transactional);
         }
 
-        public virtual void SendMessage(Queue queue, object msg)
+        public void SendMessage(Queue queue, object msg)
         {
             Guard.NotNull(() => msg, msg);
             Guard.NotNull(() => queue, queue);
@@ -102,7 +108,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             _queueOperations.Send(queue, msg);
         }
 
-        public virtual void DeleteQueue(Queue queue)
+        public void DeleteQueue(Queue queue)
         {
             Guard.NotNull(() => queue, queue);
             Guard.NotNull(() => queue.Address, queue.Address);
@@ -118,7 +124,7 @@ namespace NServiceBus.Profiler.Desktop.Core
             _queueOperations.MoveMessage(source, destination, messageId);
         }
 
-        public virtual void DeleteMessage(Queue queue, MessageInfo message)
+        public void DeleteMessage(Queue queue, MessageInfo message)
         {
             Guard.NotNull(() => message, message);
             Guard.NotNull(() => queue, queue);

@@ -10,5 +10,6 @@ namespace NServiceBus.Profiler.Desktop.Core
         Task<int> GetMessageCountAsync(Queue queue);
         Task<IList<Queue>> GetQueuesAsync(string machineName);
         Task<bool> IsMsmqInstalledAsync(string machineName);
+        Task<Queue> CreateQueueAsync(Queue queue, bool isTransactional);
     }
 }
