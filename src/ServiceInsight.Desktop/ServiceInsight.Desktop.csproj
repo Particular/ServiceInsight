@@ -206,6 +206,7 @@
     <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
+    <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
