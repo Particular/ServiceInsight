@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -373,6 +374,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void DisplayRegistrationStatus()
         {
             var license = _licenseManager.CurrentLicense;
+
+            if (license == null)
+            {
+                return;
+            }
             if (license.LicenseType == ProfilerLicenseTypes.Standard)
             {
                 StatusBarManager.SetRegistrationInfo(LicensedStatusMessage, license.RegisteredTo);
