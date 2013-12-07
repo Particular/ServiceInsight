@@ -5,7 +5,6 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.ViewModels;
 using ExceptionHandler;
 using ExceptionHandler.Wpf;
-using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -40,6 +39,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             StopAsyncProgress(rootError);
 
+            if (IsIgnoredError(rootError)) return;
+
             if(IsSoftError(rootError))
             {
                 ShowWarning(rootError);
@@ -59,7 +60,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             if (_shell.WorkInProgress)
             {
-                _eventAggregator.Publish(new AsyncOperationFailed {Message = rootError.Message});
+                _eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
             }
         }
 
@@ -71,11 +72,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
                    rootError is LicenseFileNotFoundException;
         }
 
+        private bool IsIgnoredError(Exception rootError)
+        {
+            return rootError is MessageQueueException;
+        }
+
         private bool IsSoftError(Exception rootError)
         {
-            return rootError is MessageQueueException ||
-                   rootError is QueueManagerException ||
-                   rootError is NotImplementedException;
+            return rootError is NotImplementedException;
         }
 
         private void ShowWarning(Exception error)

@@ -31,7 +31,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IErrorHeaderViewModel _errorHeaderDisplay;
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
-        private readonly IStatusBarManager _statusBar;
         private readonly IMenuItem _returnToSourceMenu;
         private readonly IMenuItem _retryMessageMenu;
         private readonly IMenuItem _copyMessageIdMenu;
@@ -49,8 +48,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             ISearchBarViewModel searchBarViewModel,
             IErrorHeaderViewModel errorHeaderDisplay,
             IGeneralHeaderViewModel generalHeaderDisplay,
-            IClipboard clipboard,
-            IStatusBarManager statusBar)
+            IClipboard clipboard)
         {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
@@ -59,7 +57,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _errorHeaderDisplay = errorHeaderDisplay;
             _generalHeaderDisplay = generalHeaderDisplay;
             _clipboard = clipboard;
-            _statusBar = statusBar;
 
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
@@ -125,11 +122,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async void RetryMessage()
         {
-            _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint);
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint));
             var msg = (StoredMessage)FocusedMessage;
             await _serviceControl.RetryMessage(FocusedMessage.Id);
             Messages.Remove(msg);
-            _statusBar.Done();
+            _eventAggregator.Publish(new WorkFinished());
         }
 
         public void CopyMessageId()

@@ -7,7 +7,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
     public class StatusBarManager : PropertyChangedBase, 
         IStatusBarManager, 
         IHandle<WorkStarted>,
-        IHandle<WorkFinished>
+        IHandle<WorkFinished>,
+        IHandle<AsyncOperationFailed>
     {
         public const string DoneStatusMessage = "Done";
 
@@ -30,6 +31,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
+        public void Handle(AsyncOperationFailed @event)
+        {
+            StatusMessage = @event.Message;
+            ErrorMessageVisible = true;
+        }
+
         public void SetRegistrationInfo(string message, params object[] args)
         {
             Registration = string.Format(message, args);
@@ -39,12 +46,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             StatusMessage = string.Format(message, args);
             ErrorMessageVisible = false;
-        }
-
-        public void SetFailStatusMessage(string message, params object[] args)
-        {
-            StatusMessage = string.Format(message, args);
-            ErrorMessageVisible = true;
         }
 
         public void Done()

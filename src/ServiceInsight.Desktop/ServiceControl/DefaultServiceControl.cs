@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         private readonly IServiceControlConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
         private readonly ProfilerSettings _settings;
-        private readonly ILog Logger = LogManager.GetLogger(typeof(IServiceControl));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
@@ -260,11 +260,11 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogRequest(IRestRequest request)
         {
-            Logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
+            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
             
             foreach (var parameter in request.Parameters)
             {
-                Logger.DebugFormat("Request Parameter: {0} : {1}", 
+                _logger.DebugFormat("Request Parameter: {0} : {1}", 
                                                        parameter.Name, 
                                                        parameter.Value);
             }
@@ -275,11 +275,11 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            Logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
+            _logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
 
             foreach (var header in response.Headers)
             {
-                Logger.DebugFormat("Response Header: {0} : {1}", 
+                _logger.DebugFormat("Response Header: {0} : {1}", 
                                                      header.Name, 
                                                      header.Value);
             }
@@ -291,7 +291,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                                                                            response.ErrorMessage, 
                                                                            response.StatusCode);
             RaiseAsyncOperationFailed(errorMessage);
-            Logger.ErrorFormat(errorMessage, response.ErrorException);
+            _logger.ErrorFormat(errorMessage, response.ErrorException);
         }
 
         private static bool HasSucceeded(IRestResponse response)
@@ -301,10 +301,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void RaiseAsyncOperationFailed(string errorMessage)
         {
-            _eventAggregator.Publish(new AsyncOperationFailed
-            {
-                Message = errorMessage
-            });
+            _eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
         }
 
         private static IEnumerable<HttpStatusCode> SuccessCodes

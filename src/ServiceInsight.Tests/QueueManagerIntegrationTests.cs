@@ -102,11 +102,9 @@ namespace NServiceBus.Profiler.Tests
             var message = manager.GetMessages(source).First();
             manager.DeleteMessage(source, message);
 
-            var error = Should.Throw<QueueManagerException>(() => manager.MoveMessage(source, destination, message.Id));
+            var error = Should.Throw<InvalidOperationException>(() => manager.MoveMessage(source, destination, message.Id));
 
             error.ShouldNotBe(null);
-            error.ShouldBeTypeOf<QueueManagerException>();
-            error.Message.ShouldContain("Message could not be loaded");
         }
 
         [Test]

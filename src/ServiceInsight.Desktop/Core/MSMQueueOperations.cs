@@ -13,54 +13,54 @@ namespace NServiceBus.Profiler.Desktop.Core
     public class MSMQueueOperations : IQueueOperationsAsync
     {
         private readonly IMapper _mapper;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(IQueueOperations));
 
         public MSMQueueOperations(IMapper mapper)
         {
             _mapper = mapper;
         }
 
-        public ILog Logger { get; set; }
-
-        public virtual IList<Queue> GetQueues(string machineName)
-        {
-            try
-            {
-                var queuesPrivate = MessageQueue.GetPrivateQueuesByMachine(machineName).ToList();
-                var mapped = queuesPrivate.Select(x => _mapper.MapQueue(x)).ToList();
-
-                queuesPrivate.ForEach(x => x.Close());
-
-                return mapped;
-            }
-            catch (InvalidOperationException)
-            {
-                return new List<Queue>();
-            }
-        }
-
-        public virtual Task<IList<MessageInfo>> GetMessagesAsync(Queue queue)
+        public Task<IList<MessageInfo>> GetMessagesAsync(Queue queue)
         {
             return Task.Run(() => GetMessages(queue));
         }
 
-        public virtual Task<int> GetMessageCountAsync(Queue queue)
+        public Task<int> GetMessageCountAsync(Queue queue)
         {
             return Task.Run(() => GetMessageCount(queue));
         }
 
-        public virtual Task<IList<Queue>> GetQueuesAsync(string machineName)
+        public Task<IList<Queue>> GetQueuesAsync(string machineName)
         {
             return Task.Run(() => GetQueues(machineName));
         }
 
-        Task<bool> IQueueOperationsAsync.IsMsmqInstalledAsync(string machineName)
+        public Task<bool> IsMsmqInstalledAsync(string machineName)
         {
             return Task.Run(() => IsMsmqInstalled(machineName));
         }
 
-        Task<Queue> IQueueOperationsAsync.CreateQueueAsync(Queue queue, bool isTransactional)
+        public Task<Queue> CreateQueueAsync(Queue queue, bool isTransactional)
         {
             return Task.Run(() => CreateQueue(queue, isTransactional));
+        }
+
+        public IList<Queue> GetQueues(string machineName)
+        {
+            try
+            {
+                var queues = MessageQueue.GetPrivateQueuesByMachine(machineName).ToList();
+                var mapped = queues.Select(x => _mapper.MapQueue(x)).ToList();
+
+                queues.ForEach(x => x.Close());
+
+                return mapped;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not retreive queues on machine {0}.", machineName), ex);
+                throw;
+            }
         }
 
         public IList<MessageInfo> GetMessages(Queue queue)
@@ -93,7 +93,8 @@ namespace NServiceBus.Profiler.Desktop.Core
                         }
                         catch (MessageQueueException ex)
                         {
-                            Logger.Error("There was an error reading message from the queue.", ex);
+                            _logger.Error("There was an error reading message from the queue.", ex);
+                            throw;
                         }
                     }
                 }
@@ -108,19 +109,24 @@ namespace NServiceBus.Profiler.Desktop.Core
 
         public MessageBody GetMessageBody(Queue queue, string messageId)
         {
-            using (var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
+            try
             {
-                q.MessageReadPropertyFilter.SetAll();
-                q.MessageReadPropertyFilter.SourceMachine = true;
-
-                try
+                using (var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
                 {
+                    q.MessageReadPropertyFilter.SetAll();
+                    q.MessageReadPropertyFilter.SourceMachine = true;
+
                     return _mapper.MapBody(q.PeekById(messageId));
                 }
-                catch (InvalidOperationException) //message is removed from the queue (by another process)
-                {
-                    return null;
-                }
+            }
+            catch (InvalidOperationException) //message is removed from the queue (by another process)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not read message {0} body.", messageId), ex);
+                throw;
             }
         }
 
@@ -151,62 +157,95 @@ namespace NServiceBus.Profiler.Desktop.Core
 
         public void DeleteQueue(Queue queue)
         {
-            var format = queue.Address.ToFormatName();
-            MessageQueue.Delete(format);
+            try
+            {
+                var format = queue.Address.ToFormatName();
+                MessageQueue.Delete(format);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not delete queue {0}", queue), ex);
+                throw;
+            }
         }
 
         public void Send(Queue queue, object message)
         {
-            using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
+            try
             {
-                q.Send(message, MessageQueueTransactionType.Single);
+                using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
+                {
+                    q.Send(message, MessageQueueTransactionType.Single);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not send a message to queue {0}", queue), ex);
+                throw;                
             }
         }
 
         public void DeleteMessage(Queue queue, string messageId)
         {
-            using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
+            try
             {
-                q.ReceiveById(messageId);
+                using(var q = queue.AsMessageQueue(QueueAccessMode.SendAndReceive))
+                {
+                    q.ReceiveById(messageId);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not delete message {0} to queue {1}", messageId, queue), ex);
+                throw;                                
             }
         }
 
         public void PurgeQueue(Queue queue)
         {
-            using(var q = queue.AsMessageQueue(QueueAccessMode.ReceiveAndAdmin))
+            try
             {
-                q.Purge();
+                using(var q = queue.AsMessageQueue(QueueAccessMode.ReceiveAndAdmin))
+                {
+                    q.Purge();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not purge queue {0}", queue), ex);
+                throw;                
             }
         }
 
         public void MoveMessage(Queue source, Queue destination, string messageId)
         {
-            using(var tx = new TransactionScope())
-            using(var queueDest = destination.AsMessageQueue(QueueAccessMode.SendAndReceive))
-            using(var queueSource = source.AsMessageQueue(QueueAccessMode.SendAndReceive))
+
+            try
             {
-                Guard.True(queueSource.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", source.Address)));
-                Guard.True(queueSource.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", source.Address)));
+                using(var tx = new TransactionScope())
+                using(var queueDest = destination.AsMessageQueue(QueueAccessMode.SendAndReceive))
+                using(var queueSource = source.AsMessageQueue(QueueAccessMode.SendAndReceive))
+                {
+                    Guard.True(queueSource.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", source.Address)));
+                    Guard.True(queueSource.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", source.Address)));
                 
-                Guard.True(queueDest.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", destination.Address)));
-                Guard.True(queueDest.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", destination.Address)));
+                    Guard.True(queueDest.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", destination.Address)));
+                    Guard.True(queueDest.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", destination.Address)));
 
-                Message msg = null;
-
-                try
-                {
                     queueSource.MessageReadPropertyFilter.SetAll();
-                    msg = queueSource.ReceiveById(messageId, MessageQueueTransactionType.Automatic);
+                    var msg = queueSource.ReceiveById(messageId, MessageQueueTransactionType.Automatic);
+
+                    Guard.NotNull(() => msg, msg, () => new QueueManagerException("Message could not be loaded."));
+
+                    queueDest.Send(msg, MessageQueueTransactionType.Automatic);
+
+                    tx.Complete();
                 }
-                catch
-                {
-                }
-
-                Guard.NotNull(() => msg, msg, () => new QueueManagerException("Message could not be loaded."));
-
-                queueDest.Send(msg, MessageQueueTransactionType.Automatic);
-
-                tx.Complete();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not send a message {0} from queue {1} to {2}", messageId, source, destination), ex);
+                throw;
             }
         }
 
@@ -214,18 +253,26 @@ namespace NServiceBus.Profiler.Desktop.Core
         {
             var messageCount = 0;
 
-            using (var q = queue.AsMessageQueue())
+            try
             {
-                q.MessageReadPropertyFilter.ClearAll();
-                var msgLoop = q.GetMessageEnumerator2();
-
-                if (queue.CanRead)
+                using (var q = queue.AsMessageQueue())
                 {
-                    while (msgLoop.MoveNext())
+                    q.MessageReadPropertyFilter.ClearAll();
+                    var msgLoop = q.GetMessageEnumerator2();
+
+                    if (queue.CanRead)
                     {
-                        messageCount++;
+                        while (msgLoop.MoveNext())
+                        {
+                            messageCount++;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Could not retrieve message count from queue {0}", queue), ex);
+                throw;                
             }
             return messageCount;
         }

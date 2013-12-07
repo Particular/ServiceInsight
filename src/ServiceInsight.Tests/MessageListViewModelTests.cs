@@ -12,7 +12,6 @@ using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
@@ -29,7 +28,6 @@ namespace NServiceBus.Profiler.Tests
         private IEventAggregator EventAggregator;
         private IServiceControl ServiceControl;
         private ISearchBarViewModel SearchBar;
-        private IStatusBarManager StatusBarManager;
         private Dictionary<Queue, List<MessageInfo>> MessageStore;
         private MessageListViewModel MessageList;
         private IMessageListView View;
@@ -43,14 +41,12 @@ namespace NServiceBus.Profiler.Tests
             QueueManager = new FakeQueueManager(MessageStore);
             WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
-            StatusBarManager = Substitute.For<IStatusBarManager>();
             View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, WindowManager, ServiceControl, 
                                                    QueueManager, SearchBar, 
                                                    Substitute.For<IErrorHeaderViewModel>(), 
                                                    Substitute.For<IGeneralHeaderViewModel>(), 
-                                                   Substitute.For<IClipboard>(), 
-                                                   StatusBarManager);
+                                                   Substitute.For<IClipboard>());
             MessageList.AttachView(View, null);
         }
 

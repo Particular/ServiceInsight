@@ -23,6 +23,8 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
         private readonly IScreenFactory _screenFactory;
+        private bool _allowResize;
+
         private static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
         private static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
         private static readonly IDictionary<DialogResult, bool?> DialogResultMaps;
@@ -96,25 +98,24 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return MessageBoxResult.None;
         }
 
-        private bool allowResize = false;
-
         public bool? ShowDialog<T>() where T : class
         {
-            this.allowResize = false;
+            _allowResize = false;
+            
             var screen = _screenFactory.CreateScreen<T>();
             return base.ShowDialog(screen, null);
         }
 
         public bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class
         {
-            this.allowResize = allowResize;
+            _allowResize = allowResize;
             return base.ShowDialog(instance, null);
         }
 
         protected override Window EnsureWindow(object model, object view, bool isDialog)
         {
             var window = base.EnsureWindow(model, view, isDialog);
-            window.ResizeMode = allowResize ? window.ResizeMode : ResizeMode.NoResize;
+            window.ResizeMode = _allowResize ? window.ResizeMode : ResizeMode.NoResize;
 
             SetParentToMain(window);
 
@@ -142,6 +143,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
 
         private static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
+            //TODO: Use map to avoid switch/case
             MessageChoice choices;
             switch (button)
             {

@@ -12,7 +12,6 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
@@ -41,7 +40,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
         private readonly IHeaderInfoSerializer _headerInfoSerializer;
         private readonly IClipboard _clipboard;
-        private readonly IStatusBarManager _statusBar;
         private readonly IWindowManagerEx _windowManager;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
@@ -52,7 +50,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IContentDecoder<IList<HeaderInfo>> decoder,
             IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
-            IStatusBarManager statusBar,
             IWindowManagerEx windowManager,
             IScreenFactory screenFactory)
         {
@@ -61,7 +58,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _decoder = decoder;
             _headerInfoSerializer = headerInfoSerializer;
             _clipboard = clipboard;
-            _statusBar = statusBar;
             _windowManager = windowManager;
             _screenFactory = screenFactory;
 
@@ -116,10 +112,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public async Task RetryMessage(StoredMessage message)
         {
-            _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", message.OriginatingEndpoint);
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.OriginatingEndpoint));
             await _serviceControl.RetryMessage(message.Id);
             _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
-            _statusBar.Done();
+            _eventAggregator.Publish(new WorkFinished());
         }
 
         public async void Handle(MessageBodyLoaded @event)

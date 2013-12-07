@@ -441,11 +441,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public void Handle(AsyncOperationFailed message)
-        {
-            StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
-        }
-
         public void Handle(SwitchToMessageBody @event)
         {
             View.SelectTab("MessageBody");
