@@ -23,11 +23,11 @@
             <Image Source="/Images/SearchRefresh.png" Stretch="UniformToFill" Width="14" Height="14" />
         </Button>
         
-        <TextBlock VerticalAlignment="Center" Margin="5" Grid.Column="1">
-            <Run FontWeight="Bold" Text="{Binding SelectedEndpoint.Name}" />
-            <Run Text="{Binding TotalItemCount}" />
-            <Run Text="Message(s) Found" />
-        </TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
+            <TextBlock VerticalAlignment="Center" Margin="2" FontWeight="Bold" Text="{Binding SelectedEndpoint.Name}" Visibility="{Binding SearchInProgress, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+            <TextBlock VerticalAlignment="Center" Margin="2" Text="{Binding TotalItemCount}" />
+            <TextBlock VerticalAlignment="Center" Margin="2" Text="Message(s) Found" />
+        </StackPanel>
 
         <StackPanel Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4">
             <StackPanel.Resources>

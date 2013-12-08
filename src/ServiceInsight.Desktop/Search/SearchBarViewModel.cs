@@ -34,35 +34,35 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyPropertiesChanged();
         }
 
-        public virtual void GoToFirstPage()
+        public void GoToFirstPage()
         {
             Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
         }
 
-        public virtual void GoToPreviousPage()
+        public void GoToPreviousPage()
         {
             Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage - 1, SearchQuery);
         }
 
-        public virtual void GoToNextPage()
+        public void GoToNextPage()
         {
             Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage + 1, SearchQuery);
         }
 
-        public virtual void GoToLastPage()
+        public void GoToLastPage()
         {
             Parent.RefreshEndpoint(SelectedEndpoint, PageCount, SearchQuery);
         }
 
         [AutoCheckAvailability]
-        public virtual async void Search()
+        public async void Search()
         {
             SearchInProgress = true;
             await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
         }
 
         [AutoCheckAvailability]
-        public virtual async void CancelSearch()
+        public async void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
@@ -90,7 +90,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool CanGoToLastPage
+        public bool CanGoToLastPage
         {
             get
             {
@@ -100,7 +100,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool CanCancelSearch
+        public bool CanCancelSearch
         {
             get { return SearchInProgress; }
         }
@@ -110,7 +110,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             get { return base.Parent as IMessageListViewModel; }
         }
         
-        public virtual int PageCount
+        public int PageCount
         {
             get
             {
@@ -123,20 +123,20 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool WorkInProgress
+        public bool WorkInProgress
         {
             get { return _workCount > 0; }
         }
 
-        public virtual Endpoint SelectedEndpoint { get; private set; }
+        public Endpoint SelectedEndpoint { get; private set; }
 
-        public virtual Queue SelectedQueue { get; private set; }
+        public Queue SelectedQueue { get; private set; }
         
-        public virtual string SearchQuery { get; set; }
+        public string SearchQuery { get; set; }
 
-        public virtual bool IsVisible { get; set; }
+        public bool IsVisible { get; set; }
 
-        public virtual bool CanGoToFirstPage
+        public bool CanGoToFirstPage
         {
             get
             {
@@ -146,7 +146,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool CanGoToPreviousPage
+        public bool CanGoToPreviousPage
         {
             get
             {
@@ -156,7 +156,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool CanGoToNextPage
+        public bool CanGoToNextPage
         {
             get
             {
@@ -166,19 +166,19 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual IList<MessageInfo> Result { get; private set; }
+        public IList<MessageInfo> Result { get; private set; }
 
-        public virtual int CurrentPage { get; private set; }
+        public int CurrentPage { get; private set; }
         
-        public virtual int PageSize { get; private set; }
+        public int PageSize { get; private set; }
         
-        public virtual int TotalItemCount { get; private set; }
+        public int TotalItemCount { get; private set; }
         
-        public virtual bool SearchInProgress { get; private set; }
+        public bool SearchInProgress { get; private set; }
         
-        public virtual bool SearchEnabled { get; private set; }
+        public bool SearchEnabled { get; private set; }
 
-        public virtual bool CanSearch
+        public bool CanSearch
         {
             get
             {
@@ -244,13 +244,13 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             _workCount++;
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (_workCount > 0)
             {
