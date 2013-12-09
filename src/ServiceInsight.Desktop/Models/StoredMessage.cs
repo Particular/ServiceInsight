@@ -21,7 +21,26 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string ConversationId { get; set; }
         public string ContentType { get; set; }
         public string MessageId { get; set; }
-        public List<StoredMessageHeader> Headers { get; set; }
+
+        public List<StoredMessageHeader> Headers
+        {
+            get
+            {
+                if (headers == null)
+                {
+                    //todo: lazy load
+                    headers = new List<StoredMessageHeader>();
+                }
+
+                return headers;
+            }
+            set
+            {
+                headers = value;
+            }
+        }
+
+        private List<StoredMessageHeader> headers;
 
         public string GetHeaderByKey(string key)
         {
