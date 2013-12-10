@@ -178,7 +178,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private Point GetPosition(string name, Panel panel)
         {
-            
             return ((System.Windows.UIElement)panel.FindName(name))
                 .TransformToAncestor(panel)
                 .Transform(new System.Windows.Point(0, 0));

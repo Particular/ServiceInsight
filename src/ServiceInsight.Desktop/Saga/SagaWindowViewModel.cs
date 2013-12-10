@@ -47,6 +47,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public IEnumerable<SagaStep> Steps { get; private set; }
 
         public DateTime CompleteTime { get; private set; }
+
+        public bool ShowEndpoints { get; set; }
+
     }
 
     public interface ISagaWindowViewModel : IScreen
