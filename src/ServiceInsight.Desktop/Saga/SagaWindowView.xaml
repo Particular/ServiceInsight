@@ -182,28 +182,82 @@
                     </Style>
 
                     <DataTemplate x:Key="Message">
-                        <StackPanel Background="{StaticResource MessageBackground}" Height="56px" Width="350px" >
-                            <StackPanel Margin="10" Orientation="Horizontal" Background="{StaticResource MessageBackground}">
-                                <ContentControl Template="{StaticResource CommandIcon}" 
+                        <Grid x:Name="RootGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <SolidColorBrush x:Key="EndpointBackground" Color="White" />
+                                <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
+
+                                <Style x:Key="MessageEndpointText" TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="9" />
+                                    <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
+                                </Style>
+                            </Grid.Resources>
+
+                            <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+                            <StackPanel x:Name="OriginatingEndPoint" 
+                                                        ToolTip="Sending Endpoint"
+                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Orientation="Horizontal"
+                                                        Background="{StaticResource EndpointBackground}" 
+                                                        Height="14">
+                                <ContentControl Template="{StaticResource SendingEndpoint}" 
+                                                                Margin="3,0,3,0" />
+                                <TextBlock FontSize="10px"
+                                                           Text="{Binding OriginatingEndpoint}"
+                                                           Style="{StaticResource MessageEndpointText}" />
+                            </StackPanel>
+
+                            <Rectangle  Fill="{StaticResource MessageBackground}" Grid.Row="1" Grid.ColumnSpan="2" Height="45px" Width="220px"/>
+
+                            <ContentControl Template="{StaticResource CommandIcon}" 
+                                                   Grid.Row="1" Grid.Column="0"
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,4,0,0"
                                                    Width="20"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                <ContentControl Template="{StaticResource EventIcon}" 
+                            <ContentControl Template="{StaticResource EventIcon}" 
+                                                   Grid.Row="1" Grid.Column="0"
                                                    ToolTip="Event"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,8,0,0"
                                                    Width="24"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Time}" FontSize="14px" />
-                                </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Time}" FontSize="14px" />
                             </StackPanel>
-                        </StackPanel>
+
+                            <StackPanel x:Name="ReceivingEndPoint" 
+                                                        ToolTip="Processing Endpoint"
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Orientation="Horizontal"
+                                                        VerticalAlignment="Center"
+                                                        Background="{StaticResource EndpointBackground}"
+                                                        Height="14">
+                                <ContentControl Template="{StaticResource ReceivingEndpoint}" 
+                                                                    Margin="3,0,3,0" />
+                                <TextBlock FontSize="10px"
+                                                    Text="{Binding ReceivingEndpoint}"
+                                                            Style="{StaticResource MessageEndpointText}" />
+                            </StackPanel>
+
+                        </Grid>
                     </DataTemplate>
 
                     <DataTemplate x:Key="UpdatedValuesTemplate">
@@ -280,52 +334,55 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                            <ContentPresenter x:Name="TimeoutMessage" Grid.Column="2" ContentTemplate="{StaticResource Message}" ContentSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 65 0 0"/>
+                            <StackPanel Grid.Column="2" >
+                                <ContentPresenter x:Name="TimeoutMessage" ContentTemplate="{StaticResource Message}" ContentSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 65 0 0"/>
+                                <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Column="2"  />
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
 
                     <DataTemplate x:Key="SagaNode">
                         <Grid>
-                        <StackPanel SizeChanged="StackPanel_SizeChanged">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter x:Name="InitialMessage" Grid.Column="0" ContentTemplate="{StaticResource Message}" Content="{Binding StartingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                                <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
-                                    <StackPanel Margin="10 6" Background="{StaticResource SagaBackground}" >
-                                        <StackPanel Orientation="Horizontal" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
-                                            <ContentControl Template="{StaticResource SagaTimeoutIcon}" 
+                            <StackPanel x:Name="SagaNodePanel">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding StartingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                    <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
+                                        <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}" >
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
+                                                <ContentControl Template="{StaticResource SagaTimeoutIcon}" 
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4" />
 
-                                            <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
-                                        </StackPanel>
-                                        <StackPanel Margin="10" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"  >
-                                        </StackPanel>
+                                                <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
+                                            </StackPanel>
+                                            <StackPanel Margin="10" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"  >
+                                            </StackPanel>
 
-                                        <StackPanel x:Name="StepName" Orientation="Horizontal" >
-                                            <ContentControl Template="{StaticResource SagaInitiatedIcon}" 
+                                            <StackPanel x:Name="StepName" Orientation="Horizontal" >
+                                                <ContentControl Template="{StaticResource SagaInitiatedIcon}" 
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4"
                                                     Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
-                                            <ContentControl Template="{StaticResource SagaUpdatedIcon}" 
+                                                <ContentControl Template="{StaticResource SagaUpdatedIcon}" 
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4"
                                                     Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
 
-                                            <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
-                                        </StackPanel>
+                                                <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
+                                            </StackPanel>
 
-                                        <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
+                                            <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                                <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
-                            </Grid>
-                            <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}"/>
-                        </StackPanel>
+                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
+                                </Grid>
+                                <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}"/>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
 
@@ -374,34 +431,28 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-        <Grid x:Name="Root">
+    <Grid x:Name="Root">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
-                <StackPanel Orientation="Horizontal" Margin="5" >
-                    <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Show Endpoints" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </ToggleButton>
-                    <Button Margin="2" x:Name="ToggleTimelineData" Visibility="Collapsed">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/DiagramTimeView.png" Margin="0,0,5,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Toggle Timeline Stretch" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </Border>
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+            <StackPanel Orientation="Horizontal" Margin="5" >
+                <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Show Endpoints" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
+        </Border>
 
         <ScrollViewer Grid.Row="1">
-            <StackPanel x:Name="Surface">
+            <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding}"/>
-                <ItemsControl ItemsSource="{Binding Steps}" ItemTemplate="{StaticResource SagaNode}" />
+                <ItemsControl x:Name="Steps" ItemsSource="{Binding Steps}" ItemTemplate="{StaticResource SagaNode}" />
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding}"/>
             </StackPanel>
         </ScrollViewer>

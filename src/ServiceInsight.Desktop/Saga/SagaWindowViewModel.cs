@@ -26,17 +26,17 @@ namespace NServiceBus.Profiler.Desktop.Saga
             this.Guid = Guid.NewGuid();
             this.Steps = new List<SagaStep> { 
                 new SagaStep { IsFirstNode = true, IsTimeout = false, 
-                        StartingMessage = new SagaMessage { IsPublished = true, Name = "SubmitOrder", Time = new DateTime(2013, 7, 28, 14, 12, 17) },
+                        StartingMessage = new SagaMessage { IsPublished = true, Name = "SubmitOrder", Time = new DateTime(2013, 7, 28, 14, 12, 17), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
                         Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "VeryLongValue", NewValue = "Yup" }, new SagaUpdatedValue { Name = "Location", NewValue = "NY", OldValue = "CA" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 5648" } },
-                        TimeoutMessages = new List<SagaTimeoutMessage> { new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), Name = "BuyersRemorseIsOver", Timeout = new TimeSpan(0, 0, 20) }, new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), Name = "BuyersRemorseIsOver", Timeout = new TimeSpan(0, 0, 20) } } }
+                        TimeoutMessages = new List<SagaTimeoutMessage> { new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host", Name = "BuyersRemorseIsOver", Timeout = new TimeSpan(0, 0, 20) }, new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host", Name = "BuyersRemorseIsOver", Timeout = new TimeSpan(0, 0, 20) } } }
                 , new SagaStep { IsFirstNode = false, IsTimeout = false, 
-                        StartingMessage = new SagaMessage { IsPublished = true, Name = "SubmitOrderUpdate", Time = new DateTime(2013, 7, 28, 14, 23, 34) },
+                        StartingMessage = new SagaMessage { IsPublished = true, Name = "SubmitOrderUpdate", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
                         Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "Location", NewValue = "NY", OldValue = "CA" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 2140", OldValue = "555 - 5648" } } ,
-                        Messages = new List<SagaMessage> { new SagaMessage { IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34) }, new SagaMessage { IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34)  }  } }
+                        Messages = new List<SagaMessage> { new SagaMessage { IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" }, new SagaMessage { IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host"  }  } }
                 , new SagaStep { IsFirstNode = false, IsTimeout = true, 
-                        StartingMessage = new SagaMessage { IsPublished = true, Name = "BuyersRemorseIsOver", Time = new DateTime(2013, 7, 28, 14, 12, 37) },
+                        StartingMessage = new SagaMessage { IsPublished = true, Name = "BuyersRemorseIsOver", Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
                         Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "Location", NewValue = "FL", OldValue = "NY" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 5648", OldValue = "555 - 5648" } } ,
-                        Messages = new List<SagaMessage> { new SagaMessage { IsPublished = false, Name = "OrderAccepted", Time = new DateTime(2013, 7, 28, 14, 12, 37)  }  } }
+                        Messages = new List<SagaMessage> { new SagaMessage { IsPublished = false, Name = "OrderAccepted", Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host"  }  } }
             };
         }
 
@@ -48,11 +48,24 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         public DateTime CompleteTime { get; private set; }
 
-        public bool ShowEndpoints { get; set; }
+        private bool showEndpoints = false;
+        public bool ShowEndpoints
+        {
+            get 
+            { 
+                return showEndpoints; 
+            }
+            set
+            { 
+                showEndpoints = value; 
+                NotifyOfPropertyChange(() => ShowEndpoints); 
+            }
+        }
 
     }
 
     public interface ISagaWindowViewModel : IScreen
     {
+        bool ShowEndpoints { get; }
     }
 }

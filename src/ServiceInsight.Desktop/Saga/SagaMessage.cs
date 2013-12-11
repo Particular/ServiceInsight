@@ -11,6 +11,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public bool IsPublished { get; set; }
         public string Name { get; set; }
         public DateTime Time { get; set; }
+        public string ReceivingEndpoint { get; set; }
+        public string OriginatingEndpoint { get; set; }
     }
 
     public class SagaTimeoutMessage : SagaMessage
