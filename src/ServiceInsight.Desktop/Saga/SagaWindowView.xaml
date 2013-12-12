@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -417,6 +418,7 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Background="{StaticResource SagaBackground}" Grid.Column="1" >
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
+                                    <TextBlock Text="&#x2190; Back to Message View" FontSize="12px" Foreground="{StaticResource SagaBlue}" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
                                     <Border BorderThickness="0 0 0 2" Padding="0 5 0 5" BorderBrush="{StaticResource SagaBlue}">
                                         <TextBlock Text="{Binding Name}" FontSize="24px" FontWeight="Bold" />
                                     </Border>

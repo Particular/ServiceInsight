@@ -92,7 +92,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void ShowSagaWindow(StoredMessage message)
         {
-            //_eventAggregator.Publish(new SwitchToSagaWindow());
+            _eventAggregator.Publish(new SwitchToSagaWindow());
         }
 
         public void ShowException(IExceptionDetails exception)

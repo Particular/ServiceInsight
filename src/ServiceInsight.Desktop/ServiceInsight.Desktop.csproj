@@ -208,6 +208,7 @@
     <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
+    <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
     <Compile Include="ExtensionMethods\EnumExtensions.cs" />

@@ -1,4 +1,6 @@
-﻿using Caliburn.PresentationFramework.Screens;
+﻿using Caliburn.PresentationFramework.ApplicationModel;
+using Caliburn.PresentationFramework.Screens;
+using NServiceBus.Profiler.Desktop.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel
     {
         private ISagaWindowView _view;
+        private IEventAggregator _eventAggregator;
+
+        public SagaWindowViewModel(IEventAggregator eventAggregator)
+        {
+            _eventAggregator = eventAggregator;
+        }
 
         public override void AttachView(object view, object context)
         {
@@ -52,11 +60,17 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        public void ShowFlow()
+        {
+            _eventAggregator.Publish(new SwitchToFlowWindow());
+        }
+
     }
 
     public interface ISagaWindowViewModel : IScreen
     {
         bool ShowEndpoints { get; }
         IEnumerable<SagaStep> Steps { get; }
+        void ShowFlow();
     }
 }
