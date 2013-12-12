@@ -36,6 +36,18 @@ namespace NServiceBus.Profiler.Desktop.Saga
     {
         public TimeSpan Timeout { get; set; }
 
+        public string TimeoutText
+        {
+            get
+            {
+                return Timeout.ToString(@"hh\:mm\:ss");
+            }
+            set
+            {
+                Timeout = TimeSpan.Parse(value);
+            }
+        }
+
         public string TimeoutFriendly
         {
             get

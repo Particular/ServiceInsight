@@ -1,113 +1,111 @@
 ﻿[
     {
-        IsFirstNode:true,
-        IsTimeout:false,
-        StartingMessage:
+        "IsFirstNode":true,
+        "IsTimeout":false,
+        "StartingMessage":
             {
-                Id:"21861b0b-2526-4f2b-8f1b-518abbb5c0a7",
-                IsPublished:true,
-                Name:"SubmitOrder",
-                Time:"2013-07-28T17:12:17Z",
-                ReceivingEndpoint:"endpoint@host",
-                OriginatingEndpoint:"endpoint@host"
+                "Id":"21861b0b-2526-4f2b-8f1b-518abbb5c0a7",
+                "IsPublished":true,
+                "Name":"SubmitOrder",
+                "Time":"2013-07-28T17:12:17Z",
+                "ReceivingEndpoint":"endpoint@host",
+                "OriginatingEndpoint":"endpoint@host"
             },
-        Messages:null,
-        TimeoutMessages:
+        "Messages":[],
+        "TimeoutMessages":
             [
                 {
-                    Timeout:
-                        {Days:0,Hours:0,Milliseconds:0,Minutes:0,Seconds:20},
-                    Id:"a353d7b3-4a80-44a7-be2a-3200297a3163",
-                    IsPublished:true,
-                    Name:"BuyersRemorseIsOver",
-                    Time:"2013-07-28T17:12:37Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "TimeoutText":"00:00:20",
+                    "Id":"a353d7b3-4a80-44a7-be2a-3200297a3163",
+                    "IsPublished":true,
+                    "Name":"BuyersRemorseIsOver",
+                    "Time":"2013-07-28T17:12:37Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 },
                 {
-                    Timeout:
-                        {Days:0,Hours:0,Milliseconds:0,Minutes:0,Seconds:20},
-                    Id:"047c983a-ac24-4369-9b83-914f54fef05d",
-                    IsPublished:true,
-                    Name:"BuyersRemorseIsOver",
-                    Time:"2013-07-28T17:12:37Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "TimeoutText":"00:00:20",
+                    "Id":"047c983a-ac24-4369-9b83-914f54fef05d",
+                    "IsPublished":true,
+                    "Name":"BuyersRemorseIsOver",
+                    "Time":"2013-07-28T17:12:37Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 }
             ],
-        Values:
+        "Values":
                 [
-                    {Name:"VeryLongValue",NewValue:"Yup",OldValue:null},
-                    {Name:"Location",NewValue:"NY",OldValue:"CA"},
-                    {Name:"Phone",NewValue:"555 - 5648",OldValue:null}
+                    {"Name":"VeryLongValue","NewValue":"Yup","OldValue":""},
+                    {"Name":"Location","NewValue":"NY","OldValue":"CA"},
+                    {"Name":"Phone","NewValue":"555 - 5648","OldValue":""}
                 ]
     },
     {
-        IsFirstNode:false,
-        IsTimeout:false,
-        StartingMessage:
+        "IsFirstNode":false,
+        "IsTimeout":false,
+        "StartingMessage":
                 {
-                    Id:"08cd41fb-8217-4b16-a06c-4700b3f7e0ef",
-                    IsPublished:true,
-                    Name:"SubmitOrderUpdate",
-                    Time:"2013-07-28T17:23:34Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "Id":"08cd41fb-8217-4b16-a06c-4700b3f7e0ef",
+                    "IsPublished":true,
+                    "Name":"SubmitOrderUpdate",
+                    "Time":"2013-07-28T17:23:34Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 },
-        Messages:
+        "Messages":
             [
                 {
-                    Id:"04dc667d-39b2-4d48-ac8c-c4ef1a2763e7",
-                    IsPublished:true,
-                    Name:"OrderUpdated",
-                    Time:"2013-07-28T17:23:34Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "Id":"04dc667d-39b2-4d48-ac8c-c4ef1a2763e7",
+                    "IsPublished":true,
+                    "Name":"OrderUpdated",
+                    "Time":"2013-07-28T17:23:34Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 },
                 {
-                    Id:"a54b8dcf-230c-42c7-9eab-31f2dfa91ab2",
-                    IsPublished:true,
-                    Name:"OrderUpdated",
-                    Time:"2013-07-28T17:23:34Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "Id":"a54b8dcf-230c-42c7-9eab-31f2dfa91ab2",
+                    "IsPublished":true,
+                    "Name":"OrderUpdated",
+                    "Time":"2013-07-28T17:23:34Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 }
             ],
-        TimeoutMessages:null,
-        Values:
+        "TimeoutMessages":[],
+        "Values":
             [
-                    {Name:"Location",NewValue:"NY",OldValue:"CA"},
-                    {Name:"Phone",NewValue:"555 - 5648",OldValue:"555 - 5648"}
-            ],
+                    {"Name":"Location","NewValue":"NY","OldValue":"CA"},
+                    {"Name":"Phone","NewValue":"555 - 5648","OldValue":"555 - 5648"}
+            ]
     },
     {
-            IsFirstNode:false,
-            IsTimeout:true,
-            StartingMessage:
+            "IsFirstNode":false,
+            "IsTimeout":true,
+            "StartingMessage":
                 {
-                    Id:"a353d7b3-4a80-44a7-be2a-3200297a3163",
-                    IsPublished:true,
-                    Name:"BuyersRemorseIsOver",
-                    Time:"2013-07-28T17:12:37Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "Id":"a353d7b3-4a80-44a7-be2a-3200297a3163",
+                    "IsPublished":true,
+                    "Name":"BuyersRemorseIsOver",
+                    "Time":"2013-07-28T17:12:37Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 },
-        Messages:
+        "Messages":
             [
                 {
-                    Id:"112ef7a6-6e84-4176-a5c8-47e70186540c",
-                    IsPublished:true,
-                    Name:"OrderAccepted",
-                    Time:"2013-07-28T17:12:37Z",
-                    ReceivingEndpoint:"endpoint@host",
-                    OriginatingEndpoint:"endpoint@host"
+                    "Id":"112ef7a6-6e84-4176-a5c8-47e70186540c",
+                    "IsPublished":true,
+                    "Name":"OrderAccepted",
+                    "Time":"2013-07-28T17:12:37Z",
+                    "ReceivingEndpoint":"endpoint@host",
+                    "OriginatingEndpoint":"endpoint@host"
                 }
             ],
-        TimeoutMessages:null,
-        Values:
+        "TimeoutMessages":[],
+        "Values":
             [
-                    {Name:"Location",NewValue:"FL",OldValue:"NY"},
-                    {Name:"Phone",NewValue:"555 - 5648",OldValue:"555 - 5648"}
-            ],
+                    {"Name":"Location","NewValue":"FL","OldValue":"NY"},
+                    {"Name":"Phone","NewValue":"555 - 5648","OldValue":"555 - 5648"}
+            ]
     }
-];
+]
