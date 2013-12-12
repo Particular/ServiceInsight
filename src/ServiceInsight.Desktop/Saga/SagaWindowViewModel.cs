@@ -25,6 +25,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             this.CompleteTime = new DateTime(2013, 7, 28, 14, 25, 34);
             this.Guid = Guid.NewGuid();
             var timeoutGuid = Guid.NewGuid();
+
             this.Steps = new List<SagaStep> { 
                 new SagaStep { IsFirstNode = true, IsTimeout = false, 
                         StartingMessage = new SagaMessage { Id = Guid.NewGuid(), IsPublished = true, Name = "SubmitOrder", Time = new DateTime(2013, 7, 28, 14, 12, 17), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
