@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using DevExpress.Xpf.Editors.Validation;
 
 namespace NServiceBus.Profiler.Desktop.Models
 {
@@ -11,12 +10,9 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
-        public FailureDetails FailureDetails { get; set; }
         public Endpoint OriginatingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
-        //public SagaDetails OriginatingSaga { get; set; }
         public MessageStatistics Statistics { get; set; }
-        public bool IsDeferredMessage { get; set; }
         public string RelatedToMessageId { get; set; }
         public string ConversationId { get; set; }
         public string ContentType { get; set; }

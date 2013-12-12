@@ -21,9 +21,5 @@ namespace NServiceBus.Profiler.Desktop.Models
         public byte[] HeaderRaw { get; set; }
         public byte[] BodyRaw { get; set; }
         public string Body { get; set; }
-        public string CorrelationId { get; set; }
-        public string TransactionId { get; set; }
-        public Queue Destination { get; set; }
-        public Queue Response { get; set; }
     }
 }

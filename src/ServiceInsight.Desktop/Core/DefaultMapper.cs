@@ -35,10 +35,6 @@ namespace NServiceBus.Profiler.Desktop.Core
             {
                 BodyRaw = source.BodyStream.GetAsBytes(),
                 HeaderRaw = source.Extension,
-                CorrelationId = source.CorrelationId,
-                TransactionId = source.TransactionId,
-                Destination = source.DestinationQueue == null ? null : MapQueue(source.DestinationQueue),
-                Response = source.ResponseQueue == null ? null : MapQueue(source.ResponseQueue),
             };
 
             return m;
