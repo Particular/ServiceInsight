@@ -211,5 +211,38 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 .TransformToAncestor(panel)
                 .Transform(new System.Windows.Point(0, 0));
         }
+
+        private void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var model = this.DataContext as ISagaWindowViewModel;
+            var message = ((FrameworkElement)sender).DataContext as SagaMessage;
+            SetSelected(model, message.Id);
+        }
+
+        private void SetSelected(ISagaWindowViewModel model, Guid id)
+        {
+            foreach (var step in model.Steps)
+            {
+                SetSelected(step.StartingMessage, id);
+                SetSelected(step.TimeoutMessages, id);
+                SetSelected(step.Messages, id);
+            }
+        }
+
+        private void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        {
+            if (messages != null)
+            {
+                foreach (var message in messages)
+                {
+                    SetSelected(message, id);
+                }
+            }
+        }
+
+        private void SetSelected(SagaMessage message, Guid id)
+        {
+            message.IsSelected = message.Id == id;
+        }
     }
 }

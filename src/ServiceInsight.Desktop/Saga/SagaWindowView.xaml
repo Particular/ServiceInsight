@@ -182,45 +182,48 @@
                     </Style>
 
                     <DataTemplate x:Key="Message">
-                        <Grid x:Name="RootGrid">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.Resources>
-                                <SolidColorBrush x:Key="EndpointBackground" Color="White" />
-                                <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
+                        <Border BorderBrush="Black" BorderThickness="0" x:Name="EndpointsBorder">
+                            <Grid x:Name="RootGrid" Focusable="True" MouseLeftButtonUp="RootGrid_MouseLeftButtonUp">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <SolidColorBrush x:Key="EndpointBackground" Color="White" />
+                                    <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
-                                <Style x:Key="MessageEndpointText" TargetType="TextBlock">
-                                    <Setter Property="FontSize" Value="9" />
-                                    <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
-                                </Style>
-                            </Grid.Resources>
+                                    <Style x:Key="MessageEndpointText" TargetType="TextBlock">
+                                        <Setter Property="FontSize" Value="9" />
+                                        <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
+                                    </Style>
+                                </Grid.Resources>
 
-                            <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                                <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
 
-                            <StackPanel x:Name="OriginatingEndPoint" 
+                                <StackPanel x:Name="OriginatingEndPoint" 
                                                         ToolTip="Sending Endpoint"
                                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         Background="{StaticResource EndpointBackground}" 
                                                         Height="14">
-                                <ContentControl Template="{StaticResource SendingEndpoint}" 
+                                    <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                                 Margin="3,0,3,0" />
-                                <TextBlock FontSize="10px"
+                                    <TextBlock FontSize="10px"
                                                            Text="{Binding OriginatingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
-                            </StackPanel>
+                                </StackPanel>
 
-                            <Rectangle  Fill="{StaticResource MessageBackground}" Grid.Row="1" Grid.ColumnSpan="2" Height="45px" Width="220px"/>
+                                <Border BorderBrush="Black" BorderThickness="0" x:Name="NoEndpointsBorder" Grid.Row="1" Grid.ColumnSpan="2" >
+                                    <Rectangle  Fill="{StaticResource MessageBackground}" Height="45px" Width="220px"/>
+                                </Border>
 
-                            <ContentControl Template="{StaticResource CommandIcon}" 
+                                <ContentControl Template="{StaticResource CommandIcon}" 
                                                    Grid.Row="1" Grid.Column="0"
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
@@ -228,7 +231,7 @@
                                                    Margin="0,4,0,0"
                                                    Width="20"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                            <ContentControl Template="{StaticResource EventIcon}" 
+                                <ContentControl Template="{StaticResource EventIcon}" 
                                                    Grid.Row="1" Grid.Column="0"
                                                    ToolTip="Event"
                                                    HorizontalAlignment="Center"
@@ -237,12 +240,12 @@
                                                    Width="24"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
-                            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Bold" />
-                                <TextBlock Text="{Binding Time}" FontSize="14px" />
-                            </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Time}" FontSize="14px" />
+                                </StackPanel>
 
-                            <StackPanel x:Name="ReceivingEndPoint" 
+                                <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                                                         Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
@@ -250,14 +253,33 @@
                                                         VerticalAlignment="Center"
                                                         Background="{StaticResource EndpointBackground}"
                                                         Height="14">
-                                <ContentControl Template="{StaticResource ReceivingEndpoint}" 
+                                    <ContentControl Template="{StaticResource ReceivingEndpoint}" 
                                                                     Margin="3,0,3,0" />
-                                <TextBlock FontSize="10px"
+                                    <TextBlock FontSize="10px"
                                                     Text="{Binding ReceivingEndpoint}"
                                                             Style="{StaticResource MessageEndpointText}" />
-                            </StackPanel>
+                                </StackPanel>
 
-                        </Grid>
+                            </Grid>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="False" />
+                                    <Condition Binding="{Binding IsSelected}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="NoEndpointsBorder" Value="2" />
+                                <Setter Property="Margin" TargetName="NoEndpointsBorder" Value="0 -2 0 0" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="True" />
+                                    <Condition Binding="{Binding IsSelected}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="EndpointsBorder" Value="2" />
+                                <Setter Property="Margin" TargetName="NoEndpointsBorder" Value="0 -2 0 0" />
+                            </MultiDataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
 
                     <DataTemplate x:Key="UpdatedValuesTemplate">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.PresentationFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,29 @@ using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Desktop.Saga
 {
-    public class SagaMessage
+    public class SagaMessage : PropertyChangedBase
     {
+        public Guid Id { get; set; }
         public bool IsPublished { get; set; }
         public string Name { get; set; }
         public DateTime Time { get; set; }
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
+
+        private bool isSelected = false;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                NotifyOfPropertyChange(() => IsSelected);
+            }
+        }
+
     }
 
     public class SagaTimeoutMessage : SagaMessage
