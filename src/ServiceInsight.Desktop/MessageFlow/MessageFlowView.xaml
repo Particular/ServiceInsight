@@ -8,6 +8,7 @@
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
              xmlns:core="clr-namespace:System;assembly=mscorlib"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
 
@@ -239,9 +240,10 @@
                                                    Grid.Column="0" Grid.Row="1" 
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
-                                            <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" Grid.Column="1" Grid.Row="1" />
+                                            <StackPanel Grid.Column="1" Grid.Row="1" >
+                                                <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
 
-                                            <local:MessagePopupControl x:Name="MenuPopup" Grid.Row="1" Grid.Column="1" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                <local:MessagePopupControl x:Name="MenuPopup" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
@@ -249,8 +251,16 @@
                                                                            HorizontalAlignment="Stretch"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
-                                                <local:MessageActionPopup />
-                                            </local:MessagePopupControl>
+                                                    <local:MessageActionPopup />
+                                                </local:MessagePopupControl>
+
+                                                <StackPanel Orientation="Horizontal" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]" >
+                                                    <ContentControl Template="{StaticResource SagaUpdatedIcon}" 
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                                    <TextBlock Background="Black" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontWeight="Bold" Width="120" Margin="4 1" Padding="3 0" />
+                                                </StackPanel>
+                                            </StackPanel>
 
                                             <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"

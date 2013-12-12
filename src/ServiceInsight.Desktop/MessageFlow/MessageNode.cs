@@ -3,6 +3,7 @@ using System.Windows;
 using Mindscape.WpfDiagramming;
 using NServiceBus.Profiler.Desktop.Models;
 using System;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -19,6 +20,24 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Bounds = new Rect(0, 0, 233, HeightNoEndpoints);
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
+            SagaType = ProcessType(message.GetHeaderByKey(MessageHeaderKeys.SagaType));
+
+            heightNoEndpoints += HasSaga ? 10 : 0;
+            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+        }
+
+        private string ProcessType(string messageType)
+        {
+            if (string.IsNullOrEmpty(messageType))
+                return string.Empty;
+
+            var clazz = messageType.Split(',').First();
+            var objectName = clazz.Split('.').Last();
+
+            if (objectName.Contains("+"))
+                objectName = objectName.Split('+').Last();
+
+            return objectName;
         }
 
         public StoredMessage Message
@@ -124,6 +143,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get
             {
                 return Message.Status == MessageStatus.RetryIssued;
+            }
+        }
+
+        public string SagaType { get; private set; }
+
+        public bool HasSaga
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(SagaType);
             }
         }
 

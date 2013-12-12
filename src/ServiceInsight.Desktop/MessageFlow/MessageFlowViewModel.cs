@@ -90,9 +90,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _eventAggregator.Publish(new SwitchToMessageBody());
         }
 
-        public void ShowSagaWindow(StoredMessage message)
+        public void ShowSagaWindow()
         {
             _eventAggregator.Publish(new SwitchToSagaWindow());
+        }
+
+        public void ShowSagaWindow(StoredMessage message)
+        {
+            ShowSagaWindow();
         }
 
         public void ShowException(IExceptionDetails exception)
