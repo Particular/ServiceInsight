@@ -13,10 +13,31 @@ namespace NServiceBus.Profiler.Desktop.Models
         public Endpoint OriginatingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
         public MessageStatistics Statistics { get; set; }
-        public string RelatedToMessageId { get; set; }
+
+        public string RelatedToMessageId
+        {
+            get
+            {
+                return GetHeaderByKey("NServiceBus.RelatedTo");
+            }
+        }
         public string ConversationId { get; set; }
-        public string ContentType { get; set; }
-        public string MessageId { get; set; }
+        public string ContentType
+        {
+            get
+            {
+                return GetHeaderByKey("NServiceBus.ContentType");
+            }
+        }
+       
+        public string MessageId  
+        {
+            get
+            {
+                return GetHeaderByKey("NServiceBus.MessageId");
+            }
+        }
+        
 
         public List<StoredMessageHeader> Headers
         {

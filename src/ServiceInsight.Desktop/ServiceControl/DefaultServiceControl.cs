@@ -38,13 +38,6 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             _settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
-        public async Task<PagedResult<StoredMessage>> GetErrorMessages()
-        {
-            var request = new RestRequest("failedmessages");
-            var result = await GetPagedResult<StoredMessage>(request);
-            
-            return result;
-        }
 
         public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {

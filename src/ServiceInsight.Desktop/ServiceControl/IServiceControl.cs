@@ -6,7 +6,6 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
     public interface IServiceControl
     {
-        Task<PagedResult<StoredMessage>> GetErrorMessages();
         Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
         Task<PagedResult<StoredMessage>> Search(string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
         Task<List<StoredMessage>> GetConversationById(string conversationId);
