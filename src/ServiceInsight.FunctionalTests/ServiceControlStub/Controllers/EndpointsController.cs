@@ -14,7 +14,6 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
                 {
                     Name = "Test",
                     Machine = "localhost",
-                    Url = "http://localhost",
                 }
             };
         }
