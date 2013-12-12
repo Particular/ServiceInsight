@@ -55,8 +55,31 @@ namespace NServiceBus.Profiler.Desktop.Models
         }
 
         Endpoint receivingEndpoint;
-       
-        public MessageStatistics Statistics { get; set; }
+
+
+        public TimeSpan CriticalTime { get; set; }
+        public TimeSpan ProcessingTime { get; set; }
+        public MessageStatistics Statistics
+        {
+            get
+            {
+                if (statistics == null)
+                {
+                    statistics = new MessageStatistics
+                    {
+                        CriticalTime = CriticalTime,
+                        ProcessingTime = ProcessingTime
+                    };
+                }
+                return statistics;
+            }
+            set
+            {
+                statistics = value;
+            }
+        }
+
+        private MessageStatistics statistics;
 
         public string RelatedToMessageId
         {
