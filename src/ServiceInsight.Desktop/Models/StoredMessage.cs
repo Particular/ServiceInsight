@@ -10,8 +10,52 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
-        public Endpoint OriginatingEndpoint { get; set; }
-        public Endpoint ReceivingEndpoint { get; set; }
+        public string SendingEndpointName { get; set; }
+
+        public Endpoint OriginatingEndpoint
+        {
+            get
+            {
+                if (originatingEndpoint == null)
+                {
+                    originatingEndpoint = new Endpoint
+                    {
+                        Name = SendingEndpointName
+                    };
+                }
+                return originatingEndpoint;
+            }
+            set
+            {
+                originatingEndpoint = value;
+            }
+        }
+
+        Endpoint originatingEndpoint;
+
+        public string ReceivingEndpointName { get; set; }
+
+        public Endpoint ReceivingEndpoint
+        {
+            get
+            {
+                if (receivingEndpoint == null)
+                {
+                    receivingEndpoint = new Endpoint
+                    {
+                        Name = ReceivingEndpointName
+                    };
+                }
+                return receivingEndpoint;
+            }
+            set
+            {
+                receivingEndpoint = value;
+            }
+        }
+
+        Endpoint receivingEndpoint;
+       
         public MessageStatistics Statistics { get; set; }
 
         public string RelatedToMessageId
