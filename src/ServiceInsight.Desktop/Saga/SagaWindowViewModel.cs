@@ -28,21 +28,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
             var sagaDataText = System.IO.File.ReadAllText("saga\\saga.data").Replace("\r", "").Replace("\n", "");
             this.Steps = RestSharp.SimpleJson.DeserializeObject<List<SagaStep>>(sagaDataText);
-
-            //this.Steps = new List<SagaStep> { 
-            //    new SagaStep { IsFirstNode = true, IsTimeout = false, 
-            //            StartingMessage = new SagaMessage { Id = Guid.NewGuid(), IsPublished = true, Name = "SubmitOrder", Time = new DateTime(2013, 7, 28, 14, 12, 17), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
-            //            Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "VeryLongValue", NewValue = "Yup" }, new SagaUpdatedValue { Name = "Location", NewValue = "NY", OldValue = "CA" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 5648" } },
-            //            TimeoutMessages = new List<SagaTimeoutMessage> { new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host", Name = "BuyersRemorseIsOver", Id = timeoutGuid, Timeout = new TimeSpan(0, 0, 20) }, new SagaTimeoutMessage { IsPublished = true, Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host", Name = "BuyersRemorseIsOver", Id = Guid.NewGuid(), Timeout = new TimeSpan(0, 0, 20) } } }
-            //    , new SagaStep { IsFirstNode = false, IsTimeout = false, 
-            //            StartingMessage = new SagaMessage { Id = Guid.NewGuid(), IsPublished = true, Name = "SubmitOrderUpdate", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
-            //            Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "Location", NewValue = "NY", OldValue = "CA" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 2140", OldValue = "555 - 5648" } } ,
-            //            Messages = new List<SagaMessage> { new SagaMessage { Id = Guid.NewGuid(), IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" }, new SagaMessage { Id = Guid.NewGuid(), IsPublished = true, Name = "OrderUpdated", Time = new DateTime(2013, 7, 28, 14, 23, 34), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host"  }  } }
-            //    , new SagaStep { IsFirstNode = false, IsTimeout = true, 
-            //            StartingMessage = new SagaMessage { Id = timeoutGuid, IsPublished = true, Name = "BuyersRemorseIsOver", Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host" },
-            //            Values = new List<SagaUpdatedValue> { new SagaUpdatedValue { Name = "Location", NewValue = "FL", OldValue = "NY" }, new SagaUpdatedValue { Name = "Phone", NewValue = "555 - 5648", OldValue = "555 - 5648" } } ,
-            //            Messages = new List<SagaMessage> { new SagaMessage { Id = Guid.NewGuid(), IsPublished = false, Name = "OrderAccepted", Time = new DateTime(2013, 7, 28, 14, 12, 37), OriginatingEndpoint = "endpoint@host", ReceivingEndpoint = "endpoint@host"  }  } }
-            //};
         }
 
         public string Name { get; private set; }
