@@ -1,9 +1,36 @@
-﻿namespace NServiceBus.Profiler.Desktop.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace NServiceBus.Profiler.Desktop.Models
 {
     public class Endpoint
     {
         public string Name { get; set; }
-        public string Machine { get; set; }
+
+        public string Machine
+        {
+            get
+            {
+                if (machine == null)
+                {
+                    if (Machines != null)
+                    {
+                        machine = Machines.FirstOrDefault();    
+                    }
+                    
+                }
+
+                return machine;
+            }
+            set
+            {
+                machine = value;
+            }
+        }
+
+        private string machine;
+
+        public List<string> Machines { get; set; }
 
         public string Address
         {
