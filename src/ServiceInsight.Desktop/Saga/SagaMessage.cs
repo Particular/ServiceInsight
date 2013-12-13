@@ -1,4 +1,5 @@
 ﻿using Caliburn.PresentationFramework;
+using NServiceBus.Profiler.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public DateTime Time { get; set; }
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
+        public MessageStatus Status { get; set; }
+
+        private List<KeyValuePair<MessageStatus, string>> status = new List<KeyValuePair<MessageStatus,string>> { 
+            new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
+            new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
+            new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
+            new KeyValuePair<MessageStatus, string>(MessageStatus.Successful, "Success" ),
+        };
 
         private bool isSelected = false;
         public bool IsSelected
@@ -30,6 +39,33 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        public bool HasFailed
+        {
+            get
+            {
+                return (Status == MessageStatus.Failed) || (Status == MessageStatus.RepeatedFailure);
+            }
+        }
+
+        public string StatusText
+        {
+            get
+            {
+                return status.FirstOrDefault(k => k.Key == Status).Value;
+            }
+            set
+            {
+                Status = status.FirstOrDefault(k => k.Value == value).Key;
+            }
+        }
+
+        public bool HasRetried
+        {
+            get
+            {
+                return Status == MessageStatus.RetryIssued;
+            }
+        }
     }
 
     public class SagaTimeoutMessage : SagaMessage

@@ -9,7 +9,8 @@
                 "Name":"SubmitOrder",
                 "Time":"2013-07-28T17:12:17Z",
                 "ReceivingEndpoint":"endpoint@host",
-                "OriginatingEndpoint":"endpoint@host"
+                "OriginatingEndpoint":"endpoint@host",
+				"StatusText":"Fail"
             },
         "Messages":[],
         "TimeoutMessages":
@@ -21,7 +22,8 @@
                     "Name":"BuyersRemorseIsOver",
                     "Time":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 },
                 {
                     "TimeoutText":"00:00:20",
@@ -30,7 +32,8 @@
                     "Name":"BuyersRemorseIsOver",
                     "Time":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Retry"
                 }
             ],
         "Values":
@@ -50,7 +53,8 @@
                     "Name":"SubmitOrderUpdate",
                     "Time":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 },
         "Messages":
             [
@@ -60,7 +64,8 @@
                     "Name":"OrderUpdated",
                     "Time":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 },
                 {
                     "Id":"a54b8dcf-230c-42c7-9eab-31f2dfa91ab2",
@@ -68,7 +73,8 @@
                     "Name":"OrderUpdated",
                     "Time":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 }
             ],
         "TimeoutMessages":[],
@@ -88,7 +94,8 @@
                     "Name":"BuyersRemorseIsOver",
                     "Time":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 },
         "Messages":
             [
@@ -98,7 +105,8 @@
                     "Name":"OrderAccepted",
                     "Time":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
-                    "OriginatingEndpoint":"endpoint@host"
+                    "OriginatingEndpoint":"endpoint@host",
+					"StatusText":"Success"
                 }
             ],
         "TimeoutMessages":[],

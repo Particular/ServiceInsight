@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -182,6 +183,27 @@
                         </Setter>
                     </Style>
 
+                    <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
+                    <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
+
+                    <Style x:Key="FailedMessageMarker" TargetType="ContentControl">
+                        <Setter Property="Margin" Value="7,5,5,5" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.Failed}">
+                                <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Failed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.RepeatedFailure}">
+                                <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Repeated Failures" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.RetryIssued}">
+                                <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
+                                <Setter Property="ToolTip" Value="Retry Requested" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
                     <DataTemplate x:Key="Message">
                         <Border BorderBrush="Black" BorderThickness="0" x:Name="EndpointsBorder">
                             <Grid x:Name="RootGrid" Focusable="True" MouseLeftButtonUp="RootGrid_MouseLeftButtonUp">
@@ -221,8 +243,13 @@
                                 </StackPanel>
 
                                 <Border BorderBrush="Black" BorderThickness="0" x:Name="NoEndpointsBorder" Grid.Row="1" Grid.ColumnSpan="2" >
-                                    <Rectangle  Fill="{StaticResource MessageBackground}" Height="45px" Width="220px"/>
+                                    <Rectangle x:Name="MessageRectangle" Fill="{StaticResource MessageBackground}" Height="45px" Width="220px"/>
                                 </Border>
+
+                                <ContentControl Style="{StaticResource FailedMessageMarker}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
+                                </ContentControl>
 
                                 <ContentControl Template="{StaticResource CommandIcon}" 
                                                    Grid.Row="1" Grid.Column="0"
@@ -264,6 +291,16 @@
                             </Grid>
                         </Border>
                         <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding HasFailed}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Fill" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding HasRetried}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Fill" TargetName="MessageRectangle" Value="{StaticResource RetriedMessageBackground}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="False" />
