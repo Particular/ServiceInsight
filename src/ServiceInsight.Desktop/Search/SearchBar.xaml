@@ -11,8 +11,8 @@
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -22,12 +22,12 @@
                 cal:Message.Attach="[Event Click]=[Action RefreshResult]">
             <Image Source="/Images/SearchRefresh.png" Stretch="UniformToFill" Width="14" Height="14" />
         </Button>
-        
-        <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1">
-            <TextBlock VerticalAlignment="Center" Margin="2" FontWeight="Bold" Text="{Binding SelectedEndpoint.Name}" Visibility="{Binding SearchInProgress, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-            <TextBlock VerticalAlignment="Center" Margin="2" Text="{Binding TotalItemCount}" />
-            <TextBlock VerticalAlignment="Center" Margin="2" Text="Message(s) Found" />
-        </StackPanel>
+
+        <TextBlock Margin="5" Grid.Column="1" 
+                   VerticalAlignment="Center" 
+                   Text="{Binding SearchResultMessage}"
+                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                   ToolTip="{Binding SearchResultMessage}" />
 
         <StackPanel Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4">
             <StackPanel.Resources>

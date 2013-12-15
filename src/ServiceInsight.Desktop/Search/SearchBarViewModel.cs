@@ -127,6 +127,11 @@ namespace NServiceBus.Profiler.Desktop.Search
         
         public string SearchQuery { get; set; }
 
+        public string SearchResultMessage
+        {
+            get { return GetSearchResultMessage(); }
+        }
+
         public bool IsVisible { get; set; }
 
         public bool CanGoToFirstPage
@@ -196,6 +201,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyOfPropertyChange(() => SearchEnabled);
             NotifyOfPropertyChange(() => CanCancelSearch);
             NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(() => SearchResultMessage);
         }
 
         public void OnSelectedEndpointChanged()
@@ -252,6 +258,20 @@ namespace NServiceBus.Profiler.Desktop.Search
                 _workCount--;
                 NotifyPropertiesChanged();
             }
+        }
+
+        private string GetSearchResultMessage()
+        {
+            if (SearchInProgress)
+            {
+                return SelectedEndpoint != null ? 
+                        string.Format("Search results: {0} Message(s) found in Endpoint '{1}", TotalItemCount, SelectedEndpoint) : 
+                        string.Format("Search results: {0} Message(s) found", TotalItemCount);
+            }
+
+            return SelectedEndpoint != null ? 
+                    string.Format("{1}: {0} Message(s) found", TotalItemCount, SelectedEndpoint) : 
+                    string.Format("{0} Message(s) found", TotalItemCount);
         }
     }
 }
