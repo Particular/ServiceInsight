@@ -30,8 +30,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         Task PurgeQueue();
         Task DeleteSelectedMessages();
         Task RefreshMessages(string orderBy = null, bool ascending = false);
+        Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
         Task RefreshQueue(Queue queue);
-        Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
         string GetCriticalTime(StoredMessage msg);
         string GetProcessingTime(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);

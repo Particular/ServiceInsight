@@ -36,29 +36,29 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public void GoToFirstPage()
         {
-            Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void GoToPreviousPage()
         {
-            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage - 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage - 1, SearchQuery);
         }
 
         public void GoToNextPage()
         {
-            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage + 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage + 1, SearchQuery);
         }
 
         public void GoToLastPage()
         {
-            Parent.RefreshEndpoint(SelectedEndpoint, PageCount, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
         }
 
         [AutoCheckAvailability]
         public async void Search()
         {
             SearchInProgress = true;
-            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         [AutoCheckAvailability]
@@ -66,7 +66,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             SearchQuery = null;
             SearchInProgress = false;
-            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<MessageInfo> pagedResult)
@@ -80,14 +80,7 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public async void RefreshResult()
         {
-            if (SelectedEndpoint != null)
-            {
-                await Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage, SearchQuery);
-            }
-            else
-            {
-                await Parent.RefreshMessages();
-            }
+            await Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
         }
 
         public bool CanGoToLastPage
@@ -140,8 +133,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage > 1 &&
+                return CurrentPage > 1 &&
                        !WorkInProgress;
             }
         }
@@ -150,8 +142,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage - 1 >= 1 &&
+                return CurrentPage - 1 >= 1 &&
                        !WorkInProgress;
             }
         }
@@ -160,8 +151,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage + 1 <= PageCount &&
+                return CurrentPage + 1 <= PageCount &&
                        !WorkInProgress;
             }
         }
@@ -183,8 +173,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             get
             {
                 return !WorkInProgress &&
-                       !string.IsNullOrWhiteSpace(SearchQuery) &&
-                       SelectedEndpoint != null;
+                       !string.IsNullOrWhiteSpace(SearchQuery);
             }
         }
 
@@ -192,7 +181,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return !WorkInProgress && (SelectedEndpoint != null || SelectedQueue != null);
+                return !WorkInProgress;
             }
         }
 
@@ -233,6 +222,12 @@ namespace NServiceBus.Profiler.Desktop.Search
             if (endpointNode != null)
             {
                 SelectedEndpoint = endpointNode.Endpoint;                
+            }
+
+            var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();
+            if (serviceNode != null)
+            {
+                SelectedEndpoint = null;
             }
 
             var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();

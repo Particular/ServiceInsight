@@ -210,7 +210,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             var serviceControl = SelectedExplorerItem.As<ServiceControlExplorerItem>();
             if (serviceControl != null)
             {
-                await RefreshEndpoint(searchQuery: SearchBar.SearchQuery,
+                await RefreshMessages(searchQuery: SearchBar.SearchQuery,
                                       endpoint: null,
                                       orderBy: orderBy,
                                       ascending: ascending);
@@ -219,14 +219,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
             if (endpointNode != null)
             {
-                await RefreshEndpoint(searchQuery: SearchBar.SearchQuery,
+                await RefreshMessages(searchQuery: SearchBar.SearchQuery,
                                       endpoint: endpointNode.Endpoint,
                                       orderBy: orderBy,
                                       ascending: ascending);
             }
         }
 
-        public async Task RefreshEndpoint(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public async Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             _eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
