@@ -360,6 +360,15 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             RefreshAll();
         }
+
+        public string AutoRefreshTooltip
+        {
+            get
+            {
+                var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
+                return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
+            }
+        }
         
         private void ValidateLicense()
         {

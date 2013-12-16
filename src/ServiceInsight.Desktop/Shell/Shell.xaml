@@ -34,7 +34,7 @@
                     dxc:DXSerializer.SerializationID="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.4">
+                    dxc:DXSerializer.LayoutVersion="1.1.6">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -130,8 +130,10 @@
                                CategoryName="View" />
             <dxb:BarCheckItem Content="Auto Refresh"
                               Name="DataAutoRefresh"
+                              Hint="{Binding AutoRefreshTooltip}" ShowScreenTip="True"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
+                              Glyph="/Images/SearchRefresh.png"
                               CategoryName="View" />
                               
             <dxb:ToolbarListItem x:Name="ToolbarList" 
@@ -242,8 +244,9 @@
                 <dxb:BarButtonItemLink BarItemName="PurgeCurrentQueue" />
                 <dxb:BarButtonItemLink BarItemName="DeleteCurrentQueue" />
                 <dxb:BarItemLinkSeparator />
-                <!--<dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
                 <dxb:BarButtonItemLink BarItemName="DeleteSelectedMessages" />
+                <dxb:BarItemLinkSeparator />
+                <dxb:BarCheckItemLink BarItemName="DataAutoRefresh"  />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar" 
                      AutomationProperties.AutomationId="StatusBar"

@@ -43,5 +43,6 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         {
             _clipboard.CopyTo(value.ToString());
         }
+
     }
 }
