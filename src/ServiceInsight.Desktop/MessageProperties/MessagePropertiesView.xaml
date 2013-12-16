@@ -18,7 +18,7 @@
         <dxprg:PropertyDefinition Path="General" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
             <dxprg:PropertyDefinition Path="Version" />
             <dxprg:PropertyDefinition Path="EnclosedMessageTypes" />
-            <dxprg:PropertyDefinition Path="Retries" />
+            <dxprg:PropertyDefinition Path="MessageId" />
             <dxprg:PropertyDefinition Path="RelatedTo" />
             <dxprg:PropertyDefinition Path="ContentType" />
             <dxprg:PropertyDefinition Path="IsDeferedMessage" />

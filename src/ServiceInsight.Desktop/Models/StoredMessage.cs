@@ -157,6 +157,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string ContentType = "ContentType";
         public const string IsDeferedMessage = "IsDeferedMessage";
         public const string ConversationId = "ConversationId";
+        public const string MessageId = "MessageId";
         public const string ExceptionType = "ExceptionInfo.ExceptionType";
         public const string ExceptionMessage = "ExceptionInfo.Message";
         public const string ExceptionSource = "ExceptionInfo.Source";
