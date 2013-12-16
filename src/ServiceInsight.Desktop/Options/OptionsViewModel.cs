@@ -13,7 +13,7 @@ namespace NServiceBus.Profiler.Desktop.Options
         {
             _settingsProvider = settingsProvider;
 
-            DisplayName = "Options...";
+            DisplayName = "Options";
         }
 
         protected override void OnActivate()
