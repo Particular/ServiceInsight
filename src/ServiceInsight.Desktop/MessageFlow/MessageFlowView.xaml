@@ -352,7 +352,7 @@
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
-                        <Setter Property="ToolTip" Value="Sent Event" />
+                        <Setter Property="ToolTip" Value="Published Event" />
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EventEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
