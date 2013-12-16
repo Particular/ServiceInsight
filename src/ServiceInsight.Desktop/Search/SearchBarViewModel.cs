@@ -265,12 +265,12 @@ namespace NServiceBus.Profiler.Desktop.Search
             if (SearchInProgress)
             {
                 return SelectedEndpoint != null ? 
-                        string.Format("Search results: {0} Message(s) found in Endpoint '{1}", TotalItemCount, SelectedEndpoint) : 
+                        string.Format("Search results: {0} Message(s) found in Endpoint '{1}", TotalItemCount, SelectedEndpoint.Name) : 
                         string.Format("Search results: {0} Message(s) found", TotalItemCount);
             }
 
-            return SelectedEndpoint != null ? 
-                    string.Format("{1}: {0} Message(s) found", TotalItemCount, SelectedEndpoint) : 
+            return SelectedEndpoint != null ?
+                    string.Format("{1}: {0} Message(s) found", TotalItemCount, SelectedEndpoint.Name) : 
                     string.Format("{0} Message(s) found", TotalItemCount);
         }
     }

@@ -34,7 +34,12 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public string Address
         {
-            get { return string.Format("{0}@{1}", Name, Machine); }
+            get { return string.Format("{0}{1}", Name, AtMachine()); }
+        }
+
+        private string AtMachine()
+        {
+            return string.IsNullOrEmpty(Machine) ? string.Empty : string.Format("@{0}", Machine);
         }
 
         protected bool Equals(Endpoint other)
