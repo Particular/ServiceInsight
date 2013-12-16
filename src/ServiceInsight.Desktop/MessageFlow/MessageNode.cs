@@ -16,7 +16,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             IsResizable = false;
             Owner = owner;
-            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+            Bounds = new Rect(0, 0, 233, heightNoEndpoints);
             //ZOrder = 1;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
