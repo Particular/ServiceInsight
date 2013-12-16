@@ -4,7 +4,6 @@
     {
         string Version { get; }
         string EnclosedMessageTypes { get; }
-        string Retries { get; }
         string RelatedTo { get; }
         string ContentType { get; }
         string IsDeferedMessage { get; }
