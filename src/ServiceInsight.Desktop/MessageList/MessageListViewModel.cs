@@ -63,7 +63,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             _returnToSourceMenu = new MenuItem("Return To Source", new RelayCommand(ReturnToSource, CanReturnToSource), Properties.Resources.MessageReturn);
             _retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
-            _copyMessageIdMenu = new MenuItem("Copy Message Identifier", new RelayCommand(CopyMessageId, CanCopyMessageId));
+            _copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
             _copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
 
             Messages = new BindableCollection<MessageInfo>();

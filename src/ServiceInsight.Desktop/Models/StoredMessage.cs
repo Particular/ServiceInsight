@@ -124,6 +124,11 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
+        public string GetURIQuery()
+        {
+            return string.Format("?EndpointName={0}&Search={1}", OriginatingEndpoint.Name, Id);
+        }
+
         private List<StoredMessageHeader> headers;
 
         public string GetHeaderByKey(string key)

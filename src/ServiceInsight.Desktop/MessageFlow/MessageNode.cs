@@ -90,11 +90,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Message.GetHeaderByKey(MessageHeaderKeys.Version); }
         }
 
-        public string SecondLevelRetries
-        {
-            get { return Message.GetHeaderByKey(MessageHeaderKeys.Retries); }
-        }
-
         public bool IsPublished
         {
             get { return Message.MessageIntent == MessageIntent.Publish; }
