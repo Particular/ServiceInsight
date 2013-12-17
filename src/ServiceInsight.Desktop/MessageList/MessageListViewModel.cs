@@ -255,8 +255,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             using (new GridSelectionPreserver(_view))
             {
-                Messages.Clear();
-                Messages.AddRange(pagedResult.Result);
+                var newMessages = pagedResult.Result.Where(m => !Messages.Any(e => e.Id == m.Id));
+                Messages.AddRange(newMessages);
             }
 
             SearchBar.IsVisible = true;
