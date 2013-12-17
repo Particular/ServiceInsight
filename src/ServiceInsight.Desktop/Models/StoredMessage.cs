@@ -83,7 +83,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public string GetURIQuery()
         {
-            return string.Format("?EndpointName={0}&Search={1}", SendingEndpoint.Name, Id);
+            return string.Format("?EndpointName={0}&Search={1}", ReceivingEndpoint.Name, MessageId);
         }
 
         private List<StoredMessageHeader> headers;

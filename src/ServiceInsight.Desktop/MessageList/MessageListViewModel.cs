@@ -131,8 +131,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public void CopyMessageId()
         {
-            var msg = FocusedMessage;
-            _clipboard.CopyTo(msg.Id);
+            _clipboard.CopyTo(_serviceControl.GetUri((StoredMessage)FocusedMessage).ToString());
         }
 
         public void CopyHeaders()

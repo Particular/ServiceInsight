@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Desktop.Models;
+using System;
 
 namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
@@ -13,5 +14,6 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         Task<bool> RetryMessage(string messageId);
         Task<bool> IsAlive();
         Task<string> GetVersion();
+        Uri GetUri(StoredMessage message);
     }
 }

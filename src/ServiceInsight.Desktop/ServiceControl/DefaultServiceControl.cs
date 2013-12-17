@@ -305,5 +305,11 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                 yield return HttpStatusCode.Accepted;
             }
         }
+
+        public Uri GetUri(StoredMessage message)
+        {
+            var connectionUri = new Uri(_connection.Url);
+            return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
+        }
     }
 }

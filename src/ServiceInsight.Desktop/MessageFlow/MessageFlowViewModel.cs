@@ -21,6 +21,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
+        void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
         void CopyMessageHeaders(StoredMessage message);
         Task RetryMessage(StoredMessage message);
@@ -101,6 +102,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public void CopyConversationId(StoredMessage message)
         {
             _clipboard.CopyTo(message.ConversationId);
+        }
+
+        public void CopyMessageUri(StoredMessage message)
+        {
+            _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
         }
 
         public void CopyMessageHeaders(StoredMessage message)

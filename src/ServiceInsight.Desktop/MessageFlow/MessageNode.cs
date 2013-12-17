@@ -32,6 +32,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get; private set;
         }
 
+        public void CopyMessageUri()
+        {
+            Owner.CopyMessageUri(Message);
+        }
+
         public void CopyConversationId()
         {
             Owner.CopyConversationId(Message);
