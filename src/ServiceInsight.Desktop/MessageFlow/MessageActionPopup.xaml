@@ -384,7 +384,7 @@
                 <MenuItem Grid.Row="2" Header="Retry Message" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action Retry]" cal:Action.TargetWithoutContext="{Binding}" />
                 <MenuItem Grid.Row="3" Header="Copy Conversation Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyConversationId]" cal:Action.TargetWithoutContext="{Binding}" />
                 <MenuItem Grid.Row="4" Header="Copy Message URI" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyMessageUri]" cal:Action.TargetWithoutContext="{Binding}" />
-                <MenuItem Grid.Row="5" Header="Copy Headers" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyHeaders]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="5" Header="Copy Message Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyMessageId]" cal:Action.TargetWithoutContext="{Binding}" />
                 <MenuItem Grid.Row="6" VerticalAlignment="Top" Header="Show Message Body" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowBody]" cal:Action.TargetWithoutContext="{Binding}" />
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1" Background="#1E1E1E" IsSharedSizeScope="True" TextBlock.Foreground="White">

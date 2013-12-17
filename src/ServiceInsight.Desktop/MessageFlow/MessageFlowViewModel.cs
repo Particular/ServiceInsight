@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         MessageFlowDiagram Diagram { get; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
-        void CopyMessageHeaders(StoredMessage message);
+        void CopyMessageId(StoredMessage Message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
@@ -31,7 +31,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void ShowException(IExceptionDetails exception);
         void ZoomIn();
         void ZoomOut();
-
         bool IsFocused(MessageInfo Message);
     }
 
@@ -111,11 +110,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
         }
 
-        public void CopyMessageHeaders(StoredMessage message)
+        public void CopyMessageId(StoredMessage message)
         {
-            var decodedHeader = new MessageHeaderDecoder(_decoder, message);
-            var serializedHeaders = _headerInfoSerializer.Serialize(decodedHeader.DecodedHeaders);
-            _clipboard.CopyTo(serializedHeaders);
+            _clipboard.CopyTo(message.MessageId);
         }
 
         public async Task RetryMessage(StoredMessage message)

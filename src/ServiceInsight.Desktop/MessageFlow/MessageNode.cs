@@ -42,9 +42,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Owner.CopyConversationId(Message);
         }
 
-        public void CopyHeaders()
+        public void CopyMessageId()
         {
-            Owner.CopyMessageHeaders(Message);
+            Owner.CopyMessageId(Message);
         }
 
         public async void Retry()
