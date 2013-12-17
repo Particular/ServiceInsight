@@ -246,6 +246,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void Handle(SelectedMessageChanged message)
         {
+            originalSelectionId = string.Empty;
             SelectedMessage = null;
             _nodeMap.Clear();
             Diagram = new MessageFlowDiagram();
