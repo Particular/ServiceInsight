@@ -112,7 +112,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public async Task RetryMessage(StoredMessage message)
         {
-            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.OriginatingEndpoint));
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             await _serviceControl.RetryMessage(message.Id);
             _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
             _eventAggregator.Publish(new WorkFinished());
@@ -156,7 +156,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
                 var parentMessage = _nodeMap.Values.SingleOrDefault(m => 
                     m.Message.MessageId == msg.Message.RelatedToMessageId && 
-                    m.Message.ReceivingEndpoint.Name == msg.Message.OriginatingEndpoint.Name);
+                    m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
 
                 if (parentMessage == null)
                     continue;

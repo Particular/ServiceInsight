@@ -10,52 +10,9 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
-        public string SendingEndpointName { get; set; }
-
-        public Endpoint OriginatingEndpoint
-        {
-            get
-            {
-                if (originatingEndpoint == null)
-                {
-                    originatingEndpoint = new Endpoint
-                    {
-                        Name = SendingEndpointName
-                    };
-                }
-                return originatingEndpoint;
-            }
-            set
-            {
-                originatingEndpoint = value;
-            }
-        }
-
-        Endpoint originatingEndpoint;
-
-        public string ReceivingEndpointName { get; set; }
-
-        public Endpoint ReceivingEndpoint
-        {
-            get
-            {
-                if (receivingEndpoint == null)
-                {
-                    receivingEndpoint = new Endpoint
-                    {
-                        Name = ReceivingEndpointName
-                    };
-                }
-                return receivingEndpoint;
-            }
-            set
-            {
-                receivingEndpoint = value;
-            }
-        }
-
-        Endpoint receivingEndpoint;
-
+        public Endpoint SendingEndpoint{ get; set; }
+      
+        public Endpoint ReceivingEndpoint{ get; set; }
 
         public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
@@ -126,7 +83,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public string GetURIQuery()
         {
-            return string.Format("?EndpointName={0}&Search={1}", OriginatingEndpoint.Name, Id);
+            return string.Format("?EndpointName={0}&Search={1}", SendingEndpoint.Name, Id);
         }
 
         private List<StoredMessageHeader> headers;

@@ -122,7 +122,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async void RetryMessage()
         {
-            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", StoredMessage.OriginatingEndpoint));
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", StoredMessage.SendingEndpoint));
             var msg = (StoredMessage)FocusedMessage;
             await _serviceControl.RetryMessage(FocusedMessage.Id);
             Messages.Remove(msg);
