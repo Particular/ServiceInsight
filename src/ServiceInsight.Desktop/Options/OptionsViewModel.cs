@@ -20,6 +20,7 @@ namespace NServiceBus.Profiler.Desktop.Options
         {
             base.OnActivate();
             LoadSettings();
+            IsModified = false;
         }
 
         private void LoadSettings()
@@ -53,7 +54,6 @@ namespace NServiceBus.Profiler.Desktop.Options
         {
             _settingsProvider.SaveSettings(Application);
             _settingsProvider.SaveSettings(UsageReporting);
-            TryClose(true);
         }
 
         public void Close()
