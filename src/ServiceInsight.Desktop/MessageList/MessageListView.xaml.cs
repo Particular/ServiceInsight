@@ -12,6 +12,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 {
     public interface IMessageListView : IViewWithGrid
     {
+        object DataContext { get; set; }
     }
 
     public partial class MessageListView : IMessageListView

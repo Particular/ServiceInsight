@@ -160,23 +160,27 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return FocusedMessage != null;
         }
 
+        bool refreshing = false;
         public void OnFocusedMessageChanged() 
         {
-            _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
-
-            if (StoredMessage != null)
+            if (!refreshing)
             {
-                _eventAggregator.Publish(new MessageBodyLoaded(StoredMessage));
-                return;
-            }
+                _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
 
-            var queueMessage = FocusedMessage as MessageInfo;
-            if (queueMessage != null && SelectedQueue != null)
-            {
-                LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
-            }
+                if (StoredMessage != null)
+                {
+                    _eventAggregator.Publish(new MessageBodyLoaded(StoredMessage));
+                    return;
+                }
 
-            NotifyPropertiesChanged();
+                var queueMessage = FocusedMessage as MessageInfo;
+                if (queueMessage != null && SelectedQueue != null)
+                {
+                    LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
+                }
+
+                NotifyPropertiesChanged();
+            }
         }
 
         private void LoadQueueMessage(Queue queue, string selectedMessageId)
@@ -255,8 +259,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             using (new GridSelectionPreserver(_view))
             {
-                var newMessages = pagedResult.Result.Where(m => !Messages.Any(e => e.Id == m.Id));
-                Messages.AddRange(newMessages);
+                refreshing = true;
+                Messages.Clear();
+                Messages.AddRange(pagedResult.Result);
+                refreshing = false;
             }
 
             SearchBar.IsVisible = true;
