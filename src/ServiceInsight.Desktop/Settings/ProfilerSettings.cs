@@ -19,7 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [Description("Auto refresh time in seconds")]
         public int AutoRefreshTimer
         {
-            get { return Math.Max(10, _autoRefresh); }
+            get { return Math.Max(1, _autoRefresh); }
             set { _autoRefresh = value; }
         }
 
