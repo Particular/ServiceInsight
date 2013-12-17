@@ -31,6 +31,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void ShowException(IExceptionDetails exception);
         void ZoomIn();
         void ZoomOut();
+
+        bool IsFocused(MessageInfo Message);
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
@@ -150,6 +152,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints};
         }
 
+        public bool IsFocused(MessageInfo message)
+        {
+            return message.Id == originalSelectionId;
+        }
+
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
         {
             foreach (var msg in relatedMessagesTask)
@@ -193,12 +200,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Diagram.Connections.Add(connection);
         }
 
+        private string originalSelectionId = string.Empty;
         private void CreateConversationNodes(string selectedId, IEnumerable<MessageNode> relatedNodes)
         {
             foreach (var node in relatedNodes)
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
+                    originalSelectionId = selectedId;
                     SelectedMessage = node;
                 }
 

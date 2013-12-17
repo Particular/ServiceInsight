@@ -281,7 +281,7 @@
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
@@ -289,7 +289,7 @@
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasRetried}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
@@ -297,7 +297,7 @@
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="False" />
                                                 <Condition Binding="{Binding HasRetried}" Value="False" />
                                             </MultiDataTrigger.Conditions>

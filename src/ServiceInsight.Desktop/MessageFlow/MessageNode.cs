@@ -133,6 +133,12 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get; set;
         }
 
-        public bool IsCurrentMessage { get; set; }
+        public bool IsFocused
+        {
+            get
+            {
+                return Owner.IsFocused(this.Message);
+            }
+        }
     }
 }
