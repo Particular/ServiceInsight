@@ -160,10 +160,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return FocusedMessage != null;
         }
 
-        bool refreshing = false;
+        bool shouldUpdate = true;
         public void OnFocusedMessageChanged() 
         {
-            if (!refreshing)
+            if (shouldUpdate)
             {
                 _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
 
@@ -259,10 +259,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             using (new GridSelectionPreserver(_view))
             {
-                refreshing = true;
+                shouldUpdate = ShouldUpdateMessages(pagedResult);
                 Messages.Clear();
                 Messages.AddRange(pagedResult.Result);
-                refreshing = false;
+                shouldUpdate = true;
             }
 
             SearchBar.IsVisible = true;
@@ -274,6 +274,30 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             });
 
             _eventAggregator.Publish(new WorkFinished());
+        }
+
+        private bool ShouldUpdateMessages(PagedResult<Models.StoredMessage> pagedResult)
+        {
+            var storedFocused = FocusedMessage as StoredMessage;
+            if (storedFocused == null)
+                return true;
+
+            return ShouldUpdateMessage(storedFocused, pagedResult.Result.FirstOrDefault(m => m.Id == FocusedMessage.Id))
+                || Messages.OfType<StoredMessage>().Count(m => m.ConversationId == storedFocused.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == storedFocused.ConversationId);
+        }
+
+        private bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
+        {
+            if (newMessage == null)
+                return true;
+
+            if ((newMessage.Status != focusedMessage.Status) ||
+                (newMessage.TimeSent != focusedMessage.TimeSent) ||
+                (newMessage.ProcessingTime != focusedMessage.ProcessingTime) ||
+                (newMessage.IsDeleted != focusedMessage.IsDeleted))
+                return true;
+
+            return false;
         }
 
         public async Task RefreshQueue(Queue queue)
