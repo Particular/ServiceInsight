@@ -218,7 +218,7 @@
                                                 <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                                 Margin="3,0,3,0" />
                                                 <TextBlock FontSize="10px"
-                                                           Text="{Binding Data.OriginatingEndpoint}"
+                                                           Text="{Binding Data.SendingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
 
