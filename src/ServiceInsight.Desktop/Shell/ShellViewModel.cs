@@ -22,6 +22,7 @@ using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
+using System.Diagnostics;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -155,7 +156,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual void Help()
         {
-            throw new NotImplementedException("This feature is not yet implemented.");
+            Process.Start(@"http://docs.particular.net/");
         }
 
         public void Options()
