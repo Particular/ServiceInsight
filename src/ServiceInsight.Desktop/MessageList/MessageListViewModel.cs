@@ -256,6 +256,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                            orderBy: _lastSortColumn,
                                                            ascending: _lastSortOrderAscending);
             }
+            else
+            {
+                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
+                                                           searchQuery: null,
+                                                           orderBy: _lastSortColumn,
+                                                           ascending: _lastSortOrderAscending);
+            }
 
             using (new MessageSelectionPreserver(_view))
             {
