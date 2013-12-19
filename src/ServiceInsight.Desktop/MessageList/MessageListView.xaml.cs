@@ -12,7 +12,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 {
     public interface IMessageListView : IViewWithGrid
     {
-        object DataContext { get; set; }
     }
 
     public partial class MessageListView : IMessageListView
@@ -35,14 +34,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        private void OnFocusedMessageChanged(object sender, FocusedRowChangedEventArgs e)
-        {
-            if (Model != null)
-            {
-                Model.FocusedMessage = e.NewRow as MessageInfo;
-            }
-        }
-        
         private IMessageListViewModel Model
         {
             get { return (IMessageListViewModel)DataContext; }
@@ -179,6 +170,24 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public void SelectRow(int rowIndex)
         {
             Table.SelectRow(rowIndex);
+        }
+
+        public object SelectedItem
+        {
+            get
+            {
+                return grid.CurrentItem;
+            }
+            set
+            {
+                grid.CurrentItem = value;
+                grid.SelectedItem = grid.CurrentItem;
+            }
+        }
+
+        public object ItemsSource
+        {
+            get { return grid.ItemsSource; }
         }
     }
 }

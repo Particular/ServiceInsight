@@ -211,6 +211,7 @@
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageFlow\ExceptionDetailViewModel.cs" />
+    <Compile Include="MessageList\MessageSelectionPreserver.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />

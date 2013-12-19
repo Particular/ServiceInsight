@@ -118,8 +118,8 @@
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" 
+                               FocusedRow="{Binding FocusedMessage}"
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
-                               FocusedRowChanged="OnFocusedMessageChanged"
                                SelectionChanged="OnSelectedMessagesChanged"
                                ShowIndicator="False"
                                MultiSelectMode="Row"

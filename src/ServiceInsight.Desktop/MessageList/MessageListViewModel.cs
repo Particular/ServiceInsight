@@ -257,13 +257,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                            ascending: _lastSortOrderAscending);
             }
 
-            using (new GridSelectionPreserver(_view))
+            using (new MessageSelectionPreserver(_view))
             {
                 shouldUpdate = ShouldUpdateMessages(pagedResult);
                 Messages.Clear();
                 Messages.AddRange(pagedResult.Result);
-                shouldUpdate = true;
             }
+            shouldUpdate = true;
 
             SearchBar.IsVisible = true;
             SearchBar.SetupPaging(new PagedResult<MessageInfo>
@@ -282,8 +282,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             if (storedFocused == null)
                 return true;
 
-            return ShouldUpdateMessage(storedFocused, pagedResult.Result.FirstOrDefault(m => m.Id == FocusedMessage.Id))
-                || Messages.OfType<StoredMessage>().Count(m => m.ConversationId == storedFocused.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == storedFocused.ConversationId);
+            if (Messages.OfType<StoredMessage>().Count(m => m.ConversationId == storedFocused.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == storedFocused.ConversationId))
+                return true;
+            
+            foreach(var message in Messages.OfType<StoredMessage>().Where(m => m.ConversationId == storedFocused.ConversationId))
+            {
+                if (ShouldUpdateMessage(message, pagedResult.Result.FirstOrDefault(m => m.Id == message.Id)))
+                    return true;
+            }
+            
+            return false;
         }
 
         private bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
@@ -294,7 +302,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             if ((newMessage.Status != focusedMessage.Status) ||
                 (newMessage.TimeSent != focusedMessage.TimeSent) ||
                 (newMessage.ProcessingTime != focusedMessage.ProcessingTime) ||
-                (newMessage.IsDeleted != focusedMessage.IsDeleted))
+                (newMessage.IsDeleted != focusedMessage.IsDeleted) ||
+                (newMessage.ReceivingEndpoint.ToString() != focusedMessage.ReceivingEndpoint.ToString()) ||
+                (newMessage.SendingEndpoint.ToString() != focusedMessage.SendingEndpoint.ToString()))
                 return true;
 
             return false;
