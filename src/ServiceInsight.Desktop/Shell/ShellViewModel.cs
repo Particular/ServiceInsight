@@ -192,13 +192,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public async void DeleteSelectedMessages()
         {
-            await Messages.DeleteSelectedMessages();
         }
 
         [AutoCheckAvailability]
         public async void PurgeCurrentQueue()
         {
-            await Messages.PurgeQueue();
         }
 
         [AutoCheckAvailability]
@@ -270,9 +268,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return Messages.SelectedQueue != null &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -280,9 +276,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return Messages.SelectedQueue != null &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -290,9 +284,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return !WorkInProgress &&
-                       Messages.FocusedMessage != null &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -320,12 +312,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public bool CanExportMessage
         {
-            get { return !WorkInProgress && Messages.SelectedMessages.Count > 0 && false; } //TODO: Implement message export
+            get { return false; }
         }
 
         public bool CanImportMessage
         {
-            get { return !WorkInProgress && false; } //TODO: Implement message import
+            get { return false; }
         }
         
         private void InitializeIdleTimer()

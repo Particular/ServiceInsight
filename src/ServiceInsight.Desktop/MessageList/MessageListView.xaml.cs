@@ -6,11 +6,10 @@ using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using DevExpress.Xpf.Grid;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    public interface IMessageListView : IViewWithGrid
+    public interface IMessageListView
     {
     }
 
@@ -39,23 +38,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             get { return (IMessageListViewModel)DataContext; }
         }
 
-        private void OnSelectedMessagesChanged(object sender, GridSelectionChangedEventArgs e)
-        {
-            if (Model != null)
-            {
-                Model.SelectedMessages.Clear();
-
-                foreach (var row in e.Source.SelectedRows)
-                {
-                    Model.SelectedMessages.Add((MessageInfo)row);
-                }
-            }
-        }
-
         private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
-            var msg = Model.Messages[e.ListSourceRowIndex];
-            var storedMsg = msg as StoredMessage;
+            var msg = Model.Rows[e.ListSourceRowIndex];
+            var storedMsg = msg;
 
             if (e.IsGetData)
             {
@@ -142,52 +128,19 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        private TableView Table
+        private DataController Controller
         {
-            get { return (TableView)grid.View; }
-        }
-
-        public int[] GetSelectedRowsIndex()
-        {
-            return Table.GetSelectedRowHandles();
+            get { return grid.DataController; }
         }
 
         public void BeginSelection()
         {
-            Table.BeginSelection();
+            Controller.Selection.BeginSelection();
         }
 
         public void EndSelection()
         {
-            Table.EndSelection();
-        }
-
-        public bool IsRowSelected(int rowIndex)
-        {
-            return Table.IsRowSelected(rowIndex);
-        }
-
-        public void SelectRow(int rowIndex)
-        {
-            Table.SelectRow(rowIndex);
-        }
-
-        public object SelectedItem
-        {
-            get
-            {
-                return grid.CurrentItem;
-            }
-            set
-            {
-                grid.CurrentItem = value;
-                grid.SelectedItem = grid.CurrentItem;
-            }
-        }
-
-        public object ItemsSource
-        {
-            get { return grid.ItemsSource; }
+            Controller.Selection.EndSelection();
         }
     }
 }

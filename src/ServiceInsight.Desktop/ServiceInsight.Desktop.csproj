@@ -211,7 +211,7 @@
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageFlow\ExceptionDetailViewModel.cs" />
-    <Compile Include="MessageList\MessageSelectionPreserver.cs" />
+    <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />
@@ -257,7 +257,6 @@
     <Compile Include="Events\AsyncOperationFailed.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
     <Compile Include="Events\MessageBodyLoaded.cs" />
-    <Compile Include="Events\MessageRemovedFromQueue.cs" />
     <Compile Include="Events\QueueMessageCountChanged.cs" />
     <Compile Include="Events\SelectedExplorerItemChanged.cs" />
     <Compile Include="Events\SelectedMessageChanged.cs" />
@@ -393,7 +392,6 @@
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
     <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
-    <Compile Include="MessageList\DeletedMessageConverter.cs" />
     <Compile Include="MessageList\FileSizeFormatProvider.cs" />
     <Compile Include="MessageList\FileSizeValueConverter.cs" />
     <Compile Include="Explorer\ExplorerNodeImageSelector.cs" />

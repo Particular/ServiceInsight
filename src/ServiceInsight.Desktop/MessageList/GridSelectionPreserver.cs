@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    public class GridSelectionPreserver : IDisposable
+    public class GridSelectionPreserver<T> : IDisposable where T : MessageInfo
     {
-        private readonly IList<int> _selectedrows;
-        private readonly IViewWithGrid _view;
+        private readonly IList<T> _selectedrows;
+        private readonly ITableViewModel<T> _viewModel;
 
-        public GridSelectionPreserver(IViewWithGrid view)
+        public GridSelectionPreserver(ITableViewModel<T> viewModel)
         {
-            _view = view;
-            _selectedrows = _view.GetSelectedRowsIndex();
+            _viewModel = viewModel;
+            _selectedrows = new List<T>(viewModel.SelectedRows);
         }
 
         public void Dispose()
         {
-            try
+            foreach (var row in _selectedrows)
             {
-                _view.BeginSelection();
-
-                foreach (var row in _selectedrows)
+                var matchingRow = _viewModel.Rows.FirstOrDefault(x => x.Id == row.Id);
+                if (matchingRow != null)
                 {
-                    if (!_view.IsRowSelected(row))
-                        _view.SelectRow(row);
+                    _viewModel.SelectedRows.Add(matchingRow);
                 }
-            }
-            finally
-            {
-                _view.EndSelection();
             }
         }
     }

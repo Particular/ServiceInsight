@@ -5,17 +5,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:m="clr-namespace:NServiceBus.Profiler.Desktop.MessageList"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
     
-    <UserControl.Resources>
-        <m:DeletedMessageConverter x:Key="conv"/>
-    </UserControl.Resources>
-
     <Grid>
     
         <Grid.RowDefinitions>
@@ -30,7 +25,10 @@
                          ShowLoadingPanel="{Binding WorkInProgress}"
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
                          Grid.Row="1"
-                         ItemsSource="{Binding Messages}"
+                         SelectionMode="Row"
+                         SelectedItems="{Binding SelectedRows}"
+                         CurrentItem="{Binding FocusedRow, Mode=TwoWay}"
+                         ItemsSource="{Binding Rows}"
                          PreviewMouseLeftButtonDown="OnGridControlClicked"
                          CustomUnboundColumnData="OnRequestAdvancedMessageData">
             <dxb:BarManager.DXContextMenu>
@@ -62,7 +60,7 @@
                                 Header="Message ID">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                            <dxe:TextEdit x:Name="PART_Editor" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -72,7 +70,7 @@
                                 Header="Message Type">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                            <dxe:TextEdit x:Name="PART_Editor" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -85,7 +83,7 @@
                     </dxg:GridColumn.EditSettings>
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}"/>
+                            <dxe:TextEdit x:Name="PART_Editor" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -97,7 +95,7 @@
                                 Header="Critical Time">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <dxe:TextEdit x:Name="PART_Editor" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -109,7 +107,7 @@
                                 Header="Processing Time">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" TextDecorations="{Binding RowData.Row.IsDeleted, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <dxe:TextEdit x:Name="PART_Editor" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -118,9 +116,7 @@
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" 
-                               FocusedRow="{Binding FocusedMessage}"
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
-                               SelectionChanged="OnSelectedMessagesChanged"
                                ShowIndicator="False"
                                MultiSelectMode="Row"
                                AllowCascadeUpdate="True" 

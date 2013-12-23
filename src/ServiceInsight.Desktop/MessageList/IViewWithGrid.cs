@@ -1,14 +1,11 @@
-﻿using System.Collections;
+﻿using Caliburn.PresentationFramework;
+
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
-    public interface IViewWithGrid
+    public interface ITableViewModel<T>
     {
-        object ItemsSource { get; }
-        object SelectedItem { get; set; }   
-        int[] GetSelectedRowsIndex();
-        void BeginSelection();
-        void EndSelection();
-        void SelectRow(int rowIndex);
-        bool IsRowSelected(int rowIndex);
+        IObservableCollection<T> SelectedRows { get; }
+        IObservableCollection<T> Rows { get; } 
+        T FocusedRow { get; set; }
     }
 }

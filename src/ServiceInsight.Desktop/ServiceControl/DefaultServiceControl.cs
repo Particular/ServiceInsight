@@ -280,16 +280,16 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogError(IRestResponse response)
         {
-            var errorMessage = string.Format("Error executing the request: {0}, Status code is {1}", 
-                                                                           response.ErrorMessage, 
-                                                                           response.StatusCode);
+            var exception = response != null ? response.ErrorException : null;
+            var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
+            
             RaiseAsyncOperationFailed(errorMessage);
-            _logger.ErrorFormat(errorMessage, response.ErrorException);
+            _logger.ErrorFormat(errorMessage, exception);
         }
 
         private static bool HasSucceeded(IRestResponse response)
         {
-            return SuccessCodes.Any(x => x == response.StatusCode && response.ErrorException == null);
+            return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
         private void RaiseAsyncOperationFailed(string errorMessage)

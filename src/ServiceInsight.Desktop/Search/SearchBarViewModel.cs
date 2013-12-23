@@ -69,7 +69,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        public void SetupPaging(PagedResult<MessageInfo> pagedResult)
+        public void SetupPaging(PagedResult<StoredMessage> pagedResult)
         {
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
@@ -161,7 +161,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public IList<MessageInfo> Result { get; private set; }
+        public IList<StoredMessage> Result { get; private set; }
 
         public int CurrentPage { get; private set; }
         

@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.UI;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer;
@@ -14,7 +12,6 @@ using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
@@ -25,9 +22,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IWindowManagerEx _windowManager;
         private readonly IServiceControl _serviceControl;
-        private readonly IQueueManagerAsync _asyncQueueManager;
         private readonly IErrorHeaderViewModel _errorHeaderDisplay;
         private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
         private readonly IClipboard _clipboard;
@@ -35,25 +30,20 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IMenuItem _retryMessageMenu;
         private readonly IMenuItem _copyMessageIdMenu;
         private readonly IMenuItem _copyHeadersMenu;
-        private IMessageListView _view;
         private string _lastSortColumn;
         private bool _lastSortOrderAscending;
         private int _workCount;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager,
             IServiceControl serviceControl,
-            IQueueManagerAsync asyncQueueManager,
             ISearchBarViewModel searchBarViewModel,
             IErrorHeaderViewModel errorHeaderDisplay,
             IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
             _eventAggregator = eventAggregator;
-            _windowManager = windowManager;
             _serviceControl = serviceControl;
-            _asyncQueueManager = asyncQueueManager;
             _errorHeaderDisplay = errorHeaderDisplay;
             _generalHeaderDisplay = generalHeaderDisplay;
             _clipboard = clipboard;
@@ -66,8 +56,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
             _copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
 
-            Messages = new BindableCollection<MessageInfo>();
-            SelectedMessages = new BindableCollection<MessageInfo>();
+            Rows = new BindableCollection<StoredMessage>();
+            SelectedRows = new BindableCollection<StoredMessage>();
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
                 _returnToSourceMenu, 
@@ -90,30 +80,19 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public new IShellViewModel Parent { get { return (IShellViewModel) base.Parent; } }
 
-        public IObservableCollection<MessageInfo> Messages { get; private set; }
-
-        public IObservableCollection<MessageInfo> SelectedMessages { get; private set; }
-
         public ISearchBarViewModel SearchBar { get; private set; }
 
-        public MessageInfo FocusedMessage { get; set; }
+        public IObservableCollection<StoredMessage> SelectedRows { get; private set; }
 
-        public StoredMessage StoredMessage
-        {
-            get { return FocusedMessage as StoredMessage; }
-        }
+        public IObservableCollection<StoredMessage> Rows { get; private set; } 
+
+        public StoredMessage FocusedRow { get; set; }
 
         public Queue SelectedQueue { get; private set; }
 		
         public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
-
-        public override void AttachView(object view, object context)
-        {
-            base.AttachView(view, context);
-            _view = (IMessageListView) view;
-        }
 
         public void ReturnToSource()
         {
@@ -122,16 +101,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public async void RetryMessage()
         {
-            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", StoredMessage.SendingEndpoint));
-            var msg = (StoredMessage)FocusedMessage;
-            await _serviceControl.RetryMessage(FocusedMessage.Id);
-            Messages.Remove(msg);
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", FocusedRow.SendingEndpoint));
+            var msg = FocusedRow;
+            await _serviceControl.RetryMessage(FocusedRow.Id);
+            Rows.Remove(msg);
             _eventAggregator.Publish(new WorkFinished());
         }
 
         public void CopyMessageId()
         {
-            _clipboard.CopyTo(_serviceControl.GetUri((StoredMessage)FocusedMessage).ToString());
+            _clipboard.CopyTo(_serviceControl.GetUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
@@ -141,8 +120,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public bool CanRetryMessage()
         {
-            return StoredMessage != null &&
-                    (StoredMessage.Status == MessageStatus.Failed || StoredMessage.Status == MessageStatus.RepeatedFailure);
+            return FocusedRow != null &&
+                   (FocusedRow.Status == MessageStatus.Failed || 
+                    FocusedRow.Status == MessageStatus.RepeatedFailure);
         }
 
         public bool CanReturnToSource()
@@ -157,59 +137,23 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public bool CanCopyMessageId()
         {
-            return FocusedMessage != null;
+            return FocusedRow != null;
         }
 
-        bool shouldUpdate = true;
-        public void OnFocusedMessageChanged() 
+        public void OnFocusedRowChanged()
         {
-            if (shouldUpdate)
+            _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
+
+            if (FocusedRow != null)
             {
-                _eventAggregator.Publish(new SelectedMessageChanged(FocusedMessage));
-
-                if (StoredMessage != null)
-                {
-                    _eventAggregator.Publish(new MessageBodyLoaded(StoredMessage));
-                    return;
-                }
-
-                var queueMessage = FocusedMessage as MessageInfo;
-                if (queueMessage != null && SelectedQueue != null)
-                {
-                    LoadQueueMessage(SelectedQueue, FocusedMessage.Id);
-                }
-
-                NotifyPropertiesChanged();
+                _eventAggregator.Publish(new MessageBodyLoaded(FocusedRow));
             }
-        }
 
-        private void LoadQueueMessage(Queue queue, string selectedMessageId)
-        {
-            var msg = _asyncQueueManager.GetMessageBody(queue, selectedMessageId);
-            if (msg == null)
-            {
-                FocusedMessage.IsDeleted = true;
-                NotifyOfPropertyChange(() => FocusedMessage);
-            }
-            _eventAggregator.Publish(new MessageBodyLoaded(msg));
+            NotifyPropertiesChanged();
         }
 
         public async Task RefreshMessages(string orderBy = null, bool ascending = false)
         {
-            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
-            if(queueNode != null)
-            {
-                await RefreshQueue(queueNode.Queue);
-                return;
-            }
-
-            var queueServer = SelectedExplorerItem.As<QueueServerExplorerItem>();
-            if (queueServer != null)
-            {
-                //TODO: Refresh all queues
-                return;
-            }
-
             var serviceControl = SelectedExplorerItem.As<ServiceControlExplorerItem>();
             if (serviceControl != null)
             {
@@ -239,7 +183,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _lastSortOrderAscending = ascending;
             }
 
-            var pagedResult = new PagedResult<StoredMessage>();
+            PagedResult<StoredMessage> pagedResult;
 
             if(endpoint != null)
             {
@@ -264,116 +208,22 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                            ascending: _lastSortOrderAscending);
             }
 
-            using (new MessageSelectionPreserver(_view))
+            using (new GridSelectionPreserver<StoredMessage>(this))
+            using (new GridFocusedRowPreserver<StoredMessage>(this))
             {
-                shouldUpdate = ShouldUpdateMessages(pagedResult);
-                Messages.Clear();
-                Messages.AddRange(pagedResult.Result);
+                Rows.Clear();
+                Rows.AddRange(pagedResult.Result);
             }
-            shouldUpdate = true;
 
             SearchBar.IsVisible = true;
-            SearchBar.SetupPaging(new PagedResult<MessageInfo>
+            SearchBar.SetupPaging(new PagedResult<StoredMessage>
             {
                 CurrentPage = pagedResult.CurrentPage,
                 TotalCount = pagedResult.TotalCount,
-                Result = pagedResult.Result.Cast<MessageInfo>().ToList(),
+                Result = pagedResult.Result,
             });
 
             _eventAggregator.Publish(new WorkFinished());
-        }
-
-        private bool ShouldUpdateMessages(PagedResult<Models.StoredMessage> pagedResult)
-        {
-            var storedFocused = FocusedMessage as StoredMessage;
-            if (storedFocused == null)
-                return true;
-
-            if (Messages.OfType<StoredMessage>().Count(m => m.ConversationId == storedFocused.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == storedFocused.ConversationId))
-                return true;
-            
-            foreach(var message in Messages.OfType<StoredMessage>().Where(m => m.ConversationId == storedFocused.ConversationId))
-            {
-                if (ShouldUpdateMessage(message, pagedResult.Result.FirstOrDefault(m => m.Id == message.Id)))
-                    return true;
-            }
-            
-            return false;
-        }
-
-        private bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
-        {
-            if (newMessage == null)
-                return true;
-
-            if ((newMessage.Status != focusedMessage.Status) ||
-                (newMessage.TimeSent != focusedMessage.TimeSent) ||
-                (newMessage.ProcessingTime != focusedMessage.ProcessingTime) ||
-                (newMessage.IsDeleted != focusedMessage.IsDeleted) ||
-                (newMessage.ReceivingEndpoint.ToString() != focusedMessage.ReceivingEndpoint.ToString()) ||
-                (newMessage.SendingEndpoint.ToString() != focusedMessage.SendingEndpoint.ToString()))
-                return true;
-
-            return false;
-        }
-
-        public async Task RefreshQueue(Queue queue)
-        {
-            _eventAggregator.Publish(new WorkStarted("Loading {0} messages...", queue));
-
-            //await RefreshQueueMessages(queue); //TODO: Do we even need this anymore?? Seems to be doing the same thing as the other!
-            await RefreshQueueMessageCount(queue);
-
-            _eventAggregator.Publish(new WorkFinished());
-        }
-
-        private async Task RefreshQueueMessageCount(Queue queue)
-        {
-            var messages = await _asyncQueueManager.GetMessages(queue);
-
-            using (new GridSelectionPreserver(_view))
-            {
-                Messages.Clear();
-                Messages.AddRange(messages);
-            }
-
-            SearchBar.IsVisible = false;
-            SearchBar.SetupPaging(new PagedResult<MessageInfo>
-            {
-                TotalCount = messages.Count,
-                CurrentPage = 1,
-                Result = messages
-            });
-
-            _eventAggregator.Publish(new QueueMessageCountChanged(SelectedQueue, Messages.Count));
-        }
-
-        private async Task RefreshQueueMessages(Queue queue)
-        {
-            var messages = await _asyncQueueManager.GetMessages(queue);
-
-            var existingMessages = Messages.Select(x => x.Id).ToArray();
-            var updatedMessages = messages.Select(x => x.Id).ToArray();
-            var removedMessages = existingMessages.Union(updatedMessages).Except(updatedMessages).ToList();
-            var newMessages = updatedMessages.Except(existingMessages).ToList();
-
-            using (new GridSelectionPreserver(_view))
-            {
-                foreach (var removedMessageId in removedMessages)
-                {
-                    var message = Messages.SingleOrDefault(m => m.Id == removedMessageId);
-                    if (message != null)
-                    {
-                        Messages.Remove(message);
-                    }
-                }
-
-                foreach (var newMessagesId in newMessages)
-                {
-                    var message = messages.FirstOrDefault(m => m.Id == newMessagesId);
-                    Messages.Add(message);
-                }
-            }
         }
 
         public string GetCriticalTime(StoredMessage msg)
@@ -400,57 +250,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
         {
             return new MessageErrorInfo(msg.Status);
-        }
-
-        public async Task DeleteSelectedMessages()
-        {
-            if (SelectedQueue == null || SelectedMessages.Count <= 0)
-                return;
-
-            var confirmation = string.Format("{0} {1} being removed from {2}. Continue?",
-                                             "message".PluralizeWord(SelectedMessages.Count), 
-                                             SelectedMessages.Count.PluralizeVerb(),
-                                             SelectedQueue.Address);
-
-            var result = _windowManager.ShowMessageBox(confirmation, "Warning", MessageBoxButton.OKCancel,
-                                                       MessageBoxImage.Question);
-            if (result != MessageBoxResult.OK)
-                return;
-
-            foreach (var msg in SelectedMessages)
-            {
-                _asyncQueueManager.DeleteMessage(SelectedQueue, msg);
-            }
-
-            await RefreshMessages();
-        }
-
-        public async Task PurgeQueue()
-        {
-            if (SelectedQueue == null)
-                return;
-
-            var confirmation = string.Format("All the messages in {0} will be removed. Continue?", SelectedQueue.Address);
-            var dialogTitle = string.Format("Purge Queue: {0}", SelectedQueue.Address.Queue);
-            var result = _windowManager.ShowMessageBox(confirmation, dialogTitle, MessageBoxButton.OKCancel, MessageBoxImage.Question, defaultChoice: MessageChoice.Cancel);
-
-            if (result != MessageBoxResult.OK)
-                return;
-
-            _asyncQueueManager.Purge(SelectedQueue);
-            await RefreshMessages();
-        }
-
-        public async void Handle(MessageRemovedFromQueue @event)
-        {
-            var queue = SelectedQueue;
-            var msg = Messages.FirstOrDefault(x => x.Id == @event.Message.Id);
-
-            if (msg != null)
-            {
-                Messages.Remove(msg);
-                await RefreshQueueMessageCount(queue);
-            }
         }
 
         public void Handle(WorkStarted @event)
@@ -500,7 +299,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public void Handle(MessageStatusChanged message)
         {
-            var msg = Messages.OfType<StoredMessage>().FirstOrDefault(x => x.MessageId == message.MessageId);
+            var msg = Rows.FirstOrDefault(x => x.MessageId == message.MessageId);
             if (msg != null)
             {
                 msg.Status = MessageStatus.RetryIssued;

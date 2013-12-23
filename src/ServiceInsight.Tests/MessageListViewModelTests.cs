@@ -2,14 +2,12 @@
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework.ApplicationModel;
 using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
 using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Tests.Helpers;
@@ -23,8 +21,6 @@ namespace NServiceBus.Profiler.Tests
     [Ignore] //TODO: Due to a problem with the async On...Change methods. To investigate.
     public class MessageListViewModelTests : AsyncTestBase
     {
-        private IQueueManagerAsync QueueManager;
-        private IWindowManagerEx WindowManager;
         private IEventAggregator EventAggregator;
         private IServiceControl ServiceControl;
         private ISearchBarViewModel SearchBar;
@@ -38,12 +34,11 @@ namespace NServiceBus.Profiler.Tests
             EventAggregator = Substitute.For<IEventAggregator>();
             ServiceControl = Substitute.For<IServiceControl>();
             MessageStore = new Dictionary<Queue, List<MessageInfo>>();
-            QueueManager = new FakeQueueManager(MessageStore);
-            WindowManager = Substitute.For<IWindowManagerEx>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
-            MessageList = new MessageListViewModel(EventAggregator, WindowManager, ServiceControl, 
-                                                   QueueManager, SearchBar, 
+            MessageList = new MessageListViewModel(EventAggregator, 
+                                                   ServiceControl, 
+                                                   SearchBar, 
                                                    Substitute.For<IErrorHeaderViewModel>(), 
                                                    Substitute.For<IGeneralHeaderViewModel>(), 
                                                    Substitute.For<IClipboard>());
@@ -70,7 +65,7 @@ namespace NServiceBus.Profiler.Tests
 
             EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
             EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
-            MessageList.Messages.Count.ShouldBe(2);
+            MessageList.Rows.Count.ShouldBe(2);
             SearchBar.IsVisible.ShouldBe(true);
         }
 
@@ -89,11 +84,11 @@ namespace NServiceBus.Profiler.Tests
 
             EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
             EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
-            MessageList.Messages.Count.ShouldBe(3);
+            MessageList.Rows.Count.ShouldBe(3);
             SearchBar.IsVisible.ShouldBe(false);
-            MessageList.Messages[0].FriendlyMessageType.ShouldBe("SomeMessage");
-            MessageList.Messages[1].FriendlyMessageType.ShouldBe("SubMessage");
-            MessageList.Messages[2].FriendlyMessageType.ShouldBe(null);
+            MessageList.Rows[0].FriendlyMessageType.ShouldBe("SomeMessage");
+            MessageList.Rows[1].FriendlyMessageType.ShouldBe("SubMessage");
+            MessageList.Rows[2].FriendlyMessageType.ShouldBe(null);
         }
     }
 }
