@@ -9,15 +9,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private const int heightNoEndpoints = 56;
-        private const int endpointsHeight = 25;
+        private const int HeightNoEndpoints = 56;
+        private const int EndpointsHeight = 25;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
             IsResizable = false;
             Owner = owner;
-            Bounds = new Rect(0, 0, 233, heightNoEndpoints);
-            //ZOrder = 1;
+            Bounds = new Rect(0, 0, 233, HeightNoEndpoints);
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
         }
@@ -82,7 +81,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
+            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, HeightNoEndpoints + (ShowEndpoints ? EndpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
@@ -137,7 +136,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             get
             {
-                return Owner.IsFocused(this.Message);
+                return Owner.IsFocused(Message);
             }
         }
     }

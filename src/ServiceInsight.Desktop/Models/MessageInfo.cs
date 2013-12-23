@@ -16,7 +16,6 @@ namespace NServiceBus.Profiler.Desktop.Models
             Id = id;
             Label = label;
             TimeSent = timeSent;
-            IsDeleted = false;
         }
 
         public string Id { get; set; }
@@ -26,8 +25,6 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string MessageType { get; set; }
 
         public DateTime TimeSent { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public string FriendlyMessageType { get; private set; }
 

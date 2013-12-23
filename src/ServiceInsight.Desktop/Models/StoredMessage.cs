@@ -96,6 +96,17 @@ namespace NServiceBus.Profiler.Desktop.Models
                                                    x.Key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));
             return pair == null ? string.Empty : pair.Value;
         }
+
+        public bool DisplayPropertiesChanged(StoredMessage focusedMessage)
+        {
+            if (focusedMessage == null) return true;
+
+            return (Status != focusedMessage.Status) ||
+                   (TimeSent != focusedMessage.TimeSent) ||
+                   (ProcessingTime != focusedMessage.ProcessingTime) ||
+                   (ReceivingEndpoint.ToString() != focusedMessage.ReceivingEndpoint.ToString()) ||
+                   (SendingEndpoint.ToString() != focusedMessage.SendingEndpoint.ToString());
+        }
     }
 
     [DebuggerDisplay("Key={Key},Value={Value}")]

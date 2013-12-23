@@ -7,9 +7,7 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.ScreenManager;
@@ -23,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         MessageFlowDiagram Diagram { get; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
-        void CopyMessageId(StoredMessage Message);
+        void CopyMessageId(StoredMessage message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
@@ -31,7 +29,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void ShowException(IExceptionDetails exception);
         void ZoomIn();
         void ZoomOut();
-        bool IsFocused(MessageInfo Message);
+        bool IsFocused(MessageInfo message);
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
@@ -39,26 +37,21 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
-        private readonly IHeaderInfoSerializer _headerInfoSerializer;
         private readonly IClipboard _clipboard;
         private readonly IWindowManagerEx _windowManager;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
+        private string _originalSelectionId = string.Empty;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder,
-            IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
             IScreenFactory screenFactory)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
-            _decoder = decoder;
-            _headerInfoSerializer = headerInfoSerializer;
             _clipboard = clipboard;
             _windowManager = windowManager;
             _screenFactory = screenFactory;
@@ -151,7 +144,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public bool IsFocused(MessageInfo message)
         {
-            return message.Id == originalSelectionId;
+            return message.Id == _originalSelectionId;
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -197,14 +190,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Diagram.Connections.Add(connection);
         }
 
-        private string originalSelectionId = string.Empty;
         private void CreateConversationNodes(string selectedId, IEnumerable<MessageNode> relatedNodes)
         {
             foreach (var node in relatedNodes)
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    originalSelectionId = selectedId;
+                    _originalSelectionId = selectedId;
                     SelectedMessage = node;
                 }
 
@@ -246,9 +238,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void Handle(SelectedMessageChanged message)
         {
-            originalSelectionId = string.Empty;
-            SelectedMessage = null;
+            _originalSelectionId = string.Empty;
             _nodeMap.Clear();
+
+            SelectedMessage = null;
             Diagram = new MessageFlowDiagram();
         }
 

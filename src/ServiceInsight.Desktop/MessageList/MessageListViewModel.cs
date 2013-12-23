@@ -30,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private readonly IMenuItem _retryMessageMenu;
         private readonly IMenuItem _copyMessageIdMenu;
         private readonly IMenuItem _copyHeadersMenu;
+        private bool _lockUpdate;
         private string _lastSortColumn;
         private bool _lastSortOrderAscending;
         private int _workCount;
@@ -142,6 +143,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public void OnFocusedRowChanged()
         {
+            if (_lockUpdate) return;
+
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
             if (FocusedRow != null)
@@ -208,12 +211,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                                            ascending: _lastSortOrderAscending);
             }
 
-            using (new GridSelectionPreserver<StoredMessage>(this))
-            using (new GridFocusedRowPreserver<StoredMessage>(this))
-            {
-                Rows.Clear();
-                Rows.AddRange(pagedResult.Result);
-            }
+            TryRebindMessageList(pagedResult);
 
             SearchBar.IsVisible = true;
             SearchBar.SetupPaging(new PagedResult<StoredMessage>
@@ -224,6 +222,45 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             });
 
             _eventAggregator.Publish(new WorkFinished());
+        }
+
+        private void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
+        {
+            try
+            {
+                _lockUpdate = !ShouldUpdateMessages(pagedResult);
+
+                using (new GridSelectionPreserver<StoredMessage>(this))
+                using (new GridFocusedRowPreserver<StoredMessage>(this))
+                {
+                    Rows.Clear();
+                    Rows.AddRange(pagedResult.Result);
+                }
+            }
+            finally
+            {
+                _lockUpdate = false;
+            }
+        }
+
+        private bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
+        {
+            if (FocusedRow == null)
+                return true;
+
+            var hasNewMessageInConversation = Rows.Count(m => m.ConversationId == FocusedRow.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == FocusedRow.ConversationId);
+            if (hasNewMessageInConversation)
+                return true;
+
+            var messagesInConversation = Rows.Where(m => m.ConversationId == FocusedRow.ConversationId);
+            var anyConversationMessageChanged = messagesInConversation.Any(message => ShouldUpdateMessage(message, pagedResult.Result.FirstOrDefault(m => m.Id == message.Id)));
+
+            return anyConversationMessageChanged;
+        }
+
+        private static bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
+        {
+            return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
         public string GetCriticalTime(StoredMessage msg)
