@@ -16,6 +16,7 @@ namespace NServiceBus.Profiler.Desktop.Search
     {
         Endpoint SelectedEndpoint { get; }
         string SearchQuery { get; }
+        bool SearchEnabled { get; }
         bool IsVisible { get; set; }
         void GoToFirstPage();
         void GoToLastPage();

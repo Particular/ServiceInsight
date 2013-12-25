@@ -234,6 +234,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             if (serviceNode != null)
             {
                 SelectedEndpoint = null;
+                SearchEnabled = true;
             }
 
             var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();

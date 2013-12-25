@@ -122,6 +122,7 @@
     <Compile Include="HexViewerTests.cs" />
     <Compile Include="JsonParserTests.cs" />
     <Compile Include="JsonViewerTests.cs" />
+    <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="QueueConnectionDialogTests.cs" />
