@@ -256,7 +256,6 @@
     <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailed.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
-    <Compile Include="Events\MessageBodyLoaded.cs" />
     <Compile Include="Events\QueueMessageCountChanged.cs" />
     <Compile Include="Events\SelectedExplorerItemChanged.cs" />
     <Compile Include="Events\SelectedMessageChanged.cs" />

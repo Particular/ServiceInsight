@@ -30,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void OnShellLoaded(object sender, RoutedEventArgs e)
         {
             DXSplashScreen.Close();
+            Activate();
         }
 
         public void ChangeTheme(string name)
