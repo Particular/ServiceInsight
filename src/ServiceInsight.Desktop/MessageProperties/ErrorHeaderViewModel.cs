@@ -5,7 +5,6 @@ using System.Linq;
 using Caliburn.PresentationFramework.ApplicationModel;
 using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.Models;
 

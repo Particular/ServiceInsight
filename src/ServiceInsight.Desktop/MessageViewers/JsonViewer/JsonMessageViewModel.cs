@@ -36,32 +36,23 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
 
             _messageView.Clear();
 
-            if (SelectedMessage != null)
+            if (SelectedMessage == null) return;
+
+            if (SelectedMessage.Body != null)
             {
-                if (SelectedMessage.Body != null)
+                _messageView.Display(SelectedMessage.Body);
+            }
+            else
+            {
+                var json = _messageDecoder.Decode(SelectedMessage.BodyRaw);
+                if (json.IsParsed)
                 {
-                    _messageView.Display(SelectedMessage.Body);
-                }
-                else
-                {
-                    var json = _messageDecoder.Decode(SelectedMessage.BodyRaw);
-                    if (json.IsParsed)
-                    {
-                        _messageView.Display(json.Value);
-                    }
+                    _messageView.Display(json.Value);
                 }
             }
         }
 
         public void Handle(SelectedMessageChanged @event)
-        {
-            if (@event.SelectedMessage == null)
-            {
-                SelectedMessage = null;
-            }
-        }
-
-        public void Handle(MessageBodyLoaded @event)
         {
             SelectedMessage = @event.Message;
         }

@@ -104,21 +104,10 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             get; private set;
         }
 
-        public void Handle(MessageBodyLoaded @event)
-        {
-            HexParts.Clear();
-
-            CurrentContent = null;
-            CurrentContent = @event.Message != null ? @event.Message.BodyRaw : null;
-        }
-
         public void Handle(SelectedMessageChanged @event)
         {
-            if (@event.SelectedMessage == null)
-            {
-                HexParts.Clear();
-                CurrentContent = null;
-            }
+            HexParts.Clear();
+            CurrentContent = @event.Message != null ? @event.Message.BodyRaw : null;
         }
     }
 }

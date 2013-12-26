@@ -147,11 +147,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
-            if (FocusedRow != null)
-            {
-                _eventAggregator.Publish(new MessageBodyLoaded(FocusedRow));
-            }
-
             NotifyPropertiesChanged();
         }
 

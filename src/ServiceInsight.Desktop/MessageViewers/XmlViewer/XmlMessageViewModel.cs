@@ -23,15 +23,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             _xmlDecoder = xmlDecoder;
             _stringDecoder = stringDecoder;
             _clipboard = clipboard;
-
-            //TODO: Add back context menu
-//            ContextMenuItems = new List<PluginContextMenu>
-//            {
-//                new PluginContextMenu("CopyMessageXml", new RelayCommand(CopyMessageXml, CanCopyMessageXml))
-//                {
-//                    DisplayName = "Copy Message",
-//                }
-//            };
         }
 
         protected override void OnActivate()
@@ -80,14 +71,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
         }
 
         public void Handle(SelectedMessageChanged @event)
-        {
-            if (@event.SelectedMessage == null)
-            {
-                SelectedMessage = null;
-            }
-        }
-
-        public void Handle(MessageBodyLoaded @event)
         {
             SelectedMessage = @event.Message;
         }

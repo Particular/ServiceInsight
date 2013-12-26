@@ -4,11 +4,11 @@ namespace NServiceBus.Profiler.Desktop.Events
 {
     public class SelectedMessageChanged
     {
-        public SelectedMessageChanged(MessageInfo message)
+        public SelectedMessageChanged(StoredMessage message)
         {
-            SelectedMessage = message;
+            Message = message;
         }
 
-        public MessageInfo SelectedMessage { get; private set; }
+        public StoredMessage Message { get; private set; }
     }
 }

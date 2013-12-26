@@ -47,7 +47,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_clear_the_view_when_message_is_unselected()
         {
-            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
 
             ViewModel.Handle(new SelectedMessageChanged(null));
 
@@ -63,7 +63,7 @@ namespace NServiceBus.Profiler.Tests
             ViewModel.AttachView(View, null);
             ((IActivate)ViewModel).Activate();
 
-            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(messageWithSpecialChars) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(messageWithSpecialChars) }));
 
             ViewModel.HexParts.ShouldNotBeEmpty();
             ViewModel.HexParts[1].Numbers.Count(n => n.Text == ".").ShouldBe(1);

@@ -6,13 +6,11 @@ using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
 using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers
 {
-    public interface IMessageBodyViewModel : 
-        IScreen,
-        IHandle<MessageBodyLoaded>
+    public interface IMessageBodyViewModel : IScreen,
+        IHandle<SelectedMessageChanged>
     {
     }
 
@@ -61,9 +59,9 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml; }
         }
 
-        public void Handle(MessageBodyLoaded @event)
+        public void Handle(SelectedMessageChanged @event)
         {
-            var storedMessage = @event.Message as StoredMessage;
+            var storedMessage = @event.Message;
             if (storedMessage != null)
             {
                 ContentType = ContentTypeMaps.GetValueOrDefault(storedMessage.ContentType, MessageContentType.NotSpecified);

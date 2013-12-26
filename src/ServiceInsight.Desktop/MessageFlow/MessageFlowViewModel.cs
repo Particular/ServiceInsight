@@ -15,7 +15,6 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     public interface IMessageFlowViewModel : IScreen, 
-        IHandle<MessageBodyLoaded>,
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
@@ -127,19 +126,33 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _eventAggregator.Publish(new WorkFinished());
         }
 
-        public async void Handle(MessageBodyLoaded @event)
+        public async void Handle(SelectedMessageChanged @event)
         {
+            if (_loadingConversation) return;
+
+            _loadingConversation = true;
+            _originalSelectionId = string.Empty;
+            _nodeMap.Clear();
+
+            SelectedMessage = null;
+            Diagram = new MessageFlowDiagram();
+        
             var storedMessage = @event.Message;
-            if (storedMessage == null) return;
+            if (storedMessage == null)
+            {
+                _loadingConversation = false;
+                return;
+            }
 
             var conversationId = storedMessage.ConversationId;
-            if (conversationId == null) return;
-
-            if (_loadingConversation) return;
+            if (conversationId == null)
+            {
+                _loadingConversation = false;
+                return;
+            }
 
             try
             {
-                _loadingConversation = true;
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
@@ -155,15 +168,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
 
             _eventAggregator.Publish(new WorkFinished());
-        }
-
-        public void Handle(SelectedMessageChanged message)
-        {
-            _originalSelectionId = string.Empty;
-            _nodeMap.Clear();
-
-            SelectedMessage = null;
-            Diagram = new MessageFlowDiagram();
         }
 
         public void ZoomIn()

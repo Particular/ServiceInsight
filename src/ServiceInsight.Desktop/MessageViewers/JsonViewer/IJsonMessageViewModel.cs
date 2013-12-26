@@ -9,7 +9,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
     public interface IJsonMessageViewModel :
         IViewAware,
         IScreen,
-        IHandle<MessageBodyLoaded>,
         IHandle<SelectedMessageChanged>
     {
         MessageBody SelectedMessage { get; set; }

@@ -50,7 +50,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_clear_message_body_when_selected_message_is_unselected()
         {
-            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
             ViewModel.Handle(new SelectedMessageChanged(null));
 
             ViewModel.SelectedMessage.ShouldBe(null);
@@ -59,7 +59,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.Handle(new MessageBodyLoaded(new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
 
             View.DidNotReceive().Display(Arg.Any<string>()); 
         }
