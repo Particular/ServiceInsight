@@ -241,6 +241,25 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 _lockUpdate = false;
             }
+
+            AutoSelectFirstRow();
+            AutoFocusFirstRow();
+        }
+
+        private void AutoFocusFirstRow()
+        {
+            if (FocusedRow == null && Rows.Count > 0)
+            {
+                FocusedRow = Rows[0];
+            }
+        }
+
+        private void AutoSelectFirstRow()
+        {
+            if (SelectedRows.Count == 0 && Rows.Count > 0)
+            {
+                SelectedRows.Add(Rows[0]);
+            }
         }
 
         private bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
