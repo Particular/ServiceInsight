@@ -4,11 +4,11 @@ namespace NServiceBus.Profiler.Desktop.Events
 {
     public class MessageBodyLoaded
     {
-        public MessageBodyLoaded(MessageBody message)
+        public MessageBodyLoaded(StoredMessage message)
         {
             Message = message;
         }
 
-        public MessageBody Message { get; private set; }
+        public StoredMessage Message { get; private set; }
     }
 }

@@ -42,6 +42,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
         private string _originalSelectionId = string.Empty;
+        private bool _loadingConversation;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -61,6 +62,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         }
 
         public MessageFlowDiagram Diagram
+        {
+            get; set;
+        }
+
+        public bool ShowEndpoints
+        {
+            get; set;
+        }
+
+        public MessageNode SelectedMessage
         {
             get; set;
         }
@@ -118,12 +129,17 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public async void Handle(MessageBodyLoaded @event)
         {
-            var storedMessage = @event.Message as StoredMessage;
-            if (storedMessage != null)
-            {
-                var conversationId = storedMessage.ConversationId;
-                if (conversationId == null) return;
+            var storedMessage = @event.Message;
+            if (storedMessage == null) return;
 
+            var conversationId = storedMessage.ConversationId;
+            if (conversationId == null) return;
+
+            if (_loadingConversation) return;
+
+            try
+            {
+                _loadingConversation = true;
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
@@ -132,19 +148,49 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 CreateConversationNodes(storedMessage.Id, nodes);
                 LinkConversationNodes(nodes);
                 UpdateLayout();
-
-                _eventAggregator.Publish(new WorkFinished());
             }
+            finally
+            {
+                _loadingConversation = false;
+            }
+
+            _eventAggregator.Publish(new WorkFinished());
         }
 
-        private MessageNode CreateMessageNode(StoredMessage x)
+        public void Handle(SelectedMessageChanged message)
         {
-            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints};
+            _originalSelectionId = string.Empty;
+            _nodeMap.Clear();
+
+            SelectedMessage = null;
+            Diagram = new MessageFlowDiagram();
+        }
+
+        public void ZoomIn()
+        {
+            _view.Surface.Zoom += 0.1;
+        }
+
+        public void ZoomOut()
+        {
+            _view.Surface.Zoom -= 0.1;
         }
 
         public bool IsFocused(MessageInfo message)
         {
             return message.Id == _originalSelectionId;
+        }
+
+        public void OnShowEndpointsChanged()
+        {
+            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
+            {
+                node.ShowEndpoints = ShowEndpoints;
+                _view.UpdateNode(node);
+            }
+
+            _view.UpdateConnections();
+            _view.ApplyLayout();
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -205,23 +251,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        public bool ShowEndpoints
-        {
-            get; set;
-        }
-
-        public void OnShowEndpointsChanged()
-        {
-            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
-            {
-                node.ShowEndpoints = ShowEndpoints;
-                _view.UpdateNode(node);
-            }
-
-            _view.UpdateConnections();
-            _view.ApplyLayout();
-        }
-
         private void UpdateLayout()
         {
             if (_view != null)
@@ -231,28 +260,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        public MessageNode SelectedMessage
+        private MessageNode CreateMessageNode(StoredMessage x)
         {
-            get; set;
-        }
-
-        public void Handle(SelectedMessageChanged message)
-        {
-            _originalSelectionId = string.Empty;
-            _nodeMap.Clear();
-
-            SelectedMessage = null;
-            Diagram = new MessageFlowDiagram();
-        }
-
-        public void ZoomIn()
-        {
-            _view.Surface.Zoom += 0.1;
-        }
-
-        public void ZoomOut()
-        {
-            _view.Surface.Zoom -= 0.1;
+            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints };
         }
     }
 }
