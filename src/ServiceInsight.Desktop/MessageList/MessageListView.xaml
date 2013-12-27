@@ -12,7 +12,6 @@
              d:DesignHeight="200" d:DesignWidth="500">
     
     <Grid>
-    
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
@@ -57,7 +56,8 @@
                                 Tag="id" 
                                 AllowColumnFiltering="False"
                                 UnboundType="String"
-                                Header="Message ID">
+                                Header="Message ID"
+                                HeaderToolTip="Message Identifier">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" />
@@ -67,7 +67,8 @@
                 <dxg:GridColumn FieldName="FriendlyMessageType" 
                                 AllowColumnFiltering="False"
                                 Tag="message_type" 
-                                Header="Message Type">
+                                Header="Message Type"
+                                HeaderToolTip="Type of the message">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" />
@@ -77,7 +78,8 @@
                 <dxg:GridColumn FieldName="TimeSent" 
                                 Tag="time_sent" 
                                 AllowColumnFiltering="False"
-                                Header="Time Sent">
+                                Header="Time Sent"
+                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
                     </dxg:GridColumn.EditSettings>
@@ -92,7 +94,8 @@
                                 AllowColumnFiltering="False"
                                 AllowSorting="True"
                                 UnboundType="String" 
-                                Header="Critical Time">
+                                Header="Critical Time"
+                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" />
@@ -104,7 +107,8 @@
                                 AllowColumnFiltering="False"
                                 AllowSorting="True"
                                 UnboundType="String" 
-                                Header="Processing Time">
+                                Header="Processing Time"
+                                HeaderToolTip="Calculated duration of processing">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit x:Name="PART_Editor" />
