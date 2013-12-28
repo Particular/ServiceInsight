@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Xml;
+﻿using System.Xml;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
@@ -16,7 +15,6 @@ namespace NServiceBus.Profiler.Tests
     {
         private IXmlMessageViewModel ViewModel;
         private IXmlMessageView View;
-        private IContentDecoder<string> StringDecoder;
         private IContentDecoder<XmlDocument> XmlDecoder;
         private IClipboard Clipboard;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
@@ -24,24 +22,20 @@ namespace NServiceBus.Profiler.Tests
         [SetUp]
         public void TestInitialize()
         {
-            StringDecoder = Substitute.For<IContentDecoder<string>>();
             XmlDecoder = Substitute.For<IContentDecoder<XmlDocument>>();
             Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
-            ViewModel = new XmlMessageViewModel(XmlDecoder, StringDecoder, Clipboard);
+            ViewModel = new XmlMessageViewModel(XmlDecoder, Clipboard);
             ViewModel.Activate();
         }
 
         [Test]
         public void should_decode_message_as_xml_when_view_is_loaded()
         {
-            var document = new XmlDocument();
-            document.LoadXml(TestMessage);
-            XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(document));
-            StringDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<string>(TestMessage));
+            XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
             ViewModel.AttachView(View, null);
-            ViewModel.SelectedMessage = new MessageBody { BodyRaw = Encoding.Default.GetBytes(TestMessage) };
+            ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 
             View.Received(1).Display(Arg.Any<string>());
             XmlDecoder.Received(1).Decode(Arg.Any<byte[]>());
@@ -50,7 +44,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_clear_message_body_when_selected_message_is_unselected()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
             ViewModel.Handle(new SelectedMessageChanged(null));
 
             ViewModel.SelectedMessage.ShouldBe(null);
@@ -59,7 +53,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
 
             View.DidNotReceive().Display(Arg.Any<string>()); 
         }
@@ -75,12 +69,20 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void clipboard_should_have_message_content_when_copying_message()
         {
-            ViewModel.SelectedMessage = new MessageBody { BodyRaw = Encoding.UTF8.GetBytes(TestMessage) };
-            StringDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<string>(TestMessage));
+            ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
             
+            XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
+
             ViewModel.CopyMessageXml();
 
             Clipboard.Received().CopyTo(Arg.Any<string>());
+        }
+
+        private static XmlDocument GetDocument(string content)
+        {
+            var document = new XmlDocument();
+            document.LoadXml(content);
+            return document;
         }
     }
 }

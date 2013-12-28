@@ -43,8 +43,6 @@ namespace NServiceBus.Profiler.Tests
             fetchedMsg.Label.ShouldNotBe(null);
             fetchedMsg.Id.ShouldNotBe(null);
             fetchedMsg.Id.ShouldNotBeEmpty();
-            fetchedMsg.BodyRaw.ShouldNotBe(null);
-            fetchedMsg.BodyRaw.Length.ShouldBeGreaterThan(0);
         }
 
         [Test]

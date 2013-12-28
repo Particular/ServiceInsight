@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
         IViewAware,
         IHandle<SelectedMessageChanged>
     {
-        byte[] CurrentContent { get; set; }
+        byte[] SelectedMessage { get; set; }
         IObservableCollection<HexPart> HexParts { get; }
     }
 }

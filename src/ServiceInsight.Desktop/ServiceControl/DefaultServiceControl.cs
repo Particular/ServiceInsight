@@ -112,12 +112,27 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var url = string.Format("errors/{0}/retry", messageId);
             var request = new RestRequest(url, Method.POST);
-            var response = await ExecuteAsync(request);
+            var response = await ExecuteAsync(request, HasSucceeded);
 
             return response;
         }
 
-        private void AppendSystemMessages(RestRequest request, string searchQuery)
+        public async Task<string> GetBody(Uri uri)
+        {
+            var serviceAddress = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
+            var request = new RestRequest(uri, Method.GET);
+            var response = await ExecuteAsync(CreateClient(serviceAddress), request, r => HasSucceeded(r) ? r.Content : string.Empty);
+
+            return response;
+        }
+
+        public Uri GetUri(StoredMessage message)
+        {
+            var connectionUri = new Uri(_connection.Url);
+            return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
+        }
+
+        private void AppendSystemMessages(IRestRequest request, string searchQuery)
         {
             if (searchQuery != null) return; //Not supported by search endpoint/api
             request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
@@ -148,7 +163,12 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private IRestClient CreateClient()
         {
-            var client = new RestClient(_connection.Url);
+            return CreateClient(_connection.Url);
+        }
+
+        private IRestClient CreateClient(string url)
+        {
+            var client = new RestClient(url);
             var deserializer = new JsonMessageDeserializer();
             client.ClearHandlers();
             client.AddHandler("application/json", deserializer);
@@ -198,12 +218,19 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return ExecuteAsync<T>(request, response => response.Data);
         }
 
-        private Task<bool> ExecuteAsync(IRestRequest request)
+        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        {
+            return ExecuteAsync(CreateClient(), request, selector);
+        }
+
+        private Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<bool>();
-            CreateClient().ExecuteAsync(request, response => ProcessResponse(HasSucceeded, response, completionSource));
+            var completionSource = new TaskCompletionSource<T>();
+            
+            client.ExecuteAsync(request, response => ProcessResponse(selector, response, completionSource));
+            
             return completionSource.Task;
         }
 
@@ -304,12 +331,6 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                 yield return HttpStatusCode.OK;
                 yield return HttpStatusCode.Accepted;
             }
-        }
-
-        public Uri GetUri(StoredMessage message)
-        {
-            var connectionUri = new Uri(_connection.Url);
-            return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
     }
 }

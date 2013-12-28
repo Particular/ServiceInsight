@@ -252,12 +252,13 @@
                         </dxd:LayoutPanel>
 
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
-                            <dxd:TabbedGroup ItemWidth="3*"
+                            <dxd:TabbedGroup x:Name="MainTabbedView" 
+                                             ItemWidth="3*"
                                              AllowClose="False"
                                              AllowFloat="False"
                                              GroupBorderStyle="Tabbed">
 
-                                <dxd:LayoutPanel x:Name="FlowDiagram" 
+                                <dxd:LayoutPanel x:Name="MessageFlow" 
                                                  AutomationProperties.AutomationId="MessageFlow"
                                                  Caption="Flow Diagram"  
                                                  AllowClose="False"

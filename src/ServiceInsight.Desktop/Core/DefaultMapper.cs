@@ -33,7 +33,6 @@ namespace NServiceBus.Profiler.Desktop.Core
         {
             var m = new MessageBody(source.Id, source.Label, source.SentTime)
             {
-                BodyRaw = source.BodyStream.GetAsBytes(),
                 HeaderRaw = source.Extension,
             };
 

@@ -10,7 +10,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
-        <dxlc:LayoutControl Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <dxlc:LayoutControl Padding="0" 
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch"
+                            SelectedTabChildChanged="OnSelectedTabChanged">
             <dxlc:LayoutGroup View="Tabs">
                 <dxlc:LayoutGroup.TabsStyle>
                     <Style TargetType="dxc:DXTabControl">
