@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -141,9 +142,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return FocusedRow != null;
         }
 
-        public void OnFocusedRowChanged()
+        public async void OnFocusedRowChanged()
         {
             if (_lockUpdate) return;
+
+            await LoadMessageBody();
 
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
@@ -219,6 +222,80 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new WorkFinished());
         }
 
+        public string GetCriticalTime(StoredMessage msg)
+        {
+            if (msg != null && msg.Statistics != null)
+                return msg.Statistics.ElapsedCriticalTime;
+
+            return string.Empty;
+        }
+
+        public string GetProcessingTime(StoredMessage msg)
+        {
+            if (msg != null && msg.Statistics != null)
+                return msg.Statistics.ElapsedProcessingTime;
+
+            return string.Empty;
+        }
+
+        public MessageErrorInfo GetMessageErrorInfo()
+        {
+            return new MessageErrorInfo();
+        }
+
+        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
+        {
+            return new MessageErrorInfo(msg.Status);
+        }
+
+        public void Handle(WorkStarted @event)
+        {
+            _workCount++;
+            NotifyOfPropertyChange(() => WorkInProgress);
+        }
+
+        public void Handle(WorkFinished @event)
+        {
+            if (_workCount > 0)
+            {
+                _workCount--;
+                NotifyOfPropertyChange(() => WorkInProgress);
+            }
+        }
+
+        public void Handle(SelectedExplorerItemChanged @event)
+        {
+            SelectedExplorerItem = @event.SelectedExplorerItem;
+        }
+
+        public void Handle(AsyncOperationFailed message)
+        {
+            _workCount = 0;
+            NotifyOfPropertyChange(() => WorkInProgress);
+        }
+
+        public void Handle(MessageStatusChanged message)
+        {
+            var msg = Rows.FirstOrDefault(x => x.MessageId == message.MessageId);
+            if (msg != null)
+            {
+                msg.Status = MessageStatus.RetryIssued;
+            }
+        }
+
+        public async void OnSelectedExplorerItemChanged()
+        {
+            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
+            if (queueNode != null)
+            {
+                SelectedQueue = queueNode.Queue;
+            }
+
+            await RefreshMessages();
+
+            NotifyPropertiesChanged();
+        }
+
         private void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
         {
             try
@@ -277,84 +354,23 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
-        public string GetCriticalTime(StoredMessage msg)
+        private async Task LoadMessageBody()
         {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedCriticalTime;
+            if (FocusedRow == null) return;
 
-            return string.Empty;
-        }
+            _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-        public string GetProcessingTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedProcessingTime;
+            var body = await _serviceControl.GetBody(new Uri(FocusedRow.BodyUrl));
+            
+            FocusedRow.Body = body;
 
-            return string.Empty;
-        }
-
-        public MessageErrorInfo GetMessageErrorInfo()
-        {
-            return new MessageErrorInfo();
-        }
-
-        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
-        {
-            return new MessageErrorInfo(msg.Status);
-        }
-
-        public void Handle(WorkStarted @event)
-        {
-            _workCount++;
-            NotifyOfPropertyChange(() => WorkInProgress);
-        }
-
-        public void Handle(WorkFinished @event)
-        {
-            if (_workCount > 0)
-            {
-                _workCount--;
-                NotifyOfPropertyChange(() => WorkInProgress);
-            }
-        }
-
-        public async void OnSelectedExplorerItemChanged()
-        {
-            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queueNode != null)
-            {
-                SelectedQueue = queueNode.Queue;
-            }
-
-            await RefreshMessages();
-
-            NotifyPropertiesChanged();
+            _eventAggregator.Publish(new WorkFinished());
         }
 
         private void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
             SearchBar.NotifyPropertiesChanged();
-        }
-
-        public void Handle(SelectedExplorerItemChanged @event)
-        {
-            SelectedExplorerItem = @event.SelectedExplorerItem;
-        }
-
-        public void Handle(AsyncOperationFailed message)
-        {
-            _workCount = 0;
-            NotifyOfPropertyChange(() => WorkInProgress);
-        }
-
-        public void Handle(MessageStatusChanged message)
-        {
-            var msg = Rows.FirstOrDefault(x => x.MessageId == message.MessageId);
-            if (msg != null)
-            {
-                msg.Status = MessageStatus.RetryIssued;
-            }
         }
     }
 }

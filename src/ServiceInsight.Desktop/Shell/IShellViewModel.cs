@@ -46,5 +46,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         void ExportMessage();
         Task CreateQueue();
         void CreateMessage();
+        void OnSelectedTabbedViewChanged(object view);
     }
 }

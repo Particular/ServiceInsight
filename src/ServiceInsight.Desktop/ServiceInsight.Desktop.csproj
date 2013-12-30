@@ -207,6 +207,7 @@
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
+    <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
@@ -360,8 +361,8 @@
     </Compile>
     <Compile Include="Options\OptionsViewModel.cs" />
     <Compile Include="Options\PropertyValueConverter.cs" />
-    <Compile Include="ScreenManager\FileDialogModel.cs" />
-    <Compile Include="ScreenManager\FileDialogResult.cs" />
+    <Compile Include="Core\UI\ScreenManager\FileDialogModel.cs" />
+    <Compile Include="Core\UI\ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
     <Compile Include="Settings\LicenseSettings.cs" />
     <Compile Include="Settings\ServiceControlSettings.cs" />
@@ -408,8 +409,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ScreenManager\ChoiceCommand.cs" />
-    <Compile Include="ScreenManager\IWindowManagerEx.cs" />
+    <Compile Include="Core\UI\ScreenManager\ChoiceCommand.cs" />
+    <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Search\ISearchBarView.cs" />
     <Compile Include="Search\ISearchBarViewModel.cs" />
     <Compile Include="Search\SearchBar.xaml.cs">
@@ -420,12 +421,12 @@
       <DependentUpon>ConnectToMachineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\ConnectToMachineViewModel.cs" />
-    <Compile Include="ScreenManager\Dialog.xaml.cs">
+    <Compile Include="Core\UI\ScreenManager\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScreenManager\DialogViewModel.cs" />
-    <Compile Include="ScreenManager\MessageChoice.cs" />
-    <Compile Include="ScreenManager\MessageIcon.cs" />
+    <Compile Include="Core\UI\ScreenManager\DialogViewModel.cs" />
+    <Compile Include="Core\UI\ScreenManager\MessageChoice.cs" />
+    <Compile Include="Core\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IShellViewModel.cs" />
@@ -436,9 +437,9 @@
     </Compile>
     <Compile Include="Shell\QueueCreationViewModel.cs" />
     <Compile Include="Shell\QueueExceptionHandler.cs" />
-    <Compile Include="ScreenManager\ScreenFactory.cs" />
+    <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
-    <Compile Include="ScreenManager\IScreenFactory.cs" />
+    <Compile Include="Core\UI\ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />
@@ -555,7 +556,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ScreenManager\Dialog.xaml">
+    <Page Include="Core\UI\ScreenManager\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

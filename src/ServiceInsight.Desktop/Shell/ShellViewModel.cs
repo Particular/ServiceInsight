@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -95,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             RestoreLayout();
         }
 
-        public virtual void Deactivate(bool close )
+        public void Deactivate(bool close)
         {
             base.OnDeactivate(close);
             _refreshTimer.Stop();
@@ -112,49 +111,54 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View.OnRestoreLayout(_settingsProvider);
         }
 
-        public virtual void ResetLayout()
+        public void ResetLayout()
         {
             View.OnResetLayout(_settingsProvider);
         }
 
-        public virtual bool AutoRefresh { get; set; }
+        public bool AutoRefresh { get; set; }
 
-        public virtual IShellView View { get; private set; }
+        public IShellView View { get; private set; }
 
-        public virtual IMessagePropertiesViewModel MessageProperties { get; private set; }
+        public IMessagePropertiesViewModel MessageProperties { get; private set; }
 
-        public virtual IQueueExplorerViewModel QueueExplorer { get; private set; }
+        public IQueueExplorerViewModel QueueExplorer { get; private set; }
 
-        public virtual IEndpointExplorerViewModel EndpointExplorer { get; private set; }
+        public IEndpointExplorerViewModel EndpointExplorer { get; private set; }
 
-        public virtual IMessageListViewModel Messages { get; private set; }
+        public IMessageListViewModel Messages { get; private set; }
 
-        public virtual IMessageFlowViewModel MessageFlow { get; private set; }
+        public IMessageFlowViewModel MessageFlow { get; private set; }
 
-        public virtual IMessageBodyViewModel MessageBody { get; private set; }
+        public IMessageBodyViewModel MessageBody { get; private set; }
 
-        public virtual IStatusBarManager StatusBarManager { get; private set; }
+        public IStatusBarManager StatusBarManager { get; private set; }
 
-        public virtual ILogWindowViewModel LogWindow { get; private set; }
+        public ILogWindowViewModel LogWindow { get; private set; }
 
-        public virtual ExplorerItem SelectedExplorerItem { get; private set; }
+        public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public virtual bool WorkInProgress
+        public void OnSelectedTabbedViewChanged(object view)
+        {
+            
+        }
+
+        public bool WorkInProgress
         {
             get { return _workCounter > 0; }
         }
 
-        public virtual void ShutDown()
+        public void ShutDown()
         {
             _appCommander.ShutdownImmediately();
         }
 
-        public virtual void About()
+        public void About()
         {
             _windowManager.ShowDialog<AboutViewModel>();
         }
 
-        public virtual void Help()
+        public void Help()
         {
             Process.Start(@"http://docs.particular.net/");
         }

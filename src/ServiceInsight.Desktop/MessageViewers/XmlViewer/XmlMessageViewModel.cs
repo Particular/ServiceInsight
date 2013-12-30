@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Text;
+using System.Xml;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
@@ -11,17 +12,14 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
         private readonly IContentDecoder<XmlDocument> _xmlDecoder;
-        private readonly IContentDecoder<string> _stringDecoder;
         private readonly IClipboard _clipboard;
         private IXmlMessageView _messageView;
 
         public XmlMessageViewModel(
             IContentDecoder<XmlDocument> xmlDecoder,
-            IContentDecoder<string> stringDecoder,
             IClipboard clipboard)
         {
             _xmlDecoder = xmlDecoder;
-            _stringDecoder = stringDecoder;
             _clipboard = clipboard;
         }
 
@@ -45,34 +43,39 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             if(_messageView == null) return;
 
             _messageView.Clear();
-
-            if (SelectedMessage != null)
-            {
-                var xml = _xmlDecoder.Decode(SelectedMessage.BodyRaw);
-                if (xml.IsParsed)
-                {
-                    _messageView.Display(xml.Value.GetFormatted());
-                }
-            }
+            ShowMessageBody();
         }
 
-        public virtual bool CanCopyMessageXml()
+        public bool CanCopyMessageXml()
         {
             return SelectedMessage != null;
         }
 
-        public virtual void CopyMessageXml()
+        public void CopyMessageXml()
         {
-            var content = _stringDecoder.Decode(SelectedMessage.BodyRaw);
-            if (content.IsParsed)
+            var content = GetMessageBody();
+            if (!content.IsEmpty())
             {
-                _clipboard.CopyTo(content.Value);
+                _clipboard.CopyTo(content);
             }
         }
 
         public void Handle(SelectedMessageChanged @event)
         {
             SelectedMessage = @event.Message;
+        }
+
+        private void ShowMessageBody()
+        {
+            if (SelectedMessage == null) return;
+            _messageView.Display(GetMessageBody());
+        }
+
+        private string GetMessageBody()
+        {
+            var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
+            var xml = _xmlDecoder.Decode(bytes);
+            return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;
         }
     }
 }

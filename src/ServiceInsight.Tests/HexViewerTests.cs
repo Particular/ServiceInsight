@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text;
-using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NServiceBus.Profiler.Desktop.Models;
@@ -28,9 +27,9 @@ namespace NServiceBus.Profiler.Tests
         public void should_display_the_message_when_view_is_loaded()
         {
             ViewModel.AttachView(View, null);
-            ((IActivate)ViewModel).Activate();
+            ViewModel.Activate();
 
-            ViewModel.CurrentContent = Encoding.Default.GetBytes(TestMessage);
+            ViewModel.SelectedMessage = Encoding.Default.GetBytes(TestMessage);
 
             ViewModel.HexParts.ShouldNotBeEmpty();
             ViewModel.HexParts.Count.ShouldBe(4);
@@ -39,7 +38,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.CurrentContent = Encoding.Default.GetBytes(TestMessage);
+            ViewModel.SelectedMessage = Encoding.Default.GetBytes(TestMessage);
 
             ViewModel.HexParts.ShouldBeEmpty();
         }
@@ -47,12 +46,12 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_clear_the_view_when_message_is_unselected()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(TestMessage) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
 
             ViewModel.Handle(new SelectedMessageChanged(null));
 
             ViewModel.HexParts.Count.ShouldBe(0);
-            ViewModel.CurrentContent.ShouldBe(null);
+            ViewModel.SelectedMessage.ShouldBe(null);
         }
 
         [Test]
@@ -61,9 +60,9 @@ namespace NServiceBus.Profiler.Tests
             const string messageWithSpecialChars = "This is a multiline test\rmessage content\tthat is spread into four lines";
 
             ViewModel.AttachView(View, null);
-            ((IActivate)ViewModel).Activate();
+            ViewModel.Activate();
 
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { BodyRaw = Encoding.Default.GetBytes(messageWithSpecialChars) }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = messageWithSpecialChars }));
 
             ViewModel.HexParts.ShouldNotBeEmpty();
             ViewModel.HexParts[1].Numbers.Count(n => n.Text == ".").ShouldBe(1);

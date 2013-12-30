@@ -8,35 +8,37 @@ namespace NServiceBus.Profiler.Desktop.Models
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
+        private MessageStatistics _statistics;
+        private List<StoredMessageHeader> _headers;
+
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
         public Endpoint SendingEndpoint{ get; set; }
       
         public Endpoint ReceivingEndpoint{ get; set; }
-
         public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
+        public string ConversationId { get; set; }
+
         public MessageStatistics Statistics
         {
             get
             {
-                if (statistics == null)
+                if (_statistics == null)
                 {
-                    statistics = new MessageStatistics
+                    _statistics = new MessageStatistics
                     {
                         CriticalTime = CriticalTime,
                         ProcessingTime = ProcessingTime
                     };
                 }
-                return statistics;
+                return _statistics;
             }
             set
             {
-                statistics = value;
+                _statistics = value;
             }
         }
-
-        private MessageStatistics statistics;
 
         public string RelatedToMessageId
         {
@@ -45,7 +47,7 @@ namespace NServiceBus.Profiler.Desktop.Models
                 return GetHeaderByKey("NServiceBus.RelatedTo");
             }
         }
-        public string ConversationId { get; set; }
+
         public string ContentType
         {
             get
@@ -67,17 +69,17 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             get
             {
-                if (headers == null)
+                if (_headers == null)
                 {
                     //todo: lazy load
-                    headers = new List<StoredMessageHeader>();
+                    _headers = new List<StoredMessageHeader>();
                 }
 
-                return headers;
+                return _headers;
             }
             set
             {
-                headers = value;
+                _headers = value;
             }
         }
 
@@ -85,8 +87,6 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             return string.Format("?EndpointName={0}&Search={1}", ReceivingEndpoint.Name, MessageId);
         }
-
-        private List<StoredMessageHeader> headers;
 
         public string GetHeaderByKey(string key)
         {
