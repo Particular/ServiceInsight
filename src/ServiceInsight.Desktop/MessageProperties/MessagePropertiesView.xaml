@@ -14,7 +14,9 @@
                                ShowProperties="WithPropertyDefinitions"
                                SortMode="Definitions"
                                ShowDescriptionIn="Panel"
-                               ExpandCategoriesWhenSelectedObjectChanged="True">
+                               ExpandCategoriesWhenSelectedObjectChanged="True" 
+                               ShowCategories="False" 
+                               ShowToolPanel="False">
         <dxprg:PropertyDefinition Path="General" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
             <dxprg:PropertyDefinition Path="Version" />
             <dxprg:PropertyDefinition Path="EnclosedMessageTypes" />
