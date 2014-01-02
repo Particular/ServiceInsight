@@ -38,7 +38,7 @@ namespace NServiceBus.Profiler.Desktop.Models
             get
             {
                 if (EndpointProperties == null) return false;
-                var heartbeat = EndpointProperties.FirstOrDefault(p => string.Equals("emits_heartbeats", p.Key, StringComparison.InvariantCultureIgnoreCase));
+                var heartbeat = EndpointProperties.FirstOrDefault(p => string.Equals("monitored", p.Key, StringComparison.InvariantCultureIgnoreCase));
                 if (heartbeat == null) return false;
                 return bool.Parse(heartbeat.Value);
             }
