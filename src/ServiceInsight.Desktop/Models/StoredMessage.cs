@@ -13,9 +13,9 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
-        public Endpoint SendingEndpoint{ get; set; }
-      
-        public Endpoint ReceivingEndpoint{ get; set; }
+        public Endpoint SendingEndpoint { get; set; }
+
+        public Endpoint ReceivingEndpoint { get; set; }
         public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
         public string ConversationId { get; set; }
@@ -63,15 +63,9 @@ namespace NServiceBus.Profiler.Desktop.Models
                 return GetHeaderByKey("NServiceBus.ContentType");
             }
         }
-       
-        public string MessageId  
-        {
-            get
-            {
-                return GetHeaderByKey("NServiceBus.MessageId");
-            }
-        }
-        
+
+        public string MessageId { get; set; }
+
 
         public List<StoredMessageHeader> Headers
         {
@@ -100,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             //Note: Some keys start with NServiceBus, some don't
             var keyWithPrefix = "NServiceBus." + key;
-            var pair = Headers.FirstOrDefault(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) || 
+            var pair = Headers.FirstOrDefault(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
                                                    x.Key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));
             return pair == null ? string.Empty : pair.Value;
         }
