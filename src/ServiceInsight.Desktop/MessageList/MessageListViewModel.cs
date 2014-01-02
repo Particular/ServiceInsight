@@ -360,7 +360,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-            var body = await _serviceControl.GetBody(new Uri(FocusedRow.BodyUrl));
+            var body = await _serviceControl.GetBody(FocusedRow.BodyUrl);
             
             FocusedRow.Body = body;
 

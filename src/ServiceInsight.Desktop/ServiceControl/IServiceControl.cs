@@ -13,7 +13,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         Task<List<Endpoint>> GetEndpoints();
         Task<bool> RetryMessage(string messageId);
         Task<bool> IsAlive();
-        Task<string> GetBody(Uri uri);
+        Task<string> GetBody(string bodyUrl);
         Task<string> GetVersion();
         Uri GetUri(StoredMessage message);
     }

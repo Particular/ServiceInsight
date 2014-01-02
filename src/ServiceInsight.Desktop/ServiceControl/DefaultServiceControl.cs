@@ -117,13 +117,20 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return response;
         }
 
-        public async Task<string> GetBody(Uri uri)
+        public async Task<string> GetBody(string bodyUrl)
         {
-            var serviceAddress = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            var request = new RestRequest(uri, Method.GET);
-            var response = await ExecuteAsync(CreateClient(serviceAddress), request, r => HasSucceeded(r) ? r.Content : string.Empty);
+            IRestClient client;
 
-            return response;
+            if (bodyUrl.StartsWith("http"))
+            {
+                client = CreateClient(bodyUrl);
+            }
+            else
+            {
+                client = CreateClient();
+            }
+
+            return await ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
         }
 
         public Uri GetUri(StoredMessage message)
