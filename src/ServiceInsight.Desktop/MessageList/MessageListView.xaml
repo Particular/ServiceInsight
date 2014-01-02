@@ -89,7 +89,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="CriticalTime" 
+                <dxg:GridColumn FieldName="ElapsedCriticalTime" 
                                 Tag="critical_time"
                                 AllowColumnFiltering="False"
                                 AllowSorting="True"
@@ -102,7 +102,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="ProcessingTime" 
+                <dxg:GridColumn FieldName="ElapsedProcessingTime" 
                                 Tag="processing_time"
                                 AllowColumnFiltering="False"
                                 AllowSorting="True"
