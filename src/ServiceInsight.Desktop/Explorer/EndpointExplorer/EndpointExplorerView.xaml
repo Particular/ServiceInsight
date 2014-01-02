@@ -12,18 +12,46 @@
         <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="tree:ExplorerItem" ItemsSource="{Binding Path=Children}">
             <TextBlock Text="{Binding Name}" />
         </HierarchicalDataTemplate>
-        
+
         <tree:ExplorerNodeChildSelector x:Key="ChildSelector" />
         <tree:ExplorerNodeImageSelector x:Key="ExplorerImageSelector" />
-        
+
+        <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Configured for Monitoring: " />
+                                <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+                                <TextBlock Text="No"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
+                            </StackPanel>
+                            <TextBlock Text="Installed On:" />
+                            <ItemsControl ItemsSource="{Binding Machines}" Margin="10 0 0 0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
-    
+
     <dxg:TreeListControl x:Name="treeList" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
         <dxg:TreeListControl.Columns>
-            <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False">
+            <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False" >
                 <dxg:TreeListColumn.EditSettings>
                     <dxe:TextEditSettings />
                 </dxg:TreeListColumn.EditSettings>
+                <dxg:TreeListColumn.CellStyle>
+                    <Style TargetType="dxg:CellContentPresenter">
+                        <Setter Property="ToolTipService.ToolTip" Value="{Binding RowData.Row.Endpoint}" />
+                    </Style>
+                </dxg:TreeListColumn.CellStyle>
             </dxg:TreeListColumn>
         </dxg:TreeListControl.Columns>
         <dxg:TreeListControl.View>
@@ -45,7 +73,7 @@
                                 ShowNodeImages="True"
                                 AllowFilterEditor="False" 
                                 AllowMoving="False" FadeSelectionOnLostFocus="False">
-                
+
             </dxg:TreeListView>
         </dxg:TreeListControl.View>
     </dxg:TreeListControl>

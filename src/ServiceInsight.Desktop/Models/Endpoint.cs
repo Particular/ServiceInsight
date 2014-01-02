@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Models
@@ -29,6 +30,19 @@ namespace NServiceBus.Profiler.Desktop.Models
         }
 
         private string machine;
+
+        public List<EndpointProperty> EndpointProperties { get; set; }
+
+        public bool EmitsHeartbeats
+        {
+            get
+            {
+                if (EndpointProperties == null) return false;
+                var heartbeat = EndpointProperties.FirstOrDefault(p => string.Equals("emits_heartbeats", p.Key, StringComparison.InvariantCultureIgnoreCase));
+                if (heartbeat == null) return false;
+                return bool.Parse(heartbeat.Value);
+            }
+        }
 
         public List<string> Machines { get; set; }
 
@@ -74,5 +88,12 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             return Address;
         }
+    }
+
+    [Serializable]
+    public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hyrate it
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }
