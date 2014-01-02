@@ -11,6 +11,7 @@ using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Search;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -20,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         MessageFlowDiagram Diagram { get; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
-        void CopyMessageId(StoredMessage message);
+        void SearchMessage(StoredMessage message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
@@ -33,6 +34,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
+        private readonly ISearchBarViewModel _searchBar;
         private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
@@ -48,13 +50,15 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IEventAggregator eventAggregator,
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
-            IScreenFactory screenFactory)
+            IScreenFactory screenFactory,
+            ISearchBarViewModel searchBar)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
             _clipboard = clipboard;
             _windowManager = windowManager;
             _screenFactory = screenFactory;
+            _searchBar = searchBar;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -113,9 +117,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
         }
 
-        public void CopyMessageId(StoredMessage message)
+        public void SearchMessage(StoredMessage message)
         {
-            _clipboard.CopyTo(message.MessageId);
+            _searchBar.Search(message.MessageId);
         }
 
         public async Task RetryMessage(StoredMessage message)

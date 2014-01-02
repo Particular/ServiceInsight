@@ -23,6 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         void GoToPreviousPage();
         void GoToNextPage();
         void Search();
+        void Search(string searchQuery);
         void CancelSearch();
         void SetupPaging(PagedResult<StoredMessage> pagedResult);
         void NotifyPropertiesChanged();

@@ -41,9 +41,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Owner.CopyConversationId(Message);
         }
 
-        public void CopyMessageId()
+        public void SearchMessage()
         {
-            Owner.CopyMessageId(Message);
+            Owner.SearchMessage(Message);
         }
 
         public async void Retry()

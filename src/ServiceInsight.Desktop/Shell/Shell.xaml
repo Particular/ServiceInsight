@@ -34,7 +34,7 @@
                     dxc:DXSerializer.SerializationID="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.6">
+                    dxc:DXSerializer.LayoutVersion="1.1.7">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />

@@ -28,10 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             base.OnActivate();
 
-            SearchQuery = _commandLineArgParser.ParsedOptions.SearchQuery;
-            SearchInProgress = !SearchQuery.IsEmpty();
-            SearchEnabled = !SearchQuery.IsEmpty();
-            NotifyPropertiesChanged();
+            Search(_commandLineArgParser.ParsedOptions.SearchQuery);
         }
 
         public void GoToFirstPage()
@@ -52,6 +49,15 @@ namespace NServiceBus.Profiler.Desktop.Search
         public void GoToLastPage()
         {
             Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
+        }
+
+        public void Search(string searchQuery)
+        {
+            SearchQuery = searchQuery;
+            SearchInProgress = !SearchQuery.IsEmpty();
+            SearchEnabled = !SearchQuery.IsEmpty();
+            NotifyPropertiesChanged();
+            Search();
         }
 
         [AutoCheckAvailability]
