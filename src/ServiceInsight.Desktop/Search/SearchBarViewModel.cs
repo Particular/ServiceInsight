@@ -138,6 +138,16 @@ namespace NServiceBus.Profiler.Desktop.Search
             get { return GetSearchResultMessage(); }
         }
 
+        public string SearchResultHeader
+        {
+            get { return GetSearchResultHeader(); }
+        }
+
+        public string SearchResultResults
+        {
+            get { return GetSearchResultResults(); }
+        }
+
         public bool IsVisible { get; set; }
 
         public bool CanGoToFirstPage
@@ -269,16 +279,30 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         private string GetSearchResultMessage()
         {
+            return string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
+        }
+
+        private string GetSearchResultHeader()
+        {
             if (SearchInProgress)
             {
-                return SelectedEndpoint != null ? 
-                        string.Format("Search results: {0} Message(s) found in Endpoint '{1}", TotalItemCount, SelectedEndpoint.Name) : 
-                        string.Format("Search results: {0} Message(s) found", TotalItemCount);
+                return "Search results: ";
             }
 
             return SelectedEndpoint != null ?
-                    string.Format("{1}: {0} Message(s) found", TotalItemCount, SelectedEndpoint.Name) : 
-                    string.Format("{0} Message(s) found", TotalItemCount);
+                SelectedEndpoint.Name : string.Empty;
+        }
+
+        private string GetSearchResultResults()
+        {
+            if (SearchInProgress)
+            {
+                return SelectedEndpoint != null ?
+                        string.Format("{0} Message(s) found in Endpoint '{1}'", TotalItemCount, SelectedEndpoint.Name) :
+                        string.Format("{0} Message(s) found", TotalItemCount);
+            }
+
+            return string.Format("{0} Message(s) found", TotalItemCount);
         }
     }
 }

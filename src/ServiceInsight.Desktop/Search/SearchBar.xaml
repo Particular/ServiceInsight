@@ -23,11 +23,15 @@
             <Image Source="/Images/SearchRefresh.png" Stretch="UniformToFill" Width="14" Height="14" />
         </Button>
 
-        <TextBlock Margin="5" Grid.Column="1" 
-                   VerticalAlignment="Center" 
-                   Text="{Binding SearchResultMessage}"
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1" 
+                   VerticalAlignment="Center" ToolTip="{Binding SearchResultMessage}" >
+            <TextBlock Text="{Binding SearchResultHeader}" FontWeight="Bold"
                    TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
-                   ToolTip="{Binding SearchResultMessage}" />
+                   />
+            <TextBlock Text="{Binding SearchResultResults}"
+                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                   />
+        </StackPanel>
 
         <StackPanel Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4">
             <StackPanel.Resources>
