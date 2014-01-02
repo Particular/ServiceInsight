@@ -75,6 +75,17 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
+                <dxg:GridColumn FieldName="OriginatingSagaType" 
+                                AllowColumnFiltering="False"
+                                Tag="saga_type" 
+                                Header="Saga"
+                                HeaderToolTip="Type of the originating saga">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
                 <dxg:GridColumn FieldName="TimeSent" 
                                 Tag="time_sent" 
                                 AllowColumnFiltering="False"
