@@ -467,5 +467,14 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View.SelectTab("FlowDiagram");
         }
 
+        public virtual void Handle(SwitchToSagaWindow @event)
+        {
+            View.SelectTab("SagaWindow");
+        }
+
+        public virtual void Handle(SwitchToFlowWindow @event)
+        {
+            View.SelectTab("FlowDiagram");
+        }
     }
 }

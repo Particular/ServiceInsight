@@ -10,8 +10,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private int HeightNoEndpoints = 56;
-        private int EndpointsHeight = 25;
+        private int heightNoEndpoints = 56;
+        private const int endpointsHeight = 25;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
@@ -21,8 +21,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
             SagaType = ProcessType(message.GetHeaderByKey(MessageHeaderKeys.SagaType));
 
-            HeightNoEndpoints += HasSaga ? 10 : 0;
-            Bounds = new Rect(0, 0, 203, HeightNoEndpoints);
+            heightNoEndpoints += HasSaga ? 10 : 0;
+            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
         }
 
         private string ProcessType(string messageType)
