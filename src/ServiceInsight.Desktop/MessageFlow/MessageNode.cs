@@ -99,7 +99,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, HeightNoEndpoints + (ShowEndpoints ? EndpointsHeight : 0)));
+            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
