@@ -62,7 +62,14 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 
         public void Handle(SelectedMessageChanged @event)
         {
-            SelectedMessage = @event.Message;
+            if (SelectedMessage == @event.Message) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
+            {
+                OnSelectedMessageChanged();
+            }
+            else
+            {
+                SelectedMessage = @event.Message;
+            }
         }
 
         private void ShowMessageBody()

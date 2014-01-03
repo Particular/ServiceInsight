@@ -269,7 +269,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             ShouldLoadMessageBody = @event.IsSelected;
             if (ShouldLoadMessageBody)
             {
-                await LoadMessageBody();
+                var bodyLoaded = await LoadMessageBody();
+                if(bodyLoaded) _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
             }
         }
 
@@ -364,9 +365,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
-        private async Task LoadMessageBody()
+        private async Task<bool> LoadMessageBody()
         {
-            if (FocusedRow == null || !ShouldLoadMessageBody) return;
+            if (FocusedRow == null || !ShouldLoadMessageBody) return false;
 
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
@@ -375,6 +376,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             FocusedRow.Body = body;
 
             _eventAggregator.Publish(new WorkFinished());
+
+            return true;
         }
 
         private void NotifyPropertiesChanged()
