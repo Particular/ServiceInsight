@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -93,6 +92,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public Queue SelectedQueue { get; private set; }
 		
         public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
+
+        public bool ShouldLoadMessageBody { get; set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -263,6 +264,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
+        public async void Handle(BodyTabSelectionChanged @event)
+        {
+            ShouldLoadMessageBody = @event.IsSelected;
+            if (ShouldLoadMessageBody)
+            {
+                await LoadMessageBody();
+            }
+        }
+
         public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
@@ -356,7 +366,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         private async Task LoadMessageBody()
         {
-            if (FocusedRow == null) return;
+            if (FocusedRow == null || !ShouldLoadMessageBody) return;
 
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 

@@ -117,6 +117,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         public bool AutoRefresh { get; set; }
+        
+        public bool BodyTabSelected { get; set; }
 
         public IShellView View { get; private set; }
 
@@ -356,6 +358,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 return;
 
             RefreshAll();
+        }
+
+        public void OnBodyTabSelectedChanged()
+        {
+            _eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip

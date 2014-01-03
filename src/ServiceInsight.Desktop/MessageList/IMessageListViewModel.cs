@@ -18,7 +18,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
-        IHandle<MessageStatusChanged>
+        IHandle<MessageStatusChanged>,
+        IHandle<BodyTabSelectionChanged>
     {
         ISearchBarViewModel SearchBar { get; }
         ExplorerItem SelectedExplorerItem { get; }

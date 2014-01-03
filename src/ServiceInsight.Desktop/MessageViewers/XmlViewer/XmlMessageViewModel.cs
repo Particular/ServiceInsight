@@ -73,6 +73,8 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 
         private string GetMessageBody()
         {
+            if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
+
             var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
             var xml = _xmlDecoder.Decode(bytes);
             return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;

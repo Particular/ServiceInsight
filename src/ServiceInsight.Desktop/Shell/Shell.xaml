@@ -256,7 +256,8 @@
                                              ItemWidth="3*"
                                              AllowClose="False"
                                              AllowFloat="False"
-                                             GroupBorderStyle="Tabbed">
+                                             GroupBorderStyle="Tabbed"
+                                             SelectedItemChanged="OnSelectedItemChanged">
 
                                 <dxd:LayoutPanel x:Name="MessageFlow" 
                                                  AutomationProperties.AutomationId="MessageFlow"
