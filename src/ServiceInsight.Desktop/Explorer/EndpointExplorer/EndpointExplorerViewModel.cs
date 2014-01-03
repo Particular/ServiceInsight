@@ -186,10 +186,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         {
             var endpoints = await _serviceControl.GetEndpoints();
 
-            if (endpoints == null)
-                return;
+            if (endpoints == null) return;
 
-            foreach (var endpoint in endpoints)
+            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
             {
                 if (!ServiceControlRoot.EndpointExists(endpoint))
                 {
