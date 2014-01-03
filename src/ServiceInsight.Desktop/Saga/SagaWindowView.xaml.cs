@@ -245,4 +245,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
             message.IsSelected = message.Id == id;
         }
     }
+
+    public interface ISagaWindowView
+    {
+    }
 }

@@ -10,6 +10,7 @@ using NServiceBus.Profiler.Desktop.MessageFlow;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.MessageViewers;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {

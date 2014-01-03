@@ -210,6 +210,7 @@
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
+    <Compile Include="Events\SwitchToSagaWindow.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
     <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
@@ -220,7 +221,6 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />
-    <Compile Include="Saga\ISagaWindowView.cs" />
     <Compile Include="Saga\SagaMessage.cs" />
     <Compile Include="Saga\SagaStep.cs" />
     <Compile Include="Saga\SagaUpdatedValue.cs" />
@@ -543,6 +543,10 @@
     <Page Include="Options\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\About.xaml">
       <SubType>Designer</SubType>

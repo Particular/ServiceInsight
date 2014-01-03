@@ -22,6 +22,7 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
 using System.Diagnostics;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -52,6 +53,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IEventAggregator eventAggregator,
             ILicenseManager licenseManager,
             IMessageFlowViewModel messageFlow,
+            ISagaWindowViewModel sagaWindow,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
@@ -67,6 +69,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
+            SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
@@ -131,6 +134,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public IMessageFlowViewModel MessageFlow { get; private set; }
 
         public IMessageBodyViewModel MessageBody { get; private set; }
+
+        public ISagaWindowViewModel SagaWindow { get; private set; }
 
         public IStatusBarManager StatusBarManager { get; private set; }
 
@@ -461,5 +466,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             View.SelectTab("FlowDiagram");
         }
+
     }
 }
