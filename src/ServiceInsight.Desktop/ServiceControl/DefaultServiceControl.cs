@@ -43,7 +43,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(CreateBaseUrl());
             
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -58,7 +58,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -139,9 +139,8 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        private void AppendSystemMessages(IRestRequest request, string searchQuery)
+        private void AppendSystemMessages(IRestRequest request)
         {
-            if (searchQuery != null) return; //Not supported by search endpoint/api
             request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
         }
 
