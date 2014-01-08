@@ -12,6 +12,7 @@ using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Settings;
 using RestSharp;
 using RestSharp.Contrib;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
@@ -73,6 +74,14 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
             var messages = await GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+
+            return messages;
+        }
+
+        public async Task<SagaData> GetSagaById(string sagaId)
+        {
+            var request = new RestRequest(string.Format("sagas/{0}", sagaId));
+            var messages = await GetModelAsync<SagaData>(request) ?? new SagaData();
 
             return messages;
         }

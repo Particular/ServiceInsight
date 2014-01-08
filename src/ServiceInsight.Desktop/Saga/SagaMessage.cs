@@ -10,15 +10,27 @@ namespace NServiceBus.Profiler.Desktop.Saga
 {
     public class SagaMessage : PropertyChangedBase
     {
-        public Guid Id { get; set; }
+        public Guid MessageId { get; set; }
         public bool IsPublished { get; set; }
-        public string Name { get; set; }
-        public DateTime Time { get; set; }
+        public string MessageType { get; set; }
+        public DateTime TimeSent { get; set; }
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
-        public MessageStatus Status { get; set; }
 
-        private List<KeyValuePair<MessageStatus, string>> status = new List<KeyValuePair<MessageStatus,string>> { 
+        private MessageStatus status;
+        public MessageStatus Status
+        {
+            get
+            {
+                return status == 0 ? MessageStatus.Successful : status;
+            }
+            set 
+            {
+                status = value;
+            }
+        }
+
+        private List<KeyValuePair<MessageStatus, string>> stati = new List<KeyValuePair<MessageStatus, string>> { 
             new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
@@ -51,11 +63,11 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return status.FirstOrDefault(k => k.Key == Status).Value;
+                return stati.FirstOrDefault(k => k.Key == Status).Value;
             }
             set
             {
-                Status = status.FirstOrDefault(k => k.Value == value).Key;
+                Status = stati.FirstOrDefault(k => k.Value == value).Key;
             }
         }
 

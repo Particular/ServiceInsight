@@ -513,7 +513,7 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding}"/>
-                <ItemsControl x:Name="Steps" ItemsSource="{Binding Steps}" ItemTemplate="{StaticResource SagaNode}" />
+                <ItemsControl x:Name="Steps" ItemsSource="{Binding Changes}" ItemTemplate="{StaticResource SagaNode}" />
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding}"/>
             </StackPanel>
         </ScrollViewer>

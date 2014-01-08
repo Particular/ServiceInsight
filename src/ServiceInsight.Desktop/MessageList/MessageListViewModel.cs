@@ -17,6 +17,7 @@ using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Shell.Menu;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -69,8 +70,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             };
         }
 
+        private SagaData saga;
+
         public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
-        
+
         public void OnContextMenuOpening()
         {
             _returnToSourceMenu.IsVisible = CanReturnToSource();
@@ -80,18 +83,18 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             NotifyPropertiesChanged();
         }
 
-        public new IShellViewModel Parent { get { return (IShellViewModel) base.Parent; } }
+        public new IShellViewModel Parent { get { return (IShellViewModel)base.Parent; } }
 
         public ISearchBarViewModel SearchBar { get; private set; }
 
         public IObservableCollection<StoredMessage> SelectedRows { get; private set; }
 
-        public IObservableCollection<StoredMessage> Rows { get; private set; } 
+        public IObservableCollection<StoredMessage> Rows { get; private set; }
 
         public StoredMessage FocusedRow { get; set; }
 
         public Queue SelectedQueue { get; private set; }
-		
+
         public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
@@ -123,7 +126,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public bool CanRetryMessage()
         {
             return FocusedRow != null &&
-                   (FocusedRow.Status == MessageStatus.Failed || 
+                   (FocusedRow.Status == MessageStatus.Failed ||
                     FocusedRow.Status == MessageStatus.RepeatedFailure);
         }
 
@@ -148,9 +151,24 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             await LoadMessageBody();
 
+            await LoadSaga();
+
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
             NotifyPropertiesChanged();
+        }
+
+        private async Task LoadSaga()
+        {
+            if (FocusedRow == null) return;
+            if (!string.IsNullOrEmpty(FocusedRow.OriginatingSagaId))
+            {
+                _eventAggregator.Publish(new WorkStarted("Loading message body..."));
+
+                saga = await _serviceControl.GetSagaById(FocusedRow.OriginatingSagaId);
+
+                _eventAggregator.Publish(new WorkFinished());
+            }
         }
 
         public async Task RefreshMessages(string orderBy = null, bool ascending = false)
@@ -163,7 +181,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                                       orderBy: orderBy,
                                       ascending: ascending);
             }
-            
+
             var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
             if (endpointNode != null)
             {
@@ -186,7 +204,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             PagedResult<StoredMessage> pagedResult;
 
-            if(endpoint != null)
+            if (endpoint != null)
             {
                 pagedResult = await _serviceControl.GetAuditMessages(endpoint,
                                                                      pageIndex: pageIndex,
@@ -361,7 +379,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
             var body = await _serviceControl.GetBody(FocusedRow.BodyUrl);
-            
+
             FocusedRow.Body = body;
 
             _eventAggregator.Publish(new WorkFinished());

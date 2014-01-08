@@ -221,8 +221,9 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />
+    <Compile Include="Saga\SagaData.cs" />
     <Compile Include="Saga\SagaMessage.cs" />
-    <Compile Include="Saga\SagaStep.cs" />
+    <Compile Include="Saga\SagaUpdate.cs" />
     <Compile Include="Saga\SagaUpdatedValue.cs" />
     <Compile Include="Saga\SagaWindowView.xaml.cs">
       <DependentUpon>SagaWindowView.xaml</DependentUpon>

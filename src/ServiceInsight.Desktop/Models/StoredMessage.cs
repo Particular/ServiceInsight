@@ -65,6 +65,14 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
+        public string OriginatingSagaId
+        {
+            get
+            {
+                return GetHeaderByKey("OriginatingSagaId");
+            }
+        }
+
         public string RelatedToMessageId
         {
             get

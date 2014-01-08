@@ -35,14 +35,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
             var timeoutGuid = Guid.NewGuid();
 
             var sagaDataText = System.IO.File.ReadAllText("saga\\saga.data").Replace("\r", "").Replace("\n", "");
-            this.Steps = RestSharp.SimpleJson.DeserializeObject<List<SagaStep>>(sagaDataText);
+            this.Changes = RestSharp.SimpleJson.DeserializeObject<List<SagaUpdate>>(sagaDataText);
         }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public Guid Guid { get; private set; }
+        public Guid Guid { get; set; }
 
-        public IEnumerable<SagaStep> Steps { get; private set; }
+        public IEnumerable<SagaUpdate> Changes { get; private set; }
 
         public DateTime CompleteTime { get; private set; }
 
@@ -70,7 +70,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
     public interface ISagaWindowViewModel : IScreen
     {
         bool ShowEndpoints { get; }
-        IEnumerable<SagaStep> Steps { get; }
+        IEnumerable<SagaUpdate> Changes { get; }
         void ShowFlow();
     }
 }

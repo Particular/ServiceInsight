@@ -54,7 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void RefreshAll()
         {
-            var steps = (ItemsControl)this.FindName("Steps");
+            var steps = (ItemsControl)this.FindName("Changes");
             for (int i = 0; i < steps.Items.Count; i++)
             {
                 var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(steps.ItemContainerGenerator.ContainerFromIndex(i), 0))).Children[0];
@@ -216,16 +216,16 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             var model = this.DataContext as ISagaWindowViewModel;
             var message = ((FrameworkElement)sender).DataContext as SagaMessage;
-            SetSelected(model, message.Id);
+            SetSelected(model, message.MessageId);
         }
 
         private void SetSelected(ISagaWindowViewModel model, Guid id)
         {
-            foreach (var step in model.Steps)
+            foreach (var step in model.Changes)
             {
-                SetSelected(step.StartingMessage, id);
+                SetSelected(step.InitiatingMessage, id);
                 SetSelected(step.TimeoutMessages, id);
-                SetSelected(step.Messages, id);
+                SetSelected(step.OutgoingMessages, id);
             }
         }
 
@@ -242,7 +242,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void SetSelected(SagaMessage message, Guid id)
         {
-            message.IsSelected = message.Id == id;
+            message.IsSelected = message.MessageId == id;
         }
     }
 
