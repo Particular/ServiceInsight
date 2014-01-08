@@ -286,7 +286,10 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogRequest(IRestRequest request)
         {
-            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
+            var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
+            var url = _connection.Url != null ? _connection.Url.TrimEnd('/') : string.Empty;
+
+            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
             
             foreach (var parameter in request.Parameters)
             {
