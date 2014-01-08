@@ -269,8 +269,8 @@
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
                                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Time}" FontSize="14px" />
+                                    <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
                                 </StackPanel>
 
                                 <StackPanel x:Name="ReceivingEndPoint" 
@@ -410,7 +410,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding StartingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                    <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
                                     <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
                                         <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}" >
                                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
@@ -439,7 +439,7 @@
                                             <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
                                         </StackPanel>
                                     </StackPanel>
-                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
+                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding OutgoingMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
                                 </Grid>
                                 <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}"/>
                             </StackPanel>
@@ -457,11 +457,11 @@
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
                                     <TextBlock Text="&#x2190; Back to Message View" FontSize="12px" Foreground="{StaticResource SagaBlue}" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
                                     <Border BorderThickness="0 0 0 2" Padding="0 5 0 5" BorderBrush="{StaticResource SagaBlue}">
-                                        <TextBlock Text="{Binding Name}" FontSize="24px" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding SagaType}" FontSize="24px" FontWeight="Bold" />
                                     </Border>
                                     <StackPanel Orientation="Horizontal" Margin="0 5 0 2">
                                         <TextBlock FontWeight="Bold" FontSize="14px" Text="guid " Foreground="{StaticResource SagaForeground}"/>
-                                        <TextBlock FontSize="14px" Text="{Binding Guid}" Foreground="{StaticResource SagaForeground}"/>
+                                        <TextBlock FontSize="14px" Text="{Binding SagaId}" Foreground="{StaticResource SagaForeground}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -512,9 +512,9 @@
 
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
-                <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding}"/>
-                <ItemsControl x:Name="Steps" ItemsSource="{Binding Changes}" ItemTemplate="{StaticResource SagaNode}" />
-                <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding}"/>
+                <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}"/>
+                <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
+                <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

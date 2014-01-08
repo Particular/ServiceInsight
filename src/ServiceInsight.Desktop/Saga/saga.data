@@ -1,36 +1,36 @@
 ﻿[
     {
-        "IsFirstNode":true,
+        "Label":"Saga Initiated",
         "IsTimeout":false,
-        "StartingMessage":
+        "InitiatingMessage":
             {
-                "Id":"21861b0b-2526-4f2b-8f1b-518abbb5c0a7",
+                "MessageId":"21861b0b-2526-4f2b-8f1b-518abbb5c0a7",
                 "IsPublished":true,
-                "Name":"SubmitOrder",
-                "Time":"2013-07-28T17:12:17Z",
+                "MessageType":"SubmitOrder",
+                "TimeSent":"2013-07-28T17:12:17Z",
                 "ReceivingEndpoint":"endpoint@host",
                 "OriginatingEndpoint":"endpoint@host",
 				"StatusText":"Fail"
             },
-        "Messages":[],
+        "OutgoingMessages":[],
         "TimeoutMessages":
             [
                 {
                     "TimeoutText":"00:00:20",
-                    "Id":"a353d7b3-4a80-44a7-be2a-3200297a3163",
+                    "MessageId":"a353d7b3-4a80-44a7-be2a-3200297a3163",
                     "IsPublished":true,
-                    "Name":"BuyersRemorseIsOver",
-                    "Time":"2013-07-28T17:12:37Z",
+                    "MessageType":"BuyersRemorseIsOver",
+                    "TimeSent":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"
                 },
                 {
                     "TimeoutText":"00:00:20",
-                    "Id":"047c983a-ac24-4369-9b83-914f54fef05d",
+                    "MessageId":"047c983a-ac24-4369-9b83-914f54fef05d",
                     "IsPublished":true,
-                    "Name":"BuyersRemorseIsOver",
-                    "Time":"2013-07-28T17:12:37Z",
+                    "MessageType":"BuyersRemorseIsOver",
+                    "TimeSent":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Retry"
@@ -44,34 +44,34 @@
                 ]
     },
     {
-        "IsFirstNode":false,
+        "Label":"Saga Updated",
         "IsTimeout":false,
-        "StartingMessage":
+        "InitiatingMessage":
                 {
-                    "Id":"08cd41fb-8217-4b16-a06c-4700b3f7e0ef",
+                    "MessageId":"08cd41fb-8217-4b16-a06c-4700b3f7e0ef",
                     "IsPublished":true,
-                    "Name":"SubmitOrderUpdate",
-                    "Time":"2013-07-28T17:23:34Z",
+                    "MessageType":"SubmitOrderUpdate",
+                    "TimeSent":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"
                 },
-        "Messages":
+        "OutgoingMessages":
             [
                 {
-                    "Id":"04dc667d-39b2-4d48-ac8c-c4ef1a2763e7",
+                    "MessageId":"04dc667d-39b2-4d48-ac8c-c4ef1a2763e7",
                     "IsPublished":true,
-                    "Name":"OrderUpdated",
-                    "Time":"2013-07-28T17:23:34Z",
+                    "MessageType":"OrderUpdated",
+                    "TimeSent":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"
                 },
                 {
-                    "Id":"a54b8dcf-230c-42c7-9eab-31f2dfa91ab2",
+                    "MessageId":"a54b8dcf-230c-42c7-9eab-31f2dfa91ab2",
                     "IsPublished":true,
-                    "Name":"OrderUpdated",
-                    "Time":"2013-07-28T17:23:34Z",
+                    "MessageType":"OrderUpdated",
+                    "TimeSent":"2013-07-28T17:23:34Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"
@@ -85,25 +85,25 @@
             ]
     },
     {
-            "IsFirstNode":false,
+            "Label":"Saga Updated",
             "IsTimeout":true,
-            "StartingMessage":
+            "InitiatingMessage":
                 {
-                    "Id":"a353d7b3-4a80-44a7-be2a-3200297a3163",
+                    "MessageId":"a353d7b3-4a80-44a7-be2a-3200297a3163",
                     "IsPublished":true,
-                    "Name":"BuyersRemorseIsOver",
-                    "Time":"2013-07-28T17:12:37Z",
+                    "MessageType":"BuyersRemorseIsOver",
+                    "TimeSent":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"
                 },
-        "Messages":
+        "OutgoingMessages":
             [
                 {
-                    "Id":"112ef7a6-6e84-4176-a5c8-47e70186540c",
+                    "MessageId":"112ef7a6-6e84-4176-a5c8-47e70186540c",
                     "IsPublished":true,
-                    "Name":"OrderAccepted",
-                    "Time":"2013-07-28T17:12:37Z",
+                    "MessageType":"OrderAccepted",
+                    "TimeSent":"2013-07-28T17:12:37Z",
                     "ReceivingEndpoint":"endpoint@host",
                     "OriginatingEndpoint":"endpoint@host",
 					"StatusText":"Success"

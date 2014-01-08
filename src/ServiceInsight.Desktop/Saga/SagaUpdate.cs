@@ -8,7 +8,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
 {
     public class SagaUpdate
     {
-        public bool IsFirstNode { get; set; }
+        public bool IsFirstNode
+        {
+            get
+            {
+                return Status == SagaStateChangeStatus.New;
+            }
+        }
+
         public bool IsTimeout { get; set; }
 
         public SagaStateChangeStatus Status { get; set; }
@@ -32,7 +39,22 @@ namespace NServiceBus.Profiler.Desktop.Saga
                         return "Saga Updated";
                 }
 
-                throw new ArgumentException("Invalid value for SagaUpdate.Status", "Label");
+                return string.Empty;
+            }
+            set // this is only for demo deserialization and may be removed soon
+            {
+                if (value == "Saga Completed")
+                {
+                    Status = SagaStateChangeStatus.Completed;
+                }
+                else if (value == "Saga Initiated")
+                {
+                    Status = SagaStateChangeStatus.New;
+                }
+                else if (value == "Saga Updated")
+                {
+                    Status = SagaStateChangeStatus.Updated;
+                }
             }
         }
     }

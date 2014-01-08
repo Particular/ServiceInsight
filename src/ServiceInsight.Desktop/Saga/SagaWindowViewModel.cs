@@ -29,22 +29,17 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void CreateMockSaga()
         {
-            this.Name = "ProcessOrderSaga";
-            this.CompleteTime = new DateTime(2013, 7, 28, 14, 25, 34);
-            this.Guid = Guid.NewGuid();
-            var timeoutGuid = Guid.NewGuid();
-
             var sagaDataText = System.IO.File.ReadAllText("saga\\saga.data").Replace("\r", "").Replace("\n", "");
-            this.Changes = RestSharp.SimpleJson.DeserializeObject<List<SagaUpdate>>(sagaDataText);
+            Data = new SagaData 
+                    { 
+                        SagaType = "ProcessOrderSaga",
+                        CompleteTime = new DateTime(2013, 7, 28, 14, 25, 34),
+                        SagaId = Guid.NewGuid(),
+                        Changes = RestSharp.SimpleJson.DeserializeObject<List<SagaUpdate>>(sagaDataText) 
+                    };
         }
 
-        public string Name { get; set; }
-
-        public Guid Guid { get; set; }
-
-        public IEnumerable<SagaUpdate> Changes { get; private set; }
-
-        public DateTime CompleteTime { get; private set; }
+        public SagaData Data { get; set; }
 
         private bool showEndpoints = false;
         public bool ShowEndpoints
@@ -70,7 +65,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
     public interface ISagaWindowViewModel : IScreen
     {
         bool ShowEndpoints { get; }
-        IEnumerable<SagaUpdate> Changes { get; }
+        SagaData Data { get; }
         void ShowFlow();
     }
 }

@@ -54,7 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void RefreshAll()
         {
-            var steps = (ItemsControl)this.FindName("Changes");
+            var steps = (ItemsControl)this.FindName("Steps");
             for (int i = 0; i < steps.Items.Count; i++)
             {
                 var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(steps.ItemContainerGenerator.ContainerFromIndex(i), 0))).Children[0];
@@ -221,7 +221,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void SetSelected(ISagaWindowViewModel model, Guid id)
         {
-            foreach (var step in model.Changes)
+            foreach (var step in model.Data.Changes)
             {
                 SetSelected(step.InitiatingMessage, id);
                 SetSelected(step.TimeoutMessages, id);
