@@ -16,14 +16,20 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        public bool IsTimeout { get; set; }
+        public bool IsSagaTimeoutMessage
+        {
+            get
+            {
+                return InitiatingMessage.IsSagaTimeoutMessage;
+            }
+        }
 
         public SagaStateChangeStatus Status { get; set; }
 
         public SagaMessage InitiatingMessage { get; set; }
         public List<SagaTimeoutMessage> OutgoingMessages { get; set; }
 
-        public List<SagaMessage> NonTimeoutMessages 
+        public List<SagaMessage> NonTimeoutMessages
         {
             get
             {

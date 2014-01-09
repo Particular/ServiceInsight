@@ -51,8 +51,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-                CreateMockSaga();
-                //Data = await _serviceControl.GetSagaById(message.OriginatingSagaId);
+                //CreateMockSaga();
+                Data = await _serviceControl.GetSagaById(message.OriginatingSagaId);
 
                 _eventAggregator.Publish(new WorkFinished());
             }

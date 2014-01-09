@@ -413,14 +413,14 @@
                                     <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
                                     <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
                                         <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}" >
-                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
                                                 <ContentControl Template="{StaticResource SagaTimeoutIcon}" 
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4" />
 
                                                 <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
                                             </StackPanel>
-                                            <StackPanel Margin="10" Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"  >
+                                            <StackPanel Margin="10" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"  >
                                             </StackPanel>
 
                                             <StackPanel x:Name="StepName" Orientation="Horizontal" >

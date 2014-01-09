@@ -12,7 +12,22 @@ namespace NServiceBus.Profiler.Desktop.Saga
     {
         public Guid MessageId { get; set; }
         public bool IsPublished { get; set; }
-        public string MessageType { get; set; }
+
+        public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
+
+        private string messageType;
+        public string MessageType 
+        { 
+            get
+            {
+                return messageType.Split('.').Last();
+            }
+            set
+            {
+                messageType = value;
+            }
+        }
+
         public DateTime TimeSent { get; set; }
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
@@ -116,7 +131,10 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return string.Format("{0}{1}{2}", GetFriendly(Timeout.Hours, "h"), GetFriendly(Timeout.Minutes, "m"), GetFriendly(Timeout.Seconds, "s"));
+                if (Timeout != TimeSpan.MinValue)
+                    return string.Format("{0}{1}{2}", GetFriendly(Timeout.Hours, "h"), GetFriendly(Timeout.Minutes, "m"), GetFriendly(Timeout.Seconds, "s"));
+
+                return DeliverAt.ToString();
             }
         }
 
