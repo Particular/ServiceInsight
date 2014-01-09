@@ -469,7 +469,7 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="Footer">
-                        <Grid>
+                        <Grid Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
@@ -514,7 +514,7 @@
             <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}"/>
                 <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
-                <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}"/>
+                <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
