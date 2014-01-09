@@ -492,14 +492,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid x:Name="Root">
+    <Grid x:Name="Root" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <StackPanel Orientation="Horizontal" Margin="5" >
                 <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
                     <StackPanel Orientation="Horizontal">
@@ -510,12 +510,14 @@
             </StackPanel>
         </Border>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}"/>
                 <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />
             </StackPanel>
         </ScrollViewer>
+        
+        <TextBlock Grid.RowSpan="2" Text="No Saga Available" FontSize="24px" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource SagaForeground}"  Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
     </Grid>
 </UserControl>

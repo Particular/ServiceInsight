@@ -28,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             base.AttachView(view, context);
             _view = (ISagaWindowView)view;
 
-            CreateMockSaga();
+            //CreateMockSaga();
         }
 
         private void CreateMockSaga()
@@ -62,6 +62,13 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        public bool HasSaga
+        {
+            get
+            {
+                return Data != null;
+            }
+        }
 
         public SagaData Data { get; set; }
 
