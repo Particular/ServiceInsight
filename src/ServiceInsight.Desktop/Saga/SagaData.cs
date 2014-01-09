@@ -11,7 +11,26 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public List<SagaUpdate> Changes { get; set; }
         public string SagaType { get; set; }
         public Guid SagaId { get; set; }
-        public DateTime CompleteTime { get; set; }
+
+        public bool IsCompleted
+        {
+            get
+            {
+                return Changes.Any(c => c.Status == SagaStateChangeStatus.Completed);
+            }
+        }
+
+        public DateTime CompleteTime
+        {
+            get
+            {
+                var change = Changes.FirstOrDefault(c => c.Status == SagaStateChangeStatus.Completed);
+                if (change == null)
+                    return DateTime.MinValue;
+
+                return change.FinishTime;
+            }
+        }
 
     }
 }

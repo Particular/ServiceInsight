@@ -224,8 +224,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
             foreach (var step in model.Data.Changes)
             {
                 SetSelected(step.InitiatingMessage, id);
-                SetSelected(step.TimeoutMessages, id);
                 SetSelected(step.OutgoingMessages, id);
+                //SetSelected(step.NonTimeoutMessages, id);
             }
         }
 

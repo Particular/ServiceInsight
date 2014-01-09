@@ -12,11 +12,10 @@
                 "OriginatingEndpoint":"endpoint@host",
 				"StatusText":"Fail"
             },
-        "OutgoingMessages":[],
-        "TimeoutMessages":
+        "OutgoingMessages":
             [
                 {
-                    "TimeoutText":"00:00:20",
+                    "DeliveryDelay":"00:00:20",
                     "MessageId":"a353d7b3-4a80-44a7-be2a-3200297a3163",
                     "IsPublished":true,
                     "MessageType":"BuyersRemorseIsOver",
@@ -26,7 +25,7 @@
 					"StatusText":"Success"
                 },
                 {
-                    "TimeoutText":"00:00:20",
+                    "DeliveryDelay":"00:00:20",
                     "MessageId":"047c983a-ac24-4369-9b83-914f54fef05d",
                     "IsPublished":true,
                     "MessageType":"BuyersRemorseIsOver",
@@ -85,8 +84,9 @@
             ]
     },
     {
-            "Label":"Saga Updated",
+            "Label":"Saga Completed",
             "IsTimeout":true,
+			"FinishTime":"2013-07-28T17:12:37Z",
             "InitiatingMessage":
                 {
                     "MessageId":"a353d7b3-4a80-44a7-be2a-3200297a3163",

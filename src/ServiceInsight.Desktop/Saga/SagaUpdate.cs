@@ -21,8 +21,24 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public SagaStateChangeStatus Status { get; set; }
 
         public SagaMessage InitiatingMessage { get; set; }
-        public List<SagaMessage> OutgoingMessages { get; set; }
-        public List<SagaTimeoutMessage> TimeoutMessages { get; set; }
+        public List<SagaTimeoutMessage> OutgoingMessages { get; set; }
+
+        public List<SagaMessage> NonTimeoutMessages 
+        {
+            get
+            {
+                return OutgoingMessages.Where(m => !m.IsTimeout).Cast<SagaMessage>().ToList();
+            }
+        }
+
+        public List<SagaTimeoutMessage> TimeoutMessages
+        {
+            get
+            {
+                return OutgoingMessages.Where(m => m.IsTimeout).ToList();
+            }
+        }
+
         public List<SagaUpdatedValue> Values { get; set; }
 
         public string Label
@@ -31,10 +47,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 switch (Status)
                 {
-                    case SagaStateChangeStatus.Completed:
-                        return "Saga Completed";
                     case SagaStateChangeStatus.New:
                         return "Saga Initiated";
+                    case SagaStateChangeStatus.Completed:
                     case SagaStateChangeStatus.Updated:
                         return "Saga Updated";
                 }
@@ -57,6 +72,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 }
             }
         }
+
+        public DateTime FinishTime { get; set; }
+        public DateTime StartTime { get; set; }
     }
 
     public enum SagaStateChangeStatus

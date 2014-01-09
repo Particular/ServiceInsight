@@ -439,7 +439,7 @@
                                             <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
                                         </StackPanel>
                                     </StackPanel>
-                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding OutgoingMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
+                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding NonTimeoutMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
                                 </Grid>
                                 <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}"/>
                             </StackPanel>

@@ -151,24 +151,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             await LoadMessageBody();
 
-            await LoadSaga();
-
             _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
             NotifyPropertiesChanged();
-        }
-
-        private async Task LoadSaga()
-        {
-            if (FocusedRow == null) return;
-            if (!string.IsNullOrEmpty(FocusedRow.OriginatingSagaId))
-            {
-                _eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-                saga = await _serviceControl.GetSagaById(FocusedRow.OriginatingSagaId);
-
-                _eventAggregator.Publish(new WorkFinished());
-            }
         }
 
         public async Task RefreshMessages(string orderBy = null, bool ascending = false)

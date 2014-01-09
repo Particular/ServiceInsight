@@ -82,9 +82,25 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
     public class SagaTimeoutMessage : SagaMessage
     {
+        public SagaTimeoutMessage()
+        {
+            DeliverAt = DateTime.MinValue;
+            Timeout = TimeSpan.MinValue;
+        }
+
         public TimeSpan Timeout { get; set; }
 
-        public string TimeoutText
+        public bool IsTimeout
+        {
+            get
+            {
+                return (DeliverAt != DateTime.MinValue || Timeout != TimeSpan.MinValue);
+            }
+        }
+
+        public DateTime DeliverAt { get; set; }
+
+        public string DeliveryDelay
         {
             get
             {
