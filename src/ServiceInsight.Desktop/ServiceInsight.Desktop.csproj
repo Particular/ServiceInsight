@@ -663,6 +663,7 @@
     <Resource Include="Images\EventIcon.png" />
     <Resource Include="Images\DiagramEndpointIcon.png" />
     <Resource Include="Images\Exclamation.png" />
+    <Resource Include="Images\saga.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

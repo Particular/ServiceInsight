@@ -273,7 +273,7 @@
                                                  AllowClose="False"
                                                  AllowFloat="False"
                                                  ShowBorder="False"
-                                                 CaptionImage="/Images/Log.png">
+                                                 CaptionImage="/Images/Saga.png">
                                     <ContentControl cal:View.Model="{Binding SagaWindow}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
