@@ -376,9 +376,9 @@
                     <DataTemplate x:Key="TimeoutMessage">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Background="{StaticResource SagaBackground}" Grid.Column="1" >
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
@@ -406,9 +406,9 @@
                             <StackPanel x:Name="SagaNodePanel">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width=".95*" />
+                                        <ColumnDefinition Width="1.1*" />
+                                        <ColumnDefinition Width=".95*" />
                                     </Grid.ColumnDefinitions>
                                     <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
                                     <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
@@ -449,9 +449,9 @@
                     <DataTemplate x:Key="Header">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Background="{StaticResource SagaBackground}" Grid.Column="1" >
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
@@ -471,9 +471,9 @@
                     <DataTemplate x:Key="Footer">
                         <Grid Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Background="{StaticResource FooterBackground}" Grid.Column="1" >
                                 <StackPanel Margin="11" Orientation="Horizontal" >
