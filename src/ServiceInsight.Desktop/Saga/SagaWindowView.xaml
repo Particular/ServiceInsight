@@ -434,6 +434,9 @@
                                                     Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
 
                                                 <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
+                                                <TextBlock Text="  " FontSize="12px" />
+                                                <TextBlock Text="{Binding StartTime}" FontSize="12px" Margin="5 5"/>
+                                                <TextBlock Text="  " FontSize="12px" />
                                             </StackPanel>
 
                                             <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
