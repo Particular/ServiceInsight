@@ -54,11 +54,39 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 //CreateMockSaga();
                 Data = await _serviceControl.GetSagaById(message.OriginatingSagaId);
 
+                ProcessDataValues(Data.Changes);
+
                 _eventAggregator.Publish(new WorkFinished());
             }
             else
             {
                 Data = null;
+            }
+        }
+
+        private void ProcessDataValues(List<SagaUpdate> list)
+        {
+            IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
+            foreach (var change in list)
+            {
+                ProcessChange(oldValues, change.Values);
+                oldValues = change.Values;
+            }
+        }
+
+        private void ProcessChange(IList<SagaUpdatedValue> oldValues, List<SagaUpdatedValue> newValues)
+        {
+            foreach (var value in newValues)
+            {
+                var oldValue = oldValues.FirstOrDefault(v => v.Name == value.Name);
+                if (oldValue != null)
+                {
+                    value.OldValue = oldValue.NewValue;
+                }
+                else
+                {
+                    value.OldValue = string.Empty;
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,31 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 return OutgoingMessages.Where(m => m.IsTimeout).ToList();
             }
+        }
+
+        private string stateAfterChange;
+        public string StateAfterChange
+        {
+            get
+            {
+                return stateAfterChange;
+            }
+            set
+            {
+                stateAfterChange = value;
+                ProcessValues(stateAfterChange);
+            }
+        }
+
+        private IList<string> standardKeys = new List<string> { "$type", "Id", "Originator", "OriginalMessageId" };
+
+        private void ProcessValues(string stateAfterChange)
+        {
+            Values = JsonConvert.DeserializeObject<Dictionary<string, string>>
+                (stateAfterChange.TrimStart('[').TrimEnd(']'))
+                .Where(m => !standardKeys.Any(s => s == m.Key))
+                .Select(n => new SagaUpdatedValue { Name = n.Key, NewValue = n.Value })
+                .ToList();
         }
 
         public List<SagaUpdatedValue> Values { get; set; }
