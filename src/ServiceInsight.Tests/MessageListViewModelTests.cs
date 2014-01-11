@@ -17,7 +17,7 @@ using Shouldly;
 namespace NServiceBus.Profiler.Tests
 {
     [TestFixture]
-    public class MessageListViewModelTests : AsyncTestBase
+    public class MessageListViewModelTests
     {
         private IEventAggregator EventAggregator;
         private IServiceControl ServiceControl;

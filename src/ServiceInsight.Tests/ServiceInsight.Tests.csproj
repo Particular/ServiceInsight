@@ -105,6 +105,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutViewModelTests.cs" />
     <Compile Include="CommandLineArgParserTests.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
@@ -114,7 +115,6 @@
     <Compile Include="Helpers\TestExtensions.cs" />
     <Compile Include="AddressTests.cs" />
     <Compile Include="AsyncQueueOperationsTests.cs" />
-    <Compile Include="AsyncTest.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="CryptographyServiceTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />
