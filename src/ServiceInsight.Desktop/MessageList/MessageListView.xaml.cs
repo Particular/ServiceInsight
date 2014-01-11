@@ -21,6 +21,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             public const string ProcessingTime = "ProcessingTime";
             public const string IsFaulted = "IsFaulted";
             public const string MessageId = "Identifier";
+            public const string DeliveryTime = "DeliveryTime";
         }
 
         private readonly PropertyInfo _sortUpProperty;
@@ -58,6 +59,11 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 if (e.Column.FieldName == AdvancedEndpointColumns.ProcessingTime)
                 {
                     e.Value = Model.GetProcessingTime(storedMsg);
+                }
+
+                if (e.Column.FieldName == AdvancedEndpointColumns.DeliveryTime)
+                {
+                    e.Value = Model.GetDeliveryTime(storedMsg);
                 }
 
                 if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)

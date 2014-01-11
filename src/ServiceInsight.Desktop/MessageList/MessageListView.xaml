@@ -115,6 +115,19 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ElapsedDeliveryTime" 
+                                Tag="delivery_time"
+                                AllowColumnFiltering="False"
+                                AllowSorting="True"
+                                UnboundType="String" 
+                                Header="Delivery Time"
+                                HeaderToolTip="Calculated duration of delivery">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
 
             </dxg:GridControl.Columns>
 

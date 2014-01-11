@@ -239,6 +239,14 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return string.Empty;
         }
 
+        public string GetDeliveryTime(StoredMessage msg)
+        {
+            if (msg != null && msg.Statistics != null)
+                return msg.Statistics.ElapsedProcessingTime;
+
+            return string.Empty;
+        }
+
         public MessageErrorInfo GetMessageErrorInfo()
         {
             return new MessageErrorInfo();
