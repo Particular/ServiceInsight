@@ -25,10 +25,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         ExplorerItem SelectedExplorerItem { get; }
         Task RefreshMessages(string orderBy = null, bool ascending = false);
         Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
-        string GetCriticalTime(StoredMessage msg);
-        string GetProcessingTime(StoredMessage msg);
-        string GetDeliveryTime(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
-        MessageErrorInfo GetMessageErrorInfo();
     }
 }

@@ -9,13 +9,14 @@ namespace NServiceBus.Profiler.Desktop.Models
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
-        private MessageStatistics _statistics;
-        private List<StoredMessageHeader> _headers;
+        public StoredMessage()
+        {
+            Headers = new List<StoredMessageHeader>();
+        }
 
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
         public Endpoint SendingEndpoint { get; set; }
-
         public Endpoint ReceivingEndpoint { get; set; }
         public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
@@ -43,27 +44,6 @@ namespace NServiceBus.Profiler.Desktop.Models
             get
             {
                 return DeliveryTime.GetElapsedTime();
-            }
-        }
-
-        public MessageStatistics Statistics
-        {
-            get
-            {
-                if (_statistics == null)
-                {
-                    _statistics = new MessageStatistics
-                    {
-                        CriticalTime = CriticalTime,
-                        ProcessingTime = ProcessingTime,
-                        DeliveryTime = DeliveryTime
-                    };
-                }
-                return _statistics;
-            }
-            set
-            {
-                _statistics = value;
             }
         }
 
@@ -96,20 +76,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public List<StoredMessageHeader> Headers
         {
-            get
-            {
-                if (_headers == null)
-                {
-                    //todo: lazy load
-                    _headers = new List<StoredMessageHeader>();
-                }
-
-                return _headers;
-            }
-            set
-            {
-                _headers = value;
-            }
+            get; set;
         }
 
         public string GetURIQuery()

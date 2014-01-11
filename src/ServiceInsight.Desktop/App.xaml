@@ -269,6 +269,10 @@
                     
                     <DataTemplate x:Key="PropertyGridEmptyTextTemplate">
                     </DataTemplate>
+                    
+                    <DataTemplate x:Key="TextEditGridColumnCellTemplate">
+                        <dxe:TextEdit x:Name="PART_Editor" />
+                    </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">
                         <dxe:TextEdit Name="PART_Editor" 

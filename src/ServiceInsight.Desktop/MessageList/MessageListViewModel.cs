@@ -223,35 +223,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new WorkFinished());
         }
 
-        public string GetCriticalTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedCriticalTime;
-
-            return string.Empty;
-        }
-
-        public string GetProcessingTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedProcessingTime;
-
-            return string.Empty;
-        }
-
-        public string GetDeliveryTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedProcessingTime;
-
-            return string.Empty;
-        }
-
-        public MessageErrorInfo GetMessageErrorInfo()
-        {
-            return new MessageErrorInfo();
-        }
-
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
         {
             return new MessageErrorInfo(msg.Status);
