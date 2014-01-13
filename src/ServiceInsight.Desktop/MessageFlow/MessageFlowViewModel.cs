@@ -212,6 +212,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 }
 
                 var parentMessage = _nodeMap.Values.SingleOrDefault(m => 
+                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                     m.Message.MessageId == msg.Message.RelatedToMessageId && 
                     m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
 
