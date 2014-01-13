@@ -56,7 +56,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 {
                     Data = await _serviceControl.GetSagaById(message.OriginatingSagaId);
 
-                    ProcessDataValues(Data.Changes);
+                    if (Data != null && Data.Changes != null)
+                    {
+                        ProcessDataValues(Data.Changes);
+                    }
+                    else
+                    {
+                        Data = null;
+                    }
                 }
 
                 _eventAggregator.Publish(new WorkFinished());
