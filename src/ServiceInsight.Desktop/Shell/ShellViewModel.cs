@@ -464,7 +464,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public virtual void Handle(SwitchToFlowWindow @event)
         {
-            View.SelectTab("FlowDiagram");
+            View.SelectTab("MessageFlow");
         }
 
     }
