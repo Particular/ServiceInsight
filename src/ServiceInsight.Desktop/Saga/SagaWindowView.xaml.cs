@@ -54,7 +54,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             if (e.PropertyName == "ShowEndpoints" || e.PropertyName == "Data")
             {
-                RefreshAll();
                 refreshVisual = true;   
             }
         }
