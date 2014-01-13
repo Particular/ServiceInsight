@@ -514,7 +514,7 @@
         </Border>
 
         <ScrollViewer Grid.Row="1" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
-            <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" >
+            <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" LayoutUpdated="SagaWindowView_LayoutUpdated">
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}"/>
                 <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />

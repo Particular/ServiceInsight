@@ -39,11 +39,23 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
         }
 
+        bool refreshVisual = false;
+
+        void SagaWindowView_LayoutUpdated(object sender, EventArgs e)
+        {
+            if (refreshVisual)
+            {
+                RefreshAll();
+                refreshVisual = false;
+            }
+        }
+
         void SagaWindowView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ShowEndpoints" || e.PropertyName == "Data")
             {
                 RefreshAll();
+                refreshVisual = true;   
             }
         }
 
@@ -244,15 +256,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             message.IsSelected = message.MessageId == id;
         }
-
-        public void RedrawIfNeeded()
-        {
-            RefreshAll();
-        }
     }
 
     public interface ISagaWindowView
     {
-        void RedrawIfNeeded();
     }
 }
