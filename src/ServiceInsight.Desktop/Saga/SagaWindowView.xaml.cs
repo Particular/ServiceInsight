@@ -69,7 +69,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             for (int i = 0; i < steps.Items.Count; i++)
             {
                 var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
-                if (VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+                if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
                 {
                     var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
                     DrawLines(item, ((ISagaWindowViewModel)this.DataContext).ShowEndpoints);

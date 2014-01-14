@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,10 +65,10 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void ProcessValues(string stateAfterChange)
         {
-            Values = JsonConvert.DeserializeObject<Dictionary<string, string>>
+            Values = JsonConvert.DeserializeObject<Dictionary<string, object>>
                 (stateAfterChange.TrimStart('[').TrimEnd(']'))
                 .Where(m => !standardKeys.Any(s => s == m.Key))
-                .Select(n => new SagaUpdatedValue { Name = n.Key, NewValue = n.Value })
+                .Select(n => new SagaUpdatedValue { Name = n.Key, NewValue = n.Value.ToString() })
                 .ToList();
         }
 
