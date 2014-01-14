@@ -9,16 +9,18 @@ namespace NServiceBus.Profiler.Desktop.Models
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
-        private MessageStatistics _statistics;
-        private List<StoredMessageHeader> _headers;
+        public StoredMessage()
+        {
+            Headers = new List<StoredMessageHeader>();
+        }
 
         public MessageStatus Status { get; set; }
         public MessageIntent MessageIntent { get; set; }
         public Endpoint SendingEndpoint { get; set; }
-
         public Endpoint ReceivingEndpoint { get; set; }
         public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
+        public TimeSpan DeliveryTime { get; set; }
         public string ConversationId { get; set; }
 
         public string ElapsedCriticalTime
@@ -57,19 +59,14 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
-        public string OriginatingSagaType
-        {
-            get
-            {
-                return GetHeaderByKey("OriginatingSagaType");
-            }
-        }
+        private MessageStatistics _statistics;
 
-        public string OriginatingSagaId
+
+        public string ElapsedDeliveryTime
         {
             get
             {
-                return GetHeaderByKey("OriginatingSagaId");
+                return DeliveryTime.GetElapsedTime();
             }
         }
 
@@ -94,21 +91,15 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public List<StoredMessageHeader> Headers
         {
-            get
-            {
-                if (_headers == null)
-                {
-                    //todo: lazy load
-                    _headers = new List<StoredMessageHeader>();
-                }
-
-                return _headers;
-            }
-            set
-            {
-                _headers = value;
-            }
+            get;
+            set;
         }
+
+        public List<SagaInfo> InvokedSagas { get; set; }
+
+
+        public SagaInfo OriginatesFromSaga { get; set; }
+
 
         public string GetURIQuery()
         {
@@ -143,6 +134,13 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string Value { get; set; }
     }
 
+    [DebuggerDisplay("SagaType={SagaType},SagaId={Value}")]
+    public class SagaInfo
+    {
+        public string SagaType { get; set; }
+        public Guid SagaId { get; set; }
+    }
+
     public class MessageHeaderKeys
     {
         public const string Version = "Version";
@@ -160,9 +158,8 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string FailedQueue = "FailedQ";
         public const string TimeSent = "TimeSent";
         public const string TimeOfFailure = "TimeOfFailure";
-        public const string SagaId = "SagaId";
-        public const string OriginatingSagaId = "OriginatingSagaId";
-        public const string SagaType = "SagaType";
     }
 
 }
+
+

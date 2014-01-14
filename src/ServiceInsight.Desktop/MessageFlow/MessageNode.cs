@@ -19,7 +19,15 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Owner = owner;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
-            SagaType = ProcessType(message.GetHeaderByKey(MessageHeaderKeys.SagaType));
+
+            if (message.InvokedSagas != null)
+            {
+                var originatingSaga = message.InvokedSagas.FirstOrDefault();
+                if (originatingSaga != null)
+                {
+                    SagaType = ProcessType(originatingSaga.SagaType);
+                }
+            }
 
             heightNoEndpoints += HasSaga ? 10 : 0;
             Bounds = new Rect(0, 0, 203, heightNoEndpoints);

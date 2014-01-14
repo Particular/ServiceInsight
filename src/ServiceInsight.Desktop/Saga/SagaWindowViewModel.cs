@@ -47,26 +47,42 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public async void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
-            if (message != null && !string.IsNullOrEmpty(message.OriginatingSagaId))
+            if (message != null)
             {
-                _eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-                //CreateMockSaga();
-                if (Data == null || Data.SagaId.ToString() != message.OriginatingSagaId)
+                if (message.InvokedSagas != null)
                 {
-                    Data = await _serviceControl.GetSagaById(message.OriginatingSagaId);
-
-                    if (Data != null && Data.Changes != null)
+                    var originatingSaga = message.InvokedSagas.FirstOrDefault();
+                    if (originatingSaga != null)
                     {
-                        ProcessDataValues(Data.Changes);
+
+                        _eventAggregator.Publish(new WorkStarted("Loading message body..."));
+
+                        //CreateMockSaga();
+                        if (Data == null || Data.SagaId != originatingSaga.SagaId)
+                        {
+                            Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+
+                            if (Data != null && Data.Changes != null)
+                            {
+                                ProcessDataValues(Data.Changes);
+                            }
+                            else
+                            {
+                                Data = null;
+                            }
+                        }
+
+                        _eventAggregator.Publish(new WorkFinished());
                     }
                     else
                     {
                         Data = null;
                     }
                 }
-
-                _eventAggregator.Publish(new WorkFinished());
+                else
+                {
+                    Data = null;
+                }
             }
             else
             {

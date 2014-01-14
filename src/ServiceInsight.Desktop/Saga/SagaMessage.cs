@@ -20,12 +20,26 @@ namespace NServiceBus.Profiler.Desktop.Saga
         { 
             get
             {
-                return messageType.Split('.').Last();
+                return ProcessType(messageType);
             }
             set
             {
                 messageType = value;
             }
+        }
+
+        private string ProcessType(string messageType)
+        {
+            if (string.IsNullOrEmpty(messageType))
+                return string.Empty;
+
+            var clazz = messageType.Split(',').First();
+            var objectName = clazz.Split('.').Last();
+
+            if (objectName.Contains("+"))
+                objectName = objectName.Split('+').Last();
+
+            return objectName;
         }
 
         public DateTime TimeSent { get; set; }
