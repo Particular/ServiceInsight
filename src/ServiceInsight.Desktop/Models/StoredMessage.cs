@@ -47,14 +47,6 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
-        public string OriginatingSagaType
-        {
-            get
-            {
-                return GetHeaderByKey("OriginatingSagaType");
-            }
-        }
-
         public string RelatedToMessageId
         {
             get
@@ -78,6 +70,11 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             get; set;
         }
+
+        public List<SagaInfo> InvokedSagas{get;set;}
+
+
+        public SagaInfo OriginatesFromSaga{get;set;}
 
         public string GetURIQuery()
         {
@@ -110,6 +107,13 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public string Key { get; set; }
         public string Value { get; set; }
+    }
+
+    [DebuggerDisplay("SagaType={SagaType},SagaId={Value}")]
+    public class SagaInfo
+    {
+        public string SagaType { get; set; }
+        public Guid SagaId { get; set; }
     }
 
     public class MessageHeaderKeys
