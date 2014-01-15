@@ -83,6 +83,12 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             base.AttachView(view, context);
             _view = (IMessageFlowView)view;
+            _view.ShowMessage += _view_ShowMessage;
+        }
+
+        void _view_ShowMessage(object sender, SearchMessageEventArgs e)
+        {
+            SearchMessage(e.MessageNode.Message);
         }
 
         public void ShowMessageBody(StoredMessage message)

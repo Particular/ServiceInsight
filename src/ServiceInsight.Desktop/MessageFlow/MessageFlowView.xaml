@@ -193,7 +193,7 @@
                                     <Border x:Name="MessageRectangle" 
                                                 Background="{StaticResource MessageBackground}" 
                                                 BorderBrush="Transparent"
-                                                BorderThickness="1">
+                                                BorderThickness="1" MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown">
                                         <Grid x:Name="RootGrid">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />

@@ -14,6 +14,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     {
         public MessageFlowView()
         {
+            ShowMessage = (s, e) => { };
             InitializeComponent();
         }
 
@@ -45,5 +46,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             Surface.UpdateLayout();
         }
+
+        private void MessageRectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
+            ShowMessage(sender, new SearchMessageEventArgs(node));
+        }
+
+        public event System.EventHandler<SearchMessageEventArgs> ShowMessage;
     }
 }
