@@ -286,7 +286,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             if (SearchInProgress)
             {
-                return "Search results: ";
+                return "Search results:";
             }
 
             return SelectedEndpoint != null ?
@@ -298,11 +298,11 @@ namespace NServiceBus.Profiler.Desktop.Search
             if (SearchInProgress)
             {
                 return SelectedEndpoint != null ?
-                        string.Format("{0} Message(s) found in Endpoint '{1}'", TotalItemCount, SelectedEndpoint.Name) :
-                        string.Format("{0} Message(s) found", TotalItemCount);
+                        string.Format(" {0} Message(s) found in Endpoint '{1}'", TotalItemCount, SelectedEndpoint.Name) :
+                        string.Format(" {0} Message(s) found", TotalItemCount);
             }
 
-            return string.Format("{0} Message(s) found", TotalItemCount);
+            return string.Format(" {0} Message(s) found", TotalItemCount);
         }
     }
 }
