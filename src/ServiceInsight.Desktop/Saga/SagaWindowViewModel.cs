@@ -49,9 +49,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
             var message = @event.Message;
             if (message != null)
             {
-                if (message.InvokedSagas != null)
+                if (message.Sagas != null)
                 {
-                    var originatingSaga = message.InvokedSagas.FirstOrDefault();
+                    var originatingSaga = message.Sagas.FirstOrDefault();
                     if (originatingSaga != null)
                     {
 

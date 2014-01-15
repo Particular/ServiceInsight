@@ -20,9 +20,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
 
-            if (message.InvokedSagas != null)
+            if (message.Sagas != null)
             {
-                var originatingSaga = message.InvokedSagas.FirstOrDefault();
+                var originatingSaga = message.Sagas.FirstOrDefault();
                 if (originatingSaga != null)
                 {
                     SagaType = ProcessType(originatingSaga.SagaType);

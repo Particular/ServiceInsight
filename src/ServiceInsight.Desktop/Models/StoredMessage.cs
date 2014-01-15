@@ -97,6 +97,26 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public List<SagaInfo> InvokedSagas { get; set; }
 
+        public List<SagaInfo> Sagas
+        {
+            get
+            {
+                if (InvokedSagas != null)
+                {
+                    if (OriginatesFromSaga != null)
+                    {
+                        return InvokedSagas.Union(new List<SagaInfo> { OriginatesFromSaga }).ToList();
+                    }
+                    else
+                        return InvokedSagas;
+                }
+
+                if (OriginatesFromSaga != null)
+                    return new List<SagaInfo> { OriginatesFromSaga };
+
+                return null;
+            }
+        }
 
         public SagaInfo OriginatesFromSaga { get; set; }
 
