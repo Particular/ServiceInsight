@@ -49,8 +49,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         private void MessageRectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
-            ShowMessage(sender, new SearchMessageEventArgs(node));
+            if (e.ClickCount == 2)
+            {
+                var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
+                ShowMessage(sender, new SearchMessageEventArgs(node));
+            }
         }
 
         public event System.EventHandler<SearchMessageEventArgs> ShowMessage;
