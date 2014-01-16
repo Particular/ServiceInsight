@@ -1,17 +1,20 @@
 ﻿using System;
 using Autofac;
+using log4net;
 using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
     public class CommandLineArgParser : ICommandLineArgParser
     {
+        private static ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
+
         private const char UriSeparator = '?';
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
         private readonly IEnvironment _environment;
-
+        
         public CommandLineOptions ParsedOptions { get; private set; }
 
         public CommandLineArgParser(IEnvironment environment)
@@ -23,6 +26,8 @@ namespace NServiceBus.Profiler.Desktop.Startup
         public void Start()
         {
             var args = _environment.GetCommandLineArgs();
+            
+            Logger.DebugFormat("Application invoked with following arguments: {0}", string.Join(" ", args));
 
             if (args.Length != 2) return;
 

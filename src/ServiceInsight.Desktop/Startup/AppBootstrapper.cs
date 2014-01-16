@@ -21,7 +21,6 @@ namespace NServiceBus.Profiler.Desktop.Startup
         
         public AppBootstrapper()
         {
-            LoggingConfig.SetupLog4net();
             WireTaskExceptionHandler();
         }
 

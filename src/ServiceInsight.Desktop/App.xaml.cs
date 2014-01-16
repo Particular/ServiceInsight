@@ -3,6 +3,7 @@ using System.Windows;
 using DevExpress.Xpf.Core;
 using log4net;
 using NServiceBus.Profiler.Desktop.Shell;
+using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop
 {
@@ -40,6 +41,7 @@ namespace NServiceBus.Profiler.Desktop
 
         public App()
         {
+            LoggingConfig.SetupLog4net();
             InitializeComponent();
         }
 
