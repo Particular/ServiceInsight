@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
@@ -349,6 +350,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (_idleTimer != null)
                 _idleTimer.Stop();
 
+            ValidateCommandLineArgs();
             ValidateLicense();
         }
 
@@ -371,6 +373,15 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
+            }
+        }
+
+        private void ValidateCommandLineArgs()
+        {
+            if (_comandLineArgParser.HasUnsupportedKeys)
+            {
+                _windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _appCommander.ShutdownImmediately();
             }
         }
         

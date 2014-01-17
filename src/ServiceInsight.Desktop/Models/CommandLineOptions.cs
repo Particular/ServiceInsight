@@ -14,7 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string EndpointName { get; private set; }
         public int AutoRefreshRate { get; private set; }
         public bool ShouldAutoRefresh { get; private set; }
-
+        
         public void SetEndpointUri(string value)
         {
             if(string.IsNullOrWhiteSpace(value)) return;

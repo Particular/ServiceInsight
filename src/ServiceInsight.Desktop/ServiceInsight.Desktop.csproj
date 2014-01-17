@@ -437,7 +437,7 @@
       <DependentUpon>QueueCreationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\QueueCreationViewModel.cs" />
-    <Compile Include="Shell\QueueExceptionHandler.cs" />
+    <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
     <Compile Include="Core\UI\ScreenManager\IScreenFactory.cs" />
