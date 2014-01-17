@@ -346,7 +346,6 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\MessageIntent.cs" />
-    <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Models\MessageStatus.cs" />
     <Compile Include="Models\PagedResult.cs" />
     <Compile Include="Models\Queue.cs" />
