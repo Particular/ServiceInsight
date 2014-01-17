@@ -49,15 +49,15 @@
             <dxb:BarButtonItem Content="Exit Application" 
                                x:Name="ShutDown" 
                                AutomationProperties.AutomationId="ShutdownMenuItem"
-                               CategoryName="File" Glyph="/Images/Exit.png"/>
+                               CategoryName="File" />
             <dxb:BarButtonItem Content="About" 
                                x:Name="About" 
                                AutomationProperties.AutomationId="AboutMenuItem"
-                               CategoryName="Help" Glyph="/Images/About.png" />
+                               CategoryName="Help" />
             <dxb:BarButtonItem Content="Help" 
                                x:Name="Help" 
                                AutomationProperties.AutomationId="HelpMenuItem"
-                               CategoryName="Help" Glyph="/Images/Help.png" />
+                               CategoryName="Help"  />
             <dxb:BarButtonItem Content="Connect To ServiceControl" 
                                x:Name="ConnectToServiceControl" 
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
@@ -77,7 +77,7 @@
             <dxb:BarButtonItem Content="Refresh" 
                                x:Name="RefreshAll" 
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
-                               CategoryName="Tools" Glyph="/Images/Refresh.png"
+                               CategoryName="Tools" Glyph="/Images/SearchRefresh.png"
                                KeyGesture="F5" />
             <dxb:BarButtonItem Content="Import From File" 
                                x:Name="ImportMessage" 
@@ -90,7 +90,7 @@
             <dxb:BarButtonItem Content="Register..." 
                                x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
-                               CategoryName="Help" Glyph="/Images/Key.png" />
+                               CategoryName="Help"  />
             <dxb:BarButtonItem Content="Restore default layout" 
                                x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
@@ -100,7 +100,7 @@
                               Hint="{Binding AutoRefreshTooltip}" ShowScreenTip="True"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
-                              Glyph="/Images/SearchRefresh.png"
+                              Glyph="/Images/Refresh.png"
                               CategoryName="View" />
                               
             <dxb:ToolbarListItem x:Name="ToolbarList" 
