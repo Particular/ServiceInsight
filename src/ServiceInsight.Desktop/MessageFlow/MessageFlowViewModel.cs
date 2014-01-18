@@ -21,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         MessageFlowDiagram Diagram { get; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
-        void SearchMessage(StoredMessage message);
+        void SearchByMessageId(StoredMessage message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
@@ -117,9 +117,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
         }
 
-        public void SearchMessage(StoredMessage message)
+        public void SearchByMessageId(StoredMessage message)
         {
-            _searchBar.Search(message.MessageId);
+            _searchBar.Search(performSearch: false, searchQuery: message.MessageId);
+            _eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
         public async Task RetryMessage(StoredMessage message)

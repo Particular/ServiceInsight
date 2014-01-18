@@ -51,13 +51,14 @@ namespace NServiceBus.Profiler.Desktop.Search
             Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
         }
 
-        public void Search(string searchQuery)
+        public void Search(string searchQuery, bool performSearch = true)
         {
             SearchQuery = searchQuery;
             SearchInProgress = !SearchQuery.IsEmpty();
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
-            Search();
+
+            if(performSearch) Search();
         }
 
         [AutoCheckAvailability]
@@ -290,7 +291,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
 
             return SelectedEndpoint != null ?
-                SelectedEndpoint.Name : string.Empty;
+                   SelectedEndpoint.Name : string.Empty;
         }
 
         private string GetSearchResultResults()
