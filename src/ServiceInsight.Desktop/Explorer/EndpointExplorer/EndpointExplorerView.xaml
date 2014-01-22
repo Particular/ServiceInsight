@@ -21,7 +21,7 @@
                 <Setter.Value>
                     <DataTemplate>
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                                 <TextBlock Text="Configured for Monitoring: " />
                                 <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
                                 <TextBlock Text="No"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
