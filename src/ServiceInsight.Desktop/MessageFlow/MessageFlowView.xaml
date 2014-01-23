@@ -73,7 +73,7 @@
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Margin" Value="0,5,0,5" />
-                        <Setter Property="MaxWidth" Value="130" />
+                        <Setter Property="MaxWidth" Value="165" />
                         <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="Template">
                             <Setter.Value>
@@ -82,7 +82,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Data.FriendlyMessageType}"
                                                        ToolTip="{Binding Data.FriendlyMessageType}"
-                                                               MaxWidth="120"
+                                                               MaxWidth="155"
                                                                FontSize="14px"
                                                                FontWeight="Bold"
                                                                Style="{StaticResource MessageTypeText}"/>
@@ -218,7 +218,7 @@
                                                 <ContentControl Template="{StaticResource SendingEndpoint}" 
                                                                 Margin="3,0,3,0" />
                                                 <TextBlock FontSize="10px"
-                                                           Text="{Binding Data.OriginatingEndpoint}"
+                                                           Text="{Binding Data.SendingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
 
@@ -281,7 +281,7 @@
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
@@ -289,7 +289,7 @@
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasRetried}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
@@ -297,7 +297,7 @@
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Value="True" />
+                                                <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="False" />
                                                 <Condition Binding="{Binding HasRetried}" Value="False" />
                                             </MultiDataTrigger.Conditions>
@@ -352,7 +352,7 @@
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
-                        <Setter Property="ToolTip" Value="Sent Event" />
+                        <Setter Property="ToolTip" Value="Published Event" />
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
                         <Setter Property="EndArrowTemplate" Value="{StaticResource EventEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />

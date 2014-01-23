@@ -8,7 +8,6 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public MessageBody()
         {
-            BodyRaw = new byte[0];
             HeaderRaw = new byte[0];
         }
 
@@ -17,13 +16,11 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
         }
 
+        public int BodySize { get; set; }
+        public string BodyUrl { get; set; }
+
         [DeserializeAs(Name = "Headers")]
         public byte[] HeaderRaw { get; set; }
-        public byte[] BodyRaw { get; set; }
         public string Body { get; set; }
-        public string CorrelationId { get; set; }
-        public string TransactionId { get; set; }
-        public Queue Destination { get; set; }
-        public Queue Response { get; set; }
     }
 }

@@ -29,9 +29,6 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         [Description("Type of the message")]
         public string EnclosedMessageTypes { get; private set; }
 
-        [Description("Number of retries")]
-        public string Retries { get; private set; }
-
         [Description("Id of the message this relates to")]
         public string RelatedTo { get; private set; }
 
@@ -43,6 +40,9 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         [Description("Conversation Identifier")]
         public string ConversationId { get; private set; }
+
+        [Description("Message Identifier")]
+        public string MessageId { get; private set; }
 
         [Description("Raw header information")]
         public string HeaderContent { get; private set; }
@@ -59,8 +59,8 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         {
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.Version, StringComparison.OrdinalIgnoreCase), h => Version = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.EnclosedMessageTypes, StringComparison.OrdinalIgnoreCase), h => EnclosedMessageTypes = h.Value);
-            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.Retries, StringComparison.OrdinalIgnoreCase), h => Retries = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.RelatedTo, StringComparison.OrdinalIgnoreCase), h => RelatedTo = h.Value);
+            ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.MessageId, StringComparison.OrdinalIgnoreCase), h => MessageId = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.ContentType, StringComparison.OrdinalIgnoreCase), h => ContentType = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.IsDeferedMessage, StringComparison.OrdinalIgnoreCase), h => IsDeferedMessage = h.Value);
             ConditionsMap.Add(h => h.Key.EndsWith(MessageHeaderKeys.ConversationId, StringComparison.OrdinalIgnoreCase), h => ConversationId = h.Value);
@@ -70,12 +70,13 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         {
             Version = null;
             EnclosedMessageTypes = null;
-            Retries = null;
             RelatedTo = null;
             ContentType = null;
             IsDeferedMessage = null;
             ConversationId = null;
+            MessageId = null;
             HeaderContent = null;
         }
+
     }
 }

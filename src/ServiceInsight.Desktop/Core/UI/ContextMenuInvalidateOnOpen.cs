@@ -9,12 +9,12 @@ namespace NServiceBus.Profiler.Desktop.Core.UI
     {
         public static readonly DependencyProperty NotifyMenuOpeningProperty = DependencyProperty.RegisterAttached("NotifyMenuOpening", typeof(bool), typeof(NotifyMenuOpeningBehavior), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsRender, OnNotifyMenuOpeningChanged));
 
-        public static void SetNotifyMenuOpening(UIElement element, bool value)
+        public static void SetNotifyMenuOpening(PopupMenu element, bool value)
         {
             element.SetValue(NotifyMenuOpeningProperty, value);
         }
 
-        public static bool GetNotifyMenuOpening(UIElement element)
+        public static bool GetNotifyMenuOpening(PopupMenu element)
         {
             return (bool)element.GetValue(NotifyMenuOpeningProperty);
         }

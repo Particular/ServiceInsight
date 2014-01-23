@@ -9,9 +9,10 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 {
     public class HexContentViewModel : Screen, IHexContentViewModel
     {
-        private IHexContentView _view;
-        private static readonly Encoding Encoding;
         internal static Func<byte, string> ByteToStringConverter;
+        private static readonly Encoding Encoding;
+
+        private IHexContentView _view;
 
         static HexContentViewModel()
         {
@@ -24,11 +25,18 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             HexParts = new BindableCollection<HexPart>();
         }
 
+        public byte[] SelectedMessage { get; set; }
+
+        public IObservableCollection<HexPart> HexParts
+        {
+            get; private set;
+        }
+
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
             _view = (IHexContentView) view;
-            OnCurrentContentChanged();
+            OnSelectedMessageChanged();
         }
 
         protected override void OnActivate()
@@ -37,13 +45,28 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             DisplayName = "Hex";
         }
 
-        public byte[] CurrentContent { get; set; }
-
-        public virtual void OnCurrentContentChanged()
+        public void Handle(SelectedMessageChanged @event)
         {
-            if(_view == null || CurrentContent == null) 
+            byte[] body = null;
+
+            if (@event.Message != null && @event.Message.Body != null)
+            {
+                body = Encoding.Default.GetBytes(@event.Message.Body);
+            }
+
+            SelectedMessage = body;
+        }
+
+        public void OnSelectedMessageChanged()
+        {
+            if (_view == null || SelectedMessage == null) 
                 return;
 
+            DisplayMessage();
+        }
+
+        private void DisplayMessage()
+        {
             ClearHexParts();
             CreateHexParts();
         }
@@ -59,7 +82,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             var lineNumber = 1;
             var hexLine = new HexPart(lineNumber);
 
-            foreach (var currentByte in CurrentContent)
+            foreach (var currentByte in SelectedMessage)
             {
                 if(!HexParts.Contains(hexLine))
                     HexParts.Add(hexLine);
@@ -97,28 +120,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
         private static void AppendHex(HexNumber hexValue, byte b)
         {
             hexValue.Hex = string.Format(b < 0x10 ? "0{0:X000} " : "{0:X000} ", b);
-        }
-
-        public IObservableCollection<HexPart> HexParts
-        {
-            get; private set;
-        }
-
-        public void Handle(MessageBodyLoaded @event)
-        {
-            HexParts.Clear();
-
-            CurrentContent = null;
-            CurrentContent = @event.Message != null ? @event.Message.BodyRaw : null;
-        }
-
-        public void Handle(SelectedMessageChanged @event)
-        {
-            if (@event.SelectedMessage == null)
-            {
-                HexParts.Clear();
-                CurrentContent = null;
-            }
         }
     }
 }

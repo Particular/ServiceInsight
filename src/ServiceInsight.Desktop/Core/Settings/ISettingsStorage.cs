@@ -6,5 +6,6 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
     {
         void Save<T>(string key, T settings);
         T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new();
+        bool HasSettings(string key);
     }
 }

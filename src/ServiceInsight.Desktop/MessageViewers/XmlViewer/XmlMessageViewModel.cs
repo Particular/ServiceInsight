@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Text;
+using System.Xml;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
@@ -11,27 +12,15 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
         private readonly IContentDecoder<XmlDocument> _xmlDecoder;
-        private readonly IContentDecoder<string> _stringDecoder;
         private readonly IClipboard _clipboard;
         private IXmlMessageView _messageView;
 
         public XmlMessageViewModel(
             IContentDecoder<XmlDocument> xmlDecoder,
-            IContentDecoder<string> stringDecoder,
             IClipboard clipboard)
         {
             _xmlDecoder = xmlDecoder;
-            _stringDecoder = stringDecoder;
             _clipboard = clipboard;
-
-            //TODO: Add back context menu
-//            ContextMenuItems = new List<PluginContextMenu>
-//            {
-//                new PluginContextMenu("CopyMessageXml", new RelayCommand(CopyMessageXml, CanCopyMessageXml))
-//                {
-//                    DisplayName = "Copy Message",
-//                }
-//            };
         }
 
         protected override void OnActivate()
@@ -54,42 +43,48 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             if(_messageView == null) return;
 
             _messageView.Clear();
-
-            if (SelectedMessage != null)
-            {
-                var xml = _xmlDecoder.Decode(SelectedMessage.BodyRaw);
-                if (xml.IsParsed)
-                {
-                    _messageView.Display(xml.Value.GetFormatted());
-                }
-            }
+            ShowMessageBody();
         }
 
-        public virtual bool CanCopyMessageXml()
+        public bool CanCopyMessageXml()
         {
             return SelectedMessage != null;
         }
 
-        public virtual void CopyMessageXml()
+        public void CopyMessageXml()
         {
-            var content = _stringDecoder.Decode(SelectedMessage.BodyRaw);
-            if (content.IsParsed)
+            var content = GetMessageBody();
+            if (!content.IsEmpty())
             {
-                _clipboard.CopyTo(content.Value);
+                _clipboard.CopyTo(content);
             }
         }
 
         public void Handle(SelectedMessageChanged @event)
         {
-            if (@event.SelectedMessage == null)
+            if (SelectedMessage == @event.Message) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
             {
-                SelectedMessage = null;
+                OnSelectedMessageChanged();
+            }
+            else
+            {
+                SelectedMessage = @event.Message;
             }
         }
 
-        public void Handle(MessageBodyLoaded @event)
+        private void ShowMessageBody()
         {
-            SelectedMessage = @event.Message;
+            if (SelectedMessage == null) return;
+            _messageView.Display(GetMessageBody());
+        }
+
+        private string GetMessageBody()
+        {
+            if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
+
+            var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
+            var xml = _xmlDecoder.Decode(bytes);
+            return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;
         }
     }
 }

@@ -28,48 +28,55 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             base.OnActivate();
 
-            SearchQuery = _commandLineArgParser.ParsedOptions.SearchQuery;
+            Search(_commandLineArgParser.ParsedOptions.SearchQuery);
+        }
+
+        public void GoToFirstPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+        }
+
+        public void GoToPreviousPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage - 1, SearchQuery);
+        }
+
+        public void GoToNextPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage + 1, SearchQuery);
+        }
+
+        public void GoToLastPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
+        }
+
+        public void Search(string searchQuery, bool performSearch = true)
+        {
+            SearchQuery = searchQuery;
             SearchInProgress = !SearchQuery.IsEmpty();
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
-        }
 
-        public virtual void GoToFirstPage()
-        {
-            Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
-        }
-
-        public virtual void GoToPreviousPage()
-        {
-            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage - 1, SearchQuery);
-        }
-
-        public virtual void GoToNextPage()
-        {
-            Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage + 1, SearchQuery);
-        }
-
-        public virtual void GoToLastPage()
-        {
-            Parent.RefreshEndpoint(SelectedEndpoint, PageCount, SearchQuery);
+            if(performSearch) Search();
         }
 
         [AutoCheckAvailability]
-        public virtual async void Search()
+        public async void Search()
         {
             SearchInProgress = true;
-            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         [AutoCheckAvailability]
-        public virtual async void CancelSearch()
+        public async void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            await Parent.RefreshEndpoint(SelectedEndpoint, 1, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        public void SetupPaging(PagedResult<MessageInfo> pagedResult)
+        public void SetupPaging(PagedResult<StoredMessage> pagedResult)
         {
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
@@ -80,17 +87,10 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public async void RefreshResult()
         {
-            if (SelectedEndpoint != null)
-            {
-                await Parent.RefreshEndpoint(SelectedEndpoint, CurrentPage, SearchQuery);
-            }
-            else
-            {
-                await Parent.RefreshMessages();
-            }
+            await Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
         }
 
-        public virtual bool CanGoToLastPage
+        public bool CanGoToLastPage
         {
             get
             {
@@ -100,7 +100,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool CanCancelSearch
+        public bool CanCancelSearch
         {
             get { return SearchInProgress; }
         }
@@ -110,7 +110,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             get { return base.Parent as IMessageListViewModel; }
         }
         
-        public virtual int PageCount
+        public int PageCount
         {
             get
             {
@@ -123,68 +123,79 @@ namespace NServiceBus.Profiler.Desktop.Search
             }
         }
 
-        public virtual bool WorkInProgress
+        public bool WorkInProgress
         {
             get { return _workCount > 0; }
         }
 
-        public virtual Endpoint SelectedEndpoint { get; private set; }
+        public Endpoint SelectedEndpoint { get; private set; }
 
-        public virtual Queue SelectedQueue { get; private set; }
+        public Queue SelectedQueue { get; private set; }
         
-        public virtual string SearchQuery { get; set; }
+        public string SearchQuery { get; set; }
 
-        public virtual bool IsVisible { get; set; }
+        public string SearchResultMessage
+        {
+            get { return GetSearchResultMessage(); }
+        }
 
-        public virtual bool CanGoToFirstPage
+        public string SearchResultHeader
+        {
+            get { return GetSearchResultHeader(); }
+        }
+
+        public string SearchResultResults
+        {
+            get { return GetSearchResultResults(); }
+        }
+
+        public bool IsVisible { get; set; }
+
+        public bool CanGoToFirstPage
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage > 1 &&
+                return CurrentPage > 1 &&
                        !WorkInProgress;
             }
         }
 
-        public virtual bool CanGoToPreviousPage
+        public bool CanGoToPreviousPage
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage - 1 >= 1 &&
+                return CurrentPage - 1 >= 1 &&
                        !WorkInProgress;
             }
         }
 
-        public virtual bool CanGoToNextPage
+        public bool CanGoToNextPage
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage + 1 <= PageCount &&
+                return CurrentPage + 1 <= PageCount &&
                        !WorkInProgress;
             }
         }
 
-        public virtual IList<MessageInfo> Result { get; private set; }
+        public IList<StoredMessage> Result { get; private set; }
 
-        public virtual int CurrentPage { get; private set; }
+        public int CurrentPage { get; private set; }
         
-        public virtual int PageSize { get; private set; }
+        public int PageSize { get; private set; }
         
-        public virtual int TotalItemCount { get; private set; }
+        public int TotalItemCount { get; private set; }
         
-        public virtual bool SearchInProgress { get; private set; }
+        public bool SearchInProgress { get; private set; }
         
-        public virtual bool SearchEnabled { get; private set; }
+        public bool SearchEnabled { get; private set; }
 
-        public virtual bool CanSearch
+        public bool CanSearch
         {
             get
             {
                 return !WorkInProgress &&
-                       !string.IsNullOrWhiteSpace(SearchQuery) &&
-                       SelectedEndpoint != null;
+                       !string.IsNullOrWhiteSpace(SearchQuery);
             }
         }
 
@@ -192,7 +203,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return !WorkInProgress && (SelectedEndpoint != null || SelectedQueue != null);
+                return !WorkInProgress;
             }
         }
 
@@ -207,6 +218,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyOfPropertyChange(() => SearchEnabled);
             NotifyOfPropertyChange(() => CanCancelSearch);
             NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(() => SearchResultMessage);
         }
 
         public void OnSelectedEndpointChanged()
@@ -235,6 +247,13 @@ namespace NServiceBus.Profiler.Desktop.Search
                 SelectedEndpoint = endpointNode.Endpoint;                
             }
 
+            var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();
+            if (serviceNode != null)
+            {
+                SelectedEndpoint = null;
+                SearchEnabled = true;
+            }
+
             var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();
             if (queueNode != null)
             {
@@ -244,19 +263,47 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             _workCount++;
             NotifyPropertiesChanged();
         }
 
-        public virtual void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (_workCount > 0)
             {
                 _workCount--;
                 NotifyPropertiesChanged();
             }
+        }
+
+        private string GetSearchResultMessage()
+        {
+            return string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
+        }
+
+        private string GetSearchResultHeader()
+        {
+            if (SearchInProgress)
+            {
+                return "Search results:";
+            }
+
+            return SelectedEndpoint != null ?
+                   SelectedEndpoint.Name : string.Empty;
+        }
+
+        private string GetSearchResultResults()
+        {
+            if (SearchInProgress)
+            {
+                return SelectedEndpoint != null ?
+                        string.Format(" {0} Message(s) found in Endpoint '{1}'", TotalItemCount, SelectedEndpoint.Name) :
+                        string.Format(" {0} Message(s) found", TotalItemCount);
+            }
+
+            return string.Format(" {0} Message(s) found", TotalItemCount);
         }
     }
 }

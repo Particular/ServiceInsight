@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
@@ -21,6 +22,7 @@ using NServiceBus.Profiler.Desktop.Options;
 using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
+using System.Diagnostics;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -93,7 +95,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             RestoreLayout();
         }
 
-        public virtual void Deactivate(bool close )
+        public void Deactivate(bool close)
         {
             base.OnDeactivate(close);
             _refreshTimer.Stop();
@@ -110,51 +112,58 @@ namespace NServiceBus.Profiler.Desktop.Shell
             View.OnRestoreLayout(_settingsProvider);
         }
 
-        public virtual void ResetLayout()
+        public void ResetLayout()
         {
             View.OnResetLayout(_settingsProvider);
         }
 
-        public virtual bool AutoRefresh { get; set; }
+        public bool AutoRefresh { get; set; }
+        
+        public bool BodyTabSelected { get; set; }
 
-        public virtual IShellView View { get; private set; }
+        public IShellView View { get; private set; }
 
-        public virtual IMessagePropertiesViewModel MessageProperties { get; private set; }
+        public IMessagePropertiesViewModel MessageProperties { get; private set; }
 
-        public virtual IQueueExplorerViewModel QueueExplorer { get; private set; }
+        public IQueueExplorerViewModel QueueExplorer { get; private set; }
 
-        public virtual IEndpointExplorerViewModel EndpointExplorer { get; private set; }
+        public IEndpointExplorerViewModel EndpointExplorer { get; private set; }
 
-        public virtual IMessageListViewModel Messages { get; private set; }
+        public IMessageListViewModel Messages { get; private set; }
 
-        public virtual IMessageFlowViewModel MessageFlow { get; private set; }
+        public IMessageFlowViewModel MessageFlow { get; private set; }
 
-        public virtual IMessageBodyViewModel MessageBody { get; private set; }
+        public IMessageBodyViewModel MessageBody { get; private set; }
 
-        public virtual IStatusBarManager StatusBarManager { get; private set; }
+        public IStatusBarManager StatusBarManager { get; private set; }
 
-        public virtual ILogWindowViewModel LogWindow { get; private set; }
+        public ILogWindowViewModel LogWindow { get; private set; }
 
-        public virtual ExplorerItem SelectedExplorerItem { get; private set; }
+        public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public virtual bool WorkInProgress
+        public void OnSelectedTabbedViewChanged(object view)
+        {
+            
+        }
+
+        public bool WorkInProgress
         {
             get { return _workCounter > 0; }
         }
 
-        public virtual void ShutDown()
+        public void ShutDown()
         {
             _appCommander.ShutdownImmediately();
         }
 
-        public virtual void About()
+        public void About()
         {
             _windowManager.ShowDialog<AboutViewModel>();
         }
 
-        public virtual void Help()
+        public void Help()
         {
-            throw new NotImplementedException("This feature is not yet implemented.");
+            Process.Start(@"http://docs.particular.net/");
         }
 
         public void Options()
@@ -190,13 +199,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         [AutoCheckAvailability]
         public async void DeleteSelectedMessages()
         {
-            await Messages.DeleteSelectedMessages();
         }
 
         [AutoCheckAvailability]
         public async void PurgeCurrentQueue()
         {
-            await Messages.PurgeQueue();
         }
 
         [AutoCheckAvailability]
@@ -268,9 +275,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return Messages.SelectedQueue != null &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -278,9 +283,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return Messages.SelectedQueue != null &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -288,9 +291,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get
             {
-                return !WorkInProgress &&
-                       Messages.FocusedMessage != null &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
+                return false;
             }
         }
 
@@ -318,12 +319,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public bool CanExportMessage
         {
-            get { return !WorkInProgress && Messages.SelectedMessages.Count > 0 && false; } //TODO: Implement message export
+            get { return false; }
         }
 
         public bool CanImportMessage
         {
-            get { return !WorkInProgress && false; } //TODO: Implement message import
+            get { return false; }
         }
         
         private void InitializeIdleTimer()
@@ -349,6 +350,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (_idleTimer != null)
                 _idleTimer.Stop();
 
+            ValidateCommandLineArgs();
             ValidateLicense();
         }
 
@@ -358,6 +360,29 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 return;
 
             RefreshAll();
+        }
+
+        public void OnBodyTabSelectedChanged()
+        {
+            _eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
+        }
+
+        public string AutoRefreshTooltip
+        {
+            get
+            {
+                var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
+                return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
+            }
+        }
+
+        private void ValidateCommandLineArgs()
+        {
+            if (_comandLineArgParser.HasUnsupportedKeys)
+            {
+                _windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _appCommander.ShutdownImmediately();
+            }
         }
         
         private void ValidateLicense()
@@ -373,6 +398,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void DisplayRegistrationStatus()
         {
             var license = _licenseManager.CurrentLicense;
+
+            if (license == null)
+            {
+                return;
+            }
             if (license.LicenseType == ProfilerLicenseTypes.Standard)
             {
                 StatusBarManager.SetRegistrationInfo(LicensedStatusMessage, license.RegisteredTo);
@@ -433,11 +463,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
-        }
-
-        public void Handle(AsyncOperationFailed message)
-        {
-            StatusBarManager.SetFailStatusMessage("Operation Failed: {0}", message.Message);
         }
 
         public void Handle(SwitchToMessageBody @event)

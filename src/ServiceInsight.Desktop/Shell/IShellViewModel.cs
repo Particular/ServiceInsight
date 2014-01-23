@@ -19,7 +19,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
-        IHandle<AsyncOperationFailed>,
         IHandle<SwitchToMessageBody>,
         IWorkTracker
     {
@@ -34,6 +33,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IShellView View { get; }
         ExplorerItem SelectedExplorerItem { get; }
         bool AutoRefresh { get; }
+        bool BodyTabSelected { get; set; }
         void ShutDown();
         void About();
         void Help();
@@ -47,5 +47,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         void ExportMessage();
         Task CreateQueue();
         void CreateMessage();
+        void OnSelectedTabbedViewChanged(object view);
     }
 }

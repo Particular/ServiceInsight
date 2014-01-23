@@ -22,5 +22,11 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             return Children.OfType<EndpointExplorerItem>()
                            .Any(item => item.Endpoint == endpoint);
         }
+
+        public EndpointExplorerItem GetEndpointNode(Endpoint endpoint)
+        {
+            return Children.OfType<EndpointExplorerItem>()
+                           .First(item => item.Endpoint == endpoint);
+        }
     }
 }

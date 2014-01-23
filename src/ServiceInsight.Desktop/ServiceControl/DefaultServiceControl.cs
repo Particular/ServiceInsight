@@ -26,7 +26,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         private readonly IServiceControlConnectionProvider _connection;
         private readonly IEventAggregator _eventAggregator;
         private readonly ProfilerSettings _settings;
-        private readonly ILog Logger = LogManager.GetLogger(typeof(IServiceControl));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
@@ -38,19 +38,12 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             _settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
-        public async Task<PagedResult<StoredMessage>> GetErrorMessages()
-        {
-            var request = new RestRequest("failedmessages");
-            var result = await GetPagedResult<StoredMessage>(request);
-            
-            return result;
-        }
 
         public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl());
             
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -65,7 +58,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -119,14 +112,35 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var url = string.Format("errors/{0}/retry", messageId);
             var request = new RestRequest(url, Method.POST);
-            var response = await ExecuteAsync(request);
+            var response = await ExecuteAsync(request, HasSucceeded);
 
             return response;
         }
 
-        private void AppendSystemMessages(RestRequest request, string searchQuery)
+        public async Task<string> GetBody(string bodyUrl)
         {
-            if (searchQuery != null) return; //Not supported by search endpoint/api
+            IRestClient client;
+
+            if (bodyUrl.StartsWith("http"))
+            {
+                client = CreateClient(bodyUrl);
+            }
+            else
+            {
+                client = CreateClient();
+            }
+
+            return await ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
+        }
+
+        public Uri GetUri(StoredMessage message)
+        {
+            var connectionUri = new Uri(_connection.Url);
+            return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
+        }
+
+        private void AppendSystemMessages(IRestRequest request)
+        {
             request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
         }
 
@@ -155,7 +169,12 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private IRestClient CreateClient()
         {
-            var client = new RestClient(_connection.Url);
+            return CreateClient(_connection.Url);
+        }
+
+        private IRestClient CreateClient(string url)
+        {
+            var client = new RestClient(url);
             var deserializer = new JsonMessageDeserializer();
             client.ClearHandlers();
             client.AddHandler("application/json", deserializer);
@@ -205,12 +224,19 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return ExecuteAsync<T>(request, response => response.Data);
         }
 
-        private Task<bool> ExecuteAsync(IRestRequest request)
+        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        {
+            return ExecuteAsync(CreateClient(), request, selector);
+        }
+
+        private Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<bool>();
-            CreateClient().ExecuteAsync(request, response => ProcessResponse(HasSucceeded, response, completionSource));
+            var completionSource = new TaskCompletionSource<T>();
+            
+            client.ExecuteAsync(request, response => ProcessResponse(selector, response, completionSource));
+            
             return completionSource.Task;
         }
 
@@ -260,11 +286,14 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogRequest(IRestRequest request)
         {
-            Logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
+            var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
+            var url = _connection.Url != null ? _connection.Url.TrimEnd('/') : string.Empty;
+
+            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
             
             foreach (var parameter in request.Parameters)
             {
-                Logger.DebugFormat("Request Parameter: {0} : {1}", 
+                _logger.DebugFormat("Request Parameter: {0} : {1}", 
                                                        parameter.Name, 
                                                        parameter.Value);
             }
@@ -275,11 +304,11 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            Logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
+            _logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
 
             foreach (var header in response.Headers)
             {
-                Logger.DebugFormat("Response Header: {0} : {1}", 
+                _logger.DebugFormat("Response Header: {0} : {1}", 
                                                      header.Name, 
                                                      header.Value);
             }
@@ -287,24 +316,21 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogError(IRestResponse response)
         {
-            var errorMessage = string.Format("Error executing the request: {0}, Status code is {1}", 
-                                                                           response.ErrorMessage, 
-                                                                           response.StatusCode);
+            var exception = response != null ? response.ErrorException : null;
+            var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
+            
             RaiseAsyncOperationFailed(errorMessage);
-            Logger.ErrorFormat(errorMessage, response.ErrorException);
+            _logger.ErrorFormat(errorMessage, exception);
         }
 
         private static bool HasSucceeded(IRestResponse response)
         {
-            return SuccessCodes.Any(x => x == response.StatusCode && response.ErrorException == null);
+            return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
         private void RaiseAsyncOperationFailed(string errorMessage)
         {
-            _eventAggregator.Publish(new AsyncOperationFailed
-            {
-                Message = errorMessage
-            });
+            _eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
         }
 
         private static IEnumerable<HttpStatusCode> SuccessCodes

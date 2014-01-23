@@ -16,14 +16,16 @@ namespace NServiceBus.Profiler.Desktop.Search
     {
         Endpoint SelectedEndpoint { get; }
         string SearchQuery { get; }
+        bool SearchEnabled { get; }
         bool IsVisible { get; set; }
         void GoToFirstPage();
         void GoToLastPage();
         void GoToPreviousPage();
         void GoToNextPage();
         void Search();
+        void Search(string searchQuery, bool performSearch = true); 
         void CancelSearch();
-        void SetupPaging(PagedResult<MessageInfo> pagedResult);
+        void SetupPaging(PagedResult<StoredMessage> pagedResult);
         void NotifyPropertiesChanged();
     }
 }

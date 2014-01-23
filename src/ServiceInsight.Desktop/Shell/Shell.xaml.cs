@@ -5,6 +5,7 @@ using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Serialization;
 using DevExpress.Xpf.Docking;
+using DevExpress.Xpf.Docking.Base;
 using log4net;
 using NServiceBus.Profiler.Desktop.Core.Settings;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
@@ -30,6 +31,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void OnShellLoaded(object sender, RoutedEventArgs e)
         {
             DXSplashScreen.Close();
+            Activate();
         }
 
         public void ChangeTheme(string name)
@@ -135,6 +137,19 @@ namespace NServiceBus.Profiler.Desktop.Shell
             catch(Exception ex)
             {
                 _logger.Info("Failed to restore layout, reason is: " + ex);
+            }
+        }
+
+        private IShellViewModel Model
+        {
+            get { return DataContext as IShellViewModel; }
+        }
+
+        private void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (Model != null)
+            {
+                Model.BodyTabSelected = e.Item != null && e.Item == MessageBody;
             }
         }
     }

@@ -45,6 +45,8 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 
         private void Validate(string license)
         {
+
+#if RELEASE
             if (_validator != null)
             {
                 try
@@ -88,6 +90,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
                 CreateTrialLicense();
                 ValidateTrialStartDate();
             }
+#endif
         }
 
         private void StoreLicense(string license)

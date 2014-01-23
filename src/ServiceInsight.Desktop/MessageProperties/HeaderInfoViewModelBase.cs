@@ -39,18 +39,22 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         protected Queue SelectedQueue { get; private set; } 
 
-        public virtual void Handle(SelectedExplorerItemChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
             var queue = @event.SelectedExplorerItem.As<QueueExplorerItem>();
             SelectedQueue = queue != null ? queue.Queue : null;
         }
 
-        public virtual void Handle(MessageBodyLoaded @event)
+        public void Handle(SelectedMessageChanged @event)
         {
-            ClearHeaderValues();
             SelectedMessage = @event.Message;
+            ClearHeaderValues();
 
-            if (SelectedMessage != null)
+            if (SelectedMessage == null)
+            {
+                Headers = null;
+            }
+            else
             {
                 Headers = DecodeHeader(SelectedMessage);
                 OnItemsLoaded();
@@ -88,15 +92,5 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
         protected abstract void MapHeaderKeys();
 
         protected abstract void ClearHeaderValues();
-
-        public virtual void Handle(SelectedMessageChanged @event)
-        {
-            if (@event.SelectedMessage == null)
-            {
-                SelectedMessage = null;
-                Headers = null;
-                ClearHeaderValues();
-            }
-        }
     }
 }

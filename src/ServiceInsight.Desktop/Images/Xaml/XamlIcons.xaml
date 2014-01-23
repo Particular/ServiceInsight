@@ -177,4 +177,18 @@
             </Canvas>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="CopyIcon">
+        <Canvas Name="Layer_1" Width="11" Height="11" Canvas.Left="0" Canvas.Top="0">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Canvas.RenderTransform>
+            <Canvas Name="g2990">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="copy2icon_2_" Fill="#FF007BC6">
+                    <Path.Data>
+                        <PathGeometry Figures="M8.284 2.72V0H0v8.28h2.716V11H11V2.72H8.284z M1.068 7.212V1.068h6.148V2.72h-4.5    v4.493L1.068 7.212L1.068 7.212z M9.932 9.932H3.784V3.788h6.148V9.932z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>

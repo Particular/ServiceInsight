@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Core;
@@ -11,8 +12,11 @@ using NServiceBus.Profiler.Desktop.ServiceControl;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
-    public class AboutViewModel : INotifyPropertyChanged, IActivate
+    public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
+        public const string DetectingServiceControlVersion = "(Detecting...)";
+        public const string NotConnectedToServiceControl = "(Not Connected)";
+
         private readonly INetworkOperations _networkOperations;
         private readonly IServiceControl _serviceControl;
 
@@ -24,6 +28,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public ILicenseRegistrationViewModel License { get; private set; }
         public string AppVersion { get; set; }
         public string ServiceControlVersion { get; set; }
+        public string DisplayName { get; set; }
+        public string CommitHash { get; set; }
         public bool IsActive { get; private set; }
 
         public AboutViewModel(
@@ -36,6 +42,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             
             License = licenseInfo;
             IsSplash = false;
+            DisplayName = "About";
         }
 
         private AboutViewModel()
@@ -74,7 +81,22 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private void LoadAppVersion()
         {
-            AppVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var versionParts = version.Split(' ');
+            var appVersion = versionParts[0];
+            var commitHash = versionParts[2];
+
+            AppVersion = appVersion;
+            CommitHash = GetShortCommitHash(commitHash);
+        }
+
+        private static string GetShortCommitHash(string commitHash)
+        {
+            var parts = commitHash.Split(':');
+            var shaValue = parts[1].Replace("'", "");
+            var shortCommitHash = shaValue.Substring(0, 7);
+
+            return shortCommitHash;
         }
 
         private void ActivateLicense()
@@ -87,10 +109,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private async Task LoadVersions()
         {
-            ServiceControlVersion = "(Detecting...)";
+            ServiceControlVersion = DetectingServiceControlVersion;
 
             var version = await _serviceControl.GetVersion();
-            ServiceControlVersion = version ?? "(Not Connected)";
+            ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

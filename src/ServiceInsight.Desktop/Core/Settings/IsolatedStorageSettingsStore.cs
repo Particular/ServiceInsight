@@ -36,5 +36,15 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
 
             return null;
         }
+
+        public override bool HasSettings(string key)
+        {
+            var filename = key + ".settings";
+
+            using (var isoStore = IsolatedStorageFile.GetStore(Scope, null, null))
+            {
+                return isoStore.FileExists(filename);
+            }
+        }
     }
 }

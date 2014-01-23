@@ -1,5 +1,4 @@
 ﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Models;
 
@@ -8,12 +7,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
     public class JsonMessageViewModel : Screen, IJsonMessageViewModel
     {
         private IJsonMessageView _messageView;
-        private readonly IContentDecoder<string> _messageDecoder;
-
-        public JsonMessageViewModel(IContentDecoder<string> messageDecoder)
-        {
-            _messageDecoder = messageDecoder;
-        }
 
         protected override void OnActivate()
         {
@@ -36,32 +29,12 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
 
             _messageView.Clear();
 
-            if (SelectedMessage != null)
-            {
-                if (SelectedMessage.Body != null)
-                {
-                    _messageView.Display(SelectedMessage.Body);
-                }
-                else
-                {
-                    var json = _messageDecoder.Decode(SelectedMessage.BodyRaw);
-                    if (json.IsParsed)
-                    {
-                        _messageView.Display(json.Value);
-                    }
-                }
-            }
+            if (SelectedMessage == null || SelectedMessage.Body == null) return;
+
+            _messageView.Display(SelectedMessage.Body);
         }
 
         public void Handle(SelectedMessageChanged @event)
-        {
-            if (@event.SelectedMessage == null)
-            {
-                SelectedMessage = null;
-            }
-        }
-
-        public void Handle(MessageBodyLoaded @event)
         {
             SelectedMessage = @event.Message;
         }

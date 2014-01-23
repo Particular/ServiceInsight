@@ -1,5 +1,4 @@
-﻿using System;
-using NServiceBus.Profiler.Desktop.Models;
+﻿using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.Startup;
 using NSubstitute;
 using NUnit.Framework;
@@ -121,15 +120,15 @@ namespace NServiceBus.Profiler.Tests
 
             _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
-            var exception = Should.Throw<NotSupportedException>(() => CreateSut());
+            var sut = CreateSut();
 
-            exception.Message.ShouldContain(UnsupportedKey);
+            sut.HasUnsupportedKeys.ShouldBe(true);
         }
 
         private ICommandLineArgParser CreateSut()
         {
             var parser = new CommandLineArgParser(_environment);
-            parser.Start();
+            parser.Parse();
             return parser;
         }
     }

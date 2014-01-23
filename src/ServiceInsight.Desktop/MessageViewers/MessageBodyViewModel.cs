@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
+using NServiceBus.Profiler.Desktop.ExtensionMethods;
 using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
 using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
 using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-using NServiceBus.Profiler.Desktop.Models;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers
 {
-    public interface IMessageBodyViewModel : 
-        IScreen,
-        IHandle<MessageBodyLoaded>
+    public interface IMessageBodyViewModel : IScreen,
+        IHandle<SelectedMessageChanged>
     {
     }
 
     public class MessageBodyViewModel : Screen, IMessageBodyViewModel
     {
-        private static IDictionary<string, MessageContentType> ContentTypeMaps;
+        private static readonly IDictionary<string, MessageContentType> ContentTypeMaps;
 
         static MessageBodyViewModel()
         {
@@ -27,7 +25,8 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
                 {"application/json", MessageContentType.Json},
                 {"text/json", MessageContentType.Json},
                 {"application/xml", MessageContentType.Xml},
-                {"text/xml", MessageContentType.Xml}
+                {"text/xml", MessageContentType.Xml},
+                {"", MessageContentType.NotSpecified}
             };
         }
 
@@ -60,12 +59,12 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml; }
         }
 
-        public void Handle(MessageBodyLoaded @event)
+        public void Handle(SelectedMessageChanged @event)
         {
-            var storedMessage = @event.Message as StoredMessage;
-            if (storedMessage != null && ContentTypeMaps.ContainsKey(storedMessage.ContentType))
+            var storedMessage = @event.Message;
+            if (storedMessage != null)
             {
-                ContentType = ContentTypeMaps[storedMessage.ContentType];
+                ContentType = ContentTypeMaps.GetValueOrDefault(storedMessage.ContentType, MessageContentType.NotSpecified);
             }
             else
             {

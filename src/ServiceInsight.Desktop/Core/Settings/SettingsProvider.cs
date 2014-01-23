@@ -19,7 +19,14 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
         {
             try
             {
-                return LoadSettings<T>(ReadSettingMetadata<T>());
+                if (_settingsRepository.HasSettings(GetKey<T>()))
+                {
+                    return LoadSettings<T>(ReadSettingMetadata<T>());
+                }
+                else
+                {
+                    return GetDefaultSettings<T>();
+                }
             }
             catch
             {

@@ -34,7 +34,7 @@
                     dxc:DXSerializer.SerializationID="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.4">
+                    dxc:DXSerializer.LayoutVersion="1.1.7">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -49,31 +49,15 @@
             <dxb:BarButtonItem Content="Exit Application" 
                                x:Name="ShutDown" 
                                AutomationProperties.AutomationId="ShutdownMenuItem"
-                               CategoryName="File" Glyph="/Images/Exit.png"/>
+                               CategoryName="File" />
             <dxb:BarButtonItem Content="About" 
                                x:Name="About" 
                                AutomationProperties.AutomationId="AboutMenuItem"
-                               CategoryName="Help" Glyph="/Images/About.png" />
+                               CategoryName="Help" />
             <dxb:BarButtonItem Content="Help" 
                                x:Name="Help" 
                                AutomationProperties.AutomationId="HelpMenuItem"
-                               CategoryName="Help" Glyph="/Images/Help.png" />
-            <dxb:BarButtonItem Content="Connect To MSMQ" 
-                               x:Name="ConnectToMessageQueue" 
-                               AutomationProperties.AutomationId="ConnectToMessageQueueMenuItem"
-                               CategoryName="Tools" Glyph="/Images/ConnectQueue.png">
-                <dxb:BarButtonItem.SuperTip>
-                    <dxc:SuperTip>
-                        <dxc:SuperTipItem Content="Connect Queue Explorer to MSMQ">
-                            <dxc:SuperTipItem.ContentTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" FontWeight="Bold"/>
-                                </DataTemplate>
-                            </dxc:SuperTipItem.ContentTemplate>
-                        </dxc:SuperTipItem>
-                    </dxc:SuperTip>
-                </dxb:BarButtonItem.SuperTip>
-            </dxb:BarButtonItem>
+                               CategoryName="Help"  />
             <dxb:BarButtonItem Content="Connect To ServiceControl" 
                                x:Name="ConnectToServiceControl" 
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
@@ -90,28 +74,11 @@
                     </dxc:SuperTip>
                 </dxb:BarButtonItem.SuperTip>
             </dxb:BarButtonItem>
-            <dxb:BarButtonItem Content="Delete Message(s)" 
-                               x:Name="DeleteSelectedMessages" 
-                               AutomationProperties.AutomationId="DeleteSelectedMessagesMenuItem"
-                               CategoryName="Tools" Glyph="/Images/DeleteMessage.png" />
-            <dxb:BarButtonItem Content="Purge Queue" 
-                               x:Name="PurgeCurrentQueue" 
-                               AutomationProperties.AutomationId="PurgeCurrentQueueMenuItem"
-                               CategoryName="Tools" Glyph="/Images/PurgeQueue.png" />
-            <dxb:BarButtonItem Content="Delete Queue" 
-                               x:Name="DeleteCurrentQueue" 
-                               AutomationProperties.AutomationId="DeleteCurrentQueueMenuItem"
-                               KeyGesture="ALT+DEL"
-                               CategoryName="Tools" Glyph="/Images/DeleteQueue.png" />
             <dxb:BarButtonItem Content="Refresh" 
                                x:Name="RefreshAll" 
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
-                               CategoryName="Tools" Glyph="/Images/Refresh.png"
+                               CategoryName="Tools" Glyph="/Images/SearchRefresh.png"
                                KeyGesture="F5" />
-            <dxb:BarButtonItem Content="Create Queue" 
-                               x:Name="CreateQueue" 
-                               AutomationProperties.AutomationId="CreateQueueMenuItem"
-                               CategoryName="Tools" Glyph="/Images/CreateQueue.png" />
             <dxb:BarButtonItem Content="Import From File" 
                                x:Name="ImportMessage" 
                                AutomationProperties.AutomationId="ImportMessageMenuItem"
@@ -123,15 +90,17 @@
             <dxb:BarButtonItem Content="Register..." 
                                x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
-                               CategoryName="Help" Glyph="/Images/Key.png" />
+                               CategoryName="Help"  />
             <dxb:BarButtonItem Content="Restore default layout" 
                                x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
                                CategoryName="View" />
             <dxb:BarCheckItem Content="Auto Refresh"
                               Name="DataAutoRefresh"
+                              Hint="{Binding AutoRefreshTooltip}" ShowScreenTip="True"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
+                              Glyph="/Images/Refresh.png"
                               CategoryName="View" />
                               
             <dxb:ToolbarListItem x:Name="ToolbarList" 
@@ -158,16 +127,8 @@
                             AutomationProperties.AutomationId="ToolsMenu"
                             CategoryName="Tools" 
                             Content="Tools">
-                <dxb:BarButtonItemLink BarItemName="ConnectToMessageQueue" />
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
-                <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="CreateQueue" />
-                <dxb:BarButtonItemLink BarItemName="PurgeCurrentQueue" />
-                <dxb:BarButtonItemLink BarItemName="DeleteCurrentQueue" />
-                <dxb:BarItemLinkSeparator />
-                <!--                <dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
-                <dxb:BarButtonItemLink BarItemName="DeleteSelectedMessages" />
             </dxb:BarSubItem>
 
             <dxb:BarSubItem x:Name="ViewMenu" 
@@ -234,16 +195,10 @@
                      Caption="Toolbar" 
                      AllowHide="True" 
                      AllowCollapse="True">
-                <dxb:BarButtonItemLink BarItemName="ConnectToMessageQueue" />
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarButtonItemLink BarItemName="CreateQueue" />
-                <dxb:BarButtonItemLink BarItemName="PurgeCurrentQueue" />
-                <dxb:BarButtonItemLink BarItemName="DeleteCurrentQueue" />
-                <dxb:BarItemLinkSeparator />
-                <!--<dxb:BarButtonItemLink BarItemName="itemCreateMessage" />-->
-                <dxb:BarButtonItemLink BarItemName="DeleteSelectedMessages" />
+                <dxb:BarCheckItemLink BarItemName="DataAutoRefresh"  />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar" 
                      AutomationProperties.AutomationId="StatusBar"
@@ -279,15 +234,6 @@
                                          CaptionImage="/Images/ServerExplorer.png">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
-                        <dxd:LayoutPanel x:Name="QueueExplorer" 
-                                         AutomationProperties.AutomationId="QueueExplorer"
-                                         Caption="Queue Explorer" 
-                                         AllowClose="False" 
-                                         ShowBorder="False" 
-                                         AllowFloat="False"
-                                         CaptionImage="/Images/ServerExplorer.png">
-                            <ContentControl cal:View.Model="{Binding QueueExplorer}" />
-                        </dxd:LayoutPanel>
 
                     </dxd:AutoHideGroup>
 
@@ -306,12 +252,14 @@
                         </dxd:LayoutPanel>
 
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
-                            <dxd:TabbedGroup ItemWidth="3*"
+                            <dxd:TabbedGroup x:Name="MainTabbedView" 
+                                             ItemWidth="3*"
                                              AllowClose="False"
                                              AllowFloat="False"
-                                             GroupBorderStyle="Tabbed">
+                                             GroupBorderStyle="Tabbed"
+                                             SelectedItemChanged="OnSelectedItemChanged">
 
-                                <dxd:LayoutPanel x:Name="FlowDiagram" 
+                                <dxd:LayoutPanel x:Name="MessageFlow" 
                                                  AutomationProperties.AutomationId="MessageFlow"
                                                  Caption="Flow Diagram"  
                                                  AllowClose="False"

@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using DevExpress.Xpf.Editors.Helpers;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Filter;
 using log4net.Layout;
+using NServiceBus.Profiler.Desktop.Core;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Startup;
 
@@ -18,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
     {
         private readonly RichTextBox _richtextBox;
         private readonly Paragraph _paragraph;
-        private const int MaxTextLength = 100000;
+        private const int MaxTextLength = 5000;
 
         public RichTextBoxAppender(RichTextBox textbox)
         {
@@ -31,8 +34,18 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
 
         private void CreateFilters()
         {
-            AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = typeof(IServiceControl).FullName});
+            LoggerMatchingTypes.ForEach(type => AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = type.FullName }));
             AddFilter(new DenyAllFilter());
+        }
+
+        private IEnumerable<Type> LoggerMatchingTypes
+        {
+            get
+            {
+                yield return typeof (IServiceControl);
+                yield return typeof (IQueueOperationsAsync);
+                yield return typeof (IQueueOperations);
+            }
         }
 
         private ILayout CreateLogLayout()

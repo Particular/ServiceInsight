@@ -7,23 +7,21 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using ExceptionHandler;
 using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
 using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
 using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.ScreenManager;
+using NServiceBus.Profiler.Desktop.Search;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     public interface IMessageFlowViewModel : IScreen, 
-        IHandle<MessageBodyLoaded>,
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
+        void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
-        void CopyMessageHeaders(StoredMessage message);
+        void SearchByMessageId(StoredMessage message);
         Task RetryMessage(StoredMessage message);
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
@@ -31,45 +29,52 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void ShowException(IExceptionDetails exception);
         void ZoomIn();
         void ZoomOut();
+        bool IsFocused(MessageInfo message);
     }
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
+        private readonly ISearchBarViewModel _searchBar;
         private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
-        private readonly IHeaderInfoSerializer _headerInfoSerializer;
         private readonly IClipboard _clipboard;
-        private readonly IStatusBarManager _statusBar;
         private readonly IWindowManagerEx _windowManager;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
+        private string _originalSelectionId = string.Empty;
+        private bool _loadingConversation;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder,
-            IHeaderInfoSerializer headerInfoSerializer,
             IClipboard clipboard, 
-            IStatusBarManager statusBar,
             IWindowManagerEx windowManager,
-            IScreenFactory screenFactory)
+            IScreenFactory screenFactory,
+            ISearchBarViewModel searchBar)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
-            _decoder = decoder;
-            _headerInfoSerializer = headerInfoSerializer;
             _clipboard = clipboard;
-            _statusBar = statusBar;
             _windowManager = windowManager;
             _screenFactory = screenFactory;
+            _searchBar = searchBar;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
 
         public MessageFlowDiagram Diagram
+        {
+            get; set;
+        }
+
+        public bool ShowEndpoints
+        {
+            get; set;
+        }
+
+        public MessageNode SelectedMessage
         {
             get; set;
         }
@@ -107,29 +112,52 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _clipboard.CopyTo(message.ConversationId);
         }
 
-        public void CopyMessageHeaders(StoredMessage message)
+        public void CopyMessageUri(StoredMessage message)
         {
-            var decodedHeader = new MessageHeaderDecoder(_decoder, message);
-            var serializedHeaders = _headerInfoSerializer.Serialize(decodedHeader.DecodedHeaders);
-            _clipboard.CopyTo(serializedHeaders);
+            _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
+        }
+
+        public void SearchByMessageId(StoredMessage message)
+        {
+            _searchBar.Search(performSearch: false, searchQuery: message.MessageId);
+            _eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
         public async Task RetryMessage(StoredMessage message)
         {
-            _statusBar.SetSuccessStatusMessage("Retrying to send selected error message {0}", message.OriginatingEndpoint);
+            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             await _serviceControl.RetryMessage(message.Id);
             _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
-            _statusBar.Done();
+            _eventAggregator.Publish(new WorkFinished());
         }
 
-        public async void Handle(MessageBodyLoaded @event)
+        public async void Handle(SelectedMessageChanged @event)
         {
-            var storedMessage = @event.Message as StoredMessage;
-            if (storedMessage != null)
-            {
-                var conversationId = storedMessage.ConversationId;
-                if (conversationId == null) return;
+            if (_loadingConversation) return;
 
+            _loadingConversation = true;
+            _originalSelectionId = string.Empty;
+            _nodeMap.Clear();
+
+            SelectedMessage = null;
+            Diagram = new MessageFlowDiagram();
+        
+            var storedMessage = @event.Message;
+            if (storedMessage == null)
+            {
+                _loadingConversation = false;
+                return;
+            }
+
+            var conversationId = storedMessage.ConversationId;
+            if (conversationId == null)
+            {
+                _loadingConversation = false;
+                return;
+            }
+
+            try
+            {
                 _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
 
                 var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
@@ -138,14 +166,40 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 CreateConversationNodes(storedMessage.Id, nodes);
                 LinkConversationNodes(nodes);
                 UpdateLayout();
-
-                _eventAggregator.Publish(new WorkFinished());
             }
+            finally
+            {
+                _loadingConversation = false;
+            }
+
+            _eventAggregator.Publish(new WorkFinished());
         }
 
-        private MessageNode CreateMessageNode(StoredMessage x)
+        public void ZoomIn()
         {
-            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints};
+            _view.Surface.Zoom += 0.1;
+        }
+
+        public void ZoomOut()
+        {
+            _view.Surface.Zoom -= 0.1;
+        }
+
+        public bool IsFocused(MessageInfo message)
+        {
+            return message.Id == _originalSelectionId;
+        }
+
+        public void OnShowEndpointsChanged()
+        {
+            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
+            {
+                node.ShowEndpoints = ShowEndpoints;
+                _view.UpdateNode(node);
+            }
+
+            _view.UpdateConnections();
+            _view.ApplyLayout();
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
@@ -159,8 +213,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 }
 
                 var parentMessage = _nodeMap.Values.SingleOrDefault(m => 
+                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                     m.Message.MessageId == msg.Message.RelatedToMessageId && 
-                    m.Message.ReceivingEndpoint.Name == msg.Message.OriginatingEndpoint.Name);
+                    m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
 
                 if (parentMessage == null)
                     continue;
@@ -197,29 +252,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
+                    _originalSelectionId = selectedId;
                     SelectedMessage = node;
                 }
 
                 _nodeMap.TryAdd(node.Message.Id, node);
                 Diagram.Nodes.Add(node);
             }
-        }
-
-        public bool ShowEndpoints
-        {
-            get; set;
-        }
-
-        public void OnShowEndpointsChanged()
-        {
-            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
-            {
-                node.ShowEndpoints = ShowEndpoints;
-                _view.UpdateNode(node);
-            }
-
-            _view.UpdateConnections();
-            _view.ApplyLayout();
         }
 
         private void UpdateLayout()
@@ -231,26 +270,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        public MessageNode SelectedMessage
+        private MessageNode CreateMessageNode(StoredMessage x)
         {
-            get; set;
-        }
-
-        public void Handle(SelectedMessageChanged message)
-        {
-            SelectedMessage = null;
-            _nodeMap.Clear();
-            Diagram = new MessageFlowDiagram();
-        }
-
-        public void ZoomIn()
-        {
-            _view.Surface.Zoom += 0.1;
-        }
-
-        public void ZoomOut()
-        {
-            _view.Surface.Zoom -= 0.1;
+            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints };
         }
     }
 }

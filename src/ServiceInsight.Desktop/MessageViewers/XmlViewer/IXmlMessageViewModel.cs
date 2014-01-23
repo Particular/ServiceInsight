@@ -9,7 +9,6 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
     public interface IXmlMessageViewModel : 
         IScreen,
         IViewAware,
-        IHandle<MessageBodyLoaded>,
         IHandle<SelectedMessageChanged>
     {
         MessageBody SelectedMessage { get; set; }
