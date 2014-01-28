@@ -70,7 +70,7 @@
                                 Tag="time_sent" 
                                 AllowColumnFiltering="False"
                                 Header="Time Sent"
-                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint"
+                                HeaderToolTip="Time the message was sent"
                                 CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />

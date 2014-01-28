@@ -11,7 +11,7 @@
              ShowInTaskbar="False"
              ShowTitle="True"
              ResizeMode="NoResize"
-             Icon="/Images/Computer.png"
+             Icon="/Images/ConnectService.png"
              Width="380" Height="180"
              FocusManager.FocusedElement="{Binding ElementName=name}" 
              Loaded="SelectText"
@@ -31,7 +31,7 @@
         <StackPanel Orientation="Horizontal" Margin="3">
             <Image Source="/Images/Information.png" Margin="5" VerticalAlignment="Center" Width="16" Height="16">
                 <Image.ToolTip>
-                    <TextBlock Text="Please enter ServiceControl url or IP address." />
+                    <TextBlock Text="Please enter ServiceControl URI." />
                 </Image.ToolTip>
             </Image>
             <TextBlock Text="Service Url:" Grid.Row="0" Grid.Column="0" 
