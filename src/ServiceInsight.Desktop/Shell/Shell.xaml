@@ -220,7 +220,7 @@
         <!--Dock Windows-->
         <Grid>
             <dxd:DockLayoutManager x:Name="DockManager"
-                                   AutomationProperties.AutomationId="DockManager">
+                                   AutomationProperties.AutomationId="DockManager" >
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200"
