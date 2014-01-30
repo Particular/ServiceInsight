@@ -88,7 +88,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         void _view_ShowMessage(object sender, SearchMessageEventArgs e)
         {
-            SearchMessage(e.MessageNode.Message);
+            SearchByMessageId(e.MessageNode.Message);
         }
 
         public void ShowMessageBody(StoredMessage message)
