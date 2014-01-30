@@ -19,6 +19,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
         {
             this._settingsProvider = settingsProvider;
+            this.DisplayName = "Exception Details";
         }
 
         public ExceptionDetailViewModel(IExceptionDetails exception)

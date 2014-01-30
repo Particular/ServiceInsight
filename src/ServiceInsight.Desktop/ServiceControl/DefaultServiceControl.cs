@@ -44,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(CreateBaseUrl());
             
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -59,7 +59,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
-            AppendSystemMessages(request, searchQuery);
+            AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
@@ -148,9 +148,8 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        private void AppendSystemMessages(IRestRequest request, string searchQuery)
+        private void AppendSystemMessages(IRestRequest request)
         {
-            if (searchQuery != null) return; //Not supported by search endpoint/api
             request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
         }
 
@@ -296,7 +295,10 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
 
         private void LogRequest(IRestRequest request)
         {
-            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, _connection.Url, request.Resource);
+            var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
+            var url = _connection.Url != null ? _connection.Url.TrimEnd('/') : string.Empty;
+
+            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
             
             foreach (var parameter in request.Parameters)
             {

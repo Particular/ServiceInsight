@@ -30,5 +30,10 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
         }
 
         protected abstract string ReadTextFile(string filename);
+
+        public virtual bool HasSettings(string key)
+        {
+            return true;
+        }
     }
 }

@@ -4,7 +4,6 @@ using Caliburn.PresentationFramework.ApplicationModel;
 using ExceptionHandler;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.Models;
@@ -18,13 +17,11 @@ using Shouldly;
 namespace NServiceBus.Profiler.Tests
 {
     [TestFixture]
-    [Ignore] //TODO: Due to a problem with the async On...Change methods. To investigate.
-    public class MessageListViewModelTests : AsyncTestBase
+    public class MessageListViewModelTests
     {
         private IEventAggregator EventAggregator;
         private IServiceControl ServiceControl;
         private ISearchBarViewModel SearchBar;
-        private Dictionary<Queue, List<MessageInfo>> MessageStore;
         private MessageListViewModel MessageList;
         private IMessageListView View;
 
@@ -33,7 +30,6 @@ namespace NServiceBus.Profiler.Tests
         {
             EventAggregator = Substitute.For<IEventAggregator>();
             ServiceControl = Substitute.For<IServiceControl>();
-            MessageStore = new Dictionary<Queue, List<MessageInfo>>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, 
@@ -50,7 +46,7 @@ namespace NServiceBus.Profiler.Tests
         {
             var endpoint = new Endpoint { Machine = "localhost", Name = "Service" };
             ServiceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
-                             .Returns(x => Task.Run(() => new PagedResult<StoredMessage>
+                             .Returns(x => Task.FromResult(new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,
                                  TotalCount = 100,
@@ -70,25 +66,30 @@ namespace NServiceBus.Profiler.Tests
         }
 
         [Test]
-        public void should_load_the_messages_from_the_queue()
+        public void Should_load_body_content_when_body_tab_is_already_selected()
         {
-            var selectedQueue = new Queue("testqueue");
-            MessageStore.Add(selectedQueue, new List<MessageInfo>(new[]
+            const string uri = "http://localhost:3333/api/somemessageid/body";
+
+            MessageList.FocusedRow = null;
+            MessageList.Handle(new BodyTabSelectionChanged(true));
+            
+            AsyncHelper.Run(() =>
             {
-                new MessageInfo { MessageType = "Contracts.SomeMessage, Contracts"}, 
-                new MessageInfo { MessageType = "Contracts.SomeMessage+SubMessage, Contracts"},
-                new MessageInfo { MessageType = ""}, 
-            }));
+                MessageList.FocusedRow = new StoredMessage {BodyUrl = uri};
+            });
 
-            AsyncHelper.Run(() => MessageList.Handle(new SelectedExplorerItemChanged(new QueueExplorerItem(selectedQueue)))); // trigger refresh
+            ServiceControl.Received(1).GetBody(uri).IgnoreAwait();
+        }
 
-            EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
-            EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
-            MessageList.Rows.Count.ShouldBe(3);
-            SearchBar.IsVisible.ShouldBe(false);
-            MessageList.Rows[0].FriendlyMessageType.ShouldBe("SomeMessage");
-            MessageList.Rows[1].FriendlyMessageType.ShouldBe("SubMessage");
-            MessageList.Rows[2].FriendlyMessageType.ShouldBe(null);
+        [Test]
+        public void Should_load_body_content_when_body_tab_is_focused()
+        {
+            const string uri = "http://localhost:3333/api/somemessageid/body";
+            MessageList.FocusedRow = new StoredMessage { BodyUrl = uri };
+
+            AsyncHelper.Run(() => MessageList.Handle(new BodyTabSelectionChanged(true)));
+
+            ServiceControl.Received(1).GetBody(uri).IgnoreAwait();
         }
     }
 }

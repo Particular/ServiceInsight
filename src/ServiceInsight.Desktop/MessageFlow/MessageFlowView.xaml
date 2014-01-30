@@ -187,6 +187,7 @@
 
                     <Style x:Key="MessageNodeStyle" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Cursor" Value="Arrow" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
@@ -387,7 +388,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="Root">
+    <Grid x:Name="Root" KeyUp="Root_KeyUp">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
@@ -422,7 +423,7 @@
                            Diagram="{Binding Diagram}"
                            IsReadOnly="True" 
                            ZoomMode="ControlMouseWheel"
-                           Cursor="Hand"
+                           Cursor="ScrollAll"
                            DragAction="Pan"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"

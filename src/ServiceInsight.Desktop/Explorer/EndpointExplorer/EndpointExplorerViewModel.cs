@@ -113,7 +113,6 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             _eventAggregator.Publish(new WorkFinished());
         }
 
-
         private string GetConfiguredAddress()
         {
             if (_commandLineParser.ParsedOptions.EndpointUri == null)
@@ -186,10 +185,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         {
             var endpoints = await _serviceControl.GetEndpoints();
 
-            if (endpoints == null)
-                return;
+            if (endpoints == null) return;
 
-            foreach (var endpoint in endpoints)
+            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
             {
                 if (!ServiceControlRoot.EndpointExists(endpoint))
                 {
@@ -208,6 +206,15 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
         private void ExpandServiceNode()
         {
             _view.ExpandNode(ServiceControlRoot);
+        }
+
+        public void Handle(RequestSelectingEndpoint message)
+        {
+            if (ServiceControlRoot.EndpointExists(message.Endpoint))
+            {
+                var node = ServiceControlRoot.GetEndpointNode(message.Endpoint);
+                SelectedNode = node;
+            }
         }
     }
 }

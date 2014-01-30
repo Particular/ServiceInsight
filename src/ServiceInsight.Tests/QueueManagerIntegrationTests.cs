@@ -9,6 +9,7 @@ namespace NServiceBus.Profiler.Tests
 {
     [TestFixture]
     [Category("Integration")]
+    [Ignore] //Should be removed eventually
     public class QueueManagerIntegrationTests
     {
         private Queue destination;

@@ -7,7 +7,8 @@
         ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="InfoText" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Tahoma" />
+            <Setter Property="Margin" Value="0, 1.5" />
+            <Setter Property="FontFamily" Value="Calibri" />
             <Setter Property="FontSize" Value="11" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="Black" />
@@ -32,17 +33,23 @@
             <Hyperlink Click="OnLinkClicked">www.particular.net</Hyperlink>
         </TextBlock>
 
-        <StackPanel Margin="38 224" Orientation="Horizontal">
-            <TextBlock Style="{StaticResource InfoText}">
-                <Run Text="Version " />
-                <Run Text="{Binding AppVersion}" />
-            </TextBlock>
+        <DockPanel LastChildFill="True" Margin="38 210" Height="30">
+            <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+            
+                <TextBlock Style="{StaticResource InfoText}">
+                    <Run Text="Version " />
+                    <Run Text="{Binding AppVersion}" />
+                    <Run Text=" Commit hash: " />
+                    <Run Text="{Binding CommitHash}" />
+                </TextBlock>
 
-            <TextBlock Style="{StaticResource InfoText}" Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
-                <Run Text=" / " />
-                <Run Text="ServiceControl Version " />
-                <Run Text="{Binding ServiceControlVersion}" />
-            </TextBlock>
-        </StackPanel>
+                <TextBlock Style="{StaticResource InfoText}" 
+                           VerticalAlignment="Center"
+                           Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" >
+                    <Run Text="ServiceControl: " />
+                    <Run Text="{Binding ServiceControlVersion}" />
+                </TextBlock>
+            </StackPanel>
+        </DockPanel>
     </Canvas>
 </Window>

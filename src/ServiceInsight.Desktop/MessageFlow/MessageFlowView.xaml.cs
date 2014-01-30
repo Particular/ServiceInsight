@@ -4,6 +4,7 @@ using Mindscape.WpfDiagramming.Foundation;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -57,5 +58,27 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         }
 
         public event System.EventHandler<SearchMessageEventArgs> ShowMessage;
+        private void Root_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                if (e.Key == Key.OemPlus || e.Key == Key.Add)
+                {
+                    Surface.Zoom += 0.1;
+                }
+                else if (e.Key == Key.OemMinus || e.Key == Key.Subtract)
+                {
+                    Surface.Zoom -= 0.1;
+                }
+                else if (e.Key == Key.D0 || e.Key == Key.NumPad0) 
+                {
+                    Surface.Zoom = 1;
+                }
+                else if (e.Key == Key.D1 || e.Key == Key.NumPad1)
+                {
+                    Surface.SizeToFit();
+                }
+            }
+        }
     }
 }

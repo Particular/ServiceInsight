@@ -69,7 +69,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void SearchMessage()
         {
-            Owner.SearchMessage(Message);
+            Owner.SearchByMessageId(Message);
         }
 
         public async void Retry()

@@ -49,7 +49,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
         {
             byte[] body = null;
 
-            if (@event.Message != null)
+            if (@event.Message != null && @event.Message.Body != null)
             {
                 body = Encoding.Default.GetBytes(@event.Message.Body);
             }

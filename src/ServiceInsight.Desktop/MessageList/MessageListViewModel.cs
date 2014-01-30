@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
@@ -96,6 +95,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public Queue SelectedQueue { get; private set; }
 
         public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
+
+        public bool ShouldLoadMessageBody { get; set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -225,27 +226,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _eventAggregator.Publish(new WorkFinished());
         }
 
-        public string GetCriticalTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedCriticalTime;
-
-            return string.Empty;
-        }
-
-        public string GetProcessingTime(StoredMessage msg)
-        {
-            if (msg != null && msg.Statistics != null)
-                return msg.Statistics.ElapsedProcessingTime;
-
-            return string.Empty;
-        }
-
-        public MessageErrorInfo GetMessageErrorInfo()
-        {
-            return new MessageErrorInfo();
-        }
-
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
         {
             return new MessageErrorInfo(msg.Status);
@@ -263,6 +243,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 _workCount--;
                 NotifyOfPropertyChange(() => WorkInProgress);
+            }
+        }
+
+        public async void Handle(BodyTabSelectionChanged @event)
+        {
+            ShouldLoadMessageBody = @event.IsSelected;
+            if (ShouldLoadMessageBody)
+            {
+                var bodyLoaded = await LoadMessageBody();
+                if(bodyLoaded) _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
             }
         }
 
@@ -357,9 +347,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
-        private async Task LoadMessageBody()
+        private async Task<bool> LoadMessageBody()
         {
-            if (FocusedRow == null) return;
+            if (FocusedRow == null || !ShouldLoadMessageBody) return false;
 
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
@@ -368,6 +358,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             FocusedRow.Body = body;
 
             _eventAggregator.Publish(new WorkFinished());
+
+            return true;
         }
 
         private void NotifyPropertiesChanged()

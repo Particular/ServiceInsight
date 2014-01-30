@@ -15,12 +15,9 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
     public partial class MessageListView : IMessageListView
     {
-        private static class AdvancedEndpointColumns
+        private static class UnboundColumns
         {
-            public const string CriticalTime = "CriticalTime";
-            public const string ProcessingTime = "ProcessingTime";
             public const string IsFaulted = "IsFaulted";
-            public const string MessageId = "Identifier";
         }
 
         private readonly PropertyInfo _sortUpProperty;
@@ -41,29 +38,10 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
             var msg = Model.Rows[e.ListSourceRowIndex];
-            var storedMsg = msg;
 
-            if (e.IsGetData)
+            if (e.IsGetData && e.Column.FieldName == UnboundColumns.IsFaulted)
             {
-                if (e.Column.FieldName == AdvancedEndpointColumns.MessageId)
-                {
-                    e.Value = storedMsg != null ? storedMsg.MessageId : msg.Id;
-                }
-
-                if (e.Column.FieldName == AdvancedEndpointColumns.CriticalTime)
-                {
-                    e.Value = Model.GetCriticalTime(storedMsg);
-                }
-
-                if (e.Column.FieldName == AdvancedEndpointColumns.ProcessingTime)
-                {
-                    e.Value = Model.GetProcessingTime(storedMsg);
-                }
-
-                if (e.Column.FieldName == AdvancedEndpointColumns.IsFaulted)
-                {
-                    e.Value = storedMsg != null ? Model.GetMessageErrorInfo(storedMsg) : Model.GetMessageErrorInfo();
-                }
+                e.Value = Model.GetMessageErrorInfo(msg);
             }
         }
 

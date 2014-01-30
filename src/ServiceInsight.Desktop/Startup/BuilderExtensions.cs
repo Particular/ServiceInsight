@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
 {
     public static class BuilderExtensions
     {
-        private static readonly ILog Logger = LogManager.GetLogger("IoC");
+        private static readonly ILog Logger = LogManager.GetLogger("Container");
 
         internal static Func<string, ILog, Assembly> LoadModuleAssembly = (file, logger) =>
         {
@@ -40,7 +40,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
 
             if (!Directory.Exists(folder))
             {
-                Logger.InfoFormat("Plugin folders was not found at {0}", folder);
+                Logger.InfoFormat("Plugin folder was not found at {0}", folder);
                 return;
             }
 

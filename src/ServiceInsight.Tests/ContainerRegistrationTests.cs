@@ -40,8 +40,9 @@ namespace NServiceBus.Profiler.Tests
 
         }
 
-        protected override void TryDisplayUnhandledException(Exception exception)
+        protected override bool TryHandleException(Exception exception)
         {
+            return false;
         }
     }
 }

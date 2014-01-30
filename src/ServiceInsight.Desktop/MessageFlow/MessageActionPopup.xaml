@@ -410,9 +410,9 @@
                     <TextBlock Text="Exception" Style="{StaticResource MessageExceptionKey}" />
                 </StackPanel>
 
-                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedCriticalTime}" />
-                <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedDeliveryTime}" />
-                <TextBlock Grid.Column="2" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.Statistics.ElapsedProcessingTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedCriticalTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedDeliveryTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedProcessingTime}" />
                 <TextBlock Grid.Column="2" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
                 <TextBlock Grid.Column="2" Grid.Row="6" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}" MaxWidth="260" TextTrimming="CharacterEllipsis">
                     <Hyperlink Foreground="Red" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowException]" cal:Action.TargetWithoutContext="{Binding}" ><TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" /></Hyperlink>

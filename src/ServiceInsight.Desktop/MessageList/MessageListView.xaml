@@ -52,68 +52,50 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="Identifier" 
+                <dxg:GridColumn FieldName="MessageId" 
                                 Tag="id" 
                                 AllowColumnFiltering="False"
-                                UnboundType="String"
                                 Header="Message ID"
-                                HeaderToolTip="Message Identifier">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
+                                HeaderToolTip="Message Identifier"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="FriendlyMessageType" 
                                 AllowColumnFiltering="False"
                                 Tag="message_type" 
                                 Header="Message Type"
-                                HeaderToolTip="Type of the message">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
+                                HeaderToolTip="Type of the message"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="TimeSent" 
                                 Tag="time_sent" 
                                 AllowColumnFiltering="False"
                                 Header="Time Sent"
-                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint">
+                                HeaderToolTip="Time the message was sent"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                     <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
                     </dxg:GridColumn.EditSettings>
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="ElapsedCriticalTime" 
                                 Tag="critical_time"
                                 AllowColumnFiltering="False"
-                                AllowSorting="True"
-                                UnboundType="String" 
                                 Header="Critical Time"
-                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
+                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="ElapsedProcessingTime" 
                                 Tag="processing_time"
                                 AllowColumnFiltering="False"
-                                AllowSorting="True"
-                                UnboundType="String" 
                                 Header="Processing Time"
-                                HeaderToolTip="Calculated duration of processing">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:TextEdit x:Name="PART_Editor" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
+                                HeaderToolTip="Calculated duration of processing"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ElapsedDeliveryTime" 
+                                Tag="delivery_time"
+                                AllowColumnFiltering="False"
+                                Header="Delivery Time"
+                                HeaderToolTip="Calculated duration of delivery"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
                 </dxg:GridColumn>
 
             </dxg:GridControl.Columns>

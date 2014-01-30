@@ -207,8 +207,10 @@
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
+    <Compile Include="Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Events\MessageStatusChanged.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
+    <Compile Include="Events\RequestSelectingEndpoint.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="Events\SwitchToSagaWindow.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
@@ -359,7 +361,6 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\MessageIntent.cs" />
-    <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Models\MessageStatus.cs" />
     <Compile Include="Models\PagedResult.cs" />
     <Compile Include="Models\Queue.cs" />
@@ -450,7 +451,7 @@
       <DependentUpon>QueueCreationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\QueueCreationViewModel.cs" />
-    <Compile Include="Shell\QueueExceptionHandler.cs" />
+    <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
     <Compile Include="Core\UI\ScreenManager\IScreenFactory.cs" />

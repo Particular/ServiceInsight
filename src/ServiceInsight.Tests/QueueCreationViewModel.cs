@@ -13,7 +13,7 @@ using Shouldly;
 namespace NServiceBus.Profiler.Tests
 {
     [TestFixture]
-    public class QueueCreationViewModel : AsyncTestBase
+    public class QueueCreationViewModel
     {
         private Desktop.Shell.QueueCreationViewModel Model;
         private IQueueManagerAsync QueueManager;

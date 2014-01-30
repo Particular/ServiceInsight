@@ -61,7 +61,6 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         private MessageStatistics _statistics;
 
-
         public string ElapsedDeliveryTime
         {
             get
@@ -95,8 +94,6 @@ namespace NServiceBus.Profiler.Desktop.Models
             set;
         }
 
-        public List<SagaInfo> InvokedSagas { get; set; }
-
         public List<SagaInfo> Sagas
         {
             get
@@ -118,8 +115,9 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
-        public SagaInfo OriginatesFromSaga { get; set; }
+        public List<SagaInfo> InvokedSagas{get;set;}
 
+        public SagaInfo OriginatesFromSaga{get;set;}
 
         public string GetURIQuery()
         {

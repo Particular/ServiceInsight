@@ -18,15 +18,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
-        IHandle<MessageStatusChanged>
+        IHandle<MessageStatusChanged>,
+        IHandle<BodyTabSelectionChanged>
     {
         ISearchBarViewModel SearchBar { get; }
         ExplorerItem SelectedExplorerItem { get; }
         Task RefreshMessages(string orderBy = null, bool ascending = false);
         Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
-        string GetCriticalTime(StoredMessage msg);
-        string GetProcessingTime(StoredMessage msg);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
-        MessageErrorInfo GetMessageErrorInfo();
     }
 }

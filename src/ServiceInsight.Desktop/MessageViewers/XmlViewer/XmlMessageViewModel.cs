@@ -62,7 +62,14 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 
         public void Handle(SelectedMessageChanged @event)
         {
-            SelectedMessage = @event.Message;
+            if (SelectedMessage == @event.Message) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
+            {
+                OnSelectedMessageChanged();
+            }
+            else
+            {
+                SelectedMessage = @event.Message;
+            }
         }
 
         private void ShowMessageBody()
@@ -73,6 +80,8 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 
         private string GetMessageBody()
         {
+            if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
+
             var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
             var xml = _xmlDecoder.Decode(bytes);
             return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;

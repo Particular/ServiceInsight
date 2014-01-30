@@ -41,6 +41,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
 
                 return base.LoadSettings<T>(metadata);
             }
+
         }
     }
 }

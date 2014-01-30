@@ -77,5 +77,15 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
                 return property.DefaultValue;
             }
         }
+
+
+        public bool HasSettings(string key)
+        {
+            var settingKey = _registryKey + key.Replace('.', '\\');
+            using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
+            {
+                return registry.OpenSubKey(settingKey) != null;
+            }
+       }
     }
 }

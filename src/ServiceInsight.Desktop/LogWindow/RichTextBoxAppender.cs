@@ -21,7 +21,7 @@ namespace NServiceBus.Profiler.Desktop.LogWindow
     {
         private readonly RichTextBox _richtextBox;
         private readonly Paragraph _paragraph;
-        private const int MaxTextLength = 100000;
+        private const int MaxTextLength = 5000;
 
         public RichTextBoxAppender(RichTextBox textbox)
         {
