@@ -125,6 +125,15 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Message.MessageIntent == MessageIntent.Publish; }
         }
 
+        public bool IsTimeout
+        {
+            get 
+            {
+                var isTimeoutString = Message.GetHeaderByKey("IsSagaTimeoutMessage");
+                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString); 
+            }
+        }
+
         public DateTime? TimeSent
         {
             get 

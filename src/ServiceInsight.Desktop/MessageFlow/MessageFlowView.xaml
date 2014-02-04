@@ -224,22 +224,11 @@
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
 
-                                            <ContentControl Template="{StaticResource CommandIcon}" 
+                                            <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
-                                                   Margin="0,4,0,0"
-                                                   Width="20"
-                                                   Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                            <ContentControl Template="{StaticResource EventIcon}" 
-                                                   ToolTip="Event"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Margin="0,8,0,0"
-                                                   Width="24"
-                                                   Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                                   Grid.Column="0" Grid.Row="1" />
 
                                             <StackPanel Grid.Column="1" Grid.Row="1" >
                                                 <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
@@ -280,6 +269,33 @@
                                         </Grid>
                                     </Border>
                                     <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsTimeout}" Value="True">
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource TimeoutIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Timeout" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="300" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,8,0,0" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                                <Condition Binding="{Binding IsPublished}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource EventIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Event" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="20" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                                <Condition Binding="{Binding IsPublished}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource CommandIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Command" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="24" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
+                                        </MultiDataTrigger>
+                                        
                                         <DataTrigger Binding="{Binding HasFailed}" Value="True">
                                             <DataTrigger.Setters>
                                                 <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
