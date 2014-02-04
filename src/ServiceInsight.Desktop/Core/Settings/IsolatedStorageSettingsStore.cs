@@ -7,8 +7,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
     {
         private const IsolatedStorageScope Scope = IsolatedStorageScope.User     |
                                                    IsolatedStorageScope.Assembly | 
-                                                   IsolatedStorageScope.Domain   | 
-                                                   IsolatedStorageScope.Roaming;
+                                                   IsolatedStorageScope.Domain;
 
         protected override void WriteTextFile(string filename, string fileContents)
         {
