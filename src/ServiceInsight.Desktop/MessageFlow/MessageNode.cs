@@ -125,11 +125,27 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Message.MessageIntent == MessageIntent.Publish; }
         }
 
+        public bool IsSagaInitiated
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId)) && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
+            }
+        }
+
+        public bool IsSagaCompleted
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public bool IsTimeout
         {
             get 
             {
-                var isTimeoutString = Message.GetHeaderByKey("IsSagaTimeoutMessage");
+                var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
                 return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString); 
             }
         }

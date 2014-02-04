@@ -176,6 +176,9 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string FailedQueue = "FailedQ";
         public const string TimeSent = "TimeSent";
         public const string TimeOfFailure = "TimeOfFailure";
+        public const string IsSagaTimeout = "IsSagaTimeoutMessage";
+        public const string SagaId = "SagaId";
+        public const string OriginatedSagaId = "OriginatingSagaId";
     }
 
 }
