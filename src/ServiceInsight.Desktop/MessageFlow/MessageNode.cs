@@ -137,7 +137,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             get
             {
-                return false;
+                return !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaStatus)) && string.Equals(Message.GetHeaderByKey(MessageHeaderKeys.SagaStatus), "Completed", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 

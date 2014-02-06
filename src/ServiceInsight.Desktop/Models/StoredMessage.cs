@@ -179,6 +179,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string IsSagaTimeout = "IsSagaTimeoutMessage";
         public const string SagaId = "SagaId";
         public const string OriginatedSagaId = "OriginatingSagaId";
+        public const string SagaStatus = "ServiceControl.SagaChangeStatus";
     }
 
 }
