@@ -39,9 +39,13 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 case MessageStatus.Failed:
                     return Resources.BulletYellow.ToBitmapImage();
+                case MessageStatus.ArchivedFailure:
+                    return Resources.BulletYellow.ToBitmapImage();
                 case MessageStatus.RepeatedFailure:
                     return Resources.BulletRed.ToBitmapImage();
                 case MessageStatus.Successful:
+                    return Resources.BulletGreen.ToBitmapImage();
+                case MessageStatus.ResolvedSuccessfully:
                     return Resources.BulletGreen.ToBitmapImage();
                 case MessageStatus.RetryIssued:
                     return Resources.BulletWhite.ToBitmapImage();

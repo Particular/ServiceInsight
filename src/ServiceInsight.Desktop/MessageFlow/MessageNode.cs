@@ -115,7 +115,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get
             {
                 return Message.Status == MessageStatus.Failed ||
-                       Message.Status == MessageStatus.RepeatedFailure;
+                       Message.Status == MessageStatus.RepeatedFailure || Message.Status == MessageStatus.ArchivedFailure;
             }
         }
 

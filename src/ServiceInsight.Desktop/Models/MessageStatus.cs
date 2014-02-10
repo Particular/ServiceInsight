@@ -13,7 +13,13 @@ namespace NServiceBus.Profiler.Desktop.Models
         [Description("Successful")]
         Successful = 3,
 
+        [Description("Successfully resolved")]
+        ResolvedSuccessfully = 4,
+
+        [Description("Failure message archived")]
+        ArchivedFailure = 5,
+
         [Description("Retry Requested")]
-        RetryIssued = 4
+        RetryIssued = 6
     }
 }
