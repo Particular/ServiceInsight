@@ -525,6 +525,9 @@
             </StackPanel>
         </ScrollViewer>
 
-        <TextBlock Grid.RowSpan="2" Text="No Saga Available" FontSize="24px" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource SagaForeground}"  Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
+            <ContentControl Template="{StaticResource NoSaga}" />
+            <TextBlock Text="No Saga Available" FontSize="24px" Margin="5,0,0,0" FontWeight="Bold" Foreground="#d3d3d3" />
+        </StackPanel>
     </Grid>
 </UserControl>

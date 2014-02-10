@@ -272,14 +272,19 @@ namespace NServiceBus.Profiler.Desktop.Saga
                     var update = steps.Items[i] as SagaUpdate;
                     if (update != null && update.InitiatingMessage.MessageId == message.MessageId)
                     {
-                        var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
-                        if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
-                        {
-                            var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
-                            item.BringIntoView();
-                        }
+                        ScrollIntoView(steps, i);
                     }
                 }
+            }
+        }
+
+        private static void ScrollIntoView(ItemsControl steps, int i)
+        {
+            var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
+            if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+            {
+                var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
+                item.BringIntoView();
             }
         }
     }

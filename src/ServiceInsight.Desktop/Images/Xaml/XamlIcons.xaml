@@ -307,4 +307,23 @@
             <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="9,12.201 9,0 7,0 7,12.201 5.806,12.201 8,16 10.194,12.201 " Name="polygon2992" FillRule="NonZero" Fill="#FF777777"/>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="NoSaga">
+        <Canvas Name="Layer_1" Width="128" Height="128" Canvas.Left="0" Canvas.Top="0">
+            <Canvas Name="g2986">
+                <Canvas Name="g2988">
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2990" Fill="#FFD3D3D3">
+                        <Path.Data>
+                            <PathGeometry Figures="M44 42.9C29.7 37.2 19.1 27.3 19.1 0h-16c0 40.7 20.6 53.3 40.9 59.9V42.9z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2992" Fill="#FFD3D3D3">
+                        <Path.Data>
+                            <PathGeometry Figures="M114.3 97C110.1 67.7 93 57.7 75 52.1V69c12 4.5 20.4 12 23.3 29.1l-9.4 0.2l18.5 29.7L124 97H114.3z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="68,98 68,0 51,0 51,98 41.6,98 59.1,128 76.7,98  " Name="polygon2994" FillRule="NonZero" Fill="#FFE4E4E4"/>
+            </Canvas>
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>
