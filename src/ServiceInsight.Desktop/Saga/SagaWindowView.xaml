@@ -388,8 +388,12 @@
                                                     Margin="0 4 4 4" />
 
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Timeout Requested = " Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
-                                            <TextBlock Text="{Binding TimeoutFriendly}" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
+                                            <TextBlock>
+                                                <Hyperlink Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" Click="Hyperlink_Click">
+                                                    <TextBlock Text="Timeout Requested = " />
+                                                    <TextBlock Text="{Binding TimeoutFriendly}" />
+                                                </Hyperlink >
+                                            </TextBlock>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
@@ -520,7 +524,7 @@
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />
             </StackPanel>
         </ScrollViewer>
-        
+
         <TextBlock Grid.RowSpan="2" Text="No Saga Available" FontSize="24px" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource SagaForeground}"  Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
     </Grid>
 </UserControl>

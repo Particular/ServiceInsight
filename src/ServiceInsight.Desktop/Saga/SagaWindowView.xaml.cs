@@ -54,7 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             if (e.PropertyName == "ShowEndpoints" || e.PropertyName == "Data")
             {
-                refreshVisual = true;   
+                refreshVisual = true;
             }
         }
 
@@ -258,6 +258,29 @@ namespace NServiceBus.Profiler.Desktop.Saga
         private void SetSelected(SagaMessage message, Guid id)
         {
             message.IsSelected = message.MessageId == id;
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var model = this.DataContext as ISagaWindowViewModel;
+            var message = ((Hyperlink)e.Source).DataContext as SagaTimeoutMessage;
+            if (message != null)
+            {
+                var steps = (ItemsControl)this.FindName("Steps");
+                for (int i = 0; i < steps.Items.Count; i++)
+                {
+                    var update = steps.Items[i] as SagaUpdate;
+                    if (update != null && update.InitiatingMessage.MessageId == message.MessageId)
+                    {
+                        var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
+                        if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+                        {
+                            var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
+                            item.BringIntoView();
+                        }
+                    }
+                }
+            }
         }
     }
 
