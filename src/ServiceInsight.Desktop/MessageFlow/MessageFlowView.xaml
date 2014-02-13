@@ -48,7 +48,7 @@
                                 <Setter Property="ToolTip" Value="Retry Requested" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.ArchivedFailure}">
-                                <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
+                                <Setter Property="Template" Value="{StaticResource msgArchiveIcon}" />
                                 <Setter Property="ToolTip" Value="Archived Failure" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.ResolvedSuccessfully}">

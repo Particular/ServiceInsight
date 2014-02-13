@@ -40,7 +40,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 case MessageStatus.Failed:
                     return Resources.BulletYellow.ToBitmapImage();
                 case MessageStatus.ArchivedFailure:
-                    return Resources.BulletYellow.ToBitmapImage();
+                    return Resources.BulletArchived.ToBitmapImage();
                 case MessageStatus.RepeatedFailure:
                     return Resources.BulletRed.ToBitmapImage();
                 case MessageStatus.Successful:
