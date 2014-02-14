@@ -103,6 +103,7 @@
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" 
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
+                               IsColumnMenuEnabled="False"
                                ShowIndicator="False"
                                MultiSelectMode="Row"
                                AllowCascadeUpdate="True" 
