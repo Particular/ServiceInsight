@@ -50,6 +50,7 @@
                                    Source="{Binding Value.Image}"
                                    ToolTip="{Binding Value.Description}" />
                         </DataTemplate>
+                        
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="MessageId" 

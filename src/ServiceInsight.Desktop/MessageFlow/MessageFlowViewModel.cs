@@ -15,6 +15,9 @@ using NServiceBus.Profiler.Desktop.Search;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
+    using Core.Settings;
+    using Settings;
+
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
     {
@@ -40,6 +43,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private readonly IEventAggregator _eventAggregator;
         private readonly IClipboard _clipboard;
         private readonly IWindowManagerEx _windowManager;
+        private readonly ISettingsProvider _settingsProvider;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
         private string _originalSelectionId = string.Empty;
@@ -51,7 +55,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
             IScreenFactory screenFactory,
-            ISearchBarViewModel searchBar)
+            ISearchBarViewModel searchBar, 
+            ISettingsProvider settingsProvider)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
@@ -59,6 +64,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _windowManager = windowManager;
             _screenFactory = screenFactory;
             _searchBar = searchBar;
+            _settingsProvider = settingsProvider;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -83,6 +89,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             base.AttachView(view, context);
             _view = (IMessageFlowView)view;
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            
+            ShowEndpoints = settings.ShowEndpoints;
         }
 
         public void ShowMessageBody(StoredMessage message)
@@ -195,11 +209,26 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                _view.UpdateNode(node);
+                if(_view != null) _view.UpdateNode(node);
             }
 
-            _view.UpdateConnections();
-            _view.ApplyLayout();
+            if (_view != null)
+            {
+                _view.UpdateConnections();
+                _view.ApplyLayout();
+            }
+
+            UpdateSetting();
+        }
+
+        private void UpdateSetting()
+        {
+            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            if (settings.ShowEndpoints != ShowEndpoints)
+            {
+                settings.ShowEndpoints = ShowEndpoints;
+                _settingsProvider.SaveSettings(settings);
+            }
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)

@@ -1,9 +1,6 @@
 ﻿using Mindscape.WpfDiagramming;
 using Mindscape.WpfDiagramming.FlowDiagrams;
 using Mindscape.WpfDiagramming.Foundation;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
@@ -47,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Surface.UpdateLayout();
         }
 
-        private void Root_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Root_KeyUp(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
