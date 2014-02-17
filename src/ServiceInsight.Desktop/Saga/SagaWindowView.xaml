@@ -206,9 +206,9 @@
 
                     <DataTemplate x:Key="MessageDataItem">
                         <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Key}" Foreground="{StaticResource SagaForeground}" />
+                            <TextBlock Text="{Binding Key}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                             <TextBlock Text=" = " Foreground="{StaticResource SagaForeground}" />
-                            <TextBlock Text="{Binding Value}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Value}" Foreground="{StaticResource SagaForeground}" />
                         </StackPanel>
                     </DataTemplate>
 
