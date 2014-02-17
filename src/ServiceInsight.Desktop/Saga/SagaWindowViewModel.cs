@@ -41,12 +41,13 @@ namespace NServiceBus.Profiler.Desktop.Saga
             RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
         }
 
-        private void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
+        private async void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
         {
             foreach (var message in messages)
             {
-                message.RefreshData(_serviceControl);
+                await message.RefreshData(_serviceControl);
             }
+            NotifyOfPropertyChange("Data");
         }
 
         public override void AttachView(object view, object context)

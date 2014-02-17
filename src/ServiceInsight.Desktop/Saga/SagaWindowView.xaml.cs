@@ -52,7 +52,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         void SagaWindowView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ShowEndpoints" || e.PropertyName == "Data")
+            if (e.PropertyName == "ShowEndpoints" || e.PropertyName == "Data" || e.PropertyName == "ShowMessageData")
             {
                 refreshVisual = true;
             }
@@ -82,20 +82,21 @@ namespace NServiceBus.Profiler.Desktop.Saga
             if (panel != null)
             {
                 var endpointHeight = showEndpoints ? -14 : 0;
-                var caption = (FrameworkElement)panel.FindName("StepNameBox");
-                var captionPosition = GetPosition("StepNameBox", panel);
+                var caption = (FrameworkElement)panel.FindName("StepName");
+                var captionPosition = GetPosition("StepName", panel);
                 var message = (FrameworkElement)panel.FindName("InitialMessage");
                 var messagePosition = GetPosition("InitialMessage", panel);
+                var messageData = ((FrameworkElement)((ContentPresenter)message).ContentTemplate.FindName("MessageDataPanel", message));
 
                 var parent = panel.Parent as Grid;
                 RemoveExistingLines(parent);
 
-                AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight), parent);
+                AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageData.ActualHeight), parent);
 
                 var stepName = (Panel)panel.FindName("StepName");
                 var icon = stepName.Children.Cast<FrameworkElement>().OfType<ContentControl>().FirstOrDefault(c => c.Visibility == System.Windows.Visibility.Visible);
                 var iconPosition = icon.TransformToAncestor(panel).Transform(new Point(0, 0));
-                var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight);
+                var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight - messageData.ActualHeight);
                 var timeoutPoint = new Point(0, 0);
 
                 var timeoutMessages = (ItemsControl)panel.FindName("TimeoutMessages");
@@ -116,8 +117,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 var sagaMessages = (ItemsControl)panel.FindName("SagaMessages");
                 if (sagaMessages.Items.Count > 0)
                 {
-                    AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight), parent);
-                    AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
+                    AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageData.ActualHeight), parent);
+                    AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
                     AddArrow(parent, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
                 }
             }

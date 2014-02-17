@@ -114,7 +114,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
 
-        internal async void RefreshData(IServiceControl serviceControl)
+        internal async Task RefreshData(IServiceControl serviceControl)
         {
             if (Data == null)
             {

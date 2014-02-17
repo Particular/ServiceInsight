@@ -206,9 +206,9 @@
 
                     <DataTemplate x:Key="MessageDataItem">
                         <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Key}" />
-                            <TextBlock Text=" = " />
-                            <TextBlock Text="{Binding Value}" />
+                            <TextBlock Text="{Binding Key}" Foreground="{StaticResource SagaForeground}" />
+                            <TextBlock Text=" = " Foreground="{StaticResource SagaForeground}" />
+                            <TextBlock Text="{Binding Value}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                         </StackPanel>
                     </DataTemplate>
 
@@ -251,7 +251,7 @@
                                 </StackPanel>
 
                                 <Border BorderBrush="Black" BorderThickness="0" x:Name="NoEndpointsBorder" Grid.Row="1" Grid.ColumnSpan="2" >
-                                    <Rectangle x:Name="MessageRectangle" Fill="{StaticResource MessageBackground}" Height="45px" Width="220px"/>
+                                    <Rectangle x:Name="MessageRectangle" Fill="{StaticResource MessageBackground}" Height="45px" MinWidth="220px" Width="{Binding Width,ElementName=MessageTypeBox}"/>
                                 </Border>
 
                                 <ContentControl Style="{StaticResource FailedMessageMarker}"
@@ -276,18 +276,19 @@
                                                    Width="24"
                                                    Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
-                                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel x:Name="MessageTypeBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
                                     <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
                                 </StackPanel>
 
-                                <ItemsControl x:Name="MessageData" 
-                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
-                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
-                                                        VerticalAlignment="Center"
-                                                        Background="{StaticResource EndpointBackground}"
-                                                        ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}">
-                                </ItemsControl>
+                                <StackPanel x:Name="MessageDataPanel"
+                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+
+                                    <TextBlock Text="Message Properties" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                                    <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}">
+                                    </ItemsControl>
+                                </StackPanel>
 
                                 <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
