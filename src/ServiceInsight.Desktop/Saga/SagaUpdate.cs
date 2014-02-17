@@ -57,22 +57,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
             set
             {
                 stateAfterChange = value;
-                ProcessValues(stateAfterChange);
+                Values = JsonPropertiesHelper.ProcessValues(stateAfterChange, s => s.TrimStart('[').TrimEnd(']'))
+                    .Select(v => new SagaUpdatedValue { Name = v.Key, NewValue = v.Value }).ToList();
             }
         }
 
-        private IList<string> standardKeys = new List<string> { "$type", "Id", "Originator", "OriginalMessageId" };
-
-        private void ProcessValues(string stateAfterChange)
-        {
-            Values = JsonConvert.DeserializeObject<Dictionary<string, object>>
-                (stateAfterChange.TrimStart('[').TrimEnd(']'))
-                .Where(m => !standardKeys.Any(s => s == m.Key))
-                .Select(n => new SagaUpdatedValue { Name = n.Key, NewValue = n.Value.ToString() })
-                .ToList();
-        }
-
-        public List<SagaUpdatedValue> Values { get; set; }
+        public IList<SagaUpdatedValue> Values { get; set; }
 
         public string Label
         {

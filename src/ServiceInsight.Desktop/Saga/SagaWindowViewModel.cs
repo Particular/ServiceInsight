@@ -21,6 +21,32 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             _eventAggregator = eventAggregator;
             _serviceControl = serviceControl;
+
+            PropertyChanged += SagaWindowViewModel_PropertyChanged;
+        }
+
+        void SagaWindowViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ShowMessageData")
+            {
+                if (this.ShowMessageData)
+                {
+                    RefreshMessageProperties();
+                }
+            }
+        }
+
+        private void RefreshMessageProperties()
+        {
+            RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
+        }
+
+        private void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
+        {
+            foreach (var message in messages)
+            {
+                message.RefreshData(_serviceControl);
+            }
         }
 
         public override void AttachView(object view, object context)
@@ -72,6 +98,11 @@ namespace NServiceBus.Profiler.Desktop.Saga
                             }
                         }
 
+                        if (showMessageData)
+                        {
+                            RefreshMessageProperties();
+                        }
+
                         _eventAggregator.Publish(new WorkFinished());
                     }
                     else
@@ -100,7 +131,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private void ProcessChange(IList<SagaUpdatedValue> oldValues, List<SagaUpdatedValue> newValues)
+        private void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {
@@ -140,6 +171,20 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        private bool showMessageData = false;
+        public bool ShowMessageData
+        {
+            get
+            {
+                return showMessageData;
+            }
+            set
+            {
+                showMessageData = value;
+                NotifyOfPropertyChange(() => ShowMessageData);
+            }
+        }
+
         public void ShowFlow()
         {
             _eventAggregator.Publish(new SwitchToFlowWindow());
@@ -149,6 +194,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
     public interface ISagaWindowViewModel : IScreen
     {
+        bool ShowMessageData { get; }
         bool ShowEndpoints { get; }
         SagaData Data { get; }
         void ShowFlow();

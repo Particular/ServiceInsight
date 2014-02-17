@@ -1,10 +1,14 @@
 ﻿using Caliburn.PresentationFramework;
+using Newtonsoft.Json;
 using NServiceBus.Profiler.Desktop.Models;
+using NServiceBus.Profiler.Desktop.ServiceControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace NServiceBus.Profiler.Desktop.Saga
 {
@@ -107,6 +111,56 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 return Status == MessageStatus.RetryIssued;
             }
         }
+
+        public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
+
+        internal async void RefreshData(IServiceControl serviceControl)
+        {
+            if (Data == null)
+            {
+                var url = string.Format("/messagebody?id={0}", this.MessageId);
+                var bodyString = await serviceControl.GetBody(url);
+                bodyString = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(bodyString).FirstOrDefault();
+                if (IsXml(bodyString))
+                {
+                    Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
+                }
+                else
+                {
+                    Data = JsonPropertiesHelper.ProcessValues(bodyString, cleanupBodyString);
+                }
+            }
+        }
+
+        private IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
+        {
+            try
+            {
+                var xml = XDocument.Parse(bodyString);
+                if (xml != null)
+                {
+                    var root = xml.Root.Nodes().FirstOrDefault() as XElement;
+                    if (root != null)
+                    {
+                        return root.Nodes().OfType<XElement>().
+                            Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
+                    }
+                }
+            }
+            catch (XmlException) { }
+            return new List<KeyValuePair<string, string>>();
+        }
+
+        private bool IsXml(string bodyString)
+        {
+            return bodyString.StartsWith("<?xml");
+        }
+
+        private static string cleanupBodyString(string bodyString)
+        {
+            return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
+        }
+
     }
 
     public class SagaTimeoutMessage : SagaMessage

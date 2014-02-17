@@ -204,6 +204,14 @@
                         </Style.Triggers>
                     </Style>
 
+                    <DataTemplate x:Key="MessageDataItem">
+                        <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Key}" />
+                            <TextBlock Text=" = " />
+                            <TextBlock Text="{Binding Value}" />
+                        </StackPanel>
+                    </DataTemplate>
+
                     <DataTemplate x:Key="Message">
                         <Border BorderBrush="Black" BorderThickness="0" x:Name="EndpointsBorder">
                             <Grid x:Name="RootGrid" Focusable="True" MouseLeftButtonUp="RootGrid_MouseLeftButtonUp">
@@ -272,6 +280,14 @@
                                     <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
                                     <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
                                 </StackPanel>
+
+                                <ItemsControl x:Name="MessageData" 
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        VerticalAlignment="Center"
+                                                        Background="{StaticResource EndpointBackground}"
+                                                        ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}">
+                                </ItemsControl>
 
                                 <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
@@ -508,10 +524,10 @@
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <StackPanel Orientation="Horizontal" Margin="5" >
-                <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
+                <ToggleButton Margin="2" IsChecked="{Binding ShowMessageData}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Show Endpoints" VerticalAlignment="Center" />
+                        <TextBlock Text="Show Message Data" VerticalAlignment="Center" />
                     </StackPanel>
                 </ToggleButton>
             </StackPanel>
