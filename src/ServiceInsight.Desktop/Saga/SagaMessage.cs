@@ -118,9 +118,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             if (Data == null)
             {
-                var url = string.Format("/messagebody?id={0}", this.MessageId);
+                var url = string.Format("/messages/{0}/body", this.MessageId);
                 var bodyString = await serviceControl.GetBody(url);
-                bodyString = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(bodyString).FirstOrDefault();
+                //bodyString = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(bodyString).FirstOrDefault();
                 if (IsXml(bodyString))
                 {
                     Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
