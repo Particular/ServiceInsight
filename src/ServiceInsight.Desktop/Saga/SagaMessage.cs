@@ -112,6 +112,20 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        private bool showData = false;
+        public bool ShowData
+        {
+            get
+            {
+                return showData && Data != null && Data.Any();
+            }
+            set
+            {
+                showData = value;
+                NotifyOfPropertyChange("ShowData");
+            }
+        }
+
         public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
 
         internal async Task RefreshData(IServiceControl serviceControl)

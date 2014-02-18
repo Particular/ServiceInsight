@@ -88,15 +88,17 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 var messagePosition = GetPosition("InitialMessage", panel);
                 var messageData = ((FrameworkElement)((ContentPresenter)message).ContentTemplate.FindName("MessageDataPanel", message));
 
+                var messageDataHeight = messageData.Visibility == System.Windows.Visibility.Visible ? messageData.ActualHeight : 0;
+
                 var parent = panel.Parent as Grid;
                 RemoveExistingLines(parent);
 
-                AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageData.ActualHeight), parent);
+                AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageDataHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), parent);
 
                 var stepName = (Panel)panel.FindName("StepName");
                 var icon = stepName.Children.Cast<FrameworkElement>().OfType<ContentControl>().FirstOrDefault(c => c.Visibility == System.Windows.Visibility.Visible);
                 var iconPosition = icon.TransformToAncestor(panel).Transform(new Point(0, 0));
-                var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight - messageData.ActualHeight);
+                var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight - messageDataHeight);
                 var timeoutPoint = new Point(0, 0);
 
                 var timeoutMessages = (ItemsControl)panel.FindName("TimeoutMessages");
@@ -117,8 +119,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 var sagaMessages = (ItemsControl)panel.FindName("SagaMessages");
                 if (sagaMessages.Items.Count > 0)
                 {
-                    AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageData.ActualHeight), parent);
-                    AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageData.ActualHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
+                    AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), parent);
+                    AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
                     AddArrow(parent, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
                 }
             }

@@ -281,13 +281,15 @@
                                     <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
                                 </StackPanel>
 
-                                <StackPanel x:Name="MessageDataPanel"
+                                <Border BorderThickness="1" BorderBrush="Black"
                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
-                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
-
-                                    <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}">
+                                        Visibility="{Binding ShowData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                <StackPanel x:Name="MessageDataPanel"
+                                            Visibility="{Binding ShowData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                        <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}" Padding="2">
                                     </ItemsControl>
                                 </StackPanel>
+                                </Border>
 
                                 <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"

@@ -36,6 +36,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
+        private void RefreshShowData()
+        {
+            foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages))) { message.ShowData = showMessageData; };
+            NotifyOfPropertyChange("Data");
+        }
+
         private void RefreshMessageProperties()
         {
             RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
@@ -103,6 +109,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
                         {
                             RefreshMessageProperties();
                         }
+
+                        RefreshShowData();
 
                         _eventAggregator.Publish(new WorkFinished());
                     }
@@ -182,6 +190,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             set
             {
                 showMessageData = value;
+                RefreshShowData();
                 NotifyOfPropertyChange(() => ShowMessageData);
             }
         }
