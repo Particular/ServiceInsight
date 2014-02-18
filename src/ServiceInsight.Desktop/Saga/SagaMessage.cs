@@ -120,7 +120,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 var url = string.Format("/messages/{0}/body", this.MessageId);
                 var bodyString = await serviceControl.GetBody(url);
-                //bodyString = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(bodyString).FirstOrDefault();
                 if (IsXml(bodyString))
                 {
                     Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));

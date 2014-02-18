@@ -285,7 +285,6 @@
                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                                         Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
 
-                                    <TextBlock Text="Message Properties" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                                     <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}">
                                     </ItemsControl>
                                 </StackPanel>
