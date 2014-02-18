@@ -283,11 +283,13 @@
 
                                 <Border BorderThickness="1" BorderBrush="Black"
                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
-                                        Visibility="{Binding ShowData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                                 <StackPanel x:Name="MessageDataPanel"
-                                            Visibility="{Binding ShowData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                            Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                                         <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}" Padding="2">
                                     </ItemsControl>
+                                        <TextBlock Text="Empty" Visibility="Collapsed" x:Name="EmptyPropertyText" Foreground="Black">
+                                        </TextBlock>
                                 </StackPanel>
                                 </Border>
 
@@ -309,6 +311,12 @@
                             </Grid>
                         </Border>
                         <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding ShowData}" Value="False">
+                                <DataTrigger.Setters>
+                                    <Setter TargetName="EmptyPropertyText" Property="Visibility" Value="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+
                             <DataTrigger Binding="{Binding HasFailed}" Value="True">
                                 <DataTrigger.Setters>
                                     <Setter Property="Fill" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
