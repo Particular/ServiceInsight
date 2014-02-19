@@ -103,9 +103,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             get
             {
-                return SelectedEndpoint != null &&
-                       CurrentPage < PageCount &&
-                       !WorkInProgress;
+                return CurrentPage < PageCount && !WorkInProgress;
             }
         }
 
