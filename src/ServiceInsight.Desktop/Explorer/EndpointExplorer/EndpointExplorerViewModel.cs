@@ -118,8 +118,8 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             if (_commandLineParser.ParsedOptions.EndpointUri == null)
             {
                 var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
-                if (appSettings != null && appSettings.LastUsedManagementApi != null)
-                    return appSettings.LastUsedManagementApi;
+                if (appSettings != null && appSettings.LastUsedServiceControl != null)
+                    return appSettings.LastUsedServiceControl;
 
                 var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);

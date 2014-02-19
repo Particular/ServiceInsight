@@ -40,13 +40,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             base.OnActivate();
 
             IsAddressValid = true;
-            ServiceUrl = _appSettings.LastUsedManagementApi;
+            ServiceUrl = _appSettings.LastUsedServiceControl;
             RecentEntries = GetRecentServiceEntries();
         }
 
         private List<string> GetRecentServiceEntries()
         {
-            return _appSettings.RecentManagementApiEntries.ToList();
+            return _appSettings.RecentServiceControlEntries.ToList();
         }
 
         public virtual void Close()
@@ -95,12 +95,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private void StoreConnectionAddress()
         {
-            var existingEntry = _appSettings.RecentManagementApiEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
+            var existingEntry = _appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
-                _appSettings.RecentManagementApiEntries.Remove(existingEntry);
+                _appSettings.RecentServiceControlEntries.Remove(existingEntry);
 
-            _appSettings.RecentManagementApiEntries.Add(ServiceUrl);
-            _appSettings.LastUsedManagementApi = ServiceUrl;
+            _appSettings.RecentServiceControlEntries.Add(ServiceUrl);
+            _appSettings.LastUsedServiceControl = ServiceUrl;
 
             _settingsProvider.SaveSettings(_appSettings);
         }

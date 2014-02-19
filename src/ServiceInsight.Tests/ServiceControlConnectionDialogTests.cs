@@ -54,16 +54,16 @@ namespace NServiceBus.Profiler.Tests
             AsyncHelper.Run(() => connectTo.Accept());
 
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
-            storedSetting.RecentManagementApiEntries.Count.ShouldBe(3);
-            storedSetting.RecentManagementApiEntries.ShouldContain("http://localhost:8080/managemnetApi");
+            storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);
+            storedSetting.RecentServiceControlEntries.ShouldContain("http://localhost:8080/managemnetApi");
         }
 
         private ProfilerSettings GetReloadedSettings()
         {
             var settings = new ProfilerSettings();
 
-            settings.RecentManagementApiEntries.Add("http://localhost/api");
-            settings.RecentManagementApiEntries.Add("http://othermachine:8888/api");
+            settings.RecentServiceControlEntries.Add("http://localhost/api");
+            settings.RecentServiceControlEntries.Add("http://othermachine:8888/api");
 
             return settings;
         }

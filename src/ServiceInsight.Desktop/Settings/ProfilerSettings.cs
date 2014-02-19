@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.Settings
         public ProfilerSettings()
         {
             RecentSearchEntries = new ObservableCollection<string>();
-            RecentManagementApiEntries = new ObservableCollection<string>();
+            RecentServiceControlEntries = new ObservableCollection<string>();
         }
 
         [DefaultValue(15)]
@@ -44,10 +44,10 @@ namespace NServiceBus.Profiler.Desktop.Settings
 
         [DisplayName("Recent ServiceControl Entries")]
         [Description("List of recently connected service URLs for ServiceControl")]
-        public ObservableCollection<string> RecentManagementApiEntries { get; set; }
+        public ObservableCollection<string> RecentServiceControlEntries { get; set; }
 
         [DisplayName("ServiceControl URL")]
         [Description("Last used ServiceControl address")]
-        public string LastUsedManagementApi { get; set; }
+        public string LastUsedServiceControl { get; set; }
     }
 }

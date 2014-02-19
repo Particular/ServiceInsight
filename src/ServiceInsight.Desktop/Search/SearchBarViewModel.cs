@@ -13,14 +13,21 @@ using NServiceBus.Profiler.Desktop.Startup;
 
 namespace NServiceBus.Profiler.Desktop.Search
 {
+    using System.Linq;
+    using Caliburn.PresentationFramework;
+    using Core.Settings;
+    using Settings;
+
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
         private readonly ICommandLineArgParser _commandLineArgParser;
+        readonly ISettingsProvider _settingProvider;
         private int _workCount;
 
-        public SearchBarViewModel(ICommandLineArgParser commandLineArgParser)
+        public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
             _commandLineArgParser = commandLineArgParser;
+            _settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
         }
 
@@ -28,6 +35,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             base.OnActivate();
 
+            RestoreRecentSearchEntries();
             Search(_commandLineArgParser.ParsedOptions.SearchQuery);
         }
 
@@ -65,6 +73,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         public async void Search()
         {
             SearchInProgress = true;
+            AddRecentSearchEntry(SearchQuery);
             await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
@@ -180,6 +189,8 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public IList<StoredMessage> Result { get; private set; }
 
+        public IObservableCollection<string> RecentSearchQueries { get; private set; }
+
         public int CurrentPage { get; private set; }
         
         public int PageSize { get; private set; }
@@ -275,6 +286,26 @@ namespace NServiceBus.Profiler.Desktop.Search
             {
                 _workCount--;
                 NotifyPropertiesChanged();
+            }
+        }
+
+        private void RestoreRecentSearchEntries()
+        {
+            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
+        }
+
+        private void AddRecentSearchEntry(string searchQuery)
+        {
+            if (searchQuery.IsEmpty()) return;
+
+            RecentSearchQueries.Add(searchQuery);
+
+            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            if (!setting.RecentSearchEntries.Contains(searchQuery, StringComparer.OrdinalIgnoreCase))
+            {
+                setting.RecentSearchEntries.Add(searchQuery);
+                _settingProvider.SaveSettings(setting);
             }
         }
 
