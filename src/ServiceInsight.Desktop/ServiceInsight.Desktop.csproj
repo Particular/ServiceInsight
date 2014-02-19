@@ -218,6 +218,11 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Modules\InterfacesModule.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceControl\ServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">
@@ -405,11 +410,6 @@
     <Compile Include="Modules\PluginModule.cs" />
     <Compile Include="Modules\SettingsModule.cs" />
     <Compile Include="Modules\SettingsSource.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Core\UI\ScreenManager\ChoiceCommand.cs" />
     <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Search\ISearchBarView.cs" />
@@ -592,10 +592,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="ServiceInsight-About.png" />
-    <None Include="Images\HeaderError.png" />
-    <None Include="Images\HeaderPerformance.png" />
-    <None Include="Images\HeaderGeneral.png" />
-    <None Include="Images\HeaderGateway.png" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -604,16 +600,10 @@
     </EmbeddedResource>
     <Resource Include="Images\AutoRefresh.png" />
     <Resource Include="Images\ConnectService.png" />
-    <Resource Include="Images\Monitoring.png" />
-    <Resource Include="Images\AuditFolder.png" />
     <Resource Include="Images\TreeAuditFolder.png" />
     <Resource Include="Images\MessageReturn.png" />
-    <Resource Include="Images\HeaderSaga.png" />
-    <Resource Include="Images\ZoomActual.png" />
-    <Resource Include="Images\ZoomFit.png" />
     <Resource Include="Images\SearchRefresh.png" />
     <Resource Include="Images\SearchSeparator.png" />
-    <Resource Include="Images\AsyncProcess.gif" />
     <Resource Include="Images\Bullet-Green.png" />
     <Resource Include="Images\Bullet-Red.png" />
     <Resource Include="Images\Bullet-White.png" />
@@ -624,14 +614,10 @@
     <Resource Include="Images\Document.png" />
     <Resource Include="Images\Folder-Table.png" />
     <Resource Include="Images\ServiceInsight-Banner.png" />
-    <Resource Include="Images\Key.png" />
     <Resource Include="Images\TreeErrorQueue.png" />
     <Resource Include="Images\TreeMonitoring.png" />
-    <Resource Include="Images\Endpoint.png" />
     <Resource Include="Images\Bullet-Blue.png" />
-    <Resource Include="Images\Information-Large.png" />
     <Resource Include="Images\ErrorStatus.png" />
-    <Resource Include="Images\Log-Large.png" />
     <Resource Include="Images\Log.png" />
     <Resource Include="Images\Options.png" />
     <Resource Include="Images\Alert.png" />
@@ -691,29 +677,13 @@
     <Resource Include="ServiceInsight.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ConnectQueue.png" />
-    <Resource Include="Images\DeleteMessage.png" />
-    <Resource Include="Images\DeleteQueue.png" />
     <Resource Include="Images\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\About.png" />
-    <Resource Include="Images\Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CreateMessage.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Computer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Settings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PurgeQueue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Queue.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Exit.png" />
@@ -734,14 +704,8 @@
     <Resource Include="Images\Information.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CreateQueue.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Open.png" />
     <Resource Include="Images\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Message.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\TreeQueue.png" />
