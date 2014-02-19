@@ -259,36 +259,36 @@
                                                        VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
                                 </ContentControl>
 
-                                <ContentControl Template="{StaticResource CommandIcon}" 
+                                <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
                                                    Grid.Row="1" Grid.Column="0"
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,4,0,0"
                                                    Width="20"
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                <ContentControl Template="{StaticResource EventIcon}" 
+                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+                                <ContentControl Template="{StaticResource TimeoutIcon}" 
                                                    Grid.Row="1" Grid.Column="0"
-                                                   ToolTip="Event"
+                                                   ToolTip="Timeout"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,8,0,0"
                                                    Width="24"
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
                                 <StackPanel x:Name="MessageTypeBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
                                     <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
                                 </StackPanel>
 
-                                <Border BorderThickness="1" BorderBrush="Black"
+                                <Border BorderThickness="1,0,1,1" BorderBrush="{StaticResource MessageBackground}"
                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
                                         Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                                 <StackPanel x:Name="MessageDataPanel"
                                             Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
-                                        <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}" Padding="2">
+                                        <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}" Padding="4">
                                     </ItemsControl>
-                                        <TextBlock Text="Empty" Visibility="Collapsed" x:Name="EmptyPropertyText" Foreground="Black">
+                                        <TextBlock Text="Empty" Visibility="Collapsed" x:Name="EmptyPropertyText" Foreground="Black" HorizontalAlignment="Center">
                                         </TextBlock>
                                 </StackPanel>
                                 </Border>
@@ -349,14 +349,14 @@
                     <DataTemplate x:Key="UpdatedValuesTemplate">
                         <StackPanel Background="{StaticResource SagaBackground}"  >
                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueChanged, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0">
-                                <TextBlock Text="{Binding Name}" Width="100px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Name}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
                                 <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}"/>
                                 <TextBlock Text="{Binding OldValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                                 <TextBlock Text=" ® " FontFamily="Symbol" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueNew, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0">
-                                <TextBlock Text="{Binding Label}" Width="100px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Label}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
                                 <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}"/>
                                 <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
                             </StackPanel>
@@ -367,7 +367,7 @@
                         <StackPanel Background="{StaticResource SagaBackground}" >
                             <ContentPresenter ContentTemplate="{StaticResource UpdatedValuesTemplate}" ContentSource="{Binding}" />
                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueNotUpdated, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0" >
-                                <TextBlock Text="{Binding Name}" Width="100px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Name}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
                                 <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}" />
                                 <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
                             </StackPanel>

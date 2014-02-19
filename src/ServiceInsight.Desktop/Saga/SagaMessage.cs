@@ -16,6 +16,13 @@ namespace NServiceBus.Profiler.Desktop.Saga
     {
         public Guid MessageId { get; set; }
         public bool IsPublished { get; set; }
+        public virtual bool IsTimeout
+        {
+            get
+            {
+                return IsSagaTimeoutMessage;
+            }
+        }
 
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
@@ -186,7 +193,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         public TimeSpan Timeout { get; set; }
 
-        public bool IsTimeout
+        public override bool IsTimeout
         {
             get
             {
