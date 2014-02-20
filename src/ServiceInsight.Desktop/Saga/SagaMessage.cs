@@ -141,13 +141,20 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 var url = string.Format("/messages/{0}/body", this.MessageId);
                 var bodyString = await serviceControl.GetBody(url);
-                if (IsXml(bodyString))
+                if (bodyString != null)
                 {
-                    Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
+                    if (IsXml(bodyString))
+                    {
+                        Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
+                    }
+                    else
+                    {
+                        Data = JsonPropertiesHelper.ProcessValues(bodyString, cleanupBodyString);
+                    }
                 }
                 else
                 {
-                    Data = JsonPropertiesHelper.ProcessValues(bodyString, cleanupBodyString);
+                    Data = new List<KeyValuePair<string, string>>();
                 }
             }
         }
