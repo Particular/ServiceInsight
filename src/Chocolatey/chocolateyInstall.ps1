@@ -1,0 +1,1 @@
+﻿Install-ChocolateyPackage 'ServiceInsight.install' 'exe' '' 'https://github.com/Particular/ServiceInsight/releases/download/1.0.0-Beta5/Particular.ServiceInsight-1.0.0-Beta5.exe'

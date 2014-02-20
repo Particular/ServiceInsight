@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Desktop", "ServiceInsight.Desktop\ServiceInsight.Desktop.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.FunctionalTests", "ServiceInsight.FunctionalTests\ServiceInsight.FunctionalTests.csproj", "{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chocolatey", "Chocolatey\Chocolatey.csproj", "{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +49,16 @@ Global
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Release|x86.ActiveCfg = Release|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
