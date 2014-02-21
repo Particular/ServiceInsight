@@ -1,7 +1,5 @@
 *.ncrunchsolution
-*.ncrunchproject
-*.Pdb
-*.pdb
+*.ncr
 *.xap
 *.Xap
 *.bak

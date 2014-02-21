@@ -127,8 +127,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public bool CanRetryMessage()
         {
             return FocusedRow != null &&
-                   (FocusedRow.Status == MessageStatus.Failed ||
-                    FocusedRow.Status == MessageStatus.RepeatedFailure);
+                   (FocusedRow.Status == MessageStatus.Failed || FocusedRow.Status == MessageStatus.RepeatedFailure)
+                   && FocusedRow.Status != MessageStatus.ArchivedFailure;
         }
 
         public bool CanReturnToSource()

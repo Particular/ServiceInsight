@@ -9,6 +9,15 @@
             </Canvas>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="msgArchiveIcon">
+        <Canvas Name="Layer_1" Width="16" Height="16" Canvas.Left="0" Canvas.Top="0">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3033" Fill="#000000">
+                <Path.Data>
+                    <PathGeometry Figures="M2 0v16h13V0H2z M14 12H3V8h4v1h3V8h4V12z M14 6H3V2h4v1h3V2h4V6z" FillRule="NonZero"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </ControlTemplate>
     <ControlTemplate x:Key="msgRepeatedFailureIcon">
         <Canvas Name="Layer_1" Width="7.986" Height="13" ClipToBounds="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
             <Canvas>
