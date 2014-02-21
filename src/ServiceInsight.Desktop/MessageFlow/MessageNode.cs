@@ -3,22 +3,48 @@ using System.Windows;
 using Mindscape.WpfDiagramming;
 using NServiceBus.Profiler.Desktop.Models;
 using System;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private const int HeightNoEndpoints = 56;
-        private const int EndpointsHeight = 25;
+        private int heightNoEndpoints = 56;
+        private const int endpointsHeight = 25;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
             IsResizable = false;
             Owner = owner;
-            Bounds = new Rect(0, 0, 233, HeightNoEndpoints);
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
+
+            if (message.Sagas != null)
+            {
+                var originatingSaga = message.Sagas.FirstOrDefault();
+                if (originatingSaga != null)
+                {
+                    SagaType = ProcessType(originatingSaga.SagaType);
+                }
+            }
+
+            heightNoEndpoints += HasSaga ? 10 : 0;
+            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+        }
+
+        private string ProcessType(string messageType)
+        {
+            if (string.IsNullOrEmpty(messageType))
+                return string.Empty;
+
+            var clazz = messageType.Split(',').First();
+            var objectName = clazz.Split('.').Last();
+
+            if (objectName.Contains("+"))
+                objectName = objectName.Split('+').Last();
+
+            return objectName;
         }
 
         public StoredMessage Message
@@ -81,7 +107,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, HeightNoEndpoints + (ShowEndpoints ? EndpointsHeight : 0)));
+            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
@@ -97,6 +123,32 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public bool IsPublished
         {
             get { return Message.MessageIntent == MessageIntent.Publish; }
+        }
+
+        public bool IsSagaInitiated
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId)) && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
+            }
+        }
+
+        public bool IsSagaCompleted
+        {
+            get
+            {
+                var status = Message.InvokedSagas == null ? null : Message.InvokedSagas.FirstOrDefault();
+                return status != null && status.ChangeStatus == "Completed";
+            }
+        }
+
+        public bool IsTimeout
+        {
+            get 
+            {
+                var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
+                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString); 
+            }
         }
 
         public DateTime? TimeSent
@@ -124,6 +176,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get
             {
                 return Message.Status == MessageStatus.RetryIssued;
+            }
+        }
+
+        public string SagaType { get; private set; }
+
+        public bool HasSaga
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(SagaType);
             }
         }
 

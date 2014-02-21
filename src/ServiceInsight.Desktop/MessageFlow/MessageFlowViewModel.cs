@@ -83,6 +83,12 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             base.AttachView(view, context);
             _view = (IMessageFlowView)view;
+            _view.ShowMessage += _view_ShowMessage;
+        }
+
+        void _view_ShowMessage(object sender, SearchMessageEventArgs e)
+        {
+            SearchByMessageId(e.MessageNode.Message);
         }
 
         public void ShowMessageBody(StoredMessage message)
@@ -90,9 +96,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _eventAggregator.Publish(new SwitchToMessageBody());
         }
 
+        public void ShowSagaWindow()
+        {
+            _eventAggregator.Publish(new SwitchToSagaWindow());
+        }
+
         public void ShowSagaWindow(StoredMessage message)
         {
-            //_eventAggregator.Publish(new SwitchToSagaWindow());
+            ShowSagaWindow();
         }
 
         public void ShowException(IExceptionDetails exception)

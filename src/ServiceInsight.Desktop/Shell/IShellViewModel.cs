@@ -10,6 +10,7 @@ using NServiceBus.Profiler.Desktop.MessageFlow;
 using NServiceBus.Profiler.Desktop.MessageList;
 using NServiceBus.Profiler.Desktop.MessageProperties;
 using NServiceBus.Profiler.Desktop.MessageViewers;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -20,6 +21,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<SwitchToMessageBody>,
+        IHandle<SwitchToSagaWindow>,
+        IHandle<SwitchToFlowWindow>,
         IWorkTracker
     {
         IQueueExplorerViewModel QueueExplorer { get; }
@@ -27,6 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         IMessageListViewModel Messages { get; }
         IStatusBarManager StatusBarManager { get; }
         ILogWindowViewModel LogWindow { get; }
+        ISagaWindowViewModel SagaWindow { get; }
         IMessageFlowViewModel MessageFlow { get; }
         IMessageBodyViewModel MessageBody { get; }
         IMessagePropertiesViewModel MessageProperties { get; }

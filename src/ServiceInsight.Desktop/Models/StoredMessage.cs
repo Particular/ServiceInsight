@@ -39,6 +39,28 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
+        public MessageStatistics Statistics
+        {
+            get
+            {
+                if (_statistics == null)
+                {
+                    _statistics = new MessageStatistics
+                    {
+                        CriticalTime = CriticalTime,
+                        ProcessingTime = ProcessingTime
+                    };
+                }
+                return _statistics;
+            }
+            set
+            {
+                _statistics = value;
+            }
+        }
+
+        private MessageStatistics _statistics;
+
         public string ElapsedDeliveryTime
         {
             get
@@ -68,11 +90,32 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         public List<StoredMessageHeader> Headers
         {
-            get; set;
+            get;
+            set;
+        }
+
+        public List<SagaInfo> Sagas
+        {
+            get
+            {
+                if (InvokedSagas != null)
+                {
+                    if (OriginatesFromSaga != null)
+                    {
+                        return InvokedSagas.Union(new List<SagaInfo> { OriginatesFromSaga }).ToList();
+                    }
+                    else
+                        return InvokedSagas;
+                }
+
+                if (OriginatesFromSaga != null)
+                    return new List<SagaInfo> { OriginatesFromSaga };
+
+                return null;
+            }
         }
 
         public List<SagaInfo> InvokedSagas{get;set;}
-
 
         public SagaInfo OriginatesFromSaga{get;set;}
 
@@ -112,6 +155,7 @@ namespace NServiceBus.Profiler.Desktop.Models
     [DebuggerDisplay("SagaType={SagaType},SagaId={Value}")]
     public class SagaInfo
     {
+        public string ChangeStatus { get; set; }
         public string SagaType { get; set; }
         public Guid SagaId { get; set; }
     }
@@ -133,6 +177,12 @@ namespace NServiceBus.Profiler.Desktop.Models
         public const string FailedQueue = "FailedQ";
         public const string TimeSent = "TimeSent";
         public const string TimeOfFailure = "TimeOfFailure";
+        public const string IsSagaTimeout = "IsSagaTimeoutMessage";
+        public const string SagaId = "SagaId";
+        public const string OriginatedSagaId = "OriginatingSagaId";
+        public const string SagaStatus = "ServiceControl.SagaChangeStatus";
     }
 
 }
+
+

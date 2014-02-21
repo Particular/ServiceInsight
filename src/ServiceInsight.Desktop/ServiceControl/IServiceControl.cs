@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NServiceBus.Profiler.Desktop.Models;
 using System;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.ServiceControl
 {
@@ -14,6 +15,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         Task<bool> RetryMessage(string messageId);
         Task<bool> IsAlive();
         Task<string> GetBody(string bodyUrl);
+        Task<SagaData> GetSagaById(string sagaId);
         Task<string> GetVersion();
         Uri GetUri(StoredMessage message);
     }

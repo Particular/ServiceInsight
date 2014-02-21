@@ -21,6 +21,7 @@ using NServiceBus.Profiler.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Tests
 {
@@ -41,6 +42,7 @@ namespace NServiceBus.Profiler.Tests
         private IMessageListViewModel MessageList;
         private IConnectToMachineViewModel ConnectToViewModel;
         private IMessageFlowViewModel MessageFlow;
+        private ISagaWindowViewModel SagaWindow;
         private IEventAggregator EventAggregator;
         private IStatusBarManager StatusbarManager;
         private IMessageBodyViewModel MessageBodyView;
@@ -63,6 +65,7 @@ namespace NServiceBus.Profiler.Tests
             StatusbarManager = Substitute.For<IStatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<IMessageFlowViewModel>();
+            SagaWindow = Substitute.For<ISagaWindowViewModel>();
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
@@ -76,7 +79,7 @@ namespace NServiceBus.Profiler.Tests
 
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, 
                                        EndpointExplorer, MessageList, StatusbarManager, 
-                                       EventAggregator, LicenseManager, MessageFlow, 
+                                       EventAggregator, LicenseManager, MessageFlow, SagaWindow,
                                        MessageBodyView, SettingsProvider, MessageProperties, 
                                        LogWindow, CommandLineArgParser);
 

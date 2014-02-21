@@ -34,7 +34,7 @@
                     dxc:DXSerializer.SerializationID="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.7">
+                    dxc:DXSerializer.LayoutVersion="1.1.8">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -268,7 +268,15 @@
                                                  CaptionImage="/Images/Diagram.png">
                                     <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
-
+                                <dxd:LayoutPanel x:Name="SagaWindow"
+                                                 AutomationProperties.AutomationId="SagaWindow"
+                                                 Caption="Saga"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
+                                                 CaptionImage="/Images/Saga.png">
+                                    <ContentControl cal:View.Model="{Binding SagaWindow}" />
+                                </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"  
