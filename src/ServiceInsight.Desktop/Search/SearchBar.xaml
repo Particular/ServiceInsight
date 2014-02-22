@@ -59,6 +59,7 @@
         <dxe:ComboBoxEdit Grid.Column="3" 
                           IsEnabled="{Binding SearchEnabled}"
                           Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                          ItemsSource="{Binding RecentSearchQueries}"
                           Width="200" 
                           Margin="5" 
                           AllowDefaultButton="False"

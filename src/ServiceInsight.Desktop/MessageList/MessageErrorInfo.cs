@@ -8,17 +8,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 {
     public class MessageErrorInfo : IComparable
     {
-        private readonly bool _statusSpecified;
+        private MessageStatus _status;
+        private bool _statusSpecified;
 
         public MessageErrorInfo()
         {
-            _statusSpecified = false;
             Image = GetImage();
         }
 
         public MessageErrorInfo(MessageStatus status)
         {
-            _statusSpecified = true;
             Status = status;
             Image = GetImage();
             Description = status.GetDescription();
@@ -26,7 +25,15 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public BitmapImage Image { get; private set; }
 
-        public MessageStatus Status { get; private set; }
+        public MessageStatus Status
+        {
+            get { return _status; }
+            private set
+            {
+                _status = value;
+                _statusSpecified = true;
+            }
+        }
 
         public string Description { get; private set; }
 

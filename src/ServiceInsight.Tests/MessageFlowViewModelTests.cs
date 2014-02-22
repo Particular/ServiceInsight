@@ -12,6 +12,8 @@ using NUnit.Framework;
 
 namespace NServiceBus.Profiler.Tests
 {
+    using Desktop.Core.Settings;
+
     [TestFixture]
     public class MessageFlowViewModelTests
     {
@@ -21,6 +23,7 @@ namespace NServiceBus.Profiler.Tests
         private IWindowManagerEx _windowManager;
         private IScreenFactory _screenFactory;
         private ISearchBarViewModel _searchBar;
+        private ISettingsProvider _settingProvider;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -61,13 +64,15 @@ namespace NServiceBus.Profiler.Tests
             _windowManager = Substitute.For<IWindowManagerEx>();
             _screenFactory = Substitute.For<IScreenFactory>();
             _searchBar = Substitute.For<ISearchBarViewModel>();
+            _settingProvider = Substitute.For<ISettingsProvider>();
 
             return new MessageFlowViewModel(_serviceControl, 
                                             _eventAggregator, 
                                             _clipboard, 
                                             _windowManager,
                                             _screenFactory, 
-                                            _searchBar);
+                                            _searchBar,
+                                            _settingProvider);
         }
 
     }

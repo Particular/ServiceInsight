@@ -349,7 +349,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         private async Task<bool> LoadMessageBody()
         {
-            if (FocusedRow == null || !ShouldLoadMessageBody) return false;
+            if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty()) return false;
 
             _eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
