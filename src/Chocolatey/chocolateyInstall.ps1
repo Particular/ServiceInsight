@@ -1,1 +1,1 @@
-﻿Install-ChocolateyPackage 'ServiceInsight.install' 'exe' '' 'https://github.com/Particular/ServiceInsight/releases/download/VERSION/Particular.ServiceInsight-VERSION.exe'
+﻿Install-ChocolateyPackage 'ServiceInsight.install' 'exe' '' 'https://github.com/Particular/ServiceInsight/releases/download/SemVer/Particular.ServiceInsight-SemVer.exe'
