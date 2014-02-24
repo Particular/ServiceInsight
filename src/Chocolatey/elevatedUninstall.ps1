@@ -2,7 +2,7 @@
 
     Start-Transcript -Path $args[0] -Force
 
-	$app = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "ServiceInsight*"  -and ($_.Version -eq "MajorMinorPatch") }
+	$app = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "*ServiceInsight*"  -and ($_.Version -eq "MajorMinorPatch") }
 	$result = $app.Uninstall();
 
 }
