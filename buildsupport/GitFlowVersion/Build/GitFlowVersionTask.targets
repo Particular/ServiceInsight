@@ -7,16 +7,10 @@
   <UsingTask
       TaskName="GitFlowVersionTask.UpdateAssemblyInfo"
       AssemblyFile="$(MSBuildThisFileDirectory)..\GitFlowVersionTask.dll" />
-  <UsingTask
-      TaskName="GitFlowVersionTask.WriteVersionInfoToBuildLog"
-      AssemblyFile="$(MSBuildThisFileDirectory)..\GitFlowVersionTask.dll" />
 
     <Target Name="UpdateAssemblyInfo"
             BeforeTargets="CoreCompile">
-      <WriteVersionInfoToBuildLog
-        SolutionDirectory="$(SolutionDir)"
-        />
-        <UpdateAssemblyInfo 
+        <GitFlowVersionTask.UpdateAssemblyInfo 
           SolutionDirectory="$(SolutionDir)"
           AssemblyName="$(AssemblyName)" 
           ProjectFile="$(ProjectPath)" 
@@ -25,11 +19,14 @@
           <Output 
             TaskParameter="AssemblyInfoTempFilePath" 
             PropertyName="AssemblyInfoTempFilePath" />
-        </UpdateAssemblyInfo>
+        </GitFlowVersionTask.UpdateAssemblyInfo>
+        <Message Text="$(AssemblyInfoTempFilePath)" />
 
+        <Message Text="BeforeInjection @(Compile)" />
         <ItemGroup>
             <Compile Include="$(AssemblyInfoTempFilePath)" />
         </ItemGroup>
+        <Message Text="AfterInjection @(Compile)" />
     </Target>
 
   <!--Support for ncrunch-->
