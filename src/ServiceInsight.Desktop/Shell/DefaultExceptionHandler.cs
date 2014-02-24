@@ -8,7 +8,6 @@ using ExceptionHandler.Wpf;
 using NServiceBus.Profiler.Desktop.Core.Licensing;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ScreenManager;
-using Rhino.Licensing;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -66,10 +65,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         private bool IsHardError(Exception rootError)
         {
-            return rootError is LicenseExpiredException  ||
-                   rootError is LicenseNotFoundException ||
-                   rootError is InvalidLicenseException  ||
-                   rootError is LicenseFileNotFoundException;
+            return false;
         }
 
         private bool IsIgnoredError(Exception rootError)

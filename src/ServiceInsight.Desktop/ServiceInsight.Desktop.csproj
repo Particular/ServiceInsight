@@ -159,10 +159,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Licensing, Version=1.3.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rhino.Licensing.1.3\lib\Net45\Rhino.Licensing.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -172,6 +168,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
@@ -195,6 +192,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="CodeParser\BaseParser.cs" />
     <Compile Include="CodeParser\CodeBlockPresenter.cs" />
     <Compile Include="CodeParser\CodeLanguage.cs" />
@@ -257,12 +262,6 @@
     <Compile Include="Core\IQueueOperations.cs" />
     <Compile Include="Core\IQueueOperationsAsync.cs" />
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
-    <Compile Include="Core\Licensing\CryptographyService.cs" />
-    <Compile Include="Core\Licensing\ILicenseManager.cs" />
-    <Compile Include="Core\Licensing\InvalidLicenseException.cs" />
-    <Compile Include="Core\Licensing\LicenseDescriptor.cs" />
-    <Compile Include="Core\Licensing\LicenseType.cs" />
-    <Compile Include="Core\Licensing\ProfilerLicense.cs" />
     <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\IContentDecoder.cs" />

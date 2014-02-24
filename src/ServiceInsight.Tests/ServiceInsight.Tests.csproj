@@ -116,7 +116,6 @@
     <Compile Include="AddressTests.cs" />
     <Compile Include="AsyncQueueOperationsTests.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
-    <Compile Include="CryptographyServiceTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />
     <Compile Include="ExplorerTests.cs" />
     <Compile Include="GuardTests.cs" />
@@ -149,5 +148,6 @@
       <Name>ServiceInsight.Desktop</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
