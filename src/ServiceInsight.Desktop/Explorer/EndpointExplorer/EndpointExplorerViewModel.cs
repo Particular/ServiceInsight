@@ -49,7 +49,10 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public ServiceControlExplorerItem ServiceControlRoot
         {
-            get { return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); }
+            get 
+            { 
+                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); 
+            }
         }
 
         public AuditEndpointExplorerItem AuditRoot
@@ -183,19 +186,30 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public async Task RefreshData()
         {
+            if (ServiceControlRoot == null)
+                await TryReconnectToServiceControl();
+
             var endpoints = await _serviceControl.GetEndpoints();
 
             if (endpoints == null) return;
 
-            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
+            if (ServiceControlRoot != null)
             {
-                if (!ServiceControlRoot.EndpointExists(endpoint))
+                foreach (var endpoint in endpoints.OrderBy(e => e.Name))
                 {
-                    ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                    if (!ServiceControlRoot.EndpointExists(endpoint))
+                    {
+                        ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                    }
                 }
             }
 
             //TODO: Remove non-existing endpoints efficiently
+        }
+
+        private async Task TryReconnectToServiceControl()
+        {
+            await ConnectToService(GetConfiguredAddress());
         }
 
         public void Navigate(string navigateUri)

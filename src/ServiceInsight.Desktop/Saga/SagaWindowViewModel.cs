@@ -38,7 +38,10 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void RefreshShowData()
         {
-            foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages))) { message.ShowData = showMessageData; };
+            if (Data != null)
+            {
+                foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages))) { message.ShowData = showMessageData; };
+            }
             NotifyOfPropertyChange("Data");
         }
 
