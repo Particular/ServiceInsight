@@ -337,7 +337,6 @@
     <Compile Include="MessageProperties\MessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\PerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\SagaHeaderViewModel.cs" />
-    <Compile Include="MessageList\GridSelectionPreserver.cs" />
     <Compile Include="MessageList\ITableViewModel.cs" />
     <Compile Include="MessageList\MessageErrorInfo.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentView.xaml.cs">
