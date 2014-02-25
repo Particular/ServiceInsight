@@ -202,12 +202,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public async void DeleteSelectedMessages()
+        public void DeleteSelectedMessages()
         {
         }
 
         [AutoCheckAvailability]
-        public async void PurgeCurrentQueue()
+        public void PurgeCurrentQueue()
         {
         }
 
