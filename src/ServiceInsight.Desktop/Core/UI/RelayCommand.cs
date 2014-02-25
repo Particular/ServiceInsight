@@ -8,12 +8,7 @@ namespace NServiceBus.Profiler.Desktop.Core.UI
         private readonly Func<bool> _canExecute;
         private readonly Action _execute;
 
-        public RelayCommand(Action execute)
-            : this(execute, null)
-        {
-        }
-
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayCommand(Action execute, Func<bool> canExecute = null)
         {
             if (execute == null) throw new ArgumentNullException("execute");
             _execute = execute;

@@ -46,14 +46,13 @@ namespace NServiceBus.Profiler.Desktop.Core
                 var SV_TYPE_WORKSTATION = 1;
                 var SV_TYPE_SERVER = 2;
                 var buffer = IntPtr.Zero;
-                var tmpBuffer = IntPtr.Zero;
                 var sizeofINFO = Marshal.SizeOf(typeof(ServerInfo));
-                int entriesRead;
-                int totalEntries;
-                int resHandle;
 
                 try
                 {
+                    int entriesRead;
+                    int totalEntries;
+                    int resHandle;
                     var result = NetServerEnum(null, 100, ref buffer, MAX_PREFERRED_LENGTH,
                                             out entriesRead,
                                             out totalEntries, 
@@ -64,13 +63,13 @@ namespace NServiceBus.Profiler.Desktop.Core
                     {
                         for (var i = 0; i < totalEntries; i++)
                         {
-                            tmpBuffer = new IntPtr((long) buffer + (i*sizeofINFO));
+                            var tmpBuffer = new IntPtr((long) buffer + (i*sizeofINFO));
                             var svrInfo = (ServerInfo)Marshal.PtrToStructure(tmpBuffer, typeof (ServerInfo));
                             networkComputers.Add(svrInfo.sv100_name);
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return networkComputers;
                 }
