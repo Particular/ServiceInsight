@@ -16,7 +16,6 @@ using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Shell.Menu;
-using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -59,7 +58,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             _copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
 
             Rows = new BindableCollection<StoredMessage>();
-            SelectedRows = new BindableCollection<StoredMessage>();
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
                 _returnToSourceMenu, 
@@ -68,8 +66,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _copyMessageIdMenu
             };
         }
-
-        private SagaData saga;
 
         public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
 
@@ -85,8 +81,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public new IShellViewModel Parent { get { return (IShellViewModel)base.Parent; } }
 
         public ISearchBarViewModel SearchBar { get; private set; }
-
-        public IObservableCollection<StoredMessage> SelectedRows { get; private set; }
 
         public IObservableCollection<StoredMessage> Rows { get; private set; }
 
@@ -295,7 +289,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             {
                 _lockUpdate = !ShouldUpdateMessages(pagedResult);
 
-                using (new GridSelectionPreserver<StoredMessage>(this))
                 using (new GridFocusedRowPreserver<StoredMessage>(this))
                 {
                     Rows.Clear();
@@ -307,7 +300,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
                 _lockUpdate = false;
             }
 
-            AutoSelectFirstRow();
             AutoFocusFirstRow();
         }
 
@@ -316,14 +308,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             if (FocusedRow == null && Rows.Count > 0)
             {
                 FocusedRow = Rows[0];
-            }
-        }
-
-        private void AutoSelectFirstRow()
-        {
-            if (SelectedRows.Count == 0 && Rows.Count > 0)
-            {
-                SelectedRows.Add(Rows[0]);
             }
         }
 

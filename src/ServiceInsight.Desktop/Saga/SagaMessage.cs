@@ -31,7 +31,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         { 
             get
             {
-                return ProcessType(messageType);
+                return ProcessType();
             }
             set
             {
@@ -39,7 +39,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private string ProcessType(string messageType)
+        private string ProcessType()
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;
@@ -77,19 +77,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             new KeyValuePair<MessageStatus, string>(MessageStatus.Successful, "Success" ),
         };
 
-        private bool isSelected = false;
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                NotifyOfPropertyChange(() => IsSelected);
-            }
-        }
+        public bool IsSelected { get; set; }
 
         public bool HasFailed
         {
@@ -137,25 +125,25 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         internal async Task RefreshData(IServiceControl serviceControl)
         {
-            if (Data == null)
+            //TODO: Consider moving this into ServiceControl e.g. GetSageMessageBody or something, models should be just about data
+            if (Data != null) return;
+
+            var url = string.Format("/messages/{0}/body", MessageId);
+            var bodyString = await serviceControl.GetBody(url);
+            if (bodyString != null)
             {
-                var url = string.Format("/messages/{0}/body", this.MessageId);
-                var bodyString = await serviceControl.GetBody(url);
-                if (bodyString != null)
+                if (IsXml(bodyString))
                 {
-                    if (IsXml(bodyString))
-                    {
-                        Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
-                    }
-                    else
-                    {
-                        Data = JsonPropertiesHelper.ProcessValues(bodyString, cleanupBodyString);
-                    }
+                    Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
                 }
                 else
                 {
-                    Data = new List<KeyValuePair<string, string>>();
+                    Data = JsonPropertiesHelper.ProcessValues(bodyString, CleanupBodyString);
                 }
+            }
+            else
+            {
+                Data = new List<KeyValuePair<string, string>>();
             }
         }
 
@@ -164,13 +152,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
             try
             {
                 var xml = XDocument.Parse(bodyString);
-                if (xml != null)
+                if (xml.Root != null)
                 {
                     var root = xml.Root.Nodes().FirstOrDefault() as XElement;
                     if (root != null)
                     {
-                        return root.Nodes().OfType<XElement>().
-                            Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
+                        return root.Nodes()
+                                   .OfType<XElement>()
+                                   .Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
                     }
                 }
             }
@@ -178,16 +167,15 @@ namespace NServiceBus.Profiler.Desktop.Saga
             return new List<KeyValuePair<string, string>>();
         }
 
-        private bool IsXml(string bodyString)
+        private static bool IsXml(string bodyString)
         {
             return bodyString.StartsWith("<?xml");
         }
 
-        private static string cleanupBodyString(string bodyString)
+        private static string CleanupBodyString(string bodyString)
         {
             return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
         }
-
     }
 
     public class SagaTimeoutMessage : SagaMessage

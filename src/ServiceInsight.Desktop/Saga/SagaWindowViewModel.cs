@@ -2,37 +2,29 @@
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ServiceControl;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Desktop.Saga
 {
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
     {
-        private ISagaWindowView _view;
         private IEventAggregator _eventAggregator;
         private IServiceControl _serviceControl;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator,
-            IServiceControl serviceControl)
+        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
         {
             _eventAggregator = eventAggregator;
             _serviceControl = serviceControl;
-
-            PropertyChanged += SagaWindowViewModel_PropertyChanged;
         }
 
-        void SagaWindowViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public void OnShowMessageDataChanged()
         {
-            if (e.PropertyName == "ShowMessageData")
+            RefreshShowData();
+
+            if (ShowMessageData)
             {
-                if (this.ShowMessageData)
-                {
-                    RefreshMessageProperties();
-                }
+                RefreshMessageProperties();
             }
         }
 
@@ -40,8 +32,16 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             if (Data == null) return;
 
-            foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages))) { message.ShowData = showMessageData; };
-            NotifyOfPropertyChange("Data");
+            var messages = Data.Changes
+                               .Select(c => c.InitiatingMessage)
+                               .Union(Data.Changes.SelectMany(c => c.OutgoingMessages));
+
+            foreach (var message in messages)
+            {
+                message.ShowData = ShowMessageData;
+            }
+
+            NotifyOfPropertyChange(() => Data);
         }
 
         private void RefreshMessageProperties()
@@ -55,29 +55,9 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 await message.RefreshData(_serviceControl);
             }
-            NotifyOfPropertyChange("Data");
+
+            NotifyOfPropertyChange(() => Data);
         }
-
-        public override void AttachView(object view, object context)
-        {
-            base.AttachView(view, context);
-            _view = (ISagaWindowView)view;
-
-            //CreateMockSaga();
-        }
-
-        private void CreateMockSaga()
-        {
-            var sagaDataText = System.IO.File.ReadAllText("saga\\saga.data").Replace("\r", "").Replace("\n", "");
-            Data = new SagaData 
-                    { 
-                        SagaType = "ProcessOrderSaga",
-                        //CompleteTime = new DateTime(2013, 7, 28, 14, 25, 34),
-                        SagaId = Guid.NewGuid(),
-                        Changes = RestSharp.SimpleJson.DeserializeObject<List<SagaUpdate>>(sagaDataText) 
-                    };
-        }
-
 
         public async void Handle(SelectedMessageChanged @event)
         {
@@ -91,8 +71,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
                     {
 
                         _eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-                        //CreateMockSaga();
+                        
                         if (Data == null || Data.SagaId != originatingSaga.SagaId)
                         {
                             Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
@@ -107,7 +86,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
                             }
                         }
 
-                        if (showMessageData)
+                        if (ShowMessageData)
                         {
                             RefreshMessageProperties();
                         }
@@ -158,50 +137,15 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        public bool HasSaga
-        {
-            get
-            {
-                return Data != null;
-            }
-        }
-
+        public bool HasSaga { get { return Data != null; } }
         public SagaData Data { get; set; }
-
-        private bool showEndpoints = false;
-        public bool ShowEndpoints
-        {
-            get 
-            { 
-                return showEndpoints; 
-            }
-            set
-            { 
-                showEndpoints = value; 
-                NotifyOfPropertyChange(() => ShowEndpoints); 
-            }
-        }
-
-        private bool showMessageData = false;
-        public bool ShowMessageData
-        {
-            get
-            {
-                return showMessageData;
-            }
-            set
-            {
-                showMessageData = value;
-                RefreshShowData();
-                NotifyOfPropertyChange(() => ShowMessageData);
-            }
-        }
+        public bool ShowEndpoints { get; set; }
+        public bool ShowMessageData { get; set; }
 
         public void ShowFlow()
         {
             _eventAggregator.Publish(new SwitchToFlowWindow());
         }
-
     }
 
     public interface ISagaWindowViewModel : IScreen
