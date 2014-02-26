@@ -1,7 +1,4 @@
-﻿Install-ChocolateyPackage 'ServiceInsight.install' 'exe' '' 'https://github.com/Particular/ServiceInsight/releases/download/SemVer/Particular.ServiceInsight-SemVer.exe'
-
-
-$packageName = "ServiceInsight"
+﻿$packageName = "ServiceInsight"
 $url = "https://github.com/Particular/ServiceInsight/releases/download/SemVer/Particular.ServiceInsight-SemVer.exe"
 
 try {
