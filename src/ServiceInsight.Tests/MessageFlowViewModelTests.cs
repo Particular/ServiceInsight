@@ -13,6 +13,7 @@ using NUnit.Framework;
 namespace NServiceBus.Profiler.Tests
 {
     using Desktop.Core.Settings;
+    using NServiceBus.Profiler.Desktop.MessageList;
 
     [TestFixture]
     public class MessageFlowViewModelTests
@@ -23,6 +24,7 @@ namespace NServiceBus.Profiler.Tests
         private IWindowManagerEx _windowManager;
         private IScreenFactory _screenFactory;
         private ISearchBarViewModel _searchBar;
+        private IMessageListViewModel _messageList;
         private ISettingsProvider _settingProvider;
 
         [Test]
@@ -64,6 +66,7 @@ namespace NServiceBus.Profiler.Tests
             _windowManager = Substitute.For<IWindowManagerEx>();
             _screenFactory = Substitute.For<IScreenFactory>();
             _searchBar = Substitute.For<ISearchBarViewModel>();
+            _messageList = Substitute.For<IMessageListViewModel>();
             _settingProvider = Substitute.For<ISettingsProvider>();
 
             return new MessageFlowViewModel(_serviceControl, 
@@ -72,6 +75,7 @@ namespace NServiceBus.Profiler.Tests
                                             _windowManager,
                                             _screenFactory, 
                                             _searchBar,
+                                            _messageList,
                                             _settingProvider);
         }
 

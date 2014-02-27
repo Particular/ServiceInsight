@@ -16,6 +16,8 @@ using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.ServiceControl;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Shell.Menu;
+using System.Windows;
+using DevExpress.Xpf.Grid;
 
 namespace NServiceBus.Profiler.Desktop.MessageList
 {
@@ -34,6 +36,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         private string _lastSortColumn;
         private bool _lastSortOrderAscending;
         private int _workCount;
+        private IMessageListView _view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -138,6 +141,27 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         public bool CanCopyMessageId()
         {
             return FocusedRow != null;
+        }
+
+        public override void AttachView(object view, object context)
+        {
+            this._view = view as IMessageListView;
+            base.AttachView(view, context);
+        }
+
+        public void Focus(StoredMessage msg)
+        {
+            var grid = ((GridControl)((FrameworkElement)_view).FindName("grid"));
+            for (int i = 0; i < Rows.Count; i++)
+            {
+                var row = Rows[i];
+                if (row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id)
+                {
+                    grid.UnselectAll();
+                    FocusedRow = row;
+                    return;
+                }
+            }
         }
 
         public async void OnFocusedRowChanged()

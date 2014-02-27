@@ -17,6 +17,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     using Core.Settings;
     using Settings;
+    using NServiceBus.Profiler.Desktop.MessageList;
 
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
@@ -38,6 +39,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         private readonly ISearchBarViewModel _searchBar;
+        private readonly IMessageListViewModel _messageList;
         private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
@@ -56,6 +58,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IWindowManagerEx windowManager,
             IScreenFactory screenFactory,
             ISearchBarViewModel searchBar, 
+            IMessageListViewModel messageList,
             ISettingsProvider settingsProvider)
         {
             _serviceControl = serviceControl;
@@ -65,6 +68,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _screenFactory = screenFactory;
             _searchBar = searchBar;
             _settingsProvider = settingsProvider;
+            _messageList = messageList;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -112,6 +116,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void ShowSagaWindow()
         {
+            _messageList.Focus(SelectedMessage.Message);
             _eventAggregator.Publish(new SwitchToSagaWindow());
         }
 

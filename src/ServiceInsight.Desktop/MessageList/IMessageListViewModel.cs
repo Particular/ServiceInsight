@@ -26,5 +26,6 @@ namespace NServiceBus.Profiler.Desktop.MessageList
         Task RefreshMessages(string orderBy = null, bool ascending = false);
         Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);
         MessageErrorInfo GetMessageErrorInfo(StoredMessage msg);
+        void Focus(StoredMessage msg);
     }
 }
