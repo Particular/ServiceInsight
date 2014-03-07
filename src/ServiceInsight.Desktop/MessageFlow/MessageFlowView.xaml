@@ -8,6 +8,7 @@
              xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
              xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
              xmlns:core="clr-namespace:System;assembly=mscorlib"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
 
@@ -46,6 +47,10 @@
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RetryIssued}">
                                 <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
                                 <Setter Property="ToolTip" Value="Retry Requested" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.ArchivedFailure}">
+                                <Setter Property="Template" Value="{StaticResource msgArchiveIcon}" />
+                                <Setter Property="ToolTip" Value="Archived Failure" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -186,13 +191,14 @@
 
                     <Style x:Key="MessageNodeStyle" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Cursor" Value="Arrow" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
                                     <Border x:Name="MessageRectangle" 
                                                 Background="{StaticResource MessageBackground}" 
                                                 BorderBrush="Transparent"
-                                                BorderThickness="1">
+                                                BorderThickness="1" MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown">
                                         <Grid x:Name="RootGrid">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -222,26 +228,16 @@
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
 
-                                            <ContentControl Template="{StaticResource CommandIcon}" 
+                                            <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
                                                    ToolTip="Command"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
-                                                   Margin="0,4,0,0"
-                                                   Width="20"
-                                                   Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                            <ContentControl Template="{StaticResource EventIcon}" 
-                                                   ToolTip="Event"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Margin="0,8,0,0"
-                                                   Width="24"
-                                                   Grid.Column="0" Grid.Row="1" 
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                                   Grid.Column="0" Grid.Row="1" />
 
-                                            <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" Grid.Column="1" Grid.Row="1" />
+                                            <StackPanel Grid.Column="1" Grid.Row="1" >
+                                                <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
 
-                                            <local:MessagePopupControl x:Name="MenuPopup" Grid.Row="1" Grid.Column="1" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                <local:MessagePopupControl x:Name="MenuPopup" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
@@ -249,8 +245,16 @@
                                                                            HorizontalAlignment="Stretch"
                                                                            AllowsTransparency="True"
                                                                            StaysOpen="False">
-                                                <local:MessageActionPopup />
-                                            </local:MessagePopupControl>
+                                                    <local:MessageActionPopup />
+                                                </local:MessagePopupControl>
+
+                                                <StackPanel Orientation="Horizontal" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]" >
+                                                    <ContentControl x:Name="SagaStatusIcon" Template="{StaticResource SagaInitiatedIcon}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                                    <TextBlock Background="#333333" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontSize="11px" FontWeight="Bold" Width="120" Margin="2 0 0 0" Padding="3 0" />
+                                                </StackPanel>
+                                            </StackPanel>
 
                                             <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
@@ -269,6 +273,51 @@
                                         </Grid>
                                     </Border>
                                     <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True">
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}"/>
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False"/>
+                                                <Condition Binding="{Binding IsSagaCompleted}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}"/>
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False"/>
+                                                <Condition Binding="{Binding IsSagaCompleted}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}"/>
+                                        </MultiDataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsTimeout}" Value="True">
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource TimeoutIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Timeout" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="300" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,8,0,0" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                                <Condition Binding="{Binding IsPublished}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource EventIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Event" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="20" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                                <Condition Binding="{Binding IsPublished}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource CommandIcon}" />
+                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Command" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="24" />
+                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
+                                        </MultiDataTrigger>
+                                        
                                         <DataTrigger Binding="{Binding HasFailed}" Value="True">
                                             <DataTrigger.Setters>
                                                 <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
@@ -377,7 +426,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="Root">
+    <Grid x:Name="Root" KeyUp="Root_KeyUp">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
@@ -412,7 +461,7 @@
                            Diagram="{Binding Diagram}"
                            IsReadOnly="True" 
                            ZoomMode="ControlMouseWheel"
-                           Cursor="Hand"
+                           Cursor="ScrollAll"
                            DragAction="Pan"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"

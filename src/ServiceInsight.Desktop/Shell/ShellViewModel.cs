@@ -23,6 +23,7 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 using NServiceBus.Profiler.Desktop.Settings;
 using NServiceBus.Profiler.Desktop.Startup;
 using System.Diagnostics;
+using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
@@ -53,6 +54,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IEventAggregator eventAggregator,
             ILicenseManager licenseManager,
             IMessageFlowViewModel messageFlow,
+            ISagaWindowViewModel sagaWindow,
             IMessageBodyViewModel messageBodyViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
@@ -68,6 +70,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             _comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
+            SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
@@ -135,6 +138,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public IMessageBodyViewModel MessageBody { get; private set; }
 
+        public ISagaWindowViewModel SagaWindow { get; private set; }
+
         public IStatusBarManager StatusBarManager { get; private set; }
 
         public ILogWindowViewModel LogWindow { get; private set; }
@@ -197,12 +202,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
         }
 
         [AutoCheckAvailability]
-        public async void DeleteSelectedMessages()
+        public void DeleteSelectedMessages()
         {
         }
 
         [AutoCheckAvailability]
-        public async void PurgeCurrentQueue()
+        public void PurgeCurrentQueue()
         {
         }
 
@@ -469,5 +474,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             View.SelectTab("MessageBody");
         }
+
+        public virtual void Handle(SwitchToSagaWindow @event)
+        {
+            View.SelectTab("SagaWindow");
+        }
+
+        public virtual void Handle(SwitchToFlowWindow @event)
+        {
+            View.SelectTab("MessageFlow");
+        }
+
     }
 }

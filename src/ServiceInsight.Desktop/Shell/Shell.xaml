@@ -34,7 +34,7 @@
                     dxc:DXSerializer.SerializationID="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.7">
+                    dxc:DXSerializer.LayoutVersion="1.1.8">
         <!--Categories-->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
@@ -79,14 +79,6 @@
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
                                CategoryName="Tools" Glyph="/Images/SearchRefresh.png"
                                KeyGesture="F5" />
-            <dxb:BarButtonItem Content="Import From File" 
-                               x:Name="ImportMessage" 
-                               AutomationProperties.AutomationId="ImportMessageMenuItem"
-                               CategoryName="Tools" Glyph="/Images/Open.png" />
-            <dxb:BarButtonItem Content="Export To File" 
-                               x:Name="ExportMessage" 
-                               AutomationProperties.AutomationId="ExportMessageMenuItem"
-                               CategoryName="Tools" Glyph="/Images/Save.png" />
             <dxb:BarButtonItem Content="Register..." 
                                x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
@@ -117,9 +109,6 @@
                             AutomationProperties.AutomationId="FileMenu"
                             CategoryName="File" 
                             Content="File">
-                <dxb:BarButtonItemLink BarItemName="ExportMessage" />
-                <dxb:BarButtonItemLink BarItemName="ImportMessage" />
-                <dxb:BarItemLinkSeparator />
                 <dxb:BarButtonItemLink BarItemName="ShutDown" />
             </dxb:BarSubItem>
 
@@ -220,7 +209,7 @@
         <!--Dock Windows-->
         <Grid>
             <dxd:DockLayoutManager x:Name="DockManager"
-                                   AutomationProperties.AutomationId="DockManager">
+                                   AutomationProperties.AutomationId="DockManager" >
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200"
@@ -268,7 +257,15 @@
                                                  CaptionImage="/Images/Diagram.png">
                                     <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
-
+                                <dxd:LayoutPanel x:Name="SagaWindow"
+                                                 AutomationProperties.AutomationId="SagaWindow"
+                                                 Caption="Saga"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
+                                                 CaptionImage="/Images/Saga.png">
+                                    <ContentControl cal:View.Model="{Binding SagaWindow}" />
+                                </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"  

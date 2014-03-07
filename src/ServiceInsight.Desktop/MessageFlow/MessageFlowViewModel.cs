@@ -15,6 +15,10 @@ using NServiceBus.Profiler.Desktop.Search;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
+    using Core.Settings;
+    using Settings;
+    using NServiceBus.Profiler.Desktop.MessageList;
+
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
     {
@@ -35,11 +39,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         private readonly ISearchBarViewModel _searchBar;
+        private readonly IMessageListViewModel _messageList;
         private readonly IScreenFactory _screenFactory;
         private readonly IServiceControl _serviceControl;
         private readonly IEventAggregator _eventAggregator;
         private readonly IClipboard _clipboard;
         private readonly IWindowManagerEx _windowManager;
+        private readonly ISettingsProvider _settingsProvider;
         private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
         private IMessageFlowView _view;
         private string _originalSelectionId = string.Empty;
@@ -51,7 +57,9 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
             IScreenFactory screenFactory,
-            ISearchBarViewModel searchBar)
+            ISearchBarViewModel searchBar, 
+            IMessageListViewModel messageList,
+            ISettingsProvider settingsProvider)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
@@ -59,6 +67,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _windowManager = windowManager;
             _screenFactory = screenFactory;
             _searchBar = searchBar;
+            _settingsProvider = settingsProvider;
+            _messageList = messageList;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -83,6 +93,20 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             base.AttachView(view, context);
             _view = (IMessageFlowView)view;
+            _view.ShowMessage += _view_ShowMessage;
+        }
+
+        void _view_ShowMessage(object sender, SearchMessageEventArgs e)
+        {
+            SearchByMessageId(e.MessageNode.Message);
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            
+            ShowEndpoints = settings.ShowEndpoints;
         }
 
         public void ShowMessageBody(StoredMessage message)
@@ -90,9 +114,15 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _eventAggregator.Publish(new SwitchToMessageBody());
         }
 
+        public void ShowSagaWindow()
+        {
+            _messageList.Focus(SelectedMessage.Message);
+            _eventAggregator.Publish(new SwitchToSagaWindow());
+        }
+
         public void ShowSagaWindow(StoredMessage message)
         {
-            //_eventAggregator.Publish(new SwitchToSagaWindow());
+            ShowSagaWindow();
         }
 
         public void ShowException(IExceptionDetails exception)
@@ -158,8 +188,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
             try
             {
-                _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
-
                 var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
@@ -171,8 +199,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             {
                 _loadingConversation = false;
             }
-
-            _eventAggregator.Publish(new WorkFinished());
         }
 
         public void ZoomIn()
@@ -195,11 +221,26 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                _view.UpdateNode(node);
+                if(_view != null) _view.UpdateNode(node);
             }
 
-            _view.UpdateConnections();
-            _view.ApplyLayout();
+            if (_view != null)
+            {
+                _view.UpdateConnections();
+                _view.ApplyLayout();
+            }
+
+            UpdateSetting();
+        }
+
+        private void UpdateSetting()
+        {
+            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            if (settings.ShowEndpoints != ShowEndpoints)
+            {
+                settings.ShowEndpoints = ShowEndpoints;
+                _settingsProvider.SaveSettings(settings);
+            }
         }
 
         private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)

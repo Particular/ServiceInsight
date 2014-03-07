@@ -1,5 +1,6 @@
 ﻿using Mindscape.WpfDiagramming;
 using Mindscape.WpfDiagramming.Foundation;
+using System;
 
 namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
@@ -10,5 +11,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         void UpdateNode(IDiagramNode node);
         void UpdateConnections();
         void SizeToFit();
+
+        event EventHandler<SearchMessageEventArgs> ShowMessage;
     }
 }

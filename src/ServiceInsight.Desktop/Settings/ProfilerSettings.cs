@@ -11,7 +11,7 @@ namespace NServiceBus.Profiler.Desktop.Settings
         public ProfilerSettings()
         {
             RecentSearchEntries = new ObservableCollection<string>();
-            RecentManagementApiEntries = new ObservableCollection<string>();
+            RecentServiceControlEntries = new ObservableCollection<string>();
         }
 
         [DefaultValue(15)]
@@ -33,16 +33,21 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [Description("Whether or not display scheduled messages in the message list")]
         public bool DisplayScheduledMessages { get; set; }
 
+        [DefaultValue(false)]
+        [DisplayName("Display Endpoint Information")]
+        [Description("Whether or not display Endpoint information in diagrams")]
+        public bool ShowEndpoints { get; set; }
+
         [DisplayName("Recent Search Entries")]
         [Description("List of recent keywords used in search box")]
         public ObservableCollection<string> RecentSearchEntries { get; set; }
 
         [DisplayName("Recent ServiceControl Entries")]
         [Description("List of recently connected service URLs for ServiceControl")]
-        public ObservableCollection<string> RecentManagementApiEntries { get; set; }
+        public ObservableCollection<string> RecentServiceControlEntries { get; set; }
 
         [DisplayName("ServiceControl URL")]
         [Description("Last used ServiceControl address")]
-        public string LastUsedManagementApi { get; set; }
+        public string LastUsedServiceControl { get; set; }
     }
 }

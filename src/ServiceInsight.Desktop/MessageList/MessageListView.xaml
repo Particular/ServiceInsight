@@ -23,9 +23,8 @@
         <dxg:GridControl x:Name="grid"
                          ShowLoadingPanel="{Binding WorkInProgress}"
                          IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
-                         Grid.Row="1"
-                         SelectionMode="Row"
-                         SelectedItems="{Binding SelectedRows}"
+                         Grid.Row="1" 
+                         SelectionMode="None" 
                          CurrentItem="{Binding FocusedRow, Mode=TwoWay}"
                          ItemsSource="{Binding Rows}"
                          PreviewMouseLeftButtonDown="OnGridControlClicked"
@@ -50,6 +49,7 @@
                                    Source="{Binding Value.Image}"
                                    ToolTip="{Binding Value.Description}" />
                         </DataTemplate>
+                        
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn FieldName="MessageId" 
@@ -103,8 +103,9 @@
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" 
                                BeforeLayoutRefresh="OnBeforeLayoutRefresh"
+                               IsColumnMenuEnabled="False"
                                ShowIndicator="False"
-                               MultiSelectMode="Row"
+                               MultiSelectMode="None"
                                AllowCascadeUpdate="True" 
                                AllowPerPixelScrolling="True" 
                                AutoWidth="True" 
