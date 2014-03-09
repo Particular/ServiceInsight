@@ -43,11 +43,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
         public IHexContentViewModel HexViewer { get; private set; }
         public IJsonMessageViewModel JsonViewer { get; private set; }
         public IXmlMessageViewModel XmlViewer { get; private set; }
-
-        public MessageContentType ContentType
-        {
-            get; set;
-        }
+        public MessageContentType ContentType { get; private set; }
 
         public bool JsonViewerVisibile
         {

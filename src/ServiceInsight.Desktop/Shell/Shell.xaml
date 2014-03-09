@@ -266,6 +266,15 @@
                                                  CaptionImage="/Images/Saga.png">
                                     <ContentControl cal:View.Model="{Binding SagaWindow}" />
                                 </dxd:LayoutPanel>
+                                <dxd:LayoutPanel x:Name="MessageHeaders"
+                                                 AutomationProperties.AutomationId="MessageHeaders"
+                                                 Caption="Headers"  
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 ShowBorder="False"
+                                                 >
+                                    <ContentControl cal:View.Model="{Binding MessageHeaders}" />
+                                </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"  

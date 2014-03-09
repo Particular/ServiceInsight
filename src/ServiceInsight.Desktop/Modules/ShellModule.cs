@@ -61,7 +61,7 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (LicenseRegistrationView);
                 yield return typeof (ServiceControlConnectionView);
                 yield return typeof (OptionsView);
-                yield return typeof ( ShellView);
+                yield return typeof (ShellView);
                 yield return typeof (ExceptionView);
                 yield return typeof (AboutView);
                 yield return typeof (ExceptionDetailView);

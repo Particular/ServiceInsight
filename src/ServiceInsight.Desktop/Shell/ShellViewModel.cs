@@ -27,6 +27,8 @@ using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
+    using MessageHeaders;
+
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
         private readonly IAppCommands _appCommander;
@@ -56,6 +58,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageFlowViewModel messageFlow,
             ISagaWindowViewModel sagaWindow,
             IMessageBodyViewModel messageBodyViewer,
+            IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
             ILogWindowViewModel logWindow,
@@ -74,6 +77,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
+            MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
             Messages = messages;
             LogWindow = logWindow;
@@ -81,6 +85,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
             Items.Add(messages);
+            Items.Add(messageHeadersViewer);
             Items.Add(messageBodyViewer);
             Items.Add(messageFlow);
 
@@ -137,6 +142,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public IMessageFlowViewModel MessageFlow { get; private set; }
 
         public IMessageBodyViewModel MessageBody { get; private set; }
+
+        public IMessageHeadersViewModel MessageHeaders { get; private set; }
 
         public ISagaWindowViewModel SagaWindow { get; private set; }
 
