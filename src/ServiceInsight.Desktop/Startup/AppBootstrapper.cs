@@ -12,6 +12,10 @@ using IContainer = Autofac.IContainer;
 
 namespace NServiceBus.Profiler.Desktop.Startup
 {
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Markup;
+
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {
         private IContainer _container;
@@ -19,6 +23,17 @@ namespace NServiceBus.Profiler.Desktop.Startup
         protected override void PrepareApplication()
         {
             base.PrepareApplication();
+            ExtendConventions();
+            ApplyBindingCulture();
+        }
+
+        private void ApplyBindingCulture()
+        {
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+        }
+
+        private void ExtendConventions()
+        {
             var convention = Container.GetInstance<IConventionManager>();
             convention.AddElementConvention(new DefaultElementConvention<BarButtonItem>("ItemClick", BarButtonItem.IsVisibleProperty, (item, o) => item.DataContext = o, item => item.DataContext));
         }

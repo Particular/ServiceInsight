@@ -76,8 +76,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             await Owner.RetryMessage(Message);
             Message.Status = MessageStatus.RetryIssued;
-            base.OnPropertyChanged("HasFailed");
-            base.OnPropertyChanged("HasRetried");
+            OnPropertyChanged("HasFailed");
+            OnPropertyChanged("HasRetried");
         }
 
         public bool CanRetry()
