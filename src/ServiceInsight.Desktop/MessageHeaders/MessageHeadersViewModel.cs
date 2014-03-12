@@ -1,6 +1,5 @@
 ﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
 {
-    using System;
     using System.Linq;
     using Caliburn.PresentationFramework;
     using Caliburn.PresentationFramework.ApplicationModel;
@@ -9,15 +8,25 @@
 
     public interface IMessageHeadersViewModel : IScreen, IHandle<SelectedMessageChanged>
     {
+        IObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
     }
 
     public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
     {
-        public IObservableCollection<MessageHeaderKeyValue> KeyValues { get; set; }
+        private IMessageHeadersView _view;
+        private bool _autoFitted;
 
         public MessageHeadersViewModel()
         {
             KeyValues = new BindableCollection<MessageHeaderKeyValue>();
+        }
+
+        public IObservableCollection<MessageHeaderKeyValue> KeyValues { get; private set; }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            _view = (IMessageHeadersView) view;
         }
 
         public void Handle(SelectedMessageChanged @event)
@@ -31,12 +40,16 @@
                 Key = h.Key,
                 Value = h.Value
             }));
-        }
-    }
 
-    public class MessageHeaderKeyValue : PropertyChangedBase
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
+            AutoFitKeys();
+        }
+
+        private void AutoFitKeys()
+        {
+            if(_autoFitted) return;
+
+            _view.AutoFit();
+            _autoFitted = true;
+        }
     }
 }
