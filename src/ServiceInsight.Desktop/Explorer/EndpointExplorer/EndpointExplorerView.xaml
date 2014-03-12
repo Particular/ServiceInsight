@@ -16,7 +16,7 @@
         <tree:ExplorerNodeChildSelector x:Key="ChildSelector" />
         <tree:ExplorerNodeImageSelector x:Key="ExplorerImageSelector" />
 
-        <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">
+        <Style TargetType="{x:Type ToolTip}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -26,14 +26,10 @@
                                 <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
                                 <TextBlock Text="No"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
                             </StackPanel>
-                            <TextBlock Text="Installed On:" />
-                            <ItemsControl ItemsSource="{Binding Machines}" Margin="10 0 0 0">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <TextBlock>
+                                <Run Text="Installed On: " />
+                                <Run Text="{Binding HostDisplayName}" />
+                            </TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </Setter.Value>

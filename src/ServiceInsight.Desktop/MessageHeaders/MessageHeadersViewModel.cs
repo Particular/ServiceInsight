@@ -31,10 +31,11 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
+            KeyValues.Clear();
             var storedMessage = @event.Message;
+            if (storedMessage == null) return;
             var headers = storedMessage.Headers;
 
-            KeyValues.Clear();
             KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
             {
                 Key = h.Key,
