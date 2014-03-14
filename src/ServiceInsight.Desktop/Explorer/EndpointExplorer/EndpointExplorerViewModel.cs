@@ -186,21 +186,17 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public async Task RefreshData()
         {
-            if (ServiceControlRoot == null)
-                await TryReconnectToServiceControl();
+            if (ServiceControlRoot == null) await TryReconnectToServiceControl();
+            if (ServiceControlRoot == null) return; //TODO: DO we need to check twice? Root node should have been added at this stage.
 
             var endpoints = await _serviceControl.GetEndpoints();
-
             if (endpoints == null) return;
 
-            if (ServiceControlRoot != null)
+            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
             {
-                foreach (var endpoint in endpoints.OrderBy(e => e.Name))
+                if (!ServiceControlRoot.EndpointExists(endpoint))
                 {
-                    if (!ServiceControlRoot.EndpointExists(endpoint))
-                    {
-                        ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
-                    }
+                    ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
                 }
             }
 

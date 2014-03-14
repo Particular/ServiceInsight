@@ -9,11 +9,10 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
         public DecoderResult<XmlDocument> Decode(byte[] content)
         {
             var doc = new XmlDocument();
-            var xml = string.Empty;
 
             if (content != null && content.Length > 0)
             {
-                xml = Encoding.UTF8.GetString(content);
+                var xml = Encoding.UTF8.GetString(content);
                 if (TryLoadIntoDocument(xml, doc))
                 {
                     return new DecoderResult<XmlDocument>(doc);

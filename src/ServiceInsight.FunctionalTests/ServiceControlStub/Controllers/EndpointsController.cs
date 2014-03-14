@@ -13,7 +13,7 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
                 new Endpoint()
                 {
                     Name = "Test",
-                    Machine = "localhost",
+                    HostDisplayName = "localhost",
                 }
             };
         }

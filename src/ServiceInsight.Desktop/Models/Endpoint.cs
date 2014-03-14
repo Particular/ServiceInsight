@@ -8,28 +8,7 @@ namespace NServiceBus.Profiler.Desktop.Models
     {
         public string Name { get; set; }
 
-        public string Machine
-        {
-            get
-            {
-                if (machine == null)
-                {
-                    if (Machines != null)
-                    {
-                        machine = Machines.FirstOrDefault();    
-                    }
-                    
-                }
-
-                return machine;
-            }
-            set
-            {
-                machine = value;
-            }
-        }
-
-        private string machine;
+        public string HostDisplayName { get; set; }
 
         public List<EndpointProperty> EndpointProperties { get; set; }
 
@@ -44,8 +23,6 @@ namespace NServiceBus.Profiler.Desktop.Models
             }
         }
 
-        public List<string> Machines { get; set; }
-
         public string Address
         {
             get { return string.Format("{0}{1}", Name, AtMachine()); }
@@ -53,7 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Models
 
         private string AtMachine()
         {
-            return string.IsNullOrEmpty(Machine) ? string.Empty : string.Format("@{0}", Machine);
+            return string.IsNullOrEmpty(HostDisplayName) ? string.Empty : string.Format("@{0}", HostDisplayName);
         }
 
         protected bool Equals(Endpoint other)

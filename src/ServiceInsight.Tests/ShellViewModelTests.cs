@@ -25,6 +25,8 @@ using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Tests
 {
+    using Desktop.MessageHeaders;
+
     public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
@@ -46,6 +48,7 @@ namespace NServiceBus.Profiler.Tests
         private IEventAggregator EventAggregator;
         private IStatusBarManager StatusbarManager;
         private IMessageBodyViewModel MessageBodyView;
+        private IMessageHeadersViewModel HeaderView;
         private ISettingsProvider SettingsProvider;
         private ILicenseManager LicenseManager;
         private IShellViewStub View;
@@ -69,6 +72,7 @@ namespace NServiceBus.Profiler.Tests
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
+            HeaderView = Substitute.For<IMessageHeadersViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<ILicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
@@ -80,7 +84,7 @@ namespace NServiceBus.Profiler.Tests
             shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, 
                                        EndpointExplorer, MessageList, StatusbarManager, 
                                        EventAggregator, LicenseManager, MessageFlow, SagaWindow,
-                                       MessageBodyView, SettingsProvider, MessageProperties, 
+                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties, 
                                        LogWindow, CommandLineArgParser);
 
             ScreenFactory.CreateScreen<IConnectToMachineViewModel>().Returns(ConnectToViewModel);

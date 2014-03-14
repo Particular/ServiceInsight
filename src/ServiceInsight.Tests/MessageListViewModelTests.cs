@@ -44,7 +44,7 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_load_the_messages_from_the_endpoint()
         {
-            var endpoint = new Endpoint { Machine = "localhost", Name = "Service" };
+            var endpoint = new Endpoint { HostDisplayName = "localhost", Name = "Service" };
             ServiceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
                              .Returns(x => Task.FromResult(new PagedResult<StoredMessage>
                              {

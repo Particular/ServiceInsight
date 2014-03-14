@@ -17,7 +17,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 {
     using Core.Settings;
     using Settings;
-    using NServiceBus.Profiler.Desktop.MessageList;
+    using MessageList;
 
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
@@ -93,10 +93,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             base.AttachView(view, context);
             _view = (IMessageFlowView)view;
-            _view.ShowMessage += _view_ShowMessage;
+            _view.ShowMessage += OnShowMessage;
         }
 
-        void _view_ShowMessage(object sender, SearchMessageEventArgs e)
+        private void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
             SearchByMessageId(e.MessageNode.Message);
         }

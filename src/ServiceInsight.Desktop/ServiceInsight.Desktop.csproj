@@ -220,6 +220,11 @@
     </Compile>
     <Compile Include="MessageFlow\ExceptionDetailViewModel.cs" />
     <Compile Include="MessageFlow\ShowMessageEventArgs.cs" />
+    <Compile Include="MessageHeaders\MessageHeaderKeyValue.cs" />
+    <Compile Include="MessageHeaders\MessageHeadersView.xaml.cs">
+      <DependentUpon>MessageHeadersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageHeaders\MessageHeadersViewModel.cs" />
     <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
@@ -525,6 +530,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LogWindow\LogWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageHeaders\MessageHeadersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
