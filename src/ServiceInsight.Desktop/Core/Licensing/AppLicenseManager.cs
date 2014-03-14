@@ -74,9 +74,7 @@
 
         public bool IsLicenseExpired()
         {
-            string reason;
-
-            return LicenseExpirationChecker.HasLicenseExpired(CurrentLicense, out reason);
+            return LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
         }
 
         RegistryLicenseStore licenseStore = new RegistryLicenseStore();

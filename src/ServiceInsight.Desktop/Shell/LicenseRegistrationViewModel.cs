@@ -33,10 +33,7 @@
 
         private string GetScreenTitle()
         {
-            string expiryReason;
-
-
-            var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense, out expiryReason);
+            var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense);
 
 
             if (licenseManager.CurrentLicense.IsCommercialLicense)
@@ -117,8 +114,7 @@
             });
 
             var validLicense = false;
-            string reason;
-
+            
             if (dialog.Result.GetValueOrDefault(false))
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
@@ -129,7 +125,7 @@
 
             }
 
-            if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense, out reason))
+            if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
             {
                 TryClose(true);
             }
