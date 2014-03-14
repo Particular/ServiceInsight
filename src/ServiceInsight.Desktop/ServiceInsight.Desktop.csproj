@@ -67,7 +67,7 @@
     </None>
     <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />
-    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+    <Reference Include="Autofac">
       <HintPath>..\packages\Autofac\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Core">
@@ -136,7 +136,7 @@
     <Reference Include="ExceptionHandler.Wpf">
       <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+    <Reference Include="log4net">
       <HintPath>..\packages\log4net\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -149,12 +149,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody\Lib\NET35\PropertyChanged.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=104.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
