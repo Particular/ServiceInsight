@@ -1,5 +1,14 @@
 ﻿$packageName = "ServiceInsight"
-$url = "https://github.com/Particular/ServiceInsight/releases/download/SemVer/Particular.ServiceInsight-SemVer.exe"
+
+$url = gci -path "c:\ChocolateyResourceCache" -Filter "Particular.$packageName-*.exe" | select -first 1
+
+if($url){
+	$url = $url | Select -expandProperty FullName
+}
+else{
+	$url = "https://github.com/Particular/$packageName/releases/download/SemVer/Particular.$packageName-SemVer.exe"
+}
+
 
 try {
 

@@ -27,22 +27,21 @@ using NServiceBus.Profiler.Desktop.Saga;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
+    using MessageHeaders;
+
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
         private readonly IAppCommands _appCommander;
         private readonly IScreenFactory _screenFactory;
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
-        private readonly ILicenseManager _licenseManager;
+        private readonly AppLicenseManager _licenseManager;
         private readonly ISettingsProvider _settingsProvider;
         private readonly ICommandLineArgParser _comandLineArgParser;
         private int _workCounter;
         private DispatcherTimer _refreshTimer;
         private DispatcherTimer _idleTimer;
         
-        public const string UnlicensedStatusMessage = "Unlicensed version: {0} left";
-        public const string LicensedStatusMessage = "Registered to '{0}'";
-
         public ShellViewModel(
             IAppCommands appCommander,
             IScreenFactory screenFactory,
@@ -52,10 +51,11 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
-            ILicenseManager licenseManager,
+            AppLicenseManager licenseManager,
             IMessageFlowViewModel messageFlow,
             ISagaWindowViewModel sagaWindow,
             IMessageBodyViewModel messageBodyViewer,
+            IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
             ILogWindowViewModel logWindow,
@@ -74,6 +74,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             StatusBarManager = statusBarManager;
             QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
+            MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
             Messages = messages;
             LogWindow = logWindow;
@@ -81,6 +82,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
             Items.Add(messages);
+            Items.Add(messageHeadersViewer);
             Items.Add(messageBodyViewer);
             Items.Add(messageFlow);
 
@@ -137,6 +139,8 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public IMessageFlowViewModel MessageFlow { get; private set; }
 
         public IMessageBodyViewModel MessageBody { get; private set; }
+
+        public IMessageHeadersViewModel MessageHeaders { get; private set; }
 
         public ISagaWindowViewModel SagaWindow { get; private set; }
 
@@ -392,7 +396,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         private void ValidateLicense()
         {
-            if (_licenseManager.TrialExpired)
+            if (_licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
@@ -403,18 +407,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void DisplayRegistrationStatus()
         {
             var license = _licenseManager.CurrentLicense;
-
+            
             if (license == null)
             {
                 return;
             }
-            if (license.LicenseType == ProfilerLicenseTypes.Standard)
+            if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo(LicensedStatusMessage, license.RegisteredTo);
+                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'",license.LicenseType,license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
             }
         }
 
