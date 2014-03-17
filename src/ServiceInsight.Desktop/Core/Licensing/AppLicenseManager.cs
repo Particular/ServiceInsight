@@ -55,7 +55,8 @@
         {
             var now = DateTime.UtcNow.Date;
 
-            var expiration = TrialStartDateStore.GetTrialStartDate().AddDays(14);
+            var expiration = (CurrentLicense == null || CurrentLicense.ExpirationDate == null) ? 
+                TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
 
             var remainingDays = (expiration - now).Days;
 

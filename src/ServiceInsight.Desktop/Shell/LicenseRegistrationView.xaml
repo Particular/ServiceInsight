@@ -69,10 +69,18 @@
                     HorizontalAlignment="Right">
 
             <Button Style="{StaticResource FlatButton}" 
+                    x:Name="Extend"
+                    Width="120"
+                    Height="24"
+                    Content="Extend Trial"
+                    Margin="5 0"
+                    Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+
+            <Button Style="{StaticResource FlatButton}" 
                     x:Name="Purchase"
                     Width="120"
                     Height="24"
-                    Content="Purchase"
+                    Content="Buy Now"
                     Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
@@ -82,12 +90,6 @@
                     Content="Browse..."
                     x:Name="LoadLicense"
                     Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
-
-            <Button Style="{StaticResource FlatButton}" 
-                    Width="120"
-                    Height="24"
-                    Content="Close"
-                    x:Name="Close" />
 
         </StackPanel>
     </Grid>

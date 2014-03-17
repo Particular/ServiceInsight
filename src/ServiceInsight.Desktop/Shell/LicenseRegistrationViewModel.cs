@@ -14,6 +14,8 @@
         private readonly INetworkOperations _network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
+        public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-license";
+        public const string LicenseCallbackPageUrl = "http://particular.net/renew-trial-license";
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
@@ -143,6 +145,11 @@
         public void Purchase()
         {
             _network.Browse(LicensingPageUrl);
+        }
+
+        public void Extend()
+        {
+            _network.Browse(licenseManager.CurrentLicense.IsExtendedTrial ? LicenseExtensionPageUrl : LicenseCallbackPageUrl);
         }
 
         private string ReadAllTextWithoutLocking(string path)
