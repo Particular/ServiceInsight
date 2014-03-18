@@ -70,9 +70,6 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac\lib\net40\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="Caliburn.Core">
       <HintPath>..\packages\Caliburn\lib\net40\Caliburn.Core.dll</HintPath>
     </Reference>
@@ -142,9 +139,6 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
@@ -166,14 +160,8 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=104.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Rhino.Licensing">
       <HintPath>..\packages\Rhino.Licensing\lib\Net45\Rhino.Licensing.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Licensing, Version=1.3.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhino.Licensing.1.3\lib\Net45\Rhino.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

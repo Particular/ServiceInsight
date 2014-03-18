@@ -28,6 +28,7 @@
       <Name>ServiceInsight.Desktop</Name>
     </ProjectReference>
   </ItemGroup>
+  <Target Name="Clean" />
   <Target Name="Build" DependsOnTargets="Build" />
   <Target Name="ReBuild" DependsOnTargets="Build" />
   <UsingTask TaskName="GitFlowVersionTask.GetVersion" AssemblyFile="$(SolutionDir)..\buildsupport\GitFlowVersion\GitFlowVersionTask.dll" />
