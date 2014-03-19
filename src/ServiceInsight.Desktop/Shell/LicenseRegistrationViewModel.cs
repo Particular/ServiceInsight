@@ -15,7 +15,7 @@
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
         public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-license";
-        public const string LicenseCallbackPageUrl = "http://particular.net/renew-trial-license";
+        public const string LicenseCallbackPageUrl = "http://particular.net/extend-your-trial-license2";
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
@@ -58,8 +58,16 @@
                 }
                 else
                 {
-                    return string.Format("ServiceInsight - {0} Trial Expired", licenseManager.CurrentLicense.IsExtendedTrial ? "Final" : "Initial");
+                    return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
                 }
+            }
+        }
+
+        public string TrialTypeText
+        {
+            get
+            {
+                return licenseManager.CurrentLicense.IsExtendedTrial ? "Extended" : "Initial";
             }
         }
 
@@ -100,6 +108,37 @@
             get { return HasRemainingTrial || HasFullLicense; }
         }
 
+        public bool CanExtendTrial
+        {
+            get
+            {
+                return HasTrialLicense && !licenseManager.CurrentLicense.IsExtendedTrial;
+            }
+        }
+
+        public bool CanContactSales
+        {
+            get
+            {
+                return HasTrialLicense && licenseManager.CurrentLicense.IsExtendedTrial;
+            }
+        }
+
+        public bool MustExtendTrial
+        {
+            get
+            {
+                return HasTrialLicense && !HasRemainingTrial && !licenseManager.CurrentLicense.IsExtendedTrial;
+            }
+        }
+
+        public bool MustPurchase
+        {
+            get
+            {
+                return HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
+            }
+        }
         public void OnLicenseChanged()
         {
             NotifyOfPropertyChange(() => LicenseType);
@@ -149,8 +188,14 @@
 
         public void Extend()
         {
-            _network.Browse(licenseManager.CurrentLicense.IsExtendedTrial ? LicenseExtensionPageUrl : LicenseCallbackPageUrl);
+            _network.Browse(LicenseExtensionPageUrl);
         }
+
+        public void ContactSales()
+        {
+            _network.Browse(LicenseCallbackPageUrl);
+        }
+
 
         private string ReadAllTextWithoutLocking(string path)
         {
