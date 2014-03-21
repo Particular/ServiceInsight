@@ -66,6 +66,9 @@
     <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.pdb|Particular.ServiceInsight.pdb" Attributes="0" SourcePath="..\..\binaries\Particular.ServiceInsight.pdb" SelfReg="false"/>
     <ROW File="log4net.config" Component_="log4net.config" FileName="log4ne~1.con|log4net.config" Attributes="0" SourcePath="..\..\binaries\log4net.config" SelfReg="false" NextFile="Particular.ServiceInsight.exe"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" GeneralOptions="qh" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" EulaPathLocId="*"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="1" PackageFolder="Output Package" PackageFileName="ServiceInsight" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="res\ServiceInsights.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" MsiCmdLine="/L*V [TempFolder]Profiler.LOG" ExtUI="true" UseLargeSchema="true" ExeName="Particular.ServiceInsight-[|ProductVersion][|OPT_PRERELEASE_NAME]" UACExecutionLevel="2"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
@@ -408,7 +411,7 @@
     <ROW Action="InstallFinalize" Sequence="6595" SeqType="0" MsiKey="InstallFinalize"/>
     <ROW Action="InstallMsmq" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) ) AND ( ((&amp;MSMQ = 3) AND NOT (!MSMQ = 3)) )" Sequence="1601"/>
     <ROW Action="InstallDtc" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) ) AND ( ((&amp;DTC = 3) AND NOT (!DTC = 3)) )" Sequence="1602"/>
-    <ROW Action="Launch_URL" Condition="( NOT Installed )" Sequence="6596"/>
+    <ROW Action="Launch_URL" Condition="( NOT Installed ) AND ( UILevel &lt;&gt; &quot;2&quot; )" Sequence="6596"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
     <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
