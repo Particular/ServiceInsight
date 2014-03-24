@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NServiceBus.Profiler.Desktop.Saga
 {
@@ -15,7 +13,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(stateAfterChange)
                 .Where(m => !standardKeys.Any(s => s == m.Key))
-                .Select(f => new KeyValuePair<string, string>(f.Key, f.Value.ToString()))
+                .Select(f => new KeyValuePair<string, string>(f.Key, f.Value == null ? string.Empty : f.Value.ToString()))
                 .ToList();
         }
 
