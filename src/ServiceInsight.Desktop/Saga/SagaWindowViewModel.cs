@@ -30,7 +30,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void RefreshShowData()
         {
-            if (Data == null) return;
+            if (Data == null || Data.Changes == null) return;
 
             var messages = Data.Changes
                                .Select(c => c.InitiatingMessage)

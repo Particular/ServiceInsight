@@ -43,7 +43,9 @@
                    Visibility="{Binding HasRemainingTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
             <Run Text="You currently have " />
             <Run Text="{Binding TrialDaysRemaining, Mode=OneWay}" />
-            <Run Text="day(s) left on your free trial." />
+            <Run Text="day(s) left on your "/>
+            <Run Text="{Binding TrialTypeText, Mode=OneWay}" />
+            <Run Text="trial." />
         </TextBlock>
         <TextBlock Grid.Row="3"
                    FontSize="{StaticResource LargeFontSize}"
@@ -51,28 +53,51 @@
                    Foreground="{StaticResource WarningBrush}"
                    Margin="40,5,40,15"
                    Visibility="{Binding AllowedToUse, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"
-                   Text="The trial period has ended and a license is needed to continue."/>
+                   Text="The trial period is now over."/>
         <TextBlock Grid.Row="4"
-                   FontSize="{StaticResource LargeFontSize}"
                    Margin="40,15,40,0"
-                   Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
-                   Text="Please purchase a license online or browse for a license file."/>
-        
+                   Height="40"
+                   TextWrapping="Wrap"
+                   Visibility="{Binding MustExtendTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                   Text="To extend your free trial, click 'Extend trial' and register online. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
+        <TextBlock Grid.Row="4"
+                   Margin="40,15,40,0"
+                   Visibility="{Binding MustPurchase, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                   Height="50"
+                   TextWrapping="Wrap"
+                   Text="Please contact sales to purchase a license or to request an extension to your free trial. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
+
         <Rectangle Grid.Row="5"
                    Fill="LightGray"
                    Margin="40,0,40,0"
                    Height="1" />
-        
+
         <StackPanel Grid.Row="6" 
                     Margin="0,0,40,11"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
 
             <Button Style="{StaticResource FlatButton}" 
+                    x:Name="ContactSales"
+                    Width="120"
+                    Height="24"
+                    Content="Contact Sales"
+                    Margin="5 0"
+                    Visibility="{Binding CanContactSales, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+
+            <Button Style="{StaticResource FlatButton}" 
+                    x:Name="Extend"
+                    Width="120"
+                    Height="24"
+                    Content="Extend Trial"
+                    Margin="5 0"
+                    Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+
+            <Button Style="{StaticResource FlatButton}" 
                     x:Name="Purchase"
                     Width="120"
                     Height="24"
-                    Content="Purchase"
+                    Content="Buy Now"
                     Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
@@ -82,12 +107,6 @@
                     Content="Browse..."
                     x:Name="LoadLicense"
                     Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
-
-            <Button Style="{StaticResource FlatButton}" 
-                    Width="120"
-                    Height="24"
-                    Content="Close"
-                    x:Name="Close" />
 
         </StackPanel>
     </Grid>
