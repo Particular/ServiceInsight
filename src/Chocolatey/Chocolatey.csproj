@@ -42,6 +42,15 @@
       <Output TaskParameter="Stability" PropertyName="Stability" />
       <Output TaskParameter="PreReleasePartOne" PropertyName="PreReleasePartOne" />
     </GetVersion>
+
+    <PropertyGroup Condition=" '$(Stability)' == 'Final' ">
+      <ChocoVersion>$(MajorMinorPatch)</ChocoVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Stability)' != 'Final' ">
+      <ChocoVersion>$(MajorMinorPatch)-$(Stability)$(PreReleasePartOne)</ChocoVersion>
+    </PropertyGroup>
+
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
     </ItemGroup>
@@ -56,16 +65,8 @@
       <InstallFile Include="$(ProjectDir)Build\Tools\chocolateyUninstall.ps1" />
       <InstallFile Include="$(ProjectDir)Build\Tools\elevatedUninstall.ps1" />
     </ItemGroup>
-    <FileUpdate Files="@(InstallFile)" Regex="SemVer" ReplacementText="$(SemVer)" />
-    <FileUpdate Files="@(InstallFile)" Regex="MajorMinorPatch" ReplacementText="$(MajorMinorPatch)" />
-
-    <PropertyGroup Condition=" '$(Stability)' == 'Final' ">
-      <ChocoVersion>$(MajorMinorPatch)</ChocoVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Stability)' != 'Final' ">
-      <ChocoVersion>$(MajorMinorPatch)-$(Stability)$(PreReleasePartOne)</ChocoVersion>
-    </PropertyGroup>
+    <FileUpdate Files="@(InstallFile)" Regex="{{FileVersion}}" ReplacementText="$(SemVer)" />
+    <FileUpdate Files="@(InstallFile)" Regex="{{ReleaseName}}" ReplacementText="$(ChocoVersion)" />
 
     <CreatePackageTask  NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
   </Target>
