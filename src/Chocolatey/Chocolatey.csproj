@@ -37,8 +37,10 @@
   <Target Name="Build">
     <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="SemVer" PropertyName="SemVer" />
-      <Output TaskParameter="NuGetVersion" PropertyName="NuGetVersion" />
+      <Output TaskParameter="Stability" PropertyName="Stability" />
       <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
+      <Output TaskParameter="Stability" PropertyName="Stability" />
+      <Output TaskParameter="PreReleasePartOne" PropertyName="PreReleasePartOne" />
     </GetVersion>
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
@@ -56,6 +58,15 @@
     </ItemGroup>
     <FileUpdate Files="@(InstallFile)" Regex="SemVer" ReplacementText="$(SemVer)" />
     <FileUpdate Files="@(InstallFile)" Regex="MajorMinorPatch" ReplacementText="$(MajorMinorPatch)" />
-    <CreatePackageTask NuGetBuildDirectory="$(ProjectDir)Build" Version="$(NuGetVersion)" TargetDir="$(SolutionDir)..\nugets" />
+
+    <PropertyGroup Condition=" '$(Stability)' == 'Final' ">
+      <ChocoVersion>$(MajorMinorPatch)</ChocoVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Stability)' != 'Final' ">
+      <ChocoVersion>$(MajorMinorPatch)-$(Stability)$(PreReleasePartOne)</ChocoVersion>
+    </PropertyGroup>
+
+    <CreatePackageTask  NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
   </Target>
 </Project>
