@@ -116,6 +116,14 @@
             }
         }
 
+        public bool CanBuyNow
+        {
+            get
+            {
+                return CanContactSales;
+            }
+        }
+
         public bool CanContactSales
         {
             get
