@@ -13,6 +13,7 @@ using NUnit.Framework;
 namespace NServiceBus.Profiler.Tests
 {
     using Desktop.Core.Settings;
+    using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
     using NServiceBus.Profiler.Desktop.MessageList;
 
     [TestFixture]
@@ -26,6 +27,7 @@ namespace NServiceBus.Profiler.Tests
         private ISearchBarViewModel _searchBar;
         private IMessageListViewModel _messageList;
         private ISettingsProvider _settingProvider;
+        private IEndpointExplorerViewModel _endpointExplorer;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -68,6 +70,7 @@ namespace NServiceBus.Profiler.Tests
             _searchBar = Substitute.For<ISearchBarViewModel>();
             _messageList = Substitute.For<IMessageListViewModel>();
             _settingProvider = Substitute.For<ISettingsProvider>();
+            _endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
 
             return new MessageFlowViewModel(_serviceControl, 
                                             _eventAggregator, 
@@ -76,7 +79,8 @@ namespace NServiceBus.Profiler.Tests
                                             _screenFactory, 
                                             _searchBar,
                                             _messageList,
-                                            _settingProvider);
+                                            _settingProvider,
+                                            _endpointExplorer);
         }
 
     }
