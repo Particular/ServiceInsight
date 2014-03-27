@@ -161,7 +161,7 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
                 {
                     if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                     {
-                        SelectedNode = endpoint;
+                        //SelectedNode = endpoint;
                         break;
                     }
                 }
