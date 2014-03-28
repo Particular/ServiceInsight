@@ -215,7 +215,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             get
             {
                 if (Timeout != TimeSpan.MinValue)
-                    return string.Format("{0}{1}{2}", GetFriendly(Timeout.Hours, "h"), GetFriendly(Timeout.Minutes, "m"), GetFriendly(Timeout.Seconds, "s"));
+                    return string.Format("{0}{1}{2}{3}", GetFriendly(Timeout.Days, "d"), GetFriendly(Timeout.Hours, "h"), GetFriendly(Timeout.Minutes, "m"), GetFriendly(Timeout.Seconds, "s"));
 
                 return DeliverAt.ToString();
             }
