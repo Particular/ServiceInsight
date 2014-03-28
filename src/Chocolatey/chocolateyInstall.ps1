@@ -1,6 +1,6 @@
 ﻿$packageName = "ServiceInsight"
 
-$url = gci -path "c:\ChocolateyResourceCache" -Filter "Particular.$packageName-*.exe" | select -first 1
+$url = gci -path "c:\ChocolateyResourceCache" -Filter "Particular.$packageName-*.exe" -ErrorAction SilentlyContinue| select -first 1
 
 if($url){
 	$url = $url | Select -expandProperty FullName
