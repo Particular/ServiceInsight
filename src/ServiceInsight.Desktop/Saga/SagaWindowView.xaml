@@ -514,7 +514,7 @@
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4" />
                                     <StackPanel >
-                                        <TextBlock Foreground="White" Text="Saga Complete" FontSize="14px" FontWeight="Bold"/>
+                                        <TextBlock Foreground="White" Text="Saga Completed" FontSize="14px" FontWeight="Bold"/>
                                         <TextBlock Foreground="White" Text="{Binding CompleteTime}" FontSize="14px" />
                                     </StackPanel>
                                 </StackPanel>
