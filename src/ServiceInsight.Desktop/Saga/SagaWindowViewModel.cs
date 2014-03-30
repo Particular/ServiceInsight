@@ -16,6 +16,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             _eventAggregator = eventAggregator;
             _serviceControl = serviceControl;
+            ShowSagaNotFoundWarning = false;
         }
 
         public void OnShowMessageDataChanged()
@@ -62,56 +63,49 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public async void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
-            if (message != null)
+            ShowSagaNotFoundWarning = false;
+
+            if (message == null || message.Sagas == null || !message.Sagas.Any())
             {
-                if (message.Sagas != null)
+                Data = null;
+            }
+            else
+            {
+                var originatingSaga = message.Sagas.First();
+         
+                _eventAggregator.Publish(new WorkStarted("Loading saga data..."));
+
+                if (Data == null || Data.SagaId != originatingSaga.SagaId)
                 {
-                    var originatingSaga = message.Sagas.FirstOrDefault();
-                    if (originatingSaga != null)
+                    Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+
+                    if (Data == SagaData.Empty)
                     {
-
-                        _eventAggregator.Publish(new WorkStarted("Loading message body..."));
-                        
-                        if (Data == null || Data.SagaId != originatingSaga.SagaId)
-                        {
-                            Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
-
-                            if (Data != null && Data.Changes != null)
-                            {
-                                ProcessDataValues(Data.Changes);
-                            }
-                            else
-                            {
-                                Data = null;
-                            }
-                        }
-
-                        if (ShowMessageData)
-                        {
-                            RefreshMessageProperties();
-                        }
-
-                        RefreshShowData();
-
-                        _eventAggregator.Publish(new WorkFinished());
+                        ShowSagaNotFoundWarning = true;
+                        Data = null;
+                    }
+                    else if (Data != null && Data.Changes != null)
+                    {
+                        ProcessDataValues(Data.Changes);
                     }
                     else
                     {
                         Data = null;
                     }
                 }
-                else
+
+                if (ShowMessageData)
                 {
-                    Data = null;
+                    RefreshMessageProperties();
                 }
-            }
-            else
-            {
-                Data = null;
+
+                RefreshShowData();
+
+                _eventAggregator.Publish(new WorkFinished());
             }
         }
 
-        private void ProcessDataValues(List<SagaUpdate> list)
+        private static void ProcessDataValues(IEnumerable<SagaUpdate> list)
         {
             IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
             foreach (var change in list)
@@ -121,24 +115,18 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
+        private static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {
                 var oldValue = oldValues.FirstOrDefault(v => v.Name == value.Name);
-                if (oldValue != null)
-                {
-                    value.OldValue = oldValue.NewValue;
-                }
-                else
-                {
-                    value.OldValue = string.Empty;
-                }
+                value.OldValue = oldValue != null ? oldValue.NewValue : string.Empty;
             }
         }
 
+        public bool ShowSagaNotFoundWarning { get; set; }
         public bool HasSaga { get { return Data != null; } }
-        public SagaData Data { get; set; }
+        public SagaData Data { get; private set; }
         public bool ShowEndpoints { get; set; }
         public bool ShowMessageData { get; set; }
 
@@ -150,8 +138,10 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
     public interface ISagaWindowViewModel : IScreen
     {
+        bool ShowSagaNotFoundWarning { get; }
         bool ShowMessageData { get; }
-        bool ShowEndpoints { get; }
+        bool ShowEndpoints { get; set; }
+        bool HasSaga { get; }
         SagaData Data { get; }
         void ShowFlow();
     }

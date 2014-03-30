@@ -81,8 +81,8 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         public async Task<SagaData> GetSagaById(string sagaId)
         {
             var request = new RestRequest(string.Format("sagas/{0}", sagaId));
-            var messages = await GetModelAsync<SagaData>(request) ?? new SagaData();
-
+            var messages = await GetModelAsync<SagaData>(request) ?? SagaData.Empty;
+            
             return messages;
         }
 

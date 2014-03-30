@@ -20,6 +20,11 @@
                     <SolidColorBrush x:Key="FooterBackground" Color="#333333" />
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
 
+                    <Style x:Key="CodeStyle" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Background" Value="#F8F8F8" />
+                        <Setter Property="Foreground" Value="#777777" />
+                    </Style>
+
                     <ControlTemplate x:Key="ValidationToolTipTemplate">
                         <Grid x:Name="Root" Margin="5,0" RenderTransformOrigin="0,0" Opacity="0">
                             <Grid.RenderTransform>
@@ -551,9 +556,24 @@
             </StackPanel>
         </ScrollViewer>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
-            <ContentControl Template="{StaticResource NoSaga}" />
-            <TextBlock Text="No Saga Available" FontSize="24px" Margin="5,0,0,0" FontWeight="Bold" Foreground="#d3d3d3" />
+        <StackPanel Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical"
+                    Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
+            <StackPanel HorizontalAlignment="Center">
+                <ContentControl Template="{StaticResource NoSaga}" />
+                <TextBlock Text="No Saga Data Available" FontSize="24px" Margin="5,0,0,0" FontWeight="Bold" Foreground="#d3d3d3" />
+            </StackPanel>
+            <TextBlock FontSize="16px" Foreground="#d3d3d3" Margin="0,5,0,0"
+                       Visibility="{Binding ShowSagaNotFoundWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Run Text="Saga data display requires that the SagaAudit Plugin be deployed with the Saga endpoints when the Saga code is executed." />
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                        Visibility="{Binding ShowSagaNotFoundWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock FontSize="16px" Foreground="#d3d3d3" Text="Install from Nuget: " VerticalAlignment="Center" />
+                <Border BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4" Margin="2">
+                    <TextBlock FontSize="16px" Padding="2" HorizontalAlignment="Center" Style="{StaticResource CodeStyle}" Text="install-package ServiceControl.Plugin.SagaAudit" />
+                </Border>
+            </StackPanel>
+
         </StackPanel>
     </Grid>
 </UserControl>
