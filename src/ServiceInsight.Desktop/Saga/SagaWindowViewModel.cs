@@ -19,6 +19,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             _eventAggregator = eventAggregator;
             _serviceControl = serviceControl;
+            ShowSagaNotFoundWarning = false;
         }
 
         public void OnShowMessageDataChanged()
@@ -71,11 +72,18 @@ namespace NServiceBus.Profiler.Desktop.Saga
         private async Task RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
         {
             currentMessage = message;
-            if (message != null)
+            ShowSagaNotFoundWarning = false;
+
+            if (message == null || message.Sagas == null || !message.Sagas.Any())
             {
-                if (message.Sagas != null)
+                Data = null;
+            }
+            else
+            {
+                var originatingSaga = message.Sagas.First();
+
+                if (Data == null || Data.SagaId != originatingSaga.SagaId)
                 {
-                    var originatingSaga = message.Sagas.FirstOrDefault();
                     if (originatingSaga != null)
                     {
                         if (HasChanged(originatingSaga.SagaId.ToString()))
@@ -83,19 +91,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
                             await RefreshSaga(originatingSaga);
                         }
                     }
-                    else
-                    {
-                        Data = null;
-                    }
                 }
-                else
-                {
-                    Data = null;
-                }
-            }
-            else
-            {
-                Data = null;
             }
         }
 
@@ -107,7 +103,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
 
-                if (Data != null && Data.Changes != null)
+                if (Data == SagaData.Empty)
+                {
+                    ShowSagaNotFoundWarning = true;
+                    Data = null;
+                }
+                else if (Data != null && Data.Changes != null)
                 {
                     ProcessDataValues(Data.Changes);
                 }
@@ -127,7 +128,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             _eventAggregator.Publish(new WorkFinished());
         }
 
-        private void ProcessDataValues(List<SagaUpdate> list)
+        private static void ProcessDataValues(IEnumerable<SagaUpdate> list)
         {
             IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
             foreach (var change in list)
@@ -137,26 +138,21 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
+        private static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {
                 var oldValue = oldValues.FirstOrDefault(v => v.Name == value.Name);
-                if (oldValue != null)
-                {
-                    value.OldValue = oldValue.NewValue;
-                }
-                else
-                {
-                    value.OldValue = string.Empty;
-                }
+                value.OldValue = oldValue != null ? oldValue.NewValue : string.Empty;
             }
         }
 
         private StoredMessage currentMessage;
 
+        public bool ShowSagaNotFoundWarning { get; set; }
+
         public bool HasSaga { get { return Data != null; } }
-        public SagaData Data { get; set; }
+        public SagaData Data { get; private set; }
         public bool ShowEndpoints { get; set; }
         public bool ShowMessageData { get; set; }
 
@@ -174,8 +170,10 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
     public interface ISagaWindowViewModel : IScreen
     {
+        bool ShowSagaNotFoundWarning { get; }
         bool ShowMessageData { get; }
-        bool ShowEndpoints { get; }
+        bool ShowEndpoints { get; set; }
+        bool HasSaga { get; }
         SagaData Data { get; }
         void ShowFlow();
 

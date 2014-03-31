@@ -4,21 +4,36 @@
     using Caliburn.PresentationFramework;
     using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
+    using Core.UI;
     using Events;
+    using Shell.Menu;
 
-    public interface IMessageHeadersViewModel : IScreen, IHandle<SelectedMessageChanged>
+    public interface IMessageHeadersViewModel : IScreen, IHaveContextMenu, IHandle<SelectedMessageChanged>
     {
         IObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
     }
 
     public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
     {
+        private readonly IMenuItem _copyAllHeaders;
         private IMessageHeadersView _view;
         private bool _autoFitted;
 
         public MessageHeadersViewModel()
         {
             KeyValues = new BindableCollection<MessageHeaderKeyValue>();
+            _copyAllHeaders = new MenuItem("Copy To Clipboard", new RelayCommand(CopyHeadersToClipboard));
+
+            ContextMenuItems = new BindableCollection<IMenuItem>
+            {
+                _copyAllHeaders
+            };
+        }
+
+        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
+        
+        public void OnContextMenuOpening()
+        {
         }
 
         public IObservableCollection<MessageHeaderKeyValue> KeyValues { get; private set; }
@@ -51,6 +66,11 @@
 
             _view.AutoFit();
             _autoFitted = true;
+        }
+
+        private void CopyHeadersToClipboard()
+        {
+            _view.CopyRowsToClipboard();
         }
     }
 }

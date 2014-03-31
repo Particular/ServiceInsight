@@ -69,10 +69,9 @@ namespace NServiceBus.Profiler.Desktop
         /// <param name="value">The argument value to check.</param>
         /// <param name="from">The minimun allowed value for the argument.</param>
         /// <param name="to">The maximun allowed value for the argument.</param>
-        public static void NotOutOfRangeInclusive<T>(Expression<Func<T>> reference, T value, T from, T to)
-                        where T : IComparable
+        public static void NotOutOfRangeInclusive<T>(Expression<Func<T>> reference, T value, T from, T to) where T : IComparable
         {
-            if (value != null && (value.CompareTo(from) < 0 || value.CompareTo(to) > 0))
+            if ((value.CompareTo(from) < 0 || value.CompareTo(to) > 0))
                 throw new ArgumentOutOfRangeException(GetParameterName(reference));
         }
 
@@ -85,10 +84,9 @@ namespace NServiceBus.Profiler.Desktop
         /// <param name="value">The argument value to check.</param>
         /// <param name="from">The minimun allowed value for the argument.</param>
         /// <param name="to">The maximun allowed value for the argument.</param>
-        public static void NotOutOfRangeExclusive<T>(Expression<Func<T>> reference, T value, T from, T to)
-                        where T : IComparable
+        public static void NotOutOfRangeExclusive<T>(Expression<Func<T>> reference, T value, T from, T to) where T : IComparable
         {
-            if (value != null && (value.CompareTo(from) <= 0 || value.CompareTo(to) >= 0))
+            if ((value.CompareTo(from) <= 0 || value.CompareTo(to) >= 0))
                 throw new ArgumentOutOfRangeException(GetParameterName(reference));
         }
 

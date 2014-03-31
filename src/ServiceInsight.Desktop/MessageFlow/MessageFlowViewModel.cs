@@ -18,12 +18,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     using Core.Settings;
     using Settings;
     using MessageList;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
+    using Explorer.EndpointExplorer;
 
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
+        MessageNode SelectedMessage { get; set; }
+        bool ShowEndpoints { get; set; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
         void SearchByMessageId(StoredMessage message);
