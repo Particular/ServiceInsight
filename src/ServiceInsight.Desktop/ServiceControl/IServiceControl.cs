@@ -18,5 +18,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
         Task<SagaData> GetSagaById(string sagaId);
         Task<string> GetVersion();
         Uri GetUri(StoredMessage message);
+
+        bool HasSagaChanged(string sagaId);
     }
 }
