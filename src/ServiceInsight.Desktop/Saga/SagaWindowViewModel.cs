@@ -82,14 +82,11 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 var originatingSaga = message.Sagas.First();
 
-                if (Data == null)
+                if (originatingSaga != null)
                 {
-                    if (originatingSaga != null)
+                    if (HasChanged(originatingSaga.SagaId.ToString()))
                     {
-                        if (HasChanged(originatingSaga.SagaId.ToString()))
-                        {
-                            await RefreshSaga(originatingSaga);
-                        }
+                        await RefreshSaga(originatingSaga);
                     }
                 }
             }
