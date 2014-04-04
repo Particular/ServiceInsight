@@ -8,18 +8,21 @@
     <ROW Property="AI_EXTERNALUIUNINSTALLERNAME" MultiBuildValue="DefaultBuild:aiui"/>
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
     <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:4.5" ValueLocId="-"/>
-    <ROW Property="AI_PRODUCTNAME_ARP" Value="[|ProductName]"/>
+    <ROW Property="AI_PRODUCTNAME_ARP" Value="Particular Software ServiceInsight"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ALL_PROGRAMS_SH" Value="Yes" Type="4"/>
-    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="Particular Software ServiceInsight version [|ProductVersion] for NServiceBus" ValueLocId="*"/>
+    <ROW Property="ARPHELPLINK" Value="http://particular.net/support"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="ARPPRODUCTICON" Value="ServiceInsights.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
+    <ROW Property="ARPURLINFOABOUT" Value="http://particular.net/ServiceInsight"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="http://particular.net/downloads"/>
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:ServiceInsightwhite.png" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="DESK_SH" Value="Yes" Type="4"/>
     <ROW Property="MY_VERSION" Value="4.0"/>
-    <ROW Property="Manufacturer" Value="Particular Software Ltd."/>
+    <ROW Property="Manufacturer" Value="NServiceBus Ltd"/>
     <ROW Property="OPT_PRERELEASE_NAME" Value="OPT_PRERELEASE_NAME"/>
     <ROW Property="PORT_VAL" Value="33333" Type="4"/>
     <ROW Property="PORT_VAL.CB8171C5_FE21_41EE_BC42_72123C0AD0F7" Value="33333" Type="4"/>
