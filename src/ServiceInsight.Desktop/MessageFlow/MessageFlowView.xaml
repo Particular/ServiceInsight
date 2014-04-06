@@ -34,7 +34,7 @@
                     <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
                     <Style x:Key="FailedMessageMarker" TargetType="ContentControl">
-                        <Setter Property="Margin" Value="7,5,5,5" />
+                        <Setter Property="Margin" Value="10,5,5,5" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.Failed}">
                                 <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
@@ -78,7 +78,7 @@
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Margin" Value="0,5,0,5" />
-                        <Setter Property="MaxWidth" Value="165" />
+                        <Setter Property="MaxWidth" Value="175" />
                         <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="Template">
                             <Setter.Value>
@@ -87,10 +87,10 @@
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Data.FriendlyMessageType}"
                                                        ToolTip="{Binding Data.FriendlyMessageType}"
-                                                               MaxWidth="155"
-                                                               FontSize="14px"
-                                                               FontWeight="Bold"
-                                                               Style="{StaticResource MessageTypeText}"/>
+                                                       MaxWidth="122"
+                                                       FontSize="14px"
+                                                       FontWeight="Bold"
+                                                       Style="{StaticResource MessageTypeText}"/>
 
                                             <Path Width="5" Height="5"
                                                   Margin="4,6,4,4"
@@ -207,16 +207,13 @@
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="130" />
+                                                <ColumnDefinition Width="20" />
                                             </Grid.ColumnDefinitions>
-                                            <ContentControl Style="{StaticResource FailedMessageMarker}"
-                                                       HorizontalAlignment="Right"
-                                                       VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
-                                            </ContentControl>
 
                                             <StackPanel x:Name="OriginatingEndPoint" 
                                                         ToolTip="Sending Endpoint"
-                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         Background="{StaticResource EndpointBackground}" 
@@ -227,6 +224,12 @@
                                                            Text="{Binding Data.SendingEndpoint}"
                                                            Style="{StaticResource MessageEndpointText}" />
                                             </StackPanel>
+
+                                            <ContentControl Style="{StaticResource FailedMessageMarker}"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Top"
+                                                            Grid.Row="1" Grid.Column="2">
+                                            </ContentControl>
 
                                             <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
                                                             ToolTip="Command"
@@ -254,11 +257,12 @@
                                                                     VerticalAlignment="Center" />
                                                     <TextBlock Background="#333333" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontSize="11px" FontWeight="Bold" Width="120" Margin="2 0 0 0" Padding="3 0" />
                                                 </StackPanel>
+
                                             </StackPanel>
 
                                             <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
-                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"

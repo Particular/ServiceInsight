@@ -19,21 +19,23 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Owner = owner;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
-
-            if (message.Sagas != null)
-            {
-                var originatingSaga = message.Sagas.FirstOrDefault();
-                if (originatingSaga != null)
-                {
-                    SagaType = ProcessType(originatingSaga.SagaType);
-                }
-            }
+            SagaType = ProcessSagaType(message);
 
             heightNoEndpoints += HasSaga ? 10 : 0;
             Bounds = new Rect(0, 0, 203, heightNoEndpoints);
         }
 
-        private string ProcessType(string messageType)
+        private string ProcessSagaType(StoredMessage message)
+        {
+            if (message.Sagas == null) return string.Empty;
+            
+            var originatingSaga = message.Sagas.FirstOrDefault();
+            if (originatingSaga == null) return string.Empty;
+            
+            return ProcessType(originatingSaga.SagaType);
+        }
+
+        private static string ProcessType(string messageType)
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;
