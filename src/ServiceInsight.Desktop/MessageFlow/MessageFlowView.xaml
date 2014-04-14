@@ -279,7 +279,7 @@
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True">
                                             <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}"/>
-                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Triggered" />
+                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -287,7 +287,7 @@
                                                 <Condition Binding="{Binding IsSagaCompleted}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}"/>
-                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated" />
+                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated / Updated" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
