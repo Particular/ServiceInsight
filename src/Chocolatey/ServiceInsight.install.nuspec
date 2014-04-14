@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ServiceInsight.install</id>
+    <version>$version$</version>
+    <title>ServiceInsight.install (Install)</title>
+    <authors>Particular Software</authors>
+    <owners>Particular Software</owners>
+    <projectUrl>http://particular.net/ServiceInsight</projectUrl>
+    <iconUrl>http://s3.amazonaws.com/nuget.images/ServiceInsight_128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ServiceInsight for NServiceBus</description>
+    <summary></summary>
+    <tags>nservicebus particular chocolatey ServiceInsight</tags>
+    <dependencies>
+      <dependency id="DotNet4.5" version="4.5.20120822"  />
+    </dependencies>
+  </metadata>
+</package>

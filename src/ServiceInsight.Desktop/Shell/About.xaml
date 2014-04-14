@@ -1,0 +1,55 @@
+﻿<Window x:Class="NServiceBus.Profiler.Desktop.Shell.AboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="340" Width="640"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="{Binding Path=IsSplash, Converter={StaticResource BoolToWindowBorderConverter}}"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="InfoText" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0, 1.5" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="Foreground" Value="#00A8E1" />
+            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+        </Style>
+    </Window.Resources>
+    <Canvas Background="White">
+        <Image Source="/ServiceInsight-About.png" Stretch="None" />
+
+        <TextBlock Style="{StaticResource InfoText}"
+                   Margin="38"
+                   Visibility="{Binding HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+            <Run Text="Registered to:" FontWeight="Bold" />
+            <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
+        </TextBlock>
+
+        <TextBlock Margin="38 245"
+                   FontWeight="Bold" FontFamily="Tahoma" FontSize="10">
+            <Hyperlink Click="OnLinkClicked">www.particular.net</Hyperlink>
+        </TextBlock>
+
+        <DockPanel LastChildFill="True" Margin="38 210" Height="30">
+            <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+            
+                <TextBlock Style="{StaticResource InfoText}">
+                    <Run Text="Version " />
+                    <Run Text="{Binding AppVersion}" />
+                    <Run Text=" Commit hash: " />
+                    <Run Text="{Binding CommitHash}" />
+                </TextBlock>
+
+                <TextBlock Style="{StaticResource InfoText}" 
+                           VerticalAlignment="Center"
+                           Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" >
+                    <Run Text="ServiceControl: " />
+                    <Run Text="{Binding ServiceControlVersion}" />
+                </TextBlock>
+            </StackPanel>
+        </DockPanel>
+    </Canvas>
+</Window>

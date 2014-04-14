@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageList.MessageListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="500">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl Grid.Row="0"
+                        cal:View.Model="{Binding SearchBar}" />
+    
+        <dxg:GridControl x:Name="grid"
+                         ShowLoadingPanel="{Binding WorkInProgress}"
+                         IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
+                         Grid.Row="1" 
+                         SelectionMode="None" 
+                         CurrentItem="{Binding FocusedRow, Mode=TwoWay}"
+                         ItemsSource="{Binding Rows}"
+                         PreviewMouseLeftButtonDown="OnGridControlClicked"
+                         CustomUnboundColumnData="OnRequestAdvancedMessageData">
+            <dxb:BarManager.DXContextMenu>
+                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
+                               Visibility="{Binding RelativeSource={RelativeSource Self}, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
+                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True"/>
+            </dxb:BarManager.DXContextMenu>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn AllowSorting="False" 
+                                AllowColumnFiltering="False"
+                                FieldName="IsFaulted" 
+                                Header="Status" 
+                                Tag="status"
+                                UnboundType="Object" 
+                                Width="16">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="16" Height="16" 
+                                   Source="{Binding Value.Image}"
+                                   ToolTip="{Binding Value.Description}" />
+                        </DataTemplate>
+                        
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="MessageId" 
+                                Tag="id" 
+                                AllowColumnFiltering="False"
+                                Header="Message ID"
+                                HeaderToolTip="Message Identifier"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="FriendlyMessageType" 
+                                AllowColumnFiltering="False"
+                                Tag="message_type" 
+                                Header="Message Type"
+                                HeaderToolTip="Type of the message"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="TimeSent" 
+                                Tag="time_sent" 
+                                AllowColumnFiltering="False"
+                                Header="Time Sent"
+                                HeaderToolTip="Time the message was sent"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="G" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ElapsedCriticalTime" 
+                                Tag="critical_time"
+                                AllowColumnFiltering="False"
+                                Header="Critical Time"
+                                HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ElapsedProcessingTime" 
+                                Tag="processing_time"
+                                AllowColumnFiltering="False"
+                                Header="Processing Time"
+                                HeaderToolTip="Calculated duration of processing"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="ElapsedDeliveryTime" 
+                                Tag="delivery_time"
+                                AllowColumnFiltering="False"
+                                Header="Delivery Time"
+                                HeaderToolTip="Calculated duration of delivery"
+                                CellTemplate="{StaticResource TextEditGridColumnCellTemplate}">
+                </dxg:GridColumn>
+
+            </dxg:GridControl.Columns>
+
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gridView" 
+                               BeforeLayoutRefresh="OnBeforeLayoutRefresh"
+                               IsColumnMenuEnabled="False"
+                               ShowIndicator="False"
+                               MultiSelectMode="None"
+                               AllowCascadeUpdate="True" 
+                               AllowPerPixelScrolling="True" 
+                               AutoWidth="True" 
+                               AllowSorting="False"
+                               AllowEditing="False" 
+                               AllowGrouping="True" 
+                               ShowGroupPanel="False"
+                               NavigationStyle="Row" 
+                               FadeSelectionOnLostFocus="False">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

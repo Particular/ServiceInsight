@@ -1,0 +1,579 @@
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.Saga.SagaWindowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
+                <ResourceDictionary>
+
+                    <SolidColorBrush x:Key="SagaBackground" Color="#F2F2F2" />
+                    <SolidColorBrush x:Key="SagaForeground" Color="#808080" />
+                    <SolidColorBrush x:Key="SagaBlue" Color="#307BC6" />
+                    <SolidColorBrush x:Key="FooterBackground" Color="#333333" />
+                    <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
+
+                    <Style x:Key="CodeStyle" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Background" Value="#F8F8F8" />
+                        <Setter Property="Foreground" Value="#777777" />
+                    </Style>
+
+                    <ControlTemplate x:Key="ValidationToolTipTemplate">
+                        <Grid x:Name="Root" Margin="5,0" RenderTransformOrigin="0,0" Opacity="0">
+                            <Grid.RenderTransform>
+                                <TranslateTransform x:Name="xform" X="-25"/>
+                            </Grid.RenderTransform>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="OpenStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition GeneratedDuration="0"/>
+                                        <VisualTransition To="Open" GeneratedDuration="0:0:0.2">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="xform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <BackEase Amplitude=".3" EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Closed">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Open">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="xform" Storyboard.TargetProperty="X" To="0" Duration="0"/>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border Margin="4,4,-4,-4" Background="#052A2E31" CornerRadius="5"/>
+                            <Border Margin="3,3,-3,-3" Background="#152A2E31" CornerRadius="4"/>
+                            <Border Margin="2,2,-2,-2" Background="#252A2E31" CornerRadius="3"/>
+                            <Border Margin="1,1,-1,-1" Background="#352A2E31" CornerRadius="2"/>
+
+                            <Border Background="#FFDC000C" CornerRadius="2"/>
+                            <Border CornerRadius="2">
+                                <TextBlock 
+                  UseLayoutRounding="false" 
+                  Foreground="White" Margin="8,4,8,4" MaxWidth="250" TextWrapping="Wrap" Text="{Binding (Validation.Errors)[0].ErrorContent}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+
+
+                    <Style TargetType="RadioButton" x:Key="PropertiesRadioButton">
+                        <Setter Property="Background" Value="#FF448DCA"/>
+                        <Setter Property="Foreground" Value="{StaticResource SagaBlue}"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="Padding" Value="4,1,0,0"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFA3AEB9" Offset="0"/>
+                                    <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                                    <GradientStop Color="#FF718597" Offset="0.375"/>
+                                    <GradientStop Color="#FF617584" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <StackPanel>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="MouseOver">
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To=".55"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="CheckStates">
+                                                <VisualState x:Name="Checked">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="FontWeight">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                                <DiscreteObjectKeyFrame.Value>
+                                                                    <FontWeight>Bold</FontWeight>
+                                                                </DiscreteObjectKeyFrame.Value>
+                                                            </DiscreteObjectKeyFrame>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Unchecked"/>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="FocusStates">
+                                                <VisualState x:Name="Focused">
+                                                    <Storyboard>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Unfocused" />
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="ValidationStates">
+                                                <VisualState x:Name="Valid"/>
+                                                <VisualState x:Name="InvalidUnfocused">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                                <DiscreteObjectKeyFrame.Value>
+                                                                    <Visibility>Visible</Visibility>
+                                                                </DiscreteObjectKeyFrame.Value>
+                                                            </DiscreteObjectKeyFrame>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="InvalidFocused">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                                <DiscreteObjectKeyFrame.Value>
+                                                                    <Visibility>Visible</Visibility>
+                                                                </DiscreteObjectKeyFrame.Value>
+                                                            </DiscreteObjectKeyFrame>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="validationTooltip" Storyboard.TargetProperty="IsOpen">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                                <DiscreteObjectKeyFrame.Value>
+                                                                    <sys:Boolean>True</sys:Boolean>
+                                                                </DiscreteObjectKeyFrame.Value>
+                                                            </DiscreteObjectKeyFrame>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+
+                                        <TextBlock
+                                              x:Name="contentPresenter"
+                                              Text="{TemplateBinding Content}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
+                    <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
+
+                    <Style x:Key="FailedMessageMarker" TargetType="ContentControl">
+                        <Setter Property="Margin" Value="7,5,5,5" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.Failed}">
+                                <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Failed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.RepeatedFailure}">
+                                <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
+                                <Setter Property="ToolTip" Value="Repeated Failures" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static models:MessageStatus.RetryIssued}">
+                                <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
+                                <Setter Property="ToolTip" Value="Retry Requested" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <DataTemplate x:Key="MessageDataItem">
+                        <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Key}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                            <TextBlock Text=" = " Foreground="{StaticResource SagaForeground}" />
+                            <TextBlock Text="{Binding Value}" Foreground="{StaticResource SagaForeground}" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="Message">
+                        <Border BorderBrush="Black" BorderThickness="0" x:Name="EndpointsBorder">
+                            <Grid x:Name="RootGrid" Focusable="True" MouseLeftButtonUp="RootGrid_MouseLeftButtonUp">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <SolidColorBrush x:Key="EndpointBackground" Color="White" />
+                                    <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
+
+                                    <Style x:Key="MessageEndpointText" TargetType="TextBlock">
+                                        <Setter Property="FontSize" Value="9" />
+                                        <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
+                                    </Style>
+                                </Grid.Resources>
+
+                                <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+                                <StackPanel x:Name="OriginatingEndPoint" 
+                                                        ToolTip="Sending Endpoint"
+                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Orientation="Horizontal"
+                                                        Background="{StaticResource EndpointBackground}" 
+                                                        Height="14">
+                                    <ContentControl Template="{StaticResource SendingEndpoint}" 
+                                                                Margin="3,0,3,0" />
+                                    <TextBlock FontSize="10px"
+                                                           Text="{Binding OriginatingEndpoint}"
+                                                           Style="{StaticResource MessageEndpointText}" />
+                                </StackPanel>
+
+                                <Border BorderBrush="Black" BorderThickness="0" x:Name="NoEndpointsBorder" Grid.Row="1" Grid.ColumnSpan="2" >
+                                    <Rectangle x:Name="MessageRectangle" Fill="{StaticResource MessageBackground}" Height="45px" MinWidth="220px" Width="{Binding Width,ElementName=MessageTypeBox}"/>
+                                </Border>
+
+                                <ContentControl Style="{StaticResource FailedMessageMarker}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
+                                </ContentControl>
+
+                                <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
+                                                   Grid.Row="1" Grid.Column="0"
+                                                   ToolTip="Command"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,4,0,0"
+                                                   Width="20"
+                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+                                <ContentControl Template="{StaticResource TimeoutIcon}" 
+                                                   Grid.Row="1" Grid.Column="0"
+                                                   ToolTip="Timeout"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,8,0,0"
+                                                   Width="24"
+                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+
+                                <StackPanel x:Name="MessageTypeBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding TimeSent}" FontSize="14px" />
+                                </StackPanel>
+
+                                <Border BorderThickness="1,0,1,1" BorderBrush="{StaticResource MessageBackground}"
+                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                <StackPanel x:Name="MessageDataPanel"
+                                            Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                        <ItemsControl x:Name="MessageData" ItemsSource="{Binding Data}" ItemTemplate="{StaticResource MessageDataItem}" Padding="4">
+                                    </ItemsControl>
+                                        <TextBlock Text="Empty" Visibility="Collapsed" x:Name="EmptyPropertyText" Foreground="Black" HorizontalAlignment="Center">
+                                        </TextBlock>
+                                </StackPanel>
+                                </Border>
+
+                                <StackPanel x:Name="ReceivingEndPoint" 
+                                                        ToolTip="Processing Endpoint"
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                                        Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Orientation="Horizontal"
+                                                        VerticalAlignment="Center"
+                                                        Background="{StaticResource EndpointBackground}"
+                                                        Height="14">
+                                    <ContentControl Template="{StaticResource ReceivingEndpoint}" 
+                                                                    Margin="3,0,3,0" />
+                                    <TextBlock FontSize="10px"
+                                                    Text="{Binding ReceivingEndpoint}"
+                                                            Style="{StaticResource MessageEndpointText}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding ShowData}" Value="False">
+                                <DataTrigger.Setters>
+                                    <Setter TargetName="EmptyPropertyText" Property="Visibility" Value="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding HasFailed}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Fill" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding HasRetried}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Fill" TargetName="MessageRectangle" Value="{StaticResource RetriedMessageBackground}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="False" />
+                                    <Condition Binding="{Binding IsSelected}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="NoEndpointsBorder" Value="2" />
+                                <Setter Property="Margin" TargetName="NoEndpointsBorder" Value="0 -2 0 0" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="True" />
+                                    <Condition Binding="{Binding IsSelected}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="EndpointsBorder" Value="2" />
+                                <Setter Property="Margin" TargetName="NoEndpointsBorder" Value="0 -2 0 0" />
+                            </MultiDataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="UpdatedValuesTemplate">
+                        <StackPanel Background="{StaticResource SagaBackground}"  >
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueChanged, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0">
+                                <TextBlock Text="{Binding Name}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}"/>
+                                <TextBlock Text="{Binding OldValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                                <TextBlock Text=" ® " FontFamily="Symbol" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueNew, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0">
+                                <TextBlock Text="{Binding Label}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}"/>
+                                <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="AllValuesTemplate">
+                        <StackPanel Background="{StaticResource SagaBackground}" >
+                            <ContentPresenter ContentTemplate="{StaticResource UpdatedValuesTemplate}" ContentSource="{Binding}" />
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueNotUpdated, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0" >
+                                <TextBlock Text="{Binding Name}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}" />
+                                <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="PropertiesPanel">
+                        <StackPanel Margin="20 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Properties: " Foreground="#B3B3B3"/>
+                                <RadioButton x:Name="All" Content="All" Style="{StaticResource PropertiesRadioButton}" />
+                                <TextBlock Text=" /" Foreground="#B3B3B3" />
+                                <RadioButton x:Name="Updated" Content="Updated" IsChecked="True" Style="{StaticResource PropertiesRadioButton}" />
+                            </StackPanel>
+
+
+                            <ItemsControl ItemsSource="{Binding Values}" >
+                                <ItemsControl.Style>
+                                    <Style TargetType="{x:Type ItemsControl}">
+                                        <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
+                                                <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="TimeoutMessage">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Background="{StaticResource SagaBackground}" Grid.Column="1" >
+                                <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
+                                    <StackPanel Orientation="Horizontal" >
+                                        <ContentControl x:Name="TimeoutIcon" Template="{StaticResource SagaTimeoutIcon}" 
+                                                    VerticalAlignment="Top"
+                                                    Margin="0 4 4 4" />
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <Hyperlink Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" Click="Hyperlink_Click">
+                                                    <TextBlock Text="Timeout Requested = " />
+                                                    <TextBlock Text="{Binding TimeoutFriendly}" />
+                                                </Hyperlink >
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" >
+                                <ContentPresenter x:Name="TimeoutMessage" ContentTemplate="{StaticResource Message}" ContentSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 65 0 0"/>
+                                <Rectangle Height="14px" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" Grid.Column="2"  />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="SagaNode">
+                        <Grid>
+                            <StackPanel x:Name="SagaNodePanel">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".95*" />
+                                        <ColumnDefinition Width="1.1*" />
+                                        <ColumnDefinition Width=".95*" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                    <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1" >
+                                        <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}" >
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityCollapseConverter}}"  >
+                                                <ContentControl Template="{StaticResource SagaTimeoutIcon}" 
+                                                    VerticalAlignment="Top"
+                                                    Margin="0 4 4 4" />
+
+                                                <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
+                                            </StackPanel>
+                                            <StackPanel Margin="10" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"  >
+                                            </StackPanel>
+
+                                            <StackPanel x:Name="StepName" Orientation="Horizontal" >
+                                                <ContentControl Template="{StaticResource SagaInitiatedIcon}" 
+                                                    VerticalAlignment="Top"
+                                                    Margin="0 4 4 4"
+                                                    Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                                <ContentControl Template="{StaticResource SagaUpdatedIcon}" 
+                                                    VerticalAlignment="Top"
+                                                    Margin="0 4 4 4"
+                                                    Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+
+                                                <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
+                                                <TextBlock Text="  " FontSize="12px" />
+                                                <TextBlock Text="{Binding StartTime}" FontSize="12px" Margin="5 5"/>
+                                                <TextBlock Text="  " FontSize="12px" />
+                                            </StackPanel>
+
+                                            <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding NonTimeoutMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0"/>
+                                </Grid>
+                                <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="Header">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Background="{StaticResource SagaBackground}" Grid.Column="1" >
+                                <StackPanel Margin="10" Background="{StaticResource SagaBackground}" >
+                                    <TextBlock Text="&#x2190; Back to Message View" FontSize="12px" Foreground="{StaticResource SagaBlue}" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
+                                    <Border BorderThickness="0 0 0 2" Padding="0 5 0 5" BorderBrush="{StaticResource SagaBlue}">
+                                        <TextBlock Text="{Binding SagaType}" FontSize="24px" FontWeight="Bold" />
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" Margin="0 5 0 2">
+                                        <TextBlock FontWeight="Bold" FontSize="14px" Text="guid " Foreground="{StaticResource SagaForeground}"/>
+                                        <TextBlock FontSize="14px" Text="{Binding SagaId}" Foreground="{StaticResource SagaForeground}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="Footer">
+                        <Grid Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".95*" />
+                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width=".95*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Background="{StaticResource FooterBackground}" Grid.Column="1" >
+                                <StackPanel Margin="11" Orientation="Horizontal" >
+                                    <ContentControl Template="{StaticResource SagaCompletedIcon}" 
+                                                    VerticalAlignment="Top"
+                                                    Margin="0 4 4 4" />
+                                    <StackPanel >
+                                        <TextBlock Foreground="White" Text="Saga Completed" FontSize="14px" FontWeight="Bold"/>
+                                        <TextBlock Foreground="White" Text="{Binding CompleteTime}" FontSize="14px" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="Root" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+            <StackPanel Orientation="Horizontal" Margin="5" >
+                <ToggleButton Margin="2" IsChecked="{Binding ShowMessageData}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Show Message Data" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+            <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" LayoutUpdated="SagaWindowView_LayoutUpdated">
+                <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}"/>
+                <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
+                <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical"
+                    Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}">
+            <StackPanel HorizontalAlignment="Center">
+                <ContentControl Template="{StaticResource NoSaga}" />
+                <TextBlock Text="No Saga Data Available" FontSize="24px" Margin="5,0,0,0" FontWeight="Bold" Foreground="#d3d3d3" />
+            </StackPanel>
+            <TextBlock FontSize="16px" Foreground="#d3d3d3" Margin="0,5,0,0"
+                       Visibility="{Binding ShowSagaNotFoundWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Run Text="Saga data display requires that the SagaAudit Plugin be deployed with the Saga endpoints when the Saga code is executed." />
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                        Visibility="{Binding ShowSagaNotFoundWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock FontSize="16px" Foreground="#d3d3d3" Text="Install from Nuget: " VerticalAlignment="Center" />
+                <Border BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4" Margin="2">
+                    <TextBlock FontSize="16px" Padding="2" HorizontalAlignment="Center" Style="{StaticResource CodeStyle}" Text="install-package ServiceControl.Plugin.SagaAudit" />
+                </Border>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,423 @@
+﻿<Grid x:Class="NServiceBus.Profiler.Desktop.MessageFlow.MessageActionPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             Height="215" MinWidth="450"
+      >
+    <Grid.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+                    <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+                    <SolidColorBrush x:Key="LightBorderBrush" Color="#AAA" />
+                    <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+                    <SolidColorBrush x:Key="LightColorBrush" Color="#DDD" />
+                    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+                    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#000" />
+                    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#007AC7" />
+
+                    <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFF" Offset="0.0"/>
+                                <GradientStop Color="#CCC" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="HorizontalNormalBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFF" Offset="0.0"/>
+                                <GradientStop Color="#CCC" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="LightBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFF" Offset="0.0"/>
+                                <GradientStop Color="#EEE" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="HorizontalLightBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFF" Offset="0.0"/>
+                                <GradientStop Color="#EEE" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="DarkBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFF" Offset="0.0"/>
+                                <GradientStop Color="#AAA" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#BBB" Offset="0.0"/>
+                                <GradientStop Color="#EEE" Offset="0.1"/>
+                                <GradientStop Color="#EEE" Offset="0.9"/>
+                                <GradientStop Color="#FFF" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="NormalBorderBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#CCC" Offset="0.0"/>
+                                <GradientStop Color="#444" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="HorizontalNormalBorderBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#CCC" Offset="0.0"/>
+                                <GradientStop Color="#444" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="DefaultedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#777" Offset="0.0"/>
+                                <GradientStop Color="#000" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#444" Offset="0.0"/>
+                                <GradientStop Color="#888" Offset="1.0"/>
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
+                        <Setter Property="Height" Value="1"/>
+                        <Setter Property="Margin" Value="0,4,0,4"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Separator">
+                                    <Border BorderBrush="{StaticResource SolidBorderBrush}" BorderThickness="1"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+
+                    <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}" TargetType="MenuItem">
+                        <Border Name="Border">
+                            <Grid>
+                                <ContentPresenter Margin="6,3,6,3" 
+                                      ContentSource="Header"
+                                      RecognizesAccessKey="True" />
+                                <Popup Name="Popup" Placement="Bottom"
+                           IsOpen="{TemplateBinding IsSubmenuOpen}"
+                           AllowsTransparency="True" 
+                           Focusable="False"
+                           PopupAnimation="Fade">
+                                    <Border Name="SubmenuBorder" SnapsToDevicePixels="True" Background="{StaticResource WindowBackgroundBrush}">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+                                <Setter TargetName="Popup" Property="PopupAnimation" Value="None"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalBrush}"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
+                                <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="0,0,4,4"/>
+                                <Setter TargetName="SubmenuBorder" Property="Padding" Value="0,0,0,3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}" TargetType="MenuItem">
+                        <Border Name="Border" >
+                            <Grid>
+                                <ContentPresenter Margin="6,3,6,3" ContentSource="Header" RecognizesAccessKey="True" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalBrush}"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}" TargetType="MenuItem">
+                        <Border Name="Border" BorderThickness="3,0,3,0" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut"/>
+                                    <ColumnDefinition Width="13"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Name="Icon" Margin="6,0,6,0" VerticalAlignment="Center" ContentSource="Icon"/>
+                                <Border Name="Check"  Width="13" Height="13" Visibility="Collapsed" Margin="6,0,6,0" 
+                            Background="{StaticResource NormalBrush}" BorderThickness="1" 
+                            BorderBrush="{StaticResource NormalBorderBrush}">
+                                    <Path Name="CheckMark" Width="7" Height="7" 
+                              Visibility="Hidden" SnapsToDevicePixels="False" 
+                              Stroke="{StaticResource GlyphBrush}"
+                              StrokeThickness="2" Data="M 0 0 L 7 7 M 0 7 L 7 0" />
+                                </Border>
+                                <ContentPresenter Name="HeaderHost" Grid.Column="1" VerticalAlignment="Center"
+                                      ContentSource="Header"
+                                      RecognizesAccessKey="True"/>
+                                <TextBlock x:Name="InputGestureText" Grid.Column="2" VerticalAlignment="Center"
+                               Text="{TemplateBinding InputGestureText}"
+                               Margin="5,2,0,2"
+                               FontSize="10"
+                               DockPanel.Dock="Right" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Icon" Value="{x:Null}">
+                                <Setter TargetName="Icon" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsCheckable" Value="true">
+                                <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Icon" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedBackgroundBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <ControlTemplate x:Key="{x:Static MenuItem.SubmenuHeaderTemplateKey}" TargetType="MenuItem">
+                        <Border Name="Border" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="30" SharedSizeGroup="Icon"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut"/>
+                                    <ColumnDefinition Width="13"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Name="Icon" Margin="6,0,6,0"
+                                      VerticalAlignment="Center"
+                                      ContentSource="Icon"/>
+                                <ContentPresenter Name="HeaderHost"
+                                      Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      ContentSource="Header"
+                                      RecognizesAccessKey="True"/>
+                                <TextBlock x:Name="InputGestureText" Grid.Column="2"
+                               VerticalAlignment="Center"
+                               Text="{TemplateBinding InputGestureText}"
+                               Margin="5,2,2,2"
+                               FontSize="10"
+                               DockPanel.Dock="Right"/>
+                                <Path Grid.Column="3" HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="M 0 0 L 0 7 L 4 3.5 Z" 
+                          Fill="{StaticResource GlyphBrush}" />
+                                <Popup Name="Popup"
+                           Placement="Right"
+                           HorizontalOffset="-4" 
+                           IsOpen="{TemplateBinding IsSubmenuOpen}"
+                           AllowsTransparency="True" 
+                           Focusable="False"
+                           PopupAnimation="Fade">
+                                    <Border Name="SubmenuBorder" SnapsToDevicePixels="True" Background="{StaticResource WindowBackgroundBrush}">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Icon" Value="{x:Null}">
+                                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedBackgroundBrush}"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
+                                <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="4"/>
+                                <Setter TargetName="SubmenuBorder" Property="Padding" Value="0,3,0,3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <Style x:Key="ContextMenuItem" TargetType="MenuItem">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontSize" Value="12px" />
+                        <Setter Property="Height" Value="26" />
+                        <Style.Triggers>
+                            <Trigger Property="Role" Value="TopLevelHeader">
+                                <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
+                                <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
+                            </Trigger>
+                            <Trigger Property="Role" Value="TopLevelItem">
+                                <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelItemTemplateKey}}"/>
+                            </Trigger>
+                            <Trigger Property="Role" Value="SubmenuHeader">
+                                <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.SubmenuHeaderTemplateKey}}"/>
+                            </Trigger>
+                            <Trigger Property="Role" Value="SubmenuItem">
+                                <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.SubmenuItemTemplateKey}}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="MessagePropertyKey" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="FontSize" Value="13px" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style x:Key="MessagePropertyValue" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="13px" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Style>
+                    <Style x:Key="MessageExceptionKey" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="13px" />
+                        <Setter Property="Foreground" Value="Red" />
+                    </Style>
+                    <Style x:Key="MessageExceptionValue" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="13px" />
+                        <Setter Property="Foreground" Value="Red" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Grid.Resources>
+    <Border Name="Border"
+            Margin="0,0,0,0"
+            Background="Black"
+            BorderThickness="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="14,10,0,0" >
+            <ContentControl Template="{StaticResource CommandIcon}" 
+                                                   ToolTip="Command"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="White"
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+                <ContentControl Template="{StaticResource EventIcon}" 
+                                                   ToolTip="Event"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="White"
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}" >
+                    <ContentControl.RenderTransform>
+                        <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                    </ContentControl.RenderTransform>
+                </ContentControl>
+
+                <TextBlock Text="{Binding Message.FriendlyMessageType}" Foreground="White" FontSize="13px" FontWeight="Bold" />
+            </StackPanel>
+            <Grid Margin="0,0,0,0" Grid.Column="0" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="#1E1E1E" BorderThickness="0 1 0 0">
+                </Border>
+                <MenuItem Grid.Row="1" Header="Refresh" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" Visibility="Collapsed" cal:Message.Attach="[Event Click]=[Action Refresh]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="2" Header="Retry Message" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action Retry]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="3" Header="Copy Conversation Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyConversationId]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="4" Header="Copy Message URI" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action CopyMessageUri]" cal:Action.TargetWithoutContext="{Binding}" />
+                <MenuItem Grid.Row="5" Header="Search by Message Id" Style="{StaticResource ContextMenuItem}" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action SearchMessage]" cal:Action.TargetWithoutContext="{Binding}" />
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" Background="#1E1E1E" IsSharedSizeScope="True" TextBlock.Foreground="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="Auto" MaxWidth="280" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource MessagePropertyKey}" Text="Critical Time" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource MessagePropertyKey}" Text="Delivery Time"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource MessagePropertyKey}" Text="Processing Time" />
+                <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource MessagePropertyKey}" Text="NSB Version" />
+                <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                    <ContentControl Template="{StaticResource Exception}" Width="16" Height="16" />
+                    <TextBlock Text="Exception" Style="{StaticResource MessageExceptionKey}" />
+                </StackPanel>
+
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedCriticalTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedDeliveryTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedProcessingTime}" />
+                <TextBlock Grid.Column="2" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
+                <TextBlock Grid.Column="2" Grid.Row="6" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}" MaxWidth="260" TextTrimming="CharacterEllipsis">
+                    <Hyperlink Foreground="Red" Click="OnMenuClicked" cal:Message.Attach="[Event Click]=[Action ShowException]" cal:Action.TargetWithoutContext="{Binding}" ><TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" /></Hyperlink>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Border>
+</Grid>
