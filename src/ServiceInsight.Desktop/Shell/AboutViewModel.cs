@@ -12,6 +12,8 @@ using NServiceBus.Profiler.Desktop.ServiceControl;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
+    using System.Linq;
+
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
         public const string DetectingServiceControlVersion = "(Detecting...)";
@@ -84,7 +86,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             var versionParts = version.Split(' ');
             var appVersion = versionParts[0];
-            var commitHash = versionParts[2];
+            var commitHash = versionParts.Last();
 
             AppVersion = appVersion;
             CommitHash = GetShortCommitHash(commitHash);
