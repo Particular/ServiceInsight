@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
              mc:Ignorable="d" 
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -13,6 +15,13 @@
     </UserControl.Resources>
     <Grid>
         <dxg:GridControl x:Name="HeadersGrid" ItemsSource="{Binding KeyValues}">
+            <dxb:BarManager.DXContextMenu>
+                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
+                               Visibility="{Binding RelativeSource={RelativeSource Self}, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
+                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True"/>
+            </dxb:BarManager.DXContextMenu>
+
             <dxg:GridControl.Columns>
                 <dxg:GridColumn x:Name="KeyColumn" BestFitMode="AllRows" AllowBestFit="True" FieldName="Key" SortOrder="Ascending" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
                 <dxg:GridColumn FieldName="Value" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />

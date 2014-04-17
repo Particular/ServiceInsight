@@ -6,7 +6,7 @@ if($url){
 	$url = $url | Select -expandProperty FullName
 }
 else{
-	$url = "https://github.com/Particular/$packageName/releases/download/SemVer/Particular.$packageName-SemVer.exe"
+	$url = "https://github.com/Particular/$packageName/releases/download/{{ReleaseName}}/Particular.$packageName-{{FileVersion}}.exe"
 }
 
 

@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace NServiceBus.Profiler.Desktop.Saga
 {
-    public class SagaData
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Caliburn.PresentationFramework;
+
+    public class SagaData : PropertyChangedBase
     {
+        public static SagaData Empty = new SagaData();
+
         public List<SagaUpdate> Changes { get; set; }
+        public Guid SagaId { get; set; }
 
         private string sagaType;
         public string SagaType
@@ -37,8 +39,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
             return objectName;
         }
 
-        public Guid SagaId { get; set; }
-
         public bool IsCompleted
         {
             get
@@ -63,6 +63,5 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 return change.FinishTime;
             }
         }
-
     }
 }

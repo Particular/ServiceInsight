@@ -78,14 +78,6 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return messages;
         }
 
-        public async Task<SagaData> GetSagaById(string sagaId)
-        {
-            var request = new RestRequest(string.Format("sagas/{0}", sagaId));
-            var messages = await GetModelAsync<SagaData>(request) ?? new SagaData();
-
-            return messages;
-        }
-
         public async Task<List<Endpoint>> GetEndpoints()
         {
             var request = new RestRequest("endpoints");
@@ -227,10 +219,49 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return completionSource.Task;
         }
 
+        public bool HasSagaChanged(string sagaId)
+        {
+            return HasChanged(CreateSagaRequest(sagaId));
+        }
+
+        public async Task<SagaData> GetSagaById(string sagaId)
+        {
+            return await GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+        }
+
+        private static RestRequest CreateSagaRequest(string sagaId)
+        {
+            return new RestRequest(string.Format("sagas/{0}", sagaId));
+        }
+
+        private bool HasChanged(IRestRequest request)
+        {
+            if (System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource))
+            {
+                var method = request.Method;
+                try
+                {
+                    request.Method = Method.HEAD;
+                    var response = CreateClient().Execute(request);
+
+                    var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
+                    if (etag == null) return true;
+                    return !System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource &&
+                        string.Equals(((RestSharp.Parameter)c.Value).Value, etag.Value));
+                }
+                finally
+                {
+                    request.Method = method;
+                }
+            }
+
+            return true; 
+        }
+
         private Task<T> GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
-            return ExecuteAsync<T>(request, response => response.Data);
+            return ExecuteAsync<T>(request, response => { CacheResponse(response); return response.Data; });
         }
 
         private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
@@ -270,6 +301,14 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             {
                 LogError(response);
                 completionSource.SetResult(default(T));
+            }
+        }
+
+        private static void CacheResponse(IRestResponse response)
+        {
+            if (response.Request.Resource != null && response.Headers.Any(h => h.Name == "ETag"))
+            {
+                System.Runtime.Caching.MemoryCache.Default.Add(new System.Runtime.Caching.CacheItem(response.Request.Resource, response.Headers.FirstOrDefault(h => h.Name == "ETag")), new System.Runtime.Caching.CacheItemPolicy());
             }
         }
 

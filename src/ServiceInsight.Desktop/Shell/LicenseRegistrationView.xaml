@@ -65,7 +65,7 @@
                    Visibility="{Binding MustPurchase, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
                    Height="50"
                    TextWrapping="Wrap"
-                   Text="Please contact sales to purchase a license or to request an extension to your free trial. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
+                   Text="Please click 'Contact Sales' to request an extension to your free trial, or click 'Buy Now' to purchase a license online. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
 
         <Rectangle Grid.Row="5"
                    Fill="LightGray"
@@ -98,7 +98,7 @@
                     Width="120"
                     Height="24"
                     Content="Buy Now"
-                    Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                    Visibility="{Binding CanBuyNow, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
                     Margin="{StaticResource ButtonMargin}"

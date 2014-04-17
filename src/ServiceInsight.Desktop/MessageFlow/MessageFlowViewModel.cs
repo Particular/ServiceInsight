@@ -18,11 +18,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
     using Core.Settings;
     using Settings;
     using MessageList;
+    using Explorer.EndpointExplorer;
 
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>
     {
         MessageFlowDiagram Diagram { get; }
+        MessageNode SelectedMessage { get; set; }
+        bool ShowEndpoints { get; set; }
         void CopyMessageUri(StoredMessage message);
         void CopyConversationId(StoredMessage message);
         void SearchByMessageId(StoredMessage message);
@@ -50,6 +53,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         private IMessageFlowView _view;
         private string _originalSelectionId = string.Empty;
         private bool _loadingConversation;
+        private IEndpointExplorerViewModel _endpointExplorer;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -59,7 +63,8 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             IScreenFactory screenFactory,
             ISearchBarViewModel searchBar, 
             IMessageListViewModel messageList,
-            ISettingsProvider settingsProvider)
+            ISettingsProvider settingsProvider,
+            IEndpointExplorerViewModel endpointExplorer)
         {
             _serviceControl = serviceControl;
             _eventAggregator = eventAggregator;
@@ -69,6 +74,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             _searchBar = searchBar;
             _settingsProvider = settingsProvider;
             _messageList = messageList;
+            _endpointExplorer = endpointExplorer;
 
             Diagram = new MessageFlowDiagram();
             _nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -116,6 +122,10 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void ShowSagaWindow()
         {
+            if (!_messageList.Rows.Any(r => r.Id == SelectedMessage.Message.Id))
+            {
+                _endpointExplorer.SelectedNode = _endpointExplorer.ServiceControlRoot;
+            }
             _messageList.Focus(SelectedMessage.Message);
             _eventAggregator.Publish(new SwitchToSagaWindow());
         }

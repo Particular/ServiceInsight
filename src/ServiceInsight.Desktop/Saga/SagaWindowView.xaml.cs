@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace NServiceBus.Profiler.Desktop.Saga
@@ -23,7 +18,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public SagaWindowView()
         {
             InitializeComponent();
-            this.DataContextChanged += SagaWindowView_DataContextChanged;
+            DataContextChanged += SagaWindowView_DataContextChanged;
         }
 
         void SagaWindowView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -39,7 +34,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
         }
 
-        bool refreshVisual = false;
+        bool refreshVisual;
 
         void SagaWindowView_LayoutUpdated(object sender, EventArgs e)
         {
@@ -65,68 +60,67 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void RefreshAll()
         {
-            var steps = (ItemsControl)this.FindName("Steps");
-            for (int i = 0; i < steps.Items.Count; i++)
+            var steps = (ItemsControl)FindName("Steps");
+            for (var i = 0; i < steps.Items.Count; i++)
             {
                 var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
                 if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
                 {
-                    var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
-                    DrawLines(item, ((ISagaWindowViewModel)this.DataContext).ShowEndpoints);
+                    var item = (StackPanel)(((Grid)VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
+                    DrawLines(item, ((ISagaWindowViewModel)DataContext).ShowEndpoints);
                 }
             }
         }
 
         private void DrawLines(StackPanel panel, bool showEndpoints)
         {
-            if (panel != null)
+            if (panel == null) return;
+            
+            var endpointHeight = showEndpoints ? -14 : 0;
+            var caption = (FrameworkElement)panel.FindName("StepName");
+            var captionPosition = GetPosition("StepName", panel);
+            var message = (FrameworkElement)panel.FindName("InitialMessage");
+            var messagePosition = GetPosition("InitialMessage", panel);
+            var messageData = ((FrameworkElement)((ContentPresenter)message).ContentTemplate.FindName("MessageDataPanel", message));
+
+            var messageDataHeight = messageData.Visibility == Visibility.Visible ? messageData.ActualHeight : 0;
+
+            var parent = panel.Parent as Grid;
+            RemoveExistingLines(parent);
+
+            AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageDataHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), parent);
+
+            var stepName = (Panel)panel.FindName("StepName");
+            var icon = stepName.Children.Cast<FrameworkElement>().OfType<ContentControl>().FirstOrDefault(c => c.Visibility == Visibility.Visible);
+            var iconPosition = icon.TransformToAncestor(panel).Transform(new Point(0, 0));
+            var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight - messageDataHeight);
+            var timeoutPoint = new Point(0, 0);
+
+            var timeoutMessages = (ItemsControl)panel.FindName("TimeoutMessages");
+            for (var i = 0; i < timeoutMessages.Items.Count; i++)
             {
-                var endpointHeight = showEndpoints ? -14 : 0;
-                var caption = (FrameworkElement)panel.FindName("StepName");
-                var captionPosition = GetPosition("StepName", panel);
-                var message = (FrameworkElement)panel.FindName("InitialMessage");
-                var messagePosition = GetPosition("InitialMessage", panel);
-                var messageData = ((FrameworkElement)((ContentPresenter)message).ContentTemplate.FindName("MessageDataPanel", message));
+                var timeout = VisualTreeHelper.GetChild(timeoutMessages.ItemContainerGenerator.ContainerFromIndex(i), 0) as Panel;
+                var timeoutMessage = timeout.FindName("TimeoutMessage") as FrameworkElement;
+                var timeoutMessagePosition = timeoutMessage.TransformToAncestor(panel).Transform(new Point(0, 0));
 
-                var messageDataHeight = messageData.Visibility == System.Windows.Visibility.Visible ? messageData.ActualHeight : 0;
+                AddTimeoutVerticalLine(timeout, panel, parent, ref lastPoint, ref timeoutPoint, i);
+                AddLine(timeoutPoint, new Point(timeoutPoint.X, timeoutPoint.Y + 12), parent);
+                AddLine(new Point(timeoutPoint.X, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), parent);
+                AddLine(new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)), parent);
+                AddArrow(parent, new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)));
+            }
 
-                var parent = panel.Parent as Grid;
-                RemoveExistingLines(parent);
-
-                AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageDataHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), parent);
-
-                var stepName = (Panel)panel.FindName("StepName");
-                var icon = stepName.Children.Cast<FrameworkElement>().OfType<ContentControl>().FirstOrDefault(c => c.Visibility == System.Windows.Visibility.Visible);
-                var iconPosition = icon.TransformToAncestor(panel).Transform(new Point(0, 0));
-                var lastPoint = new Point(iconPosition.X + icon.ActualWidth / 2, message.ActualHeight + endpointHeight - messageDataHeight);
-                var timeoutPoint = new Point(0, 0);
-
-                var timeoutMessages = (ItemsControl)panel.FindName("TimeoutMessages");
-                for (int i = 0; i < timeoutMessages.Items.Count; i++)
-                {
-                    var timeout = System.Windows.Media.VisualTreeHelper.GetChild(timeoutMessages.ItemContainerGenerator.ContainerFromIndex(i), 0) as Panel;
-                    var timeoutMessage = timeout.FindName("TimeoutMessage") as FrameworkElement;
-                    var timeoutMessagePosition = timeoutMessage.TransformToAncestor(panel).Transform(new Point(0, 0));
-
-                    AddTimeoutVerticalLine(timeout, panel, parent, timeoutMessages, ref lastPoint, ref timeoutPoint, i);
-                    AddLine(timeoutPoint, new Point(timeoutPoint.X, timeoutPoint.Y + 12), parent);
-                    AddLine(new Point(timeoutPoint.X, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), parent);
-                    AddLine(new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)), parent);
-                    AddArrow(parent, new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)));
-                }
-
-                var sagaMessagesPosition = GetPosition("SagaMessages", panel);
-                var sagaMessages = (ItemsControl)panel.FindName("SagaMessages");
-                if (sagaMessages.Items.Count > 0)
-                {
-                    AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), parent);
-                    AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
-                    AddArrow(parent, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
-                }
+            var sagaMessagesPosition = GetPosition("SagaMessages", panel);
+            var sagaMessages = (ItemsControl)panel.FindName("SagaMessages");
+            if (sagaMessages.Items.Count > 0)
+            {
+                AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), parent);
+                AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
+                AddArrow(parent, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
             }
         }
 
-        private void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ItemsControl timeoutMessages, ref Point lastPoint, ref Point timeoutPoint, int i)
+        private void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint, int i)
         {
             var timeoutIcon = timeout.FindName("TimeoutIcon") as FrameworkElement;
             var timeoutIconPosition = timeoutIcon.TransformToAncestor(panel).Transform(new Point(0, 0));
@@ -151,7 +145,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 FillRule = FillRule.EvenOdd
             };
 
-            using (StreamGeometryContext ctx = geometry.Open())
+            using (var ctx = geometry.Open())
             {
                 ctx.BeginFigure(new Point(origin.X, origin.Y), false, false);
 
@@ -194,7 +188,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 FillRule = FillRule.EvenOdd
             };
 
-            using (StreamGeometryContext ctx = geometry.Open())
+            using (var ctx = geometry.Open())
             {
                 ctx.BeginFigure(new Point(arrowPoint.X, arrowPoint.Y), true, true);
 
@@ -225,14 +219,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private Point GetPosition(string name, Panel panel)
         {
-            return ((System.Windows.UIElement)panel.FindName(name))
+            return ((UIElement)panel.FindName(name))
                 .TransformToAncestor(panel)
-                .Transform(new System.Windows.Point(0, 0));
+                .Transform(new Point(0, 0));
         }
 
         private void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var model = this.DataContext as ISagaWindowViewModel;
+            var model = DataContext as ISagaWindowViewModel;
             var message = ((FrameworkElement)sender).DataContext as SagaMessage;
             SetSelected(model, message.MessageId);
         }
@@ -243,7 +237,6 @@ namespace NServiceBus.Profiler.Desktop.Saga
             {
                 SetSelected(step.InitiatingMessage, id);
                 SetSelected(step.OutgoingMessages, id);
-                //SetSelected(step.NonTimeoutMessages, id);
             }
         }
 
@@ -265,12 +258,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            var model = this.DataContext as ISagaWindowViewModel;
+            //var model = DataContext as ISagaWindowViewModel;
             var message = ((Hyperlink)e.Source).DataContext as SagaTimeoutMessage;
             if (message != null)
             {
-                var steps = (ItemsControl)this.FindName("Steps");
-                for (int i = 0; i < steps.Items.Count; i++)
+                var steps = (ItemsControl)FindName("Steps");
+                for (var i = 0; i < steps.Items.Count; i++)
                 {
                     var update = steps.Items[i] as SagaUpdate;
                     if (update != null && update.InitiatingMessage.MessageId == message.MessageId)
@@ -286,7 +279,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
             if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
             {
-                var item = (StackPanel)(((Grid)System.Windows.Media.VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
+                var item = (StackPanel)(((Grid)VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
                 item.BringIntoView();
             }
         }

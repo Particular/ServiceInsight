@@ -227,6 +227,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             await EndpointExplorer.RefreshData();
             await QueueExplorer.RefreshData();
             await Messages.RefreshMessages();
+            await SagaWindow.RefreshSaga();
         }
 
         [AutoCheckAvailability]

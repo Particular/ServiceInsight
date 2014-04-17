@@ -14,8 +14,8 @@
         private readonly INetworkOperations _network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
-        public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-license";
-        public const string LicenseCallbackPageUrl = "http://particular.net/extend-your-trial-license2";
+        public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";
+        public const string CustomLicenseExtensionPageUrl = "http://particular.net/extend-your-trial-45";
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
@@ -116,6 +116,14 @@
             }
         }
 
+        public bool CanBuyNow
+        {
+            get
+            {
+                return CanContactSales;
+            }
+        }
+
         public bool CanContactSales
         {
             get
@@ -193,7 +201,7 @@
 
         public void ContactSales()
         {
-            _network.Browse(LicenseCallbackPageUrl);
+            _network.Browse(CustomLicenseExtensionPageUrl);
         }
 
 
