@@ -272,7 +272,7 @@
                                                  AllowClose="False"
                                                  AllowFloat="False"
                                                  ShowBorder="False"
-                                                 >
+                                                 CaptionImage="/Images/Headers.png">
                                     <ContentControl cal:View.Model="{Binding MessageHeaders}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
