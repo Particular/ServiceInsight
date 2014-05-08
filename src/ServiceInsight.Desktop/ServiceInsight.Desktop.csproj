@@ -202,14 +202,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\*.cs" />
     <Compile Include="CodeParser\BaseParser.cs" />
     <Compile Include="CodeParser\CodeBlockPresenter.cs" />
     <Compile Include="CodeParser\CodeLanguage.cs" />
