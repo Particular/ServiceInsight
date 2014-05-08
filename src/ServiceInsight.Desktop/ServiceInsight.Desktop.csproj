@@ -202,7 +202,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App_Packages\Particular.Licensing\*.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\License.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeParser\BaseParser.cs" />
     <Compile Include="CodeParser\CodeBlockPresenter.cs" />
     <Compile Include="CodeParser\CodeLanguage.cs" />
@@ -754,6 +789,7 @@
     <Resource Include="Images\Msg_Info.png" />
     <Resource Include="Images\Msg_Warning.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Fody.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\RippleRestoreTask.targets" />
