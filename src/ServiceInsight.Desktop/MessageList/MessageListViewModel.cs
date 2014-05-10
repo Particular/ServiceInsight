@@ -1,26 +1,26 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core.UI;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Shell.Menu;
-using System.Windows;
-using DevExpress.Xpf.Grid;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.UI;
+    using DevExpress.Xpf.Grid;
+    using Events;
+    using ExceptionHandler;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using Explorer.QueueExplorer;
+    using ExtensionMethods;
+    using MessageProperties;
+    using Models;
+    using Search;
+    using ServiceControl;
+    using Shell;
+    using Shell.Menu;
+
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
         private readonly IEventAggregator _eventAggregator;
@@ -151,6 +151,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public void Focus(StoredMessage msg)
         {
+            //TODO: ViewModel should have no knowledge of View or the elements in it.
             var grid = ((GridControl)((FrameworkElement)_view).FindName("grid"));
             for (int i = 0; i < Rows.Count; i++)
             {

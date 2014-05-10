@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+﻿namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System;
+    using System.Linq.Expressions;
+
     public static class TestExtensions
     {
         public static TObj SetPrivate<TObj, TProp>(this TObj obj, Expression<Func<TObj, TProp>> property, TProp value)

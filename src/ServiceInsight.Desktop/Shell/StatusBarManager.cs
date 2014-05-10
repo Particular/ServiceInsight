@@ -1,9 +1,9 @@
-﻿using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Events;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Events;
+
     public class StatusBarManager : PropertyChangedBase, 
         IStatusBarManager, 
         IHandle<WorkStarted>,

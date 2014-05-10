@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
     public class SagaUpdatedValue
     {

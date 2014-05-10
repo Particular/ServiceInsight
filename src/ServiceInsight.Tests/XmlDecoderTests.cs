@@ -1,11 +1,11 @@
-﻿using System.Text;
-using System.Xml;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Text;
+    using System.Xml;
+    using Desktop.Core.MessageDecoders;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class XmlDecoderTests
     {

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Input;
+
     public interface IMenuItem
     {
         string ToolTip { get; }

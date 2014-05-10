@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for MessageActionPopup.xaml
     /// </summary>

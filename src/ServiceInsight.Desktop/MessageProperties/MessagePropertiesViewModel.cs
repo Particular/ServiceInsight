@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using System.ComponentModel;
+    using Caliburn.PresentationFramework.Screens;
+    using ExceptionHandler;
+
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
     {
         private readonly IClipboard _clipboard;

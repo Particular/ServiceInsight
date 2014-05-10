@@ -1,9 +1,9 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+    using Models;
+
     public class JsonMessageViewModel : Screen, IJsonMessageViewModel
     {
         private IJsonMessageView _messageView;

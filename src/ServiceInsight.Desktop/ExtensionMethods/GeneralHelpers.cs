@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+
     public static class GeneralHelpers
     {
         public static T TryGetValue<T>(this Func<T> retreival, T defaultValue = default(T))

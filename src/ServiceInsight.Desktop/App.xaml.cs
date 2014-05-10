@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
-using DevExpress.Xpf.Core;
-using log4net;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop
+﻿namespace Particular.ServiceInsight.Desktop
 {
+    using System;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using DevExpress.Xpf.Core;
+    using log4net;
+    using Shell;
+    using Startup;
+
     public interface IAppCommands
     {
         void ShutdownImmediately();

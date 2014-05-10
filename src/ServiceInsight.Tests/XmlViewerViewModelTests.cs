@@ -1,15 +1,15 @@
-﻿using System.Xml;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Xml;
+    using Desktop.Core.MessageDecoders;
+    using Desktop.Events;
+    using Desktop.MessageViewers.XmlViewer;
+    using Desktop.Models;
+    using ExceptionHandler;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class XmlViewerViewModelTests
     {

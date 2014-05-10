@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+﻿namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
     public abstract class DecoderResult
     {

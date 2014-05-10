@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+
     public class SettingsProvider : ISettingsProvider
     {
         private readonly ISettingsStorage _settingsRepository;
@@ -94,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
         {
             var namespaceSeparator = name.LastIndexOf('.');
             var internalClassName = name.IndexOf('+');
-            var settingName = string.Empty;
+            string settingName;
             if (namespaceSeparator > 0)
             {
                 if (internalClassName > 0)

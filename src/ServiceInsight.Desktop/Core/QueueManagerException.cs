@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace NServiceBus.Profiler.Desktop.Core
+﻿namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [Serializable]
     public class QueueManagerException : Exception
     {

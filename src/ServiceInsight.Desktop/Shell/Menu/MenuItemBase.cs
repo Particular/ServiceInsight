@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Input;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Input;
+    using Caliburn.PresentationFramework;
+
     public abstract class MenuItemBase : PropertyChangedBase, IMenuItem
     {
         protected MenuItemBase(string caption, bool isSeparator, bool isCheckable = false)

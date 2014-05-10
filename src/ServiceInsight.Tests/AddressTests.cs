@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Tests.Helpers;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Sockets;
+    using Desktop.Models;
+    using Helpers;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class AddressTests
     {

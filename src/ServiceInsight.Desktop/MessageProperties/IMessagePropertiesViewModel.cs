@@ -1,7 +1,7 @@
-﻿using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using Caliburn.PresentationFramework.Screens;
+
     public interface IMessagePropertiesViewModel : IScreen
     {
         IErrorHeaderViewModel Errors { get; }

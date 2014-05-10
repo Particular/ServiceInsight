@@ -1,14 +1,10 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Shell;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using Caliburn.PresentationFramework.Screens;
+    using Core.Settings;
+    using Models;
+    using Shell;
+
     class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
     {
         private ISettingsProvider _settingsProvider;
@@ -18,13 +14,13 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
         {
-            this._settingsProvider = settingsProvider;
-            this.DisplayName = "Exception Details";
+            _settingsProvider = settingsProvider;
+            DisplayName = "Exception Details";
         }
 
         public ExceptionDetailViewModel(IExceptionDetails exception)
         {
-            this.Exception = exception;
+            Exception = exception;
         }
 
         public override void AttachView(object view, object context)

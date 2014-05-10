@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Events
 {
+    using Models;
+
     public class QueueMessageCountChanged
     {
         public QueueMessageCountChanged(Queue queue, int count)

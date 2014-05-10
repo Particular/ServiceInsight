@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using NServiceBus.Profiler.Desktop.Shell;
-
-namespace NServiceBus.Profiler.Desktop.Explorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer
 {
+    using System.Threading.Tasks;
+    using Shell;
+
     public interface IExplorerViewModel
     {
         ExplorerItem SelectedNode { get; set; }

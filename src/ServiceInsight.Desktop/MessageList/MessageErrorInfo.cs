@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Media.Imaging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System;
+    using System.Windows.Media.Imaging;
+    using ExtensionMethods;
+    using Models;
+    using Properties;
+
     public class MessageErrorInfo : IComparable
     {
         private MessageStatus _status;

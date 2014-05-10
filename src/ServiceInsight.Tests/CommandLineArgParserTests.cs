@@ -1,11 +1,11 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Startup;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Desktop.Models;
+    using Desktop.Startup;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class CommandLineArgParserTests
     {

@@ -1,14 +1,14 @@
-﻿<Application x:Class="NServiceBus.Profiler.Desktop.App"
+﻿<Application x:Class="Particular.ServiceInsight.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:xh="clr-namespace:ExceptionHandler.Wpf.Converters;assembly=ExceptionHandler.Wpf"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:startup="clr-namespace:NServiceBus.Profiler.Desktop.Startup"
-             xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:startup="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
+             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:menu="clr-namespace:NServiceBus.Profiler.Desktop.Shell.Menu"
+             xmlns:menu="clr-namespace:Particular.ServiceInsight.Desktop.Shell.Menu"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>

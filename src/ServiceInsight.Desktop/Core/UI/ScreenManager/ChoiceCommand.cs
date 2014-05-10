@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System;
+    using System.Windows.Input;
+    using Caliburn.PresentationFramework;
+
     public delegate void ButtonCommandHandler(object target);
 
     public class ChoiceCommand : PropertyChangedBase, ICommand

@@ -1,8 +1,8 @@
-﻿using System.Messaging;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.Messaging;
+    using Models;
+
     public static class QueueExtensions
     {
         public static MessageQueue AsMessageQueue(this Queue queue, QueueAccessMode mode = QueueAccessMode.Receive)

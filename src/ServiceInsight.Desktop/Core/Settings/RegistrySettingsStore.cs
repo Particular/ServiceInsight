@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Win32;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+﻿namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Win32;
+
     public class RegistrySettingsStore : ISettingsStorage
     {
         private readonly RegistryHive _root;

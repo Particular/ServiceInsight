@@ -1,10 +1,10 @@
-using System;
-using System.Messaging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core
+namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System;
+    using System.Messaging;
+    using ExtensionMethods;
+    using Models;
+
     public class DefaultMapper : IMapper
     {
         public Queue MapQueue(MessageQueue queue)

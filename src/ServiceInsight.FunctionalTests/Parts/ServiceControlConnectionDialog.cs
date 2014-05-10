@@ -1,10 +1,10 @@
-﻿using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.ListBoxItems;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.ListBoxItems;
+    using TestStack.White.UIItems.WindowItems;
+
     public class ServiceControlConnectionDialog : ProfilerElement
     {
         private Window dialog;

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
+    using System;
+    using System.Text;
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+    using ExtensionMethods;
+
     public class HexContentViewModel : Screen, IHexContentViewModel
     {
         internal static Func<byte, string> ByteToStringConverter;

@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System.ComponentModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.Settings;
+    using Settings;
+
     public class OptionsViewModel : Screen
     {
         private readonly ISettingsProvider _settingsProvider;

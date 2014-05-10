@@ -1,8 +1,8 @@
-﻿using DevExpress.Xpf.Bars;
-using DevExpress.Xpf.PropertyGrid;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using DevExpress.Xpf.Bars;
+    using DevExpress.Xpf.PropertyGrid;
+
     /// <summary>
     /// Interaction logic for MessagePropertiesView.xaml
     /// </summary>

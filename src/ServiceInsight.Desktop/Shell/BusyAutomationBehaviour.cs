@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Automation;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System.Windows;
+    using System.Windows.Automation;
+
     public static class BusyAutomationBehaviour
     {
         public static readonly DependencyProperty IsApplicationBusyProperty;

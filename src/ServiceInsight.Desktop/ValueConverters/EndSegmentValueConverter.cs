@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Data;
-using Mindscape.WpfDiagramming.Foundation;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Data;
+    using Mindscape.WpfDiagramming.Foundation;
+
     public class EndSegmentValueConverter : IValueConverter
     {
         private const double arrowSize = 20;

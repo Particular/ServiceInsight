@@ -1,7 +1,7 @@
-﻿using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
+    using Caliburn.PresentationFramework;
+
     public interface IHaveContextMenu
     {
         IObservableCollection<IMenuItem> ContextMenuItems { get; }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.Core.UI
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI
 {
+    using System;
+    using System.Windows.Input;
+
     public class RelayCommand : ICommand
     {
         private readonly Func<bool> _canExecute;

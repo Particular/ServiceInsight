@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer.EndpointExplorerView"
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer.EndpointExplorerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:tree="clr-namespace:NServiceBus.Profiler.Desktop.Explorer"
+             xmlns:tree="clr-namespace:Particular.ServiceInsight.Desktop.Explorer"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>

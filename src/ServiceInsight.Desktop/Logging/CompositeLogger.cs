@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.Logging
+﻿namespace Particular.ServiceInsight.Desktop.Logging
 {
+    using System;
+    using System.Collections.Generic;
+    using Caliburn.Core.Logging;
+    using ExtensionMethods;
+
     public class CompositeLogger : ILog
     {
         private readonly IList<ILog> _loggers;

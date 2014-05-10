@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+
     public static class StringExtensions
     {
         public static bool IsEmpty(this string value)

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub.Controllers
 {
+    using System.Collections.Generic;
+    using System.Web.Http;
+    using Desktop.Models;
+
     public class EndpointsController : ApiController
     {
         public IEnumerable<Endpoint> Get()

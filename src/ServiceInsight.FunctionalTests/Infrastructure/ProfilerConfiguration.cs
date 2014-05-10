@@ -1,14 +1,14 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using TestStack.White;
-using TestStack.White.Factory;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
 {
+    using System.Diagnostics;
+    using System.IO;
+    using System.Reflection;
+    using System.Threading;
+    using TestStack.White;
+    using TestStack.White.Factory;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.WindowItems;
+
     public class ProfilerConfiguration
     {
         private const int ExtraIdleWaitSecs = 3;

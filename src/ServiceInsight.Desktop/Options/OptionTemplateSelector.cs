@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System.Collections;
+    using System.Windows;
+    using System.Windows.Controls;
+    using Caliburn.PresentationFramework;
+
     public class OptionTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

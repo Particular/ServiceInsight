@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using log4net;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Settings;
-using RestSharp;
-using RestSharp.Contrib;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Desktop.ServiceControl
+﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Core.MessageDecoders;
+    using Core.Settings;
+    using Events;
+    using log4net;
+    using Models;
+    using RestSharp;
+    using RestSharp.Contrib;
+    using Saga;
+    using Settings;
+
     public class DefaultServiceControl : IServiceControl
     {
         public class ServiceControlHeaders
@@ -247,7 +247,7 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                     var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
                     if (etag == null) return true;
                     return !System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource &&
-                        string.Equals(((RestSharp.Parameter)c.Value).Value, etag.Value));
+                        string.Equals(((Parameter)c.Value).Value, etag.Value));
                 }
                 finally
                 {

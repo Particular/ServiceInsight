@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.Screens;
+    using Desktop.Core;
+    using Desktop.Explorer.QueueExplorer;
+    using Desktop.Models;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class QueueCreationViewModel
     {

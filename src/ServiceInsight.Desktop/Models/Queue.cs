@@ -1,8 +1,8 @@
-﻿using System;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using Caliburn.PresentationFramework;
+
     [Serializable]
     public class Queue : PropertyChangedBase, IComparable<Queue>
     {

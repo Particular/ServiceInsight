@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
-using DevExpress.Xpf.Editors.Helpers;
-using log4net.Appender;
-using log4net.Core;
-using log4net.Filter;
-using log4net.Layout;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.LogWindow
+﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+    using Core;
+    using DevExpress.Xpf.Editors.Helpers;
+    using log4net.Appender;
+    using log4net.Core;
+    using log4net.Filter;
+    using log4net.Layout;
+    using ServiceControl;
+    using Startup;
+
     public class RichTextBoxAppender : AppenderSkeleton
     {
         private readonly RichTextBox _richtextBox;

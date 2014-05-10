@@ -1,8 +1,8 @@
-﻿using System;
-using RestSharp.Deserializers;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using RestSharp.Deserializers;
+
     [Serializable]
     public class MessageBody : MessageInfo
     {

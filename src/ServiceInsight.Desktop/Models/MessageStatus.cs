@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System.ComponentModel;
+
     public enum MessageStatus
     {
         [Description("Failed")]

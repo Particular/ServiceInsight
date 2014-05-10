@@ -1,11 +1,11 @@
-﻿namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
     using System.IO;
+    using App_Packages.Particular.Licensing;
     using Caliburn.PresentationFramework.Screens;
     using Core;
     using Core.Licensing;
-    using Particular.Licensing;
-    using ScreenManager;
+    using Core.UI.ScreenManager;
 
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {

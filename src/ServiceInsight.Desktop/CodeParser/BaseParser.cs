@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class BaseParser
     {
         protected readonly char[] SpaceChars = new[] {' ', '\t'};

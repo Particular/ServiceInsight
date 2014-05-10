@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Autofac;
-using log4net;
-using Module = Autofac.Module;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Autofac;
+    using log4net;
+    using Module = Autofac.Module;
+
     public static class BuilderExtensions
     {
         private static readonly ILog Logger = LogManager.GetLogger("Container");

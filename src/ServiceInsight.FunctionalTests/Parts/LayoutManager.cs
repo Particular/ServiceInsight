@@ -1,13 +1,13 @@
-﻿using System.Threading;
-using System.Windows;
-using NServiceBus.Profiler.FunctionalTests.Extensions;
-using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.TreeItems;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using System.Threading;
+    using System.Windows;
+    using Extensions;
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.TreeItems;
+    using TestStack.White.UIItems.WindowItems;
+
     public class LayoutManager : ProfilerElement
     {
         private readonly GroupBox _barManager;

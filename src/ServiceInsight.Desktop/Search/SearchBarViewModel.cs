@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Search
+﻿namespace Particular.ServiceInsight.Desktop.Search
 {
-    using System.Linq;
+    using System;
+    using System.Collections.Generic;
     using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.Filters;
+    using Caliburn.PresentationFramework.Screens;
     using Core.Settings;
+    using Events;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using Explorer.QueueExplorer;
+    using ExtensionMethods;
+    using MessageList;
+    using Models;
     using Settings;
+    using Startup;
+	using System.Linq;
 
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {

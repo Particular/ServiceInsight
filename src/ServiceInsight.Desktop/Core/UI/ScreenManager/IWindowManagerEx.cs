@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Forms;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.ViewModels;
-using Caliburn.PresentationFramework.Views;
-using Application = System.Windows.Application;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Forms;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.ViewModels;
+    using Caliburn.PresentationFramework.Views;
+    using Application = System.Windows.Application;
+
     public interface IDialogManager
     {
         FileDialogResult OpenFileDialog(FileDialogModel model);

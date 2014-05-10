@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.Desktop.Explorer;
-
-namespace NServiceBus.Profiler.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Events
 {
+    using Explorer;
+
     public class SelectedExplorerItemChanged
     {
         public SelectedExplorerItemChanged(ExplorerItem explorerItem)

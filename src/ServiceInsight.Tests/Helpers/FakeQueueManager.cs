@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Desktop.Core;
+    using Desktop.Models;
+
     public class FakeQueueManager : IQueueManagerAsync
     {
         public Dictionary<Queue, List<MessageInfo>> MessageQueue;
@@ -60,12 +60,12 @@ namespace NServiceBus.Profiler.Tests.Helpers
 
         public MessageBody GetMessageBody(Queue queue, string messageId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         Queue IQueueManager.CreatePrivateQueue(Queue queue, bool transactional)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         IList<MessageInfo> IQueueManager.GetMessages(Queue queue)
@@ -75,7 +75,7 @@ namespace NServiceBus.Profiler.Tests.Helpers
 
         public Queue CreatePublicQueue(Address address, bool transactional)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Queue CreatePrivateQueue(Address address, bool transactional)
@@ -118,7 +118,7 @@ namespace NServiceBus.Profiler.Tests.Helpers
 
         public int GetMessageCount(Queue queue)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

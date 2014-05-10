@@ -1,8 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for About.xaml
     /// </summary>

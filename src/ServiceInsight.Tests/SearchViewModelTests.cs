@@ -1,15 +1,14 @@
-﻿using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Startup;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
     using Desktop.Core.Settings;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Models;
+    using Desktop.Search;
+    using Desktop.Startup;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
 
     [TestFixture]
     public class SearchViewModelTests

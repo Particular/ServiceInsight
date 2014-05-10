@@ -1,10 +1,10 @@
-using System.Drawing;
-using System.Globalization;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
+    using System.Drawing;
+    using System.Globalization;
+    using Models;
+    using Properties;
+
     public class QueueExplorerItem : ExplorerItem
     {
         private string _displayName;

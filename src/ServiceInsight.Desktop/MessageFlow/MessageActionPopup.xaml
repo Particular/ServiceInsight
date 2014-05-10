@@ -1,4 +1,4 @@
-﻿<Grid x:Class="NServiceBus.Profiler.Desktop.MessageFlow.MessageActionPopup"
+﻿<Grid x:Class="Particular.ServiceInsight.Desktop.MessageFlow.MessageActionPopup"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
 {
+    using System.Collections.Generic;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+    using ExtensionMethods;
+    using HexViewer;
+    using JsonViewer;
+    using XmlViewer;
+
     public interface IMessageBodyViewModel : IScreen,
         IHandle<SelectedMessageChanged>
     {

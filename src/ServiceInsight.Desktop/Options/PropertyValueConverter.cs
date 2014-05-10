@@ -1,12 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Data;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Data;
+
     public class PropertyValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

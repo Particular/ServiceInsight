@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Input;
-using NServiceBus.Profiler.Desktop.Events;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using Events;
+
     /// <summary>
     /// Interaction logic for QueuesListView.xaml
     /// </summary>

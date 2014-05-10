@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using DevExpress.Xpf.Core;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
 {
+    using System.Windows;
+    using DevExpress.Xpf.Core;
+
     /// <summary>
     /// Interaction logic for MessageBodyView.xaml
     /// </summary>

@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.MessageList;
+    using Desktop.MessageProperties;
+    using Desktop.Models;
+    using Desktop.Search;
+    using Desktop.ServiceControl;
+    using ExceptionHandler;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class MessageListViewModelTests
     {

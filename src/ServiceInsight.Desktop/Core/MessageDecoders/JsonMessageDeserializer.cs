@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using RestSharp;
-using RestSharp.Deserializers;
-using RestSharp.Extensions;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+﻿namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text;
+    using RestSharp;
+    using RestSharp.Deserializers;
+    using RestSharp.Extensions;
+
     public class JsonMessageDeserializer : IDeserializer
     {
         public string RootElement { get; set; }

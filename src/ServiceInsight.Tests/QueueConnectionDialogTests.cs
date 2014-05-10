@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.Screens;
+    using Desktop.Core;
+    using Desktop.Shell;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class QueueConnectionDialogTests
     {

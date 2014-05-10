@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+﻿namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+
     public class BinaryObjectCloner
     {
         public static T Clone<T>(T instance)

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class Waiter
     {
         public TimeSpan UIInteractionTimeout = TimeSpan.FromSeconds(10);

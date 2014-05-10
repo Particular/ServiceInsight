@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using DevExpress.Xpf.Bars;
-using NServiceBus.Profiler.Desktop.Shell.Menu;
-
-namespace NServiceBus.Profiler.Desktop.Core.UI
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI
 {
+    using System.ComponentModel;
+    using System.Windows;
+    using DevExpress.Xpf.Bars;
+    using Shell.Menu;
+
     public class NotifyMenuOpeningBehavior : DependencyObject
     {
         public static readonly DependencyProperty NotifyMenuOpeningProperty = DependencyProperty.RegisterAttached("NotifyMenuOpening", typeof(bool), typeof(NotifyMenuOpeningBehavior), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsRender, OnNotifyMenuOpeningChanged));

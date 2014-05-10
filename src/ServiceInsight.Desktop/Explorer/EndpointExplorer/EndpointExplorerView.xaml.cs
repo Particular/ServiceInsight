@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-using NServiceBus.Profiler.Desktop.Events;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
+    using System;
+    using System.Windows.Input;
+    using Events;
+
     /// <summary>
     /// Interaction logic for QueuesListView.xaml
     /// </summary>

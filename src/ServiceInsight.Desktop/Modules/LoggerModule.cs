@@ -1,9 +1,9 @@
-﻿using Autofac;
-using Caliburn.Core.Logging;
-using NServiceBus.Profiler.Desktop.Logging;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using Autofac;
+    using Caliburn.Core.Logging;
+    using Logging;
+
     public class LoggerModule : Module
     {
         protected override void Load(ContainerBuilder builder)

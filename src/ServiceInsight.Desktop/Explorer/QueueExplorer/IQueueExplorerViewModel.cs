@@ -1,13 +1,13 @@
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.PresentationFramework.Views;
+    using Events;
+    using Models;
+
     public interface IQueueExplorerViewModel : 
         IExplorerViewModel,
         IScreen, 

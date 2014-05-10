@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using DevExpress.Xpf.Bars;
-using DevExpress.Xpf.Core;
-using DevExpress.Xpf.Core.Serialization;
-using DevExpress.Xpf.Docking;
-using DevExpress.Xpf.Docking.Base;
-using log4net;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.IO;
+    using System.Windows;
+    using Core.Settings;
+    using DevExpress.Xpf.Bars;
+    using DevExpress.Xpf.Core;
+    using DevExpress.Xpf.Core.Serialization;
+    using DevExpress.Xpf.Docking;
+    using DevExpress.Xpf.Docking.Base;
+    using ExtensionMethods;
+    using log4net;
+    using Settings;
+
     /// <summary>
     /// Interaction logic for Shell.xaml
     /// </summary>

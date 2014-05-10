@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using System;
+
     public interface IPerformanceHeaderViewModel : IHeaderInfoViewModel, IPropertyDataProvider
     {
         DateTime? TimeSent { get; }

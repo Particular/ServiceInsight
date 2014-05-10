@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Shell;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.PresentationFramework.Views;
+    using Core;
+    using Core.UI.ScreenManager;
+    using Events;
+    using ExtensionMethods;
+    using Models;
+    using Shell;
+
     [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {

@@ -1,16 +1,16 @@
-﻿using Autofac;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Autofac;
+    using Caliburn.PresentationFramework.Screens;
+    using Desktop.Core.Settings;
+    using Desktop.ServiceControl;
+    using Desktop.Settings;
+    using Desktop.Shell;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class ServiceControlConnectionDialogTests
     {

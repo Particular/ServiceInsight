@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using Caliburn.Core.Logging;
-
-namespace NServiceBus.Profiler.Desktop.Logging
+﻿namespace Particular.ServiceInsight.Desktop.Logging
 {
+    using System;
+    using System.Diagnostics;
+    using Caliburn.Core.Logging;
+
     public class TraceLogger : ILog
     {
         public void Info(string message)

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Diagnostics;
-using Autofac;
-using Castle.Core.Logging;
-using NServiceBus.Profiler.Desktop.Modules;
-using NServiceBus.Profiler.FunctionalTests.Infrastructure;
-using NServiceBus.Profiler.FunctionalTests.Parts;
-using NServiceBus.Profiler.FunctionalTests.ServiceControlStub;
-using NUnit.Framework;
-using TestStack.White;
-using TestStack.White.Configuration;
-using TestStack.White.InputDevices;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests
 {
+    using System;
+    using Autofac;
+    using Castle.Core.Logging;
+    using Desktop.Modules;
+    using Infrastructure;
+    using NUnit.Framework;
+    using Parts;
+    using ServiceControlStub;
+    using TestStack.White;
+    using TestStack.White.Configuration;
+    using TestStack.White.InputDevices;
+    using TestStack.White.UIItems.WindowItems;
+
     [TestFixture]
     public abstract class TestBase
     {

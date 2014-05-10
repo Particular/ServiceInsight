@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class XmlParser : BaseParser
     {
         protected static readonly char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };

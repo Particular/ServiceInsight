@@ -1,11 +1,10 @@
-﻿using Mindscape.WpfDiagramming;
-using Mindscape.WpfDiagramming.FlowDiagrams;
-using Mindscape.WpfDiagramming.Foundation;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
     using System;
+    using System.Windows.Input;
+    using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.FlowDiagrams;
+    using Mindscape.WpfDiagramming.Foundation;
 
     /// <summary>
     /// Interaction logic for MessageFlowView.xaml

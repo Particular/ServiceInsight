@@ -1,9 +1,9 @@
-﻿using Autofac;
-using Autofac.Core;
-using Caliburn.PresentationFramework.ApplicationModel;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using Autofac;
+    using Autofac.Core;
+    using Caliburn.PresentationFramework.ApplicationModel;
+
     public class EventAggregationAutoSubscriptionModule : Module
     {
         protected override void AttachToComponentRegistration(IComponentRegistry registry, IComponentRegistration registration)

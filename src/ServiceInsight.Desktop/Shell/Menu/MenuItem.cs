@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
+    using System.Drawing;
+    using System.Windows.Input;
+
     public class MenuItem : MenuItemBase
     {
         //TODO: Use caliburn actions and messages

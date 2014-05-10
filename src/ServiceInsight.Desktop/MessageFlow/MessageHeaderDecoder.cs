@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System.Collections.Generic;
+    using System.Text;
+    using Core.MessageDecoders;
+    using Models;
+
     public class MessageHeaderDecoder
     {
         public MessageHeaderDecoder(IContentDecoder<IList<HeaderInfo>> decoder, MessageBody message)

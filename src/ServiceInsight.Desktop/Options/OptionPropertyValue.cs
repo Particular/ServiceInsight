@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+
     public class OptionPropertyValue : IDataErrorInfo
     {
         private readonly PropertyInfo _propertyInfo;

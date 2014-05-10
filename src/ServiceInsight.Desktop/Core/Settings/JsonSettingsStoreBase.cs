@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using Newtonsoft.Json;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
     public abstract class JsonSettingsStoreBase : ISettingsStorage
     {
         public void Save<T>(string key, T settings)

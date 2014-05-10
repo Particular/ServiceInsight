@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+
     public static class ReflectionHelper
     {
          public static T GetAttribute<T>(this ICustomAttributeProvider provider, bool inherit = false) 

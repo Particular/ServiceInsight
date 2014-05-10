@@ -1,8 +1,8 @@
-﻿using System.Data.Entity.Design.PluralizationServices;
-using System.Globalization;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.Data.Entity.Design.PluralizationServices;
+    using System.Globalization;
+
     public static class GrammerExtensions
     {
         private static readonly PluralizationService Pluralizer;

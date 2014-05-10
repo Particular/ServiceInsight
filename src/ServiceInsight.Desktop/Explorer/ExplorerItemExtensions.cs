@@ -1,8 +1,8 @@
-﻿using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-
-namespace NServiceBus.Profiler.Desktop.Explorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer
 {
+    using EndpointExplorer;
+    using QueueExplorer;
+
     public static class ExplorerItemExtensions
     {
         public static T As<T>(this ExplorerItem explorerItem) where T : ExplorerItem

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Globalization;
-using System.Threading;
-using System.Windows.Data;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System.Threading;
+
     public class MessageDateTimeFormatProvider
     {
         static MessageDateTimeFormatProvider()

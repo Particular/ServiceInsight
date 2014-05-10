@@ -1,11 +1,11 @@
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
+namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.PresentationFramework.Views;
+    using Events;
+    using Models;
+
     public interface IXmlMessageViewModel : 
         IScreen,
         IViewAware,

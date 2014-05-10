@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+﻿namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
+    using Models;
+    using Newtonsoft.Json;
+
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {
         private readonly IContentDecoder<string> _stringDecoder;
@@ -49,6 +49,7 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
                     return new DecoderResult<IList<HeaderInfo>>(json, json != null);
                 }
             }
+// ReSharper disable once EmptyGeneralCatchClause
             catch //Swallow
             {
             }
@@ -67,6 +68,7 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
                     return new DecoderResult<IList<HeaderInfo>>(deserialized);
                 }
             }
+// ReSharper disable once EmptyGeneralCatchClause
             catch //Swallow
             {
             }

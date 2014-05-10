@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using NServiceBus.Profiler.Desktop.Models;
-using System;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Desktop.ServiceControl
+﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Models;
+    using Saga;
+
     public interface IServiceControl
     {
         Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);

@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System;
+    using System.IO;
+
     public static class LoggingConfig
     {
         public const string LogPattern = "%date - [%-5level] - %logger{1} - %message%newline";

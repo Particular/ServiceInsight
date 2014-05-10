@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using log4net;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System.Collections.Generic;
+    using log4net;
+    using Models;
+
     public class CommandLineArgParser : ICommandLineArgParser
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));

@@ -1,11 +1,10 @@
-﻿using System;
-using NServiceBus.Profiler.Desktop;
-using NUnit.Framework;
-using Shouldly;
-using Guard = NServiceBus.Profiler.Desktop.Guard;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using Desktop;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class GuardTests
     {

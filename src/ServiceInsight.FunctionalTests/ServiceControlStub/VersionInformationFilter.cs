@@ -1,8 +1,8 @@
-﻿using System.Web.Http.Filters;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
+    using System.Web.Http.Filters;
+    using Desktop.ServiceControl;
+
     public class VersionInformationFilter : ActionFilterAttribute
     {
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)

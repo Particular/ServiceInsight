@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System.Collections.Generic;
+
     public interface ISettingsStorage
     {
         void Save<T>(string key, T settings);

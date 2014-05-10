@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Events
 {
     public class BodyTabSelectionChanged
     {

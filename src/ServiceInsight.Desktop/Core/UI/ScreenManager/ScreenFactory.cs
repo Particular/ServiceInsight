@@ -1,7 +1,7 @@
-﻿using Autofac;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using Autofac;
+
     public class ScreenFactory : IScreenFactory
     {
         private readonly IContainer _container;

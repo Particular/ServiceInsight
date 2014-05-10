@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Desktop.Core;
+    using Desktop.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class QueueManagerTests
     {

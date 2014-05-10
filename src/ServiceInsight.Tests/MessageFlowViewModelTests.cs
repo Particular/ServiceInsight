@@ -1,20 +1,18 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Caliburn.PresentationFramework.ApplicationModel;
     using Desktop.Core.Settings;
-    using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-    using NServiceBus.Profiler.Desktop.MessageList;
+    using Desktop.Core.UI.ScreenManager;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.MessageFlow;
+    using Desktop.MessageList;
+    using Desktop.Models;
+    using Desktop.Search;
+    using Desktop.ServiceControl;
+    using ExceptionHandler;
+    using NSubstitute;
+    using NUnit.Framework;
 
     [TestFixture]
     public class MessageFlowViewModelTests

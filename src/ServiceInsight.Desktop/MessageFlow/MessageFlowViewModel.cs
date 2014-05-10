@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
     using Core.Settings;
-    using Settings;
-    using MessageList;
+    using Core.UI.ScreenManager;
+    using Events;
+    using ExceptionHandler;
     using Explorer.EndpointExplorer;
+    using MessageList;
+    using Mindscape.WpfDiagramming;
+    using Models;
+    using Search;
+    using ServiceControl;
+    using Settings;
 
     public interface IMessageFlowViewModel : IScreen, 
         IHandle<SelectedMessageChanged>

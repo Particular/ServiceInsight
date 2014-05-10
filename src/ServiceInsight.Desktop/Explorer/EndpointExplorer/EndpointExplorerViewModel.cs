@@ -1,21 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.PresentationFramework.Views;
+    using Core;
+    using Core.Settings;
+    using Events;
+    using ExtensionMethods;
+    using ServiceControl;
+    using Settings;
+    using Shell;
+    using Startup;
+
     [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {

@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Text;
-using System.Xml;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.IO;
+    using System.Text;
+    using System.Xml;
+
     public static class XmlDocumentExtensions
     {
          public static string GetFormatted(this XmlDocument document)

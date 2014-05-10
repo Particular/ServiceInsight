@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Diagnostics;
+
     [DebuggerDisplay("{Remaining}")]
     public class SourcePart
     {

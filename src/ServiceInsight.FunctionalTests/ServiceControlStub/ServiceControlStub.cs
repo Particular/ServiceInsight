@@ -1,11 +1,11 @@
-﻿using System;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
-using Castle.Core.Logging;
-using TestStack.White.Configuration;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
+    using System;
+    using System.Web.Http;
+    using System.Web.Http.SelfHost;
+    using Castle.Core.Logging;
+    using TestStack.White.Configuration;
+
     public class ServiceControl : IDisposable
     {
         private readonly ILogger _logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));

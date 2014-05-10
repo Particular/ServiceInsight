@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Caliburn.Core;
-using Caliburn.Core.Behaviors;
-using Caliburn.Core.InversionOfControl;
-using Autofac;
-using Autofac.Builder;
-using Autofac.Core;
-using Autofac.Core.Activators.ProvidedInstance;
-using Autofac.Core.Registration;
-using IContainer = Autofac.IContainer;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Autofac;
+    using Autofac.Builder;
+    using Autofac.Core;
+    using Autofac.Core.Activators.ProvidedInstance;
+    using Autofac.Core.Registration;
+    using Caliburn.Core;
+    using Caliburn.Core.Behaviors;
+    using Caliburn.Core.InversionOfControl;
+    using IContainer = Autofac.IContainer;
+
     /// <summary>
     /// An adapter allowing an <see cref="IContainer"/> to plug into Caliburn via <see cref="IServiceLocator"/> and <see cref="IRegistry"/>.
     /// </summary>

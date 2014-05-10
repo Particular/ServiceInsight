@@ -1,33 +1,32 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.MessageViewers;
-using NServiceBus.Profiler.Desktop.Options;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Startup;
-using System.Diagnostics;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.Diagnostics;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Threading;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Filters;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.Licensing;
+    using Core.Settings;
+    using Core.UI.ScreenManager;
+    using Events;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using Explorer.QueueExplorer;
+    using ExtensionMethods;
+    using LogWindow;
+    using MessageFlow;
     using MessageHeaders;
+    using MessageList;
+    using MessageProperties;
+    using MessageViewers;
+    using Options;
+    using Saga;
+    using Settings;
+    using Startup;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {

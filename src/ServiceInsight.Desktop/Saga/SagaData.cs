@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
     using System;
     using System.Collections.Generic;

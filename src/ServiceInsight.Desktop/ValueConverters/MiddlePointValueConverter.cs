@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Data;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Data;
+
     public class MiddlePointValueConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter,

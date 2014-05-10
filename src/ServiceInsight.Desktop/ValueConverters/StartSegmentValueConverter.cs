@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Data;
-using Mindscape.WpfDiagramming.Foundation;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Data;
+    using Mindscape.WpfDiagramming.Foundation;
+
     public class StartSegmentValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

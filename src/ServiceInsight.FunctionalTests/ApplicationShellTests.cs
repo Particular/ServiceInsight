@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace NServiceBus.Profiler.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class ApplicationShellTests : TestBase
     {

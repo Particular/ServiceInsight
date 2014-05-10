@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Automation;
-using TestStack.White.UIItems.WindowItems;
-using TestStack.White.Utility;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using System;
+    using System.Windows.Automation;
+    using TestStack.White.UIItems.WindowItems;
+    using TestStack.White.Utility;
+
     public class ShellScreen : ProfilerElement
     {
         public ShellScreen(Window mainWindow) : base(mainWindow)

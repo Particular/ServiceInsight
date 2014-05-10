@@ -1,4 +1,4 @@
-namespace NServiceBus.Profiler.Desktop.CodeParser
+namespace Particular.ServiceInsight.Desktop.CodeParser
 {
     public enum LexemType
     {

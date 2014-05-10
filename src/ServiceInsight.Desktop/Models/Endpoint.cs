@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Endpoint
     {
         public string Name { get; set; }

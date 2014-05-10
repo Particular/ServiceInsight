@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Documents;
+
     public class CodeLexem
     {
         public CodeLexem(string text)

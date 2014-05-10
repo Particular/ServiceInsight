@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Messaging;
-using System.Threading.Tasks;
-using System.Transactions;
-using log4net;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core
+﻿namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Messaging;
+    using System.Threading.Tasks;
+    using System.Transactions;
+    using ExtensionMethods;
+    using log4net;
+    using Models;
+
     public class MSMQueueOperations : IQueueOperationsAsync
     {
         private readonly IMapper _mapper;

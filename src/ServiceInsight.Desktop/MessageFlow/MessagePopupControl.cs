@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls.Primitives;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+
     public class MessagePopupControl : Popup
     {
         protected override void OnInitialized(EventArgs e)

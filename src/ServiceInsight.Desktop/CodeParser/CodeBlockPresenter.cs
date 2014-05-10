@@ -1,7 +1,7 @@
-﻿using System.Windows.Documents;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System.Windows.Documents;
+
     public class CodeBlockPresenter
     {
         public CodeBlockPresenter()

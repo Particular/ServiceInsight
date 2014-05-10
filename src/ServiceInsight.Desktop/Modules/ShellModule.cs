@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using Autofac;
-using ExceptionHandler;
-using ExceptionHandler.Settings;
-using ExceptionHandler.Wpf;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Options;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using Autofac;
+    using Core.UI.ScreenManager;
+    using ExceptionHandler;
+    using ExceptionHandler.Settings;
+    using ExceptionHandler.Wpf;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using Explorer.QueueExplorer;
+    using MessageFlow;
+    using Options;
+    using Search;
+    using Shell;
+    using Startup;
+
     public class ShellModule : Module
     {
         protected override void Load(ContainerBuilder builder)

@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
     public enum MessageIcon
     {

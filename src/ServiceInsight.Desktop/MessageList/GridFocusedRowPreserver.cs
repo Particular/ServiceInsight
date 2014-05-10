@@ -1,9 +1,9 @@
-﻿using NServiceBus.Profiler.Desktop.Models;
-using System;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System;
+    using System.Linq;
+    using Models;
+
     public class GridFocusedRowPreserver<T> : IDisposable where T : MessageInfo
     {
         private readonly T _currentItem;

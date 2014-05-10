@@ -1,17 +1,15 @@
-﻿using Caliburn.PresentationFramework;
-using Newtonsoft.Json;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Xml;
+    using System.Xml.Linq;
+    using Caliburn.PresentationFramework;
+    using Models;
+    using ServiceControl;
+
     public class SagaMessage : PropertyChangedBase
     {
         public Guid MessageId { get; set; }

@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using NServiceBus.Profiler.Desktop.CodeParser;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Desktop.CodeParser;
+    using NUnit.Framework;
+    using System.Linq;
+    using Shouldly;
+
     [TestFixture]
     public class JsonParserTests
     {

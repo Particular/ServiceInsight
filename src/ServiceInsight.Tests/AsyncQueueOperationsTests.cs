@@ -1,11 +1,11 @@
-﻿using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Tests.Helpers;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Desktop.Core;
+    using Desktop.Models;
+    using Helpers;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     [Category("Integration")]
     public class AsyncQueueOperationsTests

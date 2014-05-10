@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.Serialization;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Runtime.Serialization;
+
     ///<summary>
     /// Abstraction for an address on the NServiceBus network.
     ///</summary>

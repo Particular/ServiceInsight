@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Input;
+    using Caliburn.PresentationFramework.Screens;
+
     public class DialogViewModel : Screen
     {
         private Dialog _view;

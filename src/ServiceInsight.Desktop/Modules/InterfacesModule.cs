@@ -1,11 +1,11 @@
-﻿using System;
-using Autofac;
-using Castle.DynamicProxy;
-using NServiceBus.Profiler.Desktop.Core.Infrastructure;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System;
+    using Autofac;
+    using Castle.DynamicProxy;
+    using Core.Infrastructure;
+    using Startup;
+
     public class InterfacesModule : Module
     {
         private readonly ProxyGenerator _generator;

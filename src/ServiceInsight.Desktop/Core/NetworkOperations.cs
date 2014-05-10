@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Core
+﻿namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Threading.Tasks;
+
     public class NetworkOperations : INetworkOperations
     {
         public Task<IList<string>> GetMachines()

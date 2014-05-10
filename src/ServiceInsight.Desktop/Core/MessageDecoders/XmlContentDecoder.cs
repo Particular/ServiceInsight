@@ -1,9 +1,9 @@
-using System;
-using System.Text;
-using System.Xml;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
+    using System.Text;
+    using System.Xml;
+
     public class XmlContentDecoder : IContentDecoder<XmlDocument>
     {
         public DecoderResult<XmlDocument> Decode(byte[] content)

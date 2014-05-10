@@ -1,8 +1,8 @@
-﻿using System.Windows.Documents;
-using NServiceBus.Profiler.Desktop.CodeParser;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
+    using System.Windows.Documents;
+    using CodeParser;
+
     /// <summary>
     /// Interaction logic for JsonMessageView.xaml
     /// </summary>

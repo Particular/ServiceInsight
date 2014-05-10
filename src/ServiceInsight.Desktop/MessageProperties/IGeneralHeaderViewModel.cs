@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
     public interface IGeneralHeaderViewModel : IPropertyDataProvider
     {

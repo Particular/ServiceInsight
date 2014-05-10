@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
     public class MenuItemDataTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

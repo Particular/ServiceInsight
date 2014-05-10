@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.IO;
+    using System.Text;
+
     public static class StreamHelper
     {
         public static byte[] GetAsBytes(this Stream stream)

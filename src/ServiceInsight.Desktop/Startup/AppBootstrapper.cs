@@ -1,20 +1,19 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Threading;
-using Autofac;
-using Caliburn.Core.InversionOfControl;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Conventions;
-using DevExpress.Xpf.Bars;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Shell;
-using IContainer = Autofac.IContainer;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System;
     using System.Globalization;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Markup;
+    using System.Windows.Threading;
+    using Autofac;
+    using Caliburn.Core.InversionOfControl;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Conventions;
+    using DevExpress.Xpf.Bars;
+    using ExceptionHandler;
+    using Shell;
+    using IContainer = Autofac.IContainer;
 
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {

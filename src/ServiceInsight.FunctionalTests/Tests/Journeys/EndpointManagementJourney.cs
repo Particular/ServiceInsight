@@ -1,10 +1,10 @@
-﻿using NServiceBus.Profiler.FunctionalTests.Parts;
-using NServiceBus.Profiler.FunctionalTests.ServiceControlStub;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.FunctionalTests.Tests.Journeys
+﻿namespace Particular.ServiceInsight.FunctionalTests.Tests.Journeys
 {
+    using NUnit.Framework;
+    using Parts;
+    using ServiceControlStub;
+    using Shouldly;
+
     public class EndpointManagementJourney : ProfilerTestBase
     {
         public ServiceControlConnectionDialog Dialog { get; set; }

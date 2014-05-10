@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Autofac;
-using Autofac.Builder;
-using Autofac.Core;
-using ExceptionHandler.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System;
+    using System.Collections.Generic;
+    using Autofac;
+    using Autofac.Builder;
+    using Autofac.Core;
+    using ExceptionHandler.Settings;
+
     public class SettingsSource : IRegistrationSource
     {
         public IEnumerable<IComponentRegistration> RegistrationsFor(Service service, Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)

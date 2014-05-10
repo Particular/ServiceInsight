@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace NServiceBus.Profiler.Desktop
+﻿namespace Particular.ServiceInsight.Desktop
 {
+    using System;
+    using System.Linq.Expressions;
+
     public static class Guard
     {
         /// <summary>

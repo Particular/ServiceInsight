@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+﻿namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class AsyncHelper
     {
         public static void Run(Action asyncMethod)

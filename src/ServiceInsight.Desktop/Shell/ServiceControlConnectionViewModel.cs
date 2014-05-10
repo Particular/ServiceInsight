@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Autofac;
+    using Caliburn.PresentationFramework.Filters;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.Settings;
+    using ServiceControl;
+    using Settings;
+
     public class ServiceControlConnectionViewModel : Screen
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";

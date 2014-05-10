@@ -1,8 +1,8 @@
-﻿using System.Messaging;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core
+﻿namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System.Messaging;
+    using Models;
+
     public interface IMapper
     {
         Queue MapQueue(MessageQueue source);

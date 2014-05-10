@@ -1,8 +1,8 @@
-using System.Drawing;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.Explorer
+namespace Particular.ServiceInsight.Desktop.Explorer
 {
+    using System.Drawing;
+    using Properties;
+
     public class FolderExplorerItem : ExplorerItem
     {
         public FolderExplorerItem(string name) : base(name)

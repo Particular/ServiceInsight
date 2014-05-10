@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
+
     public static class ElementExtensions
     {
         public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj) where T : DependencyObject

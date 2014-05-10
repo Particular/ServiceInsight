@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using Autofac;
-using Caliburn.Core;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using SettingsProvider = NServiceBus.Profiler.Desktop.Core.Settings.SettingsProvider;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using Autofac;
+    using Caliburn.Core;
+    using Core.Settings;
+    using SettingsProvider = Core.Settings.SettingsProvider;
+
     public class SettingsModule : Module
     {
         protected override void Load(ContainerBuilder builder)

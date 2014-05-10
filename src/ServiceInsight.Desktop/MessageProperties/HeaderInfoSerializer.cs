@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
-using DevExpress.Xpf.Core;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Serialization;
+    using DevExpress.Xpf.Core;
+    using Models;
+
     public class HeaderInfoSerializer : IHeaderInfoSerializer
     {
         public string Serialize(IList<HeaderInfo> headers)

@@ -1,15 +1,15 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+    using Models;
+    using ServiceControl;
+
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
     {
         private IEventAggregator _eventAggregator;

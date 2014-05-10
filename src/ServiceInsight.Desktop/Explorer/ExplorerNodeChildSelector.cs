@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using DevExpress.Xpf.Grid;
-
-namespace NServiceBus.Profiler.Desktop.Explorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer
 {
+    using System.Collections;
+    using DevExpress.Xpf.Grid;
+
     public class ExplorerNodeChildSelector : IChildNodesSelector
     {
         public IEnumerable SelectChildren(object item)

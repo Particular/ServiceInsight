@@ -1,8 +1,8 @@
-using System.IO;
-using System.IO.IsolatedStorage;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System.IO;
+    using System.IO.IsolatedStorage;
+
     public class IsolatedStorageSettingsStore : JsonSettingsStoreBase
     {
         private const IsolatedStorageScope Scope = IsolatedStorageScope.User     |

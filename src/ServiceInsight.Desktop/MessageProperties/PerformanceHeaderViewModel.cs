@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Core;
+    using Core.MessageDecoders;
+    using ExtensionMethods;
+    using Models;
+
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPerformanceHeaderViewModel
     {
         public PerformanceHeaderViewModel(

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using System.Linq;
+    using Desktop.Core;
+    using Desktop.Models;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     [Category("Integration")]
     [Ignore] //Should be removed eventually

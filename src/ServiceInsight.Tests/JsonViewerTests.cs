@@ -1,10 +1,10 @@
-﻿using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Desktop.MessageViewers.JsonViewer;
+    using Desktop.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class JsonViewerTests
     {

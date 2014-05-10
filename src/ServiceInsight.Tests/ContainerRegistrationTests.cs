@@ -1,12 +1,12 @@
-﻿using System;
-using Autofac;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using Autofac;
+    using Desktop.Shell;
+    using Desktop.Startup;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class ContainerRegistrationTests
     {

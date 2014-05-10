@@ -1,9 +1,9 @@
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+
     public interface IHeaderInfoViewModel : 
         IScreen,
         IHandle<SelectedExplorerItemChanged>,

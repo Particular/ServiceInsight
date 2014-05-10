@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     public class HeaderInfo
     {

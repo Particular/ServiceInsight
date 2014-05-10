@@ -8,7 +8,7 @@
     <ProjectGuid>{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.Profiler.Desktop</RootNamespace>
+    <RootNamespace>Particular.ServiceInsight.Desktop</RootNamespace>
     <AssemblyName>Particular.ServiceInsight</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>

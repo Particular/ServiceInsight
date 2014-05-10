@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+    using System.Collections.Generic;
+
     public static class CollectionExtensions
     {
         public static void ForEach<T>(this IList<T> list, Action<T> action)

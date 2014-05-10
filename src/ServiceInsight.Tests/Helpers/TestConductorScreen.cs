@@ -1,8 +1,8 @@
-using System;
-using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System;
+    using Caliburn.PresentationFramework.Screens;
+
     public class TestConductorScreen : Conductor<IScreen>
     {
         protected override void OnDeactivate(bool close)

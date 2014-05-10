@@ -1,18 +1,17 @@
-using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Reflection;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Core;
+    using ExceptionHandler;
+    using ExtensionMethods;
+    using ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {

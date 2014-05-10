@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core
+namespace Particular.ServiceInsight.Desktop.Core
 {
+    using System.Collections.Generic;
+    using Models;
+
     public interface IQueueOperations
     {
         IList<Queue> GetQueues(string machineName);

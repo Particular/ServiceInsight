@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+
     public static class EnumExtensions
     {
         public static T ParseEnum<T>(this string value)

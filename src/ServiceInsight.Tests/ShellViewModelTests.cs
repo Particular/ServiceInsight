@@ -1,33 +1,31 @@
-﻿using System;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.MessageViewers;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Desktop;
+    using Desktop.App_Packages.Particular.Licensing;
+    using Desktop.Core.Licensing;
+    using Desktop.Core.Settings;
+    using Desktop.Core.UI.ScreenManager;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Explorer.QueueExplorer;
+    using Desktop.LogWindow;
+    using Desktop.MessageFlow;
     using Desktop.MessageHeaders;
-
-    using Particular.Licensing;
+    using Desktop.MessageList;
+    using Desktop.MessageProperties;
+    using Desktop.MessageViewers;
+    using Desktop.Models;
+    using Desktop.Saga;
+    using Desktop.Settings;
+    using Desktop.Shell;
+    using Desktop.Startup;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
 
     public interface IShellViewStub : IShellView
     {

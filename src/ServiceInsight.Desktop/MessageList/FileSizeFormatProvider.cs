@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System;
+
     public class FileSizeFormatProvider : IFormatProvider, ICustomFormatter
     {
         public object GetFormat(Type formatType)

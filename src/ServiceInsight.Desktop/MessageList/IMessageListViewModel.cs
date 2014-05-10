@@ -1,15 +1,15 @@
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Shell.Menu;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Events;
+    using Explorer;
+    using Models;
+    using Search;
+    using Shell;
+    using Shell.Menu;
+
     public interface IMessageListViewModel : IScreen, 
         IHaveContextMenu,
         ITableViewModel<StoredMessage>,

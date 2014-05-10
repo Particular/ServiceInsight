@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Threading.Tasks;
+    using Desktop.Core;
+    using Desktop.ServiceControl;
+    using Desktop.Shell;
+    using Helpers;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class AboutViewModelTests
     {

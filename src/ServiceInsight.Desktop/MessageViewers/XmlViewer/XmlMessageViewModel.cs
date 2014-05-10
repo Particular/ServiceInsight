@@ -1,14 +1,14 @@
-﻿using System.Text;
-using System.Xml;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
+    using System.Text;
+    using System.Xml;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.MessageDecoders;
+    using Events;
+    using ExceptionHandler;
+    using ExtensionMethods;
+    using Models;
+
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
         private readonly IContentDecoder<XmlDocument> _xmlDecoder;

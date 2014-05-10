@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows.Shapes;
-using Mindscape.WpfDiagramming;
-using Mindscape.WpfDiagramming.Foundation;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using Mindscape.WpfDiagramming;
+
     public class CommandConnection : DiagramConnection
     {
         public CommandConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)

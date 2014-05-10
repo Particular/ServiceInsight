@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Caliburn.PresentationFramework.Filters;
+    using Caliburn.PresentationFramework.Screens;
+    using Core;
+    using Explorer.QueueExplorer;
+    using ExtensionMethods;
+    using Models;
+
     public interface IQueueCreationViewModel : IScreen, IWorkTracker
     {
         string QueueName { get; set; }

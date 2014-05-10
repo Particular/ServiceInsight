@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
+    using System.Threading.Tasks;
+
     public static class AsyncTask
     {
         public static readonly Task DefaultCompleted = FromResult(default(AsyncVoid));

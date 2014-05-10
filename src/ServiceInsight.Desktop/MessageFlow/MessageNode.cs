@@ -1,12 +1,12 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.Models;
-using System;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows;
+    using Mindscape.WpfDiagramming;
+    using Models;
+
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {

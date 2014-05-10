@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.FunctionalTests.Parts;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.FunctionalTests.Tests.Journeys
+﻿namespace Particular.ServiceInsight.FunctionalTests.Tests.Journeys
 {
+    using System.Linq;
+    using Desktop.Core;
+    using Desktop.Models;
+    using NUnit.Framework;
+    using Parts;
+
     public class QueueManagementJourney : ProfilerTestBase
     {
         public IQueueManager QueueManager { get; set; }

@@ -1,9 +1,9 @@
-﻿namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    using Caliburn.PresentationFramework;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Caliburn.PresentationFramework;
 
     public class SagaUpdate : PropertyChangedBase
     {

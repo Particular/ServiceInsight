@@ -1,7 +1,5 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
+﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
-    using System.Linq;
-
     public interface IMessageHeadersView
     {
         void AutoFit();

@@ -1,4 +1,4 @@
-namespace NServiceBus.Profiler.Desktop.Explorer.QueueExplorer
+namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 {
     public interface IQueueConnectionProvider
     {

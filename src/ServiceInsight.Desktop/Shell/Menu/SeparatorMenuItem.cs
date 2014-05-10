@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Shell.Menu
+﻿namespace Particular.ServiceInsight.Desktop.Shell.Menu
 {
     public class SeparatorMenuItem : MenuItemBase
     {

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-
-namespace NServiceBus.Profiler.Desktop.Settings
+﻿namespace Particular.ServiceInsight.Desktop.Settings
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+
     public class ProfilerSettings : SettingBase
     {
         private int _autoRefresh;

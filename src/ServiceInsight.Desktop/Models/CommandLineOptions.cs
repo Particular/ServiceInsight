@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using RestSharp.Contrib;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Text.RegularExpressions;
+    using RestSharp.Contrib;
+
     public class CommandLineOptions
     {
         public const string ApplicationScheme = "si://";

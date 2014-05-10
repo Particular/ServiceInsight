@@ -1,7 +1,7 @@
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System.Text;
+
     public class StringContentDecoder : IContentDecoder<string>
     {
         public DecoderResult<string> Decode(byte[] content)

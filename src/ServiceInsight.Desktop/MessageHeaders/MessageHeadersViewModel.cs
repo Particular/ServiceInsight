@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
+﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     using System.Linq;
     using Caliburn.PresentationFramework;
@@ -15,18 +15,16 @@
 
     public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
     {
-        private readonly IMenuItem _copyAllHeaders;
         private IMessageHeadersView _view;
         private bool _autoFitted;
 
         public MessageHeadersViewModel()
         {
             KeyValues = new BindableCollection<MessageHeaderKeyValue>();
-            _copyAllHeaders = new MenuItem("Copy To Clipboard", new RelayCommand(CopyHeadersToClipboard));
 
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                _copyAllHeaders
+                new MenuItem("Copy To Clipboard", new RelayCommand(CopyHeadersToClipboard))
             };
         }
 

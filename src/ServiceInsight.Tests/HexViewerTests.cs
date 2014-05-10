@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using System.Text;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Text;
+    using Desktop.Events;
+    using Desktop.MessageViewers.HexViewer;
+    using Desktop.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+    using System.Linq;
+
     [TestFixture]
     public class HexViewerTests
     {

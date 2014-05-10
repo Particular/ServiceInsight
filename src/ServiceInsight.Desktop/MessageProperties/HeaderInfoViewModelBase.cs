@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using System;
+    using System.Collections.Generic;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.Screens;
+    using Core;
+    using Core.MessageDecoders;
+    using Events;
+    using Explorer;
+    using Explorer.QueueExplorer;
+    using Models;
+
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
         private readonly IContentDecoder<IList<HeaderInfo>> _decoder;

@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
     public interface IEnvironment
     {

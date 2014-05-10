@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using Autofac;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System;
+    using System.IO;
+    using Autofac;
+    using Startup;
+
     public class PluginModule : Module
     {
         protected override void Load(ContainerBuilder builder)

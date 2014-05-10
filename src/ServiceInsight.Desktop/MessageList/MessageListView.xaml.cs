@@ -1,14 +1,14 @@
-﻿using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
-using DevExpress.Data;
-using DevExpress.Xpf.Core;
-using DevExpress.Xpf.Core.Native;
-using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using DevExpress.Data;
+    using DevExpress.Xpf.Core;
+    using DevExpress.Xpf.Core.Native;
+    using DevExpress.Xpf.Grid;
+    using ExtensionMethods;
+
     public interface IMessageListView
     {
     }

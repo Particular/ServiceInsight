@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Xml;
-using Autofac;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
+    using System.Collections.Generic;
+    using System.Xml;
+    using Autofac;
+    using Core;
+    using Core.Licensing;
+    using Core.MessageDecoders;
+    using MessageProperties;
+    using Models;
+    using ServiceControl;
+    using Startup;
+
     public class CoreModule : Module
     {
         protected override void Load(ContainerBuilder builder)

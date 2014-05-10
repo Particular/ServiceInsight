@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Tests.Helpers
+﻿namespace Particular.ServiceInsight.Tests.Helpers
 {
+    using System.Threading.Tasks;
+
     public static class NSubstituteHelper
     {
         public static void IgnoreAwait(this Task task)

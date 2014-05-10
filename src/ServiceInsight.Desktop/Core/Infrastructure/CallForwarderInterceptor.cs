@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using Castle.DynamicProxy;
-
-namespace NServiceBus.Profiler.Desktop.Core.Infrastructure
+﻿namespace Particular.ServiceInsight.Desktop.Core.Infrastructure
 {
+    using System;
+    using System.Linq;
+    using Castle.DynamicProxy;
+
     public class CallForwarderInterceptor : IInterceptor
     {
         private readonly object _target;

@@ -1,11 +1,11 @@
-﻿using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
-using TestStack.White.UIItems.WindowStripControls;
-using TestStack.White.UIItems.WPFUIItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.WindowItems;
+    using TestStack.White.UIItems.WindowStripControls;
+    using TestStack.White.UIItems.WPFUIItems;
+
     public class MainMenu : ProfilerElement
     {
         public MainMenu(Window mainWindow) : base(mainWindow)

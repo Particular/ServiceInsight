@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System.Collections.ObjectModel;
+    using System.Windows;
+
     public partial class EditableListBox
     {
         public EditableListBox()

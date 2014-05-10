@@ -1,33 +1,29 @@
-﻿using System;
-using System.Messaging;
-using System.Windows;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.ViewModels;
-using ExceptionHandler;
-using ExceptionHandler.Wpf;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.Messaging;
+    using System.Windows;
+    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.PresentationFramework.ViewModels;
+    using Core.UI.ScreenManager;
+    using Events;
+    using ExceptionHandler;
+    using ExceptionHandler.Wpf;
+
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
         private readonly IWindowManagerEx _windowManager;
-        private readonly IAppCommands _appCommands;
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellViewModel _shell;
 
         public DefaultExceptionHandler(
             IWindowManagerEx windowManager, 
             IViewModelFactory screenFactory,
-            IAppCommands appCommands, 
             IEventAggregator eventAggregator,
             IShellViewModel shell) 
             : base(screenFactory.Create<IExceptionViewModel>())
         {
             _windowManager = windowManager;
-            _appCommands = appCommands;
             _eventAggregator = eventAggregator;
             _shell = shell;
         }
@@ -44,11 +40,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 ShowWarning(rootError);
             }
-            else if (IsHardError(rootError))
-            {
-                ShowError(rootError);
-                _appCommands.ShutdownImmediately();
-            }
             else
             {
                 base.Handle(error);
@@ -61,11 +52,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 _eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
             }
-        }
-
-        private bool IsHardError(Exception rootError)
-        {
-            return false;
         }
 
         private bool IsIgnoredError(Exception rootError)

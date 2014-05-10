@@ -1,13 +1,7 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System.Diagnostics;
+
     [DebuggerDisplay("Type={ExceptionType},Message={Message}")]
     public class ExceptionDetails : IExceptionDetails
     {

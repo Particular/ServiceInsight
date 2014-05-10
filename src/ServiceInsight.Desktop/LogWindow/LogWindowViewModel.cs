@@ -1,10 +1,10 @@
-﻿using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.UI;
-using NServiceBus.Profiler.Desktop.Shell.Menu;
-
-namespace NServiceBus.Profiler.Desktop.LogWindow
+﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
+    using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.Screens;
+    using Core.UI;
+    using Shell.Menu;
+
     public class LogWindowViewModel : Screen, ILogWindowViewModel
     {
         private ILogWindowView _view;

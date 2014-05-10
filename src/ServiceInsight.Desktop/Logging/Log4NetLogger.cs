@@ -1,8 +1,8 @@
-﻿using System;
-using Caliburn.Core.Logging;
-
-namespace NServiceBus.Profiler.Desktop.Logging
+﻿namespace Particular.ServiceInsight.Desktop.Logging
 {
+    using System;
+    using Caliburn.Core.Logging;
+
     public class Log4NetLogger : ILog
     {
         private readonly log4net.ILog _logger;
