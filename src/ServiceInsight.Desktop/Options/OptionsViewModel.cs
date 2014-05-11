@@ -56,7 +56,7 @@
             _settingsProvider.SaveSettings(UsageReporting);
         }
 
-        public void Close()
+        public void Exit()
         {
             TryClose(false);
         }

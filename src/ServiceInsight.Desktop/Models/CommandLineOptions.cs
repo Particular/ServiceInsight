@@ -14,6 +14,7 @@
         public string EndpointName { get; private set; }
         public int AutoRefreshRate { get; private set; }
         public bool ShouldAutoRefresh { get; private set; }
+        public bool ResetLayout { get; private set; }
         
         public void SetEndpointUri(string value)
         {
@@ -46,6 +47,11 @@
         {
             AutoRefreshRate = int.Parse(value);
             ShouldAutoRefresh = true;
+        }
+
+        public void SetResetLayout(bool value)
+        {
+            ResetLayout = true;
         }
 
         private string Decode(string encodedString)

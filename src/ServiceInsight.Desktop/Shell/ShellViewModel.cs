@@ -108,12 +108,18 @@
 
         private void SaveLayout()
         {
-            View.OnSaveLayout(_settingsProvider);
+            if (!_comandLineArgParser.ParsedOptions.ResetLayout)
+            {
+                View.OnSaveLayout(_settingsProvider);
+            }
         }
 
         private void RestoreLayout()
         {
-            View.OnRestoreLayout(_settingsProvider);
+            if (!_comandLineArgParser.ParsedOptions.ResetLayout)
+            {
+                View.OnRestoreLayout(_settingsProvider);
+            }
         }
 
         public void ResetLayout()

@@ -77,6 +77,9 @@
                 case "autorefresh":
                     ParsedOptions.SetAutoRefresh(value);
                     break;
+                case "resetlayout":
+                    ParsedOptions.SetResetLayout(bool.Parse(value));
+                    break;
                 default:
                     AddUnsupportedKey(key);
                     break;

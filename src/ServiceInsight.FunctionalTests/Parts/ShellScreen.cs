@@ -15,6 +15,8 @@
 
         public LayoutManager LayoutManager { get; set; }
 
+        public StatusBar StatusBar { get; set; }
+
         public void WaitWhileBusy()
         {
             Retry.For(ShellIsBusy, isBusy => isBusy, TimeSpan.FromSeconds(10));
@@ -25,6 +27,7 @@
             var currentPropertyValue = MainWindow.AutomationElement.GetCurrentPropertyValue(AutomationElement.HelpTextProperty);
             return currentPropertyValue != null && ((string)currentPropertyValue).Contains("Busy");
         }
+
 
     }
 }

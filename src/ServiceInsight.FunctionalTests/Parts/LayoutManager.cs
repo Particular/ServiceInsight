@@ -2,10 +2,9 @@
 {
     using System.Threading;
     using System.Windows;
-    using Extensions;
+    using Shouldly;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
-    using TestStack.White.UIItems.TreeItems;
     using TestStack.White.UIItems.WindowItems;
 
     public class LayoutManager : ProfilerElement
@@ -36,25 +35,13 @@
             Mouse.Click();
         }
 
-        public void ActivateQueueExplorer()
-        {
-            var queueExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("QueueExplorer"));
-            var computerNode = (TreeNode)queueExplorer.Get(SearchCriteria.ByText("hadi-pc"));
-            
-            computerNode.Focus();
-            computerNode.CollapseNode();
-            computerNode.ExpandNode();
-        }
-
         public void ActivateEndpointExplorer()
         {
-            var endpoint = ServiceControlStub.ServiceControl.StubServiceUrl;
-            var queueExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("QueueExplorer"));
-            var computerNode = (TreeNode)queueExplorer.Get(SearchCriteria.ByText(endpoint));
+            var endpointExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
 
-            computerNode.Focus();
-            computerNode.CollapseNode();
-            computerNode.ExpandNode();
+            endpointExplorer.ShouldNotBe(null);
+
+            Dock(endpointExplorer);
         }
     }
 }

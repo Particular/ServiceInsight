@@ -9,10 +9,9 @@
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
 
-    public class ProfilerConfiguration
+    public class ProfilerConfiguration          
     {
         private const int ExtraIdleWaitSecs = 3;
-        private const string MainWindowTitle = "ServiceInsight for NServiceBus";
         private const string ApplicationProcess = "Particular.ServiceInsight.exe";
 
         public Application LaunchApplication()
@@ -33,8 +32,7 @@
         {
             WaitForApplicationIdle(application);
             var mainWindow = application.GetWindow(SearchCriteria.ByAutomationId("ShellWindow"), InitializeOption.WithCache);
-            //var mainWindowAdapter = new ProxyGenerator().CreateInterfaceProxyWithoutTarget<IMainWindow>(new ForwardIfExistsInterceptor(mainWindow));
-            //return mainWindowAdapter;
+
             return mainWindow;
         }
 

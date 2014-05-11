@@ -6,8 +6,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.Options"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              ResizeMode="NoResize" ShowInTaskbar="False"
              mc:Ignorable="d" 
              Width="570" Height="400"
@@ -79,7 +77,7 @@
 
             <Button Style="{StaticResource DialogButton}"
                     IsCancel="True"
-                    x:Name="Close"
+                    x:Name="Exit"
                     Content="Close"
                     Grid.Column="2">
                 <Button.Margin>

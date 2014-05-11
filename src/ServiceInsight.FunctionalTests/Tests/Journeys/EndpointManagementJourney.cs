@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Tests.Journeys
 {
+    using Desktop.Shell;
     using NUnit.Framework;
     using Parts;
     using ServiceControlStub;
@@ -12,16 +13,16 @@
         [Test]
         public void Can_connect_to_service_control_stub()
         {
-            Shell.LayoutManager.ActivateQueueExplorer();
-
             Shell.MainMenu.ToolsMenu.Click();
             Shell.MainMenu.ConnectToServiceControl.Click();
 
             Dialog.Activate();
-            Dialog.ServiceUrl.EditableText = ServiceControl.StubServiceUrl + "/api";
+            Dialog.ServiceUrl.EditableText = ServiceControl.GetUrl();
             Dialog.Okay.Click();
 
             Wait.For(() => Dialog.IsClosed.ShouldBe(true));
+
+            Shell.StatusBar.GetStatusMessage().ShouldBe(StatusBarManager.DoneStatusMessage);
         }
     }
 }
