@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     using System;
-    using App_Packages.Particular.Licensing;
     using log4net;
+    using Particular.Licensing;
 
     public class AppLicenseManager
     {

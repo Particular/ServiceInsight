@@ -4,7 +4,6 @@
     using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
     using Desktop;
-    using Desktop.App_Packages.Particular.Licensing;
     using Desktop.Core.Licensing;
     using Desktop.Core.Settings;
     using Desktop.Core.UI.ScreenManager;
@@ -23,6 +22,7 @@
     using Desktop.Shell;
     using Desktop.Startup;
     using Helpers;
+    using Licensing;
     using NSubstitute;
     using NUnit.Framework;
     using Shouldly;
