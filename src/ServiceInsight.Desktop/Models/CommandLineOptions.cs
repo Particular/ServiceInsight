@@ -51,7 +51,7 @@
 
         public void SetResetLayout(bool value)
         {
-            ResetLayout = true;
+            ResetLayout = value;
         }
 
         private string Decode(string encodedString)

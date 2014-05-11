@@ -70,7 +70,8 @@
             Model.IsTransactional = true;
             Model.Accept();
 
-            QueueManager.Received().CreatePrivateQueueAsync(Arg.Is<Queue>(q => q.Address.Equals("testqueue@.")), Arg.Is(true));
+            var expected = Address.Parse(queueName + "@.");
+            QueueManager.Received().CreatePrivateQueueAsync(Arg.Is<Queue>(q => q.Address.Equals(expected)), Arg.Is(true));
             Model.IsActive.ShouldBe(false);
         }
     }

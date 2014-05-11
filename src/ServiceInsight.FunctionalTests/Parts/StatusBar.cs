@@ -13,14 +13,10 @@
         {
         }
 
-        public GroupBox BarManager
-        {
-            get { return GetByAutomationId<GroupBox>("BarManager"); }
-        }
-
         public string GetStatusMessage()
         {
-            var toolStrip = BarManager.Get<ToolStrip>("StatusBar");
+            var barManager = GetByAutomationId<GroupBox>("BarManager");
+            var toolStrip = barManager.Get<ToolStrip>("StatusBar");
             var statusButton = toolStrip.Get<Button>(SearchCriteria.ByAutomationId("StatusMessage"));
             var textPart = statusButton.Get<Label>(SearchCriteria.ByControlType(ControlType.Text));
 
@@ -29,7 +25,8 @@
 
         public bool ImageShown()
         {
-            var toolStrip = BarManager.Get<ToolStrip>("StatusBar");
+            var barManager = GetByAutomationId<GroupBox>("BarManager");
+            var toolStrip = barManager.Get<ToolStrip>("StatusBar");
             var statusButton = toolStrip.Get<Button>(SearchCriteria.ByAutomationId("StatusMessage"));
             var imagePart = statusButton.Get<Image>(SearchCriteria.ByControlType(ControlType.Image));
 

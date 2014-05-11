@@ -1,8 +1,6 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
     using System;
-    using System.Diagnostics;
-    using System.Security.Principal;
     using System.Web.Http;
     using System.Web.Http.SelfHost;
     using Castle.Core.Logging;
@@ -13,8 +11,8 @@
         private readonly ILogger _logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
         private readonly HttpSelfHostServer _server;
 
-        public const int StubServicePort = 55555;
-        public const string StubServiceUrl = "http://localhost";
+        private const int StubServicePort = 55555;
+        private const string StubServiceUrl = "http://localhost";
 
         private ServiceControl()
         {

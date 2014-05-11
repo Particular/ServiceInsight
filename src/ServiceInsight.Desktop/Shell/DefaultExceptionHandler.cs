@@ -68,10 +68,5 @@
         {
             _windowManager.ShowMessageBox(error.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-
-        private void ShowError(Exception error)
-        {
-            _windowManager.ShowMessageBox(error.Message, "Fatal", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
     }
 }

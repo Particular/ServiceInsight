@@ -45,7 +45,7 @@
             var queue = new Queue(address);
             QueueManager.CreatePrivateQueue(queue);
 
-            QueueOperations.Received().CreateQueue(Arg.Is<Queue>(x => x.Address.Equals("newqueue@newmachine")), Arg.Is(true));
+            QueueOperations.Received().CreateQueue(Arg.Is<Queue>(x => x.Address.ToString().Equals("newqueue@newmachine")), Arg.Is(true));
         }
 
         [Test]

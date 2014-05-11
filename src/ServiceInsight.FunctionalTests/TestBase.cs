@@ -22,7 +22,7 @@
         protected ProfilerConfiguration Configuration;
         protected IContainer Container;
         protected Waiter Wait;
-        protected NameGenerator NameGenerator;
+        //protected NameGenerator NameGenerator;
         protected ServiceControl ServiceControlStub;
         protected ILogger Logger;
 
@@ -37,7 +37,7 @@
             {
                 Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof (TestBase));
                 Wait = new Waiter();
-                NameGenerator = new NameGenerator();
+                //NameGenerator = new NameGenerator();
                 ServiceControlStub = ServiceControl.Start();
                 Configuration = new ProfilerConfiguration();
                 Application = Configuration.LaunchApplication();
