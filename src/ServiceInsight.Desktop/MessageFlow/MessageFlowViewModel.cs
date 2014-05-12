@@ -121,7 +121,7 @@
 
         public void ShowSagaWindow()
         {
-            if (!messageList.Rows.Any(r => r.Id == SelectedMessage.Message.Id))
+            if (messageList.Rows.All(r => r.Id != SelectedMessage.Message.Id))
             {
                 endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
             }

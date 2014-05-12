@@ -74,7 +74,7 @@
 			{
 				var type = prop.PropertyType;
 
-				var name = String.Empty;
+				string name;
 
 				var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
 				if (attributes.Length > 0)
@@ -87,7 +87,7 @@
 					name = prop.Name;
 				}
 
-				var actualName = name.GetNameVariants(Culture).FirstOrDefault(n => data.ContainsKey(n));
+				var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
 				var value = actualName != null ? data[actualName] : null;
 
 				if (value == null) continue;

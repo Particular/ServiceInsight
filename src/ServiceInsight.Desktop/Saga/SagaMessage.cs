@@ -105,7 +105,7 @@
             }
         }
 
-        private bool showData = false;
+        private bool showData;
         public bool ShowData
         {
             get

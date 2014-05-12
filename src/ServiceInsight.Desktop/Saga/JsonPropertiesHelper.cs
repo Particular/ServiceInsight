@@ -12,7 +12,7 @@
         public static IList<KeyValuePair<string, string>> ProcessValues(string stateAfterChange)
         {
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(stateAfterChange)
-                .Where(m => !standardKeys.Any(s => s == m.Key))
+                .Where(m => standardKeys.All(s => s != m.Key))
                 .Select(f => new KeyValuePair<string, string>(f.Key, f.Value == null ? string.Empty : f.Value.ToString()))
                 .ToList();
         }

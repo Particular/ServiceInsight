@@ -244,10 +244,7 @@
 
         private string GetMatchesSystemQueuesName(Queue queue)
         {
-            return SubQueueNames.FirstOrDefault(q =>
-            {
-                return queue.Address.Queue.EndsWith(q, StringComparison.InvariantCultureIgnoreCase);
-            });
+            return SubQueueNames.FirstOrDefault(q => queue.Address.Queue.EndsWith(q, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private bool IsConnected
