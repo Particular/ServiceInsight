@@ -338,7 +338,6 @@
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
-    <Compile Include="Models\AccessMode.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressMode.cs" />
     <Compile Include="Models\Endpoint.cs" />
