@@ -18,7 +18,7 @@
 
             while (text.Length > 0)
             {
-                var lenght = text.Length;
+                var length = text.Length;
 
                 TryExtract(list, ref text, ByteOrderMark);
                 TryExtract(list, ref text, "[", LexemType.Symbol);
@@ -40,7 +40,7 @@
                 TryExtract(list, ref text, "}", LexemType.Symbol);
                 TryExtract(list, ref text, "]", LexemType.Symbol);
 
-                if (lenght == text.Length)
+                if (length == text.Length)
                     break;
             }
 

@@ -11,14 +11,14 @@
         protected readonly char[] SpaceChars = new[] {' ', '\t'};
         protected readonly string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
-        protected char previousSimbol;
+        protected char previousSymbol;
 
         protected string CutString(ref SourcePart text, int count)
         {
             if (count == 0)
                 return string.Empty;
             
-            previousSimbol = text[count - 1];
+            previousSymbol = text[count - 1];
             var result = text.Substring(0, count);
             text = text.Substring(count);
             return result;

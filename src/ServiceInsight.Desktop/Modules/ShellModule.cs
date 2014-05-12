@@ -23,7 +23,7 @@
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(ThisAssembly)
-                   .Where(t => t.IsViewOrViewModel() && !ExcemptTypes.Contains(t))
+                   .Where(t => t.IsViewOrViewModel() && !ExemptTypes.Contains(t))
                    .AsImplementedInterfaces()
                    .AsSelf()
                    .SingleInstance();
@@ -52,7 +52,7 @@
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
         }
 
-        protected static IEnumerable<Type> ExcemptTypes
+        protected static IEnumerable<Type> ExemptTypes
         {
             get
             {

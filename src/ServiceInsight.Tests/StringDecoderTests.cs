@@ -19,13 +19,13 @@
         }
 
         [Test]
-        public void should_be_able_to_decode_conent_to_string()
+        public void should_be_able_to_decode_content_to_string()
         {
             decoder.Decode(stringContent).IsParsed.ShouldBe(true);
         }
 
         [Test]
-        public void should_decode_conent_to_string()
+        public void should_decode_content_to_string()
         {
             decoder.Decode(stringContent).Value.ShouldBe("This is a string content");
         }

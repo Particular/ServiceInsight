@@ -223,21 +223,21 @@
             try
             {
                 using(var tx = new TransactionScope())
-                using(var queueDest = destination.AsMessageQueue(QueueAccessMode.SendAndReceive))
+                using(var queueDestination = destination.AsMessageQueue(QueueAccessMode.SendAndReceive))
                 using(var queueSource = source.AsMessageQueue(QueueAccessMode.SendAndReceive))
                 {
                     Guard.True(queueSource.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", source.Address)));
                     Guard.True(queueSource.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", source.Address)));
                 
-                    Guard.True(queueDest.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", destination.Address)));
-                    Guard.True(queueDest.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", destination.Address)));
+                    Guard.True(queueDestination.CanRead, () => new QueueManagerException(string.Format("Can not read messages from queue {0}", destination.Address)));
+                    Guard.True(queueDestination.Transactional, () => new QueueManagerException(string.Format("Queue {0} is not transactional", destination.Address)));
 
                     queueSource.MessageReadPropertyFilter.SetAll();
                     var msg = queueSource.ReceiveById(messageId, MessageQueueTransactionType.Automatic);
 
                     Guard.NotNull(() => msg, msg, () => new QueueManagerException("Message could not be loaded."));
 
-                    queueDest.Send(msg, MessageQueueTransactionType.Automatic);
+                    queueDestination.Send(msg, MessageQueueTransactionType.Automatic);
 
                     tx.Complete();
                 }

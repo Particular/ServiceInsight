@@ -45,12 +45,12 @@
         public IXmlMessageViewModel XmlViewer { get; private set; }
         public MessageContentType ContentType { get; private set; }
 
-        public bool JsonViewerVisibile
+        public bool JsonViewerVisible
         {
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json; }
         }
 
-        public bool XmlViewerVisibile
+        public bool XmlViewerVisible
         {
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml; }
         }

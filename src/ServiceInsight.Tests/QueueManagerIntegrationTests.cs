@@ -32,7 +32,7 @@
         }
 
         [Test]
-        public void should_retreive_and_map_message_from_the_queue()
+        public void should_retrieve_and_map_message_from_the_queue()
         {
             manager.SendMessage(destination, FirstMsg);
             manager.SendMessage(destination, SecondMsg);
@@ -121,7 +121,7 @@
         }
 
         [Test]
-        public void should_retreive_message_count_in_the_queue()
+        public void should_retrieve_message_count_in_the_queue()
         {
             manager.SendMessage(source, "This is a test message");
             manager.SendMessage(source, "This the second test message");

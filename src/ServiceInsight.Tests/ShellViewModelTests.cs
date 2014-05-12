@@ -192,7 +192,7 @@
 
         [Test]
         [Ignore] //TODO: NSubstitute doesn't play well with the inner async call
-        public void should_refresh_queue_exporer_when_new_queue_is_created()
+        public void should_refresh_queue_explorer_when_new_queue_is_created()
         {
             var viewModel = Substitute.For<IQueueCreationViewModel>();
             ScreenFactory.CreateScreen<IQueueCreationViewModel>().Returns(viewModel);

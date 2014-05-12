@@ -13,7 +13,7 @@
             if (asyncMethod == null) 
                 throw new ArgumentNullException("asyncMethod");
 
-            var prevCtx = SynchronizationContext.Current;
+            var previousContext = SynchronizationContext.Current;
             try
             {
                 var syncCtx = new SingleThreadSynchronizationContext(true);
@@ -27,7 +27,7 @@
             }
             finally
             {
-                SynchronizationContext.SetSynchronizationContext(prevCtx);
+                SynchronizationContext.SetSynchronizationContext(previousContext);
             }
         }
 
@@ -36,7 +36,7 @@
             if (asyncMethod == null) 
                 throw new ArgumentNullException("asyncMethod");
 
-            var prevCtx = SynchronizationContext.Current;
+            var previousContext = SynchronizationContext.Current;
             try
             {
                 var syncCtx = new SingleThreadSynchronizationContext(false);
@@ -54,7 +54,7 @@
             }
             finally
             {
-                SynchronizationContext.SetSynchronizationContext(prevCtx);
+                SynchronizationContext.SetSynchronizationContext(previousContext);
             }
         }
 
@@ -63,7 +63,7 @@
             if (asyncMethod == null) 
                 throw new ArgumentNullException("asyncMethod");
 
-            var prevCtx = SynchronizationContext.Current;
+            var previousContext = SynchronizationContext.Current;
             try
             {
                 var syncCtx = new SingleThreadSynchronizationContext(false);
@@ -80,7 +80,7 @@
             }
             finally
             {
-                SynchronizationContext.SetSynchronizationContext(prevCtx);
+                SynchronizationContext.SetSynchronizationContext(previousContext);
             }
         }
 

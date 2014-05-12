@@ -35,7 +35,7 @@
                 return null;
 
             var bytes = Encoding.UTF8.GetBytes(someString);
-            return new MemoryStream(bytes); ;
+            return new MemoryStream(bytes);
         }
 
         public static string GetAsString(this byte[] data)

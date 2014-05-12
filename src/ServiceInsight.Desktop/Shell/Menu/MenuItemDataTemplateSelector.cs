@@ -14,7 +14,7 @@
 
             if (menu.SubMenuItems.Count > 0) return app.Resources["SubButtonContextMenu"] as DataTemplate;
             if (menu.IsCheckable) return app.Resources["CheckButtonContextMenu"] as DataTemplate;
-            if (menu.IsSeparator) return app.Resources["SeperatorContextMenu"] as DataTemplate;
+            if (menu.IsSeparator) return app.Resources["SeparatorContextMenu"] as DataTemplate;
 
             return app.Resources["ButtonContextMenu"] as DataTemplate;
         }

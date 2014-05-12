@@ -320,7 +320,7 @@
                         </ContentControl>
                     </DataTemplate>
 
-                    <DataTemplate x:Key="SeperatorContextMenu">
+                    <DataTemplate x:Key="SeparatorContextMenu">
                         <ContentControl>
                             <dxb:BarItemSeparator/>
                         </ContentControl>

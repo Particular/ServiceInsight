@@ -3,11 +3,11 @@
     using System.Data.Entity.Design.PluralizationServices;
     using System.Globalization;
 
-    public static class GrammerExtensions
+    public static class GrammarExtensions
     {
         private static readonly PluralizationService Pluralizer;
 
-        static GrammerExtensions()
+        static GrammarExtensions()
         {
             Pluralizer = PluralizationService.CreateService(new CultureInfo("en-US"));
         }

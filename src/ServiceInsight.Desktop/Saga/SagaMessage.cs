@@ -68,7 +68,7 @@
             }
         }
 
-        private List<KeyValuePair<MessageStatus, string>> stati = new List<KeyValuePair<MessageStatus, string>> { 
+        private List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> { 
             new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
@@ -89,11 +89,11 @@
         {
             get
             {
-                return stati.FirstOrDefault(k => k.Key == Status).Value;
+                return statuses.FirstOrDefault(k => k.Key == Status).Value;
             }
             set
             {
-                Status = stati.FirstOrDefault(k => k.Value == value).Key;
+                Status = statuses.FirstOrDefault(k => k.Value == value).Key;
             }
         }
 
