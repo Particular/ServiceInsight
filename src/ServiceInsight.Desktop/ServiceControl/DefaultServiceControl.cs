@@ -24,19 +24,19 @@
             public const string TotalCount = "Total-Count";
         }
 
-        private readonly IServiceControlConnectionProvider _connection;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly ProfilerSettings _settings;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(IServiceControl));
+        private readonly IServiceControlConnectionProvider connection;
+        private readonly IEventAggregator eventAggregator;
+        private readonly ProfilerSettings settings;
+        private readonly ILog logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
             IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
-            _connection = connection;
-            _eventAggregator = eventAggregator;
-            _settings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.connection = connection;
+            this.eventAggregator = eventAggregator;
+            settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
 
@@ -136,13 +136,13 @@
 
         public Uri GetUri(StoredMessage message)
         {
-            var connectionUri = new Uri(_connection.Url);
+            var connectionUri = new Uri(connection.Url);
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
         private void AppendSystemMessages(IRestRequest request)
         {
-            request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
+            request.AddParameter("include_system_messages", settings.DisplaySystemMessages);
         }
 
         private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
@@ -170,7 +170,7 @@
 
         private IRestClient CreateClient()
         {
-            return CreateClient(_connection.Url);
+            return CreateClient(connection.Url);
         }
 
         private IRestClient CreateClient(string url)
@@ -335,13 +335,13 @@
         private void LogRequest(IRestRequest request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
-            var url = _connection.Url != null ? _connection.Url.TrimEnd('/') : string.Empty;
+            var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
 
-            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
+            logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
             
             foreach (var parameter in request.Parameters)
             {
-                _logger.DebugFormat("Request Parameter: {0} : {1}", 
+                logger.DebugFormat("Request Parameter: {0} : {1}", 
                                                        parameter.Name, 
                                                        parameter.Value);
             }
@@ -352,11 +352,11 @@
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            _logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
+            logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
 
             foreach (var header in response.Headers)
             {
-                _logger.DebugFormat("Response Header: {0} : {1}", 
+                logger.DebugFormat("Response Header: {0} : {1}", 
                                                      header.Name, 
                                                      header.Value);
             }
@@ -368,7 +368,7 @@
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
             
             RaiseAsyncOperationFailed(errorMessage);
-            _logger.ErrorFormat(errorMessage, exception);
+            logger.ErrorFormat(errorMessage, exception);
         }
 
         private static bool HasSucceeded(IRestResponse response)
@@ -378,7 +378,7 @@
 
         private void RaiseAsyncOperationFailed(string errorMessage)
         {
-            _eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
+            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
         }
 
         private static IEnumerable<HttpStatusCode> SuccessCodes

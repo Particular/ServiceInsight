@@ -12,26 +12,26 @@
         private const char TokenSeparator = '&';
         private const char KeyValueSeparator = '=';
 
-        private readonly IEnvironment _environment;
-        private readonly IList<string> _unsupportedKeys;
+        private readonly IEnvironment environment;
+        private readonly IList<string> unsupportedKeys;
         
         public CommandLineOptions ParsedOptions { get; private set; }
 
         public bool HasUnsupportedKeys
         {
-            get { return _unsupportedKeys.Count > 0; }
+            get { return unsupportedKeys.Count > 0; }
         }
 
         public CommandLineArgParser(IEnvironment environment)
         {
-            _environment = environment;
-            _unsupportedKeys = new List<string>();
+            this.environment = environment;
+            unsupportedKeys = new List<string>();
             ParsedOptions = new CommandLineOptions();
         }
 
         public void Parse()
         {
-            var args = _environment.GetCommandLineArgs();
+            var args = environment.GetCommandLineArgs();
             
             Logger.DebugFormat("Application invoked with following arguments: {0}", string.Join(" ", args));
 
@@ -89,7 +89,7 @@
         private void AddUnsupportedKey(string key)
         {
             Logger.WarnFormat("Key '{0}' is not supported.", key);
-            _unsupportedKeys.Add(key);
+            unsupportedKeys.Add(key);
         }
     }
 

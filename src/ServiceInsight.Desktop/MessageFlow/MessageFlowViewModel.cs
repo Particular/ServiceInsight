@@ -40,19 +40,19 @@
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
-        private readonly ISearchBarViewModel _searchBar;
-        private readonly IMessageListViewModel _messageList;
-        private readonly IScreenFactory _screenFactory;
-        private readonly IServiceControl _serviceControl;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IClipboard _clipboard;
-        private readonly IWindowManagerEx _windowManager;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
-        private IMessageFlowView _view;
-        private string _originalSelectionId = string.Empty;
-        private bool _loadingConversation;
-        private IEndpointExplorerViewModel _endpointExplorer;
+        private readonly ISearchBarViewModel searchBar;
+        private readonly IMessageListViewModel messageList;
+        private readonly IScreenFactory screenFactory;
+        private readonly IServiceControl serviceControl;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IClipboard clipboard;
+        private readonly IWindowManagerEx windowManager;
+        private readonly ISettingsProvider settingsProvider;
+        private readonly ConcurrentDictionary<string, MessageNode> nodeMap;
+        private IMessageFlowView view;
+        private string originalSelectionId = string.Empty;
+        private bool loadingConversation;
+        private IEndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -65,18 +65,18 @@
             ISettingsProvider settingsProvider,
             IEndpointExplorerViewModel endpointExplorer)
         {
-            _serviceControl = serviceControl;
-            _eventAggregator = eventAggregator;
-            _clipboard = clipboard;
-            _windowManager = windowManager;
-            _screenFactory = screenFactory;
-            _searchBar = searchBar;
-            _settingsProvider = settingsProvider;
-            _messageList = messageList;
-            _endpointExplorer = endpointExplorer;
+            this.serviceControl = serviceControl;
+            this.eventAggregator = eventAggregator;
+            this.clipboard = clipboard;
+            this.windowManager = windowManager;
+            this.screenFactory = screenFactory;
+            this.searchBar = searchBar;
+            this.settingsProvider = settingsProvider;
+            this.messageList = messageList;
+            this.endpointExplorer = endpointExplorer;
 
             Diagram = new MessageFlowDiagram();
-            _nodeMap = new ConcurrentDictionary<string, MessageNode>();
+            nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
 
         public MessageFlowDiagram Diagram
@@ -97,8 +97,8 @@
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = (IMessageFlowView)view;
-            _view.ShowMessage += OnShowMessage;
+            this.view = (IMessageFlowView)view;
+            this.view.ShowMessage += OnShowMessage;
         }
 
         private void OnShowMessage(object sender, SearchMessageEventArgs e)
@@ -109,24 +109,24 @@
         protected override void OnActivate()
         {
             base.OnActivate();
-            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            var settings = settingsProvider.GetSettings<ProfilerSettings>();
             
             ShowEndpoints = settings.ShowEndpoints;
         }
 
         public void ShowMessageBody(StoredMessage message)
         {
-            _eventAggregator.Publish(new SwitchToMessageBody());
+            eventAggregator.Publish(new SwitchToMessageBody());
         }
 
         public void ShowSagaWindow()
         {
-            if (!_messageList.Rows.Any(r => r.Id == SelectedMessage.Message.Id))
+            if (!messageList.Rows.Any(r => r.Id == SelectedMessage.Message.Id))
             {
-                _endpointExplorer.SelectedNode = _endpointExplorer.ServiceControlRoot;
+                endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
             }
-            _messageList.Focus(SelectedMessage.Message);
-            _eventAggregator.Publish(new SwitchToSagaWindow());
+            messageList.Focus(SelectedMessage.Message);
+            eventAggregator.Publish(new SwitchToSagaWindow());
         }
 
         public void ShowSagaWindow(StoredMessage message)
@@ -136,9 +136,9 @@
 
         public void ShowException(IExceptionDetails exception)
         {
-            var model = _screenFactory.CreateScreen<IExceptionDetailViewModel>();
+            var model = screenFactory.CreateScreen<IExceptionDetailViewModel>();
             model.Exception = exception;
-            _windowManager.ShowDialog(model, true);
+            windowManager.ShowDialog(model, true);
         }
 
         public void ToggleEndpointData()
@@ -148,35 +148,35 @@
 
         public void CopyConversationId(StoredMessage message)
         {
-            _clipboard.CopyTo(message.ConversationId);
+            clipboard.CopyTo(message.ConversationId);
         }
 
         public void CopyMessageUri(StoredMessage message)
         {
-            _clipboard.CopyTo(_serviceControl.GetUri(message).ToString());
+            clipboard.CopyTo(serviceControl.GetUri(message).ToString());
         }
 
         public void SearchByMessageId(StoredMessage message)
         {
-            _searchBar.Search(performSearch: false, searchQuery: message.MessageId);
-            _eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            searchBar.Search(performSearch: false, searchQuery: message.MessageId);
+            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
         public async Task RetryMessage(StoredMessage message)
         {
-            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
-            await _serviceControl.RetryMessage(message.Id);
-            _eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
+            await serviceControl.RetryMessage(message.Id);
+            eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
+            eventAggregator.Publish(new WorkFinished());
         }
 
         public async void Handle(SelectedMessageChanged @event)
         {
-            if (_loadingConversation) return;
+            if (loadingConversation) return;
 
-            _loadingConversation = true;
-            _originalSelectionId = string.Empty;
-            _nodeMap.Clear();
+            loadingConversation = true;
+            originalSelectionId = string.Empty;
+            nodeMap.Clear();
 
             SelectedMessage = null;
             Diagram = new MessageFlowDiagram();
@@ -184,20 +184,20 @@
             var storedMessage = @event.Message;
             if (storedMessage == null)
             {
-                _loadingConversation = false;
+                loadingConversation = false;
                 return;
             }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
             {
-                _loadingConversation = false;
+                loadingConversation = false;
                 return;
             }
 
             try
             {
-                var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
+                var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
                 CreateConversationNodes(storedMessage.Id, nodes);
@@ -206,23 +206,23 @@
             }
             finally
             {
-                _loadingConversation = false;
+                loadingConversation = false;
             }
         }
 
         public void ZoomIn()
         {
-            _view.Surface.Zoom += 0.1;
+            view.Surface.Zoom += 0.1;
         }
 
         public void ZoomOut()
         {
-            _view.Surface.Zoom -= 0.1;
+            view.Surface.Zoom -= 0.1;
         }
 
         public bool IsFocused(MessageInfo message)
         {
-            return message.Id == _originalSelectionId;
+            return message.Id == originalSelectionId;
         }
 
         public void OnShowEndpointsChanged()
@@ -230,13 +230,13 @@
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                if(_view != null) _view.UpdateNode(node);
+                if(view != null) view.UpdateNode(node);
             }
 
-            if (_view != null)
+            if (view != null)
             {
-                _view.UpdateConnections();
-                _view.ApplyLayout();
+                view.UpdateConnections();
+                view.ApplyLayout();
             }
 
             UpdateSetting();
@@ -244,11 +244,11 @@
 
         private void UpdateSetting()
         {
-            var settings = _settingsProvider.GetSettings<ProfilerSettings>();
+            var settings = settingsProvider.GetSettings<ProfilerSettings>();
             if (settings.ShowEndpoints != ShowEndpoints)
             {
                 settings.ShowEndpoints = ShowEndpoints;
-                _settingsProvider.SaveSettings(settings);
+                settingsProvider.SaveSettings(settings);
             }
         }
 
@@ -262,7 +262,7 @@
                     continue;
                 }
 
-                var parentMessage = _nodeMap.Values.SingleOrDefault(m => 
+                var parentMessage = nodeMap.Values.SingleOrDefault(m => 
                     m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                     m.Message.MessageId == msg.Message.RelatedToMessageId && 
                     m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
@@ -302,21 +302,21 @@
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    _originalSelectionId = selectedId;
+                    originalSelectionId = selectedId;
                     SelectedMessage = node;
                 }
 
-                _nodeMap.TryAdd(node.Message.Id, node);
+                nodeMap.TryAdd(node.Message.Id, node);
                 Diagram.Nodes.Add(node);
             }
         }
 
         private void UpdateLayout()
         {
-            if (_view != null)
+            if (view != null)
             {
-                _view.ApplyLayout();
-                _view.SizeToFit();
+                view.ApplyLayout();
+                view.SizeToFit();
             }
         }
 

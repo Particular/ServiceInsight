@@ -4,16 +4,16 @@
 
     public class ScreenFactory : IScreenFactory
     {
-        private readonly IContainer _container;
+        private readonly IContainer container;
 
         public ScreenFactory(IContainer container)
         {
-            _container = container;
+            this.container = container;
         }
 
         public T CreateScreen<T>() where T : class
         {
-            return _container.Resolve<T>();
+            return container.Resolve<T>();
         }
     }
 }

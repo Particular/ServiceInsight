@@ -23,18 +23,18 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        private readonly IQueueManagerAsync _queueManager;
-        private readonly IQueueExplorerViewModel _explorer;
-        private readonly INetworkOperations _networkOperations;
+        private readonly IQueueManagerAsync queueManager;
+        private readonly IQueueExplorerViewModel explorer;
+        private readonly INetworkOperations networkOperations;
 
         public QueueCreationViewModel(
             IQueueManagerAsync queueManager, 
             IQueueExplorerViewModel explorer,
             INetworkOperations networkOperations)
         {
-            _queueManager = queueManager;
-            _explorer = explorer;
-            _networkOperations = networkOperations;
+            this.queueManager = queueManager;
+            this.explorer = explorer;
+            this.networkOperations = networkOperations;
             Machines = new List<string>();
             DisplayName = "Queue";
             IsTransactional = true;
@@ -53,8 +53,8 @@
 
             StartWorkInProgress(DiscoveringComputersOnNetwork);
             Machines.Clear();
-            SelectedMachine = _explorer.ConnectedToAddress;
-            var machines = await _networkOperations.GetMachines();
+            SelectedMachine = explorer.ConnectedToAddress;
+            var machines = await networkOperations.GetMachines();
             Machines.AddRange(machines);
             StopWorkInProgress();
         }
@@ -82,7 +82,7 @@
 
         public async Task<bool> CreateQueue()
         {
-            var queue = await _queueManager.CreatePrivateQueueAsync(new Queue(SelectedMachine, QueueName), IsTransactional);
+            var queue = await queueManager.CreatePrivateQueueAsync(new Queue(SelectedMachine, QueueName), IsTransactional);
             return queue != null;
         }
 

@@ -12,12 +12,12 @@
 
     public class MSMQueueOperations : IQueueOperationsAsync
     {
-        private readonly IMapper _mapper;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(IQueueOperations));
+        private readonly IMapper mapper;
+        private readonly ILog logger = LogManager.GetLogger(typeof(IQueueOperations));
 
         public MSMQueueOperations(IMapper mapper)
         {
-            _mapper = mapper;
+            this.mapper = mapper;
         }
 
         public Task<IList<MessageInfo>> GetMessagesAsync(Queue queue)
@@ -50,7 +50,7 @@
             try
             {
                 var queues = MessageQueue.GetPrivateQueuesByMachine(machineName).ToList();
-                var mapped = queues.Select(x => _mapper.MapQueue(x)).ToList();
+                var mapped = queues.Select(x => mapper.MapQueue(x)).ToList();
 
                 queues.ForEach(x => x.Close());
 
@@ -58,7 +58,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not retreive queues on machine {0}.", machineName), ex);
+                logger.Error(string.Format("Could not retreive queues on machine {0}.", machineName), ex);
                 throw;
             }
         }
@@ -88,12 +88,12 @@
                             var currentMessage = msgLoop.Current;
                             if (currentMessage != null)
                             {
-                                result.Add(_mapper.MapInfo(currentMessage));
+                                result.Add(mapper.MapInfo(currentMessage));
                             }
                         }
                         catch (MessageQueueException ex)
                         {
-                            _logger.Error("There was an error reading message from the queue.", ex);
+                            logger.Error("There was an error reading message from the queue.", ex);
                             throw;
                         }
                     }
@@ -116,7 +116,7 @@
                     q.MessageReadPropertyFilter.SetAll();
                     q.MessageReadPropertyFilter.SourceMachine = true;
 
-                    return _mapper.MapBody(q.PeekById(messageId));
+                    return mapper.MapBody(q.PeekById(messageId));
                 }
             }
             catch (InvalidOperationException) //message is removed from the queue (by another process)
@@ -125,7 +125,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not read message {0} body.", messageId), ex);
+                logger.Error(string.Format("Could not read message {0} body.", messageId), ex);
                 throw;
             }
         }
@@ -149,10 +149,10 @@
             if(!QueueExists(queue)) //MessageQueue.Exist method does not accept format name
             {
                 var q = MessageQueue.Create(path, transactional);
-                return _mapper.MapQueue(q);
+                return mapper.MapQueue(q);
             }
             
-            return _mapper.MapQueue(queue.AsMessageQueue());
+            return mapper.MapQueue(queue.AsMessageQueue());
         }
 
         public void DeleteQueue(Queue queue)
@@ -164,7 +164,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not delete queue {0}", queue), ex);
+                logger.Error(string.Format("Could not delete queue {0}", queue), ex);
                 throw;
             }
         }
@@ -180,7 +180,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not send a message to queue {0}", queue), ex);
+                logger.Error(string.Format("Could not send a message to queue {0}", queue), ex);
                 throw;                
             }
         }
@@ -196,7 +196,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not delete message {0} to queue {1}", messageId, queue), ex);
+                logger.Error(string.Format("Could not delete message {0} to queue {1}", messageId, queue), ex);
                 throw;                                
             }
         }
@@ -212,7 +212,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not purge queue {0}", queue), ex);
+                logger.Error(string.Format("Could not purge queue {0}", queue), ex);
                 throw;                
             }
         }
@@ -244,7 +244,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not send a message {0} from queue {1} to {2}", messageId, source, destination), ex);
+                logger.Error(string.Format("Could not send a message {0} from queue {1} to {2}", messageId, source, destination), ex);
                 throw;
             }
         }
@@ -271,7 +271,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Could not retrieve message count from queue {0}", queue), ex);
+                logger.Error(string.Format("Could not retrieve message count from queue {0}", queue), ex);
                 throw;                
             }
             return messageCount;

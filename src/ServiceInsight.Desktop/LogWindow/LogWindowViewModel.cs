@@ -7,7 +7,7 @@
 
     public class LogWindowViewModel : Screen, ILogWindowViewModel
     {
-        private ILogWindowView _view;
+        private ILogWindowView view;
 
         public LogWindowViewModel()
         {
@@ -21,13 +21,13 @@
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = (ILogWindowView)view;
-            _view.Initialize();
+            this.view = (ILogWindowView)view;
+            this.view.Initialize();
         }
 
         public void Clear()
         {
-            _view.Clear();
+            view.Clear();
         }
 
         public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
@@ -38,7 +38,7 @@
 
         public void CopyToClipboard()
         {
-            _view.Copy();
+            view.Copy();
         }
     }
 

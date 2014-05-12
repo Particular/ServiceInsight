@@ -43,23 +43,23 @@
         {
             get
             {
-                if (_statistics == null)
+                if (statistics == null)
                 {
-                    _statistics = new MessageStatistics
+                    statistics = new MessageStatistics
                     {
                         CriticalTime = CriticalTime,
                         ProcessingTime = ProcessingTime
                     };
                 }
-                return _statistics;
+                return statistics;
             }
             set
             {
-                _statistics = value;
+                statistics = value;
             }
         }
 
-        private MessageStatistics _statistics;
+        private MessageStatistics statistics;
 
         public string ElapsedDeliveryTime
         {

@@ -7,31 +7,31 @@
 
     public class CompositeLogger : ILog
     {
-        private readonly IList<ILog> _loggers;
+        private readonly IList<ILog> loggers;
 
         public CompositeLogger(IList<ILog> loggers)
         {
-            _loggers = loggers;
+            this.loggers = loggers;
         }
 
         public void Info(string message)
         {
-            _loggers.ForEach(x => x.Info(message));
+            loggers.ForEach(x => x.Info(message));
         }
 
         public void Warn(string message)
         {
-            _loggers.ForEach(x => x.Warn(message));
+            loggers.ForEach(x => x.Warn(message));
         }
 
         public void Error(Exception exception)
         {
-            _loggers.ForEach(x => x.Error(exception));
+            loggers.ForEach(x => x.Error(exception));
         }
 
         public void Error(string message, Exception exception)
         {
-            _loggers.ForEach(x => x.Error(message, exception));
+            loggers.ForEach(x => x.Error(message, exception));
         }
     }
 }

@@ -6,7 +6,7 @@
 
     public class JsonMessageViewModel : Screen, IJsonMessageViewModel
     {
-        private IJsonMessageView _messageView;
+        private IJsonMessageView messageView;
 
         protected override void OnActivate()
         {
@@ -17,7 +17,7 @@
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _messageView = (IJsonMessageView)view;
+            messageView = (IJsonMessageView)view;
             OnSelectedMessageChanged();
         }
 
@@ -25,13 +25,13 @@
 
         public void OnSelectedMessageChanged()
         {
-            if (_messageView == null) return;
+            if (messageView == null) return;
 
-            _messageView.Clear();
+            messageView.Clear();
 
             if (SelectedMessage == null || SelectedMessage.Body == null) return;
 
-            _messageView.Display(SelectedMessage.Body);
+            messageView.Display(SelectedMessage.Body);
         }
 
         public void Handle(SelectedMessageChanged @event)

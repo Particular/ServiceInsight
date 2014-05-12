@@ -6,24 +6,24 @@
 
     public class OptionPropertyValue : IDataErrorInfo
     {
-        private readonly PropertyInfo _propertyInfo;
-        private readonly object _owner;
-        private readonly DisplayNameAttribute _displayName;
-        private readonly DescriptionAttribute _description;
+        private readonly PropertyInfo propertyInfo;
+        private readonly object owner;
+        private readonly DisplayNameAttribute displayName;
+        private readonly DescriptionAttribute description;
 
         public OptionPropertyValue(PropertyInfo propertyInfo, object owner)
         {
-            _propertyInfo = propertyInfo;
-            _owner = owner;
-            _displayName = _propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
-            _description = _propertyInfo.GetCustomAttribute<DescriptionAttribute>();
+            this.propertyInfo = propertyInfo;
+            this.owner = owner;
+            displayName = this.propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
+            description = this.propertyInfo.GetCustomAttribute<DescriptionAttribute>();
         }
 
         public string Name
         {
             get
             {
-                return _displayName != null ? _displayName.DisplayName : _propertyInfo.Name;
+                return displayName != null ? displayName.DisplayName : propertyInfo.Name;
             }
         }
 
@@ -31,25 +31,25 @@
         {
             get
             {
-                return _description == null ? string.Empty : _description.Description;
+                return description == null ? string.Empty : description.Description;
             }
         }
 
         public Type PropertyType
         {
-            get { return _propertyInfo.PropertyType; }
+            get { return propertyInfo.PropertyType; }
         }
 
         public object Value
         {
-            get { return _propertyInfo.GetValue(_owner, null); }
+            get { return propertyInfo.GetValue(owner, null); }
             set { TrySetValue(value); }
         }
 
         private void TrySetValue(object value)
         {
             var convertedValue = Convert.ChangeType(value, PropertyType);
-            _propertyInfo.SetValue(_owner, convertedValue, null);
+            propertyInfo.SetValue(owner, convertedValue, null);
         }
 
         public string this[string columnName]

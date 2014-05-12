@@ -15,8 +15,8 @@
 
     public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
     {
-        private IMessageHeadersView _view;
-        private bool _autoFitted;
+        private IMessageHeadersView view;
+        private bool autoFitted;
 
         public MessageHeadersViewModel()
         {
@@ -39,7 +39,7 @@
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            _view = (IMessageHeadersView) view;
+            this.view = (IMessageHeadersView) view;
         }
 
         public void Handle(SelectedMessageChanged @event)
@@ -60,15 +60,15 @@
 
         private void AutoFitKeys()
         {
-            if(_autoFitted) return;
+            if(autoFitted) return;
 
-            _view.AutoFit();
-            _autoFitted = true;
+            view.AutoFit();
+            autoFitted = true;
         }
 
         private void CopyHeadersToClipboard()
         {
-            _view.CopyRowsToClipboard();
+            view.CopyRowsToClipboard();
         }
     }
 }

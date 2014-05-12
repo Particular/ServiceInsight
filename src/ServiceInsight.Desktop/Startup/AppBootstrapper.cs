@@ -17,7 +17,7 @@
 
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {
-        private IContainer _container;
+        private IContainer container;
         
         protected override void PrepareApplication()
         {
@@ -39,7 +39,7 @@
 
         public IContainer GetContainer()
         {
-            return _container;
+            return container;
         }
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -51,16 +51,16 @@
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
-            _container = builder.Build();
+            container = builder.Build();
 
-            return new AutofacAdapter(_container);
+            return new AutofacAdapter(container);
         }
 
         protected virtual bool TryHandleException(Exception exception)
         {
             try
             {
-                var handler = _container.Resolve<IExceptionHandler>();
+                var handler = container.Resolve<IExceptionHandler>();
                 handler.Handle(exception);
                 return true;
             }

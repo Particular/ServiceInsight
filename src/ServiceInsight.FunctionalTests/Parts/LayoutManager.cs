@@ -9,18 +9,18 @@
 
     public class LayoutManager : ProfilerElement
     {
-        private readonly GroupBox _barManager;
-        private readonly IUIItem[] _autoHideGroups;
+        private readonly GroupBox barManager;
+        private readonly IUIItem[] autoHideGroups;
 
         public LayoutManager(Window mainWindow) : base(mainWindow)
         {
-            _barManager = mainWindow.Get<GroupBox>("BarManager");
-            _autoHideGroups = _barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
+            barManager = mainWindow.Get<GroupBox>("BarManager");
+            autoHideGroups = barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
         }
 
         public void DockAutoHideGroups()
         {
-            foreach (var item in _autoHideGroups)
+            foreach (var item in autoHideGroups)
             {
                 Dock(item);
                 Thread.Sleep(1000);
@@ -37,7 +37,7 @@
 
         public void ActivateEndpointExplorer()
         {
-            var endpointExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
+            var endpointExplorer = barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
 
             endpointExplorer.ShouldNotBe(null);
 

@@ -8,8 +8,8 @@
 
     public class ServiceControl : IDisposable
     {
-        private readonly ILogger _logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
-        private readonly HttpSelfHostServer _server;
+        private readonly ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
+        private readonly HttpSelfHostServer server;
 
         private const int StubServicePort = 55555;
         private const string StubServiceUrl = "http://localhost";
@@ -21,10 +21,10 @@
 
             Configure(config);
 
-            _server = new HttpSelfHostServer(config);
-            _server.OpenAsync().Wait();
+            server = new HttpSelfHostServer(config);
+            server.OpenAsync().Wait();
 
-            _logger.DebugFormat("ServiceControl stub started at {0}", url);
+            logger.DebugFormat("ServiceControl stub started at {0}", url);
         }
 
         public static string GetUrl()
@@ -52,8 +52,8 @@
 
         public void Stop()
         {
-            _server.CloseAsync().Wait();
-            _server.Dispose();
+            server.CloseAsync().Wait();
+            server.Dispose();
         }
 
         void IDisposable.Dispose()

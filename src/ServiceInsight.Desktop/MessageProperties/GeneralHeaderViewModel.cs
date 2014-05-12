@@ -12,7 +12,7 @@
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
     {
 
-        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
+        private readonly IContentDecoder<IList<HeaderInfo>> decoder;
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 
@@ -20,7 +20,7 @@
             IQueueManagerAsync queueManager)
             : base(eventAggregator, decoder, queueManager)
         {
-            _decoder = decoder;
+            this.decoder = decoder;
             DisplayName = "General";
         }
 
@@ -50,7 +50,7 @@
 
         protected override IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
-            var headerDecoder = new MessageHeaderDecoder(_decoder, message);
+            var headerDecoder = new MessageHeaderDecoder(decoder, message);
             HeaderContent = headerDecoder.RawHeader;
 
             return headerDecoder.DecodedHeaders;

@@ -8,8 +8,8 @@
 
     public class MessageErrorInfo : IComparable
     {
-        private MessageStatus _status;
-        private bool _statusSpecified;
+        private MessageStatus status;
+        private bool statusSpecified;
 
         public MessageErrorInfo()
         {
@@ -27,11 +27,11 @@
 
         public MessageStatus Status
         {
-            get { return _status; }
+            get { return status; }
             private set
             {
-                _status = value;
-                _statusSpecified = true;
+                status = value;
+                statusSpecified = true;
             }
         }
 
@@ -39,7 +39,7 @@
 
         private BitmapImage GetImage()
         {
-            if(!_statusSpecified)
+            if(!statusSpecified)
                 return Resources.BulletWhite.ToBitmapImage();
             
             switch (Status)
@@ -66,8 +66,8 @@
             var that = obj as MessageErrorInfo;
             if (that == null) return -1;
 
-            if (_statusSpecified == false &&
-                that._statusSpecified == false)
+            if (statusSpecified == false &&
+                that.statusSpecified == false)
             {
                 return 0;
             }
@@ -77,7 +77,7 @@
 
         public override string ToString()
         {
-            if (!_statusSpecified)
+            if (!statusSpecified)
                 return "Not Specified";
 
             switch (Status)

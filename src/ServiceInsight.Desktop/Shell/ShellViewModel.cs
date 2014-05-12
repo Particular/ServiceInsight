@@ -30,16 +30,16 @@
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
-        private readonly IAppCommands _appCommander;
-        private readonly IScreenFactory _screenFactory;
-        private readonly IWindowManagerEx _windowManager;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly AppLicenseManager _licenseManager;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ICommandLineArgParser _comandLineArgParser;
-        private int _workCounter;
-        private DispatcherTimer _refreshTimer;
-        private DispatcherTimer _idleTimer;
+        private readonly IAppCommands appCommander;
+        private readonly IScreenFactory screenFactory;
+        private readonly IWindowManagerEx windowManager;
+        private readonly IEventAggregator eventAggregator;
+        private readonly AppLicenseManager licenseManager;
+        private readonly ISettingsProvider settingsProvider;
+        private readonly ICommandLineArgParser comandLineArgParser;
+        private int workCounter;
+        private DispatcherTimer refreshTimer;
+        private DispatcherTimer idleTimer;
         
         public ShellViewModel(
             IAppCommands appCommander,
@@ -60,13 +60,13 @@
             ILogWindowViewModel logWindow,
             ICommandLineArgParser comandLineArgParser)
         {
-            _appCommander = appCommander;
-            _screenFactory = screenFactory;
-            _windowManager = windowManager;
-            _eventAggregator = eventAggregator;
-            _licenseManager = licenseManager;
-            _settingsProvider = settingsProvider;
-            _comandLineArgParser = comandLineArgParser;
+            this.appCommander = appCommander;
+            this.screenFactory = screenFactory;
+            this.windowManager = windowManager;
+            this.eventAggregator = eventAggregator;
+            this.licenseManager = licenseManager;
+            this.settingsProvider = settingsProvider;
+            this.comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -102,29 +102,29 @@
         public void Deactivate(bool close)
         {
             base.OnDeactivate(close);
-            _refreshTimer.Stop();
+            refreshTimer.Stop();
             SaveLayout();
         }
 
         private void SaveLayout()
         {
-            if (!_comandLineArgParser.ParsedOptions.ResetLayout)
+            if (!comandLineArgParser.ParsedOptions.ResetLayout)
             {
-                View.OnSaveLayout(_settingsProvider);
+                View.OnSaveLayout(settingsProvider);
             }
         }
 
         private void RestoreLayout()
         {
-            if (!_comandLineArgParser.ParsedOptions.ResetLayout)
+            if (!comandLineArgParser.ParsedOptions.ResetLayout)
             {
-                View.OnRestoreLayout(_settingsProvider);
+                View.OnRestoreLayout(settingsProvider);
             }
         }
 
         public void ResetLayout()
         {
-            View.OnResetLayout(_settingsProvider);
+            View.OnResetLayout(settingsProvider);
         }
 
         public bool AutoRefresh { get; set; }
@@ -162,17 +162,17 @@
 
         public bool WorkInProgress
         {
-            get { return _workCounter > 0; }
+            get { return workCounter > 0; }
         }
 
         public void ShutDown()
         {
-            _appCommander.ShutdownImmediately();
+            appCommander.ShutdownImmediately();
         }
 
         public void About()
         {
-            _windowManager.ShowDialog<AboutViewModel>();
+            windowManager.ShowDialog<AboutViewModel>();
         }
 
         public void Help()
@@ -182,14 +182,14 @@
 
         public void Options()
         {
-            _windowManager.ShowDialog<OptionsViewModel>();
+            windowManager.ShowDialog<OptionsViewModel>();
         }
 
         [AutoCheckAvailability]
         public void ConnectToMessageQueue()
         {
-            var machineViewModel = _screenFactory.CreateScreen<IConnectToMachineViewModel>();
-            var result = _windowManager.ShowDialog(machineViewModel);
+            var machineViewModel = screenFactory.CreateScreen<IConnectToMachineViewModel>();
+            var result = windowManager.ShowDialog(machineViewModel);
 
             if(result.GetValueOrDefault(false))
             {
@@ -200,13 +200,13 @@
         [AutoCheckAvailability]
         public async void ConnectToServiceControl()
         {
-            var connectionViewModel = _screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
-            var result = _windowManager.ShowDialog(connectionViewModel);
+            var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
+            var result = windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
             {
                 await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                _eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
@@ -250,8 +250,8 @@
         [AutoCheckAvailability]
         public async Task CreateQueue()
         {
-            var screen = _screenFactory.CreateScreen<IQueueCreationViewModel>();
-            var result = _windowManager.ShowDialog(screen);
+            var screen = screenFactory.CreateScreen<IQueueCreationViewModel>();
+            var result = windowManager.ShowDialog(screen);
 
             if(result.GetValueOrDefault(false))
             {
@@ -267,13 +267,13 @@
 
         public void Register()
         {
-            _windowManager.ShowDialog<ILicenseRegistrationViewModel>();
+            windowManager.ShowDialog<ILicenseRegistrationViewModel>();
             DisplayRegistrationStatus();
         }
 
         public void OnAutoRefreshChanged()
         {
-            _refreshTimer.IsEnabled = AutoRefresh;
+            refreshTimer.IsEnabled = AutoRefresh;
         }
 
         public bool CanCreateMessage
@@ -344,26 +344,26 @@
         
         private void InitializeIdleTimer()
         {
-            _idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
-            _idleTimer.Tick += (s, e) => OnApplicationIdle();
-            _idleTimer.Start();
+            idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
+            idleTimer.Tick += (s, e) => OnApplicationIdle();
+            idleTimer.Start();
         }
 
         private void InitializeAutoRefreshTimer()
         {
-            var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
-            var startupTime = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? _comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
+            var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
+            var startupTime = comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
-            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
-            _refreshTimer.Tick += (s, e) => OnAutoRefreshing();
+            refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
+            refreshTimer.Tick += (s, e) => OnAutoRefreshing();
 
-            AutoRefresh = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
+            AutoRefresh = comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
 
         internal void OnApplicationIdle()
         {
-            if (_idleTimer != null)
-                _idleTimer.Stop();
+            if (idleTimer != null)
+                idleTimer.Stop();
 
             ValidateCommandLineArgs();
             ValidateLicense();
@@ -379,30 +379,30 @@
 
         public void OnBodyTabSelectedChanged()
         {
-            _eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
+            eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip
         {
             get
             {
-                var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
+                var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
         }
 
         private void ValidateCommandLineArgs()
         {
-            if (_comandLineArgParser.HasUnsupportedKeys)
+            if (comandLineArgParser.HasUnsupportedKeys)
             {
-                _windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                _appCommander.ShutdownImmediately();
+                windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                appCommander.ShutdownImmediately();
             }
         }
         
         private void ValidateLicense()
         {
-            if (_licenseManager.IsLicenseExpired())
+            if (licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
@@ -412,7 +412,7 @@
 
         private void DisplayRegistrationStatus()
         {
-            var license = _licenseManager.CurrentLicense;
+            var license = licenseManager.CurrentLicense;
             
             if (license == null)
             {
@@ -424,14 +424,14 @@
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(licenseManager.GetRemainingTrialDays()));
             }
         }
 
         private void RegisterLicense()
         {
-            var model = _screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
-            var result = _windowManager.ShowDialog(model);
+            var model = screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
+            var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))
             {
@@ -462,16 +462,16 @@
 
         public void Handle(WorkStarted @event)
         {
-            _workCounter++;
+            workCounter++;
             NotifyPropertiesChanged();
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (_workCounter <= 0) 
+            if (workCounter <= 0) 
                 return;
 
-            _workCounter--;
+            workCounter--;
             NotifyPropertiesChanged();
         }
 

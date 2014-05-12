@@ -6,19 +6,19 @@
 
     public class GridFocusedRowPreserver<T> : IDisposable where T : MessageInfo
     {
-        private readonly T _currentItem;
-        private readonly ITableViewModel<T> _viewModel;
+        private readonly T currentItem;
+        private readonly ITableViewModel<T> viewModel;
 
         public GridFocusedRowPreserver(ITableViewModel<T> viewModel)
         {
-            _viewModel = viewModel;
-            _currentItem = _viewModel.FocusedRow;
+            this.viewModel = viewModel;
+            currentItem = this.viewModel.FocusedRow;
         }
 
         public void Dispose()
         {
-            if (_currentItem == null) return;
-            _viewModel.FocusedRow = _viewModel.Rows.FirstOrDefault(item => item.Id == _currentItem.Id);
+            if (currentItem == null) return;
+            viewModel.FocusedRow = viewModel.Rows.FirstOrDefault(item => item.Id == currentItem.Id);
         }
     }
 }

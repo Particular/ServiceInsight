@@ -6,26 +6,26 @@
 
     public class CallForwarderInterceptor : IInterceptor
     {
-        private readonly object _target;
-        private readonly Type _targetType;
+        private readonly object target;
+        private readonly Type targetType;
 
         public CallForwarderInterceptor(Type targetType)
         {
-            _targetType = targetType;
-            _target = null;
+            this.targetType = targetType;
+            target = null;
         }
 
         public CallForwarderInterceptor(object target)
         {
-            _targetType = target.GetType();
-            _target = target;
+            targetType = target.GetType();
+            this.target = target;
         }
 
         public void Intercept(IInvocation invocation)
         {
             var targetMethod = invocation.Method;
             var argumentTypes = invocation.Arguments.Select(a => a.GetType()).ToArray();
-            var matchingTypeMethods = _targetType.GetMethods().Where(m =>
+            var matchingTypeMethods = targetType.GetMethods().Where(m =>
             {
                 var parameterInfos = m.GetParameters();
 
@@ -42,11 +42,11 @@
             {
                 result = matchingTypeMethods.Single(m => m.IsGenericMethodDefinition)
                                             .MakeGenericMethod(targetMethod.GetGenericArguments())
-                                            .Invoke(_target, invocation.Arguments);
+                                            .Invoke(target, invocation.Arguments);
             }
             else
             {
-                result = matchingTypeMethods.Single(m => !m.IsGenericMethodDefinition).Invoke(_target, invocation.Arguments);
+                result = matchingTypeMethods.Single(m => !m.IsGenericMethodDefinition).Invoke(target, invocation.Arguments);
             }
 
             invocation.ReturnValue = result;

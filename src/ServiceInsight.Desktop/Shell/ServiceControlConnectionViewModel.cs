@@ -15,17 +15,17 @@
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
 
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ProfilerSettings _appSettings;
-        private readonly IContainer _container;
+        private readonly ISettingsProvider settingsProvider;
+        private readonly ProfilerSettings appSettings;
+        private readonly IContainer container;
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
             IContainer container)
         {
-            _settingsProvider = settingsProvider;
-            _container = container;
-            _appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.settingsProvider = settingsProvider;
+            this.container = container;
+            appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
         }
 
@@ -40,13 +40,13 @@
             base.OnActivate();
 
             IsAddressValid = true;
-            ServiceUrl = _appSettings.LastUsedServiceControl;
+            ServiceUrl = appSettings.LastUsedServiceControl;
             RecentEntries = GetRecentServiceEntries();
         }
 
         private List<string> GetRecentServiceEntries()
         {
-            return _appSettings.RecentServiceControlEntries.ToList();
+            return appSettings.RecentServiceControlEntries.ToList();
         }
 
         public virtual void Close()
@@ -95,21 +95,21 @@
 
         private void StoreConnectionAddress()
         {
-            var existingEntry = _appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
+            var existingEntry = appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
-                _appSettings.RecentServiceControlEntries.Remove(existingEntry);
+                appSettings.RecentServiceControlEntries.Remove(existingEntry);
 
-            _appSettings.RecentServiceControlEntries.Add(ServiceUrl);
-            _appSettings.LastUsedServiceControl = ServiceUrl;
+            appSettings.RecentServiceControlEntries.Add(ServiceUrl);
+            appSettings.LastUsedServiceControl = ServiceUrl;
 
-            _settingsProvider.SaveSettings(_appSettings);
+            settingsProvider.SaveSettings(appSettings);
         }
 
         private async Task<bool> IsValidUrl(string serviceUrl)
         {
             if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
             {
-                using (var scope = _container.BeginLifetimeScope())
+                using (var scope = container.BeginLifetimeScope())
                 {
                     var connection = scope.Resolve<IServiceControlConnectionProvider>();
                     var service = scope.Resolve<IServiceControl>();

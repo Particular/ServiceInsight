@@ -7,25 +7,25 @@ namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 
     public class QueueExplorerItem : ExplorerItem
     {
-        private string _displayName;
-        private readonly Queue _queue;
-        private readonly string _queueName;
+        private string displayName;
+        private readonly Queue queue;
+        private readonly string queueName;
 
         public QueueExplorerItem(Queue queue) : base(queue.Address.Queue)
         {
-            _queue = queue;
-            _queueName = queue.Address.Queue;
+            this.queue = queue;
+            queueName = queue.Address.Queue;
         }
 
         public QueueExplorerItem(Queue queue, string displayName) : base(queue.Address.Queue)
         {
-            _queue = queue;
-            _queueName = _displayName = displayName;
+            this.queue = queue;
+            queueName = this.displayName = displayName;
         }
 
         public Queue Queue
         {
-            get { return _queue; }
+            get { return queue; }
         }
 
         public override Bitmap Image
@@ -35,12 +35,12 @@ namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 
         public override string DisplayName
         {
-            get { return _displayName; }
+            get { return displayName; }
         }
 
         public void UpdateMessageCount(int count)
         {
-            _displayName = count > 0 ? string.Format("{0} ({1})", _queueName, count.ToString(CultureInfo.InvariantCulture)) : _queueName;
+            displayName = count > 0 ? string.Format("{0} ({1})", queueName, count.ToString(CultureInfo.InvariantCulture)) : queueName;
             NotifyOfPropertyChange(() => DisplayName);
         }
     }

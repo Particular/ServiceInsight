@@ -8,11 +8,11 @@
 
     public class InterfacesModule : Module
     {
-        private readonly ProxyGenerator _generator;
+        private readonly ProxyGenerator generator;
 
         public InterfacesModule()
         {
-            _generator = new ProxyGenerator();
+            generator = new ProxyGenerator();
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -22,12 +22,12 @@
 
         private object GenerateInterfaceProxyForInstance<T>(object classToProxy) where T : class
         {
-            return _generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(classToProxy));
+            return generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(classToProxy));
         }
 
         private object GenerateInterfaceProxyForType<T>(Type type) where T : class
         {
-            return _generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(type));
+            return generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(type));
         }
     }
 }

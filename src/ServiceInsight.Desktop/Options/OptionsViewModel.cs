@@ -7,11 +7,11 @@
 
     public class OptionsViewModel : Screen
     {
-        private readonly ISettingsProvider _settingsProvider;
+        private readonly ISettingsProvider settingsProvider;
 
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {
-            _settingsProvider = settingsProvider;
+            this.settingsProvider = settingsProvider;
 
             DisplayName = "Options";
         }
@@ -25,8 +25,8 @@
 
         private void LoadSettings()
         {
-            Application = _settingsProvider.GetSettings<ProfilerSettings>();
-            UsageReporting = _settingsProvider.GetSettings<ReportingSettings>();
+            Application = settingsProvider.GetSettings<ProfilerSettings>();
+            UsageReporting = settingsProvider.GetSettings<ReportingSettings>();
             Application.PropertyChanged += OnSettingChanged;
         }
 
@@ -52,8 +52,8 @@
 
         public void Save()
         {
-            _settingsProvider.SaveSettings(Application);
-            _settingsProvider.SaveSettings(UsageReporting);
+            settingsProvider.SaveSettings(Application);
+            settingsProvider.SaveSettings(UsageReporting);
         }
 
         public void Exit()

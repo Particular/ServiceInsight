@@ -86,14 +86,14 @@
 
         private sealed class SingleThreadSynchronizationContext : SynchronizationContext
         {
-            private readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> _queue;
-            private int _operationCount;
-            private readonly bool _trackOperations;
+            private readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> queue;
+            private int operationCount;
+            private readonly bool trackOperations;
 
             internal SingleThreadSynchronizationContext(bool trackOperations)
             {
-                _queue = new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
-                _trackOperations = trackOperations;
+                queue = new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
+                this.trackOperations = trackOperations;
             }
 
             /// <summary>Dispatches an asynchronous message to the synchronization context.</summary>
@@ -104,7 +104,7 @@
                 if (d == null) 
                     throw new ArgumentNullException("d");
 
-                _queue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
+                queue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state));
             }
 
             public override void Send(SendOrPostCallback d, object state)
@@ -114,24 +114,24 @@
 
             public void RunOnCurrentThread()
             {
-                foreach (var workItem in _queue.GetConsumingEnumerable())
+                foreach (var workItem in queue.GetConsumingEnumerable())
                     workItem.Key(workItem.Value);
             }
 
             public void Complete()
             {
-                _queue.CompleteAdding();
+                queue.CompleteAdding();
             }
 
             public override void OperationStarted()
             {
-                if (_trackOperations)
-                    Interlocked.Increment(ref _operationCount);
+                if (trackOperations)
+                    Interlocked.Increment(ref operationCount);
             }
 
             public override void OperationCompleted()
             {
-                if (_trackOperations && Interlocked.Decrement(ref _operationCount) == 0)
+                if (trackOperations && Interlocked.Decrement(ref operationCount) == 0)
                     Complete();
             }
         }

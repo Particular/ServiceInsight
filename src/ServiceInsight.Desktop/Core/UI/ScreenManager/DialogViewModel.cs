@@ -8,7 +8,7 @@
 
     public class DialogViewModel : Screen
     {
-        private Dialog _view;
+        private Dialog view;
 
         internal static MessageChoice Show(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
@@ -22,7 +22,7 @@
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
                 throw new ArgumentException();
 
-            _view = CreateWindow(parent);
+            view = CreateWindow(parent);
 
             Icon = icon;
             Title = title;
@@ -49,7 +49,7 @@
             if (IsSet(choices, MessageChoice.Help))
                 Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
 
-            _view.ShowDialog();
+            view.ShowDialog();
         }
 
         private Dialog CreateWindow(Window parent)
@@ -75,7 +75,7 @@
 
         private void HelpCommand(object target)
         {
-            Show(_view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
+            Show(view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
         }
 
         private void CloseCommand(object target)
@@ -88,7 +88,7 @@
         public void Close(MessageChoice closeResult)
         {
             Result = closeResult;
-            _view.Close();
+            view.Close();
         }
 
         public virtual ICollection<ICommand> Choices

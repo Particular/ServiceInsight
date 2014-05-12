@@ -19,17 +19,17 @@
 
     public class RichTextBoxAppender : AppenderSkeleton
     {
-        private readonly RichTextBox _richtextBox;
-        private readonly Paragraph _paragraph;
+        private readonly RichTextBox richtextBox;
+        private readonly Paragraph paragraph;
         private const int MaxTextLength = 5000;
 
         public RichTextBoxAppender(RichTextBox textbox)
         {
-            _richtextBox = textbox;
-            _paragraph = new Paragraph();
+            richtextBox = textbox;
+            paragraph = new Paragraph();
             CreateFilters();
             Layout = CreateLogLayout();
-            Document.Blocks.Add(_paragraph);
+            Document.Blocks.Add(paragraph);
         }
 
         private void CreateFilters()
@@ -55,23 +55,23 @@
 
         protected FlowDocument Document
         {
-            get { return _richtextBox.Document; }
+            get { return richtextBox.Document; }
         }
 
         protected InlineCollection Lines
         {
-            get { return _paragraph.Inlines; }
+            get { return paragraph.Inlines; }
         }
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            if (_richtextBox.Dispatcher.CheckAccess())
+            if (richtextBox.Dispatcher.CheckAccess())
             {
                 UpdateLog(loggingEvent);
             }
             else
             {
-                _richtextBox.Dispatcher.BeginInvoke((Action)(() => UpdateLog(loggingEvent)));
+                richtextBox.Dispatcher.BeginInvoke((Action)(() => UpdateLog(loggingEvent)));
             }
         }
 
@@ -113,7 +113,7 @@
                     break;
             }
 
-            _richtextBox.ScrollToEnd();
+            richtextBox.ScrollToEnd();
         }
 
         private void AppendText(string log, Color color, bool bold = false)

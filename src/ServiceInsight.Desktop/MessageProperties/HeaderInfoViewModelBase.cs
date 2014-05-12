@@ -13,14 +13,14 @@
 
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
-        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
+        private readonly IContentDecoder<IList<HeaderInfo>> decoder;
         
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 
             IContentDecoder<IList<HeaderInfo>> decoder, 
             IQueueManager queueManager)
         {
-            _decoder = decoder;
+            this.decoder = decoder;
             EventAggregator = eventAggregator;
             QueueManager = queueManager;
             ConditionsMap = new Dictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>>();
@@ -64,7 +64,7 @@
         protected virtual IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
             var headers = message.HeaderRaw;
-            var decodedResult = _decoder.Decode(headers);
+            var decodedResult = decoder.Decode(headers);
             
             return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
         }

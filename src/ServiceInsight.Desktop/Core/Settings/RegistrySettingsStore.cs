@@ -6,17 +6,17 @@
 
     public class RegistrySettingsStore : ISettingsStorage
     {
-        private readonly RegistryHive _root;
-        private readonly string _registryKey;
+        private readonly RegistryHive root;
+        private readonly string registryKey;
 
         public RegistrySettingsStore(string registryKey)
         {
-            _root = RegistryHive.LocalMachine;
+            root = RegistryHive.LocalMachine;
 
-            _registryKey = registryKey;
+            this.registryKey = registryKey;
 
-            if (!_registryKey.EndsWith("\\"))
-                _registryKey += "\\";
+            if (!this.registryKey.EndsWith("\\"))
+                this.registryKey += "\\";
         }
 
         public void Save<T>(string key, T settings)
@@ -27,10 +27,10 @@
         public T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new()
         {
             var dictionary = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            var settingKey = _registryKey + key.Replace('.', '\\');
+            var settingKey = registryKey + key.Replace('.', '\\');
             var setting = new T();
 
-            using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
+            using (var registry = RegistryKey.OpenBaseKey(root, RegistryView.Registry64))
             using (var settingsRoot = registry.OpenSubKey(settingKey))
             {
                 if (settingsRoot != null)
@@ -81,8 +81,8 @@
 
         public bool HasSettings(string key)
         {
-            var settingKey = _registryKey + key.Replace('.', '\\');
-            using (var registry = RegistryKey.OpenBaseKey(_root, RegistryView.Registry64))
+            var settingKey = registryKey + key.Replace('.', '\\');
+            using (var registry = RegistryKey.OpenBaseKey(root, RegistryView.Registry64))
             {
                 return registry.OpenSubKey(settingKey) != null;
             }

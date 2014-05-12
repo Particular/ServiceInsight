@@ -10,11 +10,11 @@
     {
         public event EventHandler CanExecuteChanged = delegate { };
 
-        private readonly ButtonCommandHandler _commandHandler;
+        private readonly ButtonCommandHandler commandHandler;
 
         public ChoiceCommand(ButtonCommandHandler commandHandler, bool isDefault, bool isCancel, string label, MessageChoice result)
         {
-            _commandHandler = (ButtonCommandHandler)Delegate.Combine(_commandHandler, commandHandler);
+            this.commandHandler = (ButtonCommandHandler)Delegate.Combine(this.commandHandler, commandHandler);
             IsDefault = isDefault;
             IsCancel = isCancel;
             Label = label;
@@ -28,7 +28,7 @@
 
         public virtual void Execute(object parameter)
         {
-            _commandHandler(this);
+            commandHandler(this);
         }
 
         public virtual bool IsCancel

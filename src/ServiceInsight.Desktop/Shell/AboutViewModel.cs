@@ -18,8 +18,8 @@ namespace Particular.ServiceInsight.Desktop.Shell
         public const string DetectingServiceControlVersion = "(Detecting...)";
         public const string NotConnectedToServiceControl = "(Not Connected)";
 
-        private readonly INetworkOperations _networkOperations;
-        private readonly IServiceControl _serviceControl;
+        private readonly INetworkOperations networkOperations;
+        private readonly IServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -38,8 +38,8 @@ namespace Particular.ServiceInsight.Desktop.Shell
             IServiceControl serviceControl,
             ILicenseRegistrationViewModel licenseInfo)
         {
-            _networkOperations = networkOperations;
-            _serviceControl = serviceControl;
+            this.networkOperations = networkOperations;
+            this.serviceControl = serviceControl;
             
             License = licenseInfo;
             IsSplash = false;
@@ -70,7 +70,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             if (IsSplash) return;
 
             var supportUrl = GetType().Assembly.GetAttribute<SupportWebUrlAttribute>();
-            _networkOperations.Browse(supportUrl.WebUrl);
+            networkOperations.Browse(supportUrl.WebUrl);
         }
 
         public async void Activate()
@@ -112,7 +112,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
         {
             ServiceControlVersion = DetectingServiceControlVersion;
 
-            var version = await _serviceControl.GetVersion();
+            var version = await serviceControl.GetVersion();
             ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
 

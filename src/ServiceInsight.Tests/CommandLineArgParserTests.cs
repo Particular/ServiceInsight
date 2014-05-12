@@ -12,12 +12,12 @@
         private const string AppPath = @"C:\Program Files\Particular\ServiceInsight\ServiceInsight.exe";
         private const string SchemaPrefix = CommandLineOptions.ApplicationScheme;
 
-        private IEnvironment _environment;
+        private IEnvironment environment;
 
         [SetUp]
         public void Initialize()
         {
-            _environment = Substitute.For<IEnvironment>();            
+            environment = Substitute.For<IEnvironment>();            
         }
 
         [Test]
@@ -28,7 +28,7 @@
 
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, Uri);
             
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -47,7 +47,7 @@
         {
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, validUri);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -62,7 +62,7 @@
             const string Uri = "localhost:12345";
             var invocationParameters = string.Format("{0}{1}?EndpointName={2}", SchemaPrefix, Uri, EndpointName);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -76,7 +76,7 @@
             const string Uri = "localhost:12345";
             var invocationParameters = string.Format("{0}{1}?Search={2}", SchemaPrefix, Uri, SearchQuery);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -90,7 +90,7 @@
             const string Uri = "localhost:12345";
             var invocationParameters = string.Format("{0}{1}?AutoRefresh={2}", SchemaPrefix, Uri, AutoRefreshRate);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -104,7 +104,7 @@
         {
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, wrongUri);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -118,7 +118,7 @@
             const string UnsupportedKey = "UnsupportedKey";
             var invocationParameters = string.Format("{0}{1}?{2}=value", SchemaPrefix, Uri, UnsupportedKey);
 
-            _environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
 
@@ -127,7 +127,7 @@
 
         private ICommandLineArgParser CreateSut()
         {
-            var parser = new CommandLineArgParser(_environment);
+            var parser = new CommandLineArgParser(environment);
             parser.Parse();
             return parser;
         }

@@ -20,14 +20,14 @@
             public const string IsFaulted = "IsFaulted";
         }
 
-        private readonly PropertyInfo _sortUpProperty;
-        private readonly PropertyInfo _sortDownProperty;
+        private readonly PropertyInfo sortUpProperty;
+        private readonly PropertyInfo sortDownProperty;
 
         public MessageListView()
         {
             InitializeComponent();
-            _sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
-            _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
         private IMessageListViewModel Model
@@ -65,8 +65,8 @@
 
             ClearSortExcept(columnHeader);
 
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(columnHeader, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(columnHeader, null);
+            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(columnHeader, null);
+            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(columnHeader, null);
             ColumnSortOrder sort;
 
             if (sortUpControl.Visibility != Visibility.Visible)
@@ -87,8 +87,8 @@
 
         private void HideIndicator(BaseGridColumnHeader header)
         {
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(header, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(header, null);
+            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(header, null);
+            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(header, null);
 
             sortUpControl.Visibility = Visibility.Hidden;
             sortDownControl.Visibility = Visibility.Hidden;

@@ -19,12 +19,12 @@
     [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
-        private readonly IQueueManagerAsync _queueManager;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IWindowManagerEx _windowManager;
-        private readonly INetworkOperations _networkOperations;
-        private bool _isFirstActivation = true;
-        private IExplorerView _view;
+        private readonly IQueueManagerAsync queueManager;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IWindowManagerEx windowManager;
+        private readonly INetworkOperations networkOperations;
+        private bool isFirstActivation = true;
+        private IExplorerView view;
 
         public QueueExplorerViewModel(
             IQueueManagerAsync queueManager,
@@ -32,10 +32,10 @@
             IWindowManagerEx windowManager,
             INetworkOperations networkOperations)
         {
-            _queueManager = queueManager;
-            _eventAggregator = eventAggregator;
-            _windowManager = windowManager;
-            _networkOperations = networkOperations;
+            this.queueManager = queueManager;
+            this.eventAggregator = eventAggregator;
+            this.windowManager = windowManager;
+            this.networkOperations = networkOperations;
             Items = new BindableCollection<ExplorerItem>();
             IsMSMQInstalled = true;
         }
@@ -57,20 +57,20 @@
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            if (_isFirstActivation)
+            if (isFirstActivation)
             {
-                _view.ExpandNode(MachineRoot);
-                _isFirstActivation = false;
+                this.view.ExpandNode(MachineRoot);
+                isFirstActivation = false;
             }
         }
 
         public override async void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = view as IExplorerView;
+            this.view = view as IExplorerView;
             if (!IsConnected)
             {
-                IsMSMQInstalled = await _queueManager.IsMsmqInstalled(LocalMachineName);
+                IsMSMQInstalled = await queueManager.IsMsmqInstalled(LocalMachineName);
                 if (IsMSMQInstalled)
                 {
                     await ConnectToQueue(LocalMachineName);
@@ -86,7 +86,7 @@
             var selectedItem = SelectedNode;
             var confirmation = string.Format("The queue named {0} with all its messages and its subqueues will be removed. Continue?", SelectedQueue.Address);
             var dialogTitle = string.Format("Delete Queue: {0}", selectedItem.Name);
-            var result = _windowManager.ShowMessageBox(confirmation, dialogTitle, MessageBoxButton.OKCancel, MessageBoxImage.Question, defaultChoice: MessageChoice.Cancel);
+            var result = windowManager.ShowMessageBox(confirmation, dialogTitle, MessageBoxButton.OKCancel, MessageBoxImage.Question, defaultChoice: MessageChoice.Cancel);
             
             if (result != MessageBoxResult.OK)
                 return;
@@ -94,7 +94,7 @@
             var itemsToRemove = new List<ExplorerItem>();
             foreach (var subqueue in selectedItem.Children.OfType<QueueExplorerItem>())
             {
-                _queueManager.DeleteQueue(subqueue.Queue); 
+                queueManager.DeleteQueue(subqueue.Queue); 
                 itemsToRemove.Add(subqueue);
             }
 
@@ -103,7 +103,7 @@
                 selectedItem.Children.Remove(toRemove);
             }
 
-            _queueManager.DeleteQueue(SelectedQueue);
+            queueManager.DeleteQueue(SelectedQueue);
             MachineRoot.Children.Remove(selectedItem);
         }
 
@@ -122,7 +122,7 @@
 
         public void Navigate(string navigateUri)
         {
-            _networkOperations.Browse(navigateUri);
+            networkOperations.Browse(navigateUri);
         }
 
         public string LocalMachineName
@@ -164,14 +164,14 @@
 
             MachineRoot.Children.Clear();
 
-            var queues = await _queueManager.GetQueues(ConnectedToAddress);
+            var queues = await queueManager.GetQueues(ConnectedToAddress);
             var sortedQueues = queues.OrderBy(x => x.Address).ToList();
 
             SetupQueueNodes(sortedQueues);
 
             foreach (var explorerItem in MachineRoot.Children.OfType<QueueExplorerItem>().ToList())
             {
-                var messageCount = await _queueManager.GetMessageCount(explorerItem.Queue);
+                var messageCount = await queueManager.GetMessageCount(explorerItem.Queue);
                 explorerItem.UpdateMessageCount(messageCount);
             }
         }
@@ -194,16 +194,16 @@
 
         public void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
         public IObservableCollection<ExplorerItem> Items { get; private set; }
 
         public void ExpandNodes()
         {
-            if (_view != null)
+            if (view != null)
             {
-                _view.Expand();
+                view.Expand();
             }
         }
 

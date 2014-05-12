@@ -18,7 +18,7 @@
     /// </summary>
     public partial class ShellView : IShellView
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (IShellView));
+        private readonly ILog logger = LogManager.GetLogger(typeof (IShellView));
 
         public ShellView()
         {
@@ -120,7 +120,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Info("Failed to save the layout, reason is: " + ex);
+                logger.Info("Failed to save the layout, reason is: " + ex);
                 return null;
             }
         }
@@ -136,7 +136,7 @@
             }
             catch(Exception ex)
             {
-                _logger.Info("Failed to restore layout, reason is: " + ex);
+                logger.Info("Failed to restore layout, reason is: " + ex);
             }
         }
 

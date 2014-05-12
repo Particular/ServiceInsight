@@ -19,14 +19,14 @@
     [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly IServiceControl _serviceControl;
-        private readonly INetworkOperations _networkOperations;
-        private readonly IServiceControlConnectionProvider _connectionProvider;
-        private readonly ICommandLineArgParser _commandLineParser;
-        private bool _isFirstActivation = true;
-        private IExplorerView _view;
+        private readonly IEventAggregator eventAggregator;
+        private readonly ISettingsProvider settingsProvider;
+        private readonly IServiceControl serviceControl;
+        private readonly INetworkOperations networkOperations;
+        private readonly IServiceControlConnectionProvider connectionProvider;
+        private readonly ICommandLineArgParser commandLineParser;
+        private bool isFirstActivation = true;
+        private IExplorerView view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
@@ -36,12 +36,12 @@
             IServiceControl serviceControl,
             INetworkOperations networkOperations)
         {
-            _eventAggregator = eventAggregator;
-            _settingsProvider = settingsProvider;
-            _serviceControl = serviceControl;
-            _networkOperations = networkOperations;
-            _connectionProvider = connectionProvider;
-            _commandLineParser = commandLineParser;
+            this.eventAggregator = eventAggregator;
+            this.settingsProvider = settingsProvider;
+            this.serviceControl = serviceControl;
+            this.networkOperations = networkOperations;
+            this.connectionProvider = connectionProvider;
+            this.commandLineParser = commandLineParser;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -83,17 +83,17 @@
         {
             base.OnViewLoaded(view);
 
-            if (_isFirstActivation)
+            if (isFirstActivation)
             {
-                _view.ExpandNode(ServiceControlRoot);
-                _isFirstActivation = false;
+                this.view.ExpandNode(ServiceControlRoot);
+                isFirstActivation = false;
             }
         }
 
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = view as IExplorerView;
+            this.view = view as IExplorerView;
         }
 
         protected async override void OnActivate()
@@ -103,39 +103,39 @@
             if (IsConnected) return;
 
             var configuredConnection = GetConfiguredAddress();
-            var existingConnection = _connectionProvider.Url;
+            var existingConnection = connectionProvider.Url;
             var available = await ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
-            _eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
+            eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
             
             SelectDefaultEndpoint();
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
         private string GetConfiguredAddress()
         {
-            if (_commandLineParser.ParsedOptions.EndpointUri == null)
+            if (commandLineParser.ParsedOptions.EndpointUri == null)
             {
-                var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
+                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
                 if (appSettings != null && appSettings.LastUsedServiceControl != null)
                     return appSettings.LastUsedServiceControl;
 
-                var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
+                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);
             }
 
-            return _commandLineParser.ParsedOptions.EndpointUri.ToString();
+            return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
         private async Task<bool> ServiceAvailable(string serviceUrl)
         {
-            _connectionProvider.ConnectTo(serviceUrl);
+            connectionProvider.ConnectTo(serviceUrl);
 
-            var connected = await _serviceControl.IsAlive();
+            var connected = await serviceControl.IsAlive();
 
             return connected;
         }
@@ -148,18 +148,18 @@
 
         public void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
         private void SelectDefaultEndpoint()
         {
             if (ServiceControlRoot == null) return;
 
-            if (!_commandLineParser.ParsedOptions.EndpointName.IsEmpty())
+            if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
                 foreach (var endpoint in ServiceControlRoot.Children)
                 {
-                    if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                    if (endpoint.Name.Equals(commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                     {
                         //SelectedNode = endpoint;
                         SelectedNode = ServiceControlRoot;
@@ -178,7 +178,7 @@
             if(url == null)
                 return;
 
-            _connectionProvider.ConnectTo(url);
+            connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
             await RefreshData();
@@ -190,7 +190,7 @@
             if (ServiceControlRoot == null) await TryReconnectToServiceControl();
             if (ServiceControlRoot == null) return; //TODO: DO we need to check twice? Root node should have been added at this stage.
 
-            var endpoints = await _serviceControl.GetEndpoints();
+            var endpoints = await serviceControl.GetEndpoints();
             if (endpoints == null) return;
 
             foreach (var endpoint in endpoints.OrderBy(e => e.Name))
@@ -211,12 +211,12 @@
 
         public void Navigate(string navigateUri)
         {
-            _networkOperations.Browse(navigateUri);
+            networkOperations.Browse(navigateUri);
         }
 
         private void ExpandServiceNode()
         {
-            _view.ExpandNode(ServiceControlRoot);
+            view.ExpandNode(ServiceControlRoot);
         }
 
         public void Handle(RequestSelectingEndpoint message)

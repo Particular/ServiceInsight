@@ -12,56 +12,56 @@
     [TestFixture]
     public class AboutViewModelTests
     {
-        private INetworkOperations _networkOperations;
-        private IServiceControl _serviceControl;
-        private ILicenseRegistrationViewModel _licenseRegistration;
-        private AboutViewModel _sut;
+        private INetworkOperations networkOperations;
+        private IServiceControl serviceControl;
+        private ILicenseRegistrationViewModel licenseRegistration;
+        private AboutViewModel sut;
 
         [SetUp]
         public void Initialize()
         {
-            _networkOperations = Substitute.For<INetworkOperations>();
-            _serviceControl = Substitute.For<IServiceControl>();
-            _licenseRegistration = Substitute.For<ILicenseRegistrationViewModel>();
+            networkOperations = Substitute.For<INetworkOperations>();
+            serviceControl = Substitute.For<IServiceControl>();
+            licenseRegistration = Substitute.For<ILicenseRegistrationViewModel>();
 
-            _sut = new AboutViewModel(_networkOperations, _serviceControl, _licenseRegistration);
+            sut = new AboutViewModel(networkOperations, serviceControl, licenseRegistration);
         }
 
         [Test]
         public void Should_fetch_service_control_version()
         {
-            AsyncHelper.Run(() => _sut.Activate());
+            AsyncHelper.Run(() => sut.Activate());
 
-            _serviceControl.Received(1).GetVersion();
+            serviceControl.Received(1).GetVersion();
         }
 
         [Test]
         public void Should_display_service_control_version()
         {
             const string ServiceControlVersion = "0.8.0-Unstable379";
-            _serviceControl.GetVersion().Returns(Task.FromResult(ServiceControlVersion));
+            serviceControl.GetVersion().Returns(Task.FromResult(ServiceControlVersion));
 
-            AsyncHelper.Run(() => _sut.Activate());
+            AsyncHelper.Run(() => sut.Activate());
 
-            _sut.ServiceControlVersion.ShouldBe(ServiceControlVersion);
+            sut.ServiceControlVersion.ShouldBe(ServiceControlVersion);
         }
 
         [Test]
         public void Should_display_application_version_number()
         {
-            AsyncHelper.Run(() => _sut.Activate());
+            AsyncHelper.Run(() => sut.Activate());
 
-            _sut.AppVersion.ShouldNotBe(null);
-            _sut.AppVersion.ShouldNotBeEmpty();
+            sut.AppVersion.ShouldNotBe(null);
+            sut.AppVersion.ShouldNotBeEmpty();
         }
 
         [Test]
         public void Should_display_short_commit_hash()
         {
-            AsyncHelper.Run(() => _sut.Activate());
+            AsyncHelper.Run(() => sut.Activate());
 
-            _sut.CommitHash.ShouldNotBe(null);
-            _sut.CommitHash.Length.ShouldBe(7);
+            sut.CommitHash.ShouldNotBe(null);
+            sut.CommitHash.Length.ShouldBe(7);
         }
     }
 }

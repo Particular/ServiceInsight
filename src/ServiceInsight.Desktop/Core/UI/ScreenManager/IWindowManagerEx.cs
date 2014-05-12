@@ -22,8 +22,8 @@
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
-        private readonly IScreenFactory _screenFactory;
-        private bool _allowResize;
+        private readonly IScreenFactory screenFactory;
+        private bool allowResize;
 
         private static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
         private static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
@@ -63,7 +63,7 @@
             IViewModelBinder viewModelBinder,
             IScreenFactory screenFactory) : base(viewLocator, viewModelBinder)
         {
-            _screenFactory = screenFactory;
+            this.screenFactory = screenFactory;
         }
 
         public FileDialogResult OpenFileDialog(FileDialogModel model)
@@ -100,22 +100,22 @@
 
         public bool? ShowDialog<T>() where T : class
         {
-            _allowResize = false;
+            allowResize = false;
             
-            var screen = _screenFactory.CreateScreen<T>();
+            var screen = screenFactory.CreateScreen<T>();
             return base.ShowDialog(screen, null);
         }
 
         public bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class
         {
-            _allowResize = allowResize;
+            this.allowResize = allowResize;
             return base.ShowDialog(instance, null);
         }
 
         protected override Window EnsureWindow(object model, object view, bool isDialog)
         {
             var window = base.EnsureWindow(model, view, isDialog);
-            window.ResizeMode = _allowResize ? window.ResizeMode : ResizeMode.NoResize;
+            window.ResizeMode = allowResize ? window.ResizeMode : ResizeMode.NoResize;
 
             SetParentToMain(window);
 

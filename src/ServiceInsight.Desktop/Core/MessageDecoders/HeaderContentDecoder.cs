@@ -8,18 +8,18 @@
 
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {
-        private readonly IContentDecoder<string> _stringDecoder;
+        private readonly IContentDecoder<string> stringDecoder;
 
         public HeaderContentDecoder(IContentDecoder<string> stringDecoder)
         {
-            _stringDecoder = stringDecoder;
+            this.stringDecoder = stringDecoder;
         }
 
         public DecoderResult<IList<HeaderInfo>> Decode(byte[] headers)
         {
             if (headers != null && headers.Length != 0)
             {
-                var headerAsString = _stringDecoder.Decode(headers);
+                var headerAsString = stringDecoder.Decode(headers);
                 if (headerAsString.IsParsed)
                 {
                     var headerAsJson = TryParseJson(headerAsString.Value);

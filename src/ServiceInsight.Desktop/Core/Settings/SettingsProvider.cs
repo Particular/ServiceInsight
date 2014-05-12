@@ -8,18 +8,18 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
 
     public class SettingsProvider : ISettingsProvider
     {
-        private readonly ISettingsStorage _settingsRepository;
+        private readonly ISettingsStorage settingsRepository;
 
         public SettingsProvider(ISettingsStorage settingsRepository = null)
         {
-            _settingsRepository = settingsRepository ?? new IsolatedStorageSettingsStore();
+            this.settingsRepository = settingsRepository ?? new IsolatedStorageSettingsStore();
         }
 
         public T GetSettings<T>() where T : new()
         {
             try
             {
-                if (_settingsRepository.HasSettings(GetKey<T>()))
+                if (settingsRepository.HasSettings(GetKey<T>()))
                 {
                     return LoadSettings<T>(ReadSettingMetadata<T>());
                 }
@@ -52,7 +52,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
 
         protected virtual T LoadSettings<T>(IList<SettingDescriptor> metadata) where T : new()
         {
-            return _settingsRepository.Load<T>(GetKey<T>(), metadata);
+            return settingsRepository.Load<T>(GetKey<T>(), metadata);
         }
 
         protected string GetKey<T>()
@@ -74,7 +74,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
                 setting.Write(settings, value);
             }
 
-            _settingsRepository.Save(GetKey<T>(), settings);
+            settingsRepository.Save(GetKey<T>(), settings);
         }
 
         public virtual IList<SettingDescriptor> ReadSettingMetadata<T>()

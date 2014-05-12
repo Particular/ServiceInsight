@@ -11,16 +11,16 @@
 
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
-        private readonly IContentDecoder<XmlDocument> _xmlDecoder;
-        private readonly IClipboard _clipboard;
-        private IXmlMessageView _messageView;
+        private readonly IContentDecoder<XmlDocument> xmlDecoder;
+        private readonly IClipboard clipboard;
+        private IXmlMessageView messageView;
 
         public XmlMessageViewModel(
             IContentDecoder<XmlDocument> xmlDecoder,
             IClipboard clipboard)
         {
-            _xmlDecoder = xmlDecoder;
-            _clipboard = clipboard;
+            this.xmlDecoder = xmlDecoder;
+            this.clipboard = clipboard;
         }
 
         protected override void OnActivate()
@@ -32,7 +32,7 @@
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _messageView = (IXmlMessageView)view;
+            messageView = (IXmlMessageView)view;
             OnSelectedMessageChanged();
         }
 
@@ -40,9 +40,9 @@
 
         public void OnSelectedMessageChanged()
         {
-            if(_messageView == null) return;
+            if(messageView == null) return;
 
-            _messageView.Clear();
+            messageView.Clear();
             ShowMessageBody();
         }
 
@@ -56,7 +56,7 @@
             var content = GetMessageBody();
             if (!content.IsEmpty())
             {
-                _clipboard.CopyTo(content);
+                clipboard.CopyTo(content);
             }
         }
 
@@ -75,7 +75,7 @@
         private void ShowMessageBody()
         {
             if (SelectedMessage == null) return;
-            _messageView.Display(GetMessageBody());
+            messageView.Display(GetMessageBody());
         }
 
         private string GetMessageBody()
@@ -83,7 +83,7 @@
             if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
 
             var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
-            var xml = _xmlDecoder.Decode(bytes);
+            var xml = xmlDecoder.Decode(bytes);
             return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;
         }
     }

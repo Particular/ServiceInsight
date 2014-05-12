@@ -12,7 +12,7 @@
         internal static Func<byte, string> ByteToStringConverter;
         private static readonly Encoding Encoding;
 
-        private IHexContentView _view;
+        private IHexContentView view;
 
         static HexContentViewModel()
         {
@@ -35,7 +35,7 @@
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            _view = (IHexContentView) view;
+            this.view = (IHexContentView) view;
             OnSelectedMessageChanged();
         }
 
@@ -59,7 +59,7 @@
 
         public void OnSelectedMessageChanged()
         {
-            if (_view == null || SelectedMessage == null) 
+            if (view == null || SelectedMessage == null) 
                 return;
 
             DisplayMessage();

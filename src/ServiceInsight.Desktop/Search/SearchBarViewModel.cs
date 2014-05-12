@@ -19,14 +19,14 @@
 
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
-        private readonly ICommandLineArgParser _commandLineArgParser;
-        readonly ISettingsProvider _settingProvider;
-        private int _workCount;
+        private readonly ICommandLineArgParser commandLineArgParser;
+        readonly ISettingsProvider settingProvider;
+        private int workCount;
 
         public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
-            _commandLineArgParser = commandLineArgParser;
-            _settingProvider = settingProvider;
+            this.commandLineArgParser = commandLineArgParser;
+            this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
         }
 
@@ -35,7 +35,7 @@
             base.OnActivate();
 
             RestoreRecentSearchEntries();
-            Search(_commandLineArgParser.ParsedOptions.SearchQuery);
+            Search(commandLineArgParser.ParsedOptions.SearchQuery);
         }
 
         public void GoToFirstPage()
@@ -131,7 +131,7 @@
 
         public bool WorkInProgress
         {
-            get { return _workCount > 0; }
+            get { return workCount > 0; }
         }
 
         public Endpoint SelectedEndpoint { get; private set; }
@@ -273,22 +273,22 @@
 
         public void Handle(WorkStarted @event)
         {
-            _workCount++;
+            workCount++;
             NotifyPropertiesChanged();
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (_workCount > 0)
+            if (workCount > 0)
             {
-                _workCount--;
+                workCount--;
                 NotifyPropertiesChanged();
             }
         }
 
         private void RestoreRecentSearchEntries()
         {
-            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            var setting = settingProvider.GetSettings<ProfilerSettings>();
             RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
         }
 
@@ -298,11 +298,11 @@
 
             RecentSearchQueries.Add(searchQuery);
 
-            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            var setting = settingProvider.GetSettings<ProfilerSettings>();
             if (!setting.RecentSearchEntries.Contains(searchQuery, StringComparer.OrdinalIgnoreCase))
             {
                 setting.RecentSearchEntries.Add(searchQuery);
-                _settingProvider.SaveSettings(setting);
+                settingProvider.SaveSettings(setting);
             }
         }
 

@@ -10,8 +10,8 @@
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
         private readonly AppLicenseManager licenseManager;
-        private readonly IDialogManager _dialogManager;
-        private readonly INetworkOperations _network;
+        private readonly IDialogManager dialogManager;
+        private readonly INetworkOperations network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
         public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";
@@ -23,8 +23,8 @@
             INetworkOperations network)
         {
             this.licenseManager = licenseManager;
-            _dialogManager = dialogManager;
-            _network = network;
+            this.dialogManager = dialogManager;
+            this.network = network;
         }
 
         protected override void OnActivate()
@@ -156,7 +156,7 @@
 
         public void LoadLicense()
         {
-            var dialog = _dialogManager.OpenFileDialog(new FileDialogModel
+            var dialog = dialogManager.OpenFileDialog(new FileDialogModel
             {
                 Filter = "License files (*.xml)|*.xml|All files (*.*)|*.*",
                 FilterIndex = 1
@@ -191,17 +191,17 @@
 
         public void Purchase()
         {
-            _network.Browse(LicensingPageUrl);
+            network.Browse(LicensingPageUrl);
         }
 
         public void Extend()
         {
-            _network.Browse(LicenseExtensionPageUrl);
+            network.Browse(LicenseExtensionPageUrl);
         }
 
         public void ContactSales()
         {
-            _network.Browse(CustomLicenseExtensionPageUrl);
+            network.Browse(CustomLicenseExtensionPageUrl);
         }
 
 

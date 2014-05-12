@@ -22,11 +22,11 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        private readonly INetworkOperations _networkOperations;
+        private readonly INetworkOperations networkOperations;
 
         public ConnectToMachineViewModel(INetworkOperations networkOperations)
         {
-            _networkOperations = networkOperations;
+            this.networkOperations = networkOperations;
             Machines = new List<string>();
             DisplayName = "Connect To MSMQ";
         }
@@ -38,7 +38,7 @@
             StartWorkInProgress(DiscoveringComputersOnNetwork);
             IsAddressValid = true;
 
-            var machines = await _networkOperations.GetMachines();
+            var machines = await networkOperations.GetMachines();
 
             Machines = new List<string>(machines);
             StopWorkInProgress();

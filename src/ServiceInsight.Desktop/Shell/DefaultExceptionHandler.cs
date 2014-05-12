@@ -12,9 +12,9 @@
 
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
-        private readonly IWindowManagerEx _windowManager;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IShellViewModel _shell;
+        private readonly IWindowManagerEx windowManager;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IShellViewModel shell;
 
         public DefaultExceptionHandler(
             IWindowManagerEx windowManager, 
@@ -23,9 +23,9 @@
             IShellViewModel shell) 
             : base(screenFactory.Create<IExceptionViewModel>())
         {
-            _windowManager = windowManager;
-            _eventAggregator = eventAggregator;
-            _shell = shell;
+            this.windowManager = windowManager;
+            this.eventAggregator = eventAggregator;
+            this.shell = shell;
         }
 
         public override void Handle(Exception error)
@@ -48,9 +48,9 @@
 
         private void StopAsyncProgress(Exception rootError)
         {
-            if (_shell.WorkInProgress)
+            if (shell.WorkInProgress)
             {
-                _eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
+                eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
             }
         }
 
@@ -66,7 +66,7 @@
 
         private void ShowWarning(Exception error)
         {
-            _windowManager.ShowMessageBox(error.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            windowManager.ShowMessageBox(error.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

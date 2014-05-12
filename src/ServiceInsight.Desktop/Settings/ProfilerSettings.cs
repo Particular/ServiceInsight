@@ -6,7 +6,7 @@
 
     public class ProfilerSettings : SettingBase
     {
-        private int _autoRefresh;
+        private int autoRefresh;
 
         public ProfilerSettings()
         {
@@ -19,8 +19,8 @@
         [Description("Auto refresh time in seconds")]
         public int AutoRefreshTimer
         {
-            get { return Math.Max(1, _autoRefresh); }
-            set { _autoRefresh = value; }
+            get { return Math.Max(1, autoRefresh); }
+            set { autoRefresh = value; }
         }
 
         [DefaultValue(false)]

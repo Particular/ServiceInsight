@@ -15,7 +15,7 @@
 
     public class AppCommandsWrapper : IAppCommands
     {
-        private readonly IAppCommands _current;
+        private readonly IAppCommands current;
 
         public AppCommandsWrapper()
             : this((IAppCommands)Application.Current)
@@ -24,14 +24,14 @@
 
         public AppCommandsWrapper(IAppCommands app)
         {
-            _current = app;
+            current = app;
         }
 
         public void ShutdownImmediately()
         {
-            if (_current != null)
+            if (current != null)
             {
-                _current.ShutdownImmediately();
+                current.ShutdownImmediately();
             }
         }
     }

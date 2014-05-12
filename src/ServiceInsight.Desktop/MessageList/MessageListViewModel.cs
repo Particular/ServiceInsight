@@ -23,20 +23,20 @@
 
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IServiceControl _serviceControl;
-        private readonly IErrorHeaderViewModel _errorHeaderDisplay;
-        private readonly IGeneralHeaderViewModel _generalHeaderDisplay;
-        private readonly IClipboard _clipboard;
-        private readonly IMenuItem _returnToSourceMenu;
-        private readonly IMenuItem _retryMessageMenu;
-        private readonly IMenuItem _copyMessageIdMenu;
-        private readonly IMenuItem _copyHeadersMenu;
-        private bool _lockUpdate;
-        private string _lastSortColumn;
-        private bool _lastSortOrderAscending;
-        private int _workCount;
-        private IMessageListView _view;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IServiceControl serviceControl;
+        private readonly IErrorHeaderViewModel errorHeaderDisplay;
+        private readonly IGeneralHeaderViewModel generalHeaderDisplay;
+        private readonly IClipboard clipboard;
+        private readonly IMenuItem returnToSourceMenu;
+        private readonly IMenuItem retryMessageMenu;
+        private readonly IMenuItem copyMessageIdMenu;
+        private readonly IMenuItem copyHeadersMenu;
+        private bool lockUpdate;
+        private string lastSortColumn;
+        private bool lastSortOrderAscending;
+        private int workCount;
+        private IMessageListView view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -46,27 +46,27 @@
             IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
-            _eventAggregator = eventAggregator;
-            _serviceControl = serviceControl;
-            _errorHeaderDisplay = errorHeaderDisplay;
-            _generalHeaderDisplay = generalHeaderDisplay;
-            _clipboard = clipboard;
+            this.eventAggregator = eventAggregator;
+            this.serviceControl = serviceControl;
+            this.errorHeaderDisplay = errorHeaderDisplay;
+            this.generalHeaderDisplay = generalHeaderDisplay;
+            this.clipboard = clipboard;
 
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
 
-            _returnToSourceMenu = new MenuItem("Return To Source", new RelayCommand(ReturnToSource, CanReturnToSource), Properties.Resources.MessageReturn);
-            _retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
-            _copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
-            _copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
+            returnToSourceMenu = new MenuItem("Return To Source", new RelayCommand(ReturnToSource, CanReturnToSource), Properties.Resources.MessageReturn);
+            retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
+            copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
+            copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
 
             Rows = new BindableCollection<StoredMessage>();
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                _returnToSourceMenu, 
-                _retryMessageMenu, 
-                _copyHeadersMenu, 
-                _copyMessageIdMenu
+                returnToSourceMenu, 
+                retryMessageMenu, 
+                copyHeadersMenu, 
+                copyMessageIdMenu
             };
         }
 
@@ -74,10 +74,10 @@
 
         public void OnContextMenuOpening()
         {
-            _returnToSourceMenu.IsVisible = CanReturnToSource();
-            _retryMessageMenu.IsVisible = CanRetryMessage();
-            _copyMessageIdMenu.IsEnabled = CanCopyMessageId();
-            _copyHeadersMenu.IsEnabled = CanCopyHeaders();
+            returnToSourceMenu.IsVisible = CanReturnToSource();
+            retryMessageMenu.IsVisible = CanRetryMessage();
+            copyMessageIdMenu.IsEnabled = CanCopyMessageId();
+            copyHeadersMenu.IsEnabled = CanCopyHeaders();
             NotifyPropertiesChanged();
         }
 
@@ -91,7 +91,7 @@
 
         public Queue SelectedQueue { get; private set; }
 
-        public bool WorkInProgress { get { return _workCount > 0 && !Parent.AutoRefresh; } }
+        public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
 
         public bool ShouldLoadMessageBody { get; set; }
 
@@ -99,26 +99,26 @@
 
         public void ReturnToSource()
         {
-            _errorHeaderDisplay.ReturnToSource();
+            errorHeaderDisplay.ReturnToSource();
         }
 
         public async void RetryMessage()
         {
-            _eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", FocusedRow.SendingEndpoint));
+            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", FocusedRow.SendingEndpoint));
             var msg = FocusedRow;
-            await _serviceControl.RetryMessage(FocusedRow.Id);
+            await serviceControl.RetryMessage(FocusedRow.Id);
             Rows.Remove(msg);
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
         public void CopyMessageId()
         {
-            _clipboard.CopyTo(_serviceControl.GetUri(FocusedRow).ToString());
+            clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
         {
-            _clipboard.CopyTo(_generalHeaderDisplay.HeaderContent);
+            clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
         public bool CanRetryMessage()
@@ -130,12 +130,12 @@
 
         public bool CanReturnToSource()
         {
-            return _errorHeaderDisplay.CanReturnToSource();
+            return errorHeaderDisplay.CanReturnToSource();
         }
 
         public bool CanCopyHeaders()
         {
-            return !_generalHeaderDisplay.HeaderContent.IsEmpty();
+            return !generalHeaderDisplay.HeaderContent.IsEmpty();
         }
 
         public bool CanCopyMessageId()
@@ -145,14 +145,14 @@
 
         public override void AttachView(object view, object context)
         {
-            _view = view as IMessageListView;
+            this.view = view as IMessageListView;
             base.AttachView(view, context);
         }
 
         public void Focus(StoredMessage msg)
         {
             //TODO: ViewModel should have no knowledge of View or the elements in it.
-            var grid = ((GridControl)((FrameworkElement)_view).FindName("grid"));
+            var grid = ((GridControl)((FrameworkElement)view).FindName("grid"));
             for (var i = 0; i < Rows.Count; i++)
             {
                 var row = Rows[i];
@@ -167,11 +167,11 @@
 
         public async void OnFocusedRowChanged()
         {
-            if (_lockUpdate) return;
+            if (lockUpdate) return;
 
             await LoadMessageBody();
 
-            _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
+            eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
             NotifyPropertiesChanged();
         }
@@ -199,37 +199,37 @@
 
         public async Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            _eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
+            eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
             if (orderBy != null)
             {
-                _lastSortColumn = orderBy;
-                _lastSortOrderAscending = ascending;
+                lastSortColumn = orderBy;
+                lastSortOrderAscending = ascending;
             }
 
             PagedResult<StoredMessage> pagedResult;
 
             if (endpoint != null)
             {
-                pagedResult = await _serviceControl.GetAuditMessages(endpoint,
+                pagedResult = await serviceControl.GetAuditMessages(endpoint,
                                                                      pageIndex: pageIndex,
                                                                      searchQuery: searchQuery,
-                                                                     orderBy: _lastSortColumn,
-                                                                     ascending: _lastSortOrderAscending);
+                                                                     orderBy: lastSortColumn,
+                                                                     ascending: lastSortOrderAscending);
             }
             else if (!searchQuery.IsEmpty())
             {
-                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
+                pagedResult = await serviceControl.Search(pageIndex: pageIndex,
                                                            searchQuery: searchQuery,
-                                                           orderBy: _lastSortColumn,
-                                                           ascending: _lastSortOrderAscending);
+                                                           orderBy: lastSortColumn,
+                                                           ascending: lastSortOrderAscending);
             }
             else
             {
-                pagedResult = await _serviceControl.Search(pageIndex: pageIndex,
+                pagedResult = await serviceControl.Search(pageIndex: pageIndex,
                                                            searchQuery: null,
-                                                           orderBy: _lastSortColumn,
-                                                           ascending: _lastSortOrderAscending);
+                                                           orderBy: lastSortColumn,
+                                                           ascending: lastSortOrderAscending);
             }
 
             TryRebindMessageList(pagedResult);
@@ -242,7 +242,7 @@
                 Result = pagedResult.Result,
             });
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
@@ -252,15 +252,15 @@
 
         public void Handle(WorkStarted @event)
         {
-            _workCount++;
+            workCount++;
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (_workCount > 0)
+            if (workCount > 0)
             {
-                _workCount--;
+                workCount--;
                 NotifyOfPropertyChange(() => WorkInProgress);
             }
         }
@@ -271,7 +271,7 @@
             if (ShouldLoadMessageBody)
             {
                 var bodyLoaded = await LoadMessageBody();
-                if(bodyLoaded) _eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
+                if(bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
             }
         }
 
@@ -282,7 +282,7 @@
 
         public void Handle(AsyncOperationFailed message)
         {
-            _workCount = 0;
+            workCount = 0;
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
@@ -312,7 +312,7 @@
         {
             try
             {
-                _lockUpdate = !ShouldUpdateMessages(pagedResult);
+                lockUpdate = !ShouldUpdateMessages(pagedResult);
 
                 using (new GridFocusedRowPreserver<StoredMessage>(this))
                 {
@@ -322,7 +322,7 @@
             }
             finally
             {
-                _lockUpdate = false;
+                lockUpdate = false;
             }
 
             AutoFocusFirstRow();
@@ -360,13 +360,13 @@
         {
             if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty()) return false;
 
-            _eventAggregator.Publish(new WorkStarted("Loading message body..."));
+            eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-            var body = await _serviceControl.GetBody(FocusedRow.BodyUrl);
+            var body = await serviceControl.GetBody(FocusedRow.BodyUrl);
 
             FocusedRow.Body = body;
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
 
             return true;
         }

@@ -7,14 +7,14 @@
 
     class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
     {
-        private ISettingsProvider _settingsProvider;
+        private ISettingsProvider settingsProvider;
         public virtual IPersistableLayout View { get; private set; }
 
         public IExceptionDetails Exception { get; set; }
 
         public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
         {
-            _settingsProvider = settingsProvider;
+            this.settingsProvider = settingsProvider;
             DisplayName = "Exception Details";
         }
 
@@ -43,12 +43,12 @@
 
         private void SaveLayout()
         {
-            View.OnSaveLayout(_settingsProvider);
+            View.OnSaveLayout(settingsProvider);
         }
 
         private void RestoreLayout()
         {
-            View.OnRestoreLayout(_settingsProvider);
+            View.OnRestoreLayout(settingsProvider);
         }
 
         public string FormattedSource

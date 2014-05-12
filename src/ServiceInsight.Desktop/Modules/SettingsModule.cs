@@ -21,11 +21,11 @@
 
         private class SettingProviderProxy : SettingsProvider
         {
-            private readonly IContainer _container;
+            private readonly IContainer container;
 
             public SettingProviderProxy(IContainer container)
             {
-                _container = container;
+                this.container = container;
             }
 
             protected override T LoadSettings<T>(IList<SettingDescriptor> metadata)
@@ -34,7 +34,7 @@
                 if (storageProvider != null)
                 {
                     var storageName = storageProvider.ProviderTypeName;
-                    var storage = _container.ResolveNamed<ISettingsStorage>(storageName);
+                    var storage = container.ResolveNamed<ISettingsStorage>(storageName);
 
                     return storage.Load<T>(GetKey<T>(), metadata);
                 }

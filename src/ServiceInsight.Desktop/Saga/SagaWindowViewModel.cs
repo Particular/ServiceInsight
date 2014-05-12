@@ -12,13 +12,13 @@
 
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
     {
-        private IEventAggregator _eventAggregator;
-        private IServiceControl _serviceControl;
+        private IEventAggregator eventAggregator;
+        private IServiceControl serviceControl;
 
         public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
         {
-            _eventAggregator = eventAggregator;
-            _serviceControl = serviceControl;
+            this.eventAggregator = eventAggregator;
+            this.serviceControl = serviceControl;
             ShowSagaNotFoundWarning = false;
         }
 
@@ -57,7 +57,7 @@
         {
             foreach (var message in messages)
             {
-                await message.RefreshData(_serviceControl);
+                await message.RefreshData(serviceControl);
             }
 
             NotifyOfPropertyChange(() => Data);
@@ -94,11 +94,11 @@
 
         private async Task RefreshSaga(SagaInfo originatingSaga)
         {
-            _eventAggregator.Publish(new WorkStarted("Loading message body..."));
+            eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
             if (Data == null || Data.SagaId != originatingSaga.SagaId)
             {
-                Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+                Data = await serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
 
                 if (Data == SagaData.Empty)
                 {
@@ -122,7 +122,7 @@
 
             RefreshShowData();
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
         private static void ProcessDataValues(IEnumerable<SagaUpdate> list)
@@ -155,13 +155,13 @@
 
         public void ShowFlow()
         {
-            _eventAggregator.Publish(new SwitchToFlowWindow());
+            eventAggregator.Publish(new SwitchToFlowWindow());
         }
 
 
         public async Task RefreshSaga()
         {
-            await RefreshSaga(currentMessage, _serviceControl.HasSagaChanged);
+            await RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
         }
     }
 

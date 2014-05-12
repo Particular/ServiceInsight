@@ -6,7 +6,7 @@
 
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
     {
-        private readonly IClipboard _clipboard;
+        private readonly IClipboard clipboard;
 
         public MessagePropertiesViewModel(
             IErrorHeaderViewModel error,
@@ -16,7 +16,7 @@
             IGatewayHeaderViewModel gateway,
             IClipboard clipboard)
         {
-            _clipboard = clipboard;
+            this.clipboard = clipboard;
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
@@ -41,7 +41,7 @@
 
         public void CopyPropertyValue(object value)
         {
-            _clipboard.CopyTo(value.ToString());
+            clipboard.CopyTo(value.ToString());
         }
 
     }
