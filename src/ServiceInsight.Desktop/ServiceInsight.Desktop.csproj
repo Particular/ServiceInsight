@@ -111,6 +111,9 @@
     <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
+    </Reference>
     <Reference Include="ExceptionHandler">
       <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
     </Reference>
