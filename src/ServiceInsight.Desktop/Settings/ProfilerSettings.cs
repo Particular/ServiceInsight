@@ -4,7 +4,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
 
-    public class ProfilerSettings : SettingBase
+    public class ProfilerSettings : INotifyPropertyChanged
     {
         int autoRefresh;
 
@@ -13,6 +13,7 @@
             RecentSearchEntries = new ObservableCollection<string>();
             RecentServiceControlEntries = new ObservableCollection<string>();
         }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         [DefaultValue(15)]
         [DisplayName("AutoRefresh Timer")]

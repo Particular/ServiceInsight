@@ -90,9 +90,6 @@
     <Reference Include="DevExpress.Xpf.Core.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1.Extensions">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.Docking.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
     </Reference>
@@ -102,32 +99,17 @@
     <Reference Include="DevExpress.Xpf.Grid.v13.1.Core">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Extensions">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.Layout.v13.1.Core">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Xpf.LayoutControl.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Mvvm.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Mvvm.v13.1.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.NavBar.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1.Service">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.Service.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
     <Reference Include="ExceptionHandler">
       <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
@@ -384,7 +366,6 @@
     <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
     <Compile Include="Settings\ReportingSettings.cs" />
-    <Compile Include="Settings\SettingBase.cs" />
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -425,7 +406,6 @@
     </Compile>
     <Compile Include="Core\UI\ScreenManager\ChoiceCommand.cs" />
     <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
-    <Compile Include="Search\ISearchBarView.cs" />
     <Compile Include="Search\ISearchBarViewModel.cs" />
     <Compile Include="Search\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>

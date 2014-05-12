@@ -5,7 +5,7 @@
     /// <summary>
     /// Interaction logic for SearchBar.xaml
     /// </summary>
-    public partial class SearchBar : ISearchBarView
+    public partial class SearchBar 
     {
         public SearchBar()
         {
