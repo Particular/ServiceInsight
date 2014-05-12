@@ -2,7 +2,6 @@
 {
     public enum MessageIntent
     {
-        Init,
         Send,
         Publish,
         Subscribe,
