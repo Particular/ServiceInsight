@@ -414,8 +414,6 @@
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
     <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
-    <Compile Include="MessageList\FileSizeFormatProvider.cs" />
-    <Compile Include="MessageList\FileSizeValueConverter.cs" />
     <Compile Include="Explorer\ExplorerNodeImageSelector.cs" />
     <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
