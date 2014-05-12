@@ -19,9 +19,9 @@
 
     public class RichTextBoxAppender : AppenderSkeleton
     {
-        private readonly RichTextBox richtextBox;
-        private readonly Paragraph paragraph;
-        private const int MaxTextLength = 5000;
+        readonly RichTextBox richtextBox;
+        readonly Paragraph paragraph;
+        const int MaxTextLength = 5000;
 
         public RichTextBoxAppender(RichTextBox textbox)
         {
@@ -32,13 +32,13 @@
             Document.Blocks.Add(paragraph);
         }
 
-        private void CreateFilters()
+        void CreateFilters()
         {
             LoggerMatchingTypes.ForEach(type => AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = type.FullName }));
             AddFilter(new DenyAllFilter());
         }
 
-        private IEnumerable<Type> LoggerMatchingTypes
+        IEnumerable<Type> LoggerMatchingTypes
         {
             get
             {
@@ -48,7 +48,7 @@
             }
         }
 
-        private ILayout CreateLogLayout()
+        ILayout CreateLogLayout()
         {
             return new PatternLayout(LoggingConfig.LogPattern);
         }
@@ -80,7 +80,7 @@
             Lines.Clear();
         }
 
-        private void UpdateLog(LoggingEvent loggingEvent)
+        void UpdateLog(LoggingEvent loggingEvent)
         {
             if (IsTextLarge())
             {
@@ -116,12 +116,12 @@
             richtextBox.ScrollToEnd();
         }
 
-        private void AppendText(string log, Color color, bool bold = false)
+        void AppendText(string log, Color color, bool bold = false)
         {
             Lines.Add(CreateInline(log, color, bold));
         }
 
-        private static Inline CreateInline(string text, Color color, bool bold)
+        static Inline CreateInline(string text, Color color, bool bold)
         {
             return new Run
             {
@@ -131,7 +131,7 @@
             };
         }
 
-        private bool IsTextLarge()
+        bool IsTextLarge()
         {
             return Lines.Count > MaxTextLength;
         }

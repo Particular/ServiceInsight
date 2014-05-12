@@ -20,12 +20,12 @@
             return view;
         }
 
-        private AboutViewModel Model 
+        AboutViewModel Model 
         {
             get { return (AboutViewModel) DataContext; }
         }
 
-        private void OnLinkClicked(object sender, RoutedEventArgs e)
+        void OnLinkClicked(object sender, RoutedEventArgs e)
         {
             Model.NavigateToSite();
         }

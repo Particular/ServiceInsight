@@ -58,7 +58,7 @@
         {
         }
 
-        private IContainer CreateContainer()
+        IContainer CreateContainer()
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(MainWindow);
@@ -95,7 +95,7 @@
             TryCloseApplication();
         }
 
-        private void TryCloseApplication()
+        void TryCloseApplication()
         {
             try
             {
@@ -114,7 +114,7 @@
             }
         }
 
-        private bool IsApplicationRunning()
+        bool IsApplicationRunning()
         {
             try
             {

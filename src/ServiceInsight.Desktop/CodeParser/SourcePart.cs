@@ -6,17 +6,17 @@
     [DebuggerDisplay("{Remaining}")]
     public class SourcePart
     {
-        private string Source
+        string Source
         {
             get; set;
         }
 
-        private int StartIndex
+        int StartIndex
         {
             get; set;
         }
 
-        private string Remaining
+        string Remaining
         {
             get { return Source.Substring(StartIndex); }
         }

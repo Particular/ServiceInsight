@@ -8,8 +8,8 @@
     [TestFixture]
     public class StringDecoderTests
     {
-        private byte[] stringContent;
-        private IContentDecoder decoder;
+        byte[] stringContent;
+        IContentDecoder decoder;
 
         [SetUp]
         public void TestInitialize()

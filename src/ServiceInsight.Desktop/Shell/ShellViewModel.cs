@@ -30,16 +30,16 @@
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
-        private readonly IAppCommands appCommander;
-        private readonly IScreenFactory screenFactory;
-        private readonly IWindowManagerEx windowManager;
-        private readonly IEventAggregator eventAggregator;
-        private readonly AppLicenseManager licenseManager;
-        private readonly ISettingsProvider settingsProvider;
-        private readonly ICommandLineArgParser comandLineArgParser;
-        private int workCounter;
-        private DispatcherTimer refreshTimer;
-        private DispatcherTimer idleTimer;
+        readonly IAppCommands appCommander;
+        readonly IScreenFactory screenFactory;
+        readonly IWindowManagerEx windowManager;
+        readonly IEventAggregator eventAggregator;
+        readonly AppLicenseManager licenseManager;
+        readonly ISettingsProvider settingsProvider;
+        readonly ICommandLineArgParser comandLineArgParser;
+        int workCounter;
+        DispatcherTimer refreshTimer;
+        DispatcherTimer idleTimer;
         
         public ShellViewModel(
             IAppCommands appCommander,
@@ -106,7 +106,7 @@
             SaveLayout();
         }
 
-        private void SaveLayout()
+        void SaveLayout()
         {
             if (!comandLineArgParser.ParsedOptions.ResetLayout)
             {
@@ -114,7 +114,7 @@
             }
         }
 
-        private void RestoreLayout()
+        void RestoreLayout()
         {
             if (!comandLineArgParser.ParsedOptions.ResetLayout)
             {
@@ -342,14 +342,14 @@
             get { return false; }
         }
         
-        private void InitializeIdleTimer()
+        void InitializeIdleTimer()
         {
             idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
             idleTimer.Tick += (s, e) => OnApplicationIdle();
             idleTimer.Start();
         }
 
-        private void InitializeAutoRefreshTimer()
+        void InitializeAutoRefreshTimer()
         {
             var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
             var startupTime = comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
@@ -391,7 +391,7 @@
             }
         }
 
-        private void ValidateCommandLineArgs()
+        void ValidateCommandLineArgs()
         {
             if (comandLineArgParser.HasUnsupportedKeys)
             {
@@ -400,7 +400,7 @@
             }
         }
         
-        private void ValidateLicense()
+        void ValidateLicense()
         {
             if (licenseManager.IsLicenseExpired())
             {
@@ -410,7 +410,7 @@
             DisplayRegistrationStatus();
         }
 
-        private void DisplayRegistrationStatus()
+        void DisplayRegistrationStatus()
         {
             var license = licenseManager.CurrentLicense;
             
@@ -428,7 +428,7 @@
             }
         }
 
-        private void RegisterLicense()
+        void RegisterLicense()
         {
             var model = screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
             var result = windowManager.ShowDialog(model);
@@ -439,7 +439,7 @@
             }
         }
 
-        private void NotifyPropertiesChanged()
+        void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => WorkInProgress);
             NotifyOfPropertyChange(() => CanConnectToMachine);
@@ -454,7 +454,7 @@
             NotifyOfPropertyChange(() => CanRefreshQueues);
         }
 
-        private string GetProductName()
+        string GetProductName()
         {
             var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
             return productAttribute.Product;

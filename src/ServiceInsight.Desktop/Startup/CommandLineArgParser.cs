@@ -6,14 +6,14 @@
 
     public class CommandLineArgParser : ICommandLineArgParser
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
+        static readonly ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
 
-        private const char UriSeparator = '?';
-        private const char TokenSeparator = '&';
-        private const char KeyValueSeparator = '=';
+        const char UriSeparator = '?';
+        const char TokenSeparator = '&';
+        const char KeyValueSeparator = '=';
 
-        private readonly IEnvironment environment;
-        private readonly IList<string> unsupportedKeys;
+        readonly IEnvironment environment;
+        readonly IList<string> unsupportedKeys;
         
         public CommandLineOptions ParsedOptions { get; private set; }
 
@@ -62,7 +62,7 @@
             }
         }
 
-        private void PopulateKeyValue(string key, string value)
+        void PopulateKeyValue(string key, string value)
         {
             var parameter = key.ToLower();
 
@@ -86,7 +86,7 @@
             }
         }
 
-        private void AddUnsupportedKey(string key)
+        void AddUnsupportedKey(string key)
         {
             Logger.WarnFormat("Key '{0}' is not supported.", key);
             unsupportedKeys.Add(key);

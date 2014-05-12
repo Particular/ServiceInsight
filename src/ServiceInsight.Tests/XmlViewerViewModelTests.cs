@@ -13,10 +13,10 @@
     [TestFixture]
     public class XmlViewerViewModelTests
     {
-        private IXmlMessageViewModel ViewModel;
-        private IXmlMessageView View;
-        private IContentDecoder<XmlDocument> XmlDecoder;
-        private IClipboard Clipboard;
+        IXmlMessageViewModel ViewModel;
+        IXmlMessageView View;
+        IContentDecoder<XmlDocument> XmlDecoder;
+        IClipboard Clipboard;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
@@ -78,7 +78,7 @@
             Clipboard.Received().CopyTo(Arg.Any<string>());
         }
 
-        private static XmlDocument GetDocument(string content)
+        static XmlDocument GetDocument(string content)
         {
             var document = new XmlDocument();
             document.LoadXml(content);

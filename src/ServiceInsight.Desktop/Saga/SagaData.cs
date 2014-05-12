@@ -12,7 +12,7 @@
         public List<SagaUpdate> Changes { get; set; }
         public Guid SagaId { get; set; }
 
-        private string sagaType;
+        string sagaType;
         public string SagaType
         { 
             get 
@@ -25,7 +25,7 @@
             } 
         }
 
-        private string ProcessType(string messageType)
+        string ProcessType(string messageType)
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;

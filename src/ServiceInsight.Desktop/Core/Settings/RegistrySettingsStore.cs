@@ -6,8 +6,8 @@
 
     public class RegistrySettingsStore : ISettingsStorage
     {
-        private readonly RegistryHive root;
-        private readonly string registryKey;
+        readonly RegistryHive root;
+        readonly string registryKey;
 
         public RegistrySettingsStore(string registryKey)
         {
@@ -49,7 +49,7 @@
             return setting;
         }
 
-        private void PopulateSetting(object setting, IList<SettingDescriptor> metadata, Dictionary<string, string> data)
+        void PopulateSetting(object setting, IList<SettingDescriptor> metadata, Dictionary<string, string> data)
         {
             foreach (var property in metadata)
             {
@@ -66,7 +66,7 @@
             }
         }
 
-        private static object TryCastOrDefault(object value, SettingDescriptor property)
+        static object TryCastOrDefault(object value, SettingDescriptor property)
         {
             try
             {

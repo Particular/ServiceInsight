@@ -5,7 +5,7 @@
 
     public static class GrammarExtensions
     {
-        private static readonly PluralizationService Pluralizer;
+        static readonly PluralizationService Pluralizer;
 
         static GrammarExtensions()
         {

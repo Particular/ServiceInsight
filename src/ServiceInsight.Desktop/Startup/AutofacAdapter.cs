@@ -19,8 +19,8 @@
     /// </summary>
     public class AutofacAdapter : ContainerBase
     {
-        private readonly IContainer container;
-        private ContainerUpdater updater;
+        readonly IContainer container;
+        ContainerUpdater updater;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutofacAdapter"/> class.
@@ -150,7 +150,7 @@
             return this;
         }
 
-        private void HandleSingleton(Singleton singleton)
+        void HandleSingleton(Singleton singleton)
         {
             if (!singleton.HasName())
             {
@@ -166,7 +166,7 @@
             }
         }
 
-        private void HandlePerRequest(PerRequest perRequest)
+        void HandlePerRequest(PerRequest perRequest)
         {
             if (!perRequest.HasName())
             {
@@ -182,7 +182,7 @@
             }
         }
 
-        private void HandleInstance(Instance instance)
+        void HandleInstance(Instance instance)
         {
             if (!instance.HasName())
             {
@@ -198,7 +198,7 @@
             }
         }
 
-        private class ContainerUpdater
+        class ContainerUpdater
         {
             readonly ICollection<Action<IComponentRegistry>> configurationActions = new List<Action<IComponentRegistry>>();
 

@@ -19,9 +19,9 @@
 
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
-        private readonly ICommandLineArgParser commandLineArgParser;
+        readonly ICommandLineArgParser commandLineArgParser;
         readonly ISettingsProvider settingProvider;
-        private int workCount;
+        int workCount;
 
         public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
@@ -286,13 +286,13 @@
             }
         }
 
-        private void RestoreRecentSearchEntries()
+        void RestoreRecentSearchEntries()
         {
             var setting = settingProvider.GetSettings<ProfilerSettings>();
             RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
         }
 
-        private void AddRecentSearchEntry(string searchQuery)
+        void AddRecentSearchEntry(string searchQuery)
         {
             if (searchQuery.IsEmpty()) return;
 
@@ -306,12 +306,12 @@
             }
         }
 
-        private string GetSearchResultMessage()
+        string GetSearchResultMessage()
         {
             return string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
         }
 
-        private string GetSearchResultHeader()
+        string GetSearchResultHeader()
         {
             if (SearchInProgress)
             {
@@ -322,7 +322,7 @@
                    SelectedEndpoint.Name : string.Empty;
         }
 
-        private string GetSearchResultResults()
+        string GetSearchResultResults()
         {
             if (SearchInProgress)
             {

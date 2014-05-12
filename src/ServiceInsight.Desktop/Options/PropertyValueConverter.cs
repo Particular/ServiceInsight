@@ -19,7 +19,7 @@
                    select new OptionPropertyValue(p, value);
         }
 
-        private bool IsEditableProperty(MemberInfo propertyInfo)
+        bool IsEditableProperty(MemberInfo propertyInfo)
         {
             var browsable = propertyInfo.GetCustomAttribute<EditorBrowsableAttribute>();
             return browsable == null || browsable.State != EditorBrowsableState.Never;

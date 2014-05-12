@@ -8,7 +8,7 @@
 
     public class DialogViewModel : Screen
     {
-        private Dialog view;
+        Dialog view;
 
         internal static MessageChoice Show(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
@@ -17,7 +17,7 @@
             return window.Result;
         }
 
-        private void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
+        void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
                 throw new ArgumentException();
@@ -52,7 +52,7 @@
             view.ShowDialog();
         }
 
-        private Dialog CreateWindow(Window parent)
+        Dialog CreateWindow(Window parent)
         {
             var dialog = new Dialog { Owner = parent, DataContext = this };
 
@@ -68,17 +68,17 @@
             return dialog;
         }
 
-        private static bool IsSet(MessageChoice choices, MessageChoice bits)
+        static bool IsSet(MessageChoice choices, MessageChoice bits)
         {
             return ((choices & bits) == bits);
         }
 
-        private void HelpCommand(object target)
+        void HelpCommand(object target)
         {
             Show(view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
         }
 
-        private void CloseCommand(object target)
+        void CloseCommand(object target)
         {
             var command = target as ChoiceCommand;
             if (command != null)

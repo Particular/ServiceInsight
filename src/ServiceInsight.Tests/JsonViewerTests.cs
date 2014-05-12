@@ -8,8 +8,8 @@
     [TestFixture]
     public class JsonViewerTests
     {
-        private IJsonMessageViewModel ViewModel;
-        private IJsonMessageView View;
+        IJsonMessageViewModel ViewModel;
+        IJsonMessageView View;
 
         [SetUp]
         public void TestInitialize()

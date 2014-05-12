@@ -10,8 +10,8 @@
     [TestFixture]
     public class ContainerRegistrationTests
     {
-        private AppBootstrapper Bootstrapper;
-        private IContainer Container;
+        AppBootstrapper Bootstrapper;
+        IContainer Container;
 
         [SetUp]
         public void TestInitialize()

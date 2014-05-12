@@ -12,8 +12,8 @@
 
     public class MSMQueueOperations : IQueueOperationsAsync
     {
-        private readonly IMapper mapper;
-        private readonly ILog logger = LogManager.GetLogger(typeof(IQueueOperations));
+        readonly IMapper mapper;
+        readonly ILog logger = LogManager.GetLogger(typeof(IQueueOperations));
 
         public MSMQueueOperations(IMapper mapper)
         {
@@ -277,7 +277,7 @@
             return messageCount;
         }
 
-        private bool QueueExists(Queue queue)
+        bool QueueExists(Queue queue)
         {
             var allQueues = GetQueues(queue.Address.Machine);
             return allQueues.Any(q => q.Address.Queue.Contains(queue.Address.Queue, StringComparison.InvariantCultureIgnoreCase));

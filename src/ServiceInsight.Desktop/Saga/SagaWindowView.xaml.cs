@@ -53,12 +53,12 @@
             }
         }
 
-        private void StackPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        void StackPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             RefreshAll();
         }
 
-        private void RefreshAll()
+        void RefreshAll()
         {
             var steps = (ItemsControl)FindName("Steps");
             for (var i = 0; i < steps.Items.Count; i++)
@@ -72,7 +72,7 @@
             }
         }
 
-        private void DrawLines(StackPanel panel, bool showEndpoints)
+        void DrawLines(StackPanel panel, bool showEndpoints)
         {
             if (panel == null) return;
             
@@ -120,7 +120,7 @@
             }
         }
 
-        private void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint, int i)
+        void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint, int i)
         {
             var timeoutIcon = timeout.FindName("TimeoutIcon") as FrameworkElement;
             var timeoutIconPosition = timeoutIcon.TransformToAncestor(panel).Transform(new Point(0, 0));
@@ -131,7 +131,7 @@
             lastPoint = timeoutPoint;
         }
 
-        private void AddLine(Point origin, Point destination, Panel rootCanvas)
+        void AddLine(Point origin, Point destination, Panel rootCanvas)
         {
             var relationshipPath = new Path
             {
@@ -171,7 +171,7 @@
             rootCanvas.Children.Add(relationshipPath);
         }
 
-        private void AddArrow(Panel rootCanvas, Point arrowPoint)
+        void AddArrow(Panel rootCanvas, Point arrowPoint)
         {
             var size = 10.0;
 
@@ -202,7 +202,7 @@
             rootCanvas.Children.Add(relationshipPath);
         }
 
-        private static void RemoveExistingLines(Panel rootCanvas)
+        static void RemoveExistingLines(Panel rootCanvas)
         {
             var children = rootCanvas.Children;
             var paths = new List<FrameworkElement>();
@@ -217,21 +217,21 @@
             }
         }
 
-        private Point GetPosition(string name, Panel panel)
+        Point GetPosition(string name, Panel panel)
         {
             return ((UIElement)panel.FindName(name))
                 .TransformToAncestor(panel)
                 .Transform(new Point(0, 0));
         }
 
-        private void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var model = DataContext as ISagaWindowViewModel;
             var message = ((FrameworkElement)sender).DataContext as SagaMessage;
             SetSelected(model, message.MessageId);
         }
 
-        private void SetSelected(ISagaWindowViewModel model, Guid id)
+        void SetSelected(ISagaWindowViewModel model, Guid id)
         {
             foreach (var step in model.Data.Changes)
             {
@@ -240,7 +240,7 @@
             }
         }
 
-        private void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
         {
             if (messages != null)
             {
@@ -251,12 +251,12 @@
             }
         }
 
-        private void SetSelected(SagaMessage message, Guid id)
+        void SetSelected(SagaMessage message, Guid id)
         {
             message.IsSelected = message.MessageId == id;
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             //var model = DataContext as ISagaWindowViewModel;
             var message = ((Hyperlink)e.Source).DataContext as SagaTimeoutMessage;
@@ -274,7 +274,7 @@
             }
         }
 
-        private static void ScrollIntoView(ItemsControl steps, int i)
+        static void ScrollIntoView(ItemsControl steps, int i)
         {
             var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
             if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)

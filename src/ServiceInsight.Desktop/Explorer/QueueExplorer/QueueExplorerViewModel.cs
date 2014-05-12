@@ -19,12 +19,12 @@
     [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
-        private readonly IQueueManagerAsync queueManager;
-        private readonly IEventAggregator eventAggregator;
-        private readonly IWindowManagerEx windowManager;
-        private readonly INetworkOperations networkOperations;
-        private bool isFirstActivation = true;
-        private IExplorerView view;
+        readonly IQueueManagerAsync queueManager;
+        readonly IEventAggregator eventAggregator;
+        readonly IWindowManagerEx windowManager;
+        readonly INetworkOperations networkOperations;
+        bool isFirstActivation = true;
+        IExplorerView view;
 
         public QueueExplorerViewModel(
             IQueueManagerAsync queueManager,
@@ -112,7 +112,7 @@
             get { return (IShellViewModel)base.Parent; }
         }
 
-        private void AddServerNode()
+        void AddServerNode()
         {
             if (MachineRoot == null)
             {
@@ -207,7 +207,7 @@
             }
         }
 
-        private void SetupQueueNodes(IEnumerable<Queue> queues)
+        void SetupQueueNodes(IEnumerable<Queue> queues)
         {
             if (MachineRoot == null)
                 return;
@@ -242,12 +242,12 @@
             }
         }
 
-        private string GetMatchesSystemQueuesName(Queue queue)
+        string GetMatchesSystemQueuesName(Queue queue)
         {
             return SubQueueNames.FirstOrDefault(q => queue.Address.Queue.EndsWith(q, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private bool IsConnected
+        bool IsConnected
         {
             get { return !ConnectedToAddress.IsEmpty(); }
         }

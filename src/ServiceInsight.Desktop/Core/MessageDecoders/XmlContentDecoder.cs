@@ -31,7 +31,7 @@ namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
             return new DecoderResult<XmlDocument>(doc, false);
         }
 
-        private static string GetFromBase64String(byte[] content)
+        static string GetFromBase64String(byte[] content)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
             }
         }
 
-        private bool TryLoadIntoDocument(string xml, XmlDocument document)
+        bool TryLoadIntoDocument(string xml, XmlDocument document)
         {
             if (string.IsNullOrWhiteSpace(xml)) return false;
 

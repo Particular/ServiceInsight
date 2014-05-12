@@ -21,15 +21,15 @@
     [TestFixture]
     public class ExplorerTests
     {
-        private QueueExplorerViewModel explorer;
-        private IExplorerView view;
-        private IQueueManagerAsync queueManager;
-        private IEventAggregator eventAggregator;
-        private IWindowManagerEx windowManagerEx;
-        private INetworkOperations networkOperations;
-        private Queue queue;
-        private Queue subQueue;
-        private QueueExplorerItem queueNode;
+        QueueExplorerViewModel explorer;
+        IExplorerView view;
+        IQueueManagerAsync queueManager;
+        IEventAggregator eventAggregator;
+        IWindowManagerEx windowManagerEx;
+        INetworkOperations networkOperations;
+        Queue queue;
+        Queue subQueue;
+        QueueExplorerItem queueNode;
 
         [SetUp]
         public void TestInitialize()

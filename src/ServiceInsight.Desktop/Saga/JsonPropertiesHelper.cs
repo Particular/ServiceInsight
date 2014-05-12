@@ -7,7 +7,7 @@
 
     class JsonPropertiesHelper
     {
-        private static IList<string> standardKeys = new List<string> { "$type", "Id", "Originator", "OriginalMessageId" };
+        static IList<string> standardKeys = new List<string> { "$type", "Id", "Originator", "OriginalMessageId" };
 
         public static IList<KeyValuePair<string, string>> ProcessValues(string stateAfterChange)
         {

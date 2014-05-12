@@ -18,7 +18,7 @@
     /// </summary>
     public partial class ShellView : IShellView
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof (IShellView));
+        readonly ILog logger = LogManager.GetLogger(typeof (IShellView));
 
         public ShellView()
         {
@@ -28,7 +28,7 @@
             Loaded += OnShellLoaded;
         }
 
-        private void OnShellLoaded(object sender, RoutedEventArgs e)
+        void OnShellLoaded(object sender, RoutedEventArgs e)
         {
             DXSplashScreen.Close();
             Activate();
@@ -105,12 +105,12 @@
             settingsProvider.SaveSettings(layoutSettings);
         }
 
-        private string GetCurrentLayoutVersion()
+        string GetCurrentLayoutVersion()
         {
             return DXSerializer.GetLayoutVersion(BarManager);
         }
 
-        private string GetLayout(dynamic control) //Lack of common interface :(
+        string GetLayout(dynamic control) //Lack of common interface :(
         {
             try
             {
@@ -125,7 +125,7 @@
             }
         }
 
-        private void SetLayout(dynamic control, Stream layout)
+        void SetLayout(dynamic control, Stream layout)
         {
             if(layout == null)
                 return;
@@ -140,12 +140,12 @@
             }
         }
 
-        private IShellViewModel Model
+        IShellViewModel Model
         {
             get { return DataContext as IShellViewModel; }
         }
 
-        private void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
+        void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
         {
             if (Model != null)
             {

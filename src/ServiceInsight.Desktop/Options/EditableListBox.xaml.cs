@@ -12,7 +12,7 @@
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(EditableListBox), new PropertyMetadata(OnItemsSourceChanged));
 
-        private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
+        static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
         {
             ((EditableListBox) d).OnItemsSourceChanged();
         }
@@ -28,7 +28,7 @@
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        private void OnRemoveSelectedItem(object sender, RoutedEventArgs e)
+        void OnRemoveSelectedItem(object sender, RoutedEventArgs e)
         {
             var selectedItem = List.SelectedItem as string;
             if (selectedItem != null && ItemsSource.Contains(selectedItem))
@@ -37,7 +37,7 @@
             }
         }
 
-        private void OnAddNewItem(object sender, RoutedEventArgs e)
+        void OnAddNewItem(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(NewItem.Text))
             {

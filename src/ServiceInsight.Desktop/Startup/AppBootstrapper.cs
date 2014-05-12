@@ -17,7 +17,7 @@
 
     public class AppBootstrapper : Bootstrapper<IShellViewModel>
     {
-        private IContainer container;
+        IContainer container;
         
         protected override void PrepareApplication()
         {
@@ -26,12 +26,12 @@
             ApplyBindingCulture();
         }
 
-        private void ApplyBindingCulture()
+        void ApplyBindingCulture()
         {
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
 
-        private void ExtendConventions()
+        void ExtendConventions()
         {
             var convention = Container.GetInstance<IConventionManager>();
             convention.AddElementConvention(new DefaultElementConvention<BarButtonItem>("ItemClick", BarButtonItem.IsVisibleProperty, (item, o) => item.DataContext = o, item => item.DataContext));

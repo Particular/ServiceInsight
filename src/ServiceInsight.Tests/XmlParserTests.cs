@@ -10,8 +10,8 @@
     [TestFixture]
     public class XmlParserTests
     {
-        private XmlParser Parser;
-        private IList<CodeLexem> Lexemes;
+        XmlParser Parser;
+        IList<CodeLexem> Lexemes;
 
         const string SimpleXml = "<xml version=\"1.0\" encoding=\"utf-8\"><packages>test package</packages>";
 

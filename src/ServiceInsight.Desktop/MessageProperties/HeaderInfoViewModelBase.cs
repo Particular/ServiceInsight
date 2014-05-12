@@ -13,7 +13,7 @@
 
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
-        private readonly IContentDecoder<IList<HeaderInfo>> decoder;
+        readonly IContentDecoder<IList<HeaderInfo>> decoder;
         
         protected HeaderInfoViewModelBase (
             IEventAggregator eventAggregator, 

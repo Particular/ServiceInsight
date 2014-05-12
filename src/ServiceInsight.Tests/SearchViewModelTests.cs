@@ -13,9 +13,9 @@
     [TestFixture]
     public class SearchViewModelTests
     {
-        private ISearchBarViewModel ViewModel;
-        private ICommandLineArgParser ArgParser;
-        private ISettingsProvider SettingProvider;
+        ISearchBarViewModel ViewModel;
+        ICommandLineArgParser ArgParser;
+        ISettingsProvider SettingProvider;
 
         [SetUp]
         public void TestInitialize()

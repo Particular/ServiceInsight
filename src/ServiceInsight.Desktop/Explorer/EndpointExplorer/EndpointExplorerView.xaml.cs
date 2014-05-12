@@ -14,12 +14,12 @@
             InitializeComponent();
         }
 
-        private void OnTreeClicked(object sender, MouseButtonEventArgs e)
+        void OnTreeClicked(object sender, MouseButtonEventArgs e)
         {
             Model.OnSelectedNodeChanged();
         }
 
-        private IExplorerViewModel Model
+        IExplorerViewModel Model
         {
             get { return DataContext as IExplorerViewModel; }
         }
@@ -61,7 +61,7 @@
             Dispatcher.BeginInvoke((Action)(StopWorkInProgress));
         }
 
-        private void StopWorkInProgress()
+        void StopWorkInProgress()
         {
             if (Model.Parent.AutoRefresh) return;
 
@@ -69,7 +69,7 @@
             treeList.IsHitTestVisible = true;
         }
 
-        private void StartWorkInProgress()
+        void StartWorkInProgress()
         {
             if(Model.Parent.AutoRefresh) return;
 

@@ -9,9 +9,9 @@
 
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
-        private readonly AppLicenseManager licenseManager;
-        private readonly IDialogManager dialogManager;
-        private readonly INetworkOperations network;
+        readonly AppLicenseManager licenseManager;
+        readonly IDialogManager dialogManager;
+        readonly INetworkOperations network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
         public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";
@@ -33,7 +33,7 @@
             DisplayName = GetScreenTitle();
         }
 
-        private string GetScreenTitle()
+        string GetScreenTitle()
         {
             var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense);
 
@@ -205,7 +205,7 @@
         }
 
 
-        private string ReadAllTextWithoutLocking(string path)
+        string ReadAllTextWithoutLocking(string path)
         {
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var textReader = new StreamReader(fileStream))

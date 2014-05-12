@@ -23,9 +23,9 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        private readonly IQueueManagerAsync queueManager;
-        private readonly IQueueExplorerViewModel explorer;
-        private readonly INetworkOperations networkOperations;
+        readonly IQueueManagerAsync queueManager;
+        readonly IQueueExplorerViewModel explorer;
+        readonly INetworkOperations networkOperations;
 
         public QueueCreationViewModel(
             IQueueManagerAsync queueManager, 
@@ -86,13 +86,13 @@
             return queue != null;
         }
 
-        private void StartWorkInProgress(string message)
+        void StartWorkInProgress(string message)
         {
             ProgressMessage = message;
             WorkInProgress = true;
         }
 
-        private void StopWorkInProgress()
+        void StopWorkInProgress()
         {
             ProgressMessage = string.Empty;
             WorkInProgress = false;

@@ -4,7 +4,7 @@
 
     public class ScreenFactory : IScreenFactory
     {
-        private readonly IContainer container;
+        readonly IContainer container;
 
         public ScreenFactory(IContainer container)
         {

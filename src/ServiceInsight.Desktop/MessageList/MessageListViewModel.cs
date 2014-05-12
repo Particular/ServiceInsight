@@ -23,20 +23,20 @@
 
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
-        private readonly IEventAggregator eventAggregator;
-        private readonly IServiceControl serviceControl;
-        private readonly IErrorHeaderViewModel errorHeaderDisplay;
-        private readonly IGeneralHeaderViewModel generalHeaderDisplay;
-        private readonly IClipboard clipboard;
-        private readonly IMenuItem returnToSourceMenu;
-        private readonly IMenuItem retryMessageMenu;
-        private readonly IMenuItem copyMessageIdMenu;
-        private readonly IMenuItem copyHeadersMenu;
-        private bool lockUpdate;
-        private string lastSortColumn;
-        private bool lastSortOrderAscending;
-        private int workCount;
-        private IMessageListView view;
+        readonly IEventAggregator eventAggregator;
+        readonly IServiceControl serviceControl;
+        readonly IErrorHeaderViewModel errorHeaderDisplay;
+        readonly IGeneralHeaderViewModel generalHeaderDisplay;
+        readonly IClipboard clipboard;
+        readonly IMenuItem returnToSourceMenu;
+        readonly IMenuItem retryMessageMenu;
+        readonly IMenuItem copyMessageIdMenu;
+        readonly IMenuItem copyHeadersMenu;
+        bool lockUpdate;
+        string lastSortColumn;
+        bool lastSortOrderAscending;
+        int workCount;
+        IMessageListView view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -308,7 +308,7 @@
             NotifyPropertiesChanged();
         }
 
-        private void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
+        void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
         {
             try
             {
@@ -328,7 +328,7 @@
             AutoFocusFirstRow();
         }
 
-        private void AutoFocusFirstRow()
+        void AutoFocusFirstRow()
         {
             if (FocusedRow == null && Rows.Count > 0)
             {
@@ -336,7 +336,7 @@
             }
         }
 
-        private bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
+        bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
         {
             if (FocusedRow == null)
                 return true;
@@ -351,12 +351,12 @@
             return anyConversationMessageChanged;
         }
 
-        private static bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
+        static bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
         {
             return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
-        private async Task<bool> LoadMessageBody()
+        async Task<bool> LoadMessageBody()
         {
             if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty()) return false;
 
@@ -371,7 +371,7 @@
             return true;
         }
 
-        private void NotifyPropertiesChanged()
+        void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
             SearchBar.NotifyPropertiesChanged();

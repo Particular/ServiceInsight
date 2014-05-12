@@ -13,7 +13,7 @@
             InitializeComponent();
         }
 
-        private void OnPropertyContentCopy(object sender, ItemClickEventArgs e)
+        void OnPropertyContentCopy(object sender, ItemClickEventArgs e)
         {
             var data = e.Item.DataContext as RowData;
             if (data != null && data.Value != null)
@@ -25,7 +25,7 @@
             }
         }
 
-        private IMessagePropertiesViewModel Model
+        IMessagePropertiesViewModel Model
         {
             get {  return (IMessagePropertiesViewModel)DataContext; }
         }

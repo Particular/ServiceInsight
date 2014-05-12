@@ -15,10 +15,10 @@
     [TestFixture]
     public class QueueCreationViewModel
     {
-        private Desktop.Shell.QueueCreationViewModel Model;
-        private IQueueManagerAsync QueueManager;
-        private IQueueExplorerViewModel Explorer;
-        private INetworkOperations Network;
+        Desktop.Shell.QueueCreationViewModel Model;
+        IQueueManagerAsync QueueManager;
+        IQueueExplorerViewModel Explorer;
+        INetworkOperations Network;
 
         [SetUp]
         public void TestInitialize()

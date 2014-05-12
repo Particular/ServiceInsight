@@ -7,7 +7,7 @@
 
     public class ServiceControlConnectionDialog : ProfilerElement
     {
-        private Window dialog;
+        Window dialog;
 
         public ServiceControlConnectionDialog(Window mainWindow) : base(mainWindow)
         {

@@ -12,9 +12,9 @@
 
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
-        private readonly IWindowManagerEx windowManager;
-        private readonly IEventAggregator eventAggregator;
-        private readonly IShellViewModel shell;
+        readonly IWindowManagerEx windowManager;
+        readonly IEventAggregator eventAggregator;
+        readonly IShellViewModel shell;
 
         public DefaultExceptionHandler(
             IWindowManagerEx windowManager, 
@@ -46,7 +46,7 @@
             }
         }
 
-        private void StopAsyncProgress(Exception rootError)
+        void StopAsyncProgress(Exception rootError)
         {
             if (shell.WorkInProgress)
             {
@@ -54,17 +54,17 @@
             }
         }
 
-        private bool IsIgnoredError(Exception rootError)
+        bool IsIgnoredError(Exception rootError)
         {
             return rootError is MessageQueueException;
         }
 
-        private bool IsSoftError(Exception rootError)
+        bool IsSoftError(Exception rootError)
         {
             return rootError is NotImplementedException;
         }
 
-        private void ShowWarning(Exception error)
+        void ShowWarning(Exception error)
         {
             windowManager.ShowMessageBox(error.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }

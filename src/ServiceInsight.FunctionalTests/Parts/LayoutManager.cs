@@ -9,8 +9,8 @@
 
     public class LayoutManager : ProfilerElement
     {
-        private readonly GroupBox barManager;
-        private readonly IUIItem[] autoHideGroups;
+        readonly GroupBox barManager;
+        readonly IUIItem[] autoHideGroups;
 
         public LayoutManager(Window mainWindow) : base(mainWindow)
         {
@@ -27,7 +27,7 @@
             }
         }
 
-        private void Dock(IUIItem item)
+        void Dock(IUIItem item)
         {
             //NOTE: Workaround. Can not find dockmanager's context menu
             item.RightClick();

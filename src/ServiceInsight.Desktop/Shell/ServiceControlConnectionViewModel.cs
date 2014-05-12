@@ -15,9 +15,9 @@
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
 
-        private readonly ISettingsProvider settingsProvider;
-        private readonly ProfilerSettings appSettings;
-        private readonly IContainer container;
+        readonly ISettingsProvider settingsProvider;
+        readonly ProfilerSettings appSettings;
+        readonly IContainer container;
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
@@ -44,7 +44,7 @@
             RecentEntries = GetRecentServiceEntries();
         }
 
-        private List<string> GetRecentServiceEntries()
+        List<string> GetRecentServiceEntries()
         {
             return appSettings.RecentServiceControlEntries.ToList();
         }
@@ -76,13 +76,13 @@
             StopWorkInProgress();
         }
 
-        private void StartWorkInProgress()
+        void StartWorkInProgress()
         {
             ProgressMessage = ConnectingToServiceControl;
             WorkInProgress = true;
         }
 
-        private void StopWorkInProgress()
+        void StopWorkInProgress()
         {
             ProgressMessage = string.Empty;
             WorkInProgress = false;
@@ -93,7 +93,7 @@
             get; set;
         }
 
-        private void StoreConnectionAddress()
+        void StoreConnectionAddress()
         {
             var existingEntry = appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
@@ -105,7 +105,7 @@
             settingsProvider.SaveSettings(appSettings);
         }
 
-        private async Task<bool> IsValidUrl(string serviceUrl)
+        async Task<bool> IsValidUrl(string serviceUrl)
         {
             if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
             {

@@ -12,7 +12,7 @@
 
     public partial class LogWindowView : ILogWindowView
     {
-        private RichTextBoxAppender appender;
+        RichTextBoxAppender appender;
 
 
         public LogWindowView()

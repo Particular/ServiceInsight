@@ -7,9 +7,9 @@ namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
 
     public class QueueExplorerItem : ExplorerItem
     {
-        private string displayName;
-        private readonly Queue queue;
-        private readonly string queueName;
+        string displayName;
+        readonly Queue queue;
+        readonly string queueName;
 
         public QueueExplorerItem(Queue queue) : base(queue.Address.Queue)
         {

@@ -8,7 +8,7 @@
 
     public class EndSegmentValueConverter : IValueConverter
     {
-        private const double arrowSize = 20;
+        const double arrowSize = 20;
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -30,7 +30,7 @@
             }
         }
 
-        private static double AngleFromSegments(ObservableCollection<DiagramConnectionSegment> segments)
+        static double AngleFromSegments(ObservableCollection<DiagramConnectionSegment> segments)
         {
             return Math.Atan2(segments.Last().EndPoint.X - segments.First().StartPoint.X, segments.Last().EndPoint.Y - segments.First().StartPoint.Y);
         }

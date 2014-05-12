@@ -59,7 +59,7 @@
             }
         }
 
-        private MessageStatistics statistics;
+        MessageStatistics statistics;
 
         public string ElapsedDeliveryTime
         {

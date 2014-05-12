@@ -12,7 +12,7 @@
             InitializeComponent();
         }
 
-        private void SelectText(object sender, RoutedEventArgs e)
+        void SelectText(object sender, RoutedEventArgs e)
         {
             name.SelectAll();
         }

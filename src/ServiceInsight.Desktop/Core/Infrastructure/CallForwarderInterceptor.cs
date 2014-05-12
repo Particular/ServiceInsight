@@ -6,8 +6,8 @@
 
     public class CallForwarderInterceptor : IInterceptor
     {
-        private readonly object target;
-        private readonly Type targetType;
+        readonly object target;
+        readonly Type targetType;
 
         public CallForwarderInterceptor(Type targetType)
         {

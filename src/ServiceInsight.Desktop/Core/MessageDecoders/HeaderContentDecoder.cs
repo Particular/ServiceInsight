@@ -8,7 +8,7 @@
 
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {
-        private readonly IContentDecoder<string> stringDecoder;
+        readonly IContentDecoder<string> stringDecoder;
 
         public HeaderContentDecoder(IContentDecoder<string> stringDecoder)
         {
@@ -39,7 +39,7 @@
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private static DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
+        static DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
         {
             try
             {
@@ -57,7 +57,7 @@
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private static DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
+        static DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
         {
             try
             {

@@ -18,7 +18,7 @@
         internal const string FORMATNAME = "FormatName:" + DIRECTPREFIX;
         internal const string PRIVATE = "\\private$\\";
 
-        private static readonly string DefaultMachine = Environment.MachineName;
+        static readonly string DefaultMachine = Environment.MachineName;
 
         /// <summary>
         /// Get the address of this endpoint.

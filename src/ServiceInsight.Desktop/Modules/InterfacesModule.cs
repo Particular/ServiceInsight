@@ -8,7 +8,7 @@
 
     public class InterfacesModule : Module
     {
-        private readonly ProxyGenerator generator;
+        readonly ProxyGenerator generator;
 
         public InterfacesModule()
         {
@@ -20,12 +20,12 @@
             builder.RegisterInstance(GenerateInterfaceProxyForType<IEnvironment>(typeof (Environment))).As<IEnvironment>();
         }
 
-        private object GenerateInterfaceProxyForInstance<T>(object classToProxy) where T : class
+        object GenerateInterfaceProxyForInstance<T>(object classToProxy) where T : class
         {
             return generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(classToProxy));
         }
 
-        private object GenerateInterfaceProxyForType<T>(Type type) where T : class
+        object GenerateInterfaceProxyForType<T>(Type type) where T : class
         {
             return generator.CreateInterfaceProxyWithoutTarget<T>(new CallForwarderInterceptor(type));
         }

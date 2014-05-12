@@ -7,7 +7,7 @@
 
     class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
     {
-        private ISettingsProvider settingsProvider;
+        ISettingsProvider settingsProvider;
         public virtual IPersistableLayout View { get; private set; }
 
         public IExceptionDetails Exception { get; set; }
@@ -41,12 +41,12 @@
             SaveLayout();
         }
 
-        private void SaveLayout()
+        void SaveLayout()
         {
             View.OnSaveLayout(settingsProvider);
         }
 
-        private void RestoreLayout()
+        void RestoreLayout()
         {
             View.OnRestoreLayout(settingsProvider);
         }

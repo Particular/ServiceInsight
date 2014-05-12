@@ -12,7 +12,7 @@
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
     {
 
-        private readonly IContentDecoder<IList<HeaderInfo>> decoder;
+        readonly IContentDecoder<IList<HeaderInfo>> decoder;
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 

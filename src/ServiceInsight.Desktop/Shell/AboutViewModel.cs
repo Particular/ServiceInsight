@@ -18,8 +18,8 @@ namespace Particular.ServiceInsight.Desktop.Shell
         public const string DetectingServiceControlVersion = "(Detecting...)";
         public const string NotConnectedToServiceControl = "(Not Connected)";
 
-        private readonly INetworkOperations networkOperations;
-        private readonly IServiceControl serviceControl;
+        readonly INetworkOperations networkOperations;
+        readonly IServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -46,7 +46,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             DisplayName = "About";
         }
 
-        private AboutViewModel()
+        AboutViewModel()
         {
             IsSplash = true;
         }
@@ -58,7 +58,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             return vm;
         }
 
-        private async Task OnActivate()
+        async Task OnActivate()
         {
             ActivateLicense();
             LoadAppVersion();
@@ -80,7 +80,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             Activated(this, new ActivationEventArgs());
         }
 
-        private void LoadAppVersion()
+        void LoadAppVersion()
         {
             var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             var versionParts = version.Split(' ');
@@ -91,7 +91,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             CommitHash = GetShortCommitHash(commitHash);
         }
 
-        private static string GetShortCommitHash(string commitHash)
+        static string GetShortCommitHash(string commitHash)
         {
             var parts = commitHash.Split(':');
             var shaValue = parts[1].Replace("'", "");
@@ -100,7 +100,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             return shortCommitHash;
         }
 
-        private void ActivateLicense()
+        void ActivateLicense()
         {
             if (License != null)
             {
@@ -108,7 +108,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             }
         }
 
-        private async Task LoadVersions()
+        async Task LoadVersions()
         {
             ServiceControlVersion = DetectingServiceControlVersion;
 

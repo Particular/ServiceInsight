@@ -90,7 +90,7 @@
                 throw new ArgumentOutOfRangeException(GetParameterName(reference));
         }
 
-        private static string GetParameterName(LambdaExpression reference)
+        static string GetParameterName(LambdaExpression reference)
         {
             var member = (MemberExpression)reference.Body;
             return member.Member.Name;

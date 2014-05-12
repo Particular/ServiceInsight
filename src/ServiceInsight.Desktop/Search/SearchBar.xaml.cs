@@ -12,7 +12,7 @@
             InitializeComponent();
         }
 
-        private void OnSearchKeyDown(object sender, KeyEventArgs e)
+        void OnSearchKeyDown(object sender, KeyEventArgs e)
         {
             if ((e.Key == Key.Return || e.Key == Key.Enter) && Model != null)
             {
@@ -20,7 +20,7 @@
             }
         }
 
-        private ISearchBarViewModel Model
+        ISearchBarViewModel Model
         {
             get { return DataContext as ISearchBarViewModel; }
         }

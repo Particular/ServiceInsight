@@ -12,8 +12,8 @@
     [TestFixture]
     public class HexViewerTests
     {
-        private IHexContentViewModel ViewModel;
-        private IHexContentView View;
+        IHexContentViewModel ViewModel;
+        IHexContentView View;
         const string TestMessage = "This is a test message content that is spread into four lines";
 
         [SetUp]

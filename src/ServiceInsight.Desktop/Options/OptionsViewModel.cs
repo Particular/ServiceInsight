@@ -7,7 +7,7 @@
 
     public class OptionsViewModel : Screen
     {
-        private readonly ISettingsProvider settingsProvider;
+        readonly ISettingsProvider settingsProvider;
 
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {
@@ -23,14 +23,14 @@
             IsModified = false;
         }
 
-        private void LoadSettings()
+        void LoadSettings()
         {
             Application = settingsProvider.GetSettings<ProfilerSettings>();
             UsageReporting = settingsProvider.GetSettings<ReportingSettings>();
             Application.PropertyChanged += OnSettingChanged;
         }
 
-        private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
+        void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
             IsModified = true;
         }

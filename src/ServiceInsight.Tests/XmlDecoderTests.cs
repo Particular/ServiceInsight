@@ -9,8 +9,8 @@
     [TestFixture]
     public class XmlDecoderTests
     {
-        private byte[] XmlContent;
-        private IContentDecoder Decoder;
+        byte[] XmlContent;
+        IContentDecoder Decoder;
 
         [SetUp]
         public void TestInitialize()

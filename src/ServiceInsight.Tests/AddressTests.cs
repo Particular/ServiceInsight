@@ -147,7 +147,7 @@
             Should.Throw<ArgumentNullException>(() => Address.ParseFormatName(null));
         }
 
-        private static string GetLocalIp()
+        static string GetLocalIp()
         {
             var address = Dns.GetHostEntry(Dns.GetHostName())
                              .AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork)

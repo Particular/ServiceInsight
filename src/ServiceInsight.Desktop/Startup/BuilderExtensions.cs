@@ -11,7 +11,7 @@
 
     public static class BuilderExtensions
     {
-        private static readonly ILog Logger = LogManager.GetLogger("Container");
+        static readonly ILog Logger = LogManager.GetLogger("Container");
 
         internal static Func<string, ILog, Assembly> LoadModuleAssembly = (file, logger) =>
         {
@@ -89,7 +89,7 @@
                    MatchingNames.Any(ns => type.Name.EndsWith(ns, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private static IEnumerable<string> MatchingNames
+        static IEnumerable<string> MatchingNames
         {
             get
             {

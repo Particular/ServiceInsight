@@ -12,10 +12,10 @@
     [TestFixture]
     public class AboutViewModelTests
     {
-        private INetworkOperations networkOperations;
-        private IServiceControl serviceControl;
-        private ILicenseRegistrationViewModel licenseRegistration;
-        private AboutViewModel sut;
+        INetworkOperations networkOperations;
+        IServiceControl serviceControl;
+        ILicenseRegistrationViewModel licenseRegistration;
+        AboutViewModel sut;
 
         [SetUp]
         public void Initialize()

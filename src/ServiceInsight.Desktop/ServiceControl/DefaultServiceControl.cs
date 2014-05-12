@@ -24,10 +24,10 @@
             public const string TotalCount = "Total-Count";
         }
 
-        private readonly IServiceControlConnectionProvider connection;
-        private readonly IEventAggregator eventAggregator;
-        private readonly ProfilerSettings settings;
-        private readonly ILog logger = LogManager.GetLogger(typeof(IServiceControl));
+        readonly IServiceControlConnectionProvider connection;
+        readonly IEventAggregator eventAggregator;
+        readonly ProfilerSettings settings;
+        readonly ILog logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
@@ -140,40 +140,40 @@
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        private void AppendSystemMessages(IRestRequest request)
+        void AppendSystemMessages(IRestRequest request)
         {
             request.AddParameter("include_system_messages", settings.DisplaySystemMessages);
         }
 
-        private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
+        void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
             if(orderBy == null) return;
             request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
             request.AddParameter("direction", GetSortDirection(ascending), ParameterType.GetOrPost);
         }
 
-        private void AppendPaging(IRestRequest request, int pageIndex)
+        void AppendPaging(IRestRequest request, int pageIndex)
         {
             request.AddParameter("page", pageIndex, ParameterType.GetOrPost);
         }
 
-        private void AppendSearchQuery(IRestRequest request, string searchQuery)
+        void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
             if(searchQuery == null) return;
             request.Resource += string.Format("search/{0}", Encode(searchQuery));
         }
 
-        private string GetSortDirection(bool ascending)
+        string GetSortDirection(bool ascending)
         {
             return ascending ? "asc" : "desc";
         }
 
-        private IRestClient CreateClient()
+        IRestClient CreateClient()
         {
             return CreateClient(connection.Url);
         }
 
-        private IRestClient CreateClient(string url)
+        IRestClient CreateClient(string url)
         {
             var client = new RestClient(url);
             var deserializer = new JsonMessageDeserializer();
@@ -186,12 +186,12 @@
             return client;
         }
 
-        private static string CreateBaseUrl(string endpointName = null)
+        static string CreateBaseUrl(string endpointName = null)
         {
             return endpointName != null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
         }
 
-        private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
+        Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
         {
             LogRequest(request);
 
@@ -229,12 +229,12 @@
             return await GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
         }
 
-        private static RestRequest CreateSagaRequest(string sagaId)
+        static RestRequest CreateSagaRequest(string sagaId)
         {
             return new RestRequest(string.Format("sagas/{0}", sagaId));
         }
 
-        private bool HasChanged(IRestRequest request)
+        bool HasChanged(IRestRequest request)
         {
             if (System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource))
             {
@@ -258,18 +258,18 @@
             return true; 
         }
 
-        private Task<T> GetModelAsync<T>(IRestRequest request)
+        Task<T> GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
             return ExecuteAsync<T>(request, response => { CacheResponse(response); return response.Data; });
         }
 
-        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
         {
             return ExecuteAsync(CreateClient(), request, selector);
         }
 
-        private Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
+        Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
@@ -280,7 +280,7 @@
             return completionSource.Task;
         }
 
-        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
+        Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
             LogRequest(request);
@@ -290,7 +290,7 @@
             return completionSource.Task;
         }
 
-        private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
+        void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
         {
             if (HasSucceeded(response))
             {
@@ -304,7 +304,7 @@
             }
         }
 
-        private static void CacheResponse(IRestResponse response)
+        static void CacheResponse(IRestResponse response)
         {
             if (response.Request.Resource != null && response.Headers.Any(h => h.Name == "ETag"))
             {
@@ -312,7 +312,7 @@
             }
         }
 
-        private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
+        void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
             where T : class, new()
         {
             if (HasSucceeded(response))
@@ -327,12 +327,12 @@
             }
         }
 
-        private static string Encode(string parameterValue)
+        static string Encode(string parameterValue)
         {
             return HttpUtility.UrlEncode(parameterValue);
         }
 
-        private void LogRequest(IRestRequest request)
+        void LogRequest(IRestRequest request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
             var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
@@ -347,7 +347,7 @@
             }
         }
 
-        private void LogResponse(IRestResponse response)
+        void LogResponse(IRestResponse response)
         {
             var code = response.StatusCode;
             var uri = response.ResponseUri;
@@ -362,7 +362,7 @@
             }
         }
 
-        private void LogError(IRestResponse response)
+        void LogError(IRestResponse response)
         {
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
@@ -371,17 +371,17 @@
             logger.ErrorFormat(errorMessage, exception);
         }
 
-        private static bool HasSucceeded(IRestResponse response)
+        static bool HasSucceeded(IRestResponse response)
         {
             return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
-        private void RaiseAsyncOperationFailed(string errorMessage)
+        void RaiseAsyncOperationFailed(string errorMessage)
         {
             eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
         }
 
-        private static IEnumerable<HttpStatusCode> SuccessCodes
+        static IEnumerable<HttpStatusCode> SuccessCodes
         {
             get
             {

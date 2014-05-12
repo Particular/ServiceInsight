@@ -11,10 +11,10 @@
     [TestFixture]
     public class QueueManagerTests
     {
-        private QueueManager QueueManager;
-        private IQueueOperations QueueOperations;
-        private IList<Queue> QueueList;
-        private IList<MessageInfo> Messages;
+        QueueManager QueueManager;
+        IQueueOperations QueueOperations;
+        IList<Queue> QueueList;
+        IList<MessageInfo> Messages;
 
         [SetUp]
         public void TestInitialize()

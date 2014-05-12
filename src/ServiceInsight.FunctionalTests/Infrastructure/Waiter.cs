@@ -43,7 +43,7 @@
             if (failed) throw new TimeoutException(message, exception);
         }
 
-        private static bool NotTimedOut(TimeSpan totalTimeout, DateTime startedAt)
+        static bool NotTimedOut(TimeSpan totalTimeout, DateTime startedAt)
         {
             return DateTime.Now - startedAt < totalTimeout;
         }

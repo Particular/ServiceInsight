@@ -19,9 +19,9 @@
             base.Load(builder);
         }
 
-        private class SettingProviderProxy : SettingsProvider
+        class SettingProviderProxy : SettingsProvider
         {
-            private readonly IContainer container;
+            readonly IContainer container;
 
             public SettingProviderProxy(IContainer container)
             {

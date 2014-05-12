@@ -55,7 +55,7 @@
 			return target;
 		}
 
-		private object FindRoot(string content)
+		object FindRoot(string content)
 		{
 			var data = (IDictionary<string, object>)SimpleJson.DeserializeObject(content);
 			if (RootElement.HasValue() && data.ContainsKey(RootElement))
@@ -65,7 +65,7 @@
 			return data;
 		}
 
-		private void Map(object target, IDictionary<string, object> data)
+		void Map(object target, IDictionary<string, object> data)
 		{
 			var objType = target.GetType();
 			var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
@@ -96,7 +96,7 @@
 			}
 		}
 
-		private IDictionary BuildDictionary(Type type, object parent)
+		IDictionary BuildDictionary(Type type, object parent)
 		{
 			var dict = (IDictionary)Activator.CreateInstance(type);
 			var valueType = type.GetGenericArguments()[1];
@@ -110,7 +110,7 @@
 			return dict;
 		}
 
-		private IList BuildList(Type type, object parent)
+		IList BuildList(Type type, object parent)
 		{
 			var list = (IList)Activator.CreateInstance(type);
 			var listType = type.GetInterfaces().First(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
@@ -155,7 +155,7 @@
 			return list;
 		}
 
-		private object ConvertValue(Type type, object value)
+		object ConvertValue(Type type, object value)
 		{
 			var stringValue = Convert.ToString(value, Culture);
 			
@@ -262,7 +262,7 @@
 			return null;
 		}
 
-		private object CreateAndMap(Type type, object element)
+		object CreateAndMap(Type type, object element)
 		{
 			var instance = Activator.CreateInstance(type);
 
@@ -271,7 +271,7 @@
 			return instance;
 		}
 
-        private byte[] ConvertByteArray(string str)
+        byte[] ConvertByteArray(string str)
         {
             return str.Length > 0 ? Encoding.UTF8.GetBytes(str) : new byte[0];
         }

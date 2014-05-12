@@ -13,7 +13,7 @@
             CustomPopupPlacementCallback += placeContextMenu;
         }
 
-        private CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
+        CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
         {
             var ret = new List<CustomPopupPlacement>();
             var target = PlacementTarget as FrameworkElement;
@@ -35,7 +35,7 @@
             base.OnClosed(e);
         }
 
-        private void SubscribeChildEvents()
+        void SubscribeChildEvents()
         {
             var actionPopup = (MessageActionPopup)Child;
             if (actionPopup != null)
@@ -44,7 +44,7 @@
             }
         }
 
-        private void UnsubscribeChildEvents()
+        void UnsubscribeChildEvents()
         {
             var actionPopup = (MessageActionPopup)Child;
             if (actionPopup != null)
@@ -53,7 +53,7 @@
             }
         }
 
-        private void ClosePopup()
+        void ClosePopup()
         {
             IsOpen = false;
         }

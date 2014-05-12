@@ -22,7 +22,7 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        private readonly INetworkOperations networkOperations;
+        readonly INetworkOperations networkOperations;
 
         public ConnectToMachineViewModel(INetworkOperations networkOperations)
         {
@@ -70,13 +70,13 @@
             }
         }
 
-        private void StartWorkInProgress(string message)
+        void StartWorkInProgress(string message)
         {
             ProgressMessage = message;
             WorkInProgress = true;
         }
 
-        private void StopWorkInProgress()
+        void StopWorkInProgress()
         {
             ProgressMessage = string.Empty;
             WorkInProgress = false;

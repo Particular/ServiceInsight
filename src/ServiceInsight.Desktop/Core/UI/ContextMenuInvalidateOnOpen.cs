@@ -19,7 +19,7 @@
             return (bool)element.GetValue(NotifyMenuOpeningProperty);
         }
 
-        private static void OnNotifyMenuOpeningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnNotifyMenuOpeningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var menu = (PopupMenu) d;
             var newValue = (bool) e.NewValue;
@@ -35,7 +35,7 @@
             }
         }
 
-        private static void OnMenuOpening(object sender, CancelEventArgs e)
+        static void OnMenuOpening(object sender, CancelEventArgs e)
         {
             var menu = (PopupMenu)sender;
             var target = menu.PlacementTarget as FrameworkElement;

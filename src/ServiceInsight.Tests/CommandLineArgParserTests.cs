@@ -9,10 +9,10 @@
     [TestFixture]
     public class CommandLineArgParserTests
     {
-        private const string AppPath = @"C:\Program Files\Particular\ServiceInsight\ServiceInsight.exe";
-        private const string SchemaPrefix = CommandLineOptions.ApplicationScheme;
+        const string AppPath = @"C:\Program Files\Particular\ServiceInsight\ServiceInsight.exe";
+        const string SchemaPrefix = CommandLineOptions.ApplicationScheme;
 
-        private IEnvironment environment;
+        IEnvironment environment;
 
         [SetUp]
         public void Initialize()
@@ -125,7 +125,7 @@
             sut.HasUnsupportedKeys.ShouldBe(true);
         }
 
-        private ICommandLineArgParser CreateSut()
+        ICommandLineArgParser CreateSut()
         {
             var parser = new CommandLineArgParser(environment);
             parser.Parse();

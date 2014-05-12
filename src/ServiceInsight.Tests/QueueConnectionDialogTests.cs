@@ -14,9 +14,9 @@
     [TestFixture]
     public class QueueConnectionDialogTests
     {
-        private ConnectToMachineViewModel ConnectTo;
-        private INetworkOperations NetworkOperations;
-        private TestConductorScreen Conductor;
+        ConnectToMachineViewModel ConnectTo;
+        INetworkOperations NetworkOperations;
+        TestConductorScreen Conductor;
 
         [SetUp]
         public void TestInitialize()

@@ -36,26 +36,26 @@
     [TestFixture]
     public class ShellViewModelTests
     {
-        private ShellViewModel shell;
-        private IScreenFactory ScreenFactory;
-        private IWindowManagerEx WindowManager;
-        private IQueueExplorerViewModel QueueExplorer;
-        private IEndpointExplorerViewModel EndpointExplorer;
-        private IMessageListViewModel MessageList;
-        private IConnectToMachineViewModel ConnectToViewModel;
-        private IMessageFlowViewModel MessageFlow;
-        private ISagaWindowViewModel SagaWindow;
-        private IEventAggregator EventAggregator;
-        private IStatusBarManager StatusbarManager;
-        private IMessageBodyViewModel MessageBodyView;
-        private IMessageHeadersViewModel HeaderView;
-        private ISettingsProvider SettingsProvider;
-        private AppLicenseManager LicenseManager;
-        private IShellViewStub View;
-        private IMessagePropertiesViewModel MessageProperties;
-        private ILogWindowViewModel LogWindow;
-        private IAppCommands App;
-        private ICommandLineArgParser CommandLineArgParser;
+        ShellViewModel shell;
+        IScreenFactory ScreenFactory;
+        IWindowManagerEx WindowManager;
+        IQueueExplorerViewModel QueueExplorer;
+        IEndpointExplorerViewModel EndpointExplorer;
+        IMessageListViewModel MessageList;
+        IConnectToMachineViewModel ConnectToViewModel;
+        IMessageFlowViewModel MessageFlow;
+        ISagaWindowViewModel SagaWindow;
+        IEventAggregator EventAggregator;
+        IStatusBarManager StatusbarManager;
+        IMessageBodyViewModel MessageBodyView;
+        IMessageHeadersViewModel HeaderView;
+        ISettingsProvider SettingsProvider;
+        AppLicenseManager LicenseManager;
+        IShellViewStub View;
+        IMessagePropertiesViewModel MessageProperties;
+        ILogWindowViewModel LogWindow;
+        IAppCommands App;
+        ICommandLineArgParser CommandLineArgParser;
 
         [SetUp]
         public void TestInitialize()
@@ -92,7 +92,7 @@
             shell.AttachView(View, null);
         }
 
-        private ICommandLineArgParser MockEmptyStartupOptions()
+        ICommandLineArgParser MockEmptyStartupOptions()
         {
             var parser = Substitute.For<ICommandLineArgParser>();
             
@@ -242,7 +242,7 @@
             ((IScreen)shell).Deactivate(true);
         }
 
-        private static ProfilerSettings DefaultAppSetting()
+        static ProfilerSettings DefaultAppSetting()
         {
             return new ProfilerSettings
             {

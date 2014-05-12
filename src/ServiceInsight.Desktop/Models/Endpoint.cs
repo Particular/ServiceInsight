@@ -28,7 +28,7 @@
             get { return string.Format("{0}{1}", Name, AtMachine()); }
         }
 
-        private string AtMachine()
+        string AtMachine()
         {
             return string.IsNullOrEmpty(HostDisplayName) ? string.Empty : string.Format("@{0}", HostDisplayName);
         }

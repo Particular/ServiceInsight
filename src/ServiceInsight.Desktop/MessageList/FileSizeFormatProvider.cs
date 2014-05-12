@@ -10,10 +10,10 @@
             return null;
         }
 
-        private const string FileSizeFormat = "fs";
-        private const Decimal OneKiloByte = 1024M;
-        private const Decimal OneMegaByte = OneKiloByte * 1024M;
-        private const Decimal OneGigaByte = OneMegaByte * 1024M;
+        const string FileSizeFormat = "fs";
+        const Decimal OneKiloByte = 1024M;
+        const Decimal OneMegaByte = OneKiloByte * 1024M;
+        const Decimal OneGigaByte = OneMegaByte * 1024M;
 
         public string Format(string format, object arg, IFormatProvider formatProvider)
         {
@@ -60,7 +60,7 @@
             return string.Format("{0:N" + precision + "} {1}", size, suffix);
         }
 
-        private static string DefaultFormat(string format, object arg, IFormatProvider formatProvider)
+        static string DefaultFormat(string format, object arg, IFormatProvider formatProvider)
         {
             var formattableArg = arg as IFormattable;
             if (formattableArg != null)

@@ -7,7 +7,7 @@
 
     public class CompositeLogger : ILog
     {
-        private readonly IList<ILog> loggers;
+        readonly IList<ILog> loggers;
 
         public CompositeLogger(IList<ILog> loggers)
         {

@@ -15,7 +15,7 @@
 
     public class AppCommandsWrapper : IAppCommands
     {
-        private readonly IAppCommands current;
+        readonly IAppCommands current;
 
         public AppCommandsWrapper()
             : this((IAppCommands)Application.Current)
@@ -38,7 +38,7 @@
 
     public partial class App : IAppCommands
     {
-        private static readonly ILog Logger = LogManager.GetLogger("Application");
+        static readonly ILog Logger = LogManager.GetLogger("Application");
 
         public App()
         {
@@ -48,7 +48,7 @@
             InitializeComponent();
         }
 
-        private void WireTaskExceptionHandler()
+        void WireTaskExceptionHandler()
         {
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
@@ -58,7 +58,7 @@
         }
 
 
-        private static void OnUnhandledException(UnhandledExceptionEventArgs e)
+        static void OnUnhandledException(UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;
             if (exception != null)

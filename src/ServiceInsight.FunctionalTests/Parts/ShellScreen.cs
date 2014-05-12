@@ -22,7 +22,7 @@
             Retry.For(ShellIsBusy, isBusy => isBusy, TimeSpan.FromSeconds(10));
         }
 
-        private bool ShellIsBusy()
+        bool ShellIsBusy()
         {
             var currentPropertyValue = MainWindow.AutomationElement.GetCurrentPropertyValue(AutomationElement.HelpTextProperty);
             return currentPropertyValue != null && ((string)currentPropertyValue).Contains("Busy");

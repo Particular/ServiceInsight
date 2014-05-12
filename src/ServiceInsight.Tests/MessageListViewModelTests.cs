@@ -19,11 +19,11 @@
     [TestFixture]
     public class MessageListViewModelTests
     {
-        private IEventAggregator EventAggregator;
-        private IServiceControl ServiceControl;
-        private ISearchBarViewModel SearchBar;
-        private MessageListViewModel MessageList;
-        private IMessageListView View;
+        IEventAggregator EventAggregator;
+        IServiceControl ServiceControl;
+        ISearchBarViewModel SearchBar;
+        MessageListViewModel MessageList;
+        IMessageListView View;
 
         [SetUp]
         public void TestInitialize()

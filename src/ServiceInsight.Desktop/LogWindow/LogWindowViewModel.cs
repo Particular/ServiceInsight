@@ -7,7 +7,7 @@
 
     public class LogWindowViewModel : Screen, ILogWindowViewModel
     {
-        private ILogWindowView view;
+        ILogWindowView view;
 
         public LogWindowViewModel()
         {

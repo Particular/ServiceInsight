@@ -54,7 +54,7 @@
             ResetLayout = value;
         }
 
-        private string Decode(string encodedString)
+        string Decode(string encodedString)
         {
             return HttpUtility.UrlDecode(encodedString);
         }

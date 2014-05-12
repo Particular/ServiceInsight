@@ -47,7 +47,7 @@
             return list;
         }
 
-        private void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
+        void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
         {
             if (text[0] == '{')
             {
@@ -72,7 +72,7 @@
             }
         }
 
-        private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOfAny(JsonSymbol);
             if (index != 0)
@@ -82,7 +82,7 @@
             text = text.Substring(1);
         }
 
-        private void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOf("\":");
             if (index <= 0)

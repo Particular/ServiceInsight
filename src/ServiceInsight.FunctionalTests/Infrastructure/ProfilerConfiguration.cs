@@ -11,8 +11,8 @@
 
     public class ProfilerConfiguration          
     {
-        private const int ExtraIdleWaitSecs = 3;
-        private const string ApplicationProcess = "Particular.ServiceInsight.exe";
+        const int ExtraIdleWaitSecs = 3;
+        const string ApplicationProcess = "Particular.ServiceInsight.exe";
 
         public Application LaunchApplication()
         {
@@ -36,7 +36,7 @@
             return mainWindow;
         }
 
-        private void WaitForApplicationIdle(Application application)
+        void WaitForApplicationIdle(Application application)
         {
             application.WaitWhileBusy();
             Thread.Sleep(ExtraIdleWaitSecs * 1000);

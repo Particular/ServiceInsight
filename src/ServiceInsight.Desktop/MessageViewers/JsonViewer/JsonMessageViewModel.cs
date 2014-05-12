@@ -6,7 +6,7 @@
 
     public class JsonMessageViewModel : Screen, IJsonMessageViewModel
     {
-        private IJsonMessageView messageView;
+        IJsonMessageView messageView;
 
         protected override void OnActivate()
         {

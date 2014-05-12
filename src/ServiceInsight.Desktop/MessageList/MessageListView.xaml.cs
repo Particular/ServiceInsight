@@ -15,13 +15,13 @@
 
     public partial class MessageListView : IMessageListView
     {
-        private static class UnboundColumns
+        static class UnboundColumns
         {
             public const string IsFaulted = "IsFaulted";
         }
 
-        private readonly PropertyInfo sortUpProperty;
-        private readonly PropertyInfo sortDownProperty;
+        readonly PropertyInfo sortUpProperty;
+        readonly PropertyInfo sortDownProperty;
 
         public MessageListView()
         {
@@ -30,12 +30,12 @@
             sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        private IMessageListViewModel Model
+        IMessageListViewModel Model
         {
             get { return (IMessageListViewModel)DataContext; }
         }
 
-        private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
+        void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
             var msg = Model.Rows[e.ListSourceRowIndex];
 
@@ -45,17 +45,17 @@
             }
         }
 
-        private void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
+        void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
         {
             e.Cancel = grid.ShowLoadingPanel;
         }
 
-        private void SortData(ColumnBase column, ColumnSortOrder order)
+        void SortData(ColumnBase column, ColumnSortOrder order)
         {
             Model.RefreshMessages(column.Tag as string, order == ColumnSortOrder.Ascending);
         }
 
-        private void OnGridControlClicked(object sender, MouseButtonEventArgs e)
+        void OnGridControlClicked(object sender, MouseButtonEventArgs e)
         {
             var columnHeader = LayoutHelper.FindLayoutOrVisualParentObject((DependencyObject)e.OriginalSource, typeof(GridColumnHeader)) as GridColumnHeader;
             if (columnHeader == null || Model == null || Model.WorkInProgress) return;
@@ -85,7 +85,7 @@
             SortData(clickedColumn, sort);
         }
 
-        private void HideIndicator(BaseGridColumnHeader header)
+        void HideIndicator(BaseGridColumnHeader header)
         {
             var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(header, null);
             var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(header, null);
@@ -94,7 +94,7 @@
             sortDownControl.Visibility = Visibility.Hidden;
         }
 
-        private void ClearSortExcept(GridColumnHeader clickedHeader)
+        void ClearSortExcept(GridColumnHeader clickedHeader)
         {
             var headers = grid.FindVisualChildren<GridColumnHeader>();
             foreach (var header in headers)
@@ -106,7 +106,7 @@
             }
         }
 
-        private DataController Controller
+        DataController Controller
         {
             get { return grid.DataController; }
         }

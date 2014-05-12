@@ -6,8 +6,8 @@
 
     public class GridFocusedRowPreserver<T> : IDisposable where T : MessageInfo
     {
-        private readonly T currentItem;
-        private readonly ITableViewModel<T> viewModel;
+        readonly T currentItem;
+        readonly ITableViewModel<T> viewModel;
 
         public GridFocusedRowPreserver(ITableViewModel<T> viewModel)
         {

@@ -10,9 +10,9 @@
     public class HexContentViewModel : Screen, IHexContentViewModel
     {
         internal static Func<byte, string> ByteToStringConverter;
-        private static readonly Encoding Encoding;
+        static readonly Encoding Encoding;
 
-        private IHexContentView view;
+        IHexContentView view;
 
         static HexContentViewModel()
         {
@@ -65,18 +65,18 @@
             DisplayMessage();
         }
 
-        private void DisplayMessage()
+        void DisplayMessage()
         {
             ClearHexParts();
             CreateHexParts();
         }
 
-        private void ClearHexParts()
+        void ClearHexParts()
         {
             HexParts.Clear();
         }
 
-        private void CreateHexParts()
+        void CreateHexParts()
         {
             var columnNumber = 0;
             var lineNumber = 1;
@@ -104,7 +104,7 @@
             }
         }
 
-        private static void AppendText(HexNumber number, byte b)
+        static void AppendText(HexNumber number, byte b)
         {
             var c = ByteToStringConverter.TryGetValue(b, " ");
             if (c == "\r" || c == "\n" || c == "\t")
@@ -117,7 +117,7 @@
             }
         }
 
-        private static void AppendHex(HexNumber hexValue, byte b)
+        static void AppendHex(HexNumber hexValue, byte b)
         {
             hexValue.Hex = string.Format(b < 0x10 ? "0{0:X000} " : "{0:X000} ", b);
         }

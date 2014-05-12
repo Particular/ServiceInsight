@@ -8,8 +8,8 @@
 
     public class MessageErrorInfo : IComparable
     {
-        private MessageStatus status;
-        private bool statusSpecified;
+        MessageStatus status;
+        bool statusSpecified;
 
         public MessageErrorInfo()
         {
@@ -37,7 +37,7 @@
 
         public string Description { get; private set; }
 
-        private BitmapImage GetImage()
+        BitmapImage GetImage()
         {
             if(!statusSpecified)
                 return Resources.BulletWhite.ToBitmapImage();

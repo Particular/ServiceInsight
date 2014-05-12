@@ -12,8 +12,8 @@
 
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
     {
-        private IEventAggregator eventAggregator;
-        private IServiceControl serviceControl;
+        IEventAggregator eventAggregator;
+        IServiceControl serviceControl;
 
         public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
         {
@@ -32,7 +32,7 @@
             }
         }
 
-        private void RefreshShowData()
+        void RefreshShowData()
         {
             if (Data == null || Data.Changes == null) return;
 
@@ -48,12 +48,12 @@
             NotifyOfPropertyChange(() => Data);
         }
 
-        private void RefreshMessageProperties()
+        void RefreshMessageProperties()
         {
             RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
         }
 
-        private async void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
+        async void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
         {
             foreach (var message in messages)
             {
@@ -69,7 +69,7 @@
             await RefreshSaga(message, a => true);
         }
 
-        private async Task RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
+        async Task RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -92,7 +92,7 @@
             }
         }
 
-        private async Task RefreshSaga(SagaInfo originatingSaga)
+        async Task RefreshSaga(SagaInfo originatingSaga)
         {
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
@@ -125,7 +125,7 @@
             eventAggregator.Publish(new WorkFinished());
         }
 
-        private static void ProcessDataValues(IEnumerable<SagaUpdate> list)
+        static void ProcessDataValues(IEnumerable<SagaUpdate> list)
         {
             IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
             foreach (var change in list)
@@ -135,7 +135,7 @@
             }
         }
 
-        private static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
+        static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {
@@ -144,7 +144,7 @@
             }
         }
 
-        private StoredMessage currentMessage;
+        StoredMessage currentMessage;
 
         public bool ShowSagaNotFoundWarning { get; set; }
 

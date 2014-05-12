@@ -11,9 +11,9 @@
 
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
-        private readonly IContentDecoder<XmlDocument> xmlDecoder;
-        private readonly IClipboard clipboard;
-        private IXmlMessageView messageView;
+        readonly IContentDecoder<XmlDocument> xmlDecoder;
+        readonly IClipboard clipboard;
+        IXmlMessageView messageView;
 
         public XmlMessageViewModel(
             IContentDecoder<XmlDocument> xmlDecoder,
@@ -72,13 +72,13 @@
             }
         }
 
-        private void ShowMessageBody()
+        void ShowMessageBody()
         {
             if (SelectedMessage == null) return;
             messageView.Display(GetMessageBody());
         }
 
-        private string GetMessageBody()
+        string GetMessageBody()
         {
             if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
 

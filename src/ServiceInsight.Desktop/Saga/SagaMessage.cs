@@ -24,7 +24,7 @@
 
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
-        private string messageType;
+        string messageType;
         public string MessageType 
         { 
             get
@@ -37,7 +37,7 @@
             }
         }
 
-        private string ProcessType()
+        string ProcessType()
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;
@@ -55,7 +55,7 @@
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
 
-        private MessageStatus status;
+        MessageStatus status;
         public MessageStatus Status
         {
             get
@@ -68,7 +68,7 @@
             }
         }
 
-        private List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> { 
+        List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> { 
             new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
@@ -105,7 +105,7 @@
             }
         }
 
-        private bool showData;
+        bool showData;
         public bool ShowData
         {
             get
@@ -145,7 +145,7 @@
             }
         }
 
-        private IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
+        IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
         {
             try
             {
@@ -165,12 +165,12 @@
             return new List<KeyValuePair<string, string>>();
         }
 
-        private static bool IsXml(string bodyString)
+        static bool IsXml(string bodyString)
         {
             return bodyString.StartsWith("<?xml");
         }
 
-        private static string CleanupBodyString(string bodyString)
+        static string CleanupBodyString(string bodyString)
         {
             return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
         }
@@ -219,7 +219,7 @@
             }
         }
 
-        private string GetFriendly(int time, string text)
+        string GetFriendly(int time, string text)
         {
             if (time > 0)
             {

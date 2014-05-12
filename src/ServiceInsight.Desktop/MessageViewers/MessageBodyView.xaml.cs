@@ -13,7 +13,7 @@
             InitializeComponent();
         }
 
-        private void OnSelectedTabChanged(object sender, ValueChangedEventArgs<FrameworkElement> e)
+        void OnSelectedTabChanged(object sender, ValueChangedEventArgs<FrameworkElement> e)
         {
             var newElement = e.NewValue;
             var oldElement = e.OldValue;

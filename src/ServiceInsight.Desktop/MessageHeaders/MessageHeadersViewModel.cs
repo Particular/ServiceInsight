@@ -15,8 +15,8 @@
 
     public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
     {
-        private IMessageHeadersView view;
-        private bool autoFitted;
+        IMessageHeadersView view;
+        bool autoFitted;
 
         public MessageHeadersViewModel()
         {
@@ -58,7 +58,7 @@
             AutoFitKeys();
         }
 
-        private void AutoFitKeys()
+        void AutoFitKeys()
         {
             if(autoFitted) return;
 
@@ -66,7 +66,7 @@
             autoFitted = true;
         }
 
-        private void CopyHeadersToClipboard()
+        void CopyHeadersToClipboard()
         {
             view.CopyRowsToClipboard();
         }

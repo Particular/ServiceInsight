@@ -5,7 +5,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
 
     public class IsolatedStorageSettingsStore : JsonSettingsStoreBase
     {
-        private const IsolatedStorageScope Scope = IsolatedStorageScope.User     |
+        const IsolatedStorageScope Scope = IsolatedStorageScope.User     |
                                                    IsolatedStorageScope.Assembly | 
                                                    IsolatedStorageScope.Domain;
 

@@ -6,7 +6,7 @@
 
     public class ProfilerSettings : SettingBase
     {
-        private int autoRefresh;
+        int autoRefresh;
 
         public ProfilerSettings()
         {

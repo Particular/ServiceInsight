@@ -10,9 +10,9 @@
     [Category("Integration")]
     public class AsyncQueueOperationsTests
     {
-        private IQueueManagerAsync manager;
-        private Queue sourceQ;
-        private Queue destinationQ;
+        IQueueManagerAsync manager;
+        Queue sourceQ;
+        Queue destinationQ;
 
         [TestFixtureSetUp]
         public void TestInitialize()

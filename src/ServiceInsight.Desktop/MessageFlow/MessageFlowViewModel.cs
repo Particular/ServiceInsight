@@ -40,19 +40,19 @@
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
-        private readonly ISearchBarViewModel searchBar;
-        private readonly IMessageListViewModel messageList;
-        private readonly IScreenFactory screenFactory;
-        private readonly IServiceControl serviceControl;
-        private readonly IEventAggregator eventAggregator;
-        private readonly IClipboard clipboard;
-        private readonly IWindowManagerEx windowManager;
-        private readonly ISettingsProvider settingsProvider;
-        private readonly ConcurrentDictionary<string, MessageNode> nodeMap;
-        private IMessageFlowView view;
-        private string originalSelectionId = string.Empty;
-        private bool loadingConversation;
-        private IEndpointExplorerViewModel endpointExplorer;
+        readonly ISearchBarViewModel searchBar;
+        readonly IMessageListViewModel messageList;
+        readonly IScreenFactory screenFactory;
+        readonly IServiceControl serviceControl;
+        readonly IEventAggregator eventAggregator;
+        readonly IClipboard clipboard;
+        readonly IWindowManagerEx windowManager;
+        readonly ISettingsProvider settingsProvider;
+        readonly ConcurrentDictionary<string, MessageNode> nodeMap;
+        IMessageFlowView view;
+        string originalSelectionId = string.Empty;
+        bool loadingConversation;
+        IEndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -101,7 +101,7 @@
             this.view.ShowMessage += OnShowMessage;
         }
 
-        private void OnShowMessage(object sender, SearchMessageEventArgs e)
+        void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
             SearchByMessageId(e.MessageNode.Message);
         }
@@ -242,7 +242,7 @@
             UpdateSetting();
         }
 
-        private void UpdateSetting()
+        void UpdateSetting()
         {
             var settings = settingsProvider.GetSettings<ProfilerSettings>();
             if (settings.ShowEndpoints != ShowEndpoints)
@@ -252,7 +252,7 @@
             }
         }
 
-        private void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
+        void LinkConversationNodes(IEnumerable<MessageNode> relatedMessagesTask)
         {
             foreach (var msg in relatedMessagesTask)
             {
@@ -274,7 +274,7 @@
             }
         }
 
-        private void AddConnection(MessageNode parentNode, MessageNode childNode)
+        void AddConnection(MessageNode parentNode, MessageNode childNode)
         {
             var fromPoint = new DiagramConnectionPoint(parentNode, Edge.Bottom);
             var toPoint = new DiagramConnectionPoint(childNode, Edge.Top);
@@ -296,7 +296,7 @@
             Diagram.Connections.Add(connection);
         }
 
-        private void CreateConversationNodes(string selectedId, IEnumerable<MessageNode> relatedNodes)
+        void CreateConversationNodes(string selectedId, IEnumerable<MessageNode> relatedNodes)
         {
             foreach (var node in relatedNodes)
             {
@@ -311,7 +311,7 @@
             }
         }
 
-        private void UpdateLayout()
+        void UpdateLayout()
         {
             if (view != null)
             {
@@ -320,7 +320,7 @@
             }
         }
 
-        private MessageNode CreateMessageNode(StoredMessage x)
+        MessageNode CreateMessageNode(StoredMessage x)
         {
             return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints };
         }

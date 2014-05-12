@@ -17,15 +17,15 @@
     [TestFixture]
     public class MessageFlowViewModelTests
     {
-        private IServiceControl serviceControl;
-        private IEventAggregator eventAggregator;
-        private IClipboard clipboard;
-        private IWindowManagerEx windowManager;
-        private IScreenFactory screenFactory;
-        private ISearchBarViewModel searchBar;
-        private IMessageListViewModel messageList;
-        private ISettingsProvider settingProvider;
-        private IEndpointExplorerViewModel endpointExplorer;
+        IServiceControl serviceControl;
+        IEventAggregator eventAggregator;
+        IClipboard clipboard;
+        IWindowManagerEx windowManager;
+        IScreenFactory screenFactory;
+        ISearchBarViewModel searchBar;
+        IMessageListViewModel messageList;
+        ISettingsProvider settingProvider;
+        IEndpointExplorerViewModel endpointExplorer;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -58,7 +58,7 @@
             eventAggregator.Received(1).Publish(Arg.Is<RequestSelectingEndpoint>(m => m.Endpoint == receiving));
         }
 
-        private MessageFlowViewModel CreateSUT()
+        MessageFlowViewModel CreateSUT()
         {
             serviceControl = Substitute.For<IServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();

@@ -12,14 +12,14 @@
     [Ignore] //Should be removed eventually
     public class QueueManagerIntegrationTests
     {
-        private Queue destination;
-        private QueueManager manager;
-        private Queue source;
-        private Queue nonTransactional;
-        private const string FirstMsg = "This is a test message";
-        private const string SecondMsg = "This is a second message";
-        private const string QueueName = "TestQueue";
-        private string SourceQueueName;
+        Queue destination;
+        QueueManager manager;
+        Queue source;
+        Queue nonTransactional;
+        const string FirstMsg = "This is a test message";
+        const string SecondMsg = "This is a second message";
+        const string QueueName = "TestQueue";
+        string SourceQueueName;
 
         [SetUp]
         public void TestInitialize()

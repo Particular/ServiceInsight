@@ -48,7 +48,7 @@
             Surface.UpdateLayout();
         }
 
-        private void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
@@ -57,7 +57,7 @@
             }
         }
 
-        private void Root_KeyUp(object sender, KeyEventArgs e)
+        void Root_KeyUp(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {

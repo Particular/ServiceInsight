@@ -22,12 +22,12 @@
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
-        private readonly IScreenFactory screenFactory;
-        private bool allowResize;
+        readonly IScreenFactory screenFactory;
+        bool allowResize;
 
-        private static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
-        private static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
-        private static readonly IDictionary<DialogResult, bool?> DialogResultMaps;
+        static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
+        static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
+        static readonly IDictionary<DialogResult, bool?> DialogResultMaps;
 
         static WindowManagerEx()
         {
@@ -131,7 +131,7 @@
             return window;
         }
 
-        private void SetParentToMain(Window window)
+        void SetParentToMain(Window window)
         {
             if (window.Owner == null &&
                 Application.Current != null &&
@@ -141,7 +141,7 @@
             }
         }
 
-        private static MessageChoice GetMessageChoice(MessageBoxButton button)
+        static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
             //TODO: Use map to avoid switch/case
             MessageChoice choices;

@@ -9,7 +9,7 @@
             MessageDateFormat = GetCultureDateTimeFormat();
         }
 
-        private static string GetCultureDateTimeFormat()
+        static string GetCultureDateTimeFormat()
         {
             var culture = Thread.CurrentThread.CurrentCulture;
 

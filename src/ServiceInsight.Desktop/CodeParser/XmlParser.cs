@@ -65,7 +65,7 @@
             LineBreaks(res, ref text, index + lex.Length - 1, LexemType.Value);
         }
 
-        private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOfAny(XmlSymbol);
             if (index != 0)
@@ -75,7 +75,7 @@
             text = text.Substring(1);
         }
 
-        private void ParseXmlKeyWord(ICollection<CodeLexem> res, ref SourcePart text, LexemType type)
+        void ParseXmlKeyWord(ICollection<CodeLexem> res, ref SourcePart text, LexemType type)
         {
             var index = text.IndexOfAny(XmlEndOfTerm);
             if (index <= 0)

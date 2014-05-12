@@ -6,10 +6,10 @@
 
     public class OptionPropertyValue : IDataErrorInfo
     {
-        private readonly PropertyInfo propertyInfo;
-        private readonly object owner;
-        private readonly DisplayNameAttribute displayName;
-        private readonly DescriptionAttribute description;
+        readonly PropertyInfo propertyInfo;
+        readonly object owner;
+        readonly DisplayNameAttribute displayName;
+        readonly DescriptionAttribute description;
 
         public OptionPropertyValue(PropertyInfo propertyInfo, object owner)
         {
@@ -46,7 +46,7 @@
             set { TrySetValue(value); }
         }
 
-        private void TrySetValue(object value)
+        void TrySetValue(object value)
         {
             var convertedValue = Convert.ChangeType(value, PropertyType);
             propertyInfo.SetValue(owner, convertedValue, null);

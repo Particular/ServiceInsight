@@ -15,7 +15,7 @@
 
         public event Action RequestToClose = () => { };
 
-        private void OnMenuClicked(object sender, RoutedEventArgs e)
+        void OnMenuClicked(object sender, RoutedEventArgs e)
         {
             RequestToClose();
         }

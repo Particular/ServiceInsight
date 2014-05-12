@@ -14,13 +14,13 @@
     [TestFixture]
     public class ServiceControlConnectionDialogTests
     {
-        private IServiceControl serviceControl;
-        private IShellViewModel shell;
-        private ISettingsProvider settingsProvider;
-        private IContainer container;
-        private IServiceControlConnectionProvider connection;
-        private ProfilerSettings storedSetting;
-        private ServiceControlConnectionViewModel connectTo;
+        IServiceControl serviceControl;
+        IShellViewModel shell;
+        ISettingsProvider settingsProvider;
+        IContainer container;
+        IServiceControlConnectionProvider connection;
+        ProfilerSettings storedSetting;
+        ServiceControlConnectionViewModel connectTo;
 
         [SetUp]
         public void TestInitialize()
@@ -58,7 +58,7 @@
             storedSetting.RecentServiceControlEntries.ShouldContain("http://localhost:8080/managemnetApi");
         }
 
-        private ProfilerSettings GetReloadedSettings()
+        ProfilerSettings GetReloadedSettings()
         {
             var settings = new ProfilerSettings();
 
@@ -68,7 +68,7 @@
             return settings;
         }
 
-        private IContainer RegisterContainer()
+        IContainer RegisterContainer()
         {
             var builder = new ContainerBuilder();
 

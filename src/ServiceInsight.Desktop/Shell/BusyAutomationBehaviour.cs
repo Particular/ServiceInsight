@@ -12,7 +12,7 @@
             IsApplicationBusyProperty = DependencyProperty.RegisterAttached("IsApplicationBusy", typeof (bool), typeof (BusyAutomationBehaviour), new PropertyMetadata(OnChanged));
         }
 
-        private static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             AutomationProperties.SetHelpText(d, GetIsApplicationBusy(d) ? "Busy" : string.Empty);
         }

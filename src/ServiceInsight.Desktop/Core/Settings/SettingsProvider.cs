@@ -8,7 +8,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
 
     public class SettingsProvider : ISettingsProvider
     {
-        private readonly ISettingsStorage settingsRepository;
+        readonly ISettingsStorage settingsRepository;
 
         public SettingsProvider(ISettingsStorage settingsRepository = null)
         {
@@ -34,7 +34,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
             }
         }
 
-        private T GetDefaultSettings<T>() where T : new()
+        T GetDefaultSettings<T>() where T : new()
         {
             var settingMetadata = ReadSettingMetadata<T>();
             var defaultSetting = new T();
@@ -90,7 +90,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
                 .ToArray();
         }
 
-        private static string GetSettingTypeName(string name)
+        static string GetSettingTypeName(string name)
         {
             var namespaceSeparator = name.LastIndexOf('.');
             var internalClassName = name.IndexOf('+');
@@ -127,7 +127,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
             ReadAttribute<DisplayNameAttribute>(d => DisplayName = d.DisplayName);
         }
 
-        private void ReadAttribute<TAttribute>(Action<TAttribute> callback)
+        void ReadAttribute<TAttribute>(Action<TAttribute> callback)
         {
             var instances = Property.GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>();
             foreach (var instance in instances)

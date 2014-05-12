@@ -59,7 +59,7 @@
             return result;
         }
 
-        private static Window FindFirstModalDialog(Window ownerWindow)
+        static Window FindFirstModalDialog(Window ownerWindow)
         {
             if (ownerWindow != null)
             {

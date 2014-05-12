@@ -10,7 +10,7 @@
     public class StreamExtensionMethodTests
     {
         const string SourceMesage = "This is a sample message";
-        private MemoryStream SourceStream;
+        MemoryStream SourceStream;
 
         [SetUp]
         public void TestInitialize()

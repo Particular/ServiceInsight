@@ -8,7 +8,7 @@
     [TestFixture]
     public class GuardTests
     {
-        private GuardTest GuardTest;
+        GuardTest GuardTest;
 
         [SetUp]
         public void TestInitialize()

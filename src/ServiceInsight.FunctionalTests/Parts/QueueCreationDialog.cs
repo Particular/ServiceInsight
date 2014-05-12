@@ -6,7 +6,7 @@
 
     public class QueueCreationDialog : ProfilerElement
     {
-        private Window dialog;
+        Window dialog;
 
         public QueueCreationDialog(Window mainWindow) : base(mainWindow)
         {

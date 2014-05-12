@@ -8,13 +8,13 @@
 
     public class ServiceControl : IDisposable
     {
-        private readonly ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
-        private readonly HttpSelfHostServer server;
+        readonly ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
+        readonly HttpSelfHostServer server;
 
-        private const int StubServicePort = 55555;
-        private const string StubServiceUrl = "http://localhost";
+        const int StubServicePort = 55555;
+        const string StubServiceUrl = "http://localhost";
 
-        private ServiceControl()
+        ServiceControl()
         {
             var url = GetBaseUrl();
             var config = new HttpSelfHostConfiguration(url);
@@ -32,12 +32,12 @@
             return GetBaseUrl() + "api";
         }
 
-        private static string GetBaseUrl()
+        static string GetBaseUrl()
         {
             return string.Format(StubServiceUrl + ":" + StubServicePort + "/");
         }
 
-        private static void Configure(HttpSelfHostConfiguration config)
+        static void Configure(HttpSelfHostConfiguration config)
         {
             config.Routes.MapHttpRoute("Default Route", "api/{controller}", new { controller = "Home" });
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();

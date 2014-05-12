@@ -19,14 +19,14 @@
     [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
-        private readonly IEventAggregator eventAggregator;
-        private readonly ISettingsProvider settingsProvider;
-        private readonly IServiceControl serviceControl;
-        private readonly INetworkOperations networkOperations;
-        private readonly IServiceControlConnectionProvider connectionProvider;
-        private readonly ICommandLineArgParser commandLineParser;
-        private bool isFirstActivation = true;
-        private IExplorerView view;
+        readonly IEventAggregator eventAggregator;
+        readonly ISettingsProvider settingsProvider;
+        readonly IServiceControl serviceControl;
+        readonly INetworkOperations networkOperations;
+        readonly IServiceControlConnectionProvider connectionProvider;
+        readonly ICommandLineArgParser commandLineParser;
+        bool isFirstActivation = true;
+        IExplorerView view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
@@ -74,7 +74,7 @@
             get { return (IShellViewModel)base.Parent; }
         }
 
-        private bool IsConnected
+        bool IsConnected
         {
             get { return ServiceUrl != null; }
         }
@@ -116,7 +116,7 @@
             eventAggregator.Publish(new WorkFinished());
         }
 
-        private string GetConfiguredAddress()
+        string GetConfiguredAddress()
         {
             if (commandLineParser.ParsedOptions.EndpointUri == null)
             {
@@ -131,7 +131,7 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        private async Task<bool> ServiceAvailable(string serviceUrl)
+        async Task<bool> ServiceAvailable(string serviceUrl)
         {
             connectionProvider.ConnectTo(serviceUrl);
 
@@ -140,7 +140,7 @@
             return connected;
         }
 
-        private void AddServiceNode()
+        void AddServiceNode()
         {
             Items.Clear();
             Items.Add(new ServiceControlExplorerItem(ServiceUrl));
@@ -151,7 +151,7 @@
             eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        private void SelectDefaultEndpoint()
+        void SelectDefaultEndpoint()
         {
             if (ServiceControlRoot == null) return;
 
@@ -204,7 +204,7 @@
             //TODO: Remove non-existing endpoints efficiently
         }
 
-        private async Task TryReconnectToServiceControl()
+        async Task TryReconnectToServiceControl()
         {
             await ConnectToService(GetConfiguredAddress());
         }
@@ -214,7 +214,7 @@
             networkOperations.Browse(navigateUri);
         }
 
-        private void ExpandServiceNode()
+        void ExpandServiceNode()
         {
             view.ExpandNode(ServiceControlRoot);
         }

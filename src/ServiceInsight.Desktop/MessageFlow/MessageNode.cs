@@ -10,8 +10,8 @@
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private int heightNoEndpoints = 56;
-        private const int endpointsHeight = 25;
+        int heightNoEndpoints = 56;
+        const int endpointsHeight = 25;
 
         public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
         {
@@ -25,7 +25,7 @@
             Bounds = new Rect(0, 0, 203, heightNoEndpoints);
         }
 
-        private string ProcessSagaType(StoredMessage message)
+        string ProcessSagaType(StoredMessage message)
         {
             if (message.Sagas == null) return string.Empty;
             
@@ -35,7 +35,7 @@
             return ProcessType(originatingSaga.SagaType);
         }
 
-        private static string ProcessType(string messageType)
+        static string ProcessType(string messageType)
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;

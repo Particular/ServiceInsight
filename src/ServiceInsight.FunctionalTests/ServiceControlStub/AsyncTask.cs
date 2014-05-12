@@ -13,7 +13,7 @@
             return tcs.Task;
         }
 
-        private struct AsyncVoid
+        struct AsyncVoid
         {
         }
     }
