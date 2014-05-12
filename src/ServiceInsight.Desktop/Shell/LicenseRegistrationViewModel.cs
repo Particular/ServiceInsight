@@ -44,23 +44,13 @@
                 {
                     return string.Format("ServiceInsight - License Expired");
                 }
-                else
-                {
-                    return string.Format("ServiceInsight");
-                }
-
+                return string.Format("ServiceInsight");
             }
-            else
+            if (HasRemainingTrial)
             {
-                if (HasRemainingTrial)
-                {
-                    return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
-                }
-                else
-                {
-                    return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
-                }
+                return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
             }
+            return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
         }
 
         public string TrialTypeText
@@ -163,25 +153,20 @@
             });
 
             var validLicense = false;
-            
+
             if (dialog.Result.GetValueOrDefault(false))
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
 
                 validLicense = licenseManager.TryInstallLicense(licenseContent);
-
-
-
             }
 
             if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
             {
                 TryClose(true);
+                return;
             }
-            else
-            {
-                //todo: Display error saying that the license was invalid
-            }
+            //todo: Display error saying that the license was invalid
         }
 
         public void Close()

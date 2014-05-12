@@ -24,10 +24,7 @@
             {
                 return segments.Last().EndPoint.X + (arrowSize * Math.Sin(angle));
             }
-            else
-            {
-                return segments.Last().EndPoint.Y + (arrowSize * Math.Cos(angle));
-            }
+            return segments.Last().EndPoint.Y + (arrowSize * Math.Cos(angle));
         }
 
         static double AngleFromSegments(ObservableCollection<DiagramConnectionSegment> segments)

@@ -17,10 +17,7 @@
                 {
                     throw new ArgumentNullException(GetParameterName(reference));
                 }
-                else
-                {
-                    throw error();
-                }
+                throw error();
             }
         }
 

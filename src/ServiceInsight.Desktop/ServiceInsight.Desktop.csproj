@@ -197,7 +197,6 @@
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="Events\SwitchToSagaWindow.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
-    <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
@@ -285,7 +284,7 @@
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\ElementExtensions.cs" />
     <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
-    <Compile Include="ExtensionMethods\GrammerExtensions.cs" />
+    <Compile Include="ExtensionMethods\GrammarExtensions.cs" />
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
     <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />

@@ -177,89 +177,89 @@
 			{
 				return value.ChangeType(type, Culture);
 			}
-			else if (type.IsEnum)
-			{
-				return type.FindEnumValue(stringValue, Culture);
-			}
-			else if (type == typeof(Uri))
-			{
-				return new Uri(stringValue, UriKind.RelativeOrAbsolute);
-			}
-			else if (type == typeof(string))
-			{
-				return stringValue;
-			}
-			else if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
-			{
-				DateTime dt;
-				if (DateFormat.HasValue())
-				{
-					dt = DateTime.ParseExact(stringValue, DateFormat, Culture);
-				}
-				else
-				{
-					// try parsing instead
-					dt = stringValue.ParseJsonDate(Culture);
-				}
+		    if (type.IsEnum)
+		    {
+		        return type.FindEnumValue(stringValue, Culture);
+		    }
+		    if (type == typeof(Uri))
+		    {
+		        return new Uri(stringValue, UriKind.RelativeOrAbsolute);
+		    }
+		    if (type == typeof(string))
+		    {
+		        return stringValue;
+		    }
+		    if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
+		    {
+		        DateTime dt;
+		        if (DateFormat.HasValue())
+		        {
+		            dt = DateTime.ParseExact(stringValue, DateFormat, Culture);
+		        }
+		        else
+		        {
+		            // try parsing instead
+		            dt = stringValue.ParseJsonDate(Culture);
+		        }
 
-				if (type == typeof(DateTime))
-				{
-					return dt;
-				}
-				else if (type == typeof(DateTimeOffset))
-				{
-					return (DateTimeOffset)dt;
-				}
-			}
-			else if (type == typeof(Decimal))
-			{
-				if (value is double)
-					return (decimal)((double)value);
+		        if (type == typeof(DateTime))
+		        {
+		            return dt;
+		        }
+		        if (type == typeof(DateTimeOffset))
+		        {
+		            return (DateTimeOffset)dt;
+		        }
+		    }
+		    else if (type == typeof(Decimal))
+		    {
+		        if (value is double)
+		            return (decimal)((double)value);
 
-				return Decimal.Parse(stringValue, Culture);
-			}
-            else if (type == typeof (byte[]))
-            {
-                return ConvertByteArray(stringValue);
-            }
-			else if (type == typeof(Guid))
-			{
-				return string.IsNullOrEmpty(stringValue) ? Guid.Empty : new Guid(stringValue);
-			}
-			else if (type == typeof(TimeSpan))
-			{
-				return TimeSpan.Parse(stringValue);
-			}
-			else if (type.IsGenericType)
-			{
-				var genericTypeDef = type.GetGenericTypeDefinition();
-				if (genericTypeDef == typeof(List<>))
-				{
-					return BuildList(type, value);
-				}
-				else if (genericTypeDef == typeof(Dictionary<,>))
-				{
-					var keyType = type.GetGenericArguments()[0];
+		        return Decimal.Parse(stringValue, Culture);
+		    }
+		    else if (type == typeof (byte[]))
+		    {
+		        return ConvertByteArray(stringValue);
+		    }
+		    else if (type == typeof(Guid))
+		    {
+		        return string.IsNullOrEmpty(stringValue) ? Guid.Empty : new Guid(stringValue);
+		    }
+		    else if (type == typeof(TimeSpan))
+		    {
+		        return TimeSpan.Parse(stringValue);
+		    }
+		    else if (type.IsGenericType)
+		    {
+		        var genericTypeDef = type.GetGenericTypeDefinition();
+		        if (genericTypeDef == typeof(List<>))
+		        {
+		            return BuildList(type, value);
+		        }
+		        if (genericTypeDef == typeof(Dictionary<,>))
+		        {
+		            var keyType = type.GetGenericArguments()[0];
 
-					// only supports Dict<string, T>()
-					if (keyType == typeof(string))
-					{
-						return BuildDictionary(type, value);
-					}
-				}
-				else
-				{
-					// nested property classes
-					return CreateAndMap(type, value);
-				}
-			}
-			else
-			{
-				// nested property classes
-				return CreateAndMap(type, value);
-			}
+		            // only supports Dict<string, T>()
+		            if (keyType == typeof(string))
+		            {
+		                return BuildDictionary(type, value);
+		            }
+		        }
+		        else
+		        {
+		            // nested property classes
+		            return CreateAndMap(type, value);
+		        }
+		    }
+		    else
+		    {
+		        // nested property classes
+		        return CreateAndMap(type, value);
+		    }
 
-			return null;
+		    return null;
 		}
 
 		object CreateAndMap(Type type, object element)

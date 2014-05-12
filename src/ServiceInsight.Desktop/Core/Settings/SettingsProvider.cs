@@ -23,10 +23,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
                 {
                     return LoadSettings<T>(ReadSettingMetadata<T>());
                 }
-                else
-                {
-                    return GetDefaultSettings<T>();
-                }
+                return GetDefaultSettings<T>();
             }
             catch
             {

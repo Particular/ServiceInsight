@@ -17,14 +17,11 @@ namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
                 {
                     return new DecoderResult<XmlDocument>(doc);
                 }
-                else
+                //TODO: Issues RESTSharp deserializer when reading byte array as string
+                xml = GetFromBase64String(content);
+                if (TryLoadIntoDocument(xml, doc))
                 {
-                    //TODO: Issues RESTSharp deserializer when reading byte array as string
-                    xml = GetFromBase64String(content);
-                    if (TryLoadIntoDocument(xml, doc))
-                    {
-                        return new DecoderResult<XmlDocument>(doc);
-                    }
+                    return new DecoderResult<XmlDocument>(doc);
                 }
             }
 

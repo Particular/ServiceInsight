@@ -104,8 +104,7 @@
                     {
                         return InvokedSagas.Union(new List<SagaInfo> { OriginatesFromSaga }).ToList();
                     }
-                    else
-                        return InvokedSagas;
+                    return InvokedSagas;
                 }
 
                 if (OriginatesFromSaga != null)
