@@ -155,9 +155,6 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Licensing">
-      <HintPath>..\packages\Rhino.Licensing\lib\Net45\Rhino.Licensing.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged">
