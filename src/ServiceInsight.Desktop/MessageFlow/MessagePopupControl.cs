@@ -15,11 +15,10 @@
 
         CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
         {
-            var ret = new List<CustomPopupPlacement>();
-            var target = PlacementTarget as FrameworkElement;
-
-            ret.Add(new CustomPopupPlacement(new Point(0, targetSize.Height / 2), PopupPrimaryAxis.Horizontal));
-
+            var ret = new List<CustomPopupPlacement>
+            {
+                new CustomPopupPlacement(new Point(0, targetSize.Height/2), PopupPrimaryAxis.Horizontal)
+            };
             return ret.ToArray();
         }
 
