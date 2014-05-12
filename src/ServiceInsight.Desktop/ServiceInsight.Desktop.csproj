@@ -666,9 +666,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="License.lic" />
-    <None Include="ripple.dependencies.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
