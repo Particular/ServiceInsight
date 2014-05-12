@@ -10,13 +10,13 @@
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            this.CustomPopupPlacementCallback += new CustomPopupPlacementCallback(placeContextMenu);
+            CustomPopupPlacementCallback += new CustomPopupPlacementCallback(placeContextMenu);
         }
 
         private CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
         {
             var ret = new List<CustomPopupPlacement>();
-            var target = this.PlacementTarget as FrameworkElement;
+            var target = PlacementTarget as FrameworkElement;
 
             ret.Add(new CustomPopupPlacement(new Point(0, targetSize.Height / 2), PopupPrimaryAxis.Horizontal));
 

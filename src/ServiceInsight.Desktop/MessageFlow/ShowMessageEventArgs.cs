@@ -6,7 +6,7 @@
     {
         public SearchMessageEventArgs(MessageNode message)
         {
-            this.MessageNode = message;
+            MessageNode = message;
         }
 
         public MessageNode MessageNode { get; private set; }

@@ -145,7 +145,7 @@
 
         public override void AttachView(object view, object context)
         {
-            this._view = view as IMessageListView;
+            _view = view as IMessageListView;
             base.AttachView(view, context);
         }
 
