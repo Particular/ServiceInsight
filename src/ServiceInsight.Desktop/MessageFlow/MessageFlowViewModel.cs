@@ -32,7 +32,7 @@
         void ShowMessageBody(StoredMessage message);
         void ShowSagaWindow(StoredMessage message);
         void ToggleEndpointData();
-        void ShowException(IExceptionDetails exception);
+        void ShowException(ExceptionDetails exception);
         void ZoomIn();
         void ZoomOut();
         bool IsFocused(MessageInfo message);
@@ -134,7 +134,7 @@
             ShowSagaWindow();
         }
 
-        public void ShowException(IExceptionDetails exception)
+        public void ShowException(ExceptionDetails exception)
         {
             var model = screenFactory.CreateScreen<IExceptionDetailViewModel>();
             model.Exception = exception;

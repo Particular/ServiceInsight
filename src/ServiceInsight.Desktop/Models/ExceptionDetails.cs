@@ -3,7 +3,7 @@
     using System.Diagnostics;
 
     [DebuggerDisplay("Type={ExceptionType},Message={Message}")]
-    public class ExceptionDetails : IExceptionDetails
+    public class ExceptionDetails 
     {
         public ExceptionDetails() { }
         public ExceptionDetails(StoredMessage message)
@@ -20,11 +20,4 @@
         public string StackTrace { get; set; }
     }
 
-    public interface IExceptionDetails 
-    {
-        string ExceptionType { get; set; }
-        string Message { get; set; }
-        string Source { get; set; }
-        string StackTrace { get; set; }
-    }
 }

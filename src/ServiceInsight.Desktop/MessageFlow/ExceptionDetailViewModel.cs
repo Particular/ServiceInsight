@@ -10,7 +10,7 @@
         ISettingsProvider settingsProvider;
         public virtual IPersistableLayout View { get; private set; }
 
-        public IExceptionDetails Exception { get; set; }
+        public ExceptionDetails Exception { get; set; }
 
         public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
         {
@@ -18,7 +18,7 @@
             DisplayName = "Exception Details";
         }
 
-        public ExceptionDetailViewModel(IExceptionDetails exception)
+        public ExceptionDetailViewModel(ExceptionDetails exception)
         {
             Exception = exception;
         }
@@ -62,7 +62,7 @@
 
     interface IExceptionDetailViewModel : IScreen
     {
-        IExceptionDetails Exception { get; set; }
+        ExceptionDetails Exception { get; set; }
         string FormattedSource { get; }
     }
 }
