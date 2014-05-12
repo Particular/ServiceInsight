@@ -210,7 +210,6 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="Core\Infrastructure\CallForwarderInterceptor.cs" />
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />

@@ -12,12 +12,12 @@
         const string AppPath = @"C:\Program Files\Particular\ServiceInsight\ServiceInsight.exe";
         const string SchemaPrefix = CommandLineOptions.ApplicationScheme;
 
-        IEnvironment environment;
+        EnvironmentWrapper environment;
 
         [SetUp]
         public void Initialize()
         {
-            environment = Substitute.For<IEnvironment>();            
+            environment = Substitute.For<EnvironmentWrapper>();            
         }
 
         [Test]

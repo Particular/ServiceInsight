@@ -1,7 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
-    public interface IEnvironment
+    using System;
+
+    public class EnvironmentWrapper
     {
-        string[] GetCommandLineArgs();
+        public virtual string[] GetCommandLineArgs()
+        {
+            return Environment.GetCommandLineArgs();
+        }
     }
 }

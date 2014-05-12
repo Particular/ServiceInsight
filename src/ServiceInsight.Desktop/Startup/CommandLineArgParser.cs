@@ -12,7 +12,7 @@
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
 
-        IEnvironment environment;
+        EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
         
         public CommandLineOptions ParsedOptions { get; private set; }
@@ -22,7 +22,7 @@
             get { return unsupportedKeys.Count > 0; }
         }
 
-        public CommandLineArgParser(IEnvironment environment)
+        public CommandLineArgParser(EnvironmentWrapper environment)
         {
             this.environment = environment;
             unsupportedKeys = new List<string>();
