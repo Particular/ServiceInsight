@@ -16,7 +16,7 @@
 
     public class MessageBodyViewModel : Screen, IMessageBodyViewModel
     {
-        static IDictionary<string, MessageContentType> ContentTypeMaps;
+        static Dictionary<string, MessageContentType> ContentTypeMaps;
 
         static MessageBodyViewModel()
         {
@@ -67,12 +67,5 @@
                 ContentType = MessageContentType.NotSpecified;
             }
         }
-    }
-
-    public enum MessageContentType
-    {
-        NotSpecified,
-        Json,
-        Xml,
     }
 }

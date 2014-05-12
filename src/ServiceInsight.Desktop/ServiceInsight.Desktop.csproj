@@ -233,6 +233,7 @@
     </Compile>
     <Compile Include="MessageHeaders\MessageHeadersViewModel.cs" />
     <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
+    <Compile Include="MessageViewers\MessageContentType.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
