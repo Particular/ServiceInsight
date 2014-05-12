@@ -40,7 +40,7 @@
             builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<SearchBar>().SingleInstance();
+            builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();

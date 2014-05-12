@@ -5,9 +5,9 @@
     /// <summary>
     /// Interaction logic for SearchBar.xaml
     /// </summary>
-    public partial class SearchBar 
+    public partial class SearchBarView 
     {
-        public SearchBar()
+        public SearchBarView()
         {
             InitializeComponent();
         }
