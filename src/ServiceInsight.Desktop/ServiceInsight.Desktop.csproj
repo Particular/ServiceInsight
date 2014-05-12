@@ -77,9 +77,6 @@
     <Reference Include="Caliburn.PresentationFramework">
       <HintPath>..\packages\Caliburn\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Data.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
     </Reference>
