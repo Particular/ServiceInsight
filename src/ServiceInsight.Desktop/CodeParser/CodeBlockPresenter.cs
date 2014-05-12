@@ -19,7 +19,7 @@
             text = text.Replace("\r", "");
             var codeLexem = new CodeLexem(text);
             var list = codeLexem.Parse(CodeLanguage);
-            foreach (CodeLexem current in list)
+            foreach (var current in list)
             {
                 collection.Add(current.ToInline(CodeLanguage));
             }

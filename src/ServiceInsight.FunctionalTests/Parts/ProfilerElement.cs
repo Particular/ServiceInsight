@@ -27,7 +27,7 @@
 
         protected T GetByClassName<T>(string className) where T : IUIItem
         {
-            return (T) MainWindow.Get<T>(SearchCriteria.ByClassName(className));
+            return MainWindow.Get<T>(SearchCriteria.ByClassName(className));
         }
     }
 }

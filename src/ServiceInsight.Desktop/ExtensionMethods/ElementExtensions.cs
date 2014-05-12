@@ -17,7 +17,7 @@
                     yield return (T)child;
                 }
 
-                foreach (T childOfChild in FindVisualChildren<T>(child))
+                foreach (var childOfChild in FindVisualChildren<T>(child))
                 {
                     yield return childOfChild;
                 }

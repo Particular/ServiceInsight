@@ -8,7 +8,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            double zoom = (double)value;
+            var zoom = (double)value;
             return new ScaleTransform(1 / zoom, 1 / zoom);
         }
 

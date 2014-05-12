@@ -42,7 +42,7 @@
 
         public int IndexOf(string text)
         {
-            int index = Source.IndexOf(text, StartIndex, StringComparison.Ordinal);
+            var index = Source.IndexOf(text, StartIndex, StringComparison.Ordinal);
             if (index < 0)
                 return index;
             

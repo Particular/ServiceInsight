@@ -74,7 +74,7 @@
 			{
 				var type = prop.PropertyType;
 
-				string name = String.Empty;
+				var name = String.Empty;
 
 				var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
 				if (attributes.Length > 0)

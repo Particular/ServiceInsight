@@ -153,7 +153,7 @@
         {
             //TODO: ViewModel should have no knowledge of View or the elements in it.
             var grid = ((GridControl)((FrameworkElement)_view).FindName("grid"));
-            for (int i = 0; i < Rows.Count; i++)
+            for (var i = 0; i < Rows.Count; i++)
             {
                 var row = Rows[i];
                 if (row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id)

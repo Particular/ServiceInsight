@@ -67,7 +67,7 @@
 
         private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
         {
-            int index = text.IndexOfAny(XmlSymbol);
+            var index = text.IndexOfAny(XmlSymbol);
             if (index != 0)
                 return;
             
