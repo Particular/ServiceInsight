@@ -386,7 +386,6 @@
     <Compile Include="Core\UI\ScreenManager\FileDialogModel.cs" />
     <Compile Include="Core\UI\ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
-    <Compile Include="Settings\LicenseSettings.cs" />
     <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
     <Compile Include="Settings\ReportingSettings.cs" />
