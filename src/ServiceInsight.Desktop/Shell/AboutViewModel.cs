@@ -4,7 +4,6 @@ namespace Particular.ServiceInsight.Desktop.Shell
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;

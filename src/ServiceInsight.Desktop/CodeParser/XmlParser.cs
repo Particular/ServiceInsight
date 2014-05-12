@@ -22,7 +22,7 @@
                 if (TryExtract(list, ref text, "<!--", LexemType.Comment))
                     TryExtractTo(list, ref text, "-->", LexemType.Comment);
 
-                if (text.StartsWith("<", StringComparison.Ordinal))
+                if (text.StartsWith("<"))
                     IsInsideBlock = false;
 
                 if (TryExtract(list, ref text, "\"{}", LexemType.Value))
@@ -44,7 +44,7 @@
                 TryExtract(list, ref text, "\"", LexemType.Quotes);
                 TryExtract(list, ref text, "}", LexemType.Symbol);
                 
-                if (text.StartsWith(">", StringComparison.Ordinal))
+                if (text.StartsWith(">"))
                     IsInsideBlock = true;
 
                 ParseSymbol(list, ref text);

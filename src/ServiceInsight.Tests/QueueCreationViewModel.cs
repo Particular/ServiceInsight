@@ -62,7 +62,7 @@
             const string queueName = "TestQueue";
             var parent = new TestConductorScreen();
             var addedQueue = new Queue(Environment.MachineName, queueName);
-            QueueManager.CreatePrivateQueue(Arg.Any<Queue>(), true).ReturnsForAnyArgs(addedQueue);
+            QueueManager.CreatePrivateQueue(Arg.Any<Queue>()).ReturnsForAnyArgs(addedQueue);
 
             Model.Parent = parent;
             Model.SelectedMachine = Environment.MachineName;
