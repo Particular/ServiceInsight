@@ -63,6 +63,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
+    <None Include="ripple.dependencies.config" />
     <None Include="Saga\saga.data">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -441,9 +442,7 @@
     <Compile Include="Startup\LoggingConfig.cs" />
     <Compile Include="MessageList\IMessageListViewModel.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
-    <Compile Include="Logging\CompositeLogger.cs" />
     <Compile Include="Logging\Log4NetLogger.cs" />
-    <Compile Include="Logging\TraceLogger.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />
     <Compile Include="Modules\CoreModule.cs" />
     <Compile Include="Modules\LoggerModule.cs" />
