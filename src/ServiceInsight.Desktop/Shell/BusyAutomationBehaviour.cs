@@ -5,7 +5,7 @@
 
     public static class BusyAutomationBehaviour
     {
-        public static readonly DependencyProperty IsApplicationBusyProperty;
+        public static DependencyProperty IsApplicationBusyProperty;
 
         static BusyAutomationBehaviour()
         {

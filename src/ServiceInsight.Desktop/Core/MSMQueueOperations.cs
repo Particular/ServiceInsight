@@ -12,8 +12,8 @@
 
     public class MSMQueueOperations : IQueueOperationsAsync
     {
-        readonly IMapper mapper;
-        readonly ILog logger = LogManager.GetLogger(typeof(IQueueOperations));
+        IMapper mapper;
+        ILog logger = LogManager.GetLogger(typeof(IQueueOperations));
 
         public MSMQueueOperations(IMapper mapper)
         {

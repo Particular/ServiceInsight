@@ -11,7 +11,7 @@
 
     public static class BuilderExtensions
     {
-        static readonly ILog Logger = LogManager.GetLogger("Container");
+        static ILog Logger = LogManager.GetLogger("Container");
 
         internal static Func<string, ILog, Assembly> LoadModuleAssembly = (file, logger) =>
         {

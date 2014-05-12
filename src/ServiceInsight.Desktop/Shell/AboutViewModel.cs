@@ -18,8 +18,8 @@ namespace Particular.ServiceInsight.Desktop.Shell
         public const string DetectingServiceControlVersion = "(Detecting...)";
         public const string NotConnectedToServiceControl = "(Not Connected)";
 
-        readonly INetworkOperations networkOperations;
-        readonly IServiceControl serviceControl;
+        INetworkOperations networkOperations;
+        IServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

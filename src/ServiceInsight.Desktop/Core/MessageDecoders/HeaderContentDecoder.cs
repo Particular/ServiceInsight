@@ -8,7 +8,7 @@
 
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {
-        readonly IContentDecoder<string> stringDecoder;
+        IContentDecoder<string> stringDecoder;
 
         public HeaderContentDecoder(IContentDecoder<string> stringDecoder)
         {

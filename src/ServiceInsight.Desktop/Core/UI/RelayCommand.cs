@@ -5,8 +5,8 @@
 
     public class RelayCommand : ICommand
     {
-        readonly Func<bool> canExecute;
-        readonly Action execute;
+        Func<bool> canExecute;
+        Action execute;
 
         public RelayCommand(Action execute, Func<bool> canExecute = null)
         {

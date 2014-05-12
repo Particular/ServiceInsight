@@ -21,7 +21,7 @@
 
         class SettingProviderProxy : SettingsProvider
         {
-            readonly IContainer container;
+            IContainer container;
 
             public SettingProviderProxy(IContainer container)
             {

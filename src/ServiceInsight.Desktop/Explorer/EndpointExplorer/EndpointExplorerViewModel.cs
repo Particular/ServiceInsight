@@ -19,12 +19,12 @@
     [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
     {
-        readonly IEventAggregator eventAggregator;
-        readonly ISettingsProvider settingsProvider;
-        readonly IServiceControl serviceControl;
-        readonly INetworkOperations networkOperations;
-        readonly IServiceControlConnectionProvider connectionProvider;
-        readonly ICommandLineArgParser commandLineParser;
+        IEventAggregator eventAggregator;
+        ISettingsProvider settingsProvider;
+        IServiceControl serviceControl;
+        INetworkOperations networkOperations;
+        IServiceControlConnectionProvider connectionProvider;
+        ICommandLineArgParser commandLineParser;
         bool isFirstActivation = true;
         IExplorerView view;
 

@@ -6,7 +6,7 @@
 
     public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
     {
-        readonly IClipboard clipboard;
+        IClipboard clipboard;
 
         public MessagePropertiesViewModel(
             IErrorHeaderViewModel error,

@@ -7,7 +7,7 @@
 
     public class AsyncQueueManager : QueueManager, IQueueManagerAsync
     {
-        readonly IQueueOperationsAsync queueOperations;
+        IQueueOperationsAsync queueOperations;
 
         public AsyncQueueManager(IQueueOperationsAsync queueOperations) : base(queueOperations)
         {
@@ -48,7 +48,7 @@
 
     public class QueueManager : IQueueManager
     {
-        readonly IQueueOperations queueOperations;
+        IQueueOperations queueOperations;
 
         public QueueManager() : this(new MSMQueueOperations(new DefaultMapper()))
         {

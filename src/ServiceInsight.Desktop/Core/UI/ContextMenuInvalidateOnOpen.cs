@@ -7,7 +7,7 @@
 
     public class NotifyMenuOpeningBehavior : DependencyObject
     {
-        public static readonly DependencyProperty NotifyMenuOpeningProperty = DependencyProperty.RegisterAttached("NotifyMenuOpening", typeof(bool), typeof(NotifyMenuOpeningBehavior), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsRender, OnNotifyMenuOpeningChanged));
+        public static DependencyProperty NotifyMenuOpeningProperty = DependencyProperty.RegisterAttached("NotifyMenuOpening", typeof(bool), typeof(NotifyMenuOpeningBehavior), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsRender, OnNotifyMenuOpeningChanged));
 
         public static void SetNotifyMenuOpening(PopupMenu element, bool value)
         {

@@ -7,7 +7,7 @@
 
     public class OptionsViewModel : Screen
     {
-        readonly ISettingsProvider settingsProvider;
+        ISettingsProvider settingsProvider;
 
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {

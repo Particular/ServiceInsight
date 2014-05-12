@@ -8,8 +8,8 @@ namespace Particular.ServiceInsight.Desktop.Explorer.QueueExplorer
     public class QueueExplorerItem : ExplorerItem
     {
         string displayName;
-        readonly Queue queue;
-        readonly string queueName;
+        Queue queue;
+        string queueName;
 
         public QueueExplorerItem(Queue queue) : base(queue.Address.Queue)
         {

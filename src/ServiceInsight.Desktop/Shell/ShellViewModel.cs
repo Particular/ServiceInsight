@@ -30,13 +30,13 @@
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
-        readonly IAppCommands appCommander;
-        readonly IScreenFactory screenFactory;
-        readonly IWindowManagerEx windowManager;
-        readonly IEventAggregator eventAggregator;
-        readonly AppLicenseManager licenseManager;
-        readonly ISettingsProvider settingsProvider;
-        readonly ICommandLineArgParser comandLineArgParser;
+        IAppCommands appCommander;
+        IScreenFactory screenFactory;
+        IWindowManagerEx windowManager;
+        IEventAggregator eventAggregator;
+        AppLicenseManager licenseManager;
+        ISettingsProvider settingsProvider;
+        ICommandLineArgParser comandLineArgParser;
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;

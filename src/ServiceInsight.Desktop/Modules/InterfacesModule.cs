@@ -8,7 +8,7 @@
 
     public class InterfacesModule : Module
     {
-        readonly ProxyGenerator generator;
+        ProxyGenerator generator;
 
         public InterfacesModule()
         {

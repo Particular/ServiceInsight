@@ -23,15 +23,15 @@
 
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
-        readonly IEventAggregator eventAggregator;
-        readonly IServiceControl serviceControl;
-        readonly IErrorHeaderViewModel errorHeaderDisplay;
-        readonly IGeneralHeaderViewModel generalHeaderDisplay;
-        readonly IClipboard clipboard;
-        readonly IMenuItem returnToSourceMenu;
-        readonly IMenuItem retryMessageMenu;
-        readonly IMenuItem copyMessageIdMenu;
-        readonly IMenuItem copyHeadersMenu;
+        IEventAggregator eventAggregator;
+        IServiceControl serviceControl;
+        IErrorHeaderViewModel errorHeaderDisplay;
+        IGeneralHeaderViewModel generalHeaderDisplay;
+        IClipboard clipboard;
+        IMenuItem returnToSourceMenu;
+        IMenuItem retryMessageMenu;
+        IMenuItem copyMessageIdMenu;
+        IMenuItem copyHeadersMenu;
         bool lockUpdate;
         string lastSortColumn;
         bool lastSortOrderAscending;

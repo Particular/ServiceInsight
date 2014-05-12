@@ -8,8 +8,8 @@
 
     public class BaseParser
     {
-        protected readonly char[] SpaceChars = new[] {' ', '\t'};
-        protected readonly string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+        protected char[] SpaceChars = new[] {' ', '\t'};
+        protected string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         protected char previousSymbol;
 

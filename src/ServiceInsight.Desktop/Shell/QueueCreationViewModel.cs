@@ -23,9 +23,9 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        readonly IQueueManagerAsync queueManager;
-        readonly IQueueExplorerViewModel explorer;
-        readonly INetworkOperations networkOperations;
+        IQueueManagerAsync queueManager;
+        IQueueExplorerViewModel explorer;
+        INetworkOperations networkOperations;
 
         public QueueCreationViewModel(
             IQueueManagerAsync queueManager, 

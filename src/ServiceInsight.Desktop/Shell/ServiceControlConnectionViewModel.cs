@@ -15,9 +15,9 @@
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
 
-        readonly ISettingsProvider settingsProvider;
-        readonly ProfilerSettings appSettings;
-        readonly IContainer container;
+        ISettingsProvider settingsProvider;
+        ProfilerSettings appSettings;
+        IContainer container;
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,

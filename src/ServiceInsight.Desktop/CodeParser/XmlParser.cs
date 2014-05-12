@@ -7,10 +7,10 @@
 
     public class XmlParser : BaseParser
     {
-        protected static readonly char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };
-        protected static readonly char[] XmlSymbol = new[] { '=', '/', '>', '"', '{', '}', ',' };
-        protected static readonly char[] XmlQuotes = new[] { '"'  };
-        protected static readonly char XmlNamespaceDelimeter = ':';
+        protected static char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };
+        protected static char[] XmlSymbol = new[] { '=', '/', '>', '"', '{', '}', ',' };
+        protected static char[] XmlQuotes = new[] { '"'  };
+        protected static char XmlNamespaceDelimeter = ':';
 
         protected bool IsInsideBlock;
 

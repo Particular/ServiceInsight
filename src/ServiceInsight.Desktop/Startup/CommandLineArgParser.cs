@@ -6,14 +6,14 @@
 
     public class CommandLineArgParser : ICommandLineArgParser
     {
-        static readonly ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
+        static ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
 
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
 
-        readonly IEnvironment environment;
-        readonly IList<string> unsupportedKeys;
+        IEnvironment environment;
+        IList<string> unsupportedKeys;
         
         public CommandLineOptions ParsedOptions { get; private set; }
 

@@ -40,15 +40,15 @@
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
-        readonly ISearchBarViewModel searchBar;
-        readonly IMessageListViewModel messageList;
-        readonly IScreenFactory screenFactory;
-        readonly IServiceControl serviceControl;
-        readonly IEventAggregator eventAggregator;
-        readonly IClipboard clipboard;
-        readonly IWindowManagerEx windowManager;
-        readonly ISettingsProvider settingsProvider;
-        readonly ConcurrentDictionary<string, MessageNode> nodeMap;
+        ISearchBarViewModel searchBar;
+        IMessageListViewModel messageList;
+        IScreenFactory screenFactory;
+        IServiceControl serviceControl;
+        IEventAggregator eventAggregator;
+        IClipboard clipboard;
+        IWindowManagerEx windowManager;
+        ISettingsProvider settingsProvider;
+        ConcurrentDictionary<string, MessageNode> nodeMap;
         IMessageFlowView view;
         string originalSelectionId = string.Empty;
         bool loadingConversation;

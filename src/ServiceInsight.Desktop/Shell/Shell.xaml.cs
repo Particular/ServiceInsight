@@ -18,7 +18,7 @@
     /// </summary>
     public partial class ShellView : IShellView
     {
-        readonly ILog logger = LogManager.GetLogger(typeof (IShellView));
+        ILog logger = LogManager.GetLogger(typeof (IShellView));
 
         public ShellView()
         {

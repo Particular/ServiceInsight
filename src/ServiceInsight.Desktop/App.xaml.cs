@@ -15,7 +15,7 @@
 
     public class AppCommandsWrapper : IAppCommands
     {
-        readonly IAppCommands current;
+        IAppCommands current;
 
         public AppCommandsWrapper()
             : this((IAppCommands)Application.Current)
@@ -38,7 +38,7 @@
 
     public partial class App : IAppCommands
     {
-        static readonly ILog Logger = LogManager.GetLogger("Application");
+        static ILog Logger = LogManager.GetLogger("Application");
 
         public App()
         {

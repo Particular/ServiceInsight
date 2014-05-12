@@ -8,8 +8,8 @@
 
     public class ServiceControl : IDisposable
     {
-        readonly ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
-        readonly HttpSelfHostServer server;
+        ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
+        HttpSelfHostServer server;
 
         const int StubServicePort = 55555;
         const string StubServiceUrl = "http://localhost";

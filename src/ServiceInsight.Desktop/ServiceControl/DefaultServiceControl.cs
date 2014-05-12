@@ -24,10 +24,10 @@
             public const string TotalCount = "Total-Count";
         }
 
-        readonly IServiceControlConnectionProvider connection;
-        readonly IEventAggregator eventAggregator;
-        readonly ProfilerSettings settings;
-        readonly ILog logger = LogManager.GetLogger(typeof(IServiceControl));
+        IServiceControlConnectionProvider connection;
+        IEventAggregator eventAggregator;
+        ProfilerSettings settings;
+        ILog logger = LogManager.GetLogger(typeof(IServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 

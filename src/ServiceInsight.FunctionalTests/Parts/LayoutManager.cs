@@ -9,8 +9,8 @@
 
     public class LayoutManager : ProfilerElement
     {
-        readonly GroupBox barManager;
-        readonly IUIItem[] autoHideGroups;
+        GroupBox barManager;
+        IUIItem[] autoHideGroups;
 
         public LayoutManager(Window mainWindow) : base(mainWindow)
         {

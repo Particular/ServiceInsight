@@ -19,8 +19,8 @@
 
     public class SearchBarViewModel : Screen, ISearchBarViewModel
     {
-        readonly ICommandLineArgParser commandLineArgParser;
-        readonly ISettingsProvider settingProvider;
+        ICommandLineArgParser commandLineArgParser;
+        ISettingsProvider settingProvider;
         int workCount;
 
         public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)

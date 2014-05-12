@@ -7,7 +7,7 @@
     /// </summary>
     public partial class Dialog
     {
-        public static readonly DependencyProperty IsModalProperty;
+        public static DependencyProperty IsModalProperty;
        
         static Dialog()
         {

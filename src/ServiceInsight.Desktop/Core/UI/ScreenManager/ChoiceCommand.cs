@@ -10,7 +10,7 @@
     {
         public event EventHandler CanExecuteChanged = delegate { };
 
-        readonly ButtonCommandHandler commandHandler;
+        ButtonCommandHandler commandHandler;
 
         public ChoiceCommand(ButtonCommandHandler commandHandler, bool isDefault, bool isCancel, string label, MessageChoice result)
         {

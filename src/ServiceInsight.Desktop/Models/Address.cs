@@ -18,7 +18,7 @@
         internal const string FORMATNAME = "FormatName:" + DIRECTPREFIX;
         internal const string PRIVATE = "\\private$\\";
 
-        static readonly string DefaultMachine = Environment.MachineName;
+        static string DefaultMachine = Environment.MachineName;
 
         /// <summary>
         /// Get the address of this endpoint.
@@ -94,7 +94,7 @@
             return ip != null;
         }
 
-        static readonly Func<string, string> TryGetHostEntry = machine =>
+        static Func<string, string> TryGetHostEntry = machine =>
         {
             if (string.IsNullOrWhiteSpace(machine)) 
                 return null;

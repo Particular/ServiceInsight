@@ -22,12 +22,12 @@
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
-        readonly IScreenFactory screenFactory;
+        IScreenFactory screenFactory;
         bool allowResize;
 
-        static readonly IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
-        static readonly IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
-        static readonly IDictionary<DialogResult, bool?> DialogResultMaps;
+        static IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
+        static IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
+        static IDictionary<DialogResult, bool?> DialogResultMaps;
 
         static WindowManagerEx()
         {

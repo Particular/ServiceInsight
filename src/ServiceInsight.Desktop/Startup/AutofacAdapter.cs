@@ -19,7 +19,7 @@
     /// </summary>
     public class AutofacAdapter : ContainerBase
     {
-        readonly IContainer container;
+        IContainer container;
         ContainerUpdater updater;
 
         /// <summary>
@@ -200,7 +200,7 @@
 
         class ContainerUpdater
         {
-            readonly ICollection<Action<IComponentRegistry>> configurationActions = new List<Action<IComponentRegistry>>();
+            ICollection<Action<IComponentRegistry>> configurationActions = new List<Action<IComponentRegistry>>();
 
             public void Register(Action<IComponentRegistry> configurationAction)
             {

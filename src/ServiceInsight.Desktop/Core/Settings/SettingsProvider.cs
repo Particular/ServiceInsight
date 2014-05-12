@@ -8,7 +8,7 @@ namespace Particular.ServiceInsight.Desktop.Core.Settings
 
     public class SettingsProvider : ISettingsProvider
     {
-        readonly ISettingsStorage settingsRepository;
+        ISettingsStorage settingsRepository;
 
         public SettingsProvider(ISettingsStorage settingsRepository = null)
         {

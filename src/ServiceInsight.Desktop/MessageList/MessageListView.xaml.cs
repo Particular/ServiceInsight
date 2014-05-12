@@ -20,8 +20,8 @@
             public const string IsFaulted = "IsFaulted";
         }
 
-        readonly PropertyInfo sortUpProperty;
-        readonly PropertyInfo sortDownProperty;
+        PropertyInfo sortUpProperty;
+        PropertyInfo sortDownProperty;
 
         public MessageListView()
         {

@@ -86,9 +86,9 @@
 
         sealed class SingleThreadSynchronizationContext : SynchronizationContext
         {
-            readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> queue;
+            BlockingCollection<KeyValuePair<SendOrPostCallback, object>> queue;
             int operationCount;
-            readonly bool trackOperations;
+            bool trackOperations;
 
             internal SingleThreadSynchronizationContext(bool trackOperations)
             {

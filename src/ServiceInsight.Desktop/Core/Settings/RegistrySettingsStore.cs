@@ -6,8 +6,8 @@
 
     public class RegistrySettingsStore : ISettingsStorage
     {
-        readonly RegistryHive root;
-        readonly string registryKey;
+        RegistryHive root;
+        string registryKey;
 
         public RegistrySettingsStore(string registryKey)
         {

@@ -19,8 +19,8 @@
 
     public class RichTextBoxAppender : AppenderSkeleton
     {
-        readonly RichTextBox richtextBox;
-        readonly Paragraph paragraph;
+        RichTextBox richtextBox;
+        Paragraph paragraph;
         const int MaxTextLength = 5000;
 
         public RichTextBoxAppender(RichTextBox textbox)

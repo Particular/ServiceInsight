@@ -6,10 +6,10 @@
 
     public class OptionPropertyValue : IDataErrorInfo
     {
-        readonly PropertyInfo propertyInfo;
-        readonly object owner;
-        readonly DisplayNameAttribute displayName;
-        readonly DescriptionAttribute description;
+        PropertyInfo propertyInfo;
+        object owner;
+        DisplayNameAttribute displayName;
+        DescriptionAttribute description;
 
         public OptionPropertyValue(PropertyInfo propertyInfo, object owner)
         {

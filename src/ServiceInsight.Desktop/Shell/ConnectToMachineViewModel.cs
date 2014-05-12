@@ -22,7 +22,7 @@
     {
         public const string DiscoveringComputersOnNetwork = "Discovering network computers...";
 
-        readonly INetworkOperations networkOperations;
+        INetworkOperations networkOperations;
 
         public ConnectToMachineViewModel(INetworkOperations networkOperations)
         {

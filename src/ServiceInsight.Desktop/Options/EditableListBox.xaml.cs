@@ -10,7 +10,7 @@
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(EditableListBox), new PropertyMetadata(OnItemsSourceChanged));
+        public static DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(EditableListBox), new PropertyMetadata(OnItemsSourceChanged));
 
         static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
         {

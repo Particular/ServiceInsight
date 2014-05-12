@@ -4,7 +4,7 @@
 
     public static class AsyncTask
     {
-        public static readonly Task DefaultCompleted = FromResult(default(AsyncVoid));
+        public static Task DefaultCompleted = FromResult(default(AsyncVoid));
 
         public static Task<TResult> FromResult<TResult>(TResult result)
         {

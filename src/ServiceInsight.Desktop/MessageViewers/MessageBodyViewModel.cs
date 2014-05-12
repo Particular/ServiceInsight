@@ -16,7 +16,7 @@
 
     public class MessageBodyViewModel : Screen, IMessageBodyViewModel
     {
-        static readonly IDictionary<string, MessageContentType> ContentTypeMaps;
+        static IDictionary<string, MessageContentType> ContentTypeMaps;
 
         static MessageBodyViewModel()
         {

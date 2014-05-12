@@ -12,9 +12,9 @@
 
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
-        readonly IWindowManagerEx windowManager;
-        readonly IEventAggregator eventAggregator;
-        readonly IShellViewModel shell;
+        IWindowManagerEx windowManager;
+        IEventAggregator eventAggregator;
+        IShellViewModel shell;
 
         public DefaultExceptionHandler(
             IWindowManagerEx windowManager, 

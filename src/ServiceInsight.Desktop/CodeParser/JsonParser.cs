@@ -7,8 +7,8 @@
 
     public class JsonParser : BaseParser
     {
-        protected static readonly char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
-        protected static readonly char[] JsonQuotes = new[] { '"' };
+        protected static char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
+        protected static char[] JsonQuotes = new[] { '"' };
 
         protected bool IsInsideBlock;
 

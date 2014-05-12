@@ -9,9 +9,9 @@
 
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
-        readonly AppLicenseManager licenseManager;
-        readonly IDialogManager dialogManager;
-        readonly INetworkOperations network;
+        AppLicenseManager licenseManager;
+        IDialogManager dialogManager;
+        INetworkOperations network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
         public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";

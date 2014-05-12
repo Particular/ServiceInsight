@@ -10,7 +10,7 @@
     public class HexContentViewModel : Screen, IHexContentViewModel
     {
         internal static Func<byte, string> ByteToStringConverter;
-        static readonly Encoding Encoding;
+        static Encoding Encoding;
 
         IHexContentView view;
 

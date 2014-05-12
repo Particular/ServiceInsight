@@ -5,7 +5,7 @@
 
     public class Log4NetLogger : ILog
     {
-        readonly log4net.ILog logger;
+        log4net.ILog logger;
 
         public Log4NetLogger()
         {

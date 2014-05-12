@@ -11,8 +11,8 @@
 
     public class XmlMessageViewModel : Screen, IXmlMessageViewModel
     {
-        readonly IContentDecoder<XmlDocument> xmlDecoder;
-        readonly IClipboard clipboard;
+        IContentDecoder<XmlDocument> xmlDecoder;
+        IClipboard clipboard;
         IXmlMessageView messageView;
 
         public XmlMessageViewModel(

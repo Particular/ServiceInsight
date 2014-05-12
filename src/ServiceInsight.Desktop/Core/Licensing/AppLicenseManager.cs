@@ -81,7 +81,7 @@
         RegistryLicenseStore licenseStore = new RegistryLicenseStore();
 
      
-        static readonly ILog Logger = LogManager.GetLogger(typeof(AppLicenseManager));
+        static ILog Logger = LogManager.GetLogger(typeof(AppLicenseManager));
 
 
     }

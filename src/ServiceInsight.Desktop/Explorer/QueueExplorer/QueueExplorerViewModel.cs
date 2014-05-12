@@ -19,10 +19,10 @@
     [View(typeof(QueueExplorerView))]
     public class QueueExplorerViewModel : Screen, IQueueExplorerViewModel
     {
-        readonly IQueueManagerAsync queueManager;
-        readonly IEventAggregator eventAggregator;
-        readonly IWindowManagerEx windowManager;
-        readonly INetworkOperations networkOperations;
+        IQueueManagerAsync queueManager;
+        IEventAggregator eventAggregator;
+        IWindowManagerEx windowManager;
+        INetworkOperations networkOperations;
         bool isFirstActivation = true;
         IExplorerView view;
 
