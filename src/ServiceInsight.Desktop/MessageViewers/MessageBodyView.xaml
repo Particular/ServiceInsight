@@ -12,8 +12,7 @@
     <Grid>
         <dxlc:LayoutControl Padding="0" 
                             VerticalAlignment="Stretch" 
-                            HorizontalAlignment="Stretch"
-                            SelectedTabChildChanged="OnSelectedTabChanged">
+                            HorizontalAlignment="Stretch">
             <dxlc:LayoutGroup View="Tabs">
                 <dxlc:LayoutGroup.TabsStyle>
                     <Style TargetType="dxc:DXTabControl">
