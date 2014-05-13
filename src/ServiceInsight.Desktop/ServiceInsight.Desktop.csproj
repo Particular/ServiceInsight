@@ -66,9 +66,6 @@
   <PropertyGroup />
   <ItemGroup>
     <None Include="ripple.dependencies.config" />
-    <None Include="Saga\saga.data">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />
     <Reference Include="Autofac">

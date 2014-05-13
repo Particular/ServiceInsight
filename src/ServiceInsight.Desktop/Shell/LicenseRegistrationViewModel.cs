@@ -13,10 +13,6 @@
         IDialogManager dialogManager;
         INetworkOperations network;
 
-        public const string LicensingPageUrl = "http://particular.net/licensing";
-        public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";
-        public const string CustomLicenseExtensionPageUrl = "http://particular.net/extend-your-trial-45";
-
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
             IDialogManager dialogManager,
@@ -176,17 +172,17 @@
 
         public void Purchase()
         {
-            network.Browse(LicensingPageUrl);
+            network.Browse("http://particular.net/licensing");
         }
 
         public void Extend()
         {
-            network.Browse(LicenseExtensionPageUrl);
+            network.Browse("http://particular.net/extend-your-trial-14");
         }
 
         public void ContactSales()
         {
-            network.Browse(CustomLicenseExtensionPageUrl);
+            network.Browse("http://particular.net/extend-your-trial-45");
         }
 
 
