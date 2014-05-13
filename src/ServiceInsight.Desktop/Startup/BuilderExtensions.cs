@@ -61,9 +61,8 @@
             }
         }
 
-        public static void RegisterModules(this ContainerBuilder builder, Assembly assembly)
+        static void RegisterModules(this ContainerBuilder builder, Assembly assembly)
         {
-            Guard.NotNull(() => builder, builder);
             Guard.NotNull(() => assembly, assembly);
 
             foreach (var type in assembly.GetExportedTypes())
