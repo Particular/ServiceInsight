@@ -6,7 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:tree="clr-namespace:Particular.ServiceInsight.Desktop.Explorer"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             xmlns:vm="clr-namespace:Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer"
+             xmlns:model="clr-namespace:Particular.ServiceInsight.Desktop.Models"
+             d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="tree:ExplorerItem" ItemsSource="{Binding Path=Children}">
@@ -20,7 +23,7 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel d:DataContext="{d:DesignInstance model:Endpoint}">
                             <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                                 <TextBlock Text="Configured for Monitoring: " />
                                 <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
@@ -39,7 +42,7 @@
 
     <dxg:TreeListControl x:Name="treeList" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
         <dxg:TreeListControl.Columns>
-            <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False" >
+            <dxg:TreeListColumn FieldName="DisplayName" AllowEditing="False">
                 <dxg:TreeListColumn.EditSettings>
                     <dxe:TextEditSettings />
                 </dxg:TreeListColumn.EditSettings>
