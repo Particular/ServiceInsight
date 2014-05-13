@@ -8,7 +8,6 @@
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Media;
-    using Core;
     using DevExpress.Xpf.Editors.Helpers;
     using log4net.Appender;
     using log4net.Core;
@@ -43,8 +42,6 @@
             get
             {
                 yield return typeof (IServiceControl);
-                yield return typeof (IQueueOperationsAsync);
-                yield return typeof (IQueueOperations);
             }
         }
 

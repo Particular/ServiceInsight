@@ -12,7 +12,6 @@
     using ExceptionHandler;
     using Explorer;
     using Explorer.EndpointExplorer;
-    using Explorer.QueueExplorer;
     using ExtensionMethods;
     using MessageProperties;
     using Models;
@@ -25,10 +24,8 @@
     {
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
-        IErrorHeaderViewModel errorHeaderDisplay;
         IGeneralHeaderViewModel generalHeaderDisplay;
         IClipboard clipboard;
-        IMenuItem returnToSourceMenu;
         IMenuItem retryMessageMenu;
         IMenuItem copyMessageIdMenu;
         IMenuItem copyHeadersMenu;
@@ -42,20 +39,17 @@
             IEventAggregator eventAggregator,
             IServiceControl serviceControl,
             ISearchBarViewModel searchBarViewModel,
-            IErrorHeaderViewModel errorHeaderDisplay,
             IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
-            this.errorHeaderDisplay = errorHeaderDisplay;
             this.generalHeaderDisplay = generalHeaderDisplay;
             this.clipboard = clipboard;
 
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
 
-            returnToSourceMenu = new MenuItem("Return To Source", new RelayCommand(ReturnToSource, CanReturnToSource), Properties.Resources.MessageReturn);
             retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
             copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
             copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
@@ -63,7 +57,6 @@
             Rows = new BindableCollection<StoredMessage>();
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                returnToSourceMenu, 
                 retryMessageMenu, 
                 copyHeadersMenu, 
                 copyMessageIdMenu
@@ -74,7 +67,6 @@
 
         public void OnContextMenuOpening()
         {
-            returnToSourceMenu.IsVisible = CanReturnToSource();
             retryMessageMenu.IsVisible = CanRetryMessage();
             copyMessageIdMenu.IsEnabled = CanCopyMessageId();
             copyHeadersMenu.IsEnabled = CanCopyHeaders();
@@ -89,18 +81,11 @@
 
         public StoredMessage FocusedRow { get; set; }
 
-        public Queue SelectedQueue { get; private set; }
-
         public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
 
         public bool ShouldLoadMessageBody { get; set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
-
-        public void ReturnToSource()
-        {
-            errorHeaderDisplay.ReturnToSource();
-        }
 
         public async void RetryMessage()
         {
@@ -128,11 +113,6 @@
                    && FocusedRow.Status != MessageStatus.ArchivedFailure;
         }
 
-        public bool CanReturnToSource()
-        {
-            return errorHeaderDisplay.CanReturnToSource();
-        }
-
         public bool CanCopyHeaders()
         {
             return !generalHeaderDisplay.HeaderContent.IsEmpty();
@@ -152,7 +132,9 @@
         public void Focus(StoredMessage msg)
         {
             //TODO: ViewModel should have no knowledge of View or the elements in it.
+
             var grid = ((GridControl)((FrameworkElement)view).FindName("grid"));
+
             for (var i = 0; i < Rows.Count; i++)
             {
                 var row = Rows[i];
@@ -297,14 +279,7 @@
 
         public async void OnSelectedExplorerItemChanged()
         {
-            var queueNode = SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queueNode != null)
-            {
-                SelectedQueue = queueNode.Queue;
-            }
-
             await RefreshMessages();
-
             NotifyPropertiesChanged();
         }
 

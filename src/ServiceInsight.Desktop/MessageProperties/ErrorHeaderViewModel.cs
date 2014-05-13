@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using Caliburn.PresentationFramework.ApplicationModel;
-    using Core;
     using Core.MessageDecoders;
     using ExtensionMethods;
     using Models;
@@ -14,33 +12,10 @@
     {
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManager queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IContentDecoder<IList<HeaderInfo>> decoder) 
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Errors";
-        }
-
-        public virtual bool CanReturnToSource()
-        {
-            return SelectedQueue != null &&
-                   !SelectedQueue.IsRemoteQueue() &&
-                   SelectedMessage != null &&
-                   FailedQueue != null;
-        }
-
-        public virtual void ReturnToSource()
-        {
-            if (!CanReturnToSource()) return;
-
-            var destinationAddress = Address.Parse(FailedQueue);
-            var queues = QueueManager.GetQueues();
-            var destinationQueue = queues.FirstOrDefault(q => q.Address == destinationAddress);
-
-            if (destinationQueue != null)
-            {
-                QueueManager.MoveMessage(SelectedQueue, destinationQueue, SelectedMessage.Id);
-            }
         }
 
         [Description("Stack trace for the error")]

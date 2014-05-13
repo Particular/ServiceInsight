@@ -106,15 +106,11 @@
     <Compile Include="CommandLineArgParserTests.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
-    <Compile Include="Helpers\FakeQueueManager.cs" />
     <Compile Include="Helpers\NSubstituteTestHelper.cs" />
     <Compile Include="Helpers\TestConductorScreen.cs" />
     <Compile Include="Helpers\TestExtensions.cs" />
-    <Compile Include="AddressTests.cs" />
-    <Compile Include="AsyncQueueOperationsTests.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />
-    <Compile Include="ExplorerTests.cs" />
     <Compile Include="GuardTests.cs" />
     <Compile Include="HexViewerTests.cs" />
     <Compile Include="JsonParserTests.cs" />
@@ -123,10 +119,6 @@
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
-    <Compile Include="QueueConnectionDialogTests.cs" />
-    <Compile Include="QueueCreationViewModel.cs" />
-    <Compile Include="QueueManagerIntegrationTests.cs" />
-    <Compile Include="QueueManagerTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
     <Compile Include="StreamExtensionMethodTests.cs" />
     <Compile Include="StringDecoderTests.cs" />

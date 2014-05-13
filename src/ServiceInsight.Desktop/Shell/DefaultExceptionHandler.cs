@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
     using System;
-    using System.Messaging;
     using System.Windows;
     using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.ViewModels;
@@ -34,8 +33,6 @@
 
             StopAsyncProgress(rootError);
 
-            if (IsIgnoredError(rootError)) return;
-
             if(IsSoftError(rootError))
             {
                 ShowWarning(rootError);
@@ -52,11 +49,6 @@
             {
                 eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
             }
-        }
-
-        bool IsIgnoredError(Exception rootError)
-        {
-            return rootError is MessageQueueException;
         }
 
         bool IsSoftError(Exception rootError)

@@ -9,7 +9,6 @@
     using Desktop.Core.UI.ScreenManager;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
-    using Desktop.Explorer.QueueExplorer;
     using Desktop.LogWindow;
     using Desktop.MessageFlow;
     using Desktop.MessageHeaders;
@@ -21,7 +20,6 @@
     using Desktop.Settings;
     using Desktop.Shell;
     using Desktop.Startup;
-    using Helpers;
     using Licensing;
     using NSubstitute;
     using NUnit.Framework;
@@ -39,10 +37,8 @@
         ShellViewModel shell;
         IScreenFactory ScreenFactory;
         IWindowManagerEx WindowManager;
-        IQueueExplorerViewModel QueueExplorer;
         IEndpointExplorerViewModel EndpointExplorer;
         IMessageListViewModel MessageList;
-        IConnectToMachineViewModel ConnectToViewModel;
         IMessageFlowViewModel MessageFlow;
         ISagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
@@ -62,7 +58,6 @@
         {
             ScreenFactory = Substitute.For<IScreenFactory>();
             WindowManager = Substitute.For<IWindowManagerEx>();
-            QueueExplorer = Substitute.For<IQueueExplorerViewModel>();
             EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
             MessageList = Substitute.For<IMessageListViewModel>();
             StatusbarManager = Substitute.For<IStatusBarManager>();
@@ -76,18 +71,15 @@
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
-            ConnectToViewModel = Substitute.For<IConnectToMachineViewModel>();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();
 
-            shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, 
+            shell = new ShellViewModel(App, ScreenFactory, WindowManager, 
                                        EndpointExplorer, MessageList, StatusbarManager, 
                                        EventAggregator, LicenseManager, MessageFlow, SagaWindow,
                                        MessageBodyView, HeaderView, SettingsProvider, MessageProperties, 
                                        LogWindow, CommandLineArgParser);
-
-            ScreenFactory.CreateScreen<IConnectToMachineViewModel>().Returns(ConnectToViewModel);
 
             shell.AttachView(View, null);
         }
@@ -112,15 +104,9 @@
         {
             shell.Handle(new WorkStarted());
 
-            shell.CanDeleteCurrentQueue.ShouldBe(false);
             shell.CanDeleteSelectedMessages.ShouldBe(false);
-            shell.CanConnectToMachine.ShouldBe(false);
-            shell.CanCreateMessage.ShouldBe(false);
-            shell.CanCreateQueue.ShouldBe(false);
             shell.CanExportMessage.ShouldBe(false);
             shell.CanImportMessage.ShouldBe(false);
-            shell.CanPurgeCurrentQueue.ShouldBe(false);
-            shell.CanRefreshQueues.ShouldBe(false);
         }
 
         [Test]
@@ -146,34 +132,11 @@
         }
 
         [Test]
-        public void should_display_connect_dialog_when_connecting_to_msmq()
-        {
-            ConnectToViewModel.ComputerName.Returns("NewMachine");
-            WindowManager.ShowDialog(Arg.Any<object>()).Returns(true);
-
-            shell.ConnectToMessageQueue();
-
-            ScreenFactory.Received().CreateScreen<IConnectToMachineViewModel>();
-            WindowManager.Received().ShowDialog(ConnectToViewModel);
-            QueueExplorer.Received().ConnectToQueue("NewMachine");
-        }
-
-        [Test]
         public void should_have_all_child_screens_ready_when_shell_is_activated()
         {
             ((IScreen)shell).Deactivate(true);
 
             View.Received().OnSaveLayout(SettingsProvider);
-        }
-
-        [Test]
-        public void should_not_refresh_the_queues_when_auto_refresh_is_turned_off()
-        {
-            shell.AutoRefresh = false;
-
-            shell.OnAutoRefreshing();
-
-            QueueExplorer.DidNotReceive().RefreshData();
         }
 
         [Test]
@@ -190,23 +153,9 @@
             shell.CreateMessage();
         }
 
-        [Test]
-        [Ignore] //TODO: NSubstitute doesn't play well with the inner async call
-        public void should_refresh_queue_explorer_when_new_queue_is_created()
-        {
-            var viewModel = Substitute.For<IQueueCreationViewModel>();
-            ScreenFactory.CreateScreen<IQueueCreationViewModel>().Returns(viewModel);
-            WindowManager.ShowDialog(viewModel).Returns(true);
-
-            AsyncHelper.Run(() => shell.CreateQueue());
-
-            QueueExplorer.RefreshData().ReceivedCalls(); //TODO: Comment?
-        }
-
-        [Test]
         public void should_track_selected_explorer()
         {
-            var selected = new QueueExplorerItem(new Queue("Error"));
+            var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
 
             shell.Handle(new SelectedExplorerItemChanged(selected));
 

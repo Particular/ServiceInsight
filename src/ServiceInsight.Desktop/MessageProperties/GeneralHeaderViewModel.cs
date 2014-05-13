@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using Caliburn.PresentationFramework.ApplicationModel;
-    using Core;
     using Core.MessageDecoders;
     using MessageFlow;
     using Models;
@@ -16,9 +15,8 @@
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager)
-            : base(eventAggregator, decoder, queueManager)
+            IContentDecoder<IList<HeaderInfo>> decoder)
+            : base(eventAggregator, decoder)
         {
             this.decoder = decoder;
             DisplayName = "General";

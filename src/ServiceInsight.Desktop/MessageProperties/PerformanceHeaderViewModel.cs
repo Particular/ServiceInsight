@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using Caliburn.PresentationFramework.ApplicationModel;
-    using Core;
     using Core.MessageDecoders;
     using ExtensionMethods;
     using Models;
@@ -13,9 +12,8 @@
     {
         public PerformanceHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IContentDecoder<IList<HeaderInfo>> decoder) 
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Performance";
         }

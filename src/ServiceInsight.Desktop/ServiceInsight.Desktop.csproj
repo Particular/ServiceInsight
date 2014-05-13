@@ -45,6 +45,8 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -236,22 +238,14 @@
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\CommandConnection.cs" />
     <Compile Include="MessageFlow\IMessageFlowView.cs" />
-    <Compile Include="Core\DefaultMapper.cs" />
-    <Compile Include="Core\IMapper.cs" />
     <Compile Include="Core\INetworkOperations.cs" />
-    <Compile Include="Core\IQueueManager.cs" />
-    <Compile Include="Core\IQueueOperations.cs" />
-    <Compile Include="Core\IQueueOperationsAsync.cs" />
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
     <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\IContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\StringContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\XmlContentDecoder.cs" />
-    <Compile Include="Core\MSMQueueOperations.cs" />
     <Compile Include="Core\NetworkOperations.cs" />
-    <Compile Include="Core\QueueManager.cs" />
-    <Compile Include="Core\QueueManagerException.cs" />
     <Compile Include="Core\Settings\ISettingsProvider.cs" />
     <Compile Include="Core\Settings\ISettingsStorage.cs" />
     <Compile Include="Core\Settings\IsolatedStorageSettingsStore.cs" />
@@ -260,7 +254,6 @@
     <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailed.cs" />
     <Compile Include="Events\ExecuteSearchResult.cs" />
-    <Compile Include="Events\QueueMessageCountChanged.cs" />
     <Compile Include="Events\SelectedExplorerItemChanged.cs" />
     <Compile Include="Events\SelectedMessageChanged.cs" />
     <Compile Include="Events\WorkFinished.cs" />
@@ -274,14 +267,10 @@
     <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerItemExtensions.cs" />
     <Compile Include="Explorer\IExplorerViewModel.cs" />
-    <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
     <Compile Include="Explorer\FolderExplorerItem.cs" />
-    <Compile Include="Explorer\QueueExplorer\IQueueExplorerViewModel.cs" />
     <Compile Include="Explorer\IExplorerView.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
@@ -289,7 +278,6 @@
     <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
     <Compile Include="ExtensionMethods\GrammarExtensions.cs" />
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
-    <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
@@ -338,8 +326,6 @@
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\AddressMode.cs" />
     <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\FailureDetails.cs" />
     <Compile Include="Models\HeaderInfo.cs" />
@@ -348,8 +334,6 @@
     <Compile Include="Models\MessageIntent.cs" />
     <Compile Include="Models\MessageStatus.cs" />
     <Compile Include="Models\PagedResult.cs" />
-    <Compile Include="Models\Queue.cs" />
-    <Compile Include="Models\QueueTypes.cs" />
     <Compile Include="Models\StoredMessage.cs" />
     <Compile Include="Options\EditableListBox.xaml.cs">
       <DependentUpon>EditableListBox.xaml</DependentUpon>
@@ -412,10 +396,6 @@
       <DependentUpon>SearchBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchBarViewModel.cs" />
-    <Compile Include="Shell\ConnectToMachineView.xaml.cs">
-      <DependentUpon>ConnectToMachineView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\ConnectToMachineViewModel.cs" />
     <Compile Include="Core\UI\ScreenManager\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
@@ -427,10 +407,6 @@
     <Compile Include="Shell\IShellViewModel.cs" />
     <Compile Include="Shell\IStatusBarManager.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
-    <Compile Include="Shell\QueueCreationView.xaml.cs">
-      <DependentUpon>QueueCreationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\QueueCreationViewModel.cs" />
     <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
@@ -448,10 +424,6 @@
     <Compile Include="Modules\CoreModule.cs" />
     <Compile Include="Modules\LoggerModule.cs" />
     <Compile Include="Modules\ShellModule.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerViewModel.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerView.xaml.cs">
-      <DependentUpon>QueueExplorerView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>
     </Compile>
@@ -553,23 +525,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Shell\ConnectToMachineView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Core\UI\ScreenManager\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Explorer\QueueExplorer\QueueExplorerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MessageList\MessageListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\QueueCreationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

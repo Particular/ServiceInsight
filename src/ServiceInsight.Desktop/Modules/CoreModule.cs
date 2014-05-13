@@ -15,13 +15,9 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<QueueManager>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<AsyncQueueManager>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<MSMQueueOperations>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<StringContentDecoder>().As<IContentDecoder<string>>();
             builder.RegisterType<XmlContentDecoder>().As<IContentDecoder<XmlDocument>>();
             builder.RegisterType<HeaderContentDecoder>().As<IContentDecoder<IList<HeaderInfo>>>();
-            builder.RegisterType<DefaultMapper>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<NetworkOperations>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<AppLicenseManager>().SingleInstance();
             builder.RegisterType<ServiceControlConnectionProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();

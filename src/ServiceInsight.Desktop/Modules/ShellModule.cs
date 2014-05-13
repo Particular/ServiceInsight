@@ -11,7 +11,6 @@
     using ExceptionHandler.Wpf;
     using Explorer;
     using Explorer.EndpointExplorer;
-    using Explorer.QueueExplorer;
     using MessageFlow;
     using Options;
     using Search;
@@ -30,14 +29,10 @@
 
             builder.RegisterSource(new SettingsSource());
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
-            builder.RegisterType<QueueCreationView>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<ConnectToMachineView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().As<IExplorerView>().InstancePerDependency();
-            builder.RegisterType<QueueExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<QueueExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
@@ -56,8 +51,6 @@
         {
             get
             {
-                yield return typeof (QueueCreationView);
-                yield return typeof (ConnectToMachineView);
                 yield return typeof (LicenseRegistrationView);
                 yield return typeof (ServiceControlConnectionView);
                 yield return typeof (OptionsView);

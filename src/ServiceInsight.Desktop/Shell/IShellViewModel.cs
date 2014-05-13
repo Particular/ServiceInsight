@@ -1,12 +1,10 @@
 namespace Particular.ServiceInsight.Desktop.Shell
 {
-    using System.Threading.Tasks;
     using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
-    using Explorer.QueueExplorer;
     using LogWindow;
     using MessageFlow;
     using MessageList;
@@ -25,7 +23,6 @@ namespace Particular.ServiceInsight.Desktop.Shell
         IHandle<SwitchToFlowWindow>,
         IWorkTracker
     {
-        IQueueExplorerViewModel QueueExplorer { get; }
         IEndpointExplorerViewModel EndpointExplorer { get; }
         IMessageListViewModel Messages { get; }
         IStatusBarManager StatusBarManager { get; }
@@ -41,15 +38,11 @@ namespace Particular.ServiceInsight.Desktop.Shell
         void ShutDown();
         void About();
         void Help();
-        void DeleteCurrentQueue();
-        void ConnectToMessageQueue();
         void ConnectToServiceControl();
         void DeleteSelectedMessages();
-        void PurgeCurrentQueue();
         void RefreshAll();
         void ImportMessage();
         void ExportMessage();
-        Task CreateQueue();
         void CreateMessage();
         void OnSelectedTabbedViewChanged(object view);
     }

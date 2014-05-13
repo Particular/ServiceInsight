@@ -19,6 +19,7 @@
             {
                 new CustomPopupPlacement(new Point(0, targetSize.Height/2), PopupPrimaryAxis.Horizontal)
             };
+
             return ret.ToArray();
         }
 

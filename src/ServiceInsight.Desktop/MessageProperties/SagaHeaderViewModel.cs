@@ -12,9 +12,8 @@
     {
         public SagaHeaderViewModel(
             IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IContentDecoder<IList<HeaderInfo>> decoder) 
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Saga";
         }

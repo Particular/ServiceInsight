@@ -32,11 +32,6 @@
             get { return GetMenu("HelpMenu"); }
         }
 
-        public Button CreateQueue
-        {
-            get { return GetMenuItem(ToolsMenu, "CreateQueueMenuItem"); }
-        }
-
         public Button ConnectToServiceControl
         {
             get { return GetMenuItem(ToolsMenu, "ConnectToServiceControlMenuItem"); }

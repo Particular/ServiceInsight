@@ -9,7 +9,6 @@
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
-    using Explorer.QueueExplorer;
     using ExtensionMethods;
     using MessageList;
     using Models;
@@ -136,8 +135,6 @@
 
         public Endpoint SelectedEndpoint { get; private set; }
 
-        public Queue SelectedQueue { get; private set; }
-        
         public string SearchQuery { get; set; }
 
         public string SearchResultMessage
@@ -233,17 +230,7 @@
         {
             if (SelectedEndpoint != null)
             {
-                SelectedQueue = null;
                 SearchEnabled = true;
-            }
-        }
-
-        public void OnSelectedQueueChanged()
-        {
-            if (SelectedQueue != null)
-            {
-                SelectedEndpoint = null;
-                SearchEnabled = false;
             }
         }
 
@@ -260,12 +247,6 @@
             {
                 SelectedEndpoint = null;
                 SearchEnabled = true;
-            }
-
-            var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queueNode != null)
-            {
-                SelectedQueue = queueNode.Queue;
             }
 
             NotifyPropertiesChanged();

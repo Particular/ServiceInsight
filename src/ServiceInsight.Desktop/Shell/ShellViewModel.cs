@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
     using Caliburn.PresentationFramework.ApplicationModel;
@@ -15,7 +14,6 @@
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
-    using Explorer.QueueExplorer;
     using ExtensionMethods;
     using LogWindow;
     using MessageFlow;
@@ -45,7 +43,6 @@
             IAppCommands appCommander,
             IScreenFactory screenFactory,
             IWindowManagerEx windowManager,
-            IQueueExplorerViewModel queueExplorer, 
             IEndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
@@ -71,14 +68,12 @@
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
-            QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
             MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
             Messages = messages;
             LogWindow = logWindow;
 
-            Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
             Items.Add(messages);
             Items.Add(messageHeadersViewer);
@@ -135,8 +130,6 @@
 
         public IMessagePropertiesViewModel MessageProperties { get; private set; }
 
-        public IQueueExplorerViewModel QueueExplorer { get; private set; }
-
         public IEndpointExplorerViewModel EndpointExplorer { get; private set; }
 
         public IMessageListViewModel Messages { get; private set; }
@@ -186,18 +179,6 @@
         }
 
         [AutoCheckAvailability]
-        public void ConnectToMessageQueue()
-        {
-            var machineViewModel = screenFactory.CreateScreen<IConnectToMachineViewModel>();
-            var result = windowManager.ShowDialog(machineViewModel);
-
-            if(result.GetValueOrDefault(false))
-            {
-                QueueExplorer.ConnectToQueue(machineViewModel.ComputerName);
-            }
-        }
-
-        [AutoCheckAvailability]
         public async void ConnectToServiceControl()
         {
             var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
@@ -216,21 +197,9 @@
         }
 
         [AutoCheckAvailability]
-        public void PurgeCurrentQueue()
-        {
-        }
-
-        [AutoCheckAvailability]
-        public void DeleteCurrentQueue()
-        {
-            QueueExplorer.DeleteSelectedQueue();
-        }
-
-        [AutoCheckAvailability]
         public async void RefreshAll()
         {
             await EndpointExplorer.RefreshData();
-            await QueueExplorer.RefreshData();
             await Messages.RefreshMessages();
             await SagaWindow.RefreshSaga();
         }
@@ -245,18 +214,6 @@
         public void ExportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
-        }
-
-        [AutoCheckAvailability]
-        public async Task CreateQueue()
-        {
-            var screen = screenFactory.CreateScreen<IQueueCreationViewModel>();
-            var result = windowManager.ShowDialog(screen);
-
-            if(result.GetValueOrDefault(false))
-            {
-                await QueueExplorer.RefreshData();
-            }
         }
 
         [AutoCheckAvailability]
@@ -276,32 +233,6 @@
             refreshTimer.IsEnabled = AutoRefresh;
         }
 
-        public bool CanCreateMessage
-        {
-            get { return QueueExplorer.SelectedQueue != null && !WorkInProgress; }
-        }
-
-        public bool CanRefreshQueues
-        {
-            get { return !WorkInProgress; }
-        }
-
-        public bool CanPurgeCurrentQueue
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public bool CanDeleteCurrentQueue
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public bool CanDeleteSelectedMessages
         {
             get
@@ -310,22 +241,7 @@
             }
         }
 
-        public bool CanCreateQueue
-        {
-            get
-            {
-                return !QueueExplorer.ConnectedToAddress.IsEmpty() &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
-            }
-        }
-
         public int SelectedMessageTabItem { get; set; }
-
-        public bool CanConnectToMachine
-        {
-            get { return !WorkInProgress || AutoRefresh; }
-        }
 
         public bool CanConnectToServiceControl
         {
@@ -442,16 +358,10 @@
         void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => CanConnectToMachine);
             NotifyOfPropertyChange(() => CanConnectToServiceControl);
-            NotifyOfPropertyChange(() => CanCreateMessage);
-            NotifyOfPropertyChange(() => CanCreateQueue);
-            NotifyOfPropertyChange(() => CanDeleteCurrentQueue);
             NotifyOfPropertyChange(() => CanDeleteSelectedMessages);
             NotifyOfPropertyChange(() => CanExportMessage);
             NotifyOfPropertyChange(() => CanImportMessage);
-            NotifyOfPropertyChange(() => CanPurgeCurrentQueue);
-            NotifyOfPropertyChange(() => CanRefreshQueues);
         }
 
         string GetProductName()

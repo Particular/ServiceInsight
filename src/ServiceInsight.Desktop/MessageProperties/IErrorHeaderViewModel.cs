@@ -5,8 +5,5 @@
         string ExceptionInfo { get; }
         string FailedQueue { get; }
         string TimeOfFailure { get; }
-
-        void ReturnToSource();
-        bool CanReturnToSource();
     }
 }
