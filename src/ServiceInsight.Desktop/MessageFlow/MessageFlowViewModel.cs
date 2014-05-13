@@ -29,8 +29,8 @@
         void CopyConversationId(StoredMessage message);
         void SearchByMessageId(StoredMessage message);
         Task RetryMessage(StoredMessage message);
-        void ShowMessageBody(StoredMessage message);
-        void ShowSagaWindow(StoredMessage message);
+        void ShowMessageBody();
+        void ShowSagaWindow();
         void ToggleEndpointData();
         void ShowException(ExceptionDetails exception);
         void ZoomIn();
@@ -114,7 +114,7 @@
             ShowEndpoints = settings.ShowEndpoints;
         }
 
-        public void ShowMessageBody(StoredMessage message)
+        public void ShowMessageBody()
         {
             eventAggregator.Publish(new SwitchToMessageBody());
         }
@@ -127,11 +127,6 @@
             }
             messageList.Focus(SelectedMessage.Message);
             eventAggregator.Publish(new SwitchToSagaWindow());
-        }
-
-        public void ShowSagaWindow(StoredMessage message)
-        {
-            ShowSagaWindow();
         }
 
         public void ShowException(ExceptionDetails exception)

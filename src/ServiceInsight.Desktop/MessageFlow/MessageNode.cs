@@ -90,7 +90,7 @@
 
         public void ShowBody()
         {
-            Owner.ShowMessageBody(Message);
+            Owner.ShowMessageBody();
         }
 
         public void ShowException()

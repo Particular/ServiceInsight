@@ -44,6 +44,5 @@ namespace Particular.ServiceInsight.Desktop.Shell
         void ImportMessage();
         void ExportMessage();
         void CreateMessage();
-        void OnSelectedTabbedViewChanged(object view);
     }
 }

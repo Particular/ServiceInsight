@@ -7,8 +7,8 @@
 
     public class JsonParser : BaseParser
     {
-        protected static char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
-        protected static char[] JsonQuotes = new[] { '"' };
+        protected static char[] JsonSymbol = { ':', '[', ']', ',', '{', '}' };
+        protected static char[] JsonQuotes = { '"' };
 
         protected bool IsInsideBlock;
 
@@ -20,7 +20,7 @@
             {
                 var length = text.Length;
 
-                TryExtract(list, ref text, ByteOrderMark);
+                TryExtract(ref text, ByteOrderMark);
                 TryExtract(list, ref text, "[", LexemType.Symbol);
                 TryExtract(list, ref text, "{", LexemType.Symbol);
 

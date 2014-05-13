@@ -100,7 +100,7 @@
                 var timeoutMessage = timeout.FindName("TimeoutMessage") as FrameworkElement;
                 var timeoutMessagePosition = timeoutMessage.TransformToAncestor(panel).Transform(new Point(0, 0));
 
-                AddTimeoutVerticalLine(timeout, panel, parent, ref lastPoint, ref timeoutPoint, i);
+                AddTimeoutVerticalLine(timeout, panel, parent, ref lastPoint, ref timeoutPoint);
                 AddLine(timeoutPoint, new Point(timeoutPoint.X, timeoutPoint.Y + 12), parent);
                 AddLine(new Point(timeoutPoint.X, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), parent);
                 AddLine(new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)), parent);
@@ -117,7 +117,9 @@
             }
         }
 
-        void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint, int i)
+// ReSharper disable RedundantAssignment
+        void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint)
+// ReSharper restore RedundantAssignment
         {
             var timeoutIcon = timeout.FindName("TimeoutIcon") as FrameworkElement;
             var timeoutIconPosition = timeoutIcon.TransformToAncestor(panel).Transform(new Point(0, 0));

@@ -148,11 +148,6 @@
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public void OnSelectedTabbedViewChanged(object view)
-        {
-            
-        }
-
         public bool WorkInProgress
         {
             get { return workCounter > 0; }

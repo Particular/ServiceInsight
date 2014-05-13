@@ -12,7 +12,9 @@ namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
                 {
                     return new DecoderResult<string>(Encoding.UTF8.GetString(content));
                 }
+// ReSharper disable EmptyGeneralCatchClause
                 catch
+// ReSharper restore EmptyGeneralCatchClause
                 {
                 }
             }

@@ -8,17 +8,14 @@
 
     public class BaseParser
     {
-        protected char[] SpaceChars = new[] {' ', '\t'};
+        protected char[] SpaceChars = {' ', '\t'};
         protected string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-
-        protected char previousSymbol;
 
         protected string CutString(ref SourcePart text, int count)
         {
             if (count == 0)
                 return string.Empty;
-            
-            previousSymbol = text[count - 1];
+
             var result = text.Substring(0, count);
             text = text.Substring(count);
             return result;
@@ -38,15 +35,12 @@
             }
         }
 
-        protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex)
+        protected void TryExtract(ref SourcePart text, string lex)
         {
             if (text.StartsWith(lex))
             {
                 CutString(ref text, lex.Length);
-                return true;
             }
-
-            return false;
         }
 
         protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
