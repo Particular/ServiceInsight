@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
 {
+    using System;
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
@@ -16,7 +17,11 @@
 
         public Application LaunchApplication()
         {
-            var app = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ApplicationProcess);
+            var codebase = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codebase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            var app = Path.Combine(Path.GetDirectoryName(path), ApplicationProcess);
+            
             var processStartInfo = new ProcessStartInfo
             {
                 FileName = app,
