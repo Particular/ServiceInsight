@@ -108,7 +108,6 @@
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />
-    <Compile Include="GuardTests.cs" />
     <Compile Include="HexViewerTests.cs" />
     <Compile Include="JsonParserTests.cs" />
     <Compile Include="JsonViewerTests.cs" />

@@ -281,7 +281,6 @@
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
-    <Compile Include="Guard.cs" />
     <Compile Include="LogWindow\LogWindowView.xaml.cs">
       <DependentUpon>LogWindowView.xaml</DependentUpon>
     </Compile>
@@ -380,7 +379,6 @@
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
     <Compile Include="Modules\CaliburnModule.cs" />
     <Compile Include="Modules\EventAggregationAutoSubscriptionModule.cs" />
-    <Compile Include="Modules\PluginModule.cs" />
     <Compile Include="Modules\SettingsModule.cs" />
     <Compile Include="Modules\SettingsSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
