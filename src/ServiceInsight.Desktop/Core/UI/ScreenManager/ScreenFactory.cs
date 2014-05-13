@@ -6,6 +6,10 @@
     {
         IContainer container;
 
+        //TODO: SIMON remove when empty constructor fixed
+        public ScreenFactory()
+        {
+        }
         public ScreenFactory(IContainer container)
         {
             this.container = container;

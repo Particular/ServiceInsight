@@ -29,6 +29,11 @@
         ProfilerSettings settings;
         ILog logger = LogManager.GetLogger(typeof(DefaultServiceControl));
 
+        //TODO: SIMON remove when empty constructor fixed
+        public DefaultServiceControl()
+        {
+        }
+
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 
             IEventAggregator eventAggregator,

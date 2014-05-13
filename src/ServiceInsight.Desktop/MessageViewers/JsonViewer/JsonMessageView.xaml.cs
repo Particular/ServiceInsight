@@ -3,7 +3,7 @@
     using System.Windows.Documents;
     using CodeParser;
 
-    public partial class JsonMessageView 
+    public partial class JsonMessageView : IJsonMessageView
     {
         public JsonMessageView()
         {
