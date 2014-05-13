@@ -42,7 +42,7 @@
     {
         ISearchBarViewModel searchBar;
         IMessageListViewModel messageList;
-        IScreenFactory screenFactory;
+        ScreenFactory screenFactory;
         IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IClipboard clipboard;
@@ -59,7 +59,7 @@
             IEventAggregator eventAggregator,
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
-            IScreenFactory screenFactory,
+            ScreenFactory screenFactory,
             ISearchBarViewModel searchBar, 
             IMessageListViewModel messageList,
             ISettingsProvider settingsProvider,

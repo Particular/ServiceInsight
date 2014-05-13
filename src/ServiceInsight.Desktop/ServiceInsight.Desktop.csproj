@@ -404,7 +404,6 @@
     <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
-    <Compile Include="Core\UI\ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />

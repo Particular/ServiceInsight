@@ -29,7 +29,7 @@
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
     {
         IAppCommands appCommander;
-        IScreenFactory screenFactory;
+        ScreenFactory screenFactory;
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
@@ -41,7 +41,7 @@
         
         public ShellViewModel(
             IAppCommands appCommander,
-            IScreenFactory screenFactory,
+            ScreenFactory screenFactory,
             IWindowManagerEx windowManager,
             IEndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,

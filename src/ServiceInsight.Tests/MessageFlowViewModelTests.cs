@@ -21,7 +21,7 @@
         IEventAggregator eventAggregator;
         IClipboard clipboard;
         IWindowManagerEx windowManager;
-        IScreenFactory screenFactory;
+        ScreenFactory screenFactory;
         ISearchBarViewModel searchBar;
         IMessageListViewModel messageList;
         ISettingsProvider settingProvider;
@@ -64,7 +64,7 @@
             eventAggregator = Substitute.For<IEventAggregator>();
             clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<IWindowManagerEx>();
-            screenFactory = Substitute.For<IScreenFactory>();
+            screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<ISearchBarViewModel>();
             messageList = Substitute.For<IMessageListViewModel>();
             settingProvider = Substitute.For<ISettingsProvider>();

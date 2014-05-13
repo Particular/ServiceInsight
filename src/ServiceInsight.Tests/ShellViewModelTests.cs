@@ -35,7 +35,7 @@
     public class ShellViewModelTests
     {
         ShellViewModel shell;
-        IScreenFactory ScreenFactory;
+        ScreenFactory ScreenFactory;
         IWindowManagerEx WindowManager;
         IEndpointExplorerViewModel EndpointExplorer;
         IMessageListViewModel MessageList;
@@ -56,7 +56,7 @@
         [SetUp]
         public void TestInitialize()
         {
-            ScreenFactory = Substitute.For<IScreenFactory>();
+            ScreenFactory = Substitute.For<ScreenFactory>();
             WindowManager = Substitute.For<IWindowManagerEx>();
             EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
             MessageList = Substitute.For<IMessageListViewModel>();

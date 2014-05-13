@@ -2,7 +2,7 @@
 {
     using Autofac;
 
-    public class ScreenFactory : IScreenFactory
+    public class ScreenFactory 
     {
         IContainer container;
 

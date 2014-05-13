@@ -22,7 +22,7 @@
 
     public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
     {
-        IScreenFactory screenFactory;
+        ScreenFactory screenFactory;
         bool allowResize;
 
         static IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
@@ -61,7 +61,8 @@
         public WindowManagerEx(
             IViewLocator viewLocator, 
             IViewModelBinder viewModelBinder,
-            IScreenFactory screenFactory) : base(viewLocator, viewModelBinder)
+            ScreenFactory screenFactory)
+            : base(viewLocator, viewModelBinder)
         {
             this.screenFactory = screenFactory;
         }

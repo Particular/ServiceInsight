@@ -38,7 +38,7 @@
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
-            builder.RegisterType<ScreenFactory>().As<IScreenFactory>().SingleInstance();
+            builder.RegisterType<ScreenFactory>().SingleInstance();
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
