@@ -77,7 +77,7 @@
                 MessageList.FocusedRow = new StoredMessage {BodyUrl = uri};
             });
 
-            ServiceControl.Received(1).GetBody(uri).IgnoreAwait();
+            ServiceControl.Received(1).GetBody(uri);
         }
 
         [Test]
@@ -88,7 +88,7 @@
 
             AsyncHelper.Run(() => MessageList.Handle(new BodyTabSelectionChanged(true)));
 
-            ServiceControl.Received(1).GetBody(uri).IgnoreAwait();
+            ServiceControl.Received(1).GetBody(uri);
         }
     }
 }

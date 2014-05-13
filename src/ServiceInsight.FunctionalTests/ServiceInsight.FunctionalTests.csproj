@@ -99,7 +99,6 @@
     <Compile Include="ProfilerTestBase.cs" />
     <Compile Include="Parts\MainMenu.cs" />
     <Compile Include="Parts\ProfilerElement.cs" />
-    <Compile Include="Parts\QueueCreationDialog.cs" />
     <Compile Include="Parts\ShellScreen.cs" />
     <Compile Include="ServiceControlStub\AsyncTask.cs" />
     <Compile Include="ServiceControlStub\Controllers\ControllerBase.cs" />

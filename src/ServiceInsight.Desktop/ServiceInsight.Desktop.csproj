@@ -253,7 +253,6 @@
     <Compile Include="Core\Settings\RegistrySettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailed.cs" />
-    <Compile Include="Events\ExecuteSearchResult.cs" />
     <Compile Include="Events\SelectedExplorerItemChanged.cs" />
     <Compile Include="Events\SelectedMessageChanged.cs" />
     <Compile Include="Events\WorkFinished.cs" />
