@@ -5,7 +5,6 @@
     using Events;
 
     public class StatusBarManager : PropertyChangedBase, 
-        IStatusBarManager, 
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>

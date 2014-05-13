@@ -25,7 +25,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
     {
         IEndpointExplorerViewModel EndpointExplorer { get; }
         IMessageListViewModel Messages { get; }
-        IStatusBarManager StatusBarManager { get; }
+        StatusBarManager StatusBarManager { get; }
         ILogWindowViewModel LogWindow { get; }
         ISagaWindowViewModel SagaWindow { get; }
         IMessageFlowViewModel MessageFlow { get; }

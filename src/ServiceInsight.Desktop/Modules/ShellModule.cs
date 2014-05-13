@@ -36,7 +36,7 @@
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
-            builder.RegisterType<StatusBarManager>().As<IStatusBarManager>().SingleInstance();
+            builder.RegisterType<StatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<ScreenFactory>().SingleInstance();
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();

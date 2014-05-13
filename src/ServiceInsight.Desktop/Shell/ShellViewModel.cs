@@ -45,7 +45,7 @@
             IWindowManagerEx windowManager,
             IEndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,
-            IStatusBarManager statusBarManager,
+            StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             IMessageFlowViewModel messageFlow,
@@ -142,7 +142,7 @@
 
         public ISagaWindowViewModel SagaWindow { get; private set; }
 
-        public IStatusBarManager StatusBarManager { get; private set; }
+        public StatusBarManager StatusBarManager { get; private set; }
 
         public ILogWindowViewModel LogWindow { get; private set; }
 

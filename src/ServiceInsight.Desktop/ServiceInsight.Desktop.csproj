@@ -399,7 +399,6 @@
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IShellViewModel.cs" />
-    <Compile Include="Shell\IStatusBarManager.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
     <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
