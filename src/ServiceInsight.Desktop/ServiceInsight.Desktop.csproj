@@ -412,7 +412,7 @@
     <Compile Include="Startup\AutofacAdapter.cs" />
     <Compile Include="Startup\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
-    <Compile Include="Startup\IEnvironment.cs" />
+    <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Startup\LoggingConfig.cs" />
     <Compile Include="MessageList\IMessageListViewModel.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
