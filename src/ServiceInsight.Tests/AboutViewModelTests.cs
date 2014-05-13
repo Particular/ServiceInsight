@@ -12,7 +12,7 @@
     [TestFixture]
     public class AboutViewModelTests
     {
-        INetworkOperations networkOperations;
+        NetworkOperations networkOperations;
         IServiceControl serviceControl;
         ILicenseRegistrationViewModel licenseRegistration;
         AboutViewModel sut;
@@ -20,7 +20,7 @@
         [SetUp]
         public void Initialize()
         {
-            networkOperations = Substitute.For<INetworkOperations>();
+            networkOperations = Substitute.For<NetworkOperations>();
             serviceControl = Substitute.For<IServiceControl>();
             licenseRegistration = Substitute.For<ILicenseRegistrationViewModel>();
 

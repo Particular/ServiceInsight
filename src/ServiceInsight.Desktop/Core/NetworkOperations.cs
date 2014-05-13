@@ -7,7 +7,7 @@
     using System.Security;
     using System.Threading.Tasks;
 
-    public class NetworkOperations : INetworkOperations
+    public class NetworkOperations 
     {
         public Task<IList<string>> GetMachines()
         {

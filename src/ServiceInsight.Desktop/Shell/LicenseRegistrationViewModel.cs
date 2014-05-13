@@ -11,12 +11,12 @@
     {
         AppLicenseManager licenseManager;
         IDialogManager dialogManager;
-        INetworkOperations network;
+        NetworkOperations network;
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
             IDialogManager dialogManager,
-            INetworkOperations network)
+            NetworkOperations network)
         {
             this.licenseManager = licenseManager;
             this.dialogManager = dialogManager;

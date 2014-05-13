@@ -235,7 +235,6 @@
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\CommandConnection.cs" />
     <Compile Include="MessageFlow\IMessageFlowView.cs" />
-    <Compile Include="Core\INetworkOperations.cs" />
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
     <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />

@@ -22,7 +22,7 @@
         IEventAggregator eventAggregator;
         ISettingsProvider settingsProvider;
         IServiceControl serviceControl;
-        INetworkOperations networkOperations;
+        NetworkOperations networkOperations;
         IServiceControlConnectionProvider connectionProvider;
         ICommandLineArgParser commandLineParser;
         bool isFirstActivation = true;
@@ -34,7 +34,7 @@
             IServiceControlConnectionProvider connectionProvider,
             ICommandLineArgParser commandLineParser,
             IServiceControl serviceControl,
-            INetworkOperations networkOperations)
+            NetworkOperations networkOperations)
         {
             this.eventAggregator = eventAggregator;
             this.settingsProvider = settingsProvider;
