@@ -2,9 +2,6 @@
 {
     using System.Windows.Input;
 
-    /// <summary>
-    /// Interaction logic for SearchBar.xaml
-    /// </summary>
     public partial class SearchBarView 
     {
         public SearchBarView()

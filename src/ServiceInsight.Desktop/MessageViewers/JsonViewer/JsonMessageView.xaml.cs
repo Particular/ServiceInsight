@@ -3,9 +3,6 @@
     using System.Windows.Documents;
     using CodeParser;
 
-    /// <summary>
-    /// Interaction logic for JsonMessageView.xaml
-    /// </summary>
     public partial class JsonMessageView : IJsonMessageView
     {
         public JsonMessageView()

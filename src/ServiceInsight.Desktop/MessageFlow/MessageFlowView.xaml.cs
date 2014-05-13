@@ -6,9 +6,6 @@
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Mindscape.WpfDiagramming.Foundation;
 
-    /// <summary>
-    /// Interaction logic for MessageFlowView.xaml
-    /// </summary>
     public partial class MessageFlowView : IMessageFlowView
     {
         public event EventHandler<SearchMessageEventArgs> ShowMessage;

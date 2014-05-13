@@ -3,9 +3,6 @@
     using System.Windows.Documents;
     using CodeParser;
 
-    /// <summary>
-    /// Interaction logic for XmlMessageView.xaml
-    /// </summary>
     public partial class XmlMessageView : IXmlMessageView
     {
         public XmlMessageView()

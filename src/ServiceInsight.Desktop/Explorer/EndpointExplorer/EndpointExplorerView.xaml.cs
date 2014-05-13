@@ -4,9 +4,6 @@
     using System.Windows.Input;
     using Events;
 
-    /// <summary>
-    /// Interaction logic for QueuesListView.xaml
-    /// </summary>
     public partial class EndpointExplorerView : IExplorerView
     {
         public EndpointExplorerView()

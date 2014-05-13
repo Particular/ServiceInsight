@@ -10,9 +10,6 @@
     using System.Windows.Media;
     using System.Windows.Shapes;
 
-    /// <summary>
-    /// Interaction logic for SagaWindowView.xaml
-    /// </summary>
     public partial class SagaWindowView : ISagaWindowView
     {
         public SagaWindowView()

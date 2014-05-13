@@ -2,9 +2,6 @@
 {
     using System.Windows;
 
-    /// <summary>
-    /// Interaction logic for ServiceControlConnectionView.xaml
-    /// </summary>
     public partial class ServiceControlConnectionView
     {
         public ServiceControlConnectionView()

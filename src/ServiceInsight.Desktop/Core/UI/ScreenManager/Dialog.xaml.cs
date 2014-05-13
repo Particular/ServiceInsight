@@ -2,9 +2,6 @@
 {
     using System.Windows;
 
-    /// <summary>
-    /// Interaction logic for Dialog.xaml
-    /// </summary>
     public partial class Dialog
     {
         public static DependencyProperty IsModalProperty;

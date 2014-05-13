@@ -2,9 +2,6 @@
 {
     using System.Windows;
 
-    /// <summary>
-    /// Interaction logic for About.xaml
-    /// </summary>
     public partial class AboutView
     {
         public AboutView()

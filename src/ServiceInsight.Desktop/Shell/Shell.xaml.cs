@@ -13,9 +13,6 @@
     using log4net;
     using Settings;
 
-    /// <summary>
-    /// Interaction logic for Shell.xaml
-    /// </summary>
     public partial class ShellView : IShellView
     {
         ILog logger = LogManager.GetLogger(typeof (IShellView));

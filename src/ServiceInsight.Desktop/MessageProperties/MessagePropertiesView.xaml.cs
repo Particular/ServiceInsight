@@ -3,9 +3,6 @@
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.PropertyGrid;
 
-    /// <summary>
-    /// Interaction logic for MessagePropertiesView.xaml
-    /// </summary>
     public partial class MessagePropertiesView : IMessagePropertiesView
     {
         public MessagePropertiesView()

@@ -5,9 +5,6 @@
     using Core.Settings;
     using Shell;
 
-    /// <summary>
-    /// Interaction logic for ExceptionDetailView.xaml
-    /// </summary>
     public partial class ExceptionDetailView : IPersistableLayout
     {
         public ExceptionDetailView()
