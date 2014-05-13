@@ -4,7 +4,6 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Threading;
-    using System.Threading.Tasks;
 
     public class AsyncHelper
     {
@@ -24,59 +23,6 @@
                 syncCtx.OperationCompleted();
 
                 syncCtx.RunOnCurrentThread();
-            }
-            finally
-            {
-                SynchronizationContext.SetSynchronizationContext(previousContext);
-            }
-        }
-
-        public static void Run(Func<Task> asyncMethod)
-        {
-            if (asyncMethod == null) 
-                throw new ArgumentNullException("asyncMethod");
-
-            var previousContext = SynchronizationContext.Current;
-            try
-            {
-                var syncCtx = new SingleThreadSynchronizationContext(false);
-                SynchronizationContext.SetSynchronizationContext(syncCtx);
-
-                var t = asyncMethod();
-
-                if (t == null)
-                    throw new InvalidOperationException("No task provided.");
-
-                t.ContinueWith(delegate { syncCtx.Complete(); }, TaskScheduler.Default);
-
-                syncCtx.RunOnCurrentThread();
-                t.GetAwaiter().GetResult();
-            }
-            finally
-            {
-                SynchronizationContext.SetSynchronizationContext(previousContext);
-            }
-        }
-
-        public static T Run<T>(Func<Task<T>> asyncMethod)
-        {
-            if (asyncMethod == null) 
-                throw new ArgumentNullException("asyncMethod");
-
-            var previousContext = SynchronizationContext.Current;
-            try
-            {
-                var syncCtx = new SingleThreadSynchronizationContext(false);
-                SynchronizationContext.SetSynchronizationContext(syncCtx);
-
-                var t = asyncMethod();
-                if (t == null)
-                    throw new InvalidOperationException("No task provided.");
-
-                t.ContinueWith(delegate { syncCtx.Complete(); }, TaskScheduler.Default);
-
-                syncCtx.RunOnCurrentThread();
-                return t.GetAwaiter().GetResult();
             }
             finally
             {
