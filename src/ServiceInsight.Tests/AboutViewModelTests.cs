@@ -13,7 +13,7 @@
     public class AboutViewModelTests
     {
         NetworkOperations networkOperations;
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
         ILicenseRegistrationViewModel licenseRegistration;
         AboutViewModel sut;
 
@@ -21,7 +21,7 @@
         public void Initialize()
         {
             networkOperations = Substitute.For<NetworkOperations>();
-            serviceControl = Substitute.For<IServiceControl>();
+            serviceControl = Substitute.For<DefaultServiceControl>();
             licenseRegistration = Substitute.For<ILicenseRegistrationViewModel>();
 
             sut = new AboutViewModel(networkOperations, serviceControl, licenseRegistration);

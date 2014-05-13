@@ -16,7 +16,7 @@
     using Saga;
     using Settings;
 
-    public class DefaultServiceControl : IServiceControl
+    public class DefaultServiceControl
     {
         public class ServiceControlHeaders
         {
@@ -27,7 +27,7 @@
         IServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
-        ILog logger = LogManager.GetLogger(typeof(IServiceControl));
+        ILog logger = LogManager.GetLogger(typeof(DefaultServiceControl));
 
         public DefaultServiceControl(
             IServiceControlConnectionProvider connection, 

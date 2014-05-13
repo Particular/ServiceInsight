@@ -23,7 +23,7 @@
     public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
     {
         IEventAggregator eventAggregator;
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
         IGeneralHeaderViewModel generalHeaderDisplay;
         IClipboard clipboard;
         IMenuItem retryMessageMenu;
@@ -37,7 +37,7 @@
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
-            IServiceControl serviceControl,
+            DefaultServiceControl serviceControl,
             ISearchBarViewModel searchBarViewModel,
             IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)

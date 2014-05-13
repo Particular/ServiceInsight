@@ -20,7 +20,7 @@
     public class MessageListViewModelTests
     {
         IEventAggregator EventAggregator;
-        IServiceControl ServiceControl;
+        DefaultServiceControl ServiceControl;
         ISearchBarViewModel SearchBar;
         MessageListViewModel MessageList;
         IMessageListView View;
@@ -29,7 +29,7 @@
         public void TestInitialize()
         {
             EventAggregator = Substitute.For<IEventAggregator>();
-            ServiceControl = Substitute.For<IServiceControl>();
+            ServiceControl = Substitute.For<DefaultServiceControl>();
             SearchBar = Substitute.For<ISearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, 

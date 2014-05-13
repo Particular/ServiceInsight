@@ -283,7 +283,6 @@
     <Compile Include="LogWindow\LogWindowViewModel.cs" />
     <Compile Include="LogWindow\RichTextBoxAppender.cs" />
     <Compile Include="ServiceControl\DefaultServiceControl.cs" />
-    <Compile Include="ServiceControl\IServiceControl.cs" />
     <Compile Include="ServiceControl\IServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
     <Compile Include="MessageFlow\MessageNode.cs" />

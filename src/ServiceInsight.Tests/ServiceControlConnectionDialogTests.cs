@@ -14,7 +14,7 @@
     [TestFixture]
     public class ServiceControlConnectionDialogTests
     {
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
         IShellViewModel shell;
         ISettingsProvider settingsProvider;
         IContainer container;
@@ -26,7 +26,7 @@
         public void TestInitialize()
         {
             shell = Substitute.For<IShellViewModel>();
-            serviceControl = Substitute.For<IServiceControl>();
+            serviceControl = Substitute.For<DefaultServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
             connection = Substitute.For<IServiceControlConnectionProvider>();
             container = RegisterContainer();

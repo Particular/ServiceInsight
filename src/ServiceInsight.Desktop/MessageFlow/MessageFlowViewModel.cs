@@ -43,7 +43,7 @@
         ISearchBarViewModel searchBar;
         IMessageListViewModel messageList;
         ScreenFactory screenFactory;
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IClipboard clipboard;
         IWindowManagerEx windowManager;
@@ -55,7 +55,7 @@
         IEndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
-            IServiceControl serviceControl,
+            DefaultServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IClipboard clipboard, 
             IWindowManagerEx windowManager,

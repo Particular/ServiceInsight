@@ -1,14 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Media;
-    using DevExpress.Xpf.Editors.Helpers;
     using log4net.Appender;
     using log4net.Core;
     using log4net.Filter;
@@ -33,16 +31,8 @@
 
         void CreateFilters()
         {
-            LoggerMatchingTypes.ForEach(type => AddFilter(new LoggerMatchFilter {AcceptOnMatch = true, LoggerToMatch = type.FullName }));
+            AddFilter(new LoggerMatchFilter { AcceptOnMatch = true, LoggerToMatch = typeof(DefaultServiceControl).FullName });
             AddFilter(new DenyAllFilter());
-        }
-
-        IEnumerable<Type> LoggerMatchingTypes
-        {
-            get
-            {
-                yield return typeof (IServiceControl);
-            }
         }
 
         ILayout CreateLogLayout()

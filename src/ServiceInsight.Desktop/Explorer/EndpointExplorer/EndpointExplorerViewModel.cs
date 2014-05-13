@@ -21,7 +21,7 @@
     {
         IEventAggregator eventAggregator;
         ISettingsProvider settingsProvider;
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
         NetworkOperations networkOperations;
         IServiceControlConnectionProvider connectionProvider;
         ICommandLineArgParser commandLineParser;
@@ -33,7 +33,7 @@
             ISettingsProvider settingsProvider,
             IServiceControlConnectionProvider connectionProvider,
             ICommandLineArgParser commandLineParser,
-            IServiceControl serviceControl,
+            DefaultServiceControl serviceControl,
             NetworkOperations networkOperations)
         {
             this.eventAggregator = eventAggregator;

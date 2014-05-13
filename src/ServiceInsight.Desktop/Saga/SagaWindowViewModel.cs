@@ -13,9 +13,9 @@
     public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
     {
         IEventAggregator eventAggregator;
-        IServiceControl serviceControl;
+        DefaultServiceControl serviceControl;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
+        public SagaWindowViewModel(IEventAggregator eventAggregator, DefaultServiceControl serviceControl)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;

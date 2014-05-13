@@ -121,7 +121,7 @@
 
         public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
 
-        internal async Task RefreshData(IServiceControl serviceControl)
+        internal async Task RefreshData(DefaultServiceControl serviceControl)
         {
             //TODO: Consider moving this into ServiceControl e.g. GetSageMessageBody or something, models should be just about data
             if (Data != null) return;
