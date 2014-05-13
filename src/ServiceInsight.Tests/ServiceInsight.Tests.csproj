@@ -106,9 +106,6 @@
     <Compile Include="CommandLineArgParserTests.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
-    <Compile Include="Helpers\NSubstituteTestHelper.cs" />
-    <Compile Include="Helpers\TestConductorScreen.cs" />
-    <Compile Include="Helpers\TestExtensions.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />
     <Compile Include="GuardTests.cs" />
