@@ -166,7 +166,7 @@
         {
             eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             await serviceControl.RetryMessage(message.Id);
-            eventAggregator.Publish(new MessageStatusChanged(message.MessageId, MessageStatus.RetryIssued));
+            eventAggregator.Publish(new RetryMessage{MessageId = message.MessageId});
             eventAggregator.Publish(new WorkFinished());
         }
 

@@ -196,7 +196,7 @@
     <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\BodyTabSelectionChanged.cs" />
-    <Compile Include="Events\MessageStatusChanged.cs" />
+    <Compile Include="Events\RetryMessage.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\RequestSelectingEndpoint.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />

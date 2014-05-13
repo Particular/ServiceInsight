@@ -18,7 +18,7 @@ namespace Particular.ServiceInsight.Desktop.MessageList
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
-        IHandle<MessageStatusChanged>,
+        IHandle<RetryMessage>,
         IHandle<BodyTabSelectionChanged>
     {
         ISearchBarViewModel SearchBar { get; }

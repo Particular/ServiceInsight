@@ -268,7 +268,7 @@
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
-        public void Handle(MessageStatusChanged message)
+        public void Handle(RetryMessage message)
         {
             var msg = Rows.FirstOrDefault(x => x.MessageId == message.MessageId);
             if (msg != null)
