@@ -3,26 +3,28 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     public class SagaData : PropertyChangedBase
     {
         public static SagaData Empty = new SagaData();
 
         public List<SagaUpdate> Changes { get; set; }
+
         public Guid SagaId { get; set; }
 
         string sagaType;
+
         public string SagaType
-        { 
-            get 
+        {
+            get
             {
                 return ProcessType(sagaType);
-            } 
-            set 
+            }
+            set
             {
                 sagaType = value;
-            } 
+            }
         }
 
         string ProcessType(string messageType)

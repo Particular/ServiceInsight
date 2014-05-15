@@ -2,15 +2,14 @@
 {
     using System.Text;
     using System.Xml;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using Events;
     using ExceptionHandler;
     using ExtensionMethods;
     using Models;
 
-    public class XmlMessageViewModel : Screen, 
+    public class XmlMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
         IContentDecoder<XmlDocument> xmlDecoder;
@@ -42,7 +41,7 @@
 
         public void OnSelectedMessageChanged()
         {
-            if(messageView == null) return;
+            if (messageView == null) return;
 
             messageView.Clear();
             ShowMessageBody();

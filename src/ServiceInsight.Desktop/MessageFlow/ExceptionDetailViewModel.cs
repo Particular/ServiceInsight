@@ -1,6 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.Settings;
     using Models;
     using Shell;
@@ -8,11 +8,12 @@
     class ExceptionDetailViewModel : Screen
     {
         ISettingsProvider settingsProvider;
+
         public virtual IPersistableLayout View { get; private set; }
 
         public ExceptionDetails Exception { get; set; }
 
-        public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
+        public ExceptionDetailViewModel(ISettingsProvider settingsProvider)
         {
             this.settingsProvider = settingsProvider;
             DisplayName = "Exception Details";
@@ -59,5 +60,4 @@
             }
         }
     }
-
 }

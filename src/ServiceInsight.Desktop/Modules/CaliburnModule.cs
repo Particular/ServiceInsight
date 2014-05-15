@@ -1,8 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
     using Autofac;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Invocation;
+    using Caliburn.Micro;
     using Core.UI.ScreenManager;
 
     public class CaliburnModule : Module

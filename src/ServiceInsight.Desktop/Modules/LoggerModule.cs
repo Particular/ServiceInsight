@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Modules
 {
     using Autofac;
-    using Caliburn.Core.Logging;
+    using Caliburn.Micro;
     using Logging;
 
     public class LoggerModule : Module

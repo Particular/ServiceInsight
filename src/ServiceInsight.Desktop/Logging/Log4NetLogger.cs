@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Logging
 {
     using System;
-    using Caliburn.Core.Logging;
+    using Caliburn.Micro;
 
     public class Log4NetLogger : ILog
     {

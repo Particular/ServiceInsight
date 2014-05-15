@@ -3,7 +3,6 @@
     using System.Collections;
     using System.Windows;
     using System.Windows.Controls;
-    using Caliburn.PresentationFramework;
 
     public class OptionTemplateSelector : DataTemplateSelector
     {
@@ -13,10 +12,10 @@
             if (option == null)
                 return base.SelectTemplate(item, container);
 
-            if(option.PropertyType == typeof(bool))
+            if (option.PropertyType == typeof(bool))
                 return container.GetResource<DataTemplate>("CheckBoxTemplate");
 
-            if (typeof (IList).IsAssignableFrom(option.PropertyType))
+            if (typeof(IList).IsAssignableFrom(option.PropertyType))
                 return container.GetResource<DataTemplate>("ListTemplate");
 
             return container.GetResource<DataTemplate>("TextBoxTemplate");

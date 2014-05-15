@@ -1,10 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     public interface ITableViewModel<T>
     {
-        IObservableCollection<T> Rows { get; } 
+        IObservableCollection<T> Rows { get; }
+
         T FocusedRow { get; set; }
     }
 }

@@ -3,9 +3,6 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.ViewModels;
-    using Caliburn.PresentationFramework.Views;
     using Application = System.Windows.Application;
 
     public class WindowManagerEx : DefaultWindowManager
@@ -46,11 +43,12 @@
             };
         }
 
-        public WindowManagerEx() : base(null,null)
+        public WindowManagerEx()
+            : base(null, null)
         { }
 
         public WindowManagerEx(
-            IViewLocator viewLocator, 
+            IViewLocator viewLocator,
             IViewModelBinder viewModelBinder,
             ScreenFactory screenFactory)
             : base(viewLocator, viewModelBinder)
@@ -60,7 +58,7 @@
 
         public FileDialogResult OpenFileDialog(FileDialogModel model)
         {
-            using(var dialog = new OpenFileDialog())
+            using (var dialog = new OpenFileDialog())
             {
                 dialog.CheckFileExists = model.CheckFileExists;
                 dialog.CheckPathExists = model.CheckPathExists;
@@ -69,10 +67,10 @@
                 dialog.FilterIndex = model.FilterIndex;
                 dialog.Multiselect = model.Multiselect;
                 dialog.Title = model.Title;
-                
+
                 var dialogResult = dialog.ShowDialog();
                 var result = new FileDialogResult(DialogResultMaps[dialogResult], dialog.FileNames);
-                
+
                 return result;
             }
         }
@@ -93,7 +91,7 @@
         public bool? ShowDialog<T>() where T : class
         {
             allowResize = false;
-            
+
             var screen = screenFactory.CreateScreen<T>();
             return base.ShowDialog(screen, null);
         }

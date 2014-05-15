@@ -9,9 +9,7 @@
     using Autofac.Core;
     using Autofac.Core.Activators.ProvidedInstance;
     using Autofac.Core.Registration;
-    using Caliburn.Core;
-    using Caliburn.Core.Behaviors;
-    using Caliburn.Core.InversionOfControl;
+    using Caliburn.Micro;
     using IContainer = Autofac.IContainer;
 
     /// <summary>
@@ -136,7 +134,7 @@
 
                     if (registration != null)
                     {
-                        var instance = factory.CreateProxy(implementation, 
+                        var instance = factory.CreateProxy(implementation,
                                                            implementation.GetAttributes<IBehavior>(true).ToArray(),
                                                            DetermineConstructorArgs(implementation));
 

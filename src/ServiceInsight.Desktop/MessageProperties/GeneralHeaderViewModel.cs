@@ -3,18 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using MessageFlow;
     using Models;
 
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
-
         IContentDecoder<IList<HeaderInfo>> decoder;
 
         public GeneralHeaderViewModel(
-            IEventAggregator eventAggregator, 
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder)
             : base(eventAggregator, decoder)
         {
@@ -76,6 +75,5 @@
             MessageId = null;
             HeaderContent = null;
         }
-
     }
 }

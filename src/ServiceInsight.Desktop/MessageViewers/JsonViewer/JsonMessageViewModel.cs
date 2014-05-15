@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Events;
     using Models;
 

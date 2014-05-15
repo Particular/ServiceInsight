@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     [Serializable]
     public class MessageInfo : PropertyChangedBase

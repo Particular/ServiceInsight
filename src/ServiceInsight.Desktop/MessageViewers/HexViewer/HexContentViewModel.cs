@@ -2,13 +2,11 @@
 {
     using System;
     using System.Text;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Events;
     using ExtensionMethods;
 
-    public class HexContentViewModel : Screen, 
+    public class HexContentViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
         internal static Func<byte, string> ByteToStringConverter;
@@ -31,13 +29,14 @@
 
         public IObservableCollection<HexPart> HexParts
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public override void AttachView(object view, object context)
         {
             base.AttachView(view, context);
-            this.view = (IHexContentView) view;
+            this.view = (IHexContentView)view;
             OnSelectedMessageChanged();
         }
 
@@ -61,7 +60,7 @@
 
         public void OnSelectedMessageChanged()
         {
-            if (view == null || SelectedMessage == null) 
+            if (view == null || SelectedMessage == null)
                 return;
 
             DisplayMessage();
@@ -86,7 +85,7 @@
 
             foreach (var currentByte in SelectedMessage)
             {
-                if(!HexParts.Contains(hexLine))
+                if (!HexParts.Contains(hexLine))
                     HexParts.Add(hexLine);
 
                 var hexChar = new HexNumber();

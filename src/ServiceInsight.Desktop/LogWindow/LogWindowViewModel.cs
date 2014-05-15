@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.UI;
     using Shell.Menu;
 
@@ -41,5 +40,4 @@
             view.Copy();
         }
     }
-
 }

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using ExtensionMethods;
     using Models;
@@ -11,8 +11,8 @@
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public PerformanceHeaderViewModel(
-            IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder) 
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder)
             : base(eventAggregator, decoder)
         {
             DisplayName = "Performance";

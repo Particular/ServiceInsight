@@ -1,10 +1,9 @@
 namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Events;
 
-    public interface IHeaderInfoViewModel : 
+    public interface IHeaderInfoViewModel :
         IScreen,
         IHandle<SelectedMessageChanged>
     {

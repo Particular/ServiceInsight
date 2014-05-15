@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Input;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
 
     public class DialogViewModel : Screen
     {
@@ -93,42 +93,50 @@
 
         public virtual ICollection<ICommand> Choices
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string Content
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool DontAskAgain
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool EnableDontAskAgain
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string HelpMessage
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual MessageIcon Icon
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual MessageChoice Result
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string Title
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool ShowIcon

@@ -3,10 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
-    using Caliburn.PresentationFramework.Views;
+    using Caliburn.Micro;
     using Core;
     using Core.Settings;
     using Events;
@@ -31,7 +28,7 @@
         IExplorerView view;
 
         public EndpointExplorerViewModel(
-            IEventAggregator eventAggregator, 
+            IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider,
             ServiceControlConnectionProvider connectionProvider,
             CommandLineArgParser commandLineParser,
@@ -51,9 +48,9 @@
 
         public ServiceControlExplorerItem ServiceControlRoot
         {
-            get 
-            { 
-                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); 
+            get
+            {
+                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
             }
         }
 
@@ -112,7 +109,7 @@
             eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
-            
+
             SelectDefaultEndpoint();
 
             eventAggregator.Publish(new WorkFinished());
@@ -177,7 +174,7 @@
 
         public async Task ConnectToService(string url)
         {
-            if(url == null)
+            if (url == null)
                 return;
 
             connectionProvider.ConnectTo(url);

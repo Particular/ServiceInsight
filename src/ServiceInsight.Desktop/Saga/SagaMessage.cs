@@ -6,14 +6,16 @@
     using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Linq;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
     using Models;
     using ServiceControl;
 
     public class SagaMessage : PropertyChangedBase
     {
         public Guid MessageId { get; set; }
+
         public bool IsPublished { get; set; }
+
         public virtual bool IsTimeout
         {
             get
@@ -25,8 +27,9 @@
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
         string messageType;
-        public string MessageType 
-        { 
+
+        public string MessageType
+        {
             get
             {
                 return ProcessType();
@@ -52,23 +55,26 @@
         }
 
         public DateTime TimeSent { get; set; }
+
         public string ReceivingEndpoint { get; set; }
+
         public string OriginatingEndpoint { get; set; }
 
         MessageStatus status;
+
         public MessageStatus Status
         {
             get
             {
                 return status == 0 ? MessageStatus.Successful : status;
             }
-            set 
+            set
             {
                 status = value;
             }
         }
 
-        List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> { 
+        List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> {
             new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
@@ -106,6 +112,7 @@
         }
 
         bool showData;
+
         public bool ShowData
         {
             get

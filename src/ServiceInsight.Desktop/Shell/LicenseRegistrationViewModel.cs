@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
     using System.IO;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core;
     using Core.Licensing;
     using Core.UI.ScreenManager;
@@ -33,7 +33,6 @@
         {
             var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense);
 
-
             if (licenseManager.CurrentLicense.IsCommercialLicense)
             {
                 if (expired)
@@ -57,7 +56,6 @@
             }
         }
 
-
         public string LicenseType
         {
             get { return licenseManager.CurrentLicense.LicenseType; }
@@ -77,7 +75,6 @@
         {
             get { return licenseManager.CurrentLicense.IsTrialLicense; }
         }
-
 
         public bool HasFullLicense
         {
@@ -133,6 +130,7 @@
                 return HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
             }
         }
+
         public void OnLicenseChanged()
         {
             NotifyOfPropertyChange(() => LicenseType);
@@ -185,7 +183,6 @@
             network.Browse("http://particular.net/extend-your-trial-45");
         }
 
-
         string ReadAllTextWithoutLocking(string path)
         {
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -195,5 +192,4 @@
             }
         }
     }
-
 }

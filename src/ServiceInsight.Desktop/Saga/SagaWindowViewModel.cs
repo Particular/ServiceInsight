@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Events;
     using Models;
     using ServiceControl;
@@ -149,15 +148,17 @@
         public bool ShowSagaNotFoundWarning { get; set; }
 
         public bool HasSaga { get { return Data != null; } }
+
         public SagaData Data { get; private set; }
+
         public bool ShowEndpoints { get; set; }
+
         public bool ShowMessageData { get; set; }
 
         public void ShowFlow()
         {
             eventAggregator.Publish(new SwitchToFlowWindow());
         }
-
 
         public async Task RefreshSaga()
         {

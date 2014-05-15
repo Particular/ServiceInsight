@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Filters;
-    using Caliburn.PresentationFramework.Screens;
+    using System.Linq;
+    using Caliburn.Micro;
     using Core.Settings;
     using Events;
     using Explorer;
@@ -16,7 +14,6 @@
     using Settings;
     using Shell;
     using Startup;
-	using System.Linq;
 
     public class SearchBarViewModel : Screen,
         IHandle<SelectedExplorerItemChanged>,
@@ -70,10 +67,10 @@
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
 
-            if(performSearch) Search();
+            if (performSearch) Search();
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public async void Search()
         {
             SearchInProgress = true;
@@ -81,7 +78,7 @@
             await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public async void CancelSearch()
         {
             SearchQuery = null;
@@ -120,7 +117,7 @@
         {
             get { return base.Parent as MessageListViewModel; }
         }
-        
+
         public int PageCount
         {
             get
@@ -192,13 +189,13 @@
         public IObservableCollection<string> RecentSearchQueries { get; private set; }
 
         public int CurrentPage { get; private set; }
-        
+
         public int PageSize { get; private set; }
-        
+
         public int TotalItemCount { get; private set; }
-        
+
         public bool SearchInProgress { get; private set; }
-        
+
         public bool SearchEnabled { get; private set; }
 
         public bool CanSearch
@@ -245,7 +242,7 @@
             var endpointNode = @event.SelectedExplorerItem.As<EndpointExplorerItem>();
             if (endpointNode != null)
             {
-                SelectedEndpoint = endpointNode.Endpoint;                
+                SelectedEndpoint = endpointNode.Endpoint;
             }
 
             var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();

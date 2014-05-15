@@ -5,16 +5,17 @@
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using Core.Settings;
     using Events;
-    using log4net;
     using Models;
     using RestSharp;
     using RestSharp.Contrib;
     using Saga;
     using Settings;
+    using L4NILog = log4net.ILog;
+    using L4NLogManager = log4net.LogManager;
 
     public class DefaultServiceControl
     {
@@ -27,10 +28,10 @@
         ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
-        ILog logger = LogManager.GetLogger(typeof(DefaultServiceControl));
+        L4NILog logger = L4NLogManager.GetLogger(typeof(DefaultServiceControl));
 
         public DefaultServiceControl(
-            ServiceControlConnectionProvider connection, 
+            ServiceControlConnectionProvider connection,
             IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
@@ -39,11 +40,10 @@
             settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
-
         public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl());
-            
+
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
@@ -147,7 +147,7 @@
 
         void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
-            if(orderBy == null) return;
+            if (orderBy == null) return;
             request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
             request.AddParameter("direction", GetSortDirection(ascending), ParameterType.GetOrPost);
         }
@@ -159,7 +159,7 @@
 
         void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
-            if(searchQuery == null) return;
+            if (searchQuery == null) return;
             request.Resource += string.Format("search/{0}", Encode(searchQuery));
         }
 
@@ -255,7 +255,7 @@
                 }
             }
 
-            return true; 
+            return true;
         }
 
         Task<T> GetModelAsync<T>(IRestRequest request)
@@ -274,9 +274,9 @@
             LogRequest(request);
 
             var completionSource = new TaskCompletionSource<T>();
-            
+
             client.ExecuteAsync(request, response => ProcessResponse(selector, response, completionSource));
-            
+
             return completionSource.Task;
         }
 
@@ -338,11 +338,11 @@
             var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
 
             logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
-            
+
             foreach (var parameter in request.Parameters)
             {
-                logger.DebugFormat("Request Parameter: {0} : {1}", 
-                                                       parameter.Name, 
+                logger.DebugFormat("Request Parameter: {0} : {1}",
+                                                       parameter.Name,
                                                        parameter.Value);
             }
         }
@@ -356,8 +356,8 @@
 
             foreach (var header in response.Headers)
             {
-                logger.DebugFormat("Response Header: {0} : {1}", 
-                                                     header.Name, 
+                logger.DebugFormat("Response Header: {0} : {1}",
+                                                     header.Name,
                                                      header.Value);
             }
         }
@@ -366,7 +366,7 @@
         {
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
-            
+
             RaiseAsyncOperationFailed(errorMessage);
             logger.ErrorFormat(errorMessage, exception);
         }

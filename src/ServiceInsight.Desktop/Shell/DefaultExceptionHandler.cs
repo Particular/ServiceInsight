@@ -2,8 +2,7 @@
 {
     using System;
     using System.Windows;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.ViewModels;
+    using Caliburn.Micro;
     using Core.UI.ScreenManager;
     using Events;
     using ExceptionHandler;
@@ -16,10 +15,10 @@
         ShellViewModel shell;
 
         public DefaultExceptionHandler(
-            WindowManagerEx windowManager, 
+            WindowManagerEx windowManager,
             IViewModelFactory screenFactory,
             IEventAggregator eventAggregator,
-            ShellViewModel shell) 
+            ShellViewModel shell)
             : base(screenFactory.Create<IExceptionViewModel>())
         {
             this.windowManager = windowManager;
@@ -33,7 +32,7 @@
 
             StopAsyncProgress(rootError);
 
-            if(IsSoftError(rootError))
+            if (IsSoftError(rootError))
             {
                 ShowWarning(rootError);
             }

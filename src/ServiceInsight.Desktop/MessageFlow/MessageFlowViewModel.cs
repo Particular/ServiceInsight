@@ -5,8 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.Settings;
     using Core.UI.ScreenManager;
     using Events;
@@ -19,7 +18,7 @@
     using ServiceControl;
     using Settings;
 
-    public class MessageFlowViewModel : Screen, 
+    public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
         SearchBarViewModel searchBar;
@@ -63,17 +62,20 @@
 
         public MessageFlowDiagram Diagram
         {
-            get; set;
+            get;
+            set;
         }
 
         public bool ShowEndpoints
         {
-            get; set;
+            get;
+            set;
         }
 
         public MessageNode SelectedMessage
         {
-            get; set;
+            get;
+            set;
         }
 
         public override void AttachView(object view, object context)
@@ -92,7 +94,7 @@
         {
             base.OnActivate();
             var settings = settingsProvider.GetSettings<ProfilerSettings>();
-            
+
             ShowEndpoints = settings.ShowEndpoints;
         }
 
@@ -143,7 +145,7 @@
         {
             eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             await serviceControl.RetryMessage(message.Id);
-            eventAggregator.Publish(new RetryMessage{MessageId = message.MessageId});
+            eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
             eventAggregator.Publish(new WorkFinished());
         }
 
@@ -157,7 +159,7 @@
 
             SelectedMessage = null;
             Diagram = new MessageFlowDiagram();
-        
+
             var storedMessage = @event.Message;
             if (storedMessage == null)
             {
@@ -207,7 +209,7 @@
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                if(view != null) view.UpdateNode(node);
+                if (view != null) view.UpdateNode(node);
             }
 
             if (view != null)
@@ -239,9 +241,9 @@
                     continue;
                 }
 
-                var parentMessage = nodeMap.Values.SingleOrDefault(m => 
+                var parentMessage = nodeMap.Values.SingleOrDefault(m =>
                     m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
-                    m.Message.MessageId == msg.Message.RelatedToMessageId && 
+                    m.Message.MessageId == msg.Message.RelatedToMessageId &&
                     m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
 
                 if (parentMessage == null)
@@ -255,7 +257,7 @@
         {
             var fromPoint = new DiagramConnectionPoint(parentNode, Edge.Bottom);
             var toPoint = new DiagramConnectionPoint(childNode, Edge.Top);
-            
+
             parentNode.ConnectionPoints.Add(fromPoint);
             childNode.ConnectionPoints.Add(toPoint);
 

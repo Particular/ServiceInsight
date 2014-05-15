@@ -1,10 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Events;
 
-    public class StatusBarManager : PropertyChangedBase, 
+    public class StatusBarManager : PropertyChangedBase,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>

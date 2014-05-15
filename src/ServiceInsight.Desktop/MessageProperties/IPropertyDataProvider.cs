@@ -1,9 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
 
     public interface IPropertyDataProvider : IScreen
     {
-         
     }
 }

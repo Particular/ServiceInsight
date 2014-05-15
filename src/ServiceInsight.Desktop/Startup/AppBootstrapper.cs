@@ -7,9 +7,7 @@
     using System.Windows.Markup;
     using System.Windows.Threading;
     using Autofac;
-    using Caliburn.Core.InversionOfControl;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Conventions;
+    using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
     using ExceptionHandler;
     using Shell;
@@ -18,7 +16,7 @@
     public class AppBootstrapper : Bootstrapper<ShellViewModel>
     {
         IContainer container;
-        
+
         protected override void PrepareApplication()
         {
             base.PrepareApplication();
