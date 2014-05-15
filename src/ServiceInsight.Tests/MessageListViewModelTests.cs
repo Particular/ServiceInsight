@@ -34,8 +34,8 @@
             View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, 
                                                    ServiceControl, 
-                                                   SearchBar, 
-                                                   Substitute.For<IGeneralHeaderViewModel>(), 
+                                                   SearchBar,
+                                                   Substitute.For<GeneralHeaderViewModel>(), 
                                                    Substitute.For<IClipboard>());
             MessageList.AttachView(View, null);
         }

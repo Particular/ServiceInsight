@@ -33,7 +33,7 @@
     {
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
-        IGeneralHeaderViewModel generalHeaderDisplay;
+        GeneralHeaderViewModel generalHeaderDisplay;
         IClipboard clipboard;
         IMenuItem retryMessageMenu;
         IMenuItem copyMessageIdMenu;
@@ -48,7 +48,7 @@
             IEventAggregator eventAggregator,
             DefaultServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
-            IGeneralHeaderViewModel generalHeaderDisplay,
+            GeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
             this.eventAggregator = eventAggregator;

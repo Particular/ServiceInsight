@@ -10,7 +10,7 @@
 
         public MessagePropertiesViewModel(
             ErrorHeaderViewModel error,
-            IGeneralHeaderViewModel general,
+            GeneralHeaderViewModel general,
             SagaHeaderViewModel saga,
             PerformanceHeaderViewModel performance,
             GatewayHeaderViewModel gateway,
@@ -25,7 +25,7 @@
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IGeneralHeaderViewModel General { get; private set; }
+        public GeneralHeaderViewModel General { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PerformanceHeaderViewModel Performance { get; private set; }

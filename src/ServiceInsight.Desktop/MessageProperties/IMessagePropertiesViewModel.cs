@@ -5,7 +5,7 @@
     public interface IMessagePropertiesViewModel : IScreen
     {
         ErrorHeaderViewModel Errors { get; }
-        IGeneralHeaderViewModel General { get; }
+        GeneralHeaderViewModel General { get; }
         SagaHeaderViewModel Saga { get; }
         PerformanceHeaderViewModel Performance { get; }
         GatewayHeaderViewModel Gateway { get; }

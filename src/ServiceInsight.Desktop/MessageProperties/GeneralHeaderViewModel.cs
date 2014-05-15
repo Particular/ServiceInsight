@@ -8,7 +8,7 @@
     using MessageFlow;
     using Models;
 
-    public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
+    public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
 
         IContentDecoder<IList<HeaderInfo>> decoder;
