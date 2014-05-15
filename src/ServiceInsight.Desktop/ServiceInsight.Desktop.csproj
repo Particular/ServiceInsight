@@ -289,7 +289,6 @@
     <Compile Include="MessageProperties\HeaderInfoSerializer.cs" />
     <Compile Include="MessageProperties\IGeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
-    <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IPropertyDataProvider.cs" />
     <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">

@@ -12,7 +12,7 @@
             ErrorHeaderViewModel error,
             IGeneralHeaderViewModel general,
             SagaHeaderViewModel saga,
-            IPerformanceHeaderViewModel performance,
+            PerformanceHeaderViewModel performance,
             GatewayHeaderViewModel gateway,
             IClipboard clipboard)
         {
@@ -28,7 +28,7 @@
         public IGeneralHeaderViewModel General { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IPerformanceHeaderViewModel Performance { get; private set; }
+        public PerformanceHeaderViewModel Performance { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ErrorHeaderViewModel Errors { get; private set; }

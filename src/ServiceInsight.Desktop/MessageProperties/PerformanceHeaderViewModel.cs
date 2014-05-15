@@ -8,7 +8,7 @@
     using ExtensionMethods;
     using Models;
 
-    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPerformanceHeaderViewModel
+    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public PerformanceHeaderViewModel(
             IEventAggregator eventAggregator, 
