@@ -44,7 +44,7 @@
         IEventAggregator EventAggregator;
         StatusBarManager StatusbarManager;
         MessageBodyViewModel MessageBodyView;
-        IMessageHeadersViewModel HeaderView;
+        MessageHeadersViewModel HeaderView;
         ISettingsProvider SettingsProvider;
         AppLicenseManager LicenseManager;
         IShellViewStub View;
@@ -67,7 +67,7 @@
             MessageBodyView = Substitute.For<MessageBodyViewModel>();
             MessageProperties = Substitute.For<MessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
-            HeaderView = Substitute.For<IMessageHeadersViewModel>();
+            HeaderView = Substitute.For<MessageHeadersViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
             LogWindow = Substitute.For<LogWindowViewModel>();

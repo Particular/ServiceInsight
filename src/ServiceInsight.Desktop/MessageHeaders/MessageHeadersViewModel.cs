@@ -8,12 +8,7 @@
     using Events;
     using Shell.Menu;
 
-    public interface IMessageHeadersViewModel : IScreen, IHaveContextMenu, IHandle<SelectedMessageChanged>
-    {
-        IObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
-    }
-
-    public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
+    public class MessageHeadersViewModel : Screen, IHaveContextMenu, IHandle<SelectedMessageChanged>
     {
         IMessageHeadersView view;
         bool autoFitted;

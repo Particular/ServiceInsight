@@ -59,7 +59,7 @@
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
-            IMessageHeadersViewModel messageHeadersViewer,
+            MessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
@@ -146,7 +146,7 @@
 
         public MessageBodyViewModel MessageBody { get; private set; }
 
-        public IMessageHeadersViewModel MessageHeaders { get; private set; }
+        public MessageHeadersViewModel MessageHeaders { get; private set; }
 
         public SagaWindowViewModel SagaWindow { get; private set; }
 
