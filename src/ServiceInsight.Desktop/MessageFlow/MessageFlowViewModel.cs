@@ -40,7 +40,7 @@
 
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
-        ISearchBarViewModel searchBar;
+        SearchBarViewModel searchBar;
         IMessageListViewModel messageList;
         ScreenFactory screenFactory;
         DefaultServiceControl serviceControl;
@@ -60,7 +60,7 @@
             IClipboard clipboard, 
             IWindowManagerEx windowManager,
             ScreenFactory screenFactory,
-            ISearchBarViewModel searchBar, 
+            SearchBarViewModel searchBar, 
             IMessageListViewModel messageList,
             ISettingsProvider settingsProvider,
             IEndpointExplorerViewModel endpointExplorer)

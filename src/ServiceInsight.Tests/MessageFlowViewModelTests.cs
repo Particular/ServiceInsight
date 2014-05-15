@@ -22,7 +22,7 @@
         IClipboard clipboard;
         IWindowManagerEx windowManager;
         ScreenFactory screenFactory;
-        ISearchBarViewModel searchBar;
+        SearchBarViewModel searchBar;
         IMessageListViewModel messageList;
         ISettingsProvider settingProvider;
         IEndpointExplorerViewModel endpointExplorer;
@@ -65,7 +65,7 @@
             clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<IWindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
-            searchBar = Substitute.For<ISearchBarViewModel>();
+            searchBar = Substitute.For<SearchBarViewModel>();
             messageList = Substitute.For<IMessageListViewModel>();
             settingProvider = Substitute.For<ISettingsProvider>();
             endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();

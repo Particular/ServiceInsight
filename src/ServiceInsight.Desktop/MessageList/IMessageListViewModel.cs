@@ -21,7 +21,7 @@ namespace Particular.ServiceInsight.Desktop.MessageList
         IHandle<RetryMessage>,
         IHandle<BodyTabSelectionChanged>
     {
-        ISearchBarViewModel SearchBar { get; }
+        SearchBarViewModel SearchBar { get; }
         ExplorerItem SelectedExplorerItem { get; }
         Task RefreshMessages(string orderBy = null, bool ascending = false);
         Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false);

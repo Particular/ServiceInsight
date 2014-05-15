@@ -21,7 +21,7 @@
     {
         IEventAggregator EventAggregator;
         DefaultServiceControl ServiceControl;
-        ISearchBarViewModel SearchBar;
+        SearchBarViewModel SearchBar;
         MessageListViewModel MessageList;
         IMessageListView View;
 
@@ -30,7 +30,7 @@
         {
             EventAggregator = Substitute.For<IEventAggregator>();
             ServiceControl = Substitute.For<DefaultServiceControl>();
-            SearchBar = Substitute.For<ISearchBarViewModel>();
+            SearchBar = Substitute.For<SearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
             MessageList = new MessageListViewModel(EventAggregator, 
                                                    ServiceControl, 

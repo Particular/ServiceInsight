@@ -17,9 +17,9 @@
             }
         }
 
-        ISearchBarViewModel Model
+        SearchBarViewModel Model
         {
-            get { return DataContext as ISearchBarViewModel; }
+            get { return DataContext as SearchBarViewModel; }
         }
     }
 }

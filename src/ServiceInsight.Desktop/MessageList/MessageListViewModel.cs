@@ -38,7 +38,7 @@
         public MessageListViewModel(
             IEventAggregator eventAggregator,
             DefaultServiceControl serviceControl,
-            ISearchBarViewModel searchBarViewModel,
+            SearchBarViewModel searchBarViewModel,
             IGeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)
         {
@@ -75,7 +75,7 @@
 
         public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
 
-        public ISearchBarViewModel SearchBar { get; private set; }
+        public SearchBarViewModel SearchBar { get; private set; }
 
         public IObservableCollection<StoredMessage> Rows { get; private set; }
 

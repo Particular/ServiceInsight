@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Filters;
     using Caliburn.PresentationFramework.Screens;
     using Core.Settings;
@@ -13,10 +14,15 @@
     using MessageList;
     using Models;
     using Settings;
+    using Shell;
     using Startup;
 	using System.Linq;
 
-    public class SearchBarViewModel : Screen, ISearchBarViewModel
+    public class SearchBarViewModel : Screen,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IWorkTracker
     {
         ICommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;

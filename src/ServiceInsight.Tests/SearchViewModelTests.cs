@@ -13,7 +13,7 @@
     [TestFixture]
     public class SearchViewModelTests
     {
-        ISearchBarViewModel ViewModel;
+        SearchBarViewModel ViewModel;
         ICommandLineArgParser ArgParser;
         ISettingsProvider SettingProvider;
 
