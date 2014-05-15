@@ -39,7 +39,7 @@
         WindowManagerEx WindowManager;
         EndpointExplorerViewModel EndpointExplorer;
         MessageListViewModel MessageList;
-        IMessageFlowViewModel MessageFlow;
+        MessageFlowViewModel MessageFlow;
         ISagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
         StatusBarManager StatusbarManager;
@@ -62,7 +62,7 @@
             MessageList = Substitute.For<MessageListViewModel>();
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
-            MessageFlow = Substitute.For<IMessageFlowViewModel>();
+            MessageFlow = Substitute.For<MessageFlowViewModel>();
             SagaWindow = Substitute.For<ISagaWindowViewModel>();
             MessageBodyView = Substitute.For<IMessageBodyViewModel>();
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();

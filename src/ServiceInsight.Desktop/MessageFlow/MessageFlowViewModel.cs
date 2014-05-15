@@ -19,26 +19,8 @@
     using ServiceControl;
     using Settings;
 
-    public interface IMessageFlowViewModel : IScreen, 
+    public class MessageFlowViewModel : Screen, 
         IHandle<SelectedMessageChanged>
-    {
-        MessageFlowDiagram Diagram { get; }
-        MessageNode SelectedMessage { get; set; }
-        bool ShowEndpoints { get; set; }
-        void CopyMessageUri(StoredMessage message);
-        void CopyConversationId(StoredMessage message);
-        void SearchByMessageId(StoredMessage message);
-        Task RetryMessage(StoredMessage message);
-        void ShowMessageBody();
-        void ShowSagaWindow();
-        void ToggleEndpointData();
-        void ShowException(ExceptionDetails exception);
-        void ZoomIn();
-        void ZoomOut();
-        bool IsFocused(MessageInfo message);
-    }
-
-    public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;

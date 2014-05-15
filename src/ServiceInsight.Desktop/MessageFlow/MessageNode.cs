@@ -13,7 +13,7 @@
         int heightNoEndpoints = 56;
         const int endpointsHeight = 25;
 
-        public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
+        public MessageNode(MessageFlowViewModel owner, StoredMessage message) 
         {
             IsResizable = false;
             Owner = owner;
@@ -54,7 +54,7 @@
             get { return Data as StoredMessage; }
         }
 
-        public IMessageFlowViewModel Owner
+        public MessageFlowViewModel Owner
         {
             get; private set;
         }
