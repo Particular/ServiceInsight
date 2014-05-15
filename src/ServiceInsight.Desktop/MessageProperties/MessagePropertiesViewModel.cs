@@ -9,7 +9,7 @@
         IClipboard clipboard;
 
         public MessagePropertiesViewModel(
-            IErrorHeaderViewModel error,
+            ErrorHeaderViewModel error,
             IGeneralHeaderViewModel general,
             ISagaHeaderViewModel saga,
             IPerformanceHeaderViewModel performance,
@@ -31,7 +31,7 @@
         public IPerformanceHeaderViewModel Performance { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IErrorHeaderViewModel Errors { get; private set; }
+        public ErrorHeaderViewModel Errors { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public IGatewayHeaderViewModel Gateway { get; private set; }

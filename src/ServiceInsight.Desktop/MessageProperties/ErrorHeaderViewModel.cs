@@ -8,7 +8,7 @@
     using ExtensionMethods;
     using Models;
 
-    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IErrorHeaderViewModel
+    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public ErrorHeaderViewModel(
             IEventAggregator eventAggregator, 
