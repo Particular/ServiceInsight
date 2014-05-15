@@ -4,7 +4,7 @@
     using Caliburn.PresentationFramework.Screens;
     using ExceptionHandler;
 
-    public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
+    public class MessagePropertiesViewModel : Screen
     {
         IClipboard clipboard;
 

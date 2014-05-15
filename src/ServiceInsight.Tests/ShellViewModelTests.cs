@@ -48,7 +48,7 @@
         ISettingsProvider SettingsProvider;
         AppLicenseManager LicenseManager;
         IShellViewStub View;
-        IMessagePropertiesViewModel MessageProperties;
+        MessagePropertiesViewModel MessageProperties;
         ILogWindowViewModel LogWindow;
         IAppCommands App;
         CommandLineArgParser CommandLineArgParser;
@@ -65,7 +65,7 @@
             MessageFlow = Substitute.For<MessageFlowViewModel>();
             SagaWindow = Substitute.For<SagaWindowViewModel>();
             MessageBodyView = Substitute.For<MessageBodyViewModel>();
-            MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
+            MessageProperties = Substitute.For<MessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
             HeaderView = Substitute.For<IMessageHeadersViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();

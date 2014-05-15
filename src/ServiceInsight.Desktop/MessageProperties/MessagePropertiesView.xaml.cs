@@ -22,9 +22,9 @@
             }
         }
 
-        IMessagePropertiesViewModel Model
+        MessagePropertiesViewModel Model
         {
-            get {  return (IMessagePropertiesViewModel)DataContext; }
+            get { return (MessagePropertiesViewModel)DataContext; }
         }
     }
 

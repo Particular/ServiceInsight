@@ -61,7 +61,7 @@
             MessageBodyViewModel messageBodyViewer,
             IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
-            IMessagePropertiesViewModel messageProperties,
+            MessagePropertiesViewModel messageProperties,
             ILogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
         {
@@ -136,7 +136,7 @@
 
         public IShellView View { get; private set; }
 
-        public IMessagePropertiesViewModel MessageProperties { get; private set; }
+        public MessagePropertiesViewModel MessageProperties { get; private set; }
 
         public EndpointExplorerViewModel EndpointExplorer { get; private set; }
 
