@@ -62,7 +62,7 @@
             IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
             MessagePropertiesViewModel messageProperties,
-            ILogWindowViewModel logWindow,
+            LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
         {
             this.appCommander = appCommander;
@@ -152,7 +152,7 @@
 
         public StatusBarManager StatusBarManager { get; private set; }
 
-        public ILogWindowViewModel LogWindow { get; private set; }
+        public LogWindowViewModel LogWindow { get; private set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 

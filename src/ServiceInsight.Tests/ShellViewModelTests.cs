@@ -49,7 +49,7 @@
         AppLicenseManager LicenseManager;
         IShellViewStub View;
         MessagePropertiesViewModel MessageProperties;
-        ILogWindowViewModel LogWindow;
+        LogWindowViewModel LogWindow;
         IAppCommands App;
         CommandLineArgParser CommandLineArgParser;
 
@@ -70,7 +70,7 @@
             HeaderView = Substitute.For<IMessageHeadersViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
-            LogWindow = Substitute.For<ILogWindowViewModel>();
+            LogWindow = Substitute.For<LogWindowViewModel>();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();

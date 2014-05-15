@@ -5,7 +5,7 @@
     using Core.UI;
     using Shell.Menu;
 
-    public class LogWindowViewModel : Screen, ILogWindowViewModel
+    public class LogWindowViewModel : Screen, IHaveContextMenu
     {
         ILogWindowView view;
 
@@ -42,9 +42,4 @@
         }
     }
 
-    public interface ILogWindowViewModel : IScreen, IHaveContextMenu
-    {
-        void Clear();
-        void CopyToClipboard();
-    }
 }
