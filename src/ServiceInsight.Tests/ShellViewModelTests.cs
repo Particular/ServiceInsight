@@ -43,7 +43,7 @@
         ISagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
         StatusBarManager StatusbarManager;
-        IMessageBodyViewModel MessageBodyView;
+        MessageBodyViewModel MessageBodyView;
         IMessageHeadersViewModel HeaderView;
         ISettingsProvider SettingsProvider;
         AppLicenseManager LicenseManager;
@@ -64,7 +64,7 @@
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<MessageFlowViewModel>();
             SagaWindow = Substitute.For<ISagaWindowViewModel>();
-            MessageBodyView = Substitute.For<IMessageBodyViewModel>();
+            MessageBodyView = Substitute.For<MessageBodyViewModel>();
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
             HeaderView = Substitute.For<IMessageHeadersViewModel>();

@@ -8,13 +8,9 @@
     using HexViewer;
     using JsonViewer;
     using XmlViewer;
-
-    public interface IMessageBodyViewModel : IScreen,
+    
+    public class MessageBodyViewModel : Screen,
         IHandle<SelectedMessageChanged>
-    {
-    }
-
-    public class MessageBodyViewModel : Screen, IMessageBodyViewModel
     {
         static Dictionary<string, MessageContentType> ContentTypeMaps;
 

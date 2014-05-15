@@ -58,7 +58,7 @@
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             ISagaWindowViewModel sagaWindow,
-            IMessageBodyViewModel messageBodyViewer,
+            MessageBodyViewModel messageBodyViewer,
             IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
@@ -144,7 +144,7 @@
 
         public MessageFlowViewModel MessageFlow { get; private set; }
 
-        public IMessageBodyViewModel MessageBody { get; private set; }
+        public MessageBodyViewModel MessageBody { get; private set; }
 
         public IMessageHeadersViewModel MessageHeaders { get; private set; }
 
