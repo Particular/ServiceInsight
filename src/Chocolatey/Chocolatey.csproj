@@ -14,7 +14,6 @@
     <ConfigurationName>Release</ConfigurationName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="chocolateyInstall.ps1" />
     <None Include="chocolateyUninstall.ps1" />
     <None Include="elevatedUninstall.ps1" />
