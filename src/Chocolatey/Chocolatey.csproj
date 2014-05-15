@@ -4,6 +4,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}</ProjectGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <ConfigurationName>Debug</ConfigurationName>
@@ -12,6 +14,7 @@
     <ConfigurationName>Release</ConfigurationName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="chocolateyInstall.ps1" />
     <None Include="chocolateyUninstall.ps1" />
     <None Include="elevatedUninstall.ps1" />
@@ -42,15 +45,12 @@
       <Output TaskParameter="Stability" PropertyName="Stability" />
       <Output TaskParameter="PreReleasePartOne" PropertyName="PreReleasePartOne" />
     </GetVersion>
-
     <PropertyGroup Condition=" '$(Stability)' == 'Final' ">
       <ChocoVersion>$(MajorMinorPatch)</ChocoVersion>
     </PropertyGroup>
-
     <PropertyGroup Condition=" '$(Stability)' != 'Final' ">
       <ChocoVersion>$(MajorMinorPatch)-$(Stability)$(PreReleasePartOne)</ChocoVersion>
     </PropertyGroup>
-
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
     </ItemGroup>
@@ -67,7 +67,6 @@
     </ItemGroup>
     <FileUpdate Files="@(InstallFile)" Regex="{{FileVersion}}" ReplacementText="$(SemVer)" />
     <FileUpdate Files="@(InstallFile)" Regex="{{ReleaseName}}" ReplacementText="$(ChocoVersion)" />
-
-    <CreatePackageTask  NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
+    <CreatePackageTask NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
   </Target>
 </Project>
