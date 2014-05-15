@@ -8,19 +8,7 @@
     using Caliburn.PresentationFramework.Views;
     using Application = System.Windows.Application;
 
-    public interface IDialogManager
-    {
-        FileDialogResult OpenFileDialog(FileDialogModel model);
-    }
-
-    public interface IWindowManagerEx : IWindowManager
-    {
-        MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
-        bool? ShowDialog<T>() where T : class;
-        bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class;
-    }
-
-    public class WindowManagerEx : DefaultWindowManager, IWindowManagerEx, IDialogManager
+    public class WindowManagerEx : DefaultWindowManager
     {
         ScreenFactory screenFactory;
         bool allowResize;
@@ -57,6 +45,9 @@
                 {DialogResult.No,     false},
             };
         }
+
+        public WindowManagerEx() : base(null,null)
+        { }
 
         public WindowManagerEx(
             IViewLocator viewLocator, 

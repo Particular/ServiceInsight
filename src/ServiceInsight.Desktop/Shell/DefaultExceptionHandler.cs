@@ -11,12 +11,12 @@
 
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
-        IWindowManagerEx windowManager;
+        WindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         ShellViewModel shell;
 
         public DefaultExceptionHandler(
-            IWindowManagerEx windowManager, 
+            WindowManagerEx windowManager, 
             IViewModelFactory screenFactory,
             IEventAggregator eventAggregator,
             ShellViewModel shell) 

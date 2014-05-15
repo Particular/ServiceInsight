@@ -9,7 +9,7 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WindowManagerEx>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<WindowManagerEx>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultEventAggregator>().As<IEventAggregator>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultDispatcher>().As<IDispatcher>().InstancePerLifetimeScope();
         }

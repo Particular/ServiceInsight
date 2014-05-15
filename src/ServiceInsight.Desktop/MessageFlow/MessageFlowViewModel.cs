@@ -46,7 +46,7 @@
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IClipboard clipboard;
-        IWindowManagerEx windowManager;
+        WindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
         IMessageFlowView view;
@@ -57,8 +57,8 @@
         public MessageFlowViewModel(
             DefaultServiceControl serviceControl,
             IEventAggregator eventAggregator,
-            IClipboard clipboard, 
-            IWindowManagerEx windowManager,
+            IClipboard clipboard,
+            WindowManagerEx windowManager,
             ScreenFactory screenFactory,
             SearchBarViewModel searchBar, 
             IMessageListViewModel messageList,

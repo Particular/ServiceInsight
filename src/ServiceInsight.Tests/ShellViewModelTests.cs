@@ -36,7 +36,7 @@
     {
         ShellViewModel shell;
         ScreenFactory ScreenFactory;
-        IWindowManagerEx WindowManager;
+        WindowManagerEx WindowManager;
         IEndpointExplorerViewModel EndpointExplorer;
         IMessageListViewModel MessageList;
         IMessageFlowViewModel MessageFlow;
@@ -57,7 +57,7 @@
         public void TestInitialize()
         {
             ScreenFactory = Substitute.For<ScreenFactory>();
-            WindowManager = Substitute.For<IWindowManagerEx>();
+            WindowManager = Substitute.For<WindowManagerEx>();
             EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
             MessageList = Substitute.For<IMessageListViewModel>();
             StatusbarManager = Substitute.For<StatusBarManager>();

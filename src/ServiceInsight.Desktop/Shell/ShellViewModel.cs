@@ -38,7 +38,7 @@
     {
         IAppCommands appCommander;
         ScreenFactory screenFactory;
-        IWindowManagerEx windowManager;
+        WindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
@@ -50,7 +50,7 @@
         public ShellViewModel(
             IAppCommands appCommander,
             ScreenFactory screenFactory,
-            IWindowManagerEx windowManager,
+            WindowManagerEx windowManager,
             IEndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,
             StatusBarManager statusBarManager,

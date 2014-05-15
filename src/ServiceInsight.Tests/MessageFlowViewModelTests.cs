@@ -20,7 +20,7 @@
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IClipboard clipboard;
-        IWindowManagerEx windowManager;
+        WindowManagerEx windowManager;
         ScreenFactory screenFactory;
         SearchBarViewModel searchBar;
         IMessageListViewModel messageList;
@@ -63,7 +63,7 @@
             serviceControl = Substitute.For<DefaultServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();
             clipboard = Substitute.For<IClipboard>();
-            windowManager = Substitute.For<IWindowManagerEx>();
+            windowManager = Substitute.For<WindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();
             messageList = Substitute.For<IMessageListViewModel>();
