@@ -23,7 +23,7 @@
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().InstancePerLifetimeScope();
             builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();
-            builder.RegisterType<CommandLineArgParser>().AsImplementedInterfaces().SingleInstance().OnActivating(e => e.Instance.Parse());
+            builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
         }
     }
 }

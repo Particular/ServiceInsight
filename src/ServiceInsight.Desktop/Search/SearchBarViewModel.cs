@@ -24,11 +24,11 @@
         IHandle<WorkFinished>,
         IWorkTracker
     {
-        ICommandLineArgParser commandLineArgParser;
+        CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
 
-        public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;

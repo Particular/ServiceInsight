@@ -37,7 +37,7 @@
         ShellViewModel shell;
         ScreenFactory ScreenFactory;
         WindowManagerEx WindowManager;
-        IEndpointExplorerViewModel EndpointExplorer;
+        EndpointExplorerViewModel EndpointExplorer;
         IMessageListViewModel MessageList;
         IMessageFlowViewModel MessageFlow;
         ISagaWindowViewModel SagaWindow;
@@ -51,14 +51,14 @@
         IMessagePropertiesViewModel MessageProperties;
         ILogWindowViewModel LogWindow;
         IAppCommands App;
-        ICommandLineArgParser CommandLineArgParser;
+        CommandLineArgParser CommandLineArgParser;
 
         [SetUp]
         public void TestInitialize()
         {
             ScreenFactory = Substitute.For<ScreenFactory>();
             WindowManager = Substitute.For<WindowManagerEx>();
-            EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
+            EndpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             MessageList = Substitute.For<IMessageListViewModel>();
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
@@ -84,9 +84,9 @@
             shell.AttachView(View, null);
         }
 
-        ICommandLineArgParser MockEmptyStartupOptions()
+        CommandLineArgParser MockEmptyStartupOptions()
         {
-            var parser = Substitute.For<ICommandLineArgParser>();
+            var parser = Substitute.For<CommandLineArgParser>();
             
             parser.ParsedOptions.Returns(new CommandLineOptions());
 

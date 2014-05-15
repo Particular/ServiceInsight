@@ -52,7 +52,7 @@
         IMessageFlowView view;
         string originalSelectionId = string.Empty;
         bool loadingConversation;
-        IEndpointExplorerViewModel endpointExplorer;
+        EndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
             DefaultServiceControl serviceControl,
@@ -63,7 +63,7 @@
             SearchBarViewModel searchBar, 
             IMessageListViewModel messageList,
             ISettingsProvider settingsProvider,
-            IEndpointExplorerViewModel endpointExplorer)
+            EndpointExplorerViewModel endpointExplorer)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;

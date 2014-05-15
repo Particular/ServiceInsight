@@ -25,7 +25,7 @@
         SearchBarViewModel searchBar;
         IMessageListViewModel messageList;
         ISettingsProvider settingProvider;
-        IEndpointExplorerViewModel endpointExplorer;
+        EndpointExplorerViewModel endpointExplorer;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -68,7 +68,7 @@
             searchBar = Substitute.For<SearchBarViewModel>();
             messageList = Substitute.For<IMessageListViewModel>();
             settingProvider = Substitute.For<ISettingsProvider>();
-            endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
+            endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
 
             return new MessageFlowViewModel(serviceControl, 
                                             eventAggregator, 

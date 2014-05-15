@@ -42,7 +42,7 @@
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
-        ICommandLineArgParser comandLineArgParser;
+        CommandLineArgParser comandLineArgParser;
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
@@ -51,7 +51,7 @@
             IAppCommands appCommander,
             ScreenFactory screenFactory,
             WindowManagerEx windowManager,
-            IEndpointExplorerViewModel endpointExplorer,
+            EndpointExplorerViewModel endpointExplorer,
             IMessageListViewModel messages,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
@@ -63,7 +63,7 @@
             ISettingsProvider settingsProvider,
             IMessagePropertiesViewModel messageProperties,
             ILogWindowViewModel logWindow,
-            ICommandLineArgParser comandLineArgParser)
+            CommandLineArgParser comandLineArgParser)
         {
             this.appCommander = appCommander;
             this.screenFactory = screenFactory;
@@ -138,7 +138,7 @@
 
         public IMessagePropertiesViewModel MessageProperties { get; private set; }
 
-        public IEndpointExplorerViewModel EndpointExplorer { get; private set; }
+        public EndpointExplorerViewModel EndpointExplorer { get; private set; }
 
         public IMessageListViewModel Messages { get; private set; }
 

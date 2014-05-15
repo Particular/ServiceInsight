@@ -4,9 +4,9 @@
     using log4net;
     using Models;
 
-    public class CommandLineArgParser : ICommandLineArgParser
+    public class CommandLineArgParser 
     {
-        static ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
+        static ILog Logger = LogManager.GetLogger(typeof(CommandLineArgParser));
 
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
@@ -93,9 +93,4 @@
         }
     }
 
-    public interface ICommandLineArgParser
-    {
-        CommandLineOptions ParsedOptions { get; }
-        bool HasUnsupportedKeys { get; }
-    }
 }

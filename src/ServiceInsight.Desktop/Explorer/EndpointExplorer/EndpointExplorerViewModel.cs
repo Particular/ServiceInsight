@@ -17,14 +17,16 @@
     using Startup;
 
     [View(typeof(EndpointExplorerView))]
-    public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
+    public class EndpointExplorerViewModel : Screen,
+        IExplorerViewModel,
+        IHandle<RequestSelectingEndpoint>
     {
         IEventAggregator eventAggregator;
         ISettingsProvider settingsProvider;
         DefaultServiceControl serviceControl;
         NetworkOperations networkOperations;
         ServiceControlConnectionProvider connectionProvider;
-        ICommandLineArgParser commandLineParser;
+        CommandLineArgParser commandLineParser;
         bool isFirstActivation = true;
         IExplorerView view;
 
@@ -32,7 +34,7 @@
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
             ServiceControlConnectionProvider connectionProvider,
-            ICommandLineArgParser commandLineParser,
+            CommandLineArgParser commandLineParser,
             DefaultServiceControl serviceControl,
             NetworkOperations networkOperations)
         {

@@ -14,13 +14,13 @@
     public class SearchViewModelTests
     {
         SearchBarViewModel ViewModel;
-        ICommandLineArgParser ArgParser;
+        CommandLineArgParser ArgParser;
         ISettingsProvider SettingProvider;
 
         [SetUp]
         public void TestInitialize()
         {
-            ArgParser = Substitute.For<ICommandLineArgParser>();
+            ArgParser = Substitute.For<CommandLineArgParser>();
             SettingProvider = Substitute.For<ISettingsProvider>();
             ViewModel = new SearchBarViewModel(ArgParser, SettingProvider);
         }
