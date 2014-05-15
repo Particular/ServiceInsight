@@ -20,7 +20,16 @@
     using Shell;
     using Shell.Menu;
 
-    public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive, IMessageListViewModel
+    public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHaveContextMenu,
+        ITableViewModel<StoredMessage>,
+        IWorkTracker,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IHandle<AsyncOperationFailed>,
+        IHandle<RetryMessage>,
+        IHandle<BodyTabSelectionChanged>
     {
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;

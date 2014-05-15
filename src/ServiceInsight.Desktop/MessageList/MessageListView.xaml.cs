@@ -30,9 +30,9 @@
             sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        IMessageListViewModel Model
+        MessageListViewModel Model
         {
-            get { return (IMessageListViewModel)DataContext; }
+            get { return (MessageListViewModel)DataContext; }
         }
 
         void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)

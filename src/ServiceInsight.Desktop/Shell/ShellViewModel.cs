@@ -52,7 +52,7 @@
             ScreenFactory screenFactory,
             WindowManagerEx windowManager,
             EndpointExplorerViewModel endpointExplorer,
-            IMessageListViewModel messages,
+            MessageListViewModel messages,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
@@ -140,7 +140,7 @@
 
         public EndpointExplorerViewModel EndpointExplorer { get; private set; }
 
-        public IMessageListViewModel Messages { get; private set; }
+        public MessageListViewModel Messages { get; private set; }
 
         public IMessageFlowViewModel MessageFlow { get; private set; }
 

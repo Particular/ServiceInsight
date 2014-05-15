@@ -38,7 +38,7 @@
         ScreenFactory ScreenFactory;
         WindowManagerEx WindowManager;
         EndpointExplorerViewModel EndpointExplorer;
-        IMessageListViewModel MessageList;
+        MessageListViewModel MessageList;
         IMessageFlowViewModel MessageFlow;
         ISagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
@@ -59,7 +59,7 @@
             ScreenFactory = Substitute.For<ScreenFactory>();
             WindowManager = Substitute.For<WindowManagerEx>();
             EndpointExplorer = Substitute.For<EndpointExplorerViewModel>();
-            MessageList = Substitute.For<IMessageListViewModel>();
+            MessageList = Substitute.For<MessageListViewModel>();
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<IMessageFlowViewModel>();

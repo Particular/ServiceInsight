@@ -402,7 +402,6 @@
     <Compile Include="Startup\CommandLineArgParser.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Startup\LoggingConfig.cs" />
-    <Compile Include="MessageList\IMessageListViewModel.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
     <Compile Include="Logging\Log4NetLogger.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />

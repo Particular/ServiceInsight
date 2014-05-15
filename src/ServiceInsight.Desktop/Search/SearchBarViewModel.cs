@@ -116,9 +116,9 @@
             get { return SearchInProgress; }
         }
 
-        public new IMessageListViewModel Parent
+        public new MessageListViewModel Parent
         {
-            get { return base.Parent as IMessageListViewModel; }
+            get { return base.Parent as MessageListViewModel; }
         }
         
         public int PageCount

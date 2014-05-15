@@ -41,7 +41,7 @@
     public class MessageFlowViewModel : Screen, IMessageFlowViewModel
     {
         SearchBarViewModel searchBar;
-        IMessageListViewModel messageList;
+        MessageListViewModel messageList;
         ScreenFactory screenFactory;
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
@@ -60,8 +60,8 @@
             IClipboard clipboard,
             WindowManagerEx windowManager,
             ScreenFactory screenFactory,
-            SearchBarViewModel searchBar, 
-            IMessageListViewModel messageList,
+            SearchBarViewModel searchBar,
+            MessageListViewModel messageList,
             ISettingsProvider settingsProvider,
             EndpointExplorerViewModel endpointExplorer)
         {

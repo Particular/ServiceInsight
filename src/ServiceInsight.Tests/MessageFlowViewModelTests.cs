@@ -23,7 +23,7 @@
         WindowManagerEx windowManager;
         ScreenFactory screenFactory;
         SearchBarViewModel searchBar;
-        IMessageListViewModel messageList;
+        MessageListViewModel messageList;
         ISettingsProvider settingProvider;
         EndpointExplorerViewModel endpointExplorer;
 
@@ -66,7 +66,7 @@
             windowManager = Substitute.For<WindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();
-            messageList = Substitute.For<IMessageListViewModel>();
+            messageList = Substitute.For<MessageListViewModel>();
             settingProvider = Substitute.For<ISettingsProvider>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
 
