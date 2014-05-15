@@ -7,7 +7,7 @@
     using Core.UI.ScreenManager;
     using Licensing;
 
-    public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
+    public class LicenseRegistrationViewModel : Screen
     {
         AppLicenseManager licenseManager;
         WindowManagerEx dialogManager;
@@ -196,13 +196,4 @@
         }
     }
 
-    public interface ILicenseRegistrationViewModel : IScreen
-    {
-        string LicenseType { get; }
-        string RegisteredTo { get; }
-        int TrialDaysRemaining { get; }
-        bool HasTrialLicense { get; }
-        void LoadLicense();
-        void Close();
-    }
 }

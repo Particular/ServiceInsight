@@ -25,7 +25,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
 
         public bool IsSplash { get; set; }
         public bool HasFullLicense { get { return License != null && !License.HasTrialLicense; } }
-        public ILicenseRegistrationViewModel License { get; private set; }
+        public LicenseRegistrationViewModel License { get; private set; }
         public string AppVersion { get; set; }
         public string ServiceControlVersion { get; set; }
         public string DisplayName { get; set; }
@@ -35,7 +35,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
         public AboutViewModel(
             NetworkOperations networkOperations,
             DefaultServiceControl serviceControl,
-            ILicenseRegistrationViewModel licenseInfo)
+            LicenseRegistrationViewModel licenseInfo)
         {
             this.networkOperations = networkOperations;
             this.serviceControl = serviceControl;
@@ -103,7 +103,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
         {
             if (License != null)
             {
-                License.Activate();
+                ((IActivate)License).Activate();
             }
         }
 

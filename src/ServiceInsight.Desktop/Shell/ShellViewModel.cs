@@ -227,7 +227,7 @@
 
         public void Register()
         {
-            windowManager.ShowDialog<ILicenseRegistrationViewModel>();
+            windowManager.ShowDialog<LicenseRegistrationViewModel>();
             DisplayRegistrationStatus();
         }
 
@@ -349,7 +349,7 @@
 
         void RegisterLicense()
         {
-            var model = screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
+            var model = screenFactory.CreateScreen<LicenseRegistrationViewModel>();
             var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))

@@ -14,7 +14,7 @@
     {
         NetworkOperations networkOperations;
         DefaultServiceControl serviceControl;
-        ILicenseRegistrationViewModel licenseRegistration;
+        LicenseRegistrationViewModel licenseRegistration;
         AboutViewModel sut;
 
         [SetUp]
@@ -22,7 +22,7 @@
         {
             networkOperations = Substitute.For<NetworkOperations>();
             serviceControl = Substitute.For<DefaultServiceControl>();
-            licenseRegistration = Substitute.For<ILicenseRegistrationViewModel>();
+            licenseRegistration = Substitute.For<LicenseRegistrationViewModel>();
 
             sut = new AboutViewModel(networkOperations, serviceControl, licenseRegistration);
         }
