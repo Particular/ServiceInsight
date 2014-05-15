@@ -57,7 +57,7 @@
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
-            ISagaWindowViewModel sagaWindow,
+            SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
             IMessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
@@ -148,7 +148,7 @@
 
         public IMessageHeadersViewModel MessageHeaders { get; private set; }
 
-        public ISagaWindowViewModel SagaWindow { get; private set; }
+        public SagaWindowViewModel SagaWindow { get; private set; }
 
         public StatusBarManager StatusBarManager { get; private set; }
 

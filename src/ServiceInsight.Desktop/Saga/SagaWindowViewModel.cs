@@ -10,7 +10,7 @@
     using Models;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
+    public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
@@ -163,17 +163,5 @@
         {
             await RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
         }
-    }
-
-    public interface ISagaWindowViewModel : IScreen
-    {
-        bool ShowSagaNotFoundWarning { get; }
-        bool ShowMessageData { get; }
-        bool ShowEndpoints { get; set; }
-        bool HasSaga { get; }
-        SagaData Data { get; }
-        void ShowFlow();
-
-        Task RefreshSaga();
     }
 }

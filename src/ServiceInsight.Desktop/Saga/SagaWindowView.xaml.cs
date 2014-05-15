@@ -20,7 +20,7 @@
 
         void SagaWindowView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var dataContext = (e.NewValue as ISagaWindowViewModel);
+            var dataContext = (e.NewValue as SagaWindowViewModel);
             if (dataContext != null)
             {
                 dataContext.PropertyChanged += SagaWindowView_PropertyChanged;
@@ -64,7 +64,7 @@
                 if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
                 {
                     var item = (StackPanel)(((Grid)VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
-                    DrawLines(item, ((ISagaWindowViewModel)DataContext).ShowEndpoints);
+                    DrawLines(item, ((SagaWindowViewModel)DataContext).ShowEndpoints);
                 }
             }
         }
@@ -225,12 +225,12 @@
 
         void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var model = DataContext as ISagaWindowViewModel;
+            var model = DataContext as SagaWindowViewModel;
             var message = ((FrameworkElement)sender).DataContext as SagaMessage;
             SetSelected(model, message.MessageId);
         }
 
-        void SetSelected(ISagaWindowViewModel model, Guid id)
+        void SetSelected(SagaWindowViewModel model, Guid id)
         {
             foreach (var step in model.Data.Changes)
             {
