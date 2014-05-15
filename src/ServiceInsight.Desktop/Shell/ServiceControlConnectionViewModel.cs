@@ -111,7 +111,7 @@
             {
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var connection = scope.Resolve<IServiceControlConnectionProvider>();
+                    var connection = scope.Resolve<ServiceControlConnectionProvider>();
                     var service = scope.Resolve<DefaultServiceControl>();
 
                     connection.ConnectTo(serviceUrl);

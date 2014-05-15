@@ -23,7 +23,7 @@
         ISettingsProvider settingsProvider;
         DefaultServiceControl serviceControl;
         NetworkOperations networkOperations;
-        IServiceControlConnectionProvider connectionProvider;
+        ServiceControlConnectionProvider connectionProvider;
         ICommandLineArgParser commandLineParser;
         bool isFirstActivation = true;
         IExplorerView view;
@@ -31,7 +31,7 @@
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator, 
             ISettingsProvider settingsProvider,
-            IServiceControlConnectionProvider connectionProvider,
+            ServiceControlConnectionProvider connectionProvider,
             ICommandLineArgParser commandLineParser,
             DefaultServiceControl serviceControl,
             NetworkOperations networkOperations)

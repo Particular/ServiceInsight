@@ -18,7 +18,7 @@
         ShellViewModel shell;
         ISettingsProvider settingsProvider;
         IContainer container;
-        IServiceControlConnectionProvider connection;
+        ServiceControlConnectionProvider connection;
         ProfilerSettings storedSetting;
         ServiceControlConnectionViewModel connectTo;
 
@@ -28,7 +28,7 @@
             shell = Substitute.For<ShellViewModel>();
             serviceControl = Substitute.For<DefaultServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            connection = Substitute.For<IServiceControlConnectionProvider>();
+            connection = Substitute.For<ServiceControlConnectionProvider>();
             container = RegisterContainer();
             storedSetting = GetReloadedSettings();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(storedSetting);

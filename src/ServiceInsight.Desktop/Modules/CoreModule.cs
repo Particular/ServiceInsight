@@ -20,7 +20,7 @@
             builder.RegisterType<HeaderContentDecoder>().As<IContentDecoder<IList<HeaderInfo>>>();
             builder.RegisterType<NetworkOperations>().SingleInstance();
             builder.RegisterType<AppLicenseManager>().SingleInstance();
-            builder.RegisterType<ServiceControlConnectionProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().InstancePerLifetimeScope();
             builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();
             builder.RegisterType<CommandLineArgParser>().AsImplementedInterfaces().SingleInstance().OnActivating(e => e.Instance.Parse());

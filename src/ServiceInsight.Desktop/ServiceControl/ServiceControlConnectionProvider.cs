@@ -1,6 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
 {
-    public class ServiceControlConnectionProvider : IServiceControlConnectionProvider
+    public class ServiceControlConnectionProvider 
     {
         public void ConnectTo(string url)
         {

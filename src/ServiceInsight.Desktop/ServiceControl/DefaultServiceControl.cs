@@ -24,18 +24,13 @@
             public const string TotalCount = "Total-Count";
         }
 
-        IServiceControlConnectionProvider connection;
+        ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
         ILog logger = LogManager.GetLogger(typeof(DefaultServiceControl));
 
-        //TODO: SIMON remove when empty constructor fixed
-        public DefaultServiceControl()
-        {
-        }
-
         public DefaultServiceControl(
-            IServiceControlConnectionProvider connection, 
+            ServiceControlConnectionProvider connection, 
             IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
