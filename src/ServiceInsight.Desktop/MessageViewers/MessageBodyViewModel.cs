@@ -27,18 +27,18 @@
         }
 
         public MessageBodyViewModel(
-            IHexContentViewModel hexViewer, 
-            IJsonMessageViewModel jsonViewer,
-            IXmlMessageViewModel xmlViewer)
+            HexContentViewModel hexViewer,
+            JsonMessageViewModel jsonViewer,
+            XmlMessageViewModel xmlViewer)
         {
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
         }
 
-        public IHexContentViewModel HexViewer { get; private set; }
-        public IJsonMessageViewModel JsonViewer { get; private set; }
-        public IXmlMessageViewModel XmlViewer { get; private set; }
+        public HexContentViewModel HexViewer { get; private set; }
+        public JsonMessageViewModel JsonViewer { get; private set; }
+        public XmlMessageViewModel XmlViewer { get; private set; }
         public MessageContentType ContentType { get; private set; }
 
         public bool JsonViewerVisible

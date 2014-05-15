@@ -3,11 +3,13 @@
     using System;
     using System.Text;
     using Caliburn.PresentationFramework;
+    using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
     using Events;
     using ExtensionMethods;
 
-    public class HexContentViewModel : Screen, IHexContentViewModel
+    public class HexContentViewModel : Screen, 
+        IHandle<SelectedMessageChanged>
     {
         internal static Func<byte, string> ByteToStringConverter;
         static Encoding Encoding;

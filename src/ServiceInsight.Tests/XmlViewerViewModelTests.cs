@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using System.Xml;
+    using Caliburn.PresentationFramework.Screens;
     using Desktop.Core.MessageDecoders;
     using Desktop.Events;
     using Desktop.MessageViewers.XmlViewer;
@@ -13,7 +14,7 @@
     [TestFixture]
     public class XmlViewerViewModelTests
     {
-        IXmlMessageViewModel ViewModel;
+        XmlMessageViewModel ViewModel;
         IXmlMessageView View;
         IContentDecoder<XmlDocument> XmlDecoder;
         IClipboard Clipboard;
@@ -26,7 +27,7 @@
             Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
             ViewModel = new XmlMessageViewModel(XmlDecoder, Clipboard);
-            ViewModel.Activate();
+            ((IActivate)ViewModel).Activate();
         }
 
         [Test]

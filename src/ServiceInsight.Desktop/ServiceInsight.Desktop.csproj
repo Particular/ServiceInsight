@@ -304,9 +304,7 @@
     <Compile Include="MessageViewers\HexViewer\HexNumber.cs" />
     <Compile Include="MessageViewers\HexViewer\HexPart.cs" />
     <Compile Include="MessageViewers\HexViewer\IHexContentView.cs" />
-    <Compile Include="MessageViewers\HexViewer\IHexContentViewModel.cs" />
     <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
-    <Compile Include="MessageViewers\JsonViewer\IJsonMessageViewModel.cs" />
     <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
@@ -415,7 +413,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\IXmlMessageView.cs" />
-    <Compile Include="MessageViewers\XmlViewer\IXmlMessageViewModel.cs" />
     <Compile Include="MessageViewers\XmlViewer\XmlMessageView.xaml.cs">
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>

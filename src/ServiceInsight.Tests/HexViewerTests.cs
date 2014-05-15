@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using System.Text;
+    using Caliburn.PresentationFramework.Screens;
     using Desktop.Events;
     using Desktop.MessageViewers.HexViewer;
     using Desktop.Models;
@@ -12,7 +13,7 @@
     [TestFixture]
     public class HexViewerTests
     {
-        IHexContentViewModel ViewModel;
+        HexContentViewModel ViewModel;
         IHexContentView View;
         const string TestMessage = "This is a test message content that is spread into four lines";
 
@@ -27,7 +28,7 @@
         public void should_display_the_message_when_view_is_loaded()
         {
             ViewModel.AttachView(View, null);
-            ViewModel.Activate();
+            ((IActivate)ViewModel).Activate();
 
             ViewModel.SelectedMessage = Encoding.Default.GetBytes(TestMessage);
 
@@ -60,7 +61,7 @@
             const string messageWithSpecialChars = "This is a multiline test\rmessage content\tthat is spread into four lines";
 
             ViewModel.AttachView(View, null);
-            ViewModel.Activate();
+            ((IActivate) ViewModel).Activate();
 
             ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = messageWithSpecialChars }));
 

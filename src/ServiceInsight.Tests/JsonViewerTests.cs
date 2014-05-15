@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
+    using Caliburn.PresentationFramework.Screens;
     using Desktop.MessageViewers.JsonViewer;
     using Desktop.Models;
     using NSubstitute;
@@ -8,7 +9,7 @@
     [TestFixture]
     public class JsonViewerTests
     {
-        IJsonMessageViewModel ViewModel;
+        JsonMessageViewModel ViewModel;
         IJsonMessageView View;
 
         [SetUp]
@@ -16,7 +17,7 @@
         {
             View = Substitute.For<IJsonMessageView>();
             ViewModel = new JsonMessageViewModel();
-            ViewModel.Activate();
+            ((IActivate) ViewModel).Activate();
         }
 
         [Test]

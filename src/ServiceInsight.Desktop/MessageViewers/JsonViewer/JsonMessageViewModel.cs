@@ -1,10 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
+    using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
     using Events;
     using Models;
 
-    public class JsonMessageViewModel : Screen, IJsonMessageViewModel
+    public class JsonMessageViewModel : Screen,
+        IHandle<SelectedMessageChanged>
     {
         IJsonMessageView messageView;
 

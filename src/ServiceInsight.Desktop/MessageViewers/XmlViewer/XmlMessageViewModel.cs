@@ -2,6 +2,7 @@
 {
     using System.Text;
     using System.Xml;
+    using Caliburn.PresentationFramework.ApplicationModel;
     using Caliburn.PresentationFramework.Screens;
     using Core.MessageDecoders;
     using Events;
@@ -9,7 +10,8 @@
     using ExtensionMethods;
     using Models;
 
-    public class XmlMessageViewModel : Screen, IXmlMessageViewModel
+    public class XmlMessageViewModel : Screen, 
+        IHandle<SelectedMessageChanged>
     {
         IContentDecoder<XmlDocument> xmlDecoder;
         IClipboard clipboard;
