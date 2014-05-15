@@ -113,7 +113,7 @@
 
         public void ShowException(ExceptionDetails exception)
         {
-            var model = screenFactory.CreateScreen<IExceptionDetailViewModel>();
+            var model = screenFactory.CreateScreen<ExceptionDetailViewModel>();
             model.Exception = exception;
             windowManager.ShowDialog(model, true);
         }

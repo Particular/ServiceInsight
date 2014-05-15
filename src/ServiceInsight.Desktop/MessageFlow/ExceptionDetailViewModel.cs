@@ -5,7 +5,7 @@
     using Models;
     using Shell;
 
-    class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
+    class ExceptionDetailViewModel : Screen
     {
         ISettingsProvider settingsProvider;
         public virtual IPersistableLayout View { get; private set; }
@@ -60,9 +60,4 @@
         }
     }
 
-    interface IExceptionDetailViewModel : IScreen
-    {
-        ExceptionDetails Exception { get; set; }
-        string FormattedSource { get; }
-    }
 }
