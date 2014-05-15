@@ -6,7 +6,7 @@
     {
         ErrorHeaderViewModel Errors { get; }
         IGeneralHeaderViewModel General { get; }
-        ISagaHeaderViewModel Saga { get; }
+        SagaHeaderViewModel Saga { get; }
         IPerformanceHeaderViewModel Performance { get; }
         GatewayHeaderViewModel Gateway { get; }
         void CopyPropertyValue(object value);

@@ -7,7 +7,7 @@
     using Core.MessageDecoders;
     using Models;
 
-    public class SagaHeaderViewModel : HeaderInfoViewModelBase, ISagaHeaderViewModel
+    public class SagaHeaderViewModel : HeaderInfoViewModelBase,  IPropertyDataProvider
     {
         public SagaHeaderViewModel(
             IEventAggregator eventAggregator, 

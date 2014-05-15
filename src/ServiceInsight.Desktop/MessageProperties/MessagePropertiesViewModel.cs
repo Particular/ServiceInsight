@@ -11,7 +11,7 @@
         public MessagePropertiesViewModel(
             ErrorHeaderViewModel error,
             IGeneralHeaderViewModel general,
-            ISagaHeaderViewModel saga,
+            SagaHeaderViewModel saga,
             IPerformanceHeaderViewModel performance,
             GatewayHeaderViewModel gateway,
             IClipboard clipboard)
@@ -37,7 +37,7 @@
         public GatewayHeaderViewModel Gateway { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public ISagaHeaderViewModel Saga { get; private set; }
+        public SagaHeaderViewModel Saga { get; private set; }
 
         public void CopyPropertyValue(object value)
         {

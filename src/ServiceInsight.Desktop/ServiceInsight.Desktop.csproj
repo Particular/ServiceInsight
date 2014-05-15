@@ -291,7 +291,6 @@
     <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
     <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IPropertyDataProvider.cs" />
-    <Compile Include="MessageProperties\ISagaHeaderViewModel.cs" />
     <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
       <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
