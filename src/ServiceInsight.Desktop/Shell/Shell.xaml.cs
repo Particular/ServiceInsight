@@ -137,9 +137,9 @@
             }
         }
 
-        IShellViewModel Model
+        ShellViewModel Model
         {
-            get { return DataContext as IShellViewModel; }
+            get { return DataContext as ShellViewModel; }
         }
 
         void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)

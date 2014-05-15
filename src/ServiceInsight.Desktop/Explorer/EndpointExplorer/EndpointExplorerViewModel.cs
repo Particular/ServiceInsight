@@ -69,9 +69,9 @@
 
         public string ServiceUrl { get; private set; }
 
-        public new IShellViewModel Parent
+        public new ShellViewModel Parent
         {
-            get { return (IShellViewModel)base.Parent; }
+            get { return (ShellViewModel)base.Parent; }
         }
 
         bool IsConnected

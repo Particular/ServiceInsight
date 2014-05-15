@@ -214,7 +214,7 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
-    <Compile Include="Modules\InterfacesModule.cs" />
+    <Compile Include="Modules\EnvironmentModule.cs" />
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
     <Compile Include="Saga\SagaData.cs" />
     <Compile Include="Saga\SagaMessage.cs" />
@@ -395,7 +395,6 @@
     <Compile Include="Core\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
-    <Compile Include="Shell\IShellViewModel.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
     <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />

@@ -9,6 +9,6 @@
         void OnSelectedNodeChanged();
         Task RefreshData();
         void Navigate(string navigateUri);
-        IShellViewModel Parent { get; }
+        ShellViewModel Parent { get; }
     }
 }

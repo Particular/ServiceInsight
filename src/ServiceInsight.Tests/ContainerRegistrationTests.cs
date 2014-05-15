@@ -29,7 +29,7 @@
         [Test]
         public void should_resolve_the_shell()
         {
-            Should.NotThrow(() => Container.Resolve<IShellViewModel>());
+            Should.NotThrow(() => Container.Resolve<ShellViewModel>());
         }
     }
 

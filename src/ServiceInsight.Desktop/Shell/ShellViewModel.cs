@@ -26,7 +26,15 @@
     using Settings;
     using Startup;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, 
+        IDeactivate,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<SwitchToMessageBody>,
+        IHandle<SwitchToSagaWindow>,
+        IHandle<SwitchToFlowWindow>,
+        IWorkTracker
     {
         IAppCommands appCommander;
         ScreenFactory screenFactory;

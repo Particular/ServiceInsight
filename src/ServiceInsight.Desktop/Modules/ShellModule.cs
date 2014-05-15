@@ -33,7 +33,7 @@
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().As<IExplorerView>().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<ShellViewModel>().As<IShellViewModel>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<ShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();

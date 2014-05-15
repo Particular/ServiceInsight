@@ -73,7 +73,7 @@
             NotifyPropertiesChanged();
         }
 
-        public new IShellViewModel Parent { get { return (IShellViewModel)base.Parent; } }
+        public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
 
         public ISearchBarViewModel SearchBar { get; private set; }
 

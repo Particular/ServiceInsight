@@ -15,7 +15,7 @@
     using Shell;
     using IContainer = Autofac.IContainer;
 
-    public class AppBootstrapper : Bootstrapper<IShellViewModel>
+    public class AppBootstrapper : Bootstrapper<ShellViewModel>
     {
         IContainer container;
         

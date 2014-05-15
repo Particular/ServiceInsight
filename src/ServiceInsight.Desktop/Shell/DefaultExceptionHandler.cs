@@ -13,13 +13,13 @@
     {
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
-        IShellViewModel shell;
+        ShellViewModel shell;
 
         public DefaultExceptionHandler(
             IWindowManagerEx windowManager, 
             IViewModelFactory screenFactory,
             IEventAggregator eventAggregator,
-            IShellViewModel shell) 
+            ShellViewModel shell) 
             : base(screenFactory.Create<IExceptionViewModel>())
         {
             this.windowManager = windowManager;
