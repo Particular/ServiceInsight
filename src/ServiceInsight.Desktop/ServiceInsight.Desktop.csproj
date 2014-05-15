@@ -264,7 +264,6 @@
     <Compile Include="Explorer\IExplorerViewModel.cs" />
     <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
-    <Compile Include="Explorer\FolderExplorerItem.cs" />
     <Compile Include="Explorer\IExplorerView.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
