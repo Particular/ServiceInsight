@@ -68,7 +68,7 @@
     }
 
     [Serializable]
-    public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hyrate it
+    public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hydrate it
     {
         public string Key { get; set; }
         public string Value { get; set; }

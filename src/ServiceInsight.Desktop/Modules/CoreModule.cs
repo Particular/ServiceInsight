@@ -6,7 +6,6 @@
     using Core;
     using Core.Licensing;
     using Core.MessageDecoders;
-    using MessageProperties;
     using Models;
     using ServiceControl;
     using Startup;
@@ -22,7 +21,6 @@
             builder.RegisterType<AppLicenseManager>().SingleInstance();
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().InstancePerLifetimeScope();
-            builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
         }
     }

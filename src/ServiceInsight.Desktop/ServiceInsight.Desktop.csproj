@@ -286,7 +286,6 @@
     <Compile Include="MessageFlow\MessageNode.cs" />
     <Compile Include="MessageFlow\MessagePopupControl.cs" />
     <Compile Include="MessageProperties\GatewayHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\HeaderInfoSerializer.cs" />
     <Compile Include="MessageProperties\IPropertyDataProvider.cs" />
     <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
