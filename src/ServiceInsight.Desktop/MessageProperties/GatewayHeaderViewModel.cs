@@ -7,7 +7,7 @@
     using Core.MessageDecoders;
     using Models;
 
-    public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IGatewayHeaderViewModel
+    public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public GatewayHeaderViewModel(
             IEventAggregator eventAggregator, 

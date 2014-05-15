@@ -13,7 +13,7 @@
             IGeneralHeaderViewModel general,
             ISagaHeaderViewModel saga,
             IPerformanceHeaderViewModel performance,
-            IGatewayHeaderViewModel gateway,
+            GatewayHeaderViewModel gateway,
             IClipboard clipboard)
         {
             this.clipboard = clipboard;
@@ -34,7 +34,7 @@
         public ErrorHeaderViewModel Errors { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IGatewayHeaderViewModel Gateway { get; private set; }
+        public GatewayHeaderViewModel Gateway { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ISagaHeaderViewModel Saga { get; private set; }

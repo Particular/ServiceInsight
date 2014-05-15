@@ -8,7 +8,7 @@
         IGeneralHeaderViewModel General { get; }
         ISagaHeaderViewModel Saga { get; }
         IPerformanceHeaderViewModel Performance { get; }
-        IGatewayHeaderViewModel Gateway { get; }
+        GatewayHeaderViewModel Gateway { get; }
         void CopyPropertyValue(object value);
     }
 }
