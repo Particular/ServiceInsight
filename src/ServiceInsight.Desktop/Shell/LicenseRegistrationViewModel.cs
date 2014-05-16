@@ -10,12 +10,12 @@
     public class LicenseRegistrationViewModel : Screen
     {
         AppLicenseManager licenseManager;
-        WindowManagerEx dialogManager;
+        IWindowManagerEx dialogManager;
         NetworkOperations network;
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
-            WindowManagerEx dialogManager,
+            IWindowManagerEx dialogManager,
             NetworkOperations network)
         {
             this.licenseManager = licenseManager;

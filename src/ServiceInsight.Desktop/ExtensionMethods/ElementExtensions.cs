@@ -23,6 +23,33 @@
                 }
             }
         }
- 
+
+        public static T GetResource<T>(this DependencyObject element, object key)
+        {
+            for (DependencyObject dependencyObject = element; dependencyObject != null; dependencyObject = (LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject)))
+            {
+                FrameworkElement frameworkElement = dependencyObject as FrameworkElement;
+                if (frameworkElement != null)
+                {
+                    if (frameworkElement.Resources.Contains(key))
+                    {
+                        return (T)((object)frameworkElement.Resources[key]);
+                    }
+                }
+                else
+                {
+                    FrameworkContentElement frameworkContentElement = dependencyObject as FrameworkContentElement;
+                    if (frameworkContentElement != null && frameworkContentElement.Resources.Contains(key))
+                    {
+                        return (T)((object)frameworkContentElement.Resources[key]);
+                    }
+                }
+            }
+            if (Application.Current != null && Application.Current.Resources.Contains(key))
+            {
+                return (T)((object)Application.Current.Resources[key]);
+            }
+            return default(T);
+        }
     }
 }

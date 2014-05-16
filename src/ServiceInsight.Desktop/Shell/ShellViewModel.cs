@@ -36,7 +36,7 @@
     {
         IAppCommands appCommander;
         ScreenFactory screenFactory;
-        WindowManagerEx windowManager;
+        IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
@@ -48,7 +48,7 @@
         public ShellViewModel(
             IAppCommands appCommander,
             ScreenFactory screenFactory,
-            WindowManagerEx windowManager,
+            IWindowManagerEx windowManager,
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             StatusBarManager statusBarManager,
@@ -90,9 +90,9 @@
             InitializeIdleTimer();
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             View = (IShellView)view;
 
             DisplayName = GetProductName();

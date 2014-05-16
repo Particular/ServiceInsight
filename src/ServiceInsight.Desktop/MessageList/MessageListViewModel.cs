@@ -130,10 +130,10 @@
             return FocusedRow != null;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
             this.view = view as IMessageListView;
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
         }
 
         public void Focus(StoredMessage msg)

@@ -27,7 +27,7 @@
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IClipboard clipboard;
-        WindowManagerEx windowManager;
+        IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
         IMessageFlowView view;
@@ -39,7 +39,7 @@
             DefaultServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IClipboard clipboard,
-            WindowManagerEx windowManager,
+            IWindowManagerEx windowManager,
             ScreenFactory screenFactory,
             SearchBarViewModel searchBar,
             MessageListViewModel messageList,
@@ -78,9 +78,9 @@
             set;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             this.view = (IMessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }

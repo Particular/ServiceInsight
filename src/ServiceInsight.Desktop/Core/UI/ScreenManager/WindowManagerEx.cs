@@ -1,15 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
-    using Application = System.Windows.Application;
+    using Caliburn.Micro;
 
-    public class WindowManagerEx : DefaultWindowManager
+    public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
-        ScreenFactory screenFactory;
-        bool allowResize;
-
         static IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
         static IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
         static IDictionary<DialogResult, bool?> DialogResultMaps;
@@ -41,19 +39,6 @@
                 {DialogResult.OK,     true },
                 {DialogResult.No,     false},
             };
-        }
-
-        public WindowManagerEx()
-            : base(null, null)
-        { }
-
-        public WindowManagerEx(
-            IViewLocator viewLocator,
-            IViewModelBinder viewModelBinder,
-            ScreenFactory screenFactory)
-            : base(viewLocator, viewModelBinder)
-        {
-            this.screenFactory = screenFactory;
         }
 
         public FileDialogResult OpenFileDialog(FileDialogModel model)
@@ -90,45 +75,8 @@
 
         public bool? ShowDialog<T>() where T : class
         {
-            allowResize = false;
-
-            var screen = screenFactory.CreateScreen<T>();
+            var screen = IoC.Get<T>(); // Yick!
             return base.ShowDialog(screen, null);
-        }
-
-        public bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class
-        {
-            this.allowResize = allowResize;
-            return base.ShowDialog(instance, null);
-        }
-
-        protected override Window EnsureWindow(object model, object view, bool isDialog)
-        {
-            var window = base.EnsureWindow(model, view, isDialog);
-            window.ResizeMode = allowResize ? window.ResizeMode : ResizeMode.NoResize;
-
-            SetParentToMain(window);
-
-            if (window.Owner == null)
-            {
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            }
-            else
-            {
-                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            }
-
-            return window;
-        }
-
-        void SetParentToMain(Window window)
-        {
-            if (window.Owner == null &&
-                Application.Current != null &&
-                Application.Current.MainWindow != null)
-            {
-                window.Owner = Application.Current.MainWindow;
-            }
         }
 
         static MessageChoice GetMessageChoice(MessageBoxButton button)

@@ -15,9 +15,19 @@
             this.canExecute = canExecute;
         }
 
-#pragma warning disable 67
-        public event EventHandler CanExecuteChanged;
-#pragma warning restore 67
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                if (this.canExecute != null)
+                    CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                if (this.canExecute != null)
+                    CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public virtual bool CanExecute(object parameter)
         {

@@ -30,9 +30,9 @@
             DisplayName = "Xml";
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             messageView = (IXmlMessageView)view;
             OnSelectedMessageChanged();
         }

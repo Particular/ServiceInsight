@@ -33,9 +33,9 @@
             private set;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             this.view = (IHexContentView)view;
             OnSelectedMessageChanged();
         }
