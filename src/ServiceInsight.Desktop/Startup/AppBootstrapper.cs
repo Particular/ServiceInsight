@@ -19,7 +19,7 @@ namespace Particular.ServiceInsight.Desktop.Startup
 
     public class AppBootstrapper : Bootstrapper<ShellViewModel>
     {
-        IContainer container;
+        protected IContainer container;
 
         protected override void Configure()
         {

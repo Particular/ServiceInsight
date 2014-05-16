@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using Autofac;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Desktop.Core.Settings;
     using Desktop.ServiceControl;
     using Desktop.Settings;
@@ -77,6 +77,5 @@
 
             return builder.Build();
         }
-
     }
 }

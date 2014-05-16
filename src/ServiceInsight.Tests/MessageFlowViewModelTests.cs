@@ -1,6 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Desktop.Core.Settings;
     using Desktop.Core.UI.ScreenManager;
     using Desktop.Events;
@@ -33,7 +33,7 @@
             var sut = CreateSUT();
             var messageId = "SomeMessageId";
             var msg = new StoredMessage { MessageId = messageId };
-            
+
             sut.SearchByMessageId(msg);
 
             searchBar.Received(1).Search(Arg.Is(messageId), Arg.Is(false));
@@ -48,11 +48,11 @@
             var sending = new Endpoint();
             var msg = new StoredMessage
             {
-                MessageId = messageId, 
+                MessageId = messageId,
                 ReceivingEndpoint = receiving,
                 SendingEndpoint = sending,
             };
-            
+
             sut.SearchByMessageId(msg);
 
             eventAggregator.Received(1).Publish(Arg.Is<RequestSelectingEndpoint>(m => m.Endpoint == receiving));
@@ -70,16 +70,15 @@
             settingProvider = Substitute.For<ISettingsProvider>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
 
-            return new MessageFlowViewModel(serviceControl, 
-                                            eventAggregator, 
-                                            clipboard, 
+            return new MessageFlowViewModel(serviceControl,
+                                            eventAggregator,
+                                            clipboard,
                                             windowManager,
-                                            screenFactory, 
+                                            screenFactory,
                                             searchBar,
                                             messageList,
                                             settingProvider,
                                             endpointExplorer);
         }
-
     }
 }

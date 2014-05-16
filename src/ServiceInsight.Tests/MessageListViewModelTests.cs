@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.MessageList;
@@ -32,12 +32,12 @@
             ServiceControl = Substitute.For<DefaultServiceControl>();
             SearchBar = Substitute.For<SearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
-            MessageList = new MessageListViewModel(EventAggregator, 
-                                                   ServiceControl, 
+            MessageList = new MessageListViewModel(EventAggregator,
+                                                   ServiceControl,
                                                    SearchBar,
-                                                   Substitute.For<GeneralHeaderViewModel>(), 
+                                                   Substitute.For<GeneralHeaderViewModel>(),
                                                    Substitute.For<IClipboard>());
-            MessageList.AttachView(View, null);
+            ((IViewAware)MessageList).AttachView(View, null);
         }
 
         [Test]
@@ -71,10 +71,10 @@
 
             MessageList.FocusedRow = null;
             MessageList.Handle(new BodyTabSelectionChanged(true));
-            
+
             AsyncHelper.Run(() =>
             {
-                MessageList.FocusedRow = new StoredMessage {BodyUrl = uri};
+                MessageList.FocusedRow = new StoredMessage { BodyUrl = uri };
             });
 
             ServiceControl.Received(1).GetBody(uri);

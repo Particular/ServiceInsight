@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using System.Xml;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Desktop.Core.MessageDecoders;
     using Desktop.Events;
     using Desktop.MessageViewers.XmlViewer;
@@ -35,7 +35,7 @@
         {
             XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
-            ViewModel.AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View, null);
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 
             View.Received(1).Display(Arg.Any<string>());
@@ -56,7 +56,7 @@
         {
             ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
 
-            View.DidNotReceive().Display(Arg.Any<string>()); 
+            View.DidNotReceive().Display(Arg.Any<string>());
         }
 
         [Test]
@@ -71,7 +71,7 @@
         public void clipboard_should_have_message_content_when_copying_message()
         {
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
-            
+
             XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
             ViewModel.CopyMessageXml();
