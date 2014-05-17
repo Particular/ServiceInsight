@@ -176,6 +176,8 @@
     <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Framework\Attributes\Attachment.cs" />
+    <Compile Include="Framework\Attributes\AutoAttachmentModule.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
