@@ -24,6 +24,7 @@
     using NUnit.Framework;
     using Shouldly;
 
+    using Desktop.MessageSequenceDiagram;
     public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
@@ -40,6 +41,7 @@
         EndpointExplorerViewModel EndpointExplorer;
         MessageListViewModel MessageList;
         MessageFlowViewModel MessageFlow;
+        private IMessageSequenceDiagramViewModel MessageSequenceDiagram;
         SagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
         StatusBarManager StatusbarManager;
@@ -63,6 +65,7 @@
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<MessageFlowViewModel>();
+            MessageSequenceDiagram = Substitute.For<IMessageSequenceDiagramViewModel>();
             SagaWindow = Substitute.For<SagaWindowViewModel>();
             MessageBodyView = Substitute.For<MessageBodyViewModel>();
             MessageProperties = Substitute.For<MessagePropertiesViewModel>();
@@ -77,7 +80,7 @@
 
             shell = new ShellViewModel(App, ScreenFactory, WindowManager,
                                        EndpointExplorer, MessageList, StatusbarManager,
-                                       EventAggregator, LicenseManager, MessageFlow, SagaWindow,
+                                       EventAggregator, LicenseManager, MessageFlow, MessageSequenceDiagram, SagaWindow,
                                        MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
                                        LogWindow, CommandLineArgParser);
 

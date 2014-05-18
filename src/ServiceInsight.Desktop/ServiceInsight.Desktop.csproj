@@ -34,6 +34,9 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>9c1d9b81</NuGetPackageImportStamp>
     <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
+    <RestorePackages>true</RestorePackages>
+    <FodyPath>..\packages\Fody</FodyPath>
+    <ExpressionBlendVersion>12.0.50320.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -240,6 +243,15 @@
     <Compile Include="Particular.Licensing\TrialStartDateStore.cs" />
     <Compile Include="Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="Particular.Licensing\UserSidChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="CodeParser\BaseParser.cs" />
     <Compile Include="CodeParser\CodeBlockPresenter.cs" />
     <Compile Include="CodeParser\CodeLanguage.cs" />
@@ -251,6 +263,8 @@
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Events\RetryMessage.cs" />
+    <Compile Include="Events\MessageStatusChanged.cs" />
+    <Compile Include="Events\SwitchToSequenceDiagramWindow.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\RequestSelectingEndpoint.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
@@ -268,6 +282,19 @@
     <Compile Include="MessageHeaders\MessageHeadersViewModel.cs" />
     <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
     <Compile Include="MessageViewers\MessageContentType.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceDiagramConnectionBuilder.cs" />
+    <Compile Include="MessageSequenceDiagram\IMessageSequenceDiagramView.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagram.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagramView.xaml.cs">
+      <DependentUpon>MessageSequenceDiagramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagramViewModel.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleLifeLineConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\SDFailureNode.cs" />
+    <Compile Include="MessageSequenceDiagram\ActivityNode.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleNode.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceEndNode.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceStartNode.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
@@ -488,6 +515,9 @@
     <Page Include="Framework\ExceptionHandler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    <Page Include="Images\Xaml\ExclamationMarkWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Images\Xaml\XamlIcons.xaml">
       <SubType>Designer</SubType>
@@ -518,6 +548,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageProperties\MessagePropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageSequenceDiagram\MessageSequenceDiagramView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -649,6 +683,11 @@
     <Resource Include="Images\Exclamation.png" />
     <Resource Include="Images\saga.png" />
     <Resource Include="Images\Headers.png" />
+    <Resource Include="Images\SequenceDiagram.png" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="License.lic" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -16,6 +16,7 @@
     using ExtensionMethods;
     using Framework.Rx;
     using LogWindow;
+using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
     using MessageFlow;
     using MessageHeaders;
     using MessageList;
@@ -58,6 +59,7 @@
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
+            IMessageSequenceDiagramViewModel messageSequenceDiagram,
             SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
             MessageHeadersViewModel messageHeadersViewer,
@@ -75,6 +77,7 @@
             this.comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
+            MessageSequenceDiagram = messageSequenceDiagram;
             SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
             EndpointExplorer = endpointExplorer;
@@ -88,6 +91,7 @@
             Items.Add(messageHeadersViewer);
             Items.Add(messageBodyViewer);
             Items.Add(messageFlow);
+            Items.Add(messageSequenceDiagram);
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
@@ -156,6 +160,8 @@
         public MessageListViewModel Messages { get; private set; }
 
         public MessageFlowViewModel MessageFlow { get; private set; }
+
+        public IMessageSequenceDiagramViewModel MessageSequenceDiagram { get; private set; }
 
         public MessageBodyViewModel MessageBody { get; private set; }
 
@@ -403,6 +409,10 @@
         public virtual void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
+        }
+        public virtual void Handle(SwitchToSequenceDiagramWindow @event)
+        {
+            View.SelectTab("MessageSequenceDiagram");
         }
     }
 }

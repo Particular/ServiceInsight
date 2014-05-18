@@ -176,6 +176,11 @@
             eventAggregator.Publish(new SwitchToFlowWindow());
         }
 
+        public void ShowSequenceDiagram()
+        {
+            _eventAggregator.Publish(new SwitchToSequenceDiagramWindow());
+        }
+
         public void RefreshSaga()
         {
             RefreshSaga(currentMessage, serviceControl.HasSagaChanged);

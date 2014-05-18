@@ -1,0 +1,342 @@
+﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageSequenceDiagram.MessageSequenceDiagramView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageSequenceDiagram"
+             xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             IsHitTestVisible="True">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
+                <ResourceDictionary>
+
+                    <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
+                    <cnv:StartSegmentValueConverter x:Key="StartSegmentConverter" />
+                    <cnv:EndSegmentValueConverter x:Key="EndSegmentConverter" />
+                    <ms:SegmentsToAngleConverter x:Key="EndArrowRotationConverter" ConnectionEnd="Finish" />
+                    <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
+                    
+                    <SolidColorBrush x:Key="RoleBackground" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="RoleForeground" Color="#666666" />
+                    <SolidColorBrush x:Key="RoleBottomLine" Color="#CCCCCC" />
+                    <SolidColorBrush x:Key="ActivityColor" Color="#333333" />
+
+                    <Style x:Key="ConnectionPointRelocatorStyle" TargetType="ms:ConnectionRelocatorThumb">
+                        <Setter Property="Width" Value="18" />
+                        <Setter Property="Height" Value="18" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ms:ConnectionRelocatorThumb">
+                                    <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="#800000FF" Stroke="Blue" StrokeThickness="3">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform X="-9" Y="-9"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    
+                    <ControlTemplate x:Key="ConnectionStyleTemplate" TargetType="{x:Type ms:DiagramConnectionElement}">
+                        <Canvas>
+                            <!-- Path: -->
+                            <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Gray" StrokeThickness="2" />
+                            <Path Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="#00FFFFFF" StrokeThickness="1" />
+                            <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" />
+
+                            <!-- Middle arrow: -->
+                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Left" ContentTemplate="{TemplateBinding EndArrowTemplate}">
+                                <ContentControl.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="{Binding Connection.Segments, Converter={StaticResource EndArrowRotationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <TranslateTransform>
+                                            <TranslateTransform.X>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.X>
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TransformGroup>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
+
+                            <!-- Relocator thumbs and connection point thumb: -->
+                            <ms:ConnectionRelocatorThumb Name="toPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Finish" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         RenderTransform="{Binding ToConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ms:ConnectionRelocatorThumb Name="fromPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Start" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         RenderTransform="{Binding FromConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Canvas>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="SelectionHighlight" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="True" />
+                                    <Condition Binding="{Binding ReadOnlyCanSelect, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="SelectionHighlight" Property="Visibility" Value="Collapsed" />
+                            </MultiDataTrigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="toPoint" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="fromPoint" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainPath" Property="Stroke" Value="#007AC5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <Style x:Key="RoleNodeStyle" TargetType="ms:DiagramNodeElement">
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="NodeTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border x:Name="RoleRectangle" 
+                                            Background="{StaticResource RoleBackground}" 
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0">
+                                        <Grid x:Name="RootGrid">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" MinWidth="80" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal" 
+                                                        Grid.Row="0"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center">
+                                                <ContentControl x:Name="RoleIcon"
+                                                                Template="{StaticResource SendingEndpoint}" 
+                                                                ToolTip="{Binding Data.Name}"
+                                                                Margin="3,0" />
+                                                <TextBlock Foreground="{StaticResource RoleForeground}"
+                                                           Text="{Binding Data.Name}"
+                                                           FontSize="11px"
+                                                           FontWeight="Bold"
+                                                           Margin="2,0,0,0"
+                                                           Padding="3,0" />
+                                            </StackPanel>
+                                            <Rectangle Grid.Row="1"
+                                                       StrokeThickness="10"
+                                                       Fill="{StaticResource RoleBottomLine}"
+                                                       Height="3"
+                                                       Stroke="{StaticResource RoleBottomLine}"
+                                                       Margin="0,0,0,0" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="SDFailureNode" TargetType="ms:DiagramNodeElement">
+                        <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="NodeTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border x:Name="RoleRectangle" 
+                                            Background="{StaticResource RoleBackground}" 
+                                            BorderBrush="{StaticResource RoleBottomLine}"
+                                            BorderThickness="1" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="ActivityRoleNodeStyle" TargetType="ms:DiagramNodeElement">
+                        <Setter Property="Foreground" Value="{StaticResource ActivityColor}" />
+                        <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="NodeTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border x:Name="RoleRectangle" 
+                                            Background="{StaticResource ActivityColor}" 
+                                            BorderBrush="{StaticResource ActivityColor}"
+                                            BorderThickness="1" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="SequenceStartNodeStyle" TargetType="ms:DiagramNodeElement">
+                        <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="NodeTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border x:Name="RoleRectangle" 
+                                            Background="{StaticResource RoleBackground}" 
+                                            BorderBrush="{StaticResource RoleBottomLine}"
+                                            BorderThickness="1" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="SequenceEndNodeStyle" TargetType="ms:DiagramNodeElement">
+                        <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="NodeTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Path Data="M75,0 L75,16 Z" Stroke="{StaticResource RoleBottomLine}" Fill="{StaticResource RoleBottomLine}" />
+                                        <Path Data="M0,0 L0,16 L16,16 L24,8 L150,8 L24,8 L16,0 Z" Stroke="OrangeRed" Fill="OrangeRed" />
+                                        <TextBlock Text="!" Foreground="White" Canvas.Top="0" Canvas.Left="8" FontSize="12"/>
+                                    </Canvas>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="SGMessageConnectionPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="StrokeThickness" Value="2" />
+                    </Style>
+
+                    <Style x:Key="SGEventConnectionPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="StrokeThickness" Value="2" />
+                        <Setter Property="StrokeDashArray" Value="1,1" />
+                    </Style>
+
+                    <Style x:Key="RoleLifeConnectionPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="{StaticResource RoleBottomLine}" />
+                        <Setter Property="StrokeThickness" Value="1" />
+                    </Style>
+
+                    <Style x:Key="TimeoutConnectionPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="{StaticResource RoleBottomLine}" />
+                        <Setter Property="StrokeThickness" Value="3" />
+                    </Style>
+
+                    <Style x:Key="ArrowheadPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="Fill" Value="Black" />
+                    </Style>
+
+                    <DataTemplate x:Key="EndArrowTemplate">
+                        <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="10" BackWidth="7" />
+                    </DataTemplate>
+
+                    <ms:CorneredPathBuilder x:Key="PathBuilder" ArrowLength="20"/>
+
+                    <Style x:Key="MessageConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="{Binding Data.Name}" />
+                        <Setter Property="PathStyle" Value="{StaticResource SGMessageConnectionPathStyle}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
+                        <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
+                    </Style>
+
+                    <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="{Binding Data.Name}" />
+                        <Setter Property="PathStyle" Value="{StaticResource SGEventConnectionPathStyle}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
+                        <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
+                    </Style>
+
+                    <Style x:Key="RoleLifeConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="Lifeline" />
+                        <Setter Property="PathStyle" Value="{StaticResource RoleLifeConnectionPathStyle}" />
+                        <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
+                    </Style>
+
+                    <Style x:Key="TimeoutConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="Timeout" />
+                        <Setter Property="PathStyle" Value="{StaticResource TimeoutConnectionPathStyle}" />
+                        <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
+                    </Style>
+
+                    <ms:DiagramConnectionStyleSelector x:Key="ConnectionStyleSelector">
+                        <ms:TypeStyle DataType="local:RoleLifelineConnection" Style="{StaticResource RoleLifeConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:TimeoutConnection" Style="{StaticResource TimeoutConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:SDMessageConnection" Style="{StaticResource MessageConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:SDEventConnection" Style="{StaticResource EventConnectionStyle}" />
+                    </ms:DiagramConnectionStyleSelector>
+
+                    <ms:ShapeNodeStyleSelector x:Key="NodeStyleSelector">
+                        <ms:TypeStyle DataType="local:RoleNode" Style="{StaticResource RoleNodeStyle}" />
+                        <ms:TypeStyle DataType="local:SDFailureNode" Style="{StaticResource SDFailureNode}" />
+                        <ms:TypeStyle DataType="local:ActivityNode" Style="{StaticResource ActivityRoleNodeStyle}" />
+                        <ms:TypeStyle DataType="local:SequenceEndNode" Style="{StaticResource SequenceEndNodeStyle}" />
+                        <ms:TypeStyle DataType="local:SequenceStartNode" Style="{StaticResource SequenceStartNodeStyle}" />
+                    </ms:ShapeNodeStyleSelector>
+                    
+                    <ms:DiagramFormatter x:Key="Formatter"
+                                         NodeStyleSelector="{StaticResource NodeStyleSelector}"
+                                         ConnectionStyleSelector="{StaticResource ConnectionStyleSelector}" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="Root" KeyUp="Root_KeyUp">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+            <StackPanel Orientation="Horizontal" Margin="5" >
+                <RepeatButton Margin="2" x:Name="ZoomIn" Interval="10">
+                    <ContentControl Template="{StaticResource ZoomInIcon}"    />
+                </RepeatButton>
+                <RepeatButton Margin="2" x:Name="ZoomOut" Interval="10">
+                    <ContentControl Template="{StaticResource ZoomOutIcon}"    />
+                </RepeatButton>
+                <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Show Endpoints" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ToggleButton>
+                <Button Margin="2" x:Name="ToggleTimelineData" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/DiagramTimeView.png" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Toggle Timeline Stretch" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <ms:DiagramSurface x:Name="ds"
+                           Background="White"
+                           Grid.Row="1"
+                           Diagram="{Binding Diagram}"
+                           IsReadOnly="True" 
+                           ZoomMode="ControlMouseWheel"
+                           Cursor="ScrollAll"
+                           DragAction="Pan"
+                           SelectedItem=""
+                           Formatter="{StaticResource Formatter}"
+                           HorizontalSnapSpecifier="{ms:SnapToInterval 70}"
+                           VerticalSnapSpecifier="{ms:SnapToInterval 40}" />
+
+    </Grid>
+</UserControl>
