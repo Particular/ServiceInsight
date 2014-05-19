@@ -68,7 +68,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             _messageList = messageList;
             _endpointExplorer = endpointExplorer;
             
-            Diagram = new MessageSequenceDiagram();
+            //Diagram = new MessageSequenceDiagram();
             //_nodeMap = new ConcurrentDictionary<string, MessageNode>();
             ShowSequenceDiagram();
         }
@@ -165,8 +165,8 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
 
             // add connections
-            //AddSDEventConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder" });
-            //AddSDEventConnection(activitySales1, activityeCommerce, new { Name = "OrderPlaced" });
+            AddEventConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder" });
+            AddEventConnection(activitySales1, activityeCommerce, new { Name = "OrderPlaced" });
 
             // Layout it
             UpdateLayout();
@@ -200,7 +200,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             return connection;
         }
 
-        private DiagramConnection AddSDEventConnection(DiagramNode startNode, DiagramNode endNode, object data)
+        private DiagramConnection AddEventConnection(DiagramNode startNode, DiagramNode endNode, object data)
         {
             var fromPoint = new DiagramConnectionPoint(startNode, Edge.Bottom);
             var toPoint = new DiagramConnectionPoint(endNode, Edge.Top);
@@ -253,6 +253,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             _loadingConversation = true;
             //_nodeMap.Clear();
             //Diagram = new MessageSequenceDiagram();
+            ShowSequenceDiagram();
 
             var storedMessage = @event.Message;
             if (storedMessage == null)
