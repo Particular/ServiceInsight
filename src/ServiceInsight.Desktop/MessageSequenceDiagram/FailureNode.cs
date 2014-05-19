@@ -4,11 +4,11 @@ using System.Windows;
 namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 {
 
-    public class SDFailureNode : DiagramNode
+    public class FailureNode : DiagramNode
     {
         const int endNodeSize = 1;
 
-        public SDFailureNode()
+        public FailureNode()
         {
             IsResizable = false;
 

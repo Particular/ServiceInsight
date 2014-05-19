@@ -95,7 +95,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             eCommerceNode.Data = new { Name = "eCommerce" };
             Diagram.Nodes.Add(eCommerceNode);
 
-            var eCommerceEndNode = new SDFailureNode();
+            var eCommerceEndNode = new FailureNode();
             Diagram.Nodes.Add(eCommerceEndNode);
 
             // add start of the sequence
@@ -120,7 +120,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             salesNode.Data = new { Name = "Sales" };
             Diagram.Nodes.Add(salesNode);
 
-            var salesEndNode = new SDFailureNode();
+            var salesEndNode = new FailureNode();
             Diagram.Nodes.Add(salesEndNode);
 
             // Add activitiy node to the Sales Lifeline
@@ -139,7 +139,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             customerRelationsNode.Data = new { Name = "Customer Relations" };
             Diagram.Nodes.Add(customerRelationsNode);
 
-            var customerRelationsEndNode = new SDFailureNode();
+            var customerRelationsEndNode = new FailureNode();
             Diagram.Nodes.Add(customerRelationsEndNode);
             AddLifelineConnection(customerRelationsNode, customerRelationsEndNode);
 
@@ -149,7 +149,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             contentManagementNode.Data = new { Name = "Content Management" };
             Diagram.Nodes.Add(contentManagementNode);
 
-            var contentManagementEndNode = new SDFailureNode();
+            var contentManagementEndNode = new FailureNode();
             Diagram.Nodes.Add(contentManagementEndNode);
             AddLifelineConnection(contentManagementNode, contentManagementEndNode);
 
@@ -159,7 +159,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             operationsNode.Data = new { Name = "Operations" };
             Diagram.Nodes.Add(operationsNode);
 
-            var operationsEndNode = new SDFailureNode();
+            var operationsEndNode = new FailureNode();
             Diagram.Nodes.Add(operationsEndNode);
             AddLifelineConnection(operationsNode, operationsEndNode);
 
@@ -208,7 +208,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             startNode.ConnectionPoints.Add(fromPoint);
             endNode.ConnectionPoints.Add(toPoint);
 
-            DiagramConnection connection = new SDEventConnection(fromPoint, toPoint);
+            DiagramConnection connection = new EventConnection(fromPoint, toPoint);
             connection.Data = data;
 
             Diagram.Connections.Add(connection);
@@ -223,7 +223,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             startNode.ConnectionPoints.Add(fromPoint);
             endNode.ConnectionPoints.Add(toPoint);
 
-            DiagramConnection connection = new SDMessageConnection(fromPoint, toPoint);
+            DiagramConnection connection = new MessageConnection(fromPoint, toPoint);
             connection.Data = data;
 
             Diagram.Connections.Add(connection);

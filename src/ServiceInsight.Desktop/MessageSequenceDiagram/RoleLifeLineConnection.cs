@@ -24,9 +24,9 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
         }
     }
 
-    public class SDMessageConnection : DiagramConnection
+    public class MessageConnection : DiagramConnection
     {
-        public SDMessageConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
+        public MessageConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
             : base(fromConnectionPoint, toConnectionPoint)
         {
             LineType = null;
@@ -35,9 +35,9 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
         }
     }
 
-    public class SDEventConnection : DiagramConnection
+    public class EventConnection : DiagramConnection
     {
-        public SDEventConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
+        public EventConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
             : base(fromConnectionPoint, toConnectionPoint)
         {
             LineType = null;

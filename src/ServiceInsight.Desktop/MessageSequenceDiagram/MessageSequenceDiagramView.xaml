@@ -275,13 +275,13 @@
                     <ms:DiagramConnectionStyleSelector x:Key="ConnectionStyleSelector">
                         <ms:TypeStyle DataType="local:RoleLifelineConnection" Style="{StaticResource RoleLifeConnectionStyle}" />
                         <ms:TypeStyle DataType="local:TimeoutConnection" Style="{StaticResource TimeoutConnectionStyle}" />
-                        <ms:TypeStyle DataType="local:SDMessageConnection" Style="{StaticResource MessageConnectionStyle}" />
-                        <ms:TypeStyle DataType="local:SDEventConnection" Style="{StaticResource EventConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:MessageConnection" Style="{StaticResource MessageConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:EventConnection" Style="{StaticResource EventConnectionStyle}" />
                     </ms:DiagramConnectionStyleSelector>
 
                     <ms:ShapeNodeStyleSelector x:Key="NodeStyleSelector">
                         <ms:TypeStyle DataType="local:RoleNode" Style="{StaticResource RoleNodeStyle}" />
-                        <ms:TypeStyle DataType="local:SDFailureNode" Style="{StaticResource SDFailureNode}" />
+                        <ms:TypeStyle DataType="local:FailureNode" Style="{StaticResource SDFailureNode}" />
                         <ms:TypeStyle DataType="local:ActivityNode" Style="{StaticResource ActivityRoleNodeStyle}" />
                         <ms:TypeStyle DataType="local:SequenceEndNode" Style="{StaticResource SequenceEndNodeStyle}" />
                         <ms:TypeStyle DataType="local:SequenceStartNode" Style="{StaticResource SequenceStartNodeStyle}" />
