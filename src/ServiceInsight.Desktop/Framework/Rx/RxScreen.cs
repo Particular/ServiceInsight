@@ -1,10 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Rx
 {
     using System;
-    using System.Linq;
     using Caliburn.Micro;
 
-    public class RxScreen : RxViewAware, IScreen, IChild, INotifyPropertyChangedEx
+    public class RxScreen : RxViewAware, IScreen, IChild
     {
         static readonly ILog Log = LogManager.GetLog(typeof(RxScreen));
 

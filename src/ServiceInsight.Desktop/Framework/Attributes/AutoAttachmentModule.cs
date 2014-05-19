@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
-using Autofac;
-using Autofac.Core;
-
-namespace Particular.ServiceInsight.Desktop.Framework.Attributes
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Attributes
 {
+    using System;
+    using Autofac;
+    using Autofac.Core;
+
     class AutoAttachmentModule : Module
     {
         protected override void AttachToComponentRegistration(

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Particular.ServiceInsight.Desktop.Framework.Attributes
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Attributes
 {
     internal interface IAttachment
     {

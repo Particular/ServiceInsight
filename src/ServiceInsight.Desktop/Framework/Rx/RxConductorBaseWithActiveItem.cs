@@ -1,7 +1,5 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Rx
 {
-    using System;
-    using System.Linq;
     using Caliburn.Micro;
 
     public abstract class RxConductorBaseWithActiveItem<T> : RxConductorBase<T>, IConductActiveItem where T : class

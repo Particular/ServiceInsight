@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Caliburn.Micro;
 
     public abstract class RxConductorBase<T> : RxScreen, IConductor, IParent<T> where T : class
