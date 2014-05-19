@@ -6,13 +6,14 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
     public class FailureNode : DiagramNode
     {
-        const int endNodeSize = 1;
+        const int sequenceStartHeight = 16;
+        const int sequenceEndWidth = 150;
 
         public FailureNode()
         {
             IsResizable = false;
 
-            Bounds = new Rect(0, 0, endNodeSize, endNodeSize);
+            Bounds = new Rect(0, 0, sequenceEndWidth, sequenceStartHeight);
         }
     }
 }

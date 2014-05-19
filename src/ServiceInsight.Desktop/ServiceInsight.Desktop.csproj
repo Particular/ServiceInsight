@@ -293,7 +293,7 @@
     <Compile Include="MessageSequenceDiagram\FailureNode.cs" />
     <Compile Include="MessageSequenceDiagram\ActivityNode.cs" />
     <Compile Include="MessageSequenceDiagram\RoleNode.cs" />
-    <Compile Include="MessageSequenceDiagram\SequenceEndNode.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleEndNode.cs" />
     <Compile Include="MessageSequenceDiagram\SequenceStartNode.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />

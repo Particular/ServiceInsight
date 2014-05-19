@@ -17,28 +17,13 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
         public void ApplyLayout()
         {
-            var gridLayoutAlgorithm = new GridLayoutAlgorithm()
-                {
-                    Info = new FlowDiagramLayoutAlgorithmInfo(),
-                    HorizontalOffset = 20.0,
-                    HorizontalSpacing = 10.0,
-                    VerticalOffset = 20.0,
-                    VerticalSpacing = 10.0
-                };
-
-            var treeLayoutAlgorithm = new TreeLayoutAlgorithm
-                {
-                    Info = new FlowDiagramLayoutAlgorithmInfo(),
-                    LayoutDirection = LayoutDirection.TopToBottom,
-                };
-
             Surface.ApplyLayoutAlgorithm(new GridLayoutAlgorithm()
             {
                 Info = new FlowDiagramLayoutAlgorithmInfo(),
                 HorizontalOffset = 20.0,
-                HorizontalSpacing = 10.0,
+                HorizontalSpacing = 20.0,
                 VerticalOffset = 20.0,
-                VerticalSpacing = 10.0
+                VerticalSpacing = 20.0
             });
         }
 

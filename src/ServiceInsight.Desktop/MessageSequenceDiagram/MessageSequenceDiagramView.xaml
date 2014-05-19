@@ -154,15 +154,16 @@
                         </Setter>
                     </Style>
 
-                    <Style x:Key="SDFailureNode" TargetType="ms:DiagramNodeElement">
+                    <Style x:Key="FailureNode" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Cursor" Value="Arrow" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Border x:Name="RoleRectangle" 
-                                            Background="{StaticResource RoleBackground}" 
-                                            BorderBrush="{StaticResource RoleBottomLine}"
-                                            BorderThickness="1" />
+                                    <Canvas>
+                                        <Path Data="M75,0 L75,16 Z" Stroke="{StaticResource RoleBottomLine}" Fill="{StaticResource RoleBottomLine}" />
+                                        <Path Data="M0,0 L0,16 L16,16 L24,8 L150,8 L24,8 L16,0 Z" Stroke="OrangeRed" Fill="OrangeRed" />
+                                        <TextBlock Text="!" Foreground="White" Canvas.Top="0" Canvas.Left="8" FontSize="12"/>
+                                    </Canvas>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -202,11 +203,10 @@
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Canvas>
-                                        <Path Data="M75,0 L75,16 Z" Stroke="{StaticResource RoleBottomLine}" Fill="{StaticResource RoleBottomLine}" />
-                                        <Path Data="M0,0 L0,16 L16,16 L24,8 L150,8 L24,8 L16,0 Z" Stroke="OrangeRed" Fill="OrangeRed" />
-                                        <TextBlock Text="!" Foreground="White" Canvas.Top="0" Canvas.Left="8" FontSize="12"/>
-                                    </Canvas>
+                                    <Border x:Name="RoleRectangle" 
+                                            Background="{StaticResource RoleBackground}" 
+                                            BorderBrush="{StaticResource RoleBottomLine}"
+                                            BorderThickness="1" />
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -239,7 +239,10 @@
                     </Style>
 
                     <DataTemplate x:Key="EndArrowTemplate">
-                        <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="10" BackWidth="7" />
+                        <StackPanel Orientation="Vertical">
+                            <Path Data="M0,4 L20,4 Z" Stroke="Black" Fill="Black" />
+                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />                            
+                        </StackPanel>
                     </DataTemplate>
 
                     <ms:CorneredPathBuilder x:Key="PathBuilder" ArrowLength="20"/>
@@ -281,9 +284,9 @@
 
                     <ms:ShapeNodeStyleSelector x:Key="NodeStyleSelector">
                         <ms:TypeStyle DataType="local:RoleNode" Style="{StaticResource RoleNodeStyle}" />
-                        <ms:TypeStyle DataType="local:FailureNode" Style="{StaticResource SDFailureNode}" />
+                        <ms:TypeStyle DataType="local:FailureNode" Style="{StaticResource FailureNode}" />
                         <ms:TypeStyle DataType="local:ActivityNode" Style="{StaticResource ActivityRoleNodeStyle}" />
-                        <ms:TypeStyle DataType="local:SequenceEndNode" Style="{StaticResource SequenceEndNodeStyle}" />
+                        <ms:TypeStyle DataType="local:RoleEndNode" Style="{StaticResource SequenceEndNodeStyle}" />
                         <ms:TypeStyle DataType="local:SequenceStartNode" Style="{StaticResource SequenceStartNodeStyle}" />
                     </ms:ShapeNodeStyleSelector>
                     
