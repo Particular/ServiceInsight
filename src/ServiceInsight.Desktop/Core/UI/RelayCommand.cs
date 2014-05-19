@@ -19,12 +19,12 @@
         {
             add
             {
-                if (this.canExecute != null)
+                if (canExecute != null)
                     CommandManager.RequerySuggested += value;
             }
             remove
             {
-                if (this.canExecute != null)
+                if (canExecute != null)
                     CommandManager.RequerySuggested -= value;
             }
         }

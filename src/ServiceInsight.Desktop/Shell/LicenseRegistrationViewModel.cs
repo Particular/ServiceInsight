@@ -37,9 +37,9 @@
             {
                 if (expired)
                 {
-                    return string.Format("ServiceInsight - License Expired");
+                    return "ServiceInsight - License Expired";
                 }
-                return string.Format("ServiceInsight");
+                return "ServiceInsight";
             }
             if (HasRemainingTrial)
             {

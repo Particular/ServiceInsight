@@ -73,7 +73,7 @@ namespace Particular.ServiceInsight.Desktop.Startup
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return container.Resolve(typeof(IEnumerable<>).MakeGenericType(new Type[] { service })) as IEnumerable<object>;
+            return container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
         }
 
         protected override object GetInstance(Type service, string key)
