@@ -1,14 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
 {
     using System.Collections.Generic;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Events;
     using ExtensionMethods;
     using HexViewer;
     using JsonViewer;
     using XmlViewer;
-    
+
     public class MessageBodyViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
@@ -37,8 +36,11 @@
         }
 
         public HexContentViewModel HexViewer { get; private set; }
+
         public JsonMessageViewModel JsonViewer { get; private set; }
+
         public XmlMessageViewModel XmlViewer { get; private set; }
+
         public MessageContentType ContentType { get; private set; }
 
         public bool JsonViewerVisible

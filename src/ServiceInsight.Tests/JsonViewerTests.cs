@@ -1,6 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Desktop.MessageViewers.JsonViewer;
     using Desktop.Models;
     using NSubstitute;
@@ -17,7 +17,7 @@
         {
             View = Substitute.For<IJsonMessageView>();
             ViewModel = new JsonMessageViewModel();
-            ((IActivate) ViewModel).Activate();
+            ((IActivate)ViewModel).Activate();
         }
 
         [Test]
@@ -25,7 +25,7 @@
         {
             const string TestMessage = @"[{""$type"":""NSB.Messages.CRM.RegisterCustomer, NSB.Messages"",""Name"":""Hadi"",""Password"":""123456"",""EmailAddress"":""h.eskandari@gmail.com"",""RegistrationDate"":""2013-01-28T03:24:05.0546437Z""}]";
 
-            ViewModel.AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View, null);
 
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 

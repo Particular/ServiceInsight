@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
     using System.ComponentModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using ExceptionHandler;
 
     public class MessagePropertiesViewModel : Screen
@@ -43,6 +43,5 @@
         {
             clipboard.CopyTo(value.ToString());
         }
-
     }
 }

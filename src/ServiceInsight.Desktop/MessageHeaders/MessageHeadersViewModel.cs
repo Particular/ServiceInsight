@@ -1,9 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     using System.Linq;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.UI;
     using Events;
     using Shell.Menu;
@@ -24,7 +22,7 @@
         }
 
         public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
-        
+
         public void OnContextMenuOpening()
         {
         }
@@ -34,7 +32,7 @@
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            this.view = (IMessageHeadersView) view;
+            this.view = (IMessageHeadersView)view;
         }
 
         public void Handle(SelectedMessageChanged @event)
@@ -55,7 +53,7 @@
 
         void AutoFitKeys()
         {
-            if(autoFitted) return;
+            if (autoFitted) return;
 
             view.AutoFit();
             autoFitted = true;

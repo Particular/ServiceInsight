@@ -1,8 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using System;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Desktop;
     using Desktop.Core.Licensing;
     using Desktop.Core.Settings;
@@ -28,6 +27,7 @@
     public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
+
         void Close();
     }
 
@@ -75,19 +75,19 @@
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();
 
-            shell = new ShellViewModel(App, ScreenFactory, WindowManager, 
-                                       EndpointExplorer, MessageList, StatusbarManager, 
+            shell = new ShellViewModel(App, ScreenFactory, WindowManager,
+                                       EndpointExplorer, MessageList, StatusbarManager,
                                        EventAggregator, LicenseManager, MessageFlow, SagaWindow,
-                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties, 
+                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
                                        LogWindow, CommandLineArgParser);
 
-            shell.AttachView(View, null);
+            ((IViewAware)shell).AttachView(View, null);
         }
 
         CommandLineArgParser MockEmptyStartupOptions()
         {
             var parser = Substitute.For<CommandLineArgParser>();
-            
+
             parser.ParsedOptions.Returns(new CommandLineOptions());
 
             return parser;
@@ -140,14 +140,14 @@
         }
 
         [Test]
-        [ExpectedException(typeof (NotImplementedException))]
+        [ExpectedException(typeof(NotImplementedException))]
         public void message_import()
         {
             shell.ImportMessage();
         }
 
         [Test]
-        [ExpectedException(typeof (NotImplementedException))]
+        [ExpectedException(typeof(NotImplementedException))]
         public void message_export()
         {
             shell.CreateMessage();
@@ -163,7 +163,7 @@
             shell.SelectedExplorerItem.ShouldBeSameAs(selected);
         }
 
-        [Test,Ignore("Need to figure out why this one is failing")]
+        [Test, Ignore("Need to figure out why this one is failing")]
         public void should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
@@ -198,6 +198,5 @@
                 AutoRefreshTimer = 15,
             };
         }
-
     }
 }

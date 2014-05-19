@@ -2,15 +2,14 @@
 {
     using System.Text;
     using System.Xml;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using Events;
     using ExceptionHandler;
     using ExtensionMethods;
     using Models;
 
-    public class XmlMessageViewModel : Screen, 
+    public class XmlMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
         IContentDecoder<XmlDocument> xmlDecoder;
@@ -31,9 +30,9 @@
             DisplayName = "Xml";
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             messageView = (IXmlMessageView)view;
             OnSelectedMessageChanged();
         }
@@ -42,7 +41,7 @@
 
         public void OnSelectedMessageChanged()
         {
-            if(messageView == null) return;
+            if (messageView == null) return;
 
             messageView.Clear();
             ShowMessageBody();

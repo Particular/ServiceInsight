@@ -3,16 +3,10 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.ViewModels;
-    using Caliburn.PresentationFramework.Views;
-    using Application = System.Windows.Application;
+    using Caliburn.Micro;
 
-    public class WindowManagerEx : DefaultWindowManager
+    public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
-        ScreenFactory screenFactory;
-        bool allowResize;
-
         static IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
         static IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
         static IDictionary<DialogResult, bool?> DialogResultMaps;
@@ -46,21 +40,9 @@
             };
         }
 
-        public WindowManagerEx() : base(null,null)
-        { }
-
-        public WindowManagerEx(
-            IViewLocator viewLocator, 
-            IViewModelBinder viewModelBinder,
-            ScreenFactory screenFactory)
-            : base(viewLocator, viewModelBinder)
-        {
-            this.screenFactory = screenFactory;
-        }
-
         public FileDialogResult OpenFileDialog(FileDialogModel model)
         {
-            using(var dialog = new OpenFileDialog())
+            using (var dialog = new OpenFileDialog())
             {
                 dialog.CheckFileExists = model.CheckFileExists;
                 dialog.CheckPathExists = model.CheckPathExists;
@@ -69,10 +51,10 @@
                 dialog.FilterIndex = model.FilterIndex;
                 dialog.Multiselect = model.Multiselect;
                 dialog.Title = model.Title;
-                
+
                 var dialogResult = dialog.ShowDialog();
                 var result = new FileDialogResult(DialogResultMaps[dialogResult], dialog.FileNames);
-                
+
                 return result;
             }
         }
@@ -92,45 +74,8 @@
 
         public bool? ShowDialog<T>() where T : class
         {
-            allowResize = false;
-            
-            var screen = screenFactory.CreateScreen<T>();
+            var screen = IoC.Get<T>(); // Yick!
             return base.ShowDialog(screen, null);
-        }
-
-        public bool? ShowDialog<T>(T instance, bool allowResize = false) where T : class
-        {
-            this.allowResize = allowResize;
-            return base.ShowDialog(instance, null);
-        }
-
-        protected override Window EnsureWindow(object model, object view, bool isDialog)
-        {
-            var window = base.EnsureWindow(model, view, isDialog);
-            window.ResizeMode = allowResize ? window.ResizeMode : ResizeMode.NoResize;
-
-            SetParentToMain(window);
-
-            if (window.Owner == null)
-            {
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            }
-            else
-            {
-                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            }
-
-            return window;
-        }
-
-        void SetParentToMain(Window window)
-        {
-            if (window.Owner == null &&
-                Application.Current != null &&
-                Application.Current.MainWindow != null)
-            {
-                window.Owner = Application.Current.MainWindow;
-            }
         }
 
         static MessageChoice GetMessageChoice(MessageBoxButton button)

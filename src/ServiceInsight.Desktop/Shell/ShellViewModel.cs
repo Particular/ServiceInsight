@@ -5,9 +5,7 @@
     using System.Reflection;
     using System.Windows;
     using System.Windows.Threading;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Filters;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.Licensing;
     using Core.Settings;
     using Core.UI.ScreenManager;
@@ -26,7 +24,7 @@
     using Settings;
     using Startup;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, 
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
         IDeactivate,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
@@ -38,7 +36,7 @@
     {
         IAppCommands appCommander;
         ScreenFactory screenFactory;
-        WindowManagerEx windowManager;
+        IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
@@ -46,11 +44,11 @@
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
-        
+
         public ShellViewModel(
             IAppCommands appCommander,
             ScreenFactory screenFactory,
-            WindowManagerEx windowManager,
+            IWindowManagerEx windowManager,
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             StatusBarManager statusBarManager,
@@ -92,9 +90,9 @@
             InitializeIdleTimer();
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             View = (IShellView)view;
 
             DisplayName = GetProductName();
@@ -131,7 +129,7 @@
         }
 
         public bool AutoRefresh { get; set; }
-        
+
         public bool BodyTabSelected { get; set; }
 
         public IShellView View { get; private set; }
@@ -181,7 +179,7 @@
             windowManager.ShowDialog<OptionsViewModel>();
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public async void ConnectToServiceControl()
         {
             var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
@@ -194,12 +192,12 @@
             }
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public void DeleteSelectedMessages()
         {
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public async void RefreshAll()
         {
             await EndpointExplorer.RefreshData();
@@ -207,19 +205,19 @@
             await SagaWindow.RefreshSaga();
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public void ImportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public void ExportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public void CreateMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
@@ -260,10 +258,10 @@
         {
             get { return false; }
         }
-        
+
         void InitializeIdleTimer()
         {
-            idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
+            idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) { Interval = TimeSpan.FromSeconds(10) };
             idleTimer.Tick += (s, e) => OnApplicationIdle();
             idleTimer.Start();
         }
@@ -318,7 +316,7 @@
                 appCommander.ShutdownImmediately();
             }
         }
-        
+
         void ValidateLicense()
         {
             if (licenseManager.IsLicenseExpired())
@@ -332,14 +330,14 @@
         void DisplayRegistrationStatus()
         {
             var license = licenseManager.CurrentLicense;
-            
+
             if (license == null)
             {
                 return;
             }
             if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'",license.LicenseType,license.RegisteredTo);
+                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }
             else
             {
@@ -381,7 +379,7 @@
 
         public void Handle(WorkFinished @event)
         {
-            if (workCounter <= 0) 
+            if (workCounter <= 0)
                 return;
 
             workCounter--;
@@ -407,6 +405,5 @@
         {
             View.SelectTab("MessageFlow");
         }
-
     }
 }

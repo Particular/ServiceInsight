@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.UI;
     using Shell.Menu;
 
@@ -18,9 +17,9 @@
             };
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             this.view = (ILogWindowView)view;
             this.view.Initialize();
         }
@@ -41,5 +40,4 @@
             view.Copy();
         }
     }
-
 }

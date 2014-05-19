@@ -3,9 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.UI;
     using DevExpress.Xpf.Grid;
     using Events;
@@ -66,8 +64,8 @@
             Rows = new BindableCollection<StoredMessage>();
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
-                retryMessageMenu, 
-                copyHeadersMenu, 
+                retryMessageMenu,
+                copyHeadersMenu,
                 copyMessageIdMenu
             };
         }
@@ -132,10 +130,10 @@
             return FocusedRow != null;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
             this.view = view as IMessageListView;
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
         }
 
         public void Focus(StoredMessage msg)
@@ -262,7 +260,7 @@
             if (ShouldLoadMessageBody)
             {
                 var bodyLoaded = await LoadMessageBody();
-                if(bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
+                if (bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
             }
         }
 

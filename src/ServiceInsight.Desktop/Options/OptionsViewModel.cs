@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Options
 {
     using System.ComponentModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.Settings;
     using Settings;
 
@@ -37,17 +37,20 @@
 
         public ProfilerSettings Application
         {
-            get; set;
+            get;
+            set;
         }
 
         public ReportingSettings UsageReporting
         {
-            get; set;
+            get;
+            set;
         }
 
         public bool IsModified
         {
-            get; set;
+            get;
+            set;
         }
 
         public void Save()

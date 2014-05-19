@@ -5,8 +5,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core;
     using ExceptionHandler;
     using ExtensionMethods;
@@ -21,15 +20,23 @@ namespace Particular.ServiceInsight.Desktop.Shell
         DefaultServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         public bool IsSplash { get; set; }
+
         public bool HasFullLicense { get { return License != null && !License.HasTrialLicense; } }
+
         public LicenseRegistrationViewModel License { get; private set; }
+
         public string AppVersion { get; set; }
+
         public string ServiceControlVersion { get; set; }
+
         public string DisplayName { get; set; }
+
         public string CommitHash { get; set; }
+
         public bool IsActive { get; private set; }
 
         public AboutViewModel(
@@ -39,7 +46,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
         {
             this.networkOperations = networkOperations;
             this.serviceControl = serviceControl;
-            
+
             License = licenseInfo;
             IsSplash = false;
             DisplayName = "About";
@@ -114,6 +121,5 @@ namespace Particular.ServiceInsight.Desktop.Shell
             var version = await serviceControl.GetVersion();
             ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
-
     }
 }

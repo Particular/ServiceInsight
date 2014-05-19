@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using Models;
 
     public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public GatewayHeaderViewModel(
-            IEventAggregator eventAggregator, 
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder)
             : base(eventAggregator, decoder)
         {

@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Filters;
-    using Caliburn.PresentationFramework.Screens;
+    using System.Linq;
+    using System.Windows.Input;
+    using Caliburn.Micro;
     using Core.Settings;
+    using Core.UI;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -16,7 +16,6 @@
     using Settings;
     using Shell;
     using Startup;
-	using System.Linq;
 
     public class SearchBarViewModel : Screen,
         IHandle<SelectedExplorerItemChanged>,
@@ -33,6 +32,9 @@
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
+
+            SearchCommand = new RelayCommand(Search, () => CanSearch);
+            CancelSearchCommand = new RelayCommand(CancelSearch, () => CanCancelSearch);
         }
 
         protected override void OnActivate()
@@ -40,7 +42,9 @@
             base.OnActivate();
 
             RestoreRecentSearchEntries();
-            Search(commandLineArgParser.ParsedOptions.SearchQuery);
+
+            if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
+                Search(commandLineArgParser.ParsedOptions.SearchQuery);
         }
 
         public void GoToFirstPage()
@@ -63,6 +67,10 @@
             Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
         }
 
+        public ICommand SearchCommand { get; private set; }
+
+        public ICommand CancelSearchCommand { get; private set; }
+
         public void Search(string searchQuery, bool performSearch = true)
         {
             SearchQuery = searchQuery;
@@ -70,10 +78,9 @@
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
 
-            if(performSearch) Search();
+            if (performSearch) Search();
         }
 
-        [AutoCheckAvailability]
         public async void Search()
         {
             SearchInProgress = true;
@@ -81,7 +88,6 @@
             await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        [AutoCheckAvailability]
         public async void CancelSearch()
         {
             SearchQuery = null;
@@ -120,7 +126,7 @@
         {
             get { return base.Parent as MessageListViewModel; }
         }
-        
+
         public int PageCount
         {
             get
@@ -192,13 +198,13 @@
         public IObservableCollection<string> RecentSearchQueries { get; private set; }
 
         public int CurrentPage { get; private set; }
-        
+
         public int PageSize { get; private set; }
-        
+
         public int TotalItemCount { get; private set; }
-        
+
         public bool SearchInProgress { get; private set; }
-        
+
         public bool SearchEnabled { get; private set; }
 
         public bool CanSearch
@@ -245,7 +251,7 @@
             var endpointNode = @event.SelectedExplorerItem.As<EndpointExplorerItem>();
             if (endpointNode != null)
             {
-                SelectedEndpoint = endpointNode.Endpoint;                
+                SelectedEndpoint = endpointNode.Endpoint;
             }
 
             var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();

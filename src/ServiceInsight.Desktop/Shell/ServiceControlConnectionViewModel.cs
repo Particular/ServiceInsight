@@ -5,8 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Autofac;
-    using Caliburn.PresentationFramework.Filters;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.Settings;
     using ServiceControl;
     using Settings;
@@ -30,7 +29,7 @@
         }
 
         public string ServiceUrl { get; set; }
-        
+
         public bool IsAddressValid { get; set; }
 
         public bool WorkInProgress { get; private set; }
@@ -63,7 +62,7 @@
 
         public string Version { get; private set; }
 
-        [AutoCheckAvailability]
+        //[AutoCheckAvailability]
         public async virtual void Accept()
         {
             StartWorkInProgress();
@@ -90,7 +89,8 @@
 
         public string ProgressMessage
         {
-            get; set;
+            get;
+            set;
         }
 
         void StoreConnectionAddress()

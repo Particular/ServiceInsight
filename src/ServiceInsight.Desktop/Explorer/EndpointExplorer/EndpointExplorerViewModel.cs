@@ -3,10 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
-    using Caliburn.PresentationFramework.Views;
+    using Caliburn.Micro;
     using Core;
     using Core.Settings;
     using Events;
@@ -16,7 +13,6 @@
     using Shell;
     using Startup;
 
-    [View(typeof(EndpointExplorerView))]
     public class EndpointExplorerViewModel : Screen,
         IExplorerViewModel,
         IHandle<RequestSelectingEndpoint>
@@ -31,7 +27,7 @@
         IExplorerView view;
 
         public EndpointExplorerViewModel(
-            IEventAggregator eventAggregator, 
+            IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider,
             ServiceControlConnectionProvider connectionProvider,
             CommandLineArgParser commandLineParser,
@@ -51,9 +47,9 @@
 
         public ServiceControlExplorerItem ServiceControlRoot
         {
-            get 
-            { 
-                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); 
+            get
+            {
+                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
             }
         }
 
@@ -92,9 +88,9 @@
             }
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             this.view = view as IExplorerView;
         }
 
@@ -112,7 +108,7 @@
             eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             await ConnectToService(connectTo);
-            
+
             SelectDefaultEndpoint();
 
             eventAggregator.Publish(new WorkFinished());
@@ -177,7 +173,7 @@
 
         public async Task ConnectToService(string url)
         {
-            if(url == null)
+            if (url == null)
                 return;
 
             connectionProvider.ConnectTo(url);

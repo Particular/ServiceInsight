@@ -34,7 +34,7 @@
 
         static string GetBaseUrl()
         {
-            return string.Format(StubServiceUrl + ":" + StubServicePort + "/");
+            return StubServiceUrl + ":" + StubServicePort + "/";
         }
 
         static void Configure(HttpSelfHostConfiguration config)

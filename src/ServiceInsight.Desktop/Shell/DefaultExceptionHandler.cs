@@ -2,8 +2,7 @@
 {
     using System;
     using System.Windows;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.ViewModels;
+    using Caliburn.Micro;
     using Core.UI.ScreenManager;
     using Events;
     using ExceptionHandler;
@@ -11,16 +10,16 @@
 
     public class DefaultExceptionHandler : WpfExceptionHandler
     {
-        WindowManagerEx windowManager;
+        IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         ShellViewModel shell;
 
         public DefaultExceptionHandler(
-            WindowManagerEx windowManager, 
-            IViewModelFactory screenFactory,
+            IWindowManagerEx windowManager,
+            IExceptionViewModel exceptionViewModel,
             IEventAggregator eventAggregator,
-            ShellViewModel shell) 
-            : base(screenFactory.Create<IExceptionViewModel>())
+            ShellViewModel shell)
+            : base(exceptionViewModel)
         {
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
@@ -33,7 +32,7 @@
 
             StopAsyncProgress(rootError);
 
-            if(IsSoftError(rootError))
+            if (IsSoftError(rootError))
             {
                 ShowWarning(rootError);
             }

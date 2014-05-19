@@ -10,7 +10,7 @@
     [TestFixture]
     public class ContainerRegistrationTests
     {
-        AppBootstrapper Bootstrapper;
+        TestableAppBootstrapper Bootstrapper;
         IContainer Container;
 
         [SetUp]
@@ -37,12 +37,16 @@
     {
         protected override void PrepareApplication()
         {
-
         }
 
         protected override bool TryHandleException(Exception exception)
         {
             return false;
+        }
+
+        public IContainer GetContainer()
+        {
+            return container;
         }
     }
 }

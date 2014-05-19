@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows.Input;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     public delegate void ButtonCommandHandler(object target);
 
@@ -33,22 +33,26 @@
 
         public virtual bool IsCancel
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool IsDefault
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual string Label
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual MessageChoice Result
         {
-            get; private set;
+            get;
+            private set;
         }
     }
 }

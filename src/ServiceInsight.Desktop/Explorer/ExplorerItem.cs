@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Explorer
 {
     using System.Drawing;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     public abstract class ExplorerItem : PropertyChangedBase
     {

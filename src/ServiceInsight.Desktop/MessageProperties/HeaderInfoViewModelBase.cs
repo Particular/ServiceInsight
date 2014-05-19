@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core.MessageDecoders;
     using Events;
     using Models;
@@ -11,9 +10,9 @@
     public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
     {
         IContentDecoder<IList<HeaderInfo>> decoder;
-        
-        protected HeaderInfoViewModelBase (
-            IEventAggregator eventAggregator, 
+
+        protected HeaderInfoViewModelBase(
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder)
         {
             this.decoder = decoder;
@@ -50,7 +49,7 @@
         {
             var headers = message.HeaderRaw;
             var decodedResult = decoder.Decode(headers);
-            
+
             return decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
         }
 

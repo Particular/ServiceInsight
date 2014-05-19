@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.Linq;
     using Autofac;
-    using Caliburn.Core;
+    using Caliburn.Micro;
     using Core.Settings;
     using SettingsProvider = Core.Settings.SettingsProvider;
 
@@ -41,7 +41,6 @@
 
                 return base.LoadSettings<T>(metadata);
             }
-
         }
     }
 }

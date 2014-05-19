@@ -2,7 +2,7 @@
 {
     using Autofac;
     using Autofac.Core;
-    using Caliburn.PresentationFramework.ApplicationModel;
+    using Caliburn.Micro;
 
     public class EventAggregationAutoSubscriptionModule : Module
     {
@@ -12,7 +12,7 @@
         }
 
         static void OnComponentActivated(object sender, ActivatedEventArgs<object> e)
-        { 
+        {
             var handler = e.Instance as IHandle;
             if (handler != null)
                 e.Context.Resolve<IEventAggregator>().Subscribe(handler);
