@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;

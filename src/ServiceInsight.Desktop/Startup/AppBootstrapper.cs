@@ -6,7 +6,6 @@ namespace Particular.ServiceInsight.Desktop.Startup
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
-    using System.Linq;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Markup;
@@ -37,7 +36,7 @@ namespace Particular.ServiceInsight.Desktop.Startup
             // We reregister the container within itself.
             // This is bad and we should feel bad about it.
             containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance<IContainer>(container).SingleInstance();
+            containerBuilder.RegisterInstance(container).SingleInstance();
             containerBuilder.Update(container);
         }
 

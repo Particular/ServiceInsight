@@ -2,7 +2,7 @@
 {
     using Autofac;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
+    using Core.UI.ScreenManager;
 
     public class CaliburnModule : Module
     {

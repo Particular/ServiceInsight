@@ -26,7 +26,7 @@
 
         public static T GetResource<T>(this DependencyObject element, object key)
         {
-            for (DependencyObject dependencyObject = element; dependencyObject != null; dependencyObject = (LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject)))
+            for (var dependencyObject = element; dependencyObject != null; dependencyObject = (LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject)))
             {
                 var frameworkElement = dependencyObject as FrameworkElement;
                 if (frameworkElement != null)

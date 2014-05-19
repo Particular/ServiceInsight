@@ -6,13 +6,13 @@
     using System.Windows.Input;
     using Caliburn.Micro;
     using Core.Settings;
+    using Core.UI;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using MessageList;
     using Models;
-    using Particular.ServiceInsight.Desktop.Core.UI;
     using Settings;
     using Shell;
     using Startup;
