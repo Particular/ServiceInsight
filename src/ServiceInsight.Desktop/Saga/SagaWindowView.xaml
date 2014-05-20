@@ -6,6 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
+             xmlns:l="clr-namespace:Particular.ServiceInsight.Desktop.Saga"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -73,7 +74,6 @@
                         </Grid>
                     </ControlTemplate>
 
-
                     <Style TargetType="RadioButton" x:Key="PropertiesRadioButton">
                         <Setter Property="Background" Value="#FF448DCA" />
                         <Setter Property="Foreground" Value="{StaticResource SagaBlue}" />
@@ -102,7 +102,6 @@
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
-
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Disabled">
@@ -387,7 +386,6 @@
                                 <RadioButton x:Name="Updated" Content="Updated" IsChecked="True" Style="{StaticResource PropertiesRadioButton}" />
                             </StackPanel>
 
-
                             <ItemsControl ItemsSource="{Binding Values}">
                                 <ItemsControl.Style>
                                     <Style TargetType="{x:Type ItemsControl}">
@@ -435,55 +433,55 @@
                         </Grid>
                     </DataTemplate>
 
-                    <DataTemplate x:Key="SagaNode">
+                    <DataTemplate DataType="{x:Type l:SagaUpdate}">
                         <Grid>
-                            <StackPanel x:Name="SagaNodePanel">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width=".95*" />
-                                        <ColumnDefinition Width="1.1*" />
-                                        <ColumnDefinition Width=".95*" />
-                                    </Grid.ColumnDefinitions>
-                                    <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
-                                    <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1">
-                                        <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}">
-                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                <ContentControl Template="{StaticResource SagaTimeoutIcon}"
+                            <Grid x:Name="SagaNodePanel">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".95*" />
+                                    <ColumnDefinition Width="1.1*" />
+                                    <ColumnDefinition Width=".95*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ContentPresenter x:Name="InitialMessage" ContentTemplate="{StaticResource Message}" Content="{Binding InitiatingMessage}" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                <StackPanel x:Name="Middle" Background="{StaticResource SagaBackground}" Grid.Column="1">
+                                    <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}">
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <ContentControl Template="{StaticResource SagaTimeoutIcon}"
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4" />
 
-                                                <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
-                                            </StackPanel>
-                                            <StackPanel Margin="10" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverterInverted}}">
-                                            </StackPanel>
+                                            <TextBlock Text="Timeout Invoked" Foreground="{StaticResource SagaBlue}" FontSize="16px" FontWeight="Bold" />
+                                        </StackPanel>
+                                        <Control Margin="10" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverterInverted}}">
+                                        </Control>
 
-                                            <StackPanel x:Name="StepName" Orientation="Horizontal">
-                                                <ContentControl Template="{StaticResource SagaInitiatedIcon}"
+                                        <StackPanel x:Name="StepName" Orientation="Horizontal">
+                                            <ContentControl Template="{StaticResource SagaInitiatedIcon}"
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4"
                                                     Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                <ContentControl Template="{StaticResource SagaUpdatedIcon}"
+                                            <ContentControl Template="{StaticResource SagaUpdatedIcon}"
                                                     VerticalAlignment="Top"
                                                     Margin="0 4 4 4"
                                                     Visibility="{Binding IsFirstNode, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
 
-                                                <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
-                                                <TextBlock Text="  " FontSize="12px" />
-                                                <TextBlock Text="{Binding StartTime}" FontSize="12px" Margin="5 5" />
-                                                <TextBlock Text="  " FontSize="12px" />
-                                            </StackPanel>
-
-                                            <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
+                                            <TextBlock x:Name="StepNameBox" Text="{Binding Label}" FontSize="16px" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding StartTime}" FontSize="12px" Margin="10 5" />
                                         </StackPanel>
+
+                                        <ContentPresenter ContentTemplate="{StaticResource PropertiesPanel}" ContentSource="{Binding}" />
                                     </StackPanel>
-                                    <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding NonTimeoutMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0" />
-                                </Grid>
-                                <ItemsControl x:Name="TimeoutMessages" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}" />
-                            </StackPanel>
+                                </StackPanel>
+                                <ItemsControl x:Name="SagaMessages" Grid.Column="2" ItemTemplate="{StaticResource Message}" ItemsSource="{Binding NonTimeoutMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 80 0 0" />
+                                <ItemsControl x:Name="TimeoutMessages" Grid.Row="1" Grid.ColumnSpan="3" ItemTemplate="{StaticResource TimeoutMessage}" ItemsSource="{Binding TimeoutMessages}" />
+                            </Grid>
                         </Grid>
                     </DataTemplate>
 
-                    <DataTemplate x:Key="Header">
+                    <DataTemplate DataType="{x:Type l:SagaHeader}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".95*" />
@@ -494,18 +492,18 @@
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}">
                                     <TextBlock Text="&#x2190; Back to Message View" FontSize="12px" Foreground="{StaticResource SagaBlue}" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
                                     <Border BorderThickness="0 0 0 2" Padding="0 5 0 5" BorderBrush="{StaticResource SagaBlue}">
-                                        <TextBlock Text="{Binding SagaType}" FontSize="24px" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding Data.SagaType}" FontSize="24px" FontWeight="Bold" />
                                     </Border>
                                     <StackPanel Orientation="Horizontal" Margin="0 5 0 2">
                                         <TextBlock FontWeight="Bold" FontSize="14px" Text="guid " Foreground="{StaticResource SagaForeground}" />
-                                        <TextBlock FontSize="14px" Text="{Binding SagaId}" Foreground="{StaticResource SagaForeground}" />
+                                        <TextBlock FontSize="14px" Text="{Binding Data.SagaId}" Foreground="{StaticResource SagaForeground}" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
 
-                    <DataTemplate x:Key="Footer">
+                    <DataTemplate DataType="{x:Type l:SagaFooter}">
                         <Grid Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".95*" />
@@ -519,7 +517,7 @@
                                                     Margin="0 4 4 4" />
                                     <StackPanel>
                                         <TextBlock Foreground="White" Text="Saga Completed" FontSize="14px" FontWeight="Bold" />
-                                        <TextBlock Foreground="White" Text="{Binding CompleteTime}" FontSize="14px" />
+                                        <TextBlock Foreground="White" Text="{Binding Data.CompleteTime}" FontSize="14px" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -547,13 +545,25 @@
             </StackPanel>
         </Border>
 
-        <ScrollViewer Grid.Row="1" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}">
+        <!--<ScrollViewer Grid.Row="1" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}">
             <StackPanel x:Name="Surface" SizeChanged="StackPanel_SizeChanged" LayoutUpdated="SagaWindowView_LayoutUpdated">
                 <ContentPresenter ContentTemplate="{StaticResource Header}" Content="{Binding Data}" />
                 <ItemsControl x:Name="Steps" ItemsSource="{Binding Data.Changes}" ItemTemplate="{StaticResource SagaNode}" />
                 <ContentPresenter ContentTemplate="{StaticResource Footer}" Content="{Binding Data}" />
             </StackPanel>
-        </ScrollViewer>
+        </ScrollViewer>-->
+
+        <Grid x:Name="Surface" Grid.Row="1" SizeChanged="StackPanel_SizeChanged" LayoutUpdated="SagaWindowView_LayoutUpdated">
+            <ItemsControl x:Name="Steps" Style="{StaticResource ItemsControlVirtialisedStyle}" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ItemsControl.ItemsSource>
+                    <MultiBinding Converter="{StaticResource CompositeCollectionConverter}">
+                        <Binding Path="Header" />
+                        <Binding Path="Data.Changes" />
+                        <Binding Path="Footer" />
+                    </MultiBinding>
+                </ItemsControl.ItemsSource>
+            </ItemsControl>
+        </Grid>
 
         <StackPanel Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical"
                     Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverterInverted}}">
@@ -572,7 +582,6 @@
                     <TextBlock FontSize="16px" Padding="2" HorizontalAlignment="Center" Style="{StaticResource CodeStyle}" Text="install-package ServiceControl.Plugin.SagaAudit" />
                 </Border>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </UserControl>

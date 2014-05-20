@@ -31,6 +31,7 @@
                     <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
+                    <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
 
                     <!--Template Selectors-->
                     <menu:MenuItemDataTemplateSelector x:Key="ContextMenuSelector" />
@@ -322,6 +323,34 @@
                             <dxb:BarItemSeparator />
                         </ContentControl>
                     </DataTemplate>
+
+                    <Style x:Key="ItemsControlVirtialisedStyle" TargetType="ItemsControl">
+                        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+                        <Setter Property="ItemsPanel">
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <Border
+                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                        Padding="{TemplateBinding Control.Padding}"
+                                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                        Background="{TemplateBinding Panel.Background}"
+                                        SnapsToDevicePixels="True">
+                                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

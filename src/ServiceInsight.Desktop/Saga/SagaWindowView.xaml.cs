@@ -58,21 +58,28 @@
         void RefreshAll()
         {
             var steps = (ItemsControl)FindName("Steps");
+
+            if (steps == null)
+                return;
+
             for (var i = 0; i < steps.Items.Count; i++)
             {
-                var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
-                if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+                if (steps.Items[i] is SagaUpdate)
                 {
-                    var item = (StackPanel)(((Grid)VisualTreeHelper.GetChild(stepsContainer, 0))).Children[0];
-                    DrawLines(item, ((SagaWindowViewModel)DataContext).ShowEndpoints);
+                    var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
+                    if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+                    {
+                        var item = VisualTreeHelper.GetChild(stepsContainer, 0) as Panel;
+                        DrawLines(item, ((SagaWindowViewModel)DataContext).ShowEndpoints);
+                    }
                 }
             }
         }
 
-        void DrawLines(StackPanel panel, bool showEndpoints)
+        void DrawLines(Panel panel, bool showEndpoints)
         {
             if (panel == null) return;
-            
+
             var endpointHeight = showEndpoints ? -14 : 0;
             var caption = (FrameworkElement)panel.FindName("StepName");
             var captionPosition = GetPosition("StepName", panel);
@@ -82,10 +89,9 @@
 
             var messageDataHeight = messageData.Visibility == Visibility.Visible ? messageData.ActualHeight : 0;
 
-            var parent = panel.Parent as Grid;
-            RemoveExistingLines(parent);
+            RemoveExistingLines(panel);
 
-            AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageDataHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), parent);
+            AddLine(new Point(messagePosition.X, message.ActualHeight + endpointHeight - messageDataHeight), new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), panel);
 
             var stepName = (Panel)panel.FindName("StepName");
             var icon = stepName.Children.Cast<FrameworkElement>().OfType<ContentControl>().FirstOrDefault(c => c.Visibility == Visibility.Visible);
@@ -100,32 +106,32 @@
                 var timeoutMessage = timeout.FindName("TimeoutMessage") as FrameworkElement;
                 var timeoutMessagePosition = timeoutMessage.TransformToAncestor(panel).Transform(new Point(0, 0));
 
-                AddTimeoutVerticalLine(timeout, panel, parent, ref lastPoint, ref timeoutPoint);
-                AddLine(timeoutPoint, new Point(timeoutPoint.X, timeoutPoint.Y + 12), parent);
-                AddLine(new Point(timeoutPoint.X, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), parent);
-                AddLine(new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)), parent);
-                AddArrow(parent, new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)));
+                AddTimeoutVerticalLine(timeout, panel, ref lastPoint, ref timeoutPoint);
+                AddLine(timeoutPoint, new Point(timeoutPoint.X, timeoutPoint.Y + 12), panel);
+                AddLine(new Point(timeoutPoint.X, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), panel);
+                AddLine(new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutPoint.Y + 12), new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)), panel);
+                AddArrow(panel, new Point(timeoutMessagePosition.X + timeoutMessage.ActualWidth / 2, timeoutMessagePosition.Y + (endpointHeight + 14)));
             }
 
             var sagaMessagesPosition = GetPosition("SagaMessages", panel);
             var sagaMessages = (ItemsControl)panel.FindName("SagaMessages");
             if (sagaMessages.Items.Count > 0)
             {
-                AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), parent);
-                AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), parent);
-                AddArrow(parent, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
+                AddLine(new Point(captionPosition.X + caption.ActualWidth, message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), panel);
+                AddLine(new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), message.ActualHeight + endpointHeight - messageDataHeight), new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)), panel);
+                AddArrow(panel, new Point(sagaMessagesPosition.X + (sagaMessages.ActualWidth / 2), sagaMessagesPosition.Y + (endpointHeight + 14)));
             }
         }
 
-// ReSharper disable RedundantAssignment
-        void AddTimeoutVerticalLine(Panel timeout, StackPanel panel, Grid parent, ref Point lastPoint, ref Point timeoutPoint)
-// ReSharper restore RedundantAssignment
+        // ReSharper disable RedundantAssignment
+        void AddTimeoutVerticalLine(Panel timeout, Panel panel, ref Point lastPoint, ref Point timeoutPoint)
+        // ReSharper restore RedundantAssignment
         {
             var timeoutIcon = timeout.FindName("TimeoutIcon") as FrameworkElement;
             var timeoutIconPosition = timeoutIcon.TransformToAncestor(panel).Transform(new Point(0, 0));
             timeoutPoint = new Point(timeoutIconPosition.X + timeoutIcon.ActualWidth / 2, timeoutIconPosition.Y);
 
-            AddLine(lastPoint, timeoutPoint, parent);
+            AddLine(lastPoint, timeoutPoint, panel);
             timeoutPoint.Y += timeoutIcon.ActualHeight;
             lastPoint = timeoutPoint;
         }
@@ -216,7 +222,7 @@
             }
         }
 
-        Point GetPosition(string name, Panel panel)
+        Point GetPosition(string name, FrameworkElement panel)
         {
             return ((UIElement)panel.FindName(name))
                 .TransformToAncestor(panel)

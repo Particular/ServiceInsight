@@ -11,6 +11,7 @@
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
+        private SagaData data;
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
 
@@ -149,7 +150,20 @@
 
         public bool HasSaga { get { return Data != null; } }
 
-        public SagaData Data { get; private set; }
+        public SagaData Data
+        {
+            get { return data; }
+            private set
+            {
+                data = value;
+                Header = new SagaHeader(data);
+                Footer = new SagaFooter(data);
+            }
+        }
+
+        public SagaHeader Header { get; private set; }
+
+        public SagaFooter Footer { get; private set; }
 
         public bool ShowEndpoints { get; set; }
 

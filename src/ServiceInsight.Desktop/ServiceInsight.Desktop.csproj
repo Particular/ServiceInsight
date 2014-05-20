@@ -262,6 +262,8 @@
     <Compile Include="Modules\EnvironmentModule.cs" />
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
     <Compile Include="Saga\SagaData.cs" />
+    <Compile Include="Saga\SagaFooter.cs" />
+    <Compile Include="Saga\SagaHeader.cs" />
     <Compile Include="Saga\SagaMessage.cs" />
     <Compile Include="Saga\SagaUpdate.cs" />
     <Compile Include="Saga\SagaUpdatedValue.cs" />
@@ -462,6 +464,7 @@
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
     <Compile Include="ValueConverters\BoolToWindowBorderConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\HalvingConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
