@@ -216,7 +216,7 @@
                                             <StackPanel x:Name="OriginatingEndPoint" 
                                                         ToolTip="Sending Endpoint"
                                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
-                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Orientation="Horizontal"
                                                         Background="{StaticResource EndpointBackground}" 
                                                         Height="14">
@@ -254,7 +254,7 @@
                                                     <local:MessageActionPopup />
                                                 </local:MessagePopupControl>
 
-                                                <StackPanel Orientation="Horizontal" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]" >
+                                                <StackPanel Orientation="Horizontal" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]" >
                                                     <ContentControl x:Name="SagaStatusIcon" Template="{StaticResource SagaInitiatedIcon}"
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center" />
@@ -266,7 +266,7 @@
                                             <StackPanel x:Name="ReceivingEndPoint" 
                                                         ToolTip="Processing Endpoint"
                                                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
-                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Background="{StaticResource EndpointBackground}"

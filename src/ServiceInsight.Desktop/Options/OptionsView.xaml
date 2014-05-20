@@ -86,7 +86,7 @@
             </Button>
             
             <StackPanel Orientation="Horizontal"
-                        Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                        Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Image Source="/Images/Alert.png" 
                        Width="16" Height="16" 
                        Margin="{StaticResource SmallMargin}"

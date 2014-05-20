@@ -351,13 +351,13 @@
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Foreground="White"
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                 <ContentControl Template="{StaticResource EventIcon}"
                                                    ToolTip="Event"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Foreground="White"
-                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                                   Visibility="{Binding IsPublished, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl.RenderTransform>
                         <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                     </ContentControl.RenderTransform>
@@ -402,7 +402,7 @@
                 <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource MessagePropertyKey}" Text="Delivery Time" />
                 <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource MessagePropertyKey}" Text="Processing Time" />
                 <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource MessagePropertyKey}" Text="NSB Version" />
-                <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Top" Margin="4" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl Template="{StaticResource Exception}" Width="16" Height="16" />
                     <TextBlock Text="Exception" Style="{StaticResource MessageExceptionKey}" />
                 </StackPanel>
@@ -411,7 +411,7 @@
                 <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedDeliveryTime}" />
                 <TextBlock Grid.Column="2" Grid.Row="3" Style="{StaticResource MessagePropertyValue}" Text="{Binding Message.ElapsedProcessingTime}" />
                 <TextBlock Grid.Column="2" Grid.Row="4" Style="{StaticResource MessagePropertyValue}" Text="{Binding NSBVersion}" />
-                <TextBlock Grid.Column="2" Grid.Row="6" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityCollapseConverter}}" MaxWidth="260" TextTrimming="CharacterEllipsis">
+                <TextBlock Grid.Column="2" Grid.Row="6" Style="{StaticResource MessageExceptionValue}" Visibility="{Binding ShowExceptionInfo, Converter={StaticResource BoolToVisibilityConverter}}" MaxWidth="260" TextTrimming="CharacterEllipsis">
                     <TextBlock Foreground="Red" MouseLeftButtonUp="OnMenuClicked" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowException]" cal:Action.TargetWithoutContext="{Binding}" Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" />
                 </TextBlock>
             </Grid>

@@ -26,8 +26,8 @@
                         <StackPanel d:DataContext="{d:DesignInstance model:Endpoint}">
                             <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                                 <TextBlock Text="Configured for Monitoring: " />
-                                <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
-                                <TextBlock Text="No"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"/>
+                                <TextBlock Text="Yes"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock Text="No"  Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityConverterInverted}}"/>
                             </StackPanel>
                             <TextBlock>
                                 <Run Text="Installed On: " />

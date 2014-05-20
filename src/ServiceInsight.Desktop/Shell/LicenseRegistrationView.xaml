@@ -40,7 +40,7 @@
                    FontSize="{StaticResource LargeFontSize}"
                    Margin="40,5,40,15"
                    VerticalAlignment="Top"
-                   Visibility="{Binding HasRemainingTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                   Visibility="{Binding HasRemainingTrial, Converter={StaticResource BoolToVisibilityConverter}}">
             <Run Text="You currently have " />
             <Run Text="{Binding TrialDaysRemaining, Mode=OneWay}" />
             <Run Text="day(s) left on your "/>
@@ -52,17 +52,17 @@
                    FontWeight="SemiBold"
                    Foreground="{StaticResource WarningBrush}"
                    Margin="40,5,40,15"
-                   Visibility="{Binding AllowedToUse, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}"
+                   Visibility="{Binding AllowedToUse, Converter={StaticResource BoolToVisibilityConverterInverted}}"
                    Text="The trial period is now over."/>
         <TextBlock Grid.Row="4"
                    Margin="40,15,40,0"
                    Height="40"
                    TextWrapping="Wrap"
-                   Visibility="{Binding MustExtendTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                   Visibility="{Binding MustExtendTrial, Converter={StaticResource BoolToVisibilityConverter}}"
                    Text="To extend your free trial, click 'Extend trial' and register online. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
         <TextBlock Grid.Row="4"
                    Margin="40,15,40,0"
-                   Visibility="{Binding MustPurchase, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+                   Visibility="{Binding MustPurchase, Converter={StaticResource BoolToVisibilityConverter}}"
                    Height="50"
                    TextWrapping="Wrap"
                    Text="Please click 'Contact Sales' to request an extension to your free trial, or click 'Buy Now' to purchase a license online. When you receive your license file, save it to disk and then click the 'Browse' button below to select it."/>
@@ -83,7 +83,7 @@
                     Height="24"
                     Content="Contact Sales"
                     Margin="5 0"
-                    Visibility="{Binding CanContactSales, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                    Visibility="{Binding CanContactSales, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
                     x:Name="Extend"
@@ -91,14 +91,14 @@
                     Height="24"
                     Content="Extend Trial"
                     Margin="5 0"
-                    Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                    Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
                     x:Name="Purchase"
                     Width="120"
                     Height="24"
                     Content="Buy Now"
-                    Visibility="{Binding CanBuyNow, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                    Visibility="{Binding CanBuyNow, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             <Button Style="{StaticResource FlatButton}" 
                     Margin="{StaticResource ButtonMargin}"
@@ -106,7 +106,7 @@
                     Height="24"
                     Content="Browse..."
                     x:Name="LoadLicense"
-                    Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityCollapseConverter}}"/>
+                    Visibility="{Binding HasTrialLicense, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
         </StackPanel>
     </Grid>
