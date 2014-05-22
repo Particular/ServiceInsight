@@ -55,22 +55,21 @@
                             <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Gray" StrokeThickness="2" />
                             <Path Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="#00FFFFFF" StrokeThickness="1" />
                             <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" />
-
-                            <!-- Middle arrow: -->
-                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Left" ContentTemplate="{TemplateBinding EndArrowTemplate}">
+                            
+                            <!-- arrow: -->
+                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Center" ContentTemplate="{TemplateBinding EndArrowTemplate}">
                                 <ContentControl.RenderTransform>
                                     <TransformGroup>
-                                        <RotateTransform Angle="{Binding Connection.Segments, Converter={StaticResource EndArrowRotationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
                                         <TranslateTransform>
                                             <TranslateTransform.X>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
                                                     <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                     <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>
                                             </TranslateTransform.Y>
@@ -212,12 +211,12 @@
                         </Setter>
                     </Style>
 
-                    <Style x:Key="SGMessageConnectionPathStyle" TargetType="Path">
+                    <Style x:Key="MessageConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="2" />
                     </Style>
 
-                    <Style x:Key="SGEventConnectionPathStyle" TargetType="Path">
+                    <Style x:Key="EventConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="2" />
                         <Setter Property="StrokeDashArray" Value="1,1" />
@@ -234,31 +233,40 @@
                     </Style>
 
                     <Style x:Key="ArrowheadPathStyle" TargetType="Path">
-                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="Stroke" Value="Orange" />
                         <Setter Property="Fill" Value="Black" />
                     </Style>
 
-                    <DataTemplate x:Key="EndArrowTemplate">
-                        <StackPanel Orientation="Vertical">
-                            <Path Data="M0,4 L20,4 Z" Stroke="Black" Fill="Black" />
-                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />                            
-                        </StackPanel>
+                    <DataTemplate x:Key="MessageEndArrowTemplate">
+                        <Canvas>
+                            
+                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" />
+                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />
+                        </Canvas>
                     </DataTemplate>
+
+                    <DataTemplate x:Key="EventEndArrowTemplate">
+                        <Canvas>
+                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" />
+                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />
+                        </Canvas>
+                    </DataTemplate>
+
 
                     <ms:CorneredPathBuilder x:Key="PathBuilder" ArrowLength="20"/>
 
                     <Style x:Key="MessageConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="{Binding Data.Name}" />
-                        <Setter Property="PathStyle" Value="{StaticResource SGMessageConnectionPathStyle}" />
-                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="PathStyle" Value="{StaticResource MessageConnectionPathStyle}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource MessageEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
                     </Style>
 
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="{Binding Data.Name}" />
-                        <Setter Property="PathStyle" Value="{StaticResource SGEventConnectionPathStyle}" />
-                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource EventEndArrowTemplate}" />
                         <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
                     </Style>
