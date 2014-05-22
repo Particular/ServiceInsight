@@ -25,7 +25,7 @@
         {
             const string TestMessage = @"[{""$type"":""NSB.Messages.CRM.RegisterCustomer, NSB.Messages"",""Name"":""Hadi"",""Password"":""123456"",""EmailAddress"":""h.eskandari@gmail.com"",""RegistrationDate"":""2013-01-28T03:24:05.0546437Z""}]";
 
-            ((IViewAware)ViewModel).AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
 
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 

@@ -81,7 +81,7 @@
                                        MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
                                        LogWindow, CommandLineArgParser);
 
-            ((IViewAware)shell).AttachView(View, null);
+            ((IViewAware)shell).AttachView(View);
         }
 
         CommandLineArgParser MockEmptyStartupOptions()

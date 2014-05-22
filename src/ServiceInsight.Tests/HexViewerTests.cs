@@ -27,7 +27,7 @@
         [Test]
         public void should_display_the_message_when_view_is_loaded()
         {
-            ((IViewAware)ViewModel).AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
             ((IActivate)ViewModel).Activate();
 
             ViewModel.SelectedMessage = Encoding.Default.GetBytes(TestMessage);
@@ -60,7 +60,7 @@
         {
             const string messageWithSpecialChars = "This is a multiline test\rmessage content\tthat is spread into four lines";
 
-            ((IViewAware)ViewModel).AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
             ((IActivate)ViewModel).Activate();
 
             ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = messageWithSpecialChars }));

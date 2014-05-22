@@ -35,7 +35,7 @@
         {
             XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
-            ((IViewAware)ViewModel).AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 
             View.Received(1).Display(Arg.Any<string>());

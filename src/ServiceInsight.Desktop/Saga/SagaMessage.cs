@@ -122,7 +122,6 @@
             set
             {
                 showData = value;
-                NotifyOfPropertyChange("ShowData");
             }
         }
 

@@ -75,7 +75,7 @@
         public bool? ShowDialog<T>() where T : class
         {
             var screen = IoC.Get<T>(); // Yick!
-            return base.ShowDialog(screen, null);
+            return base.ShowDialog(screen);
         }
 
         static MessageChoice GetMessageChoice(MessageBoxButton button)

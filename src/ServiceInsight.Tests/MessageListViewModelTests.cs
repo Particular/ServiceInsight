@@ -37,7 +37,7 @@
                                                    SearchBar,
                                                    Substitute.For<GeneralHeaderViewModel>(),
                                                    Substitute.For<IClipboard>());
-            ((IViewAware)MessageList).AttachView(View, null);
+            ((IViewAware)MessageList).AttachView(View);
         }
 
         [Test]
