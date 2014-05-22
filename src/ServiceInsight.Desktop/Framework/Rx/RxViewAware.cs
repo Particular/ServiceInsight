@@ -56,20 +56,20 @@
             if (element != null && !(bool)element.GetValue(PreviouslyAttachedProperty))
             {
                 element.SetValue(PreviouslyAttachedProperty, true);
-                View.ExecuteOnLoad(element, (s, e) => OnViewLoaded(s));
+                //View.ExecuteOnLoad(element, (s, e) => OnViewLoaded(s));
             }
 
-            OnViewAttached(nonGeneratedView, context);
+            //OnViewAttached(nonGeneratedView, context);
             ViewAttached(this, new ViewAttachedEventArgs { View = nonGeneratedView, Context = context });
         }
 
-        protected virtual void OnViewAttached(object view, object context)
-        {
-        }
+        //protected virtual void OnViewAttached(object view, object context)
+        //{
+        //}
 
-        protected virtual void OnViewLoaded(object view)
-        {
-        }
+        //protected virtual void OnViewLoaded(object view)
+        //{
+        //}
 
         public virtual object GetView(object context = null)
         {
