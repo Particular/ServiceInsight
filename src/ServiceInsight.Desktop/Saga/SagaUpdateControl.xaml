@@ -433,13 +433,21 @@
 
             <DataTemplate x:Key="TimeoutMessage">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".95*" />
                         <ColumnDefinition Width="1.1*" />
                         <ColumnDefinition Width=".95*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1" Background="{StaticResource SagaBackground}">
-                        <StackPanel Margin="10" Background="{StaticResource SagaBackground}">
+
+                    <Grid Grid.Column="1" Background="{DynamicResource SagaBackground}">
+                        <Border Margin="15 0 0 0"
+                                BorderBrush="Black"
+                                BorderThickness="2,0,0,0" />
+                        <Border Margin="10">
                             <StackPanel Orientation="Horizontal">
                                 <ContentControl x:Name="TimeoutIcon"
                                                 Margin="0 4 4 4"
@@ -452,28 +460,71 @@
                                                    FontSize="16px"
                                                    FontWeight="Bold"
                                                    Foreground="{StaticResource SagaBlue}">
-                                            <TextBlock Text="Timeout Requested = " />
-                                            <TextBlock Text="{Binding TimeoutFriendly}" />
+                                            <InlineUIContainer>
+                                                <TextBlock Text="Timeout Requested = " />
+                                            </InlineUIContainer><Run Text=" " />
+                                            <InlineUIContainer>
+                                                <TextBlock Text="{Binding TimeoutFriendly}" />
+                                            </InlineUIContainer>
                                         </Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2">
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="1"
+                            Grid.Column="1"
+                            Background="{DynamicResource SagaBackground}">
+                        <Border x:Name="NextTimeoutBorder"
+                                Margin="15,0,0,0"
+                                BorderBrush="Black"
+                                BorderThickness="0,2,0,0" />
+                    </Border>
+
+                    <Grid Grid.Row="1"
+                          Grid.Column="2"
+                          HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Margin="0,0,-1,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    BorderBrush="Black"
+                                    BorderThickness="0,2,2,0" />
+                        </Grid>
+
+                        <Polygon Grid.Row="1"
+                                 Width="10"
+                                 Height="10"
+                                 HorizontalAlignment="Center"
+                                 Fill="Black"
+                                 Points="0,0 1,0 0.5,1"
+                                 Stretch="Fill" />
+
                         <ContentPresenter x:Name="TimeoutMessage"
-                                          Margin="0 65 0 0"
+                                          Grid.Row="2"
+                                          Margin="0 -15 0 0"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top"
                                           ContentSource="{Binding}"
                                           ContentTemplate="{StaticResource Message}" />
-                        <Rectangle Grid.Column="2"
-                                   Height="14px"
-                                   Visibility="{Binding ElementName=Surface,
-                                                        Path=DataContext.ShowEndpoints,
-                                                        Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                    </StackPanel>
+                    </Grid>
                 </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                        <Setter TargetName="NextTimeoutBorder" Property="BorderThickness" Value="2 2 0 0" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -554,34 +605,40 @@
               Background="{StaticResource SagaBackground}">
             <Border Margin="0 0 10 0"
                     BorderBrush="Black"
-                    BorderThickness="0 2 0 0"
-                    SnapsToDevicePixels="True">
-                <StackPanel Margin="20 10 0 0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="#B3B3B3" Text="Properties: " />
-                        <RadioButton x:Name="All"
-                                     Content="All"
-                                     Style="{StaticResource PropertiesRadioButton}" />
-                        <TextBlock Foreground="#B3B3B3" Text=" /" />
-                        <RadioButton x:Name="Updated"
-                                     Content="Updated"
-                                     IsChecked="True"
-                                     Style="{StaticResource PropertiesRadioButton}" />
-                    </StackPanel>
+                    BorderThickness="0 2 0 0">
+                <Grid>
+                    <StackPanel Margin="30 10 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Foreground="#B3B3B3" Text="Properties: " />
+                            <RadioButton x:Name="All"
+                                         Content="All"
+                                         Style="{StaticResource PropertiesRadioButton}" />
+                            <TextBlock Foreground="#B3B3B3" Text=" /" />
+                            <RadioButton x:Name="Updated"
+                                         Content="Updated"
+                                         IsChecked="True"
+                                         Style="{StaticResource PropertiesRadioButton}" />
+                        </StackPanel>
 
-                    <ItemsControl ItemsSource="{Binding Values}">
-                        <ItemsControl.Style>
-                            <Style TargetType="{x:Type ItemsControl}">
-                                <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
-                                        <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ItemsControl.Style>
-                    </ItemsControl>
-                </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Values}">
+                            <ItemsControl.Style>
+                                <Style TargetType="{x:Type ItemsControl}">
+                                    <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
+                                            <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                        </ItemsControl>
+                    </StackPanel>
+                    <Border Margin="15 0 0 0"
+                            BorderBrush="Black"
+                            BorderThickness="2 0 0 0"
+                            Visibility="{Binding HasTimeoutMessages,
+                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
             </Border>
             <Border BorderBrush="Black"
                     BorderThickness="0 2 0 0"
