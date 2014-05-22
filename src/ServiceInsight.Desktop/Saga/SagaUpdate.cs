@@ -39,6 +39,10 @@
             get { return OutgoingMessages.Where(m => m.IsTimeout).ToList(); }
         }
 
+        public bool HasNonTimeoutMessages { get { return NonTimeoutMessages.Any(); } }
+
+        public bool HasTimeoutMessages { get { return TimeoutMessages.Any(); } }
+
         public string StateAfterChange
         {
             get;

@@ -23,7 +23,7 @@
 
         <TextBlock Style="{StaticResource InfoText}"
                    Margin="38"
-                   Visibility="{Binding HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                   Visibility="{Binding HasFullLicense, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Run Text="Registered to:" FontWeight="Bold" />
             <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
         </TextBlock>
@@ -45,7 +45,7 @@
 
                 <TextBlock Style="{StaticResource InfoText}" 
                            VerticalAlignment="Center"
-                           Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" >
+                           Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityConverterInverted}}" >
                     <Run Text="ServiceControl: " />
                     <Run Text="{Binding ServiceControlVersion}" />
                 </TextBlock>

@@ -15,15 +15,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <startup:AppBootstrapper x:Key="Bootstrapper" />
-                    
+
                     <!--Fonts-->
                     <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
                     <sys:Double x:Key="MessageBodyFontSize">12</sys:Double>
-                    
+
                     <!-- Converters -->
-                    <dx:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-                    <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
-                    <xh:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverterInverted" Invert="True" />
+                    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+                    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterInverted" Invert="True" />
+                    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityHiddenConverter" IsHidden="True" />
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
                     <cnv:StringEmptyOrNullToVisibilityConverter x:Key="StringEmptyOrNullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
@@ -32,10 +32,10 @@
                     <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
-                    
+                    <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
+
                     <!--Template Selectors-->
                     <menu:MenuItemDataTemplateSelector x:Key="ContextMenuSelector" />
-
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -66,8 +66,8 @@
                     <SolidColorBrush Color="#FFE52620" x:Key="DiagramRepeatedFailedNodeBackground" />
                     <SolidColorBrush Color="#FF4C5F81" x:Key="DiagramSuccessNodeBackground" />
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="DiagramTooltipBackgroundBrush">
-                        <GradientStop Color="#CF181818" Offset="0"/>
-                        <GradientStop Color="#BE1C1C1C" Offset="1"/>
+                        <GradientStop Color="#CF181818" Offset="0" />
+                        <GradientStop Color="#BE1C1C1C" Offset="1" />
                     </LinearGradientBrush>
 
                     <!-- Fonts -->
@@ -96,65 +96,64 @@
                     <sys:Double x:Key="LargeFontSize">16</sys:Double>
 
                     <Thickness x:Key="SmallMargin"
-                               Left="{StaticResource SmallSpacing}" 
-                               Top="{StaticResource SmallSpacing}" 
-                               Right="{StaticResource SmallSpacing}" 
+                               Left="{StaticResource SmallSpacing}"
+                               Top="{StaticResource SmallSpacing}"
+                               Right="{StaticResource SmallSpacing}"
                                Bottom="{StaticResource SmallSpacing}" />
 
                     <Thickness x:Key="XX-LargeMargin"
-                               Left="{StaticResource XX-LargeSpacing}" 
-                               Top="{StaticResource XX-LargeSpacing}" 
-                               Right="{StaticResource XX-LargeSpacing}" 
+                               Left="{StaticResource XX-LargeSpacing}"
+                               Top="{StaticResource XX-LargeSpacing}"
+                               Right="{StaticResource XX-LargeSpacing}"
                                Bottom="{StaticResource XX-LargeSpacing}" />
-                    
-                    <Thickness x:Key="LicenseDialogImageMargin" 
-                               Left="{StaticResource X-LargeSpacing}" 
-                               Top="{StaticResource LargeSpacing}" 
-                               Right="{StaticResource SmallSpacing}" 
+
+                    <Thickness x:Key="LicenseDialogImageMargin"
+                               Left="{StaticResource X-LargeSpacing}"
+                               Top="{StaticResource LargeSpacing}"
+                               Right="{StaticResource SmallSpacing}"
                                Bottom="{StaticResource LargeSpacing}" />
 
-                    <Thickness x:Key="LabelMargin" 
-                               Left="{StaticResource MediumSpacing}" 
-                               Top="{StaticResource MediumSpacing}" 
-                               Right="{StaticResource MediumSpacing}" 
+                    <Thickness x:Key="LabelMargin"
+                               Left="{StaticResource MediumSpacing}"
+                               Top="{StaticResource MediumSpacing}"
+                               Right="{StaticResource MediumSpacing}"
                                Bottom="{StaticResource MediumSpacing}" />
 
-                    <Thickness x:Key="DialogMargin" 
-                               Left="{StaticResource DefaultDialogMargin}" 
-                               Top="{StaticResource DefaultDialogMargin}" 
-                               Right="{StaticResource DefaultDialogMargin}" 
+                    <Thickness x:Key="DialogMargin"
+                               Left="{StaticResource DefaultDialogMargin}"
+                               Top="{StaticResource DefaultDialogMargin}"
+                               Right="{StaticResource DefaultDialogMargin}"
                                Bottom="{StaticResource DefaultDialogMargin}" />
 
-
-                    <Thickness x:Key="DialogButtonMargin" 
-                               Left="{StaticResource DefaultSpacing}" 
-                               Top="{StaticResource NoSpacing}" 
-                               Right="{StaticResource DefaultSpacing}" 
+                    <Thickness x:Key="DialogButtonMargin"
+                               Left="{StaticResource DefaultSpacing}"
+                               Top="{StaticResource NoSpacing}"
+                               Right="{StaticResource DefaultSpacing}"
                                Bottom="{StaticResource DefaultSpacing}" />
 
-                    <Thickness x:Key="DefaultMargin" 
-                               Left="{StaticResource LargeSpacing}" 
-                               Top="{StaticResource MediumSpacing}" 
-                               Right="{StaticResource LargeSpacing}" 
+                    <Thickness x:Key="DefaultMargin"
+                               Left="{StaticResource LargeSpacing}"
+                               Top="{StaticResource MediumSpacing}"
+                               Right="{StaticResource LargeSpacing}"
                                Bottom="{StaticResource ExtraLargeSpacing}" />
 
-                    <Thickness x:Key="ButtonMargin" 
-                               Top="{StaticResource NoSpacing}" 
-                               Left="{StaticResource DefaultSpacing}" 
-                               Right="{StaticResource DefaultSpacing}" 
+                    <Thickness x:Key="ButtonMargin"
+                               Top="{StaticResource NoSpacing}"
+                               Left="{StaticResource DefaultSpacing}"
+                               Right="{StaticResource DefaultSpacing}"
                                Bottom="{StaticResource NoSpacing}" />
 
                     <!--Effect-->
-                    <DropShadowEffect x:Key="DiagramNodeShadow" BlurRadius="1" Color="{StaticResource DiagramShadowColor}" Opacity="0.1" Direction="315"/>
+                    <DropShadowEffect x:Key="DiagramNodeShadow" BlurRadius="1" Color="{StaticResource DiagramShadowColor}" Opacity="0.1" Direction="315" />
                     <DropShadowEffect x:Key="DiagramSelectedNodeShadow" BlurRadius="35" Color="{StaticResource DiagramSelectedShadowColor}" Opacity="1" ShadowDepth="0" Direction="0" />
-                    
+
                     <!-- TextBlock Styles-->
                     <Style x:Key="Informational" TargetType="{x:Type TextBlock}">
                         <Setter Property="FontFamily" Value="{StaticResource DialogFonts}" />
                         <Setter Property="FontSize" Value="10" />
                         <Setter Property="SnapsToDevicePixels" Value="true" />
                     </Style>
-                    
+
                     <!-- Dialog Style -->
                     <Style x:Key="DialogRootContainer" TargetType="{x:Type Border}">
                         <Setter Property="Background" Value="{StaticResource DialogBackgroundBrush}" />
@@ -162,7 +161,7 @@
                         <Setter Property="Padding" Value="{StaticResource DefaultMargin}" />
                         <Setter Property="SnapsToDevicePixels" Value="true" />
                     </Style>
-                    
+
                     <!-- Dialog Buttons -->
                     <Style x:Key="DialogButton" TargetType="{x:Type Button}">
                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -175,7 +174,7 @@
                         <Setter Property="Margin" Value="{StaticResource ButtonMargin}" />
                         <Setter Property="Padding" Value="1" />
                     </Style>
-                    
+
                     <!-- Checkbox -->
                     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
                         <Setter Property="VerticalAlignment" Value="Center" />
@@ -188,11 +187,11 @@
 
                     <!--Flat Button -->
                     <Style x:Key="FlatButton" TargetType="{x:Type Button}">
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Padding" Value="1"/>
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="1" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
@@ -201,29 +200,29 @@
                                             <VisualStateGroup x:Name="CommonStates">
                                                 <VisualState x:Name="Normal">
                                                     <Storyboard>
-                                                        <ColorAnimation To="#F0F0F0" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.07"/>
-                                                        <ColorAnimation To="#E5E5E5" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.07"/>
+                                                        <ColorAnimation To="#F0F0F0" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.07" />
+                                                        <ColorAnimation To="#E5E5E5" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.07" />
                                                         <ColorAnimation To="#ACACAC" Storyboard.TargetName="BrBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.07" />
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="MouseOver">
                                                     <Storyboard>
-                                                        <ColorAnimation To="#F0F4F9" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.07"/>
-                                                        <ColorAnimation To="#E0ECF9" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.07"/>
+                                                        <ColorAnimation To="#F0F4F9" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.07" />
+                                                        <ColorAnimation To="#E0ECF9" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.07" />
                                                         <ColorAnimation To="#7EB4EA" Storyboard.TargetName="BrBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.07" />
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
-                                                        <ColorAnimation To="#DBEDFD" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.05"/>
-                                                        <ColorAnimation To="#C4E0FC" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.05"/>
+                                                        <ColorAnimation To="#DBEDFD" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.05" />
+                                                        <ColorAnimation To="#C4E0FC" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.05" />
                                                         <ColorAnimation To="#569DE5" Storyboard.TargetName="BrBrush" Storyboard.TargetProperty="Color" Duration="0:0:0.05" />
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Disabled">
                                                     <Storyboard>
-                                                        <ColorAnimation To="#EFEFEF" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0"/>
-                                                        <ColorAnimation To="#EFEFEF" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0"/>
+                                                        <ColorAnimation To="#EFEFEF" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0" />
+                                                        <ColorAnimation To="#EFEFEF" Storyboard.TargetName="BgBrush" Storyboard.TargetProperty="(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0" />
                                                         <ColorAnimation To="#D9D9D9" Storyboard.TargetName="BrBrush" Storyboard.TargetProperty="Color" Duration="0:0:0" />
                                                     </Storyboard>
                                                 </VisualState>
@@ -235,16 +234,16 @@
                                             </Border.BorderBrush>
                                             <Border.Background>
                                                 <LinearGradientBrush x:Name="BgBrush" EndPoint="0,1" StartPoint="0,0">
-                                                    <GradientStop Color="#F0F0F0" Offset="0"/>
-                                                    <GradientStop Color="#E5E5E5" Offset="1"/>
+                                                    <GradientStop Color="#F0F0F0" Offset="0" />
+                                                    <GradientStop Color="#E5E5E5" Offset="1" />
                                                 </LinearGradientBrush>
                                             </Border.Background>
-                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                         </Border>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Foreground" Value="#ADADAD"/>
+                                            <Setter Property="Foreground" Value="#ADADAD" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -255,7 +254,7 @@
                     <!--PropertyGrid DataTemplates-->
                     <DataTemplate x:Key="PropertyGridLongTextTemplate">
                         <dxe:MemoEdit Name="PART_Editor"
-                                      IsTextEditable="False" 
+                                      IsTextEditable="False"
                                       IsReadOnly="True"
                                       AcceptsReturn="False"
                                       ShowIcon="False"
@@ -266,16 +265,16 @@
                                       PopupFooterButtons="Close"
                                       Height="22" />
                     </DataTemplate>
-                    
+
                     <DataTemplate x:Key="PropertyGridEmptyTextTemplate">
                     </DataTemplate>
-                    
+
                     <DataTemplate x:Key="TextEditGridColumnCellTemplate">
                         <dxe:TextEdit x:Name="PART_Editor" />
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">
-                        <dxe:TextEdit Name="PART_Editor" 
+                        <dxe:TextEdit Name="PART_Editor"
                                       IsReadOnly="True"
                                       DisplayFormatString="{Binding Source={x:Static cnv:MessageDateTimeFormatProvider.MessageDateFormat}}" />
                     </DataTemplate>
@@ -283,51 +282,76 @@
                     <!--Menu DataTemplates-->
                     <DataTemplate x:Key="ButtonContextMenu" DataType="menu:IMenuItem">
                         <ContentControl>
-                            <dxb:BarButtonItem Content="{Binding Caption}" 
+                            <dxb:BarButtonItem Content="{Binding Caption}"
                                        Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
-                                       Command="{Binding Command}" 
-                                       CommandParameter="{Binding}"   
-                                       IsVisible="{Binding IsVisible}"  
-                                       IsEnabled="{Binding IsEnabled}" 
-                                       KeyGesture="{Binding KeyGesture}" 
-                                       ToolTip="{Binding ToolTip}"/>
+                                       Command="{Binding Command}"
+                                       CommandParameter="{Binding}"
+                                       IsVisible="{Binding IsVisible}"
+                                       IsEnabled="{Binding IsEnabled}"
+                                       KeyGesture="{Binding KeyGesture}"
+                                       ToolTip="{Binding ToolTip}" />
                         </ContentControl>
                     </DataTemplate>
 
                     <DataTemplate x:Key="SubButtonContextMenu" DataType="menu:IMenuItem">
                         <ContentControl>
-                            <dxb:BarSubItem Content="{Binding Caption}" 
+                            <dxb:BarSubItem Content="{Binding Caption}"
                                     Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
                                     ItemTemplateSelector="{StaticResource ContextMenuSelector}"
-                                    ItemLinksSource="{Binding SubMenuItems}" 
-                                    IsVisible="{Binding IsVisible}"  
+                                    ItemLinksSource="{Binding SubMenuItems}"
+                                    IsVisible="{Binding IsVisible}"
                                     IsEnabled="{Binding IsEnabled}" />
                         </ContentControl>
                     </DataTemplate>
 
                     <DataTemplate x:Key="CheckButtonContextMenu" DataType="menu:IMenuItem">
                         <ContentControl>
-                            <dxb:BarCheckItem Content="{Binding Caption}" 
+                            <dxb:BarCheckItem Content="{Binding Caption}"
                                       Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
                                       IsChecked="{Binding IsChecked}"
-                                      IsVisible="{Binding IsVisible}"  
-                                      IsEnabled="{Binding IsEnabled}"  
-                                      KeyGesture="{Binding KeyGesture}" 
+                                      IsVisible="{Binding IsVisible}"
+                                      IsEnabled="{Binding IsEnabled}"
+                                      KeyGesture="{Binding KeyGesture}"
                                       ToolTip="{Binding ToolTip}"
-                                      Command="{Binding Command}" 
-                                      CommandParameter="{Binding}"   
+                                      Command="{Binding Command}"
+                                      CommandParameter="{Binding}"
                                       CloseSubMenuOnClick="{Binding CloseSubMenuOnClick}" />
                         </ContentControl>
                     </DataTemplate>
 
                     <DataTemplate x:Key="SeparatorContextMenu">
                         <ContentControl>
-                            <dxb:BarItemSeparator/>
+                            <dxb:BarItemSeparator />
                         </ContentControl>
                     </DataTemplate>
 
-
-
+                    <Style x:Key="ItemsControlVirtialisedStyle" TargetType="ItemsControl">
+                        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+                        <Setter Property="ItemsPanel">
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <Border
+                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                        Padding="{TemplateBinding Control.Padding}"
+                                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                        Background="{TemplateBinding Panel.Background}"
+                                        SnapsToDevicePixels="True">
+                                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

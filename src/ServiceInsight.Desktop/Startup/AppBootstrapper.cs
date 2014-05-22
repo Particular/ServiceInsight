@@ -50,6 +50,15 @@ namespace Particular.ServiceInsight.Desktop.Startup
             ConventionManager.AddElementConvention<BarButtonItem>(BarButtonItem.IsVisibleProperty, "DataContext", "ItemClick");
         }
 
+        protected override void PrepareApplication()
+        {
+            Application.Startup += OnStartup;
+            Application.Exit += OnExit;
+
+            if (!Debugger.IsAttached)
+                Application.DispatcherUnhandledException += OnUnhandledException;
+        }
+
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             if (!Debugger.IsAttached)

@@ -11,6 +11,7 @@
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
+        private SagaData data;
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
 
@@ -144,12 +145,26 @@
         }
 
         StoredMessage currentMessage;
+        SagaMessage selectedMessage;
 
         public bool ShowSagaNotFoundWarning { get; set; }
 
         public bool HasSaga { get { return Data != null; } }
 
-        public SagaData Data { get; private set; }
+        public SagaData Data
+        {
+            get { return data; }
+            private set
+            {
+                data = value;
+                Header = new SagaHeader(data);
+                Footer = new SagaFooter(data);
+            }
+        }
+
+        public SagaHeader Header { get; private set; }
+
+        public SagaFooter Footer { get; private set; }
 
         public bool ShowEndpoints { get; set; }
 
@@ -163,6 +178,44 @@
         public async Task RefreshSaga()
         {
             await RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
+        }
+
+        public SagaMessage SelectedMessage
+        {
+            get { return selectedMessage; }
+            set
+            {
+                selectedMessage = value;
+                OnSelectedMessageChanged();
+            }
+        }
+
+        void OnSelectedMessageChanged()
+        {
+            if (SelectedMessage == null)
+                return;
+
+            foreach (var step in Data.Changes)
+            {
+                SetSelected(step.InitiatingMessage, SelectedMessage.MessageId);
+                SetSelected(step.OutgoingMessages, SelectedMessage.MessageId);
+            }
+        }
+
+        void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        {
+            if (messages == null)
+                return;
+
+            foreach (var message in messages)
+            {
+                SetSelected(message, id);
+            }
+        }
+
+        void SetSelected(SagaMessage message, Guid id)
+        {
+            message.IsSelected = message.MessageId == id;
         }
     }
 }

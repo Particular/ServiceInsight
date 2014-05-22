@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="SagaBackground" Color="#F2F2F2" />
+    <SolidColorBrush x:Key="SagaForeground" Color="#808080" />
+    <SolidColorBrush x:Key="SagaBlue" Color="#307BC6" />
+    <SolidColorBrush x:Key="FooterBackground" Color="#333333" />
+    <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
+
+    <Style x:Key="CodeStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Background" Value="#F8F8F8" />
+        <Setter Property="Foreground" Value="#777777" />
+    </Style>
+
+    <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
+    <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
+</ResourceDictionary>
