@@ -145,6 +145,7 @@
         }
 
         StoredMessage currentMessage;
+        SagaMessage selectedMessage;
 
         public bool ShowSagaNotFoundWarning { get; set; }
 
@@ -177,6 +178,44 @@
         public async Task RefreshSaga()
         {
             await RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
+        }
+
+        public SagaMessage SelectedMessage
+        {
+            get { return selectedMessage; }
+            set
+            {
+                selectedMessage = value;
+                OnSelectedMessageChanged();
+            }
+        }
+
+        void OnSelectedMessageChanged()
+        {
+            if (SelectedMessage == null)
+                return;
+
+            foreach (var step in Data.Changes)
+            {
+                SetSelected(step.InitiatingMessage, SelectedMessage.MessageId);
+                SetSelected(step.OutgoingMessages, SelectedMessage.MessageId);
+            }
+        }
+
+        void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        {
+            if (messages == null)
+                return;
+
+            foreach (var message in messages)
+            {
+                SetSelected(message, id);
+            }
+        }
+
+        void SetSelected(SagaMessage message, Guid id)
+        {
+            message.IsSelected = message.MessageId == id;
         }
     }
 }
