@@ -11,13 +11,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
-                    <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
-                    <SolidColorBrush x:Key="LightBorderBrush" Color="#AAA" />
                     <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
-                    <SolidColorBrush x:Key="LightColorBrush" Color="#DDD" />
                     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
-                    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
                     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#000" />
                     <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#007AC7" />
 
@@ -30,53 +25,6 @@
                         </GradientBrush.GradientStops>
                     </LinearGradientBrush>
 
-                    <LinearGradientBrush x:Key="HorizontalNormalBrush" StartPoint="0,0" EndPoint="1,0">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FFF" Offset="0.0" />
-                                <GradientStop Color="#CCC" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="LightBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FFF" Offset="0.0" />
-                                <GradientStop Color="#EEE" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="HorizontalLightBrush" StartPoint="0,0" EndPoint="1,0">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FFF" Offset="0.0" />
-                                <GradientStop Color="#EEE" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="DarkBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FFF" Offset="0.0" />
-                                <GradientStop Color="#AAA" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#BBB" Offset="0.0" />
-                                <GradientStop Color="#EEE" Offset="0.1" />
-                                <GradientStop Color="#EEE" Offset="0.9" />
-                                <GradientStop Color="#FFF" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
                     <LinearGradientBrush x:Key="NormalBorderBrush" StartPoint="0,0" EndPoint="0,1">
                         <GradientBrush.GradientStops>
                             <GradientStopCollection>
@@ -85,45 +33,6 @@
                             </GradientStopCollection>
                         </GradientBrush.GradientStops>
                     </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="HorizontalNormalBorderBrush" StartPoint="0,0" EndPoint="1,0">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#CCC" Offset="0.0" />
-                                <GradientStop Color="#444" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="DefaultedBorderBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#777" Offset="0.0" />
-                                <GradientStop Color="#000" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#444" Offset="0.0" />
-                                <GradientStop Color="#888" Offset="1.0" />
-                            </GradientStopCollection>
-                        </GradientBrush.GradientStops>
-                    </LinearGradientBrush>
-
-                    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
-                        <Setter Property="Height" Value="1" />
-                        <Setter Property="Margin" Value="0,4,0,4" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Separator">
-                                    <Border BorderBrush="{StaticResource SolidBorderBrush}" BorderThickness="1" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
 
                     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}" TargetType="MenuItem">
                         <Border Name="Border">
