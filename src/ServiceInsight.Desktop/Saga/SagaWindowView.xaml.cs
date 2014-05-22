@@ -57,23 +57,23 @@
 
         void RefreshAll()
         {
-            var steps = (ItemsControl)FindName("Steps");
+            //var steps = (ItemsControl)FindName("Steps");
 
-            if (steps == null)
-                return;
+            //if (steps == null)
+            //    return;
 
-            for (var i = 0; i < steps.Items.Count; i++)
-            {
-                if (steps.Items[i] is SagaUpdate)
-                {
-                    var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
-                    if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
-                    {
-                        var item = VisualTreeHelper.GetChild(stepsContainer, 0) as Panel;
-                        DrawLines(item, ((SagaWindowViewModel)DataContext).ShowEndpoints);
-                    }
-                }
-            }
+            //for (var i = 0; i < steps.Items.Count; i++)
+            //{
+            //    if (steps.Items[i] is SagaUpdate)
+            //    {
+            //        var stepsContainer = steps.ItemContainerGenerator.ContainerFromIndex(i);
+            //        if (stepsContainer != null && VisualTreeHelper.GetChildrenCount(stepsContainer) > 0)
+            //        {
+            //            var item = VisualTreeHelper.GetChild(stepsContainer, 0) as Panel;
+            //            DrawLines(item, ((SagaWindowViewModel)DataContext).ShowEndpoints);
+            //        }
+            //    }
+            //}
         }
 
         void DrawLines(Panel panel, bool showEndpoints)

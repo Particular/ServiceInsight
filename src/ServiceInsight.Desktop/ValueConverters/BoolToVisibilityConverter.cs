@@ -9,27 +9,21 @@
     {
         public bool Invert { get; set; }
 
+        public bool IsHidden { get; set; }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool flag = false;
+            var flag = false;
             if (value is bool)
             {
                 flag = (bool)value;
             }
-            else
-            {
-                if (value is bool?)
-                {
-                    bool? flag2 = (bool?)value;
-                    flag = (flag2.HasValue && flag2.Value);
-                }
-            }
-            return (flag ^ Invert) ? Visibility.Visible : Visibility.Collapsed;
+            return (flag ^ Invert) ? Visibility.Visible : (IsHidden ? Visibility.Hidden : Visibility.Collapsed);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool result = false;
+            var result = false;
 
             if (value is Visibility)
             {
