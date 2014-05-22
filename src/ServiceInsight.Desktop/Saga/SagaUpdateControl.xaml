@@ -201,8 +201,6 @@
                             BorderBrush="Black"
                             BorderThickness="0">
                         <Rectangle x:Name="MessageRectangle"
-                                   Width="{Binding Width,
-                                                   ElementName=MessageTypeBox}"
                                    Height="45px"
                                    MinWidth="220px"
                                    Fill="{StaticResource MessageBackground}" />
@@ -433,35 +431,6 @@
                 </StackPanel>
             </DataTemplate>
 
-            <DataTemplate x:Key="PropertiesPanel">
-                <StackPanel Margin="20 10 0 0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="#B3B3B3" Text="Properties: " />
-                        <RadioButton x:Name="All"
-                                     Content="All"
-                                     Style="{StaticResource PropertiesRadioButton}" />
-                        <TextBlock Foreground="#B3B3B3" Text=" /" />
-                        <RadioButton x:Name="Updated"
-                                     Content="Updated"
-                                     IsChecked="True"
-                                     Style="{StaticResource PropertiesRadioButton}" />
-                    </StackPanel>
-
-                    <ItemsControl ItemsSource="{Binding Values}">
-                        <ItemsControl.Style>
-                            <Style TargetType="{x:Type ItemsControl}">
-                                <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
-                                        <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ItemsControl.Style>
-                    </ItemsControl>
-                </StackPanel>
-            </DataTemplate>
-
             <DataTemplate x:Key="TimeoutMessage">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -508,7 +477,9 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid x:Name="SagaNodePanel">
+    <Grid x:Name="SagaNodePanel"
+          Grid.IsSharedSizeScope="True"
+          SnapsToDevicePixels="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".95*" />
             <ColumnDefinition Width="1.1*" />
@@ -516,28 +487,43 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ContentPresenter x:Name="InitialMessage"
-                          HorizontalAlignment="Right"
-                          VerticalAlignment="Top"
-                          Content="{Binding InitiatingMessage}"
-                          ContentTemplate="{StaticResource Message}" />
-        <StackPanel x:Name="Middle"
-                    Grid.Column="1"
-                    Background="{StaticResource SagaBackground}">
-            <StackPanel Margin="10 12" Background="{StaticResource SagaBackground}">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <ContentControl Margin="0 4 4 4"
-                                    VerticalAlignment="Top"
-                                    Template="{StaticResource SagaTimeoutIcon}" />
+
+        <Grid x:Name="InitialMessageTop"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageTop}" />
+        </Grid>
+
+        <Grid x:Name="InitialMessageBottom"
+              Grid.Row="1"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="0 2 0 0">
+                <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageBottom}" />
+            </Border>
+        </Grid>
+
+        <Border x:Name="Middle"
+                Grid.Column="1"
+                Background="{StaticResource SagaBackground}">
+            <StackPanel Margin="10 12 10 0" Background="{StaticResource SagaBackground}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
+                    <ContentControl Margin="0 4 4 4" Template="{StaticResource SagaTimeoutIcon}" />
 
                     <TextBlock FontSize="16px"
                                FontWeight="Bold"
                                Foreground="{StaticResource SagaBlue}"
                                Text="Timeout Invoked" />
                 </StackPanel>
-                <Control Margin="10" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
 
                 <StackPanel x:Name="StepName" Orientation="Horizontal">
                     <ContentControl Margin="0 4 4 4"
@@ -559,19 +545,94 @@
                                FontSize="12px"
                                Text="{Binding StartTime}" />
                 </StackPanel>
-
-                <ContentPresenter ContentSource="{Binding}" ContentTemplate="{StaticResource PropertiesPanel}" />
             </StackPanel>
-        </StackPanel>
-        <ItemsControl x:Name="SagaMessages"
-                      Grid.Column="2"
-                      Margin="0 80 0 0"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      ItemTemplate="{StaticResource Message}"
-                      ItemsSource="{Binding NonTimeoutMessages}" />
+        </Border>
+
+        <Grid x:Name="Properties"
+              Grid.Row="1"
+              Grid.Column="1"
+              Background="{StaticResource SagaBackground}">
+            <Border Margin="0 0 10 0"
+                    BorderBrush="Black"
+                    BorderThickness="0 2 0 0"
+                    SnapsToDevicePixels="True">
+                <StackPanel Margin="20 10 0 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="#B3B3B3" Text="Properties: " />
+                        <RadioButton x:Name="All"
+                                     Content="All"
+                                     Style="{StaticResource PropertiesRadioButton}" />
+                        <TextBlock Foreground="#B3B3B3" Text=" /" />
+                        <RadioButton x:Name="Updated"
+                                     Content="Updated"
+                                     IsChecked="True"
+                                     Style="{StaticResource PropertiesRadioButton}" />
+                    </StackPanel>
+
+                    <ItemsControl ItemsSource="{Binding Values}">
+                        <ItemsControl.Style>
+                            <Style TargetType="{x:Type ItemsControl}">
+                                <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
+                                        <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black"
+                    BorderThickness="0 2 0 0"
+                    Visibility="{Binding HasNonTimeoutMessages,
+                                         Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
+
+        <Border x:Name="SagaMessages"
+                Grid.Row="1"
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Visibility="{Binding HasNonTimeoutMessages,
+                                     Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="0,0,-1,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderBrush="Black"
+                            BorderThickness="0,2,2,0" />
+                </Grid>
+
+                <Polygon Grid.Row="1"
+                         Width="10"
+                         Height="10"
+                         HorizontalAlignment="Center"
+                         Fill="Black"
+                         Points="0,0 1,0 0.5,1"
+                         Stretch="Fill" />
+
+                <ItemsControl Grid.Row="2"
+                              Margin="0 -15 0 0"
+                              HorizontalAlignment="Center"
+                              ItemTemplate="{StaticResource Message}"
+                              ItemsSource="{Binding NonTimeoutMessages}" />
+            </Grid>
+        </Border>
+
         <ItemsControl x:Name="TimeoutMessages"
-                      Grid.Row="1"
+                      Grid.Row="2"
                       Grid.ColumnSpan="3"
                       ItemTemplate="{StaticResource TimeoutMessage}"
                       ItemsSource="{Binding TimeoutMessages}" />
