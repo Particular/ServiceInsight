@@ -247,7 +247,7 @@
                     var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
                     if (etag == null) return true;
                     return !System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource &&
-                        string.Equals(((Caliburn.Micro.Parameter)c.Value).Value, etag.Value));
+                        string.Equals(((RestSharp.Parameter)c.Value).Value, etag.Value));
                 }
                 finally
                 {

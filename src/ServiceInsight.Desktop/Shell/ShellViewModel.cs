@@ -3,7 +3,9 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Threading;
     using Caliburn.Micro;
     using Core.Licensing;
@@ -13,6 +15,7 @@
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework.Rx;
     using LogWindow;
     using MessageFlow;
     using MessageHeaders;
@@ -20,11 +23,13 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
+    using ReactiveUI;
     using Saga;
     using Settings;
     using Startup;
+    using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
         IDeactivate,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
@@ -88,6 +93,25 @@
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
+
+            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
+            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
+            ConnectToServiceControlCommand = this.CreateCommand(vm => vm.CanConnectToServiceControl, ConnectToServiceControl);
+
+            var refreshAllCommand = new ReactiveCommand();
+            refreshAllCommand.RegisterAsyncTask(_ => RefreshAll());
+            RefreshAllCommand = refreshAllCommand;
+
+            RegisterCommand = this.CreateCommand(() =>
+            {
+                this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
+                DisplayRegistrationStatus();
+            });
+
+            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
+
+            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
         protected override void OnViewAttached(object view, object context)
@@ -123,11 +147,6 @@
             }
         }
 
-        public void ResetLayout()
-        {
-            View.OnResetLayout(settingsProvider);
-        }
-
         public bool AutoRefresh { get; set; }
 
         public bool BodyTabSelected { get; set; }
@@ -159,27 +178,22 @@
             get { return workCounter > 0; }
         }
 
-        public void ShutDown()
-        {
-            appCommander.ShutdownImmediately();
-        }
+        public ICommand ShutDownCommand { get; private set; }
 
-        public void About()
-        {
-            windowManager.ShowDialog<AboutViewModel>();
-        }
+        public ICommand AboutCommand { get; private set; }
 
-        public void Help()
-        {
-            Process.Start(@"http://docs.particular.net/");
-        }
+        public ICommand HelpCommand { get; private set; }
 
-        public void Options()
-        {
-            windowManager.ShowDialog<OptionsViewModel>();
-        }
+        public ICommand ConnectToServiceControlCommand { get; private set; }
 
-        //[AutoCheckAvailability]
+        public ICommand RefreshAllCommand { get; private set; }
+
+        public ICommand RegisterCommand { get; private set; }
+
+        public ICommand ResetLayoutCommand { get; private set; }
+
+        public ICommand OptionsCommand { get; private set; }
+
         public async void ConnectToServiceControl()
         {
             var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
@@ -192,41 +206,30 @@
             }
         }
 
-        //[AutoCheckAvailability]
         public void DeleteSelectedMessages()
         {
         }
 
-        //[AutoCheckAvailability]
-        public async void RefreshAll()
+        async Task RefreshAll()
         {
             await EndpointExplorer.RefreshData();
             await Messages.RefreshMessages();
             await SagaWindow.RefreshSaga();
         }
 
-        //[AutoCheckAvailability]
         public void ImportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        //[AutoCheckAvailability]
         public void ExportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        //[AutoCheckAvailability]
         public void CreateMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
-        }
-
-        public void Register()
-        {
-            windowManager.ShowDialog<LicenseRegistrationViewModel>();
-            DisplayRegistrationStatus();
         }
 
         public void OnAutoRefreshChanged()
@@ -352,7 +355,7 @@
 
             if (!result.GetValueOrDefault(false))
             {
-                ShutDown();
+                appCommander.ShutdownImmediately();
             }
         }
 

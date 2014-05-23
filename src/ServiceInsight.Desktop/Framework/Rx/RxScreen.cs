@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Rx
 {
     using System;
+    using System.Linq.Expressions;
     using Caliburn.Micro;
 
     public class RxScreen : RxViewAware, IScreen, IChild
@@ -159,6 +160,7 @@
         }
 
         [PropertyChanged.DoNotNotify]
+        [Obsolete("Use SuppressChangeNotifications() instead.", true)]
         bool INotifyPropertyChangedEx.IsNotifying
         {
             get
@@ -171,9 +173,14 @@
             }
         }
 
-        void INotifyPropertyChangedEx.NotifyOfPropertyChange(string propertyName)
+        public void NotifyOfPropertyChange(string propertyName)
         {
             raisePropertyChanged(propertyName);
+        }
+
+        public void NotifyOfPropertyChange<TProperty>(Expression<Func<TProperty>> property)
+        {
+            NotifyOfPropertyChange(property.GetMemberInfo().Name);
         }
 
         void INotifyPropertyChangedEx.Refresh()

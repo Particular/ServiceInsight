@@ -3,9 +3,18 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Framework.Attributes;
 
     public static class BuilderExtensions
     {
+        public static bool IsAttachment(this Type type)
+        {
+            return type != null &&
+                   type.IsClass &&
+                   !type.IsAbstract &&
+                   typeof(IAttachment).IsAssignableFrom(type);
+        }
+
         public static bool IsViewOrViewModel(this Type type)
         {
             return type != null &&

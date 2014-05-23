@@ -218,6 +218,7 @@
     <Compile Include="Framework\Rx\RxConductorBase.cs" />
     <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\Rx\RxViewAware.cs" />
+    <Compile Include="Framework\Rx\ViewModelExtensions.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
@@ -714,9 +715,7 @@
     <Resource Include="Images\Msg_Info.png" />
     <Resource Include="Images\Msg_Warning.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SampleData\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
   <Import Project="..\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\packages\Fody.1.23.2\build\Fody.targets')" />

@@ -1,17 +1,21 @@
-﻿<Window 
-        xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
-        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.Shell.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cal="http://www.caliburnproject.org"
-        x:Class="Particular.ServiceInsight.Desktop.Shell.ShellView"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.Shell"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="{Binding DisplayName}"
+        MinWidth="500"
+        MinHeight="300"
         AutomationProperties.AutomationId="ShellWindow"
-        mc:Ignorable="d" 
-        MinWidth="500" MinHeight="300"
-        d:DesignHeight="300" d:DesignWidth="300" Title="{Binding DisplayName}">
+        d:DataContext="{d:DesignInstance {x:Type local:ShellViewModel}}"
+        d:DesignHeight="300"
+        d:DesignWidth="300"
+        mc:Ignorable="d">
 
     <Window.Resources>
         <Style TargetType="{x:Type dxd:DocumentPanel}">
@@ -29,13 +33,13 @@
         </Style>
     </Window.Resources>
 
-    <dxb:BarManager x:Name="BarManager" 
-                    AutomationProperties.AutomationId="BarManager"
-                    dxc:DXSerializer.SerializationID="BarManager"
+    <dxb:BarManager x:Name="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
-                    dxc:DXSerializer.LayoutVersion="1.1.8">
-        <!--Categories-->
+                    AutomationProperties.AutomationId="BarManager"
+                    dxc:DXSerializer.LayoutVersion="1.1.8"
+                    dxc:DXSerializer.SerializationID="BarManager">
+        <!--  Categories  -->
         <dxb:BarManager.Categories>
             <dxb:BarManagerCategory Name="File" />
             <dxb:BarManagerCategory Name="Tools" />
@@ -44,85 +48,98 @@
             <dxb:BarManagerCategory Name="Status" />
         </dxb:BarManager.Categories>
 
-        <!--Menu/Toolbar Items-->
+        <!--  Menu/Toolbar Items  -->
         <dxb:BarManager.Items>
-            <dxb:BarButtonItem Content="Exit Application" 
-                               x:Name="ShutDown" 
+            <dxb:BarButtonItem x:Name="ShutDown"
                                AutomationProperties.AutomationId="ShutdownMenuItem"
-                               CategoryName="File" />
-            <dxb:BarButtonItem Content="About" 
-                               x:Name="About" 
+                               CategoryName="File"
+                               Command="{Binding ShutDownCommand}"
+                               Content="Exit Application" />
+            <dxb:BarButtonItem x:Name="About"
                                AutomationProperties.AutomationId="AboutMenuItem"
-                               CategoryName="Help" />
-            <dxb:BarButtonItem Content="Help" 
-                               x:Name="Help" 
+                               CategoryName="Help"
+                               Command="{Binding AboutCommand}"
+                               Content="About" />
+            <dxb:BarButtonItem x:Name="Help"
                                AutomationProperties.AutomationId="HelpMenuItem"
-                               CategoryName="Help"  />
-            <dxb:BarButtonItem Content="Connect To ServiceControl" 
-                               x:Name="ConnectToServiceControl" 
+                               CategoryName="Help"
+                               Command="{Binding HelpCommand}"
+                               Content="Help" />
+            <dxb:BarButtonItem x:Name="ConnectToServiceControl"
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
-                               CategoryName="Tools" Glyph="/Images/ConnectService.png">
+                               CategoryName="Tools"
+                               Command="{Binding ConnectToServiceControlCommand}"
+                               Content="Connect To ServiceControl"
+                               Glyph="/Images/ConnectService.png">
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
                         <dxc:SuperTipItem Content="Connect Endpoint Explorer to ServiceControl instance">
                             <dxc:SuperTipItem.ContentTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" FontWeight="Bold"/>
+                                    <TextBlock FontWeight="Bold" Text="{Binding}" />
                                 </DataTemplate>
                             </dxc:SuperTipItem.ContentTemplate>
                         </dxc:SuperTipItem>
                     </dxc:SuperTip>
                 </dxb:BarButtonItem.SuperTip>
             </dxb:BarButtonItem>
-            <dxb:BarButtonItem Content="Refresh" 
-                               x:Name="RefreshAll" 
+            <dxb:BarButtonItem x:Name="RefreshAll"
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
-                               CategoryName="Tools" Glyph="/Images/SearchRefresh.png"
+                               CategoryName="Tools"
+                               Command="{Binding RefreshAllCommand}"
+                               Content="Refresh"
+                               Glyph="/Images/SearchRefresh.png"
                                KeyGesture="F5" />
-            <dxb:BarButtonItem Content="Register..." 
-                               x:Name="Register"
+            <dxb:BarButtonItem x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
-                               CategoryName="Help"  />
-            <dxb:BarButtonItem Content="Restore default layout" 
-                               x:Name="ResetLayout"
+                               CategoryName="Help"
+                               Command="{Binding RegisterCommand}"
+                               Content="Register..." />
+            <dxb:BarButtonItem x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
-                               CategoryName="View" />
-            <dxb:BarCheckItem Content="Auto Refresh"
-                              Name="DataAutoRefresh"
-                              Hint="{Binding AutoRefreshTooltip}" ShowScreenTip="True"
+                               CategoryName="View"
+                               Command="{Binding ResetLayoutCommand}"
+                               Content="Restore default layout" />
+            <dxb:BarCheckItem Name="DataAutoRefresh"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
-                              IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
+                              CategoryName="View"
+                              Content="Auto Refresh"
                               Glyph="/Images/Refresh.png"
-                              CategoryName="View" />
-                              
-            <dxb:ToolbarListItem x:Name="ToolbarList" 
-                                 Content="Toolbar List" 
+                              Hint="{Binding AutoRefreshTooltip}"
+                              IsChecked="{Binding AutoRefresh,
+                                                  Mode=TwoWay}"
+                              ShowScreenTip="True" />
+
+            <dxb:ToolbarListItem x:Name="ToolbarList"
                                  AutomationProperties.AutomationId="ToolbarListMenuItem"
-                                 BarItemDisplayMode="Content" />
+                                 BarItemDisplayMode="Content"
+                                 Content="Toolbar List" />
 
-            <dxb:BarButtonItem Content="Options..." 
-                               x:Name="Options" 
+            <dxb:BarButtonItem x:Name="Options"
                                AutomationProperties.AutomationId="OptionsMenuItem"
-                               CategoryName="View" Glyph="/Images/Options.png" />
+                               CategoryName="View"
+                               Command="{Binding OptionsCommand}"
+                               Content="Options..."
+                               Glyph="/Images/Options.png" />
 
-            <dxb:BarSubItem x:Name="FileMenu" 
+            <dxb:BarSubItem x:Name="FileMenu"
                             AutomationProperties.AutomationId="FileMenu"
-                            CategoryName="File" 
+                            CategoryName="File"
                             Content="File">
                 <dxb:BarButtonItemLink BarItemName="ShutDown" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="ToolsMenu" 
+            <dxb:BarSubItem x:Name="ToolsMenu"
                             AutomationProperties.AutomationId="ToolsMenu"
-                            CategoryName="Tools" 
+                            CategoryName="Tools"
                             Content="Tools">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="ViewMenu" 
+            <dxb:BarSubItem x:Name="ViewMenu"
                             AutomationProperties.AutomationId="ViewMenu"
-                            CategoryName="View" 
+                            CategoryName="View"
                             Content="View">
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
                 <dxb:BarItemLinkSeparator />
@@ -132,9 +149,9 @@
                 <dxb:BarButtonItemLink BarItemName="Options" />
             </dxb:BarSubItem>
 
-            <dxb:BarSubItem x:Name="HelpMenu" 
+            <dxb:BarSubItem x:Name="HelpMenu"
                             AutomationProperties.AutomationId="HelpMenu"
-                            CategoryName="Help" 
+                            CategoryName="Help"
                             Content="Help">
                 <dxb:BarButtonItemLink BarItemName="Help" />
                 <dxb:BarButtonItemLink BarItemName="About" />
@@ -142,59 +159,65 @@
             </dxb:BarSubItem>
 
             <dxb:BarStaticItem x:Name="Registration"
+                               Alignment="Far"
+                               AutoSizeMode="Content"
                                AutomationProperties.AutomationId="RegistrationStatus"
                                CategoryName="Status"
-                               Content="{Binding StatusBarManager.Registration, Mode=TwoWay}" 
-                               AutoSizeMode="Content" 
-                               Alignment="Far" />
+                               Content="{Binding StatusBarManager.Registration,
+                                                 Mode=TwoWay}" />
 
-            <dxb:BarStaticItem x:Name="Status" 
+            <dxb:BarStaticItem x:Name="Status"
+                               AutoSizeMode="Fill"
                                AutomationProperties.AutomationId="StatusMessage"
                                CategoryName="Status"
-                               AutoSizeMode="Fill" 
-                               ShowBorder="False"
-                               Content="{Binding}">
+                               Content="{Binding}"
+                               ShowBorder="False">
                 <dxb:BarStaticItem.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/ErrorStatus.png" Width="16" Height="16" Stretch="Uniform" Margin="0,0,5,0" Visibility="{Binding Path=StatusBarManager.ErrorMessageVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
-                            <TextBlock Text="{Binding Path=StatusBarManager.StatusMessage, Mode=OneWay}" VerticalAlignment="Center" />
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/Images/ErrorStatus.png"
+                                   Stretch="Uniform"
+                                   Visibility="{Binding Path=StatusBarManager.ErrorMessageVisible,
+                                                        Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.StatusMessage, Mode=OneWay}" />
                         </StackPanel>
                     </DataTemplate>
                 </dxb:BarStaticItem.ContentTemplate>
             </dxb:BarStaticItem>
-
         </dxb:BarManager.Items>
 
-        <!--Create two bars-->
+        <!--  Create two bars  -->
         <dxb:BarManager.Bars>
             <dxb:Bar x:Name="MainMenu"
-                     Caption="Menu" 
-                     IsMainMenu="True" 
-                     UseWholeRow="True"
-                     AutomationProperties.AutomationId="MainMenuBar">
+                     AutomationProperties.AutomationId="MainMenuBar"
+                     Caption="Menu"
+                     IsMainMenu="True"
+                     UseWholeRow="True">
                 <dxb:BarSubItemLink BarItemName="FileMenu" />
                 <dxb:BarSubItemLink BarItemName="ToolsMenu" />
                 <dxb:BarSubItemLink BarItemName="ViewMenu" />
                 <dxb:BarSubItemLink BarItemName="HelpMenu" />
             </dxb:Bar>
             <dxb:Bar x:Name="MainToolbar"
+                     AllowCollapse="True"
+                     AllowHide="True"
                      AutomationProperties.AutomationId="MainToolbar"
-                     UseWholeRow="True" 
-                     Caption="Toolbar" 
-                     AllowHide="True" 
-                     AllowCollapse="True">
+                     Caption="Toolbar"
+                     UseWholeRow="True">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
-                <dxb:BarCheckItemLink BarItemName="DataAutoRefresh"  />
+                <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
             </dxb:Bar>
-            <dxb:Bar x:Name="StatusBar" 
+            <dxb:Bar x:Name="StatusBar"
+                     AllowCollapse="True"
+                     AllowHide="True"
                      AutomationProperties.AutomationId="StatusBar"
-                     IsStatusBar="True" 
-                     Caption="Statusbar" 
-                     AllowHide="True" 
-                     AllowCollapse="True" >
+                     Caption="Statusbar"
+                     IsStatusBar="True">
                 <dxb:Bar.DockInfo>
                     <dxb:BarDockInfo ContainerType="Bottom" />
                 </dxb:Bar.DockInfo>
@@ -206,116 +229,109 @@
             </dxb:Bar>
         </dxb:BarManager.Bars>
 
-        <!--Dock Windows-->
+        <!--  Dock Windows  -->
         <Grid>
-            <dxd:DockLayoutManager x:Name="DockManager"
-                                   AutomationProperties.AutomationId="DockManager" >
+            <dxd:DockLayoutManager x:Name="DockManager" AutomationProperties.AutomationId="DockManager">
                 <dxd:DockLayoutManager.AutoHideGroups>
 
-                    <dxd:AutoHideGroup Orientation="Vertical" AutoHideSize="300, 200"
-                                       AutomationProperties.AutomationId="ExplorerGroups">
-                        <dxd:LayoutPanel x:Name="EndpointExplorer" 
+                    <dxd:AutoHideGroup AutoHideSize="300, 200"
+                                       AutomationProperties.AutomationId="ExplorerGroups"
+                                       Orientation="Vertical">
+                        <dxd:LayoutPanel x:Name="EndpointExplorer"
+                                         AllowClose="False"
+                                         AllowFloat="False"
                                          AutomationProperties.AutomationId="EndpointExplorer"
                                          Caption="Endpoint Explorer"
-                                         AllowClose="False" 
-                                         ShowBorder="False" 
-                                         AllowFloat="False"
-                                         CaptionImage="/Images/ServerExplorer.png">
+                                         CaptionImage="/Images/ServerExplorer.png"
+                                         ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
-
                     </dxd:AutoHideGroup>
-
                 </dxd:DockLayoutManager.AutoHideGroups>
 
                 <dxd:LayoutGroup>
-                    <dxd:LayoutGroup Orientation="Vertical" ItemWidth="4*">
-                        <dxd:LayoutPanel x:Name="Messages" 
-                                         AutomationProperties.AutomationId="MessageList"
-                                         Caption="Messages" 
+                    <dxd:LayoutGroup ItemWidth="4*" Orientation="Vertical">
+                        <dxd:LayoutPanel x:Name="Messages"
                                          AllowClose="False"
                                          AllowFloat="False"
-                                         ShowBorder="False"
-                                         CaptionImage="/Images/Folder-Table.png">
+                                         AutomationProperties.AutomationId="MessageList"
+                                         Caption="Messages"
+                                         CaptionImage="/Images/Folder-Table.png"
+                                         ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
                         <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
-                            <dxd:TabbedGroup x:Name="MainTabbedView" 
-                                             ItemWidth="3*"
+                            <dxd:TabbedGroup x:Name="MainTabbedView"
                                              AllowClose="False"
                                              AllowFloat="False"
                                              GroupBorderStyle="Tabbed"
+                                             ItemWidth="3*"
                                              SelectedItemChanged="OnSelectedItemChanged">
 
-                                <dxd:LayoutPanel x:Name="MessageFlow" 
-                                                 AutomationProperties.AutomationId="MessageFlow"
-                                                 Caption="Flow Diagram"  
+                                <dxd:LayoutPanel x:Name="MessageFlow"
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/Diagram.png">
+                                                 AutomationProperties.AutomationId="MessageFlow"
+                                                 Caption="Flow Diagram"
+                                                 CaptionImage="/Images/Diagram.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="SagaWindow"
-                                                 AutomationProperties.AutomationId="SagaWindow"
-                                                 Caption="Saga"
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/Saga.png">
+                                                 AutomationProperties.AutomationId="SagaWindow"
+                                                 Caption="Saga"
+                                                 CaptionImage="/Images/Saga.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding SagaWindow}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageHeaders"
-                                                 AutomationProperties.AutomationId="MessageHeaders"
-                                                 Caption="Headers"  
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/Headers.png">
+                                                 AutomationProperties.AutomationId="MessageHeaders"
+                                                 Caption="Headers"
+                                                 CaptionImage="/Images/Headers.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageHeaders}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageBody"
-                                                 AutomationProperties.AutomationId="MessageBody"
-                                                 Caption="Body"  
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/Document.png">
+                                                 AutomationProperties.AutomationId="MessageBody"
+                                                 Caption="Body"
+                                                 CaptionImage="/Images/Document.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
-                                
+
                                 <dxd:LayoutPanel x:Name="LogWindow"
-                                                 AutomationProperties.AutomationId="LogWindow"
-                                                 Caption="Logs"
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/Log.png">
+                                                 AutomationProperties.AutomationId="LogWindow"
+                                                 Caption="Logs"
+                                                 CaptionImage="/Images/Log.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding LogWindow}" />
                                 </dxd:LayoutPanel>
-
                             </dxd:TabbedGroup>
 
-                            <dxd:LayoutPanel x:Name="MessageProperties" 
-                                             AutomationProperties.AutomationId="MessageProperties"
-                                             Caption="Message Properties" 
-                                             ItemWidth="1*"
+                            <dxd:LayoutPanel x:Name="MessageProperties"
                                              AllowClose="False"
                                              AllowFloat="False"
-                                             ShowBorder="False"
-                                             CaptionImage="/Images/Properties.png">
+                                             AutomationProperties.AutomationId="MessageProperties"
+                                             Caption="Message Properties"
+                                             CaptionImage="/Images/Properties.png"
+                                             ItemWidth="1*"
+                                             ShowBorder="False">
 
                                 <ContentControl cal:View.Model="{Binding MessageProperties}" />
-
                             </dxd:LayoutPanel>
                         </dxd:LayoutGroup>
-
                     </dxd:LayoutGroup>
                 </dxd:LayoutGroup>
             </dxd:DockLayoutManager>
         </Grid>
-
     </dxb:BarManager>
-
 </Window>

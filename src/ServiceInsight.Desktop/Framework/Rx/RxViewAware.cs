@@ -13,7 +13,7 @@
         static readonly DependencyProperty PreviouslyAttachedProperty = DependencyProperty.RegisterAttached(
             "PreviouslyAttached",
             typeof(bool),
-            typeof(ViewAware),
+            typeof(RxViewAware),
             null
             );
 
@@ -59,13 +59,15 @@
                 //View.ExecuteOnLoad(element, (s, e) => OnViewLoaded(s));
             }
 
-            //OnViewAttached(nonGeneratedView, context);
+            OnViewAttached(nonGeneratedView, context);
             ViewAttached(this, new ViewAttachedEventArgs { View = nonGeneratedView, Context = context });
         }
 
-        //protected virtual void OnViewAttached(object view, object context)
-        //{
-        //}
+        // ReSharper disable UnusedParameter.Global
+        protected virtual void OnViewAttached(object view, object context)
+        // ReSharper restore UnusedParameter.Global
+        {
+        }
 
         //protected virtual void OnViewLoaded(object view)
         //{

@@ -27,6 +27,11 @@
                    .AsSelf()
                    .SingleInstance();
 
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .Where(t => t.IsAttachment())
+                .AsSelf()
+                .InstancePerDependency();
+
             builder.RegisterSource(new SettingsSource());
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
@@ -51,13 +56,13 @@
         {
             get
             {
-                yield return typeof (LicenseRegistrationView);
-                yield return typeof (ServiceControlConnectionView);
-                yield return typeof (OptionsView);
-                yield return typeof (ShellView);
-                yield return typeof (ExceptionView);
-                yield return typeof (AboutView);
-                yield return typeof (ExceptionDetailView);
+                yield return typeof(LicenseRegistrationView);
+                yield return typeof(ServiceControlConnectionView);
+                yield return typeof(OptionsView);
+                yield return typeof(ShellView);
+                yield return typeof(ExceptionView);
+                yield return typeof(AboutView);
+                yield return typeof(ExceptionDetailView);
             }
         }
     }
