@@ -57,7 +57,6 @@
             };
         }
 
-
         static void OnUnhandledException(UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;

@@ -4,22 +4,27 @@
     using System.Globalization;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Media;
 
-    public class BoolToWindowBorderConverter : IValueConverter
+    public class BoolToBrushConverter : IValueConverter
     {
+        public Brush FalseBrush { get; set; }
+
+        public Brush TrueBrush { get; set; }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var flag = false;
             if (value is bool)
             {
-                return (bool) value ? WindowStyle.None : WindowStyle.SingleBorderWindow;
+                flag = (bool)value;
             }
-
-            return DependencyProperty.UnsetValue;
+            return flag ? TrueBrush : FalseBrush;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return DependencyProperty.UnsetValue;
         }
     }
 }

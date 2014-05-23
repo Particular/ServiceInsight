@@ -12,19 +12,9 @@
         public static Window AsSplashScreen()
         {
             var vm = AboutViewModel.AsSplashScreenModel();
-            var view = new AboutView {DataContext = vm};
+            var view = new AboutView { DataContext = vm, WindowStyle = WindowStyle.None };
 
             return view;
-        }
-
-        AboutViewModel Model 
-        {
-            get { return (AboutViewModel) DataContext; }
-        }
-
-        void OnLinkClicked(object sender, RoutedEventArgs e)
-        {
-            Model.NavigateToSite();
         }
     }
 }

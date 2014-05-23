@@ -29,7 +29,6 @@
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
-                    <cnv:BoolToWindowBorderConverter x:Key="BoolToWindowBorderConverter" />
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
