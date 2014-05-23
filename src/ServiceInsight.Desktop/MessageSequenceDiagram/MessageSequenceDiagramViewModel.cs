@@ -215,7 +215,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
             return connection;
         }
 
-        private DiagramConnection AddSDMessageConnection(DiagramNode startNode, DiagramNode endNode, object data)
+        private DiagramConnection AddMessageConnection(DiagramNode startNode, DiagramNode endNode, object data)
         {
             var fromPoint = new DiagramConnectionPoint(startNode, Edge.Bottom);
             var toPoint = new DiagramConnectionPoint(endNode, Edge.Top);

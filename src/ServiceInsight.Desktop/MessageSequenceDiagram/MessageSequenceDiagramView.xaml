@@ -78,6 +78,36 @@
                                 </ContentControl.RenderTransform>
                             </ContentControl>
 
+                            <!-- label -->
+                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentControl Template="{StaticResource EventIcon}" />
+                                    <TextBlock Foreground="Black"
+                                               Text="{Binding Data.Name}"
+                                               FontSize="9px" />
+                                </StackPanel>
+                            
+                                <ContentControl.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform>
+                                            <TranslateTransform.X>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.X>
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TransformGroup>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
+
+
                             <!-- Relocator thumbs and connection point thumb: -->
                             <ms:ConnectionRelocatorThumb Name="toPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Finish" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                                          RenderTransform="{Binding ToConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -233,25 +263,31 @@
                     </Style>
 
                     <Style x:Key="ArrowheadPathStyle" TargetType="Path">
-                        <Setter Property="Stroke" Value="Orange" />
+                        <Setter Property="Stroke" Value="Black" />
                         <Setter Property="Fill" Value="Black" />
                     </Style>
 
                     <DataTemplate x:Key="MessageEndArrowTemplate">
-                        <Canvas>
-                            
-                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" />
-                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />
-                        </Canvas>
+                        <StackPanel Orientation="Vertical" >
+                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" Margin="0" />
+                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
+                                <ms:Arrowhead.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </ms:Arrowhead.RenderTransform>
+                            </ms:Arrowhead>
+                        </StackPanel>
                     </DataTemplate>
 
                     <DataTemplate x:Key="EventEndArrowTemplate">
-                        <Canvas>
-                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" />
-                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" />
-                        </Canvas>
+                        <StackPanel Orientation="Vertical" >
+                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" Margin="0" />
+                            <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
+                                <ms:Arrowhead.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </ms:Arrowhead.RenderTransform>
+                            </ms:Arrowhead>
+                        </StackPanel>
                     </DataTemplate>
-
 
                     <ms:CorneredPathBuilder x:Key="PathBuilder" ArrowLength="20"/>
 
