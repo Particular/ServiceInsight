@@ -2,15 +2,27 @@
 {
     using System;
     using System.IO;
+    using System.Reactive.Linq;
+    using LogWindow;
+    using Serilog;
+    using Serilog.Filters;
+    using ServiceControl;
 
     public static class LoggingConfig
     {
-        public const string LogPattern = "%date - [%-5level] - %logger{1} - %message%newline";
-
-        public static void SetupLog4net()
+        public static void SetupLogging()
         {
-            var logConfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(logConfig));
+            var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Particular", "ServiceInsight", "log-{Date}.txt");
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.RollingFile(logPath)
+                .WriteTo.Trace()
+                .WriteTo.Logger(lc => lc
+                    .MinimumLevel.Verbose()
+                    .Filter.ByIncludingOnly(Matching.FromSource<DefaultServiceControl>())
+                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowView.LogObserver).ObserveOnDispatcher().Subscribe()))
+                .CreateLogger();
         }
     }
 }

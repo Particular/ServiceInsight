@@ -1,12 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
     using System.Collections.Generic;
-    using log4net;
     using Models;
+    using Serilog;
 
-    public class CommandLineArgParser 
+    public class CommandLineArgParser
     {
-        static ILog Logger = LogManager.GetLogger(typeof(CommandLineArgParser));
+        static ILogger Logger = Log.ForContext<CommandLineArgParser>();// LogManager.GetLogger(typeof(CommandLineArgParser));
 
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
@@ -14,7 +14,7 @@
 
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
-        
+
         public CommandLineOptions ParsedOptions { get; private set; }
 
         public bool HasUnsupportedKeys
@@ -32,14 +32,14 @@
         public void Parse()
         {
             var args = environment.GetCommandLineArgs();
-            
-            Logger.DebugFormat("Application invoked with following arguments: {0}", string.Join(" ", args));
+
+            Logger.Debug("Application invoked with following arguments: {args}", args);
 
             if (args.Length != 2) return;
 
             var uri = args[1].Split(UriSeparator);
 
-            if(uri.Length == 0) return;
+            if (uri.Length == 0) return;
 
             if (uri.Length > 0)
             {
@@ -71,15 +71,19 @@
                 case "search":
                     ParsedOptions.SetSearchQuery(value);
                     break;
+
                 case "endpointname":
                     ParsedOptions.SetEndpointName(value);
                     break;
+
                 case "autorefresh":
                     ParsedOptions.SetAutoRefresh(value);
                     break;
+
                 case "resetlayout":
                     ParsedOptions.SetResetLayout(bool.Parse(value));
                     break;
+
                 default:
                     AddUnsupportedKey(key);
                     break;
@@ -88,9 +92,8 @@
 
         void AddUnsupportedKey(string key)
         {
-            Logger.WarnFormat("Key '{0}' is not supported.", key);
+            Logger.Warning("Key '{key}' is not supported.", key);
             unsupportedKeys.Add(key);
         }
     }
-
 }

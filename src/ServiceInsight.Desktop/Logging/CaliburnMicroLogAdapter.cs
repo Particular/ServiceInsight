@@ -2,34 +2,35 @@
 {
     using System;
     using Caliburn.Micro;
+    using Serilog;
 
-    public class Log4NetLogger : ILog
+    public class CaliburnMicroLogAdapter : ILog
     {
-        log4net.ILog logger;
+        ILogger logger;
 
-        public Log4NetLogger()
+        public CaliburnMicroLogAdapter()
         {
-            logger = log4net.LogManager.GetLogger("NServiceBus.Profiler");
+            logger = Log.ForContext<CaliburnMicroLogAdapter>();
         }
 
         public void Info(string message)
         {
-            logger.InfoFormat(message);
+            logger.Information(message);
         }
 
         public void Info(string format, params object[] args)
         {
-            logger.InfoFormat(format, args);
+            logger.Information(format, args);
         }
 
         public void Warn(string message)
         {
-            logger.WarnFormat(message);
+            logger.Warning(message);
         }
 
         public void Warn(string format, params object[] args)
         {
-            logger.WarnFormat(format, args);
+            logger.Warning(format, args);
         }
 
         public void Error(Exception exception)

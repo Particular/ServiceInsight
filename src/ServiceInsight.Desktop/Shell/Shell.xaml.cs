@@ -10,12 +10,12 @@
     using DevExpress.Xpf.Docking;
     using DevExpress.Xpf.Docking.Base;
     using ExtensionMethods;
-    using log4net;
+    using Serilog;
     using Settings;
 
     public partial class ShellView : IShellView
     {
-        ILog logger = LogManager.GetLogger(typeof (IShellView));
+        ILogger logger = Log.ForContext<IShellView>();
 
         public ShellView()
         {
@@ -117,23 +117,23 @@
             }
             catch (Exception ex)
             {
-                logger.Info("Failed to save the layout, reason is: " + ex);
+                logger.Information(ex, "Failed to save the layout, reason is: {ex}", ex);
                 return null;
             }
         }
 
         void SetLayout(dynamic control, Stream layout)
         {
-            if(layout == null)
+            if (layout == null)
                 return;
 
             try
             {
                 control.RestoreLayoutFromStream(layout);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.Info("Failed to restore layout, reason is: " + ex);
+                logger.Information(ex, "Failed to restore layout, reason is: {ex}", ex);
             }
         }
 

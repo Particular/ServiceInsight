@@ -8,7 +8,7 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<Log4NetLogger>().As<ILog>();
+            builder.RegisterType<CaliburnMicroLogAdapter>().As<ILog>();
         }
     }
 }

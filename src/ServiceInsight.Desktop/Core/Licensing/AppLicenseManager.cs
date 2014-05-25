@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     using System;
-    using log4net;
     using Particular.Licensing;
+    using Serilog;
 
     public class AppLicenseManager
     {
@@ -13,7 +13,7 @@
             if (licenseStore.TryReadLicense(out licenseText))
             {
                 Exception ex;
-                
+
                 if (LicenseVerifier.TryVerify(licenseText, out ex))
                 {
                     CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
@@ -44,7 +44,7 @@
             }
             catch (Exception ex)
             {
-                Logger.WarnFormat("Can't install license: {0}", ex);
+                Logger.Warning(ex, "Can't install license: {ex}", ex);
                 return false;
             }
         }
@@ -55,7 +55,7 @@
         {
             var now = DateTime.UtcNow.Date;
 
-            var expiration = (CurrentLicense == null || CurrentLicense.ExpirationDate == null) ? 
+            var expiration = (CurrentLicense == null || CurrentLicense.ExpirationDate == null) ?
                 TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
 
             var remainingDays = (expiration - now).Days;
@@ -67,11 +67,10 @@
         {
             var trialStartDate = TrialStartDateStore.GetTrialStartDate();
 
-            Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
+            Logger.Information("Configuring ServiceInsight to run in trial mode.");
 
             return License.TrialLicense(trialStartDate);
         }
-
 
         public bool IsLicenseExpired()
         {
@@ -80,9 +79,6 @@
 
         RegistryLicenseStore licenseStore = new RegistryLicenseStore();
 
-     
-        static ILog Logger = LogManager.GetLogger(typeof(AppLicenseManager));
-
-
+        static ILogger Logger = Log.ForContext<AppLicenseManager>();
     }
 }

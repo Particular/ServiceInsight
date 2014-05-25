@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using DevExpress.Xpf.Core;
-    using log4net;
+    using Serilog;
     using Shell;
     using Startup;
 
@@ -38,11 +38,11 @@
 
     public partial class App : IAppCommands
     {
-        static ILog Logger = LogManager.GetLogger("Application");
+        static ILogger Logger = Log.ForContext<App>();
 
         public App()
         {
-            LoggingConfig.SetupLog4net();
+            LoggingConfig.SetupLogging();
             AppDomain.CurrentDomain.UnhandledException += (s, e) => OnUnhandledException(e);
             WireTaskExceptionHandler();
             InitializeComponent();
@@ -76,10 +76,10 @@
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            Logger.Info("Starting the application...");
+            Logger.Information("Starting the application...");
             DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             base.OnStartup(e);
-            Logger.Info("Application startup finished.");
+            Logger.Information("Application startup finished.");
         }
 
         public void ShutdownImmediately()
