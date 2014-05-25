@@ -43,20 +43,13 @@
 
         public bool HasTimeoutMessages { get { return TimeoutMessages.Any(); } }
 
-        public string StateAfterChange
-        {
-            get;
-            set;
-        }
+        public string StateAfterChange { get; set; }
 
         public void OnStateAfterChangeChanged()
         {
             Values = JsonPropertiesHelper.ProcessValues(StateAfterChange, s => s.TrimStart('[').TrimEnd(']'))
-                             .Select(v => new SagaUpdatedValue
-                             {
-                                 Name = v.Key,
-                                 NewValue = v.Value
-                             }).ToList();
+                                         .Select(v => new SagaUpdatedValue(InitiatingMessage.MessageType, v.Key, v.Value))
+                                         .ToList();
         }
 
         public string Label
@@ -75,21 +68,6 @@
 
                 return string.Empty;
             }
-            //            set // this is only for demo deserialization and may be removed soon
-            //            {
-            //                if (value == "Saga Completed")
-            //                {
-            //                    Status = SagaStateChangeStatus.Completed;
-            //                }
-            //                else if (value == "Saga Initiated")
-            //                {
-            //                    Status = SagaStateChangeStatus.New;
-            //                }
-            //                else if (value == "Saga Updated")
-            //                {
-            //                    Status = SagaStateChangeStatus.Updated;
-            //                }
-            //            }
         }
     }
 

@@ -11,7 +11,9 @@
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        private SagaData data;
+        SagaData data;
+        StoredMessage currentMessage;
+        SagaMessage selectedMessage;
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
 
@@ -127,7 +129,7 @@
 
         static void ProcessDataValues(IEnumerable<SagaUpdate> list)
         {
-            IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
+            var oldValues = new List<SagaUpdatedValue>();
             foreach (var change in list)
             {
                 ProcessChange(oldValues, change.Values);
@@ -139,13 +141,10 @@
         {
             foreach (var value in newValues)
             {
-                var oldValue = oldValues.FirstOrDefault(v => v.Name == value.Name);
-                value.OldValue = oldValue != null ? oldValue.NewValue : string.Empty;
+                var oldValueViewModel = oldValues.FirstOrDefault(v => v.Name == value.Name);
+                value.UpdateOldValue(oldValueViewModel);
             }
         }
-
-        StoredMessage currentMessage;
-        SagaMessage selectedMessage;
 
         public bool ShowSagaNotFoundWarning { get; set; }
 

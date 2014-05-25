@@ -32,31 +32,4 @@
             </dxlc:LayoutGroup>
         </dxlc:LayoutControl>
     </Grid>
-<!--    <TabControl Margin="10">-->
-<!--        -->
-<!--        <TabControl.Items>-->
-<!--            -->
-<!--            <TabItem Header="Hex">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl cal:View.Model="{Binding Path=HexViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--            <TabItem Header="Json">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl cal:View.Model="{Binding Path=JsonViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--            <TabItem Header="Xml">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl Padding="0" Margin="0" cal:View.Model="{Binding Path=XmlViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--        </TabControl.Items>-->
-<!--        -->
-<!--    </TabControl>-->
-    
-    
 </UserControl>

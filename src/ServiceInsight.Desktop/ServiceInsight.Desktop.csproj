@@ -272,6 +272,9 @@
     <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Framework\Modules\EnvironmentModule.cs" />
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
+    <Compile Include="Saga\SagaContentViewer.xaml.cs">
+      <DependentUpon>SagaContentViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Saga\SagaData.cs" />
     <Compile Include="Saga\SagaFooter.cs" />
     <Compile Include="Saga\SagaHeader.cs" />
@@ -532,6 +535,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaContentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

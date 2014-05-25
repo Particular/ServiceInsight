@@ -323,7 +323,7 @@
                         </ContentControl>
                     </DataTemplate>
 
-                    <Style x:Key="ItemsControlVirtialisedStyle" TargetType="ItemsControl">
+                    <Style x:Key="ItemsControlVirtualisedStyle" TargetType="ItemsControl">
                         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
                         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
                         <Setter Property="ItemsPanel">

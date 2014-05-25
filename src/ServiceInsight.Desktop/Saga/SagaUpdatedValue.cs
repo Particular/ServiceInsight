@@ -1,10 +1,35 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    public class SagaUpdatedValue
+    using System.Windows.Input;
+    using Caliburn.Micro;
+    using Core.UI;
+
+    public class SagaUpdatedValue : PropertyChangedBase
     {
-        public string Name { get; set; }
-        public string NewValue { get; set; }
-        public string OldValue { get; set; }
+        public const byte MaxValueLength = 3;
+
+        public SagaUpdatedValue(string sagaName, string propertyName, string propertyValue)
+        {
+            SagaName = sagaName;
+            Name = propertyName;
+            NewValue = propertyValue;
+            ShowEntireContentCommand = new RelayCommand(ShowEntireContent);
+        }
+
+        public string SagaName { get; private set; }
+        public string Name { get; private set; }
+        public string NewValue { get; private set; }
+        public string OldValue { get; private set; }
+
+
+        public ICommand ShowEntireContentCommand { get; set; }
+
+        private void ShowEntireContent()
+        {
+            MessageContentVisible = true;
+        }
+
+        public bool MessageContentVisible { get; set; }
 
         public string Label
         {
@@ -12,6 +37,26 @@
             {
                 return string.Format("{0}{1}", Name, IsValueNew ? " (new)" : "");
             }
+        }
+
+        public string OldValueLink
+        {
+            get { return string.Format("{0} byte(s)", OldValue != null ? OldValue.Length : 0); }
+        }
+
+        public string NewValueLink
+        {
+            get { return string.Format("{0} byte(s)", NewValue != null ? NewValue.Length : 0); }
+        }
+
+        public bool ShouldDisplayOldValueLink
+        {
+            get { return !string.IsNullOrWhiteSpace(OldValue) && OldValue.Length > MaxValueLength; }
+        }
+
+        public bool ShouldDisplayNewValueLink
+        {
+            get { return !string.IsNullOrWhiteSpace(NewValue) && NewValue.Length > MaxValueLength; }
         }
 
         public bool IsValueChanged
@@ -36,6 +81,11 @@
             {
                 return !IsValueChanged && !IsValueNew;
             }
+        }
+
+        public void UpdateOldValue(SagaUpdatedValue oldValueHolder)
+        {
+            OldValue = oldValueHolder != null ? oldValueHolder.NewValue : string.Empty;
         }
     }
 }

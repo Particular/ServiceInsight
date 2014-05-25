@@ -115,7 +115,7 @@
 
         <Grid x:Name="Surface" Grid.Row="1">
             <ItemsControl x:Name="Steps"
-                          Style="{StaticResource ItemsControlVirtialisedStyle}"
+                          Style="{StaticResource ItemsControlVirtualisedStyle}"
                           Visibility="{Binding HasSaga,
                                                Converter={StaticResource BoolToVisibilityConverter}}">
                 <ItemsControl.ItemsSource>

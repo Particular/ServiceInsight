@@ -26,26 +26,22 @@
 
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
-        string messageType;
-
         public string MessageType
         {
-            get
-            {
-                return ProcessType();
-            }
-            set
-            {
-                messageType = value;
-            }
+            get; set;
+        }
+
+        public string MessageFriendlyTypeName
+        {
+            get { return ProcessType(); }
         }
 
         string ProcessType()
         {
-            if (string.IsNullOrEmpty(messageType))
+            if (string.IsNullOrEmpty(MessageType))
                 return string.Empty;
 
-            var clazz = messageType.Split(',').First();
+            var clazz = MessageType.Split(',').First();
             var objectName = clazz.Split('.').Last();
 
             if (objectName.Contains("+"))
