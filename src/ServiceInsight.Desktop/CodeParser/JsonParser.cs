@@ -66,9 +66,21 @@
             }
             else
             {
-                var end = text.IndexOfAny(new[] { ',', '}' });
-                res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
-                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+                var endOfValueQuote = text.IndexOfAny(new[] { '\"' });
+                if (endOfValueQuote > 0)
+                {
+                    res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueQuote)));
+                    res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
+                }
+                else
+                {
+                    var endOfValueOrCollection = text.IndexOfAny(new[] { ',', '}' });
+                    if (endOfValueOrCollection > 0)
+                    {
+                        res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueOrCollection)));
+                        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+                    }
+                }
             }
         }
 
