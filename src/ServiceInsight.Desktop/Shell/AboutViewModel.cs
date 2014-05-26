@@ -100,16 +100,20 @@ namespace Particular.ServiceInsight.Desktop.Shell
         void LoadAppVersion()
         {
             var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            var versionParts = version.Split(' ');
+            var versionParts = version.Split('+');
             var appVersion = versionParts[0];
-            var commitHash = versionParts.Last();
 
             AppVersion = appVersion;
 
-            var parts = commitHash.Split(':');
-            var shaValue = parts[1].Replace("'", "");
-            var shortCommitHash = shaValue.Substring(0, 7);
-            CommitHash = shortCommitHash;
+            var metadata = versionParts.Last();
+            var parts = metadata.Split('.');
+            var shaIndex = parts.IndexOf("Sha", StringComparer.InvariantCultureIgnoreCase);
+            if (shaIndex != -1 && parts.Length > shaIndex + 1)
+            {
+                var shaValue = parts[shaIndex + 1];
+                var shortCommitHash = shaValue.Substring(0, 7);
+                CommitHash = shortCommitHash;
+            }
         }
 
         void SetCopyrightText()
