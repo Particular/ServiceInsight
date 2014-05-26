@@ -52,20 +52,18 @@
     <ROW Component="URLProtocol" ComponentId="{C7552438-FB58-42CC-AF38-1A3D895F0878}" Directory_="APPDIR" Attributes="4" KeyPath="URLProtocol"/>
     <ROW Component="_" ComponentId="{D5E97EE9-48A7-411E-8676-0E6FB1CC7842}" Directory_="APPDIR" Attributes="4" KeyPath="__1"/>
     <ROW Component="__1" ComponentId="{66C064EC-FF8C-4921-A0CC-8F956871530A}" Directory_="APPDIR" Attributes="4" KeyPath="__2"/>
-    <ROW Component="log4net.config" ComponentId="{459829B4-1DF2-46DD-A222-8E88FC53BE45}" Directory_="Profiler_Dir" Attributes="0" KeyPath="log4net.config" Type="0"/>
     <ROW Component="open" ComponentId="{1EE534A9-F3EB-407E-A9FB-5537BC7896D6}" Directory_="APPDIR" Attributes="4" KeyPath="open"/>
     <ROW Component="shell" ComponentId="{772052C1-ED32-4951-A4A3-1320D720E214}" Directory_="APPDIR" Attributes="4" KeyPath="shell"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="DTC" Title="DTC" Description="Install the Microsoft Distributed Transaction Coordinator (required for MSMQ)" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ROW Feature="MSMQ" Feature_Parent="DTC" Title="MSMQ" Description="Install Microsoft Message Queuing (requires DTC)" Display="3" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_DisableModify AI_ExePath DefaultIcon Particular.ServiceInsight.exe Path ProductInformation SHORTCUTDIR TrialStart URLProtocol _ __1 log4net.config open shell"/>
+    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_DisableModify AI_ExePath DefaultIcon Particular.ServiceInsight.exe Path ProductInformation SHORTCUTDIR TrialStart URLProtocol _ __1 open shell"/>
     <ATTRIBUTE name="CurrentFeature" value="ServiceInsight"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="Particular.ServiceInsight.exe" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.exe|Particular.ServiceInsight.exe" Attributes="0" SourcePath="..\..\binaries\Particular.ServiceInsight.exe" SelfReg="false" NextFile="Particular.ServiceInsight.pdb" DigSign="true"/>
     <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.pdb|Particular.ServiceInsight.pdb" Attributes="0" SourcePath="..\..\binaries\Particular.ServiceInsight.pdb" SelfReg="false"/>
-    <ROW File="log4net.config" Component_="log4net.config" FileName="log4ne~1.con|log4net.config" Attributes="0" SourcePath="..\..\binaries\log4net.config" SelfReg="false" NextFile="Particular.ServiceInsight.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" GeneralOptions="qh" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" EulaPathLocId="*"/>
