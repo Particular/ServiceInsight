@@ -13,6 +13,7 @@ namespace Particular.ServiceInsight.Desktop.Startup
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
     using ExceptionHandler;
+    using Framework.Logging;
     using Shell;
     using IContainer = Autofac.IContainer;
 
@@ -25,6 +26,8 @@ namespace Particular.ServiceInsight.Desktop.Startup
             CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();
+
+            LoggingConfig.SetupCaliburnMicroLogging();
         }
 
         private void CreateContainer()

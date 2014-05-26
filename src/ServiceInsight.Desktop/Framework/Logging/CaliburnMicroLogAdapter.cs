@@ -1,39 +1,46 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Logging
 {
     using System;
-    using Anotar.Serilog;
     using Caliburn.Micro;
+    using Serilog;
 
     public class CaliburnMicroLogAdapter : ILog
     {
+        private readonly ILogger logger;
+
+        public CaliburnMicroLogAdapter(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public void Info(string message)
         {
-            LogTo.Information(message);
+            logger.Information(message);
         }
 
         public void Info(string format, params object[] args)
         {
-            LogTo.Information(format, args);
+            logger.Information(format, args);
         }
 
         public void Warn(string message)
         {
-            LogTo.Warning(message);
+            logger.Warning(message);
         }
 
         public void Warn(string format, params object[] args)
         {
-            LogTo.Warning(format, args);
+            logger.Warning(format, args);
         }
 
         public void Error(Exception exception)
         {
-            LogTo.Error(string.Empty, exception);
+            logger.Error(string.Empty, exception);
         }
 
         public void Error(string message, Exception exception)
         {
-            LogTo.Error(message, exception);
+            logger.Error(message, exception);
         }
     }
 }
