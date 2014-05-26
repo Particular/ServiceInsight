@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.Licensing
 {
     using System;
+    using Anotar.Serilog;
     using Particular.Licensing;
-    using Serilog;
 
     public class AppLicenseManager
     {
@@ -44,7 +44,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Warning(ex, "Can't install license: {ex}", ex);
+                LogTo.Warning(ex, "Can't install license: {ex}", ex);
                 return false;
             }
         }
@@ -67,7 +67,7 @@
         {
             var trialStartDate = TrialStartDateStore.GetTrialStartDate();
 
-            Logger.Information("Configuring ServiceInsight to run in trial mode.");
+            LogTo.Information("Configuring ServiceInsight to run in trial mode.");
 
             return License.TrialLicense(trialStartDate);
         }
@@ -78,7 +78,5 @@
         }
 
         RegistryLicenseStore licenseStore = new RegistryLicenseStore();
-
-        static ILogger Logger = Log.ForContext<AppLicenseManager>();
     }
 }

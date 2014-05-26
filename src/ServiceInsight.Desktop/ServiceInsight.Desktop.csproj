@@ -69,6 +69,10 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
+    <Reference Include="Anotar.Serilog">
+      <HintPath>..\packages\Anotar.Serilog.Fody.2.10.0\Lib\portable-net4+sl4+wp7+windows8\Anotar.Serilog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.4.0\lib\net40\Autofac.dll</HintPath>

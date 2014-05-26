@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Windows;
+    using Anotar.Serilog;
     using Core.Settings;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
@@ -10,13 +11,10 @@
     using DevExpress.Xpf.Docking;
     using DevExpress.Xpf.Docking.Base;
     using ExtensionMethods;
-    using Serilog;
     using Settings;
 
     public partial class ShellView : IShellView
     {
-        ILogger logger = Log.ForContext<IShellView>();
-
         public ShellView()
         {
             ChangeTheme(Theme.Office2013Name);
@@ -117,7 +115,7 @@
             }
             catch (Exception ex)
             {
-                logger.Information(ex, "Failed to save the layout, reason is: {ex}", ex);
+                LogTo.Information(ex, "Failed to save the layout, reason is: {ex}", ex);
                 return null;
             }
         }
@@ -133,7 +131,7 @@
             }
             catch (Exception ex)
             {
-                logger.Information(ex, "Failed to restore layout, reason is: {ex}", ex);
+                LogTo.Information(ex, "Failed to restore layout, reason is: {ex}", ex);
             }
         }
 

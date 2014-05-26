@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
     using System.Windows;
+    using Anotar.Serilog;
     using DevExpress.Xpf.Core;
     using Framework.Logging;
-    using Serilog;
     using Shell;
 
     public interface IAppCommands
@@ -38,8 +38,6 @@
 
     public partial class App : IAppCommands
     {
-        static ILogger Logger = Log.ForContext<App>();
-
         public App()
         {
             LoggingConfig.SetupLogging();
@@ -69,17 +67,16 @@
         public static void LogException(Exception ex)
         {
             var baseError = ex.GetBaseException();
-            var message = string.Format("An unhandled exception occurred. Error message is {0}.", baseError.Message);
 
-            Logger.Error(message, ex);
+            LogTo.Error(ex, "An unhandled exception occurred. Error message is {Message}.", baseError.Message);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            Logger.Information("Starting the application...");
+            LogTo.Information("Starting the application...");
             DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             base.OnStartup(e);
-            Logger.Information("Application startup finished.");
+            LogTo.Information("Application startup finished.");
         }
 
         public void ShutdownImmediately()

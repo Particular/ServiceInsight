@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
+    using Anotar.Serilog;
     using Caliburn.Micro;
     using Core.MessageDecoders;
     using Core.Settings;
@@ -13,7 +14,6 @@
     using RestSharp;
     using RestSharp.Contrib;
     using Saga;
-    using Serilog;
     using Settings;
 
     public class DefaultServiceControl
@@ -27,7 +27,6 @@
         ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
-        ILogger logger = Log.ForContext<DefaultServiceControl>();
 
         public DefaultServiceControl(
             ServiceControlConnectionProvider connection,
@@ -336,11 +335,11 @@
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
             var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
 
-            logger.Information("HTTP {Method} {url:l}/{resource:l}", request.Method, url, resource);
+            LogTo.Information("HTTP {Method} {url:l}/{resource:l}", request.Method, url, resource);
 
             foreach (var parameter in request.Parameters)
             {
-                logger.Debug("Request Parameter: {Name} : {Value}",
+                LogTo.Debug("Request Parameter: {Name} : {Value}",
                                                        parameter.Name,
                                                        parameter.Value);
             }
@@ -351,11 +350,11 @@
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            logger.Debug("HTTP Status {code} ({uri})", code, uri);
+            LogTo.Debug("HTTP Status {code} ({uri})", code, uri);
 
             foreach (var header in response.Headers)
             {
-                logger.Debug("Response Header: {Name} : {Value}",
+                LogTo.Debug("Response Header: {Name} : {Value}",
                                                      header.Name,
                                                      header.Value);
             }
@@ -367,7 +366,7 @@
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
             RaiseAsyncOperationFailed(errorMessage);
-            logger.Error(exception, errorMessage);
+            LogTo.Error(exception, errorMessage);
         }
 
         static bool HasSucceeded(IRestResponse response)

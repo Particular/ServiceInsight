@@ -1,13 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
     using System.Collections.Generic;
+    using Anotar.Serilog;
     using Models;
-    using Serilog;
 
     public class CommandLineArgParser
     {
-        static ILogger Logger = Log.ForContext<CommandLineArgParser>();// LogManager.GetLogger(typeof(CommandLineArgParser));
-
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
@@ -33,7 +31,7 @@
         {
             var args = environment.GetCommandLineArgs();
 
-            Logger.Debug("Application invoked with following arguments: {args}", args);
+            LogTo.Debug("Application invoked with following arguments: {args}", args);
 
             if (args.Length != 2) return;
 
@@ -92,7 +90,7 @@
 
         void AddUnsupportedKey(string key)
         {
-            Logger.Warning("Key '{key}' is not supported.", key);
+            LogTo.Warning("Key '{key}' is not supported.", key);
             unsupportedKeys.Add(key);
         }
     }
