@@ -6,7 +6,7 @@
 
     public class SagaUpdatedValue : PropertyChangedBase
     {
-        public const byte MaxValueLength = 3;
+        public const byte MaxValueLength = 30;
 
         public SagaUpdatedValue(string sagaName, string propertyName, string propertyValue)
         {
@@ -21,6 +21,10 @@
         public string NewValue { get; private set; }
         public string OldValue { get; private set; }
 
+        public string EffectiveValue
+        {
+            get { return NewValue ?? OldValue; }
+        }
 
         public ICommand ShowEntireContentCommand { get; set; }
 

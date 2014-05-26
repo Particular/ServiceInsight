@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Documents;
+    using System.Windows.Media;
     using CodeParser;
 
     /// <summary>
@@ -14,23 +15,23 @@
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty MessageContentProperty = DependencyProperty.Register("MessageContent", typeof(string), typeof(SagaContentViewer), new FrameworkPropertyMetadata(default(string), OnMessageContentChanged));
+        public static readonly DependencyProperty MessageContentProperty = DependencyProperty.Register("MessageContent", typeof(SagaUpdatedValue), typeof(SagaContentViewer), new FrameworkPropertyMetadata(default(SagaUpdatedValue), OnMessageContentChanged));
 
         private static void OnMessageContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((SagaContentViewer)d).OnMessageContentChanged(e.NewValue as string);
+            ((SagaContentViewer)d).OnMessageContentChanged(e.NewValue as SagaUpdatedValue);
         }
 
-        public string MessageContent
+        public SagaUpdatedValue MessageContent
         {
-            get { return (string)GetValue(MessageContentProperty); }
+            get { return (SagaUpdatedValue)GetValue(MessageContentProperty); }
             set { SetValue(MessageContentProperty, value); }
         }
 
-        private void OnMessageContentChanged(string newContent)
+        private void OnMessageContentChanged(SagaUpdatedValue model)
         {
             Clear();
-            Display(newContent);
+            Display(model.EffectiveValue);
         }
 
         private void Display(string message)
@@ -41,7 +42,7 @@
             var presenter = new CodeBlockPresenter(CodeLanguage.Plain);
             var paragraph = new Paragraph();
 
-            presenter.FillInlines(message, paragraph.Inlines);
+            presenter.FillInlines(message, paragraph.Inlines, Colors.White); //TODO: Do it as a dependency property?
             document.Document.Blocks.Add(paragraph);
         }
 

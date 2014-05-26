@@ -114,8 +114,11 @@
             };
         }
 
-        public virtual Inline ToInline(CodeLexem codeLexem)
+        public virtual Inline ToInline(CodeLexem codeLexem, Color? color = null)
         {
+            if (color.HasValue)
+                return CreateRun(codeLexem.Text, color.Value);
+
             return new Run(codeLexem.Text);
         }
     }

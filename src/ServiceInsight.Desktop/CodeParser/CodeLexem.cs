@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows.Documents;
+    using System.Windows.Media;
 
     public class CodeLexem
     {
@@ -39,16 +40,16 @@
             }
         }
 
-        public Inline ToInline(CodeLanguage lang)
+        public Inline ToInline(CodeLanguage lang, Color? color = null)
         {
             switch (lang)
             {
                 case CodeLanguage.Xml:
-                    return new XmlParser().ToInline(this);
+                    return new XmlParser().ToInline(this, color);
                 case CodeLanguage.Json:
-                    return new JsonParser().ToInline(this);
+                    return new JsonParser().ToInline(this, color);
                 case CodeLanguage.Plain:
-                    return new BaseParser().ToInline(this);
+                    return new BaseParser().ToInline(this, color);
                 default:
                     throw new NotImplementedException(string.Format("Conversion from {0} language is not supported.", lang));
             }

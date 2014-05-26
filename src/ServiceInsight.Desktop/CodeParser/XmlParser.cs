@@ -92,8 +92,10 @@
             res.Add(new CodeLexem(type, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem)
+        public override Inline ToInline(CodeLexem codeLexem, Color? color = null)
         {
+            if (color.HasValue) return base.ToInline(codeLexem, color);
+
             switch (codeLexem.Type)
             {
                 case LexemType.Error:
@@ -125,7 +127,6 @@
             }
 
             throw new NotImplementedException(string.Format("Lexem type {0} has no specific colors.", codeLexem.Type));
-
         }
     }
 }

@@ -373,11 +373,10 @@
             </DataTemplate>
 
             <DataTemplate x:Key="UpdatedValuesTemplate" >
-                <StackPanel Background="{StaticResource SagaBackground}" d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
+                <Grid Background="{StaticResource SagaBackground}" d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
-                                Visibility="{Binding IsValueChanged,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsValueChanged, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
@@ -390,7 +389,12 @@
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
                                    Visibility="{Binding ShouldDisplayOldValueLink, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Text="{Binding OldValueLink}" />
+                                   TextDecorations="Underline"
+                                   Text="{Binding OldValueLink}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                         <TextBlock FontFamily="Symbol"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
@@ -402,7 +406,12 @@
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
                                    Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Text="{Binding NewValueLink}" />
+                                   TextDecorations="Underline"
+                                   Text="{Binding NewValueLink}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                     </StackPanel>
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
@@ -419,9 +428,20 @@
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValueLink}" 
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                   TextDecorations="Underline"
+                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                     </StackPanel>
-                </StackPanel>
+                    <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}" 
+                           Placement="Center"
+                           StaysOpen="False"
+                           MaxWidth="400" MaxHeight="400">
+                        <local:SagaContentViewer MessageContent="{Binding}" />
+                    </Popup>
+                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="AllValuesTemplate">
@@ -429,8 +449,7 @@
                     <ContentPresenter ContentSource="{Binding}" ContentTemplate="{StaticResource UpdatedValuesTemplate}" />
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
-                                Visibility="{Binding IsValueNotUpdated,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsValueNotUpdated, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
@@ -455,10 +474,7 @@
                            Placement="Center"
                            StaysOpen="False"
                            MaxWidth="400" MaxHeight="400">
-                        <Grid>
-                            
-                            <local:SagaContentViewer MessageContent="{Binding NewValue}" />
-                        </Grid>
+                        <local:SagaContentViewer MessageContent="{Binding}" />
                     </Popup>
                 </Grid>
             </DataTemplate>

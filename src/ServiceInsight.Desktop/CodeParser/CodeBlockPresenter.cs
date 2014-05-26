@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
     using System.Windows.Documents;
+    using System.Windows.Media;
 
     public class CodeBlockPresenter
     {
@@ -14,14 +15,14 @@
             CodeLanguage = language;
         }
 
-        public void FillInlines(string text, InlineCollection collection)
+        public void FillInlines(string text, InlineCollection collection, Color? color = null)
         {
             text = text.Replace("\r", "");
             var codeLexem = new CodeLexem(text);
             var list = codeLexem.Parse(CodeLanguage);
             foreach (var current in list)
             {
-                collection.Add(current.ToInline(CodeLanguage));
+                collection.Add(current.ToInline(CodeLanguage, color));
             }
         }
 
