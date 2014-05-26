@@ -7,11 +7,10 @@
   <Target Name="Build">
     <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="SemVer" PropertyName="SemVer" />
-      <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
-      <Output TaskParameter="PreReleaseTagWithDash" PropertyName="PreReleaseTagWithDash" />
+      <Output TaskParameter="LegacySemVerPadded" PropertyName="LegacySemVerPadded" />
     </GetVersion>
     <PropertyGroup>
-      <ChocoVersion>$(MajorMinorPatch)$(PreReleaseTagWithDash)</ChocoVersion>
+      <ChocoVersion>$(LegacySemVerPadded)</ChocoVersion>
     </PropertyGroup>
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
