@@ -164,10 +164,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <SolidColorBrush x:Key="EndpointBackground" Color="White" />
                         <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
@@ -181,7 +177,6 @@
                     <StackPanel x:Name="OriginatingEndPoint"
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="2"
                                 Height="14"
                                 Background="{StaticResource EndpointBackground}"
                                 Orientation="Horizontal"
@@ -197,65 +192,69 @@
 
                     <Border x:Name="NoEndpointsBorder"
                             Grid.Row="1"
-                            Grid.ColumnSpan="2"
+                            MinWidth="220"
+                            Background="{StaticResource MessageBackground}"
                             BorderBrush="Black"
                             BorderThickness="0">
-                        <Rectangle x:Name="MessageRectangle"
-                                   Height="45px"
-                                   MinWidth="220px"
-                                   Fill="{StaticResource MessageBackground}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl x:Name="FailedMessageMarker"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource FailedMessageMarker}" />
+
+                            <ContentControl x:Name="MessageTypeIcon"
+                                            Grid.Column="0"
+                                            Width="20"
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource CommandIcon}"
+                                            ToolTip="Command"
+                                            Visibility="{Binding IsTimeout,
+                                                                 Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                            <ContentControl x:Name="TimeoutIcon"
+                                            Grid.Column="0"
+                                            Width="24"
+                                            Margin="0,8,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource TimeoutIcon}"
+                                            ToolTip="Timeout"
+                                            Visibility="{Binding IsTimeout,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                            <StackPanel x:Name="MessageTypeBox"
+                                        Grid.Column="1"
+                                        Margin="0,0,10,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock FontSize="14px"
+                                           FontWeight="Bold"
+                                           Text="{Binding MessageFriendlyTypeName}" />
+                                <TextBlock FontSize="14px" Text="{Binding TimeSent}" />
+                            </StackPanel>
+                        </Grid>
                     </Border>
-
-                    <ContentControl x:Name="FailedMessageMarker"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource FailedMessageMarker}" />
-
-                    <ContentControl x:Name="MessageTypeIcon"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Width="20"
-                                    Margin="0,4,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Template="{StaticResource CommandIcon}"
-                                    ToolTip="Command"
-                                    Visibility="{Binding IsTimeout,
-                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                    <ContentControl x:Name="TimeoutIcon"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Width="24"
-                                    Margin="0,8,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Template="{StaticResource TimeoutIcon}"
-                                    ToolTip="Timeout"
-                                    Visibility="{Binding IsTimeout,
-                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
-
-                    <StackPanel x:Name="MessageTypeBox"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                VerticalAlignment="Center">
-                        <TextBlock FontSize="14px"
-                                   FontWeight="Bold"
-                                   Text="{Binding MessageFriendlyTypeName}" />
-                        <TextBlock FontSize="14px" Text="{Binding TimeSent}" />
-                    </StackPanel>
                 </Grid>
 
                 <DataTemplate.Triggers>
-                    <DataTrigger Binding="{Binding HasFailed}" Value="True" d:DataContext="{d:DesignInstance local:SagaMessage}">
+                    <DataTrigger Binding="{Binding HasFailed}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
+                                 Value="True">
                         <DataTrigger.Setters>
-                            <Setter TargetName="MessageRectangle" Property="Fill" Value="{StaticResource FailedMessageBackground}" />
+                            <Setter TargetName="NoEndpointsBorder" Property="Background" Value="{StaticResource FailedMessageBackground}" />
                         </DataTrigger.Setters>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding HasRetried}" Value="True" d:DataContext="{d:DesignInstance local:SagaMessage}">
+                    <DataTrigger Binding="{Binding HasRetried}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
+                                 Value="True">
                         <DataTrigger.Setters>
-                            <Setter TargetName="MessageRectangle" Property="Fill" Value="{StaticResource RetriedMessageBackground}" />
+                            <Setter TargetName="NoEndpointsBorder" Property="Background" Value="{StaticResource RetriedMessageBackground}" />
                         </DataTrigger.Setters>
                     </DataTrigger>
                     <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaMessage}">
@@ -332,7 +331,9 @@
                 </Grid>
 
                 <DataTemplate.Triggers>
-                    <DataTrigger Binding="{Binding ShowData}" Value="False" d:DataContext="{d:DesignInstance local:SagaMessage}">
+                    <DataTrigger Binding="{Binding ShowData}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
+                                 Value="False">
                         <DataTrigger.Setters>
                             <Setter TargetName="EmptyPropertyText" Property="Visibility" Value="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </DataTrigger.Setters>
@@ -372,11 +373,12 @@
                 </DataTemplate.Triggers>
             </DataTemplate>
 
-            <DataTemplate x:Key="UpdatedValuesTemplate" >
+            <DataTemplate x:Key="UpdatedValuesTemplate">
                 <Grid Background="{StaticResource SagaBackground}" d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
-                                Visibility="{Binding IsValueChanged, Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsValueChanged,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
@@ -384,15 +386,17 @@
                         <TextBlock Foreground="{StaticResource SagaForeground}" Text=" =    " />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Visibility="{Binding ShouldDisplayOldValueLink, Converter={StaticResource BoolToVisibilityConverterInverted}}"
-                                   Text="{Binding OldValue}" />
+                                   Text="{Binding OldValue}"
+                                   Visibility="{Binding ShouldDisplayOldValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Visibility="{Binding ShouldDisplayOldValueLink, Converter={StaticResource BoolToVisibilityConverter}}"
+                                   Text="{Binding OldValueLink}"
                                    TextDecorations="Underline"
-                                   Text="{Binding OldValueLink}">
+                                   Visibility="{Binding ShouldDisplayOldValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                         <TextBlock FontFamily="Symbol"
@@ -401,21 +405,24 @@
                                    Text=" ® " />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverterInverted}}"
-                                   Text="{Binding NewValue}" />
+                                   Text="{Binding NewValue}"
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}"
+                                   Text="{Binding NewValueLink}"
                                    TextDecorations="Underline"
-                                   Text="{Binding NewValueLink}">
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
-                                Visibility="{Binding IsValueNew, Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsValueNew,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Label}"
@@ -424,32 +431,39 @@
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValue}"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Text="{Binding NewValueLink}" 
+                                   Text="{Binding NewValueLink}"
                                    TextDecorations="Underline"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}">
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}" 
+                    <Popup MaxWidth="400"
+                           MaxHeight="400"
+                           IsOpen="{Binding MessageContentVisible,
+                                            Mode=TwoWay}"
                            Placement="Center"
-                           StaysOpen="False"
-                           MaxWidth="400" MaxHeight="400">
+                           StaysOpen="False">
                         <local:SagaContentViewer MessageContent="{Binding}" />
                     </Popup>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="AllValuesTemplate">
-                <Grid x:Name="AllValuesRoot" Background="{StaticResource SagaBackground}" d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
+                <Grid x:Name="AllValuesRoot"
+                      Background="{StaticResource SagaBackground}"
+                      d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
                     <ContentPresenter ContentSource="{Binding}" ContentTemplate="{StaticResource UpdatedValuesTemplate}" />
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
-                                Visibility="{Binding IsValueNotUpdated, Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsValueNotUpdated,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
@@ -458,22 +472,25 @@
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValue}"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock FontWeight="Bold"
                                    Foreground="{StaticResource SagaForeground}"
-                                   Visibility="{Binding ShouldDisplayNewValueLink, Converter={StaticResource BoolToVisibilityConverter}}"
                                    Text="{Binding NewValueLink}"
-                                   TextDecorations="Underline">
+                                   TextDecorations="Underline"
+                                   Visibility="{Binding ShouldDisplayNewValueLink,
+                                                        Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowEntireContentCommand}" />
+                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
-
                     </StackPanel>
-                    <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}" 
+                    <Popup MaxWidth="400"
+                           MaxHeight="400"
+                           IsOpen="{Binding MessageContentVisible,
+                                            Mode=TwoWay}"
                            Placement="Center"
-                           StaysOpen="False"
-                           MaxWidth="400" MaxHeight="400">
+                           StaysOpen="False">
                         <local:SagaContentViewer MessageContent="{Binding}" />
                     </Popup>
                 </Grid>
