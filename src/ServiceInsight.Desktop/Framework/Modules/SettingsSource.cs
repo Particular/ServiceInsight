@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
 {
     using System;
     using System.Collections.Generic;

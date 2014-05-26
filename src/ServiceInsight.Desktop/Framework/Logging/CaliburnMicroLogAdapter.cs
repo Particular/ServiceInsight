@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Logging
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Logging
 {
     using System;
     using Caliburn.Micro;

@@ -3,7 +3,7 @@
     using System;
     using Autofac;
     using Castle.Core.Logging;
-    using Desktop.Modules;
+    using Desktop.Framework.Modules;
     using Infrastructure;
     using NUnit.Framework;
     using Parts;
@@ -22,12 +22,16 @@
         protected ProfilerConfiguration Configuration;
         protected IContainer Container;
         protected Waiter Wait;
+
         //protected NameGenerator NameGenerator;
         protected ServiceControl ServiceControlStub;
+
         protected ILogger Logger;
 
         public ICoreConfiguration CoreConfiguration { get; set; }
+
         public IMouse Mouse { get; set; }
+
         public IKeyboard Keyboard { get; set; }
 
         [TestFixtureSetUp]
@@ -35,7 +39,7 @@
         {
             try
             {
-                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof (TestBase));
+                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(TestBase));
                 Wait = new Waiter();
                 //NameGenerator = new NameGenerator();
                 ServiceControlStub = ServiceControl.Start();
@@ -102,10 +106,10 @@
                 if (IsApplicationRunning())
                 {
                     Application.ApplicationSession.Save();
-//                    if (!Debugger.IsAttached)
-//                    {
-//                        Application.Kill();
-//                    }
+                    //                    if (!Debugger.IsAttached)
+                    //                    {
+                    //                        Application.Kill();
+                    //                    }
                 }
             }
             catch (Exception ex)

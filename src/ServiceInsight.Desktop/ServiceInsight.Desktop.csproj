@@ -214,7 +214,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Framework\Attributes\Attachment.cs" />
-    <Compile Include="Framework\Attributes\AutoAttachmentModule.cs" />
+    <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\Rx\RxConductorWithCollectionOneActive.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />
     <Compile Include="Framework\Rx\RxConductorWithCollectionAllActive.cs" />
@@ -265,7 +265,7 @@
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
-    <Compile Include="Modules\EnvironmentModule.cs" />
+    <Compile Include="Framework\Modules\EnvironmentModule.cs" />
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
     <Compile Include="Saga\SagaData.cs" />
     <Compile Include="Saga\SagaFooter.cs" />
@@ -416,10 +416,10 @@
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
-    <Compile Include="Modules\CaliburnModule.cs" />
-    <Compile Include="Modules\EventAggregationAutoSubscriptionModule.cs" />
-    <Compile Include="Modules\SettingsModule.cs" />
-    <Compile Include="Modules\SettingsSource.cs" />
+    <Compile Include="Framework\Modules\CaliburnModule.cs" />
+    <Compile Include="Framework\Modules\EventAggregationAutoSubscriptionModule.cs" />
+    <Compile Include="Framework\Modules\SettingsModule.cs" />
+    <Compile Include="Framework\Modules\SettingsSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -442,16 +442,16 @@
     <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
-    <Compile Include="Startup\BuilderExtensions.cs" />
+    <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
-    <Compile Include="Startup\LoggingConfig.cs" />
+    <Compile Include="Framework\Logging\LoggingConfig.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
-    <Compile Include="Logging\CaliburnMicroLogAdapter.cs" />
+    <Compile Include="Framework\Logging\CaliburnMicroLogAdapter.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />
-    <Compile Include="Modules\CoreModule.cs" />
-    <Compile Include="Modules\LoggerModule.cs" />
-    <Compile Include="Modules\ShellModule.cs" />
+    <Compile Include="Framework\Modules\CoreModule.cs" />
+    <Compile Include="Framework\Modules\LoggerModule.cs" />
+    <Compile Include="Framework\Modules\ShellModule.cs" />
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>
     </Compile>
@@ -632,10 +632,6 @@
     <Resource Include="Images\Exclamation.png" />
     <Resource Include="Images\saga.png" />
     <Resource Include="Images\Headers.png" />
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="License.lic" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

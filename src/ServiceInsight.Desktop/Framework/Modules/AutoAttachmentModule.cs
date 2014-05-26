@@ -1,6 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Attributes
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
 {
     using System;
+    using Attributes;
     using Autofac;
     using Autofac.Core;
 

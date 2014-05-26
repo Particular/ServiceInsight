@@ -4,9 +4,9 @@
     using System.Threading.Tasks;
     using System.Windows;
     using DevExpress.Xpf.Core;
+    using Framework.Logging;
     using Serilog;
     using Shell;
-    using Startup;
 
     public interface IAppCommands
     {

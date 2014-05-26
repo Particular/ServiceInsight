@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Modules
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
 {
     using System;
     using System.Collections.Generic;
@@ -11,11 +11,11 @@
     using ExceptionHandler.Wpf;
     using Explorer;
     using Explorer.EndpointExplorer;
+    using ExtensionMethods;
     using MessageFlow;
     using Options;
     using Search;
     using Shell;
-    using Startup;
 
     public class ShellModule : Module
     {

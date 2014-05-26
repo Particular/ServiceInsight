@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     using System;
     using System.Collections.Generic;

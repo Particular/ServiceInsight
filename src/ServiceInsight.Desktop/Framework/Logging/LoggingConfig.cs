@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Logging
 {
     using System;
     using System.IO;
