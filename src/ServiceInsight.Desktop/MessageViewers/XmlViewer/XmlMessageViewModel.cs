@@ -5,7 +5,6 @@
     using Caliburn.Micro;
     using Core.MessageDecoders;
     using Events;
-    using ExceptionHandler;
     using ExtensionMethods;
     using Models;
 
@@ -13,15 +12,12 @@
         IHandle<SelectedMessageChanged>
     {
         IContentDecoder<XmlDocument> xmlDecoder;
-        IClipboard clipboard;
         IXmlMessageView messageView;
 
         public XmlMessageViewModel(
-            IContentDecoder<XmlDocument> xmlDecoder,
-            IClipboard clipboard)
+            IContentDecoder<XmlDocument> xmlDecoder)
         {
             this.xmlDecoder = xmlDecoder;
-            this.clipboard = clipboard;
         }
 
         protected override void OnActivate()
@@ -57,7 +53,7 @@
             var content = GetMessageBody();
             if (!content.IsEmpty())
             {
-                clipboard.CopyTo(content);
+                AppClipboard.CopyTo(content);
             }
         }
 

@@ -2,11 +2,11 @@
 {
     using System.Xml;
     using Caliburn.Micro;
+    using Desktop;
     using Desktop.Core.MessageDecoders;
     using Desktop.Events;
     using Desktop.MessageViewers.XmlViewer;
     using Desktop.Models;
-    using ExceptionHandler;
     using NSubstitute;
     using NUnit.Framework;
     using Shouldly;
@@ -17,16 +17,15 @@
         XmlMessageViewModel ViewModel;
         IXmlMessageView View;
         IContentDecoder<XmlDocument> XmlDecoder;
-        IClipboard Clipboard;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
         public void TestInitialize()
         {
             XmlDecoder = Substitute.For<IContentDecoder<XmlDocument>>();
-            Clipboard = Substitute.For<IClipboard>();
+            AppClipboard.Current = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
-            ViewModel = new XmlMessageViewModel(XmlDecoder, Clipboard);
+            ViewModel = new XmlMessageViewModel(XmlDecoder);
             ((IActivate)ViewModel).Activate();
         }
 
@@ -76,7 +75,7 @@
 
             ViewModel.CopyMessageXml();
 
-            Clipboard.Received().CopyTo(Arg.Any<string>());
+            AppClipboard.Current.Received().CopyTo(Arg.Any<string>());
         }
 
         static XmlDocument GetDocument(string content)

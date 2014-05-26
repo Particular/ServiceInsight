@@ -2,21 +2,16 @@
 {
     using System.ComponentModel;
     using Caliburn.Micro;
-    using ExceptionHandler;
 
     public class MessagePropertiesViewModel : Screen
     {
-        IClipboard clipboard;
-
         public MessagePropertiesViewModel(
             ErrorHeaderViewModel error,
             GeneralHeaderViewModel general,
             SagaHeaderViewModel saga,
             PerformanceHeaderViewModel performance,
-            GatewayHeaderViewModel gateway,
-            IClipboard clipboard)
+            GatewayHeaderViewModel gateway)
         {
-            this.clipboard = clipboard;
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
@@ -41,7 +36,7 @@
 
         public void CopyPropertyValue(object value)
         {
-            clipboard.CopyTo(value.ToString());
+            AppClipboard.CopyTo(value.ToString());
         }
     }
 }

@@ -7,7 +7,6 @@
     using Core.UI;
     using DevExpress.Xpf.Grid;
     using Events;
-    using ExceptionHandler;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
@@ -32,7 +31,6 @@
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
-        IClipboard clipboard;
         IMenuItem retryMessageMenu;
         IMenuItem copyMessageIdMenu;
         IMenuItem copyHeadersMenu;
@@ -46,13 +44,11 @@
             IEventAggregator eventAggregator,
             DefaultServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
-            GeneralHeaderViewModel generalHeaderDisplay,
-            IClipboard clipboard)
+            GeneralHeaderViewModel generalHeaderDisplay)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
-            this.clipboard = clipboard;
 
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
@@ -105,12 +101,12 @@
 
         public void CopyMessageId()
         {
-            clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
+            AppClipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
         {
-            clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
+            AppClipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
         public bool CanRetryMessage()

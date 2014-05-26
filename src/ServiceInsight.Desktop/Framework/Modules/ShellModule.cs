@@ -47,7 +47,6 @@
             builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
             builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
-            builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
             builder.RegisterType<SimpleSettingsReader>().As<ISettingsReader>().WithParameter(TypedParameter.From(ConfigurationManager.AppSettings));
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
         }

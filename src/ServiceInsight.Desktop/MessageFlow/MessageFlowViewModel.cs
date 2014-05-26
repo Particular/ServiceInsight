@@ -9,7 +9,6 @@
     using Core.Settings;
     using Core.UI.ScreenManager;
     using Events;
-    using ExceptionHandler;
     using Explorer.EndpointExplorer;
     using MessageList;
     using Mindscape.WpfDiagramming;
@@ -26,7 +25,6 @@
         ScreenFactory screenFactory;
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
-        IClipboard clipboard;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
@@ -38,7 +36,6 @@
         public MessageFlowViewModel(
             DefaultServiceControl serviceControl,
             IEventAggregator eventAggregator,
-            IClipboard clipboard,
             IWindowManagerEx windowManager,
             ScreenFactory screenFactory,
             SearchBarViewModel searchBar,
@@ -48,7 +45,6 @@
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
-            this.clipboard = clipboard;
             this.windowManager = windowManager;
             this.screenFactory = screenFactory;
             this.searchBar = searchBar;
@@ -127,12 +123,12 @@
 
         public void CopyConversationId(StoredMessage message)
         {
-            clipboard.CopyTo(message.ConversationId);
+            AppClipboard.CopyTo(message.ConversationId);
         }
 
         public void CopyMessageUri(StoredMessage message)
         {
-            clipboard.CopyTo(serviceControl.GetUri(message).ToString());
+            AppClipboard.CopyTo(serviceControl.GetUri(message).ToString());
         }
 
         public void SearchByMessageId(StoredMessage message)

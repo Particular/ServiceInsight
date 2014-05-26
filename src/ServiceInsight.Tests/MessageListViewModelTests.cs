@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Caliburn.Micro;
+    using Desktop;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.MessageList;
@@ -10,7 +11,6 @@
     using Desktop.Models;
     using Desktop.Search;
     using Desktop.ServiceControl;
-    using ExceptionHandler;
     using Helpers;
     using NSubstitute;
     using NUnit.Framework;
@@ -32,11 +32,11 @@
             ServiceControl = Substitute.For<DefaultServiceControl>();
             SearchBar = Substitute.For<SearchBarViewModel>();
             View = Substitute.For<IMessageListView>();
+            AppClipboard.Current = Substitute.For<IClipboard>();
             MessageList = new MessageListViewModel(EventAggregator,
                                                    ServiceControl,
                                                    SearchBar,
-                                                   Substitute.For<GeneralHeaderViewModel>(),
-                                                   Substitute.For<IClipboard>());
+                                                   Substitute.For<GeneralHeaderViewModel>());
             ((IViewAware)MessageList).AttachView(View);
         }
 

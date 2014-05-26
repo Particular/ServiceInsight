@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using Caliburn.Micro;
+    using Desktop;
     using Desktop.Core.Settings;
     using Desktop.Core.UI.ScreenManager;
     using Desktop.Events;
@@ -10,7 +11,6 @@
     using Desktop.Models;
     using Desktop.Search;
     using Desktop.ServiceControl;
-    using ExceptionHandler;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -19,7 +19,6 @@
     {
         DefaultServiceControl serviceControl;
         IEventAggregator eventAggregator;
-        IClipboard clipboard;
         WindowManagerEx windowManager;
         ScreenFactory screenFactory;
         SearchBarViewModel searchBar;
@@ -62,7 +61,7 @@
         {
             serviceControl = Substitute.For<DefaultServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();
-            clipboard = Substitute.For<IClipboard>();
+            AppClipboard.Current = Substitute.For<IClipboard>();
             windowManager = Substitute.For<WindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();
@@ -72,7 +71,6 @@
 
             return new MessageFlowViewModel(serviceControl,
                                             eventAggregator,
-                                            clipboard,
                                             windowManager,
                                             screenFactory,
                                             searchBar,
