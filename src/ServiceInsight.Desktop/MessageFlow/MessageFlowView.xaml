@@ -1,14 +1,15 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageFlow.MessageFlowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
              xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
              xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" 
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:MessageFlowViewModel}"
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
 
@@ -91,14 +92,14 @@
                                                        MaxWidth="122"
                                                        FontSize="14px"
                                                        FontWeight="Bold"
-                                                       Style="{StaticResource MessageTypeText}"/>
+                                                       Style="{StaticResource MessageTypeText}" />
 
                                             <Path Width="5" Height="5"
                                                   Margin="4,6,4,4"
-                                                  x:Name="ChevronDown" 
-                                                  Stretch="Fill" 
-                                                  Fill="#FF000000" 
-                                                  Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                                  x:Name="ChevronDown"
+                                                  Stretch="Fill"
+                                                  Fill="#FF000000"
+                                                  Data="M 0 0 L 4 4 L 8 0 Z" />
                                         </StackPanel>
                                         <TextBlock Text="{Binding TimeSent}" Style="{StaticResource TimeSentText}" />
                                     </StackPanel>
@@ -109,7 +110,7 @@
 
                     <Style x:Key="MessageEndpointText" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="9" />
-                        <Setter Property="Foreground" Value="{StaticResource EndpointForeground}"/>
+                        <Setter Property="Foreground" Value="{StaticResource EndpointForeground}" />
                     </Style>
 
                     <Style x:Key="ConnectionPointRelocatorStyle" TargetType="ms:ConnectionRelocatorThumb">
@@ -120,12 +121,12 @@
                                 <ControlTemplate TargetType="ms:ConnectionRelocatorThumb">
                                     <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="#800000FF" Stroke="Blue" StrokeThickness="3">
                                         <Ellipse.RenderTransform>
-                                            <TranslateTransform X="-9" Y="-9"/>
+                                            <TranslateTransform X="-9" Y="-9" />
                                         </Ellipse.RenderTransform>
                                     </Ellipse>
                                     <ControlTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}}" Value="True">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -198,7 +199,7 @@
                                 <DataTemplate>
                                     <Border x:Name="MessageRectangle"
                                             d:DataContext="{d:DesignInstance local:MessageNode}"
-                                            Background="{StaticResource MessageBackground}" 
+                                            Background="{StaticResource MessageBackground}"
                                             BorderBrush="Transparent"
                                             BorderThickness="1" MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown">
                                         <Grid x:Name="RootGrid">
@@ -213,14 +214,14 @@
                                                 <ColumnDefinition Width="20" />
                                             </Grid.ColumnDefinitions>
 
-                                            <StackPanel x:Name="OriginatingEndPoint" 
+                                            <StackPanel x:Name="OriginatingEndPoint"
                                                         ToolTip="Sending Endpoint"
-                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Orientation="Horizontal"
-                                                        Background="{StaticResource EndpointBackground}" 
+                                                        Background="{StaticResource EndpointBackground}"
                                                         Height="14">
-                                                <ContentControl Template="{StaticResource SendingEndpoint}" 
+                                                <ContentControl Template="{StaticResource SendingEndpoint}"
                                                                 Margin="3,0,3,0" />
                                                 <TextBlock FontSize="10px"
                                                            Text="{Binding Message.SendingEndpoint}"
@@ -228,22 +229,23 @@
                                             </StackPanel>
 
                                             <ContentControl Style="{StaticResource FailedMessageMarker}"
-                                                            
+
                                                             HorizontalAlignment="Right"
                                                             VerticalAlignment="Top"
                                                             Grid.Row="1" Grid.Column="2">
                                             </ContentControl>
 
-                                            <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}" 
+                                            <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}"
                                                             ToolTip="Command"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             Grid.Column="0" Grid.Row="1" />
 
-                                            <StackPanel Grid.Column="1" Grid.Row="1" >
+                                            <StackPanel Grid.Column="1" Grid.Row="1">
                                                 <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
 
-                                                <local:MessagePopupControl x:Name="MenuPopup" IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}" 
+                                                <local:MessagePopupControl x:Name="MenuPopup"
+                                                                           IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}"
                                                                            RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
                                                                            DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
                                                                            PlacementTarget="{Binding ElementName=MenuContainer}"
@@ -254,24 +256,27 @@
                                                     <local:MessageActionPopup />
                                                 </local:MessagePopupControl>
 
-                                                <StackPanel Orientation="Horizontal" Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]" >
+                                                <Grid Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
                                                     <ContentControl x:Name="SagaStatusIcon" Template="{StaticResource SagaInitiatedIcon}"
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center" />
-                                                    <TextBlock Background="#333333" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontSize="11px" FontWeight="Bold" Width="120" Margin="2 0 0 0" Padding="3 0" />
-                                                </StackPanel>
-
+                                                    <dxe:TextEdit Grid.Column="1" Background="#333333" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontSize="11px" FontWeight="Bold" Margin="2 0 0 0" Padding="3 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" EditMode="InplaceInactive" />
+                                                </Grid>
                                             </StackPanel>
 
-                                            <StackPanel x:Name="ReceivingEndPoint" 
+                                            <StackPanel x:Name="ReceivingEndPoint"
                                                         ToolTip="Processing Endpoint"
-                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" 
+                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
                                                         Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Background="{StaticResource EndpointBackground}"
                                                         Height="14">
-                                                <ContentControl Template="{StaticResource ReceivingEndpoint}" 
+                                                <ContentControl Template="{StaticResource ReceivingEndpoint}"
                                                                     Margin="3,0,3,0" />
                                                 <TextBlock FontSize="10px"
                                                     Text="{Binding Message.ReceivingEndpoint}"
@@ -281,23 +286,23 @@
                                     </Border>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}"/>
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}" />
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
                                         </DataTrigger>
                                         <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False"/>
-                                                <Condition Binding="{Binding IsSagaCompleted}" Value="False"/>
+                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                                <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
                                             </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}"/>
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}" />
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated / Updated" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False"/>
-                                                <Condition Binding="{Binding IsSagaCompleted}" Value="True"/>
+                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                                <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
                                             </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}"/>
+                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}" />
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Completed" />
                                         </MultiDataTrigger>
 
@@ -400,7 +405,7 @@
                         <ms:Arrowhead PathStyle="{StaticResource EventArrowheadPathStyle}" Length="20" BackWidth="15" />
                     </DataTemplate>
 
-                    <ms:CorneredPathBuilder x:Key="PathBuilder"/>
+                    <ms:CorneredPathBuilder x:Key="PathBuilder" />
 
                     <Style x:Key="CommandConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="Sent Command" />
@@ -430,7 +435,6 @@
                     <ms:DiagramFormatter x:Key="Formatter"
                                          NodeStyleSelector="{StaticResource NodeStyleSelector}"
                                          ConnectionStyleSelector="{StaticResource ConnectionStyleSelector}" />
-
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -444,12 +448,12 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
-            <StackPanel Orientation="Horizontal" Margin="5" >
+            <StackPanel Orientation="Horizontal" Margin="5">
                 <RepeatButton Margin="2" x:Name="ZoomIn" Interval="10">
-                    <ContentControl Template="{StaticResource ZoomInIcon}"    />
+                    <ContentControl Template="{StaticResource ZoomInIcon}" />
                 </RepeatButton>
                 <RepeatButton Margin="2" x:Name="ZoomOut" Interval="10">
-                    <ContentControl Template="{StaticResource ZoomOutIcon}"    />
+                    <ContentControl Template="{StaticResource ZoomOutIcon}" />
                 </RepeatButton>
                 <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
                     <StackPanel Orientation="Horizontal">
@@ -469,13 +473,13 @@
         <ms:DiagramSurface x:Name="ds" Background="White"
                            Grid.Row="1"
                            Diagram="{Binding Diagram}"
-                           IsReadOnly="True" 
+                           IsReadOnly="True"
                            ZoomMode="ControlMouseWheel"
                            Cursor="ScrollAll"
                            DragAction="Pan"
                            SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"
                            HorizontalSnapSpecifier="{ms:SnapToInterval 20}"
-                           VerticalSnapSpecifier="{ms:SnapToInterval 20}"/>
+                           VerticalSnapSpecifier="{ms:SnapToInterval 20}" />
     </Grid>
 </UserControl>

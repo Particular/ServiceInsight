@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:l="clr-namespace:Particular.ServiceInsight.Desktop.Saga"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="uc"
@@ -39,9 +40,12 @@
                                     <Border BorderBrush="{StaticResource SagaBlue}"
                                             BorderThickness="0 0 0 2"
                                             Padding="0 5 0 5">
-                                        <TextBlock FontSize="24px"
-                                                   FontWeight="Bold"
-                                                   Text="{Binding Data.SagaType}" />
+                                        <dxe:TextEdit EditMode="InplaceInactive"
+                                                      FontSize="24"
+                                                      FontWeight="Bold"
+                                                      Text="{Binding Data.SagaType}"
+                                                      TextTrimming="CharacterEllipsis"
+                                                      TextWrapping="NoWrap" />
                                     </Border>
                                     <StackPanel Margin="0 5 0 2" Orientation="Horizontal">
                                         <TextBlock FontSize="14px"

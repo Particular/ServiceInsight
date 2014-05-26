@@ -164,10 +164,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <SolidColorBrush x:Key="EndpointBackground" Color="White" />
                         <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
@@ -181,7 +177,6 @@
                     <StackPanel x:Name="OriginatingEndPoint"
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="2"
                                 Height="14"
                                 Background="{StaticResource EndpointBackground}"
                                 Orientation="Horizontal"
@@ -197,66 +192,66 @@
 
                     <Border x:Name="NoEndpointsBorder"
                             Grid.Row="1"
-                            Grid.ColumnSpan="2"
+                            MinWidth="220"
+                            Background="{StaticResource MessageBackground}"
                             BorderBrush="Black"
                             BorderThickness="0">
-                        <Rectangle x:Name="MessageRectangle"
-                                   Height="45px"
-                                   MinWidth="220px"
-                                   Fill="{StaticResource MessageBackground}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl x:Name="FailedMessageMarker"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource FailedMessageMarker}" />
+
+                            <ContentControl x:Name="MessageTypeIcon"
+                                            Grid.Column="0"
+                                            Width="20"
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource CommandIcon}"
+                                            ToolTip="Command"
+                                            Visibility="{Binding IsTimeout,
+                                                                 Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                            <ContentControl x:Name="TimeoutIcon"
+                                            Grid.Column="0"
+                                            Width="24"
+                                            Margin="0,8,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource TimeoutIcon}"
+                                            ToolTip="Timeout"
+                                            Visibility="{Binding IsTimeout,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                            <StackPanel x:Name="MessageTypeBox"
+                                        Grid.Column="1"
+                                        Margin="0,0,10,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock FontSize="14px"
+                                           FontWeight="Bold"
+                                           Text="{Binding MessageType}" />
+                                <TextBlock FontSize="14px" Text="{Binding TimeSent}" />
+                            </StackPanel>
+                        </Grid>
                     </Border>
-
-                    <ContentControl x:Name="FailedMessageMarker"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource FailedMessageMarker}" />
-
-                    <ContentControl x:Name="MessageTypeIcon"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Width="20"
-                                    Margin="0,4,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Template="{StaticResource CommandIcon}"
-                                    ToolTip="Command"
-                                    Visibility="{Binding IsTimeout,
-                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                    <ContentControl x:Name="TimeoutIcon"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Width="24"
-                                    Margin="0,8,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Template="{StaticResource TimeoutIcon}"
-                                    ToolTip="Timeout"
-                                    Visibility="{Binding IsTimeout,
-                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
-
-                    <StackPanel x:Name="MessageTypeBox"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                VerticalAlignment="Center">
-                        <TextBlock FontSize="14px"
-                                   FontWeight="Bold"
-                                   Text="{Binding MessageType}" />
-                        <TextBlock FontSize="14px" Text="{Binding TimeSent}" />
-                    </StackPanel>
                 </Grid>
 
                 <DataTemplate.Triggers>
 
                     <DataTrigger Binding="{Binding HasFailed}" Value="True">
                         <DataTrigger.Setters>
-                            <Setter TargetName="MessageRectangle" Property="Fill" Value="{StaticResource FailedMessageBackground}" />
+                            <Setter TargetName="NoEndpointsBorder" Property="Background" Value="{StaticResource FailedMessageBackground}" />
                         </DataTrigger.Setters>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding HasRetried}" Value="True">
                         <DataTrigger.Setters>
-                            <Setter TargetName="MessageRectangle" Property="Fill" Value="{StaticResource RetriedMessageBackground}" />
+                            <Setter TargetName="NoEndpointsBorder" Property="Background" Value="{StaticResource RetriedMessageBackground}" />
                         </DataTrigger.Setters>
                     </DataTrigger>
                     <MultiDataTrigger>
