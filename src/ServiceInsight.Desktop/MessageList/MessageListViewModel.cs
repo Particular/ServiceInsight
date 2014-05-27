@@ -1,6 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System;
     using System.Linq;
+    using System.Reactive.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using Caliburn.Micro;
@@ -10,14 +12,17 @@
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework.Rx;
     using MessageProperties;
     using Models;
+    using ReactiveUI;
     using Search;
     using ServiceControl;
     using Shell;
     using Shell.Menu;
+    using IScreen = Caliburn.Micro.IScreen;
 
-    public class MessageListViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class MessageListViewModel : RxConductor<IScreen>.Collection.AllActive,
         IHaveContextMenu,
         ITableViewModel<StoredMessage>,
         IWorkTracker,
@@ -64,6 +69,10 @@
                 copyHeadersMenu,
                 copyMessageIdMenu
             };
+
+            this.ObservableForProperty(vm => vm.FocusedRow)
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .Subscribe(_ => DoFocusedRowChanged());
         }
 
         public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
@@ -150,7 +159,7 @@
             }
         }
 
-        public async void OnFocusedRowChanged()
+        async void DoFocusedRowChanged()
         {
             if (lockUpdate) return;
 
