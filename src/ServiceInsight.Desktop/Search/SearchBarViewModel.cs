@@ -23,6 +23,7 @@
         IHandle<WorkFinished>,
         IWorkTracker
     {
+        private const int MAX_SAVED_SEARCHES = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
@@ -289,12 +290,18 @@
         {
             if (searchQuery.IsEmpty()) return;
 
-            RecentSearchQueries.Add(searchQuery);
-
             var setting = settingProvider.GetSettings<ProfilerSettings>();
             if (!setting.RecentSearchEntries.Contains(searchQuery, StringComparer.OrdinalIgnoreCase))
             {
-                setting.RecentSearchEntries.Add(searchQuery);
+                RecentSearchQueries.Insert(0, searchQuery);
+                setting.RecentSearchEntries.Insert(0, searchQuery);
+
+                while (RecentSearchQueries.Count < MAX_SAVED_SEARCHES)
+                    RecentSearchQueries.RemoveAt(RecentSearchQueries.Count - 1);
+
+                while (setting.RecentSearchEntries.Count < MAX_SAVED_SEARCHES)
+                    setting.RecentSearchEntries.RemoveAt(setting.RecentSearchEntries.Count - 1);
+
                 settingProvider.SaveSettings(setting);
             }
         }
