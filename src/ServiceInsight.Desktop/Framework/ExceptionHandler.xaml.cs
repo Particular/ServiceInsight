@@ -3,24 +3,21 @@
 namespace Particular.ServiceInsight.Desktop.Framework
 {
     using System;
-    using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using Anotar.Serilog;
-    using ExtensionMethods;
-    using Mindscape.Raygun4Net;
 
     public partial class ExceptionHandler
     {
-        static RaygunClient client;
+        //static RaygunClient client;
 
         static ExceptionHandler()
         {
-            client = new RaygunClient("f44kaQEkbdxoIUJLSn0TEA==")
-            {
-                ApplicationVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
-            };
+            //client = new RaygunClient("f44kaQEkbdxoIUJLSn0TEA==")
+            //{
+            //    ApplicationVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
+            //};
         }
 
         public static void Attach()
