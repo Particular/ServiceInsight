@@ -8,21 +8,21 @@
         void CopyTo(string text);
     }
 
-    static class AppClipboard
+    static class AppServices
     {
-        static IClipboard current;
+        static IClipboard clipboard;
 
-        public static IClipboard Current
+        public static IClipboard Clipboard
         {
             get
             {
-                if (current != null)
-                    return current;
+                if (clipboard != null)
+                    return clipboard;
 
-                current = new DefaultClipboard();
-                return current;
+                clipboard = new DefaultClipboard();
+                return clipboard;
             }
-            set { current = value; }
+            set { clipboard = value; }
         }
 
         class DefaultClipboard : IClipboard
@@ -31,7 +31,7 @@
             {
                 try
                 {
-                    Clipboard.SetText(text, TextDataFormat.Text);
+                    System.Windows.Clipboard.SetText(text, TextDataFormat.Text);
                 }
                 catch (COMException ex)
                 {
@@ -42,11 +42,6 @@
                     }
                 }
             }
-        }
-
-        public static void CopyTo(string text)
-        {
-            Current.CopyTo(text);
         }
     }
 }

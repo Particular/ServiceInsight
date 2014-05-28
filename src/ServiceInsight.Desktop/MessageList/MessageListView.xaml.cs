@@ -9,11 +9,7 @@
     using DevExpress.Xpf.Grid;
     using ExtensionMethods;
 
-    public interface IMessageListView
-    {
-    }
-
-    public partial class MessageListView : IMessageListView
+    public partial class MessageListView
     {
         static class UnboundColumns
         {

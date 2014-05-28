@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Caliburn.Micro;
@@ -12,8 +13,10 @@
     using Desktop.Search;
     using Desktop.ServiceControl;
     using Helpers;
+    using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
+    using ReactiveUI.Testing;
     using Shouldly;
 
     [TestFixture]
@@ -22,8 +25,7 @@
         IEventAggregator EventAggregator;
         DefaultServiceControl ServiceControl;
         SearchBarViewModel SearchBar;
-        MessageListViewModel MessageList;
-        IMessageListView View;
+        Func<MessageListViewModel> MessageListFunc;
 
         [SetUp]
         public void TestInitialize()
@@ -31,13 +33,11 @@
             EventAggregator = Substitute.For<IEventAggregator>();
             ServiceControl = Substitute.For<DefaultServiceControl>();
             SearchBar = Substitute.For<SearchBarViewModel>();
-            View = Substitute.For<IMessageListView>();
-            AppClipboard.Current = Substitute.For<IClipboard>();
-            MessageList = new MessageListViewModel(EventAggregator,
+            AppServices.Clipboard = Substitute.For<IClipboard>();
+            MessageListFunc = () => new MessageListViewModel(EventAggregator,
                                                    ServiceControl,
                                                    SearchBar,
                                                    Substitute.For<GeneralHeaderViewModel>());
-            ((IViewAware)MessageList).AttachView(View);
         }
 
         [Test]
@@ -56,37 +56,46 @@
                                  }
                              }));
 
-            AsyncHelper.Run(() => MessageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint))));
+            var messageList = MessageListFunc();
+
+            AsyncHelper.Run(() => messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint))));
 
             EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
             EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
-            MessageList.Rows.Count.ShouldBe(2);
+            messageList.Rows.Count.ShouldBe(2);
             SearchBar.IsVisible.ShouldBe(true);
         }
 
         [Test]
         public void Should_load_body_content_when_body_tab_is_already_selected()
         {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
-
-            MessageList.FocusedRow = null;
-            MessageList.Handle(new BodyTabSelectionChanged(true));
-
-            AsyncHelper.Run(() =>
+            new TestScheduler().With(sched =>
             {
-                MessageList.FocusedRow = new StoredMessage { BodyUrl = uri };
-            });
+                const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            ServiceControl.Received(1).GetBody(uri);
+                var messageList = MessageListFunc();
+
+                messageList.FocusedRow = null;
+                messageList.Handle(new BodyTabSelectionChanged(true));
+
+                messageList.FocusedRow = new StoredMessage { BodyUrl = uri };
+
+                sched.AdvanceByMs(500);
+
+                ServiceControl.Received(1).GetBody(uri);
+            });
         }
 
         [Test]
         public void Should_load_body_content_when_body_tab_is_focused()
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
-            MessageList.FocusedRow = new StoredMessage { BodyUrl = uri };
 
-            AsyncHelper.Run(() => MessageList.Handle(new BodyTabSelectionChanged(true)));
+            var messageList = MessageListFunc();
+
+            messageList.FocusedRow = new StoredMessage { BodyUrl = uri };
+
+            AsyncHelper.Run(() => messageList.Handle(new BodyTabSelectionChanged(true)));
 
             ServiceControl.Received(1).GetBody(uri);
         }

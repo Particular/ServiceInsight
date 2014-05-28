@@ -53,7 +53,7 @@
             var content = GetMessageBody();
             if (!content.IsEmpty())
             {
-                AppClipboard.CopyTo(content);
+                AppServices.Clipboard.CopyTo(content);
             }
         }
 

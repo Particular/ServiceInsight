@@ -61,7 +61,7 @@
         {
             serviceControl = Substitute.For<DefaultServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();
-            AppClipboard.Current = Substitute.For<IClipboard>();
+            AppServices.Clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<WindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();

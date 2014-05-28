@@ -218,7 +218,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Framework\Attributes\Attachment.cs" />
-    <Compile Include="Framework\CustomClipboard.cs" />
+    <Compile Include="Framework\AppServices.cs" />
     <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\Rx\RxConductorWithCollectionOneActive.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />

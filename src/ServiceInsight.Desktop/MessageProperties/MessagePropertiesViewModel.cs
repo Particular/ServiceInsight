@@ -36,7 +36,7 @@
 
         public void CopyPropertyValue(object value)
         {
-            AppClipboard.CopyTo(value.ToString());
+            AppServices.Clipboard.CopyTo(value.ToString());
         }
     }
 }

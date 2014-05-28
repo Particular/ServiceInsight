@@ -23,7 +23,7 @@
         public void TestInitialize()
         {
             XmlDecoder = Substitute.For<IContentDecoder<XmlDocument>>();
-            AppClipboard.Current = Substitute.For<IClipboard>();
+            AppServices.Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
             ViewModel = new XmlMessageViewModel(XmlDecoder);
             ((IActivate)ViewModel).Activate();
@@ -75,7 +75,7 @@
 
             ViewModel.CopyMessageXml();
 
-            AppClipboard.Current.Received().CopyTo(Arg.Any<string>());
+            AppServices.Clipboard.Received().CopyTo(Arg.Any<string>());
         }
 
         static XmlDocument GetDocument(string content)

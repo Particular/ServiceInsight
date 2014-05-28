@@ -4,10 +4,8 @@
     using System.Linq;
     using System.Reactive.Linq;
     using System.Threading.Tasks;
-    using System.Windows;
     using Caliburn.Micro;
     using Core.UI;
-    using DevExpress.Xpf.Grid;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -43,7 +41,6 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
-        IMessageListView view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -70,8 +67,8 @@
                 copyMessageIdMenu
             };
 
-            this.ObservableForProperty(vm => vm.FocusedRow)
-                .Throttle(TimeSpan.FromMilliseconds(500))
+            this.WhenAnyValue(vm => vm.FocusedRow)
+                .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
                 .Subscribe(_ => DoFocusedRowChanged());
         }
 
@@ -110,12 +107,12 @@
 
         public void CopyMessageId()
         {
-            AppClipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
+            AppServices.Clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
         {
-            AppClipboard.CopyTo(generalHeaderDisplay.HeaderContent);
+            AppServices.Clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
         public bool CanRetryMessage()
@@ -135,28 +132,9 @@
             return FocusedRow != null;
         }
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            this.view = view as IMessageListView;
-            base.OnViewAttached(view, context);
-        }
-
         public void Focus(StoredMessage msg)
         {
-            //TODO: ViewModel should have no knowledge of View or the elements in it.
-
-            var grid = ((GridControl)((FrameworkElement)view).FindName("grid"));
-
-            for (var i = 0; i < Rows.Count; i++)
-            {
-                var row = Rows[i];
-                if (row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id)
-                {
-                    grid.UnselectAll();
-                    FocusedRow = row;
-                    return;
-                }
-            }
+            FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
         }
 
         async void DoFocusedRowChanged()

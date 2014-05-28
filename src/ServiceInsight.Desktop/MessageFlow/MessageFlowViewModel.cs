@@ -123,12 +123,12 @@
 
         public void CopyConversationId(StoredMessage message)
         {
-            AppClipboard.CopyTo(message.ConversationId);
+            AppServices.Clipboard.CopyTo(message.ConversationId);
         }
 
         public void CopyMessageUri(StoredMessage message)
         {
-            AppClipboard.CopyTo(serviceControl.GetUri(message).ToString());
+            AppServices.Clipboard.CopyTo(serviceControl.GetUri(message).ToString());
         }
 
         public void SearchByMessageId(StoredMessage message)
