@@ -41,8 +41,9 @@
         public App()
         {
             LoggingConfig.SetupLogging();
-            AppDomain.CurrentDomain.UnhandledException += (s, e) => OnUnhandledException(e);
-            WireTaskExceptionHandler();
+            Framework.ExceptionHandler.Attach();
+            //AppDomain.CurrentDomain.UnhandledException += (s, e) => OnUnhandledException(e);
+            //WireTaskExceptionHandler();
             InitializeComponent();
         }
 

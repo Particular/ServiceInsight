@@ -5,28 +5,24 @@
     using Caliburn.Micro;
     using Core.UI.ScreenManager;
     using Events;
-    using ExceptionHandler;
-    using ExceptionHandler.Wpf;
 
-    public class DefaultExceptionHandler : WpfExceptionHandler
+    public class AppExceptionHandler
     {
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         ShellViewModel shell;
 
-        public DefaultExceptionHandler(
+        public AppExceptionHandler(
             IWindowManagerEx windowManager,
-            IExceptionViewModel exceptionViewModel,
             IEventAggregator eventAggregator,
             ShellViewModel shell)
-            : base(exceptionViewModel)
         {
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
             this.shell = shell;
         }
 
-        public override void Handle(Exception error)
+        public void Handle(Exception error, Action<Exception> baseAction)
         {
             var rootError = error.GetBaseException();
 
@@ -38,7 +34,7 @@
             }
             else
             {
-                base.Handle(error);
+                baseAction(error);
             }
         }
 

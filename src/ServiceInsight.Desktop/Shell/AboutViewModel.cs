@@ -8,7 +8,6 @@ namespace Particular.ServiceInsight.Desktop.Shell
     using System.Windows.Input;
     using Caliburn.Micro;
     using Core;
-    using ExceptionHandler;
     using ExtensionMethods;
     using Framework.Rx;
     using ServiceControl;
@@ -55,11 +54,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
             IsSplash = false;
             DisplayName = "About";
 
-            NavigateToSiteCommand = this.CreateCommand(() =>
-            {
-                var supportUrl = GetType().Assembly.GetAttribute<SupportWebUrlAttribute>();
-                networkOperations.Browse(supportUrl.WebUrl);
-            });
+            NavigateToSiteCommand = this.CreateCommand(() => networkOperations.Browse("http://www.particular.net"));
         }
 
         AboutViewModel()

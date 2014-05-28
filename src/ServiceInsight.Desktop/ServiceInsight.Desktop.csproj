@@ -116,13 +116,10 @@
     <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="ExceptionHandler">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="ExceptionHandler.Wpf">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mindscape.Raygun4Net">
+      <HintPath>..\packages\Mindscape.Raygun4Net.2.0.6\lib\net35\Mindscape.Raygun4Net.dll</HintPath>
+    </Reference>
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
@@ -219,6 +216,9 @@
     </Compile>
     <Compile Include="Framework\Attributes\Attachment.cs" />
     <Compile Include="Framework\AppServices.cs" />
+    <Compile Include="Framework\ExceptionHandler.xaml.cs">
+      <DependentUpon>ExceptionHandler.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\Rx\RxConductorWithCollectionOneActive.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />
@@ -271,6 +271,11 @@
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Framework\Modules\EnvironmentModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
     <Compile Include="Saga\SagaContentViewer.xaml.cs">
       <DependentUpon>SagaContentViewer.xaml</DependentUpon>
@@ -401,6 +406,7 @@
     </Compile>
     <Compile Include="Shell\AboutViewModel.cs" />
     <Compile Include="Shell\BusyAutomationBehaviour.cs" />
+    <Compile Include="Shell\AppExceptionHandler.cs" />
     <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
@@ -446,7 +452,6 @@
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
-    <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
@@ -489,6 +494,10 @@
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
+    <Page Include="Framework\ExceptionHandler.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Images\Xaml\XamlIcons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -595,9 +604,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
+    <None Include="Properties\AssemblyInfo.tt">
       <SubType>Code</SubType>
-    </Compile>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
+    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -729,7 +740,9 @@
     <Resource Include="Images\Msg_Info.png" />
     <Resource Include="Images\Msg_Warning.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
   <Import Project="..\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\packages\Fody.1.23.2\build\Fody.targets')" />

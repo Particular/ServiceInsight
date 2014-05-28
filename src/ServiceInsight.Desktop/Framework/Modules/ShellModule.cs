@@ -5,8 +5,6 @@
     using System.Linq;
     using Autofac;
     using Core.UI.ScreenManager;
-    using ExceptionHandler;
-    using ExceptionHandler.Wpf;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
@@ -41,8 +39,7 @@
             builder.RegisterType<StatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<ScreenFactory>().SingleInstance();
-            builder.RegisterType<DefaultExceptionHandler>().As<IExceptionHandler>().SingleInstance();
-            builder.RegisterType<ExceptionViewModel>().As<IExceptionViewModel>().InstancePerDependency();
+            builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
         }
@@ -55,7 +52,6 @@
                 yield return typeof(ServiceControlConnectionView);
                 yield return typeof(OptionsView);
                 yield return typeof(ShellView);
-                yield return typeof(ExceptionView);
                 yield return typeof(AboutView);
                 yield return typeof(ExceptionDetailView);
             }

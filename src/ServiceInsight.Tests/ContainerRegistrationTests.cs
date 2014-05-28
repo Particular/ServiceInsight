@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
-    using System;
     using Autofac;
     using Desktop.Shell;
     using Desktop.Startup;
@@ -37,11 +36,6 @@
     {
         protected override void PrepareApplication()
         {
-        }
-
-        protected override bool TryHandleException(Exception exception)
-        {
-            return false;
         }
 
         public IContainer GetContainer()

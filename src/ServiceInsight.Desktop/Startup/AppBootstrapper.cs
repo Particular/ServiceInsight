@@ -1,10 +1,7 @@
-﻿using System.Windows.Threading;
-
-namespace Particular.ServiceInsight.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
     using System.Windows;
@@ -12,7 +9,7 @@ namespace Particular.ServiceInsight.Desktop.Startup
     using Autofac;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
-    using ExceptionHandler;
+    using Framework;
     using Framework.Logging;
     using Shell;
     using IContainer = Autofac.IContainer;
@@ -28,6 +25,10 @@ namespace Particular.ServiceInsight.Desktop.Startup
             ApplyBindingCulture();
 
             LoggingConfig.SetupCaliburnMicroLogging();
+
+            var newHandler = container.Resolve<AppExceptionHandler>();
+            var defaultHandler = ExceptionHandler.HandleException;
+            ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
 
         private void CreateContainer()
@@ -57,29 +58,6 @@ namespace Particular.ServiceInsight.Desktop.Startup
         {
             Application.Startup += OnStartup;
             Application.Exit += OnExit;
-
-            if (!Debugger.IsAttached)
-                Application.DispatcherUnhandledException += OnUnhandledException;
-        }
-
-        protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            if (!Debugger.IsAttached)
-                e.Handled = TryHandleException(e.Exception);
-        }
-
-        protected virtual bool TryHandleException(Exception exception)
-        {
-            try
-            {
-                var handler = container.Resolve<IExceptionHandler>();
-                handler.Handle(exception);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
