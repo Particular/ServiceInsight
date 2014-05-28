@@ -6,7 +6,6 @@ namespace Particular.ServiceInsight.Desktop.Framework
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using Anotar.Serilog;
     using ExtensionMethods;
@@ -112,10 +111,10 @@ namespace Particular.ServiceInsight.Desktop.Framework
             Clipboard.SetText(ErrorDetails.Text);
         }
 
-        void ReportClick(object sender, RoutedEventArgs e)
-        {
-            client.SendInBackground(Exception);
-            ((Button)sender).IsEnabled = false;
-        }
+        //void ReportClick(object sender, RoutedEventArgs e)
+        //{
+        //    client.SendInBackground(Exception);
+        //    ((Button)sender).IsEnabled = false;
+        //}
     }
 }
