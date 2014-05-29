@@ -13,7 +13,7 @@
         int heightNoEndpoints = 56;
         const int endpointsHeight = 25;
 
-        public MessageNode(MessageFlowViewModel owner, StoredMessage message) 
+        public MessageNode(MessageFlowViewModel owner, StoredMessage message)
         {
             IsResizable = false;
             Owner = owner;
@@ -28,10 +28,10 @@
         string ProcessSagaType(StoredMessage message)
         {
             if (message.Sagas == null) return string.Empty;
-            
+
             var originatingSaga = message.Sagas.FirstOrDefault();
             if (originatingSaga == null) return string.Empty;
-            
+
             return ProcessType(originatingSaga.SagaType);
         }
 
@@ -54,10 +54,7 @@
             get { return Data as StoredMessage; }
         }
 
-        public MessageFlowViewModel Owner
-        {
-            get; private set;
-        }
+        public MessageFlowViewModel Owner { get; private set; }
 
         public void CopyMessageUri()
         {
@@ -71,7 +68,7 @@
 
         public void SearchMessage()
         {
-            Owner.SearchByMessageId(Message);
+            Owner.SearchByMessageId(Message, performSearch: true);
         }
 
         public async void Retry()
@@ -85,7 +82,6 @@
         public bool CanRetry()
         {
             return HasFailed;
-
         }
 
         public void ShowBody()
@@ -102,10 +98,7 @@
         {
         }
 
-        public bool ShowEndpoints
-        {
-            get; set;
-        }
+        public bool ShowEndpoints { get; set; }
 
         public void OnShowEndpointsChanged()
         {
@@ -146,21 +139,21 @@
 
         public bool IsTimeout
         {
-            get 
+            get
             {
                 var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
-                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString); 
+                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString);
             }
         }
 
         public DateTime? TimeSent
         {
-            get 
-            { 
+            get
+            {
                 var timeString = Message.GetHeaderByKey(MessageHeaderKeys.TimeSent);
                 if (string.IsNullOrEmpty(timeString))
                     return null;
-                return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture); 
+                return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
 
@@ -191,10 +184,7 @@
             }
         }
 
-        public string ExceptionMessage
-        {
-            get; set;
-        }
+        public string ExceptionMessage { get; set; }
 
         public bool IsFocused
         {

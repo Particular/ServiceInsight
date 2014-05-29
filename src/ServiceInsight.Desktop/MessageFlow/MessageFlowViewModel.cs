@@ -131,9 +131,9 @@
             AppServices.Clipboard.CopyTo(serviceControl.GetUri(message).ToString());
         }
 
-        public void SearchByMessageId(StoredMessage message)
+        public void SearchByMessageId(StoredMessage message, bool performSearch = false)
         {
-            searchBar.Search(performSearch: false, searchQuery: message.MessageId);
+            searchBar.Search(performSearch: performSearch, searchQuery: message.MessageId);
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
