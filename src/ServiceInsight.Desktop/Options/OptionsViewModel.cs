@@ -7,14 +7,18 @@
 
     public class OptionsViewModel : Screen
     {
-        ISettingsProvider settingsProvider;
-
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {
             this.settingsProvider = settingsProvider;
 
             DisplayName = "Options";
         }
+
+        public ProfilerSettings Application { get; set; }
+
+        public ReportingSettings UsageReporting { get; set; }
+
+        public bool IsModified { get; set; }
 
         protected override void OnActivate()
         {
@@ -27,30 +31,16 @@
         {
             Application = settingsProvider.GetSettings<ProfilerSettings>();
             UsageReporting = settingsProvider.GetSettings<ReportingSettings>();
+
+            var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
+            Application.DefaultLastUsedServiceControl = string.Format("http://localhost:{0}/api", managementConfig.Port);
+
             Application.PropertyChanged += OnSettingChanged;
         }
 
         void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
             IsModified = true;
-        }
-
-        public ProfilerSettings Application
-        {
-            get;
-            set;
-        }
-
-        public ReportingSettings UsageReporting
-        {
-            get;
-            set;
-        }
-
-        public bool IsModified
-        {
-            get;
-            set;
         }
 
         public void Save()
@@ -63,5 +53,7 @@
         {
             TryClose(false);
         }
+
+        ISettingsProvider settingsProvider;
     }
 }

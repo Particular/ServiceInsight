@@ -11,12 +11,15 @@
         DisplayNameAttribute displayName;
         DescriptionAttribute description;
 
-        public OptionPropertyValue(PropertyInfo propertyInfo, object owner)
+        public OptionPropertyValue(PropertyInfo propertyInfo, object owner, PropertyInfo defaultPropertyInfo)
         {
             this.propertyInfo = propertyInfo;
             this.owner = owner;
             displayName = this.propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
             description = this.propertyInfo.GetCustomAttribute<DescriptionAttribute>();
+
+            if (defaultPropertyInfo != null)
+                DefaultValue = (string)defaultPropertyInfo.GetValue(owner);
         }
 
         public string Name
@@ -34,6 +37,8 @@
                 return description == null ? string.Empty : description.Description;
             }
         }
+
+        public string DefaultValue { get; set; }
 
         public Type PropertyType
         {

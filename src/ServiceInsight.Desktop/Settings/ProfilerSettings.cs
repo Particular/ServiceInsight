@@ -13,6 +13,7 @@
             RecentSearchEntries = new ObservableCollection<string>();
             RecentServiceControlEntries = new ObservableCollection<string>();
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DefaultValue(15)]
@@ -50,5 +51,8 @@
         [DisplayName("ServiceControl URL")]
         [Description("Last used ServiceControl address")]
         public string LastUsedServiceControl { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string DefaultLastUsedServiceControl { get; set; }
     }
 }

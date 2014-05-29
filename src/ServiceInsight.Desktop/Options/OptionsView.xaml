@@ -15,19 +15,21 @@
               mc:Ignorable="d">
     <dxc:DXWindow.Resources>
         <local:PropertyValueConverter x:Key="PropertyValueConverter" />
-        <local:OptionTemplateSelector x:Key="TemplateSelector" />
 
-        <!-- ReSharper disable Xaml.RedundantResource -->
         <DataTemplate x:Key="CheckBoxTemplate">
             <dxe:CheckEdit EditValue="{Binding Value, ValidatesOnExceptions=True}" />
         </DataTemplate>
         <DataTemplate x:Key="TextBoxTemplate">
-            <dxe:TextEdit EditValue="{Binding Value, ValidatesOnExceptions=True}" />
+            <dxe:TextEdit EditValue="{Binding Value, ValidatesOnExceptions=True}" NullText="{Binding DefaultValue}" />
         </DataTemplate>
         <DataTemplate x:Key="ListTemplate">
             <local:EditableListBox ItemsSource="{Binding Value}" />
         </DataTemplate>
-        <!-- ReSharper restore Xaml.RedundantResource -->
+
+        <local:OptionTemplateSelector x:Key="TemplateSelector"
+                                      CheckBoxTemplate="{StaticResource CheckBoxTemplate}"
+                                      ListTemplate="{StaticResource ListTemplate}"
+                                      TextBoxTemplate="{StaticResource TextBoxTemplate}" />
 
         <Style x:Key="EditControlStyle" TargetType="ContentControl">
             <Setter Property="ContentTemplateSelector" Value="{StaticResource TemplateSelector}" />
