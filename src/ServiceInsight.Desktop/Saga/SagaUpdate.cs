@@ -45,8 +45,21 @@
 
         public string StateAfterChange { get; set; }
 
-        public void OnStateAfterChangeChanged()
+        void OnStateAfterChangeChanged()
         {
+            UpdateValues();
+        }
+
+        void OnInitiatingMessageChanged()
+        {
+            UpdateValues();
+        }
+
+        void UpdateValues()
+        {
+            if (string.IsNullOrEmpty(StateAfterChange) || InitiatingMessage == null)
+                return;
+
             Values = JsonPropertiesHelper.ProcessValues(StateAfterChange, s => s.TrimStart('[').TrimEnd(']'))
                                          .Select(v => new SagaUpdatedValue(InitiatingMessage.MessageType, v.Key, v.Value))
                                          .ToList();
