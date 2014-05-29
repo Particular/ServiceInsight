@@ -11,7 +11,6 @@
             keyPath = DefaultKeyPath;
             keyName = DefaultKeyName;
             regKey = Registry.CurrentUser;
-
         }
 
         public RegistryLicenseStore(RegistryKey regKey, string keyPath = DefaultKeyPath, string keyName = DefaultKeyName)
@@ -35,15 +34,16 @@
 
                     var licenseValue = registryKey.GetValue("License", null);
 
-                    if (licenseValue is string[])
+                    var licenseValues = licenseValue as string[];
+                    if (licenseValues != null)
                     {
-                        license = string.Join(" ", (string[]) licenseValue);
+                        license = string.Join(" ", licenseValues);
                     }
                     else
                     {
-                        license = (string)licenseValue;    
+                        license = (string)licenseValue;
                     }
-                    
+
                     return !string.IsNullOrEmpty(license);
                 }
             }
@@ -52,7 +52,6 @@
                 throw new Exception(string.Format("Failed to access '{0}'. Do you have permission to read this key?", FullPath), exception);
             }
         }
-
 
         public void StoreLicense(string license)
         {
@@ -82,7 +81,6 @@
         string keyPath;
         string keyName;
         RegistryKey regKey;
-
 
         const string DefaultKeyPath = @"SOFTWARE\ParticularSoftware";
         const string DefaultKeyName = "License";

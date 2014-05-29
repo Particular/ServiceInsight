@@ -7,10 +7,8 @@
     {
         public IEnumerable SelectChildren(object item)
         {
-            if (item is ExplorerItem)
-                return ((ExplorerItem) item).Children;
-            
-            return null;
+            var explorerItem = item as ExplorerItem;
+            return explorerItem != null ? explorerItem.Children : null;
         }
     }
 }

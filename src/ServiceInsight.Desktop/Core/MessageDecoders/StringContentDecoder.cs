@@ -1,6 +1,8 @@
 namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
     using System.Text;
+    using Anotar.Serilog;
 
     public class StringContentDecoder : IContentDecoder<string>
     {
@@ -12,10 +14,9 @@ namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
                 {
                     return new DecoderResult<string>(Encoding.UTF8.GetString(content));
                 }
-// ReSharper disable EmptyGeneralCatchClause
-                catch
-// ReSharper restore EmptyGeneralCatchClause
+                catch (Exception ex)
                 {
+                    LogTo.Error(ex, "Error trying to decode string {content}", content);
                 }
             }
 
