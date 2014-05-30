@@ -216,6 +216,7 @@
     </Compile>
     <Compile Include="Framework\Attributes\Attachment.cs" />
     <Compile Include="Framework\AppServices.cs" />
+    <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Framework\ExceptionHandler.xaml.cs">
       <DependentUpon>ExceptionHandler.xaml</DependentUpon>
     </Compile>
@@ -330,10 +331,7 @@
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
     <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerItemExtensions.cs" />
-    <Compile Include="Explorer\IExplorerViewModel.cs" />
-    <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
-    <Compile Include="Explorer\IExplorerView.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
@@ -425,7 +423,6 @@
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
     <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
-    <Compile Include="Explorer\ExplorerNodeImageSelector.cs" />
     <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>

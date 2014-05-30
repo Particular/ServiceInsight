@@ -14,7 +14,6 @@
     using Startup;
 
     public class EndpointExplorerViewModel : Screen,
-        IExplorerViewModel,
         IHandle<RequestSelectingEndpoint>
     {
         IEventAggregator eventAggregator;
@@ -23,8 +22,6 @@
         NetworkOperations networkOperations;
         ServiceControlConnectionProvider connectionProvider;
         CommandLineArgParser commandLineParser;
-        bool isFirstActivation = true;
-        IExplorerView view;
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator,
@@ -75,23 +72,6 @@
         bool IsConnected
         {
             get { return ServiceUrl != null; }
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
-            if (isFirstActivation)
-            {
-                this.view.ExpandNode(ServiceControlRoot);
-                isFirstActivation = false;
-            }
-        }
-
-        protected override void OnViewAttached(object view, object context)
-        {
-            base.OnViewAttached(view, context);
-            this.view = view as IExplorerView;
         }
 
         protected async override void OnActivate()
@@ -214,7 +194,7 @@
 
         void ExpandServiceNode()
         {
-            view.ExpandNode(ServiceControlRoot);
+            ServiceControlRoot.IsExpanded = true;
         }
 
         public void Handle(RequestSelectingEndpoint message)

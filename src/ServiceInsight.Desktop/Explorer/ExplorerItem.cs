@@ -11,6 +11,8 @@
             Name = name;
         }
 
+        public bool IsExpanded { get; set; }
+
         public int TreeRowHandle { get; set; }
 
         public abstract Bitmap Image { get; }

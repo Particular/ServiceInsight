@@ -5,7 +5,6 @@
     using System.Linq;
     using Autofac;
     using Core.UI.ScreenManager;
-    using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using MessageFlow;
@@ -31,7 +30,7 @@
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<EndpointExplorerView>().As<IExplorerView>().InstancePerDependency();
+            builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
             builder.RegisterType<ShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
