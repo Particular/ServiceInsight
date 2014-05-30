@@ -229,6 +229,7 @@
     <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="Framework\Rx\ViewModelExtensions.cs" />
+    <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />

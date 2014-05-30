@@ -1,43 +1,87 @@
 ﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Reactive.Subjects;
+    using System.Windows.Input;
+    using System.Windows.Media;
     using Caliburn.Micro;
-    using Core.UI;
-    using Shell.Menu;
+    using Framework;
+    using Framework.Rx;
+    using ReactiveUI;
+    using Serilog.Events;
+    using Serilog.Formatting;
+    using Serilog.Formatting.Display;
 
-    public class LogWindowViewModel : Screen, IHaveContextMenu
+    public class LogWindowViewModel : Screen
     {
-        ILogWindowView view;
+        public static Subject<LogEvent> LogObserver = new Subject<LogEvent>();
+
+        ITextFormatter textFormatter;
+        const int MaxTextLength = 5000;
 
         public LogWindowViewModel()
         {
-            ContextMenuItems = new BindableCollection<IMenuItem>
+            Logs = new ReactiveList<LogMessage>();
+            textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
+            LogObserver.ObserveOnDispatcher().Subscribe(UpdateLog);
+
+            ClearCommand = this.CreateCommand(Clear);
+            CopyCommand = this.CreateCommand(Copy);
+        }
+
+        public ReactiveList<LogMessage> Logs { get; private set; }
+        public ICommand ClearCommand { get; private set; }
+        public ICommand CopyCommand { get; private set; }
+
+        void Clear()
+        {
+            Logs.Clear();
+        }
+
+        void Copy()
+        {
+            AppServices.Clipboard.CopyTo(Logs.Aggregate("", (s, l) => s + l.Log));
+        }
+
+        void UpdateLog(LogEvent loggingEvent)
+        {
+            if (Logs.Count > MaxTextLength)
+                Clear();
+
+            var sr = new StringWriter();
+            textFormatter.Format(loggingEvent, sr);
+            var log = sr.ToString();
+
+            switch (loggingEvent.Level)
             {
-                new MenuItem("Clear All", new RelayCommand(Clear), Properties.Resources.Clear),
-                new MenuItem("Copy", new RelayCommand(CopyToClipboard), Properties.Resources.Copy)
-            };
-        }
+                case LogEventLevel.Information:
+                    Logs.Add(new LogMessage(log, Colors.Black, true));
+                    break;
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            base.OnViewAttached(view, context);
-            this.view = (ILogWindowView)view;
-            this.view.Initialize();
-        }
+                case LogEventLevel.Warning:
+                    Logs.Add(new LogMessage(log, Colors.DarkOrange));
+                    break;
 
-        public void Clear()
-        {
-            view.Clear();
-        }
+                case LogEventLevel.Error:
+                    Logs.Add(new LogMessage(log, Colors.Red));
+                    break;
 
-        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
+                case LogEventLevel.Fatal:
+                    Logs.Add(new LogMessage(log, Colors.DarkOrange));
+                    break;
 
-        public void OnContextMenuOpening()
-        {
-        }
+                case LogEventLevel.Debug:
+                    Logs.Add(new LogMessage(log, Colors.Green));
+                    break;
 
-        public void CopyToClipboard()
-        {
-            view.Copy();
+                default:
+                    Logs.Add(new LogMessage(log, Colors.Black));
+                    break;
+            }
         }
     }
 }
