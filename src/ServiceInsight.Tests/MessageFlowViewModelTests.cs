@@ -1,11 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using Desktop;
     using Desktop.Core.Settings;
     using Desktop.Core.UI.ScreenManager;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Framework;
     using Desktop.MessageFlow;
     using Desktop.MessageList;
     using Desktop.Models;

@@ -1,4 +1,5 @@
-﻿namespace Particular.Licensing
+﻿// ReSharper disable once CheckNamespace
+namespace Particular.Licensing
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +13,7 @@
                 LicenseType = "Trial",
                 ExpirationDate = trialStartDate.AddDays(14),
                 IsExtendedTrial = false,
-                ValidApplications = new List<string> { "All"}
+                ValidApplications = new List<string> { "All" }
             };
         }
 
@@ -41,7 +42,7 @@
 
         public DateTime? UpgradeProtectionExpiration { get; internal set; }
 
-        public List<string> ValidApplications{ get; internal set; }
+        public List<string> ValidApplications { get; internal set; }
 
         public bool ValidForApplication(string applicationName)
         {

@@ -1,4 +1,5 @@
-﻿namespace Particular.Licensing
+﻿// ReSharper disable once CheckNamespace
+namespace Particular.Licensing
 {
     using System;
 
@@ -10,7 +11,6 @@
             {
                 return true;
             }
-
 
             if (license.UpgradeProtectionExpiration != null)
             {
@@ -26,12 +26,12 @@
         static bool HasLicenseDateExpired(DateTime licenseDate)
         {
             var oneDayGrace = licenseDate;
-            
+
             if (licenseDate < DateTime.MaxValue.AddDays(-1))
             {
                 oneDayGrace = licenseDate.AddDays(1);
             }
-            
+
             return oneDayGrace < DateTime.UtcNow.Date;
         }
     }

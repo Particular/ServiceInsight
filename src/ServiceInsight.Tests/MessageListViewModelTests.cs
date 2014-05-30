@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Caliburn.Micro;
-    using Desktop;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Framework;
     using Desktop.MessageList;
     using Desktop.MessageProperties;
     using Desktop.Models;

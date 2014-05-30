@@ -2,6 +2,7 @@
 {
     using System.ComponentModel;
     using Caliburn.Micro;
+    using Framework;
 
     public class MessagePropertiesViewModel : Screen
     {

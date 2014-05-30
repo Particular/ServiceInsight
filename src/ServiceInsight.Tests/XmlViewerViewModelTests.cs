@@ -2,9 +2,9 @@
 {
     using System.Xml;
     using Caliburn.Micro;
-    using Desktop;
     using Desktop.Core.MessageDecoders;
     using Desktop.Events;
+    using Desktop.Framework;
     using Desktop.MessageViewers.XmlViewer;
     using Desktop.Models;
     using NSubstitute;

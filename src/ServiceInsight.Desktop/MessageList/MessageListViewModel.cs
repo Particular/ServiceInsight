@@ -10,6 +10,7 @@
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using Framework.Rx;
     using MessageProperties;
     using Models;

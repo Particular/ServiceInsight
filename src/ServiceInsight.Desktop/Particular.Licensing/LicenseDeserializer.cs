@@ -1,3 +1,4 @@
+// ReSharper disable once CheckNamespace
 namespace Particular.Licensing
 {
     using System;
@@ -12,9 +13,7 @@ namespace Particular.Licensing
             var doc = new XmlDocument();
             doc.LoadXml(licenseText);
 
-
             var applications = doc.SelectSingleNode("/license/@Applications");
-
 
             if (applications != null)
             {
@@ -34,7 +33,6 @@ namespace Particular.Licensing
                 if (expirationDate != null)
                 {
                     license.ExpirationDate = Parse(expirationDate.Value);
-
                 }
             }
 
@@ -42,14 +40,14 @@ namespace Particular.Licensing
 
             if (licenseType == null)
             {
-                licenseType = doc.SelectSingleNode("/license/@type");            
+                licenseType = doc.SelectSingleNode("/license/@type");
             }
 
             if (licenseType != null)
             {
                 license.LicenseType = licenseType.Value;
             }
-          
+
             var name = doc.SelectSingleNode("/license/name");
 
             if (name != null)
@@ -69,6 +67,5 @@ namespace Particular.Licensing
 
             return UniversalDateParser.Parse(dateStringFromLicense.Split('T').First());
         }
-
     }
 }

@@ -10,6 +10,7 @@
     using Core.UI.ScreenManager;
     using Events;
     using Explorer.EndpointExplorer;
+    using Framework;
     using MessageList;
     using Mindscape.WpfDiagramming;
     using Models;

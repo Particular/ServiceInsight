@@ -1,4 +1,5 @@
-﻿namespace Particular.Licensing
+﻿// ReSharper disable once CheckNamespace
+namespace Particular.Licensing
 {
     using System;
     using System.Security.Cryptography;
@@ -22,7 +23,6 @@
                 failure = ex;
                 return false;
             }
-
         }
 
         public static void Verify(string licenseText)

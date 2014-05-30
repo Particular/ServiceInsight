@@ -1,3 +1,4 @@
+// ReSharper disable once CheckNamespace
 namespace Particular.Licensing
 {
     using System.Security.Principal;

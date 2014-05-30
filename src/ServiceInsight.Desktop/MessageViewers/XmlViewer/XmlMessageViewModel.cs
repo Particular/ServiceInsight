@@ -6,6 +6,7 @@
     using Core.MessageDecoders;
     using Events;
     using ExtensionMethods;
+    using Framework;
     using Models;
 
     public class XmlMessageViewModel : Screen,
