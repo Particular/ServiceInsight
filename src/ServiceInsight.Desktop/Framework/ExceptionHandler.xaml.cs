@@ -1,23 +1,26 @@
-﻿using System.Windows.Threading;
-
-namespace Particular.ServiceInsight.Desktop.Framework
+﻿namespace Particular.ServiceInsight.Desktop.Framework
 {
     using System;
+    using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Anotar.Serilog;
+    using ExtensionMethods;
+    using Mindscape.Raygun4Net;
 
     public partial class ExceptionHandler
     {
-        //static RaygunClient client;
+        static RaygunClient client;
 
         static ExceptionHandler()
         {
-            //client = new RaygunClient("f44kaQEkbdxoIUJLSn0TEA==")
-            //{
-            //    ApplicationVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
-            //};
+            client = new RaygunClient("uX5c/PiCVqF31xlEm3jShA==")
+            {
+                ApplicationVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
+            };
         }
 
         public static void Attach()
@@ -27,20 +30,20 @@ namespace Particular.ServiceInsight.Desktop.Framework
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject as Exception;
             if (ex != null)
                 HandleException(ex);
         }
 
-        private static void CurrentDispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        static void CurrentDispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             HandleException(e.Exception);
             e.Handled = true;
         }
 
-        private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             e.SetObserved();
             HandleException(e.Exception);
@@ -67,11 +70,11 @@ namespace Particular.ServiceInsight.Desktop.Framework
             LogTo.Error(ex, "An unhandled exception occurred. Error message is {Message}.", baseError.Message);
         }
 
-        private static void ShowExceptionDialog(Exception ex)
+        static void ShowExceptionDialog(Exception ex)
         {
             var dialog = new ExceptionHandler
             {
-                Owner = App.Current.MainWindow,
+                Owner = Application.Current.MainWindow,
                 ErrorDetails =
                 {
                     Text = ex.ToString()
@@ -108,10 +111,10 @@ namespace Particular.ServiceInsight.Desktop.Framework
             Clipboard.SetText(ErrorDetails.Text);
         }
 
-        //void ReportClick(object sender, RoutedEventArgs e)
-        //{
-        //    client.SendInBackground(Exception);
-        //    ((Button)sender).IsEnabled = false;
-        //}
+        void ReportClick(object sender, RoutedEventArgs e)
+        {
+            client.SendInBackground(Exception);
+            ((Button)sender).IsEnabled = false;
+        }
     }
 }

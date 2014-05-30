@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop
 {
     using System;
-    using System.Threading.Tasks;
+    using System.Diagnostics;
     using System.Windows;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
@@ -41,35 +41,9 @@
         public App()
         {
             LoggingConfig.SetupLogging();
-            Framework.ExceptionHandler.Attach();
-            //AppDomain.CurrentDomain.UnhandledException += (s, e) => OnUnhandledException(e);
-            //WireTaskExceptionHandler();
+            if (!Debugger.IsAttached)
+                Framework.ExceptionHandler.Attach();
             InitializeComponent();
-        }
-
-        void WireTaskExceptionHandler()
-        {
-            TaskScheduler.UnobservedTaskException += (s, e) =>
-            {
-                e.SetObserved();
-                LogException(e.Exception);
-            };
-        }
-
-        static void OnUnhandledException(UnhandledExceptionEventArgs e)
-        {
-            var exception = e.ExceptionObject as Exception;
-            if (exception != null)
-            {
-                LogException(exception);
-            }
-        }
-
-        public static void LogException(Exception ex)
-        {
-            var baseError = ex.GetBaseException();
-
-            LogTo.Error(ex, "An unhandled exception occurred. Error message is {Message}.", baseError.Message);
         }
 
         protected override void OnStartup(StartupEventArgs e)

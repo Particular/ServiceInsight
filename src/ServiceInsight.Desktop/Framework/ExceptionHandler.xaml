@@ -32,10 +32,12 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
         <Image Margin="10"
                VerticalAlignment="Center"
                Source="pack://application:,,,/ServiceInsight.png"
                Stretch="None" />
+
         <TextBlock Grid.Column="1"
                    Grid.ColumnSpan="4"
                    VerticalAlignment="Center"
@@ -43,6 +45,7 @@
                    FontWeight="Bold"
                    Foreground="{StaticResource LightBrush}"
                    Text="ServiceInsight" />
+
         <Border Grid.Row="1"
                 Grid.ColumnSpan="5"
                 Margin="10 0"
@@ -73,15 +76,17 @@
                            Text="Please report this error and someone will take a look at it." />
             </Grid>
         </Border>
-        <!--
-            <Button Grid.Row="2"
-            Grid.Column="2"
-            Content="Report Error" Click="ReportClick" />
-        -->
+
+        <Button Grid.Row="2"
+                Grid.Column="2"
+                Click="ReportClick"
+                Content="Report Error" />
+
         <Button Grid.Row="2"
                 Grid.Column="3"
                 Click="CopyClick"
                 Content="Copy to Clipboard" />
+
         <Button Grid.Row="2"
                 Grid.Column="4"
                 Click="ExitClick"
