@@ -1,7 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
 {
     using System;
-    using Attributes;
+    using Attachments;
     using Autofac;
     using Autofac.Core;
 

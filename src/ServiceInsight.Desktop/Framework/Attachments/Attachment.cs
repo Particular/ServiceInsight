@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Attributes
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Attachments
 {
     internal interface IAttachment
     {
