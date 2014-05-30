@@ -25,6 +25,7 @@
         MessageListViewModel messageList;
         ISettingsProvider settingProvider;
         EndpointExplorerViewModel endpointExplorer;
+        IClipboard clipboard;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -61,7 +62,7 @@
         {
             serviceControl = Substitute.For<DefaultServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();
-            AppServices.Clipboard = Substitute.For<IClipboard>();
+            clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<WindowManagerEx>();
             screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();
@@ -76,7 +77,8 @@
                                             searchBar,
                                             messageList,
                                             settingProvider,
-                                            endpointExplorer);
+                                            endpointExplorer,
+                                            clipboard);
         }
     }
 }

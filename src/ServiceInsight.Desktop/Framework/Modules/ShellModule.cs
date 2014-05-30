@@ -16,6 +16,8 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<DefaultClipboard>().As<IClipboard>().InstancePerDependency();
+
             builder.RegisterAssemblyTypes(ThisAssembly)
                    .Where(t => t.IsViewOrViewModel() && !ExemptTypes.Contains(t))
                    .AsImplementedInterfaces()

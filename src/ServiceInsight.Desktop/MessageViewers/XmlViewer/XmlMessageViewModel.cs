@@ -12,12 +12,15 @@
     public class XmlMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
+        readonly IClipboard clipboard;
         IContentDecoder<XmlDocument> xmlDecoder;
         IXmlMessageView messageView;
 
         public XmlMessageViewModel(
-            IContentDecoder<XmlDocument> xmlDecoder)
+            IContentDecoder<XmlDocument> xmlDecoder,
+            IClipboard clipboard)
         {
+            this.clipboard = clipboard;
             this.xmlDecoder = xmlDecoder;
         }
 
@@ -54,7 +57,7 @@
             var content = GetMessageBody();
             if (!content.IsEmpty())
             {
-                AppServices.Clipboard.CopyTo(content);
+                clipboard.CopyTo(content);
             }
         }
 

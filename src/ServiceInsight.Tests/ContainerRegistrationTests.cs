@@ -3,7 +3,9 @@
     using Autofac;
     using Desktop.Shell;
     using Desktop.Startup;
+    using Microsoft.Reactive.Testing;
     using NUnit.Framework;
+    using ReactiveUI.Testing;
     using Shouldly;
 
     [TestFixture]
@@ -28,7 +30,10 @@
         [Test]
         public void should_resolve_the_shell()
         {
-            Should.NotThrow(() => Container.Resolve<ShellViewModel>());
+            new TestScheduler().With(sched =>
+            {
+                Should.NotThrow(() => Container.Resolve<ShellViewModel>());
+            });
         }
     }
 

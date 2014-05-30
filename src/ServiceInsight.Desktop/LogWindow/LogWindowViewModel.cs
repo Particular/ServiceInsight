@@ -20,14 +20,16 @@
     {
         public static Subject<LogEvent> LogObserver = new Subject<LogEvent>();
 
+        readonly IClipboard clipboard;
         ITextFormatter textFormatter;
         const int MaxTextLength = 5000;
 
-        public LogWindowViewModel()
+        public LogWindowViewModel(IClipboard clipboard)
         {
+            this.clipboard = clipboard;
             Logs = new ReactiveList<LogMessage>();
             textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
-            LogObserver.ObserveOnDispatcher().Subscribe(UpdateLog);
+            LogObserver.ObserveOn(RxApp.MainThreadScheduler).Subscribe(UpdateLog);
 
             ClearCommand = this.CreateCommand(Clear);
             CopyCommand = this.CreateCommand(Copy);
@@ -44,7 +46,7 @@
 
         void Copy()
         {
-            AppServices.Clipboard.CopyTo(Logs.Aggregate("", (s, l) => s + l.Log));
+            clipboard.CopyTo(Logs.Aggregate("", (s, l) => s + l.Log));
         }
 
         void UpdateLog(LogEvent loggingEvent)

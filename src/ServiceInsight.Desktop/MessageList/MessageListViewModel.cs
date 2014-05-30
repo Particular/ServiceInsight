@@ -32,6 +32,7 @@
         IHandle<RetryMessage>,
         IHandle<BodyTabSelectionChanged>
     {
+        readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
@@ -47,8 +48,10 @@
             IEventAggregator eventAggregator,
             DefaultServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
-            GeneralHeaderViewModel generalHeaderDisplay)
+            GeneralHeaderViewModel generalHeaderDisplay,
+            IClipboard clipboard)
         {
+            this.clipboard = clipboard;
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
@@ -108,12 +111,12 @@
 
         public void CopyMessageId()
         {
-            AppServices.Clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
+            clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
         {
-            AppServices.Clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
+            clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
         public bool CanRetryMessage()

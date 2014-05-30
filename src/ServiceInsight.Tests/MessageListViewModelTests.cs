@@ -26,6 +26,7 @@
         DefaultServiceControl ServiceControl;
         SearchBarViewModel SearchBar;
         Func<MessageListViewModel> MessageListFunc;
+        IClipboard Clipboard;
 
         [SetUp]
         public void TestInitialize()
@@ -33,11 +34,12 @@
             EventAggregator = Substitute.For<IEventAggregator>();
             ServiceControl = Substitute.For<DefaultServiceControl>();
             SearchBar = Substitute.For<SearchBarViewModel>();
-            AppServices.Clipboard = Substitute.For<IClipboard>();
+            Clipboard = Substitute.For<IClipboard>();
             MessageListFunc = () => new MessageListViewModel(EventAggregator,
                                                    ServiceControl,
                                                    SearchBar,
-                                                   Substitute.For<GeneralHeaderViewModel>());
+                                                   Substitute.For<GeneralHeaderViewModel>(),
+                                                   Clipboard);
         }
 
         [Test]

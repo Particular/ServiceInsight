@@ -17,15 +17,16 @@
         XmlMessageViewModel ViewModel;
         IXmlMessageView View;
         IContentDecoder<XmlDocument> XmlDecoder;
+        IClipboard Clipboard;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
         public void TestInitialize()
         {
             XmlDecoder = Substitute.For<IContentDecoder<XmlDocument>>();
-            AppServices.Clipboard = Substitute.For<IClipboard>();
+            Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
-            ViewModel = new XmlMessageViewModel(XmlDecoder);
+            ViewModel = new XmlMessageViewModel(XmlDecoder, Clipboard);
             ((IActivate)ViewModel).Activate();
         }
 
@@ -75,7 +76,7 @@
 
             ViewModel.CopyMessageXml();
 
-            AppServices.Clipboard.Received().CopyTo(Arg.Any<string>());
+            Clipboard.Received().CopyTo(Arg.Any<string>());
         }
 
         static XmlDocument GetDocument(string content)

@@ -21,6 +21,7 @@
     public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
+        private readonly IClipboard clipboard;
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;
         ScreenFactory screenFactory;
@@ -42,8 +43,10 @@
             SearchBarViewModel searchBar,
             MessageListViewModel messageList,
             ISettingsProvider settingsProvider,
-            EndpointExplorerViewModel endpointExplorer)
+            EndpointExplorerViewModel endpointExplorer,
+            IClipboard clipboard)
         {
+            this.clipboard = clipboard;
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
@@ -124,12 +127,12 @@
 
         public void CopyConversationId(StoredMessage message)
         {
-            AppServices.Clipboard.CopyTo(message.ConversationId);
+            clipboard.CopyTo(message.ConversationId);
         }
 
         public void CopyMessageUri(StoredMessage message)
         {
-            AppServices.Clipboard.CopyTo(serviceControl.GetUri(message).ToString());
+            clipboard.CopyTo(serviceControl.GetUri(message).ToString());
         }
 
         public void SearchByMessageId(StoredMessage message, bool performSearch = false)

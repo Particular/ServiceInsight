@@ -6,18 +6,22 @@
 
     public class MessagePropertiesViewModel : Screen
     {
+        readonly IClipboard clipboard;
+
         public MessagePropertiesViewModel(
             ErrorHeaderViewModel error,
             GeneralHeaderViewModel general,
             SagaHeaderViewModel saga,
             PerformanceHeaderViewModel performance,
-            GatewayHeaderViewModel gateway)
+            GatewayHeaderViewModel gateway,
+            IClipboard clipboard)
         {
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
             Errors = error;
             General = general;
+            this.clipboard = clipboard;
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
@@ -37,7 +41,7 @@
 
         public void CopyPropertyValue(object value)
         {
-            AppServices.Clipboard.CopyTo(value.ToString());
+            clipboard.CopyTo(value.ToString());
         }
     }
 }

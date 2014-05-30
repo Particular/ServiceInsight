@@ -215,7 +215,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Framework\Attachments\Attachment.cs" />
-    <Compile Include="Framework\AppServices.cs" />
+    <Compile Include="Framework\DefaultClipboard.cs" />
     <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Framework\ExceptionHandler.xaml.cs">
       <DependentUpon>ExceptionHandler.xaml</DependentUpon>
