@@ -1,8 +1,10 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
+    using Anotar.Serilog;
     using Models;
     using Newtonsoft.Json;
 
@@ -49,9 +51,10 @@
                     return new DecoderResult<IList<HeaderInfo>>(json, json != null);
                 }
             }
-// ReSharper disable once EmptyGeneralCatchClause
-            catch //Swallow
+            catch (Exception ex)
             {
+                LogTo.Error(ex, "Error trying to parse Json {value}", value);
+                // Swallow
             }
 
             return new DecoderResult<IList<HeaderInfo>>();
@@ -63,14 +66,15 @@
             {
                 if (value.StartsWith("<"))
                 {
-                    var serializer = new XmlSerializer(typeof (HeaderInfo[]));
-                    var deserialized = (HeaderInfo[]) serializer.Deserialize(new StringReader(value));
+                    var serializer = new XmlSerializer(typeof(HeaderInfo[]));
+                    var deserialized = (HeaderInfo[])serializer.Deserialize(new StringReader(value));
                     return new DecoderResult<IList<HeaderInfo>>(deserialized);
                 }
             }
-// ReSharper disable once EmptyGeneralCatchClause
-            catch //Swallow
+            catch (Exception ex)
             {
+                LogTo.Error(ex, "Error trying to parse XML {value}", value);
+                // Swallow
             }
 
             return new DecoderResult<IList<HeaderInfo>>();
