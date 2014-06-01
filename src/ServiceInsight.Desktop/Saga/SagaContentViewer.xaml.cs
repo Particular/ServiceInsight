@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    using System.Windows;
     using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;

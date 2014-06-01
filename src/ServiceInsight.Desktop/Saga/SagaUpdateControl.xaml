@@ -444,9 +444,7 @@
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup MaxWidth="400"
-                           MaxHeight="400"
-                           IsOpen="{Binding MessageContentVisible,
+                    <Popup IsOpen="{Binding MessageContentVisible,
                                             Mode=TwoWay}"
                            Placement="Center"
                            StaysOpen="True">
@@ -485,10 +483,8 @@
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup MaxWidth="400"
-                           MaxHeight="400"
-                           IsOpen="{Binding MessageContentVisible,
-                                            Mode=TwoWay}"
+                    <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}"
+                           CustomPopupPlacementCallback=""
                            Placement="Center"
                            StaysOpen="True">
                         <local:SagaContentViewer DataContext="{Binding}" />
