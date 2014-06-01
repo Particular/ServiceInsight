@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Documents;
+    using System.Windows.Input;
     using System.Windows.Media;
     using CodeParser;
 
@@ -13,28 +14,21 @@
         public SagaContentViewer()
         {
             InitializeComponent();
+            Loaded += (s, e) => OnViewLoaded();
         }
 
-        public static readonly DependencyProperty MessageContentProperty = DependencyProperty.Register("MessageContent", typeof(SagaUpdatedValue), typeof(SagaContentViewer), new FrameworkPropertyMetadata(default(SagaUpdatedValue), OnMessageContentChanged));
-
-        private static void OnMessageContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        SagaUpdatedValue Model
         {
-            ((SagaContentViewer)d).OnMessageContentChanged(e.NewValue as SagaUpdatedValue);
+            get { return DataContext as SagaUpdatedValue; }
         }
 
-        public SagaUpdatedValue MessageContent
-        {
-            get { return (SagaUpdatedValue)GetValue(MessageContentProperty); }
-            set { SetValue(MessageContentProperty, value); }
-        }
-
-        private void OnMessageContentChanged(SagaUpdatedValue model)
+        void OnViewLoaded()
         {
             Clear();
-            Display(model.EffectiveValue);
+            Display(Model.EffectiveValue);
         }
 
-        private void Display(string message)
+        void Display(string message)
         {
             if (message == null)
                 return;
@@ -46,9 +40,14 @@
             document.Document.Blocks.Add(paragraph);
         }
 
-        private void Clear()
+        void Clear()
         {
             document.Document.Blocks.Clear();
+        }
+
+        void OnCloseGlyphClicked(object sender, MouseButtonEventArgs e)
+        {
+            Model.MessageContentVisible = false;
         }
     }
 }

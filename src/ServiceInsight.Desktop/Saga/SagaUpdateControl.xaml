@@ -449,8 +449,8 @@
                            IsOpen="{Binding MessageContentVisible,
                                             Mode=TwoWay}"
                            Placement="Center"
-                           StaysOpen="False">
-                        <local:SagaContentViewer MessageContent="{Binding}" />
+                           StaysOpen="True">
+                        <local:SagaContentViewer DataContext="{Binding}" />
                     </Popup>
                 </Grid>
             </DataTemplate>
@@ -490,8 +490,8 @@
                            IsOpen="{Binding MessageContentVisible,
                                             Mode=TwoWay}"
                            Placement="Center"
-                           StaysOpen="False">
-                        <local:SagaContentViewer MessageContent="{Binding}" />
+                           StaysOpen="True">
+                        <local:SagaContentViewer DataContext="{Binding}" />
                     </Popup>
                 </Grid>
             </DataTemplate>
