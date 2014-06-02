@@ -20,14 +20,14 @@
             FillInlines(text, collection, new SolidColorBrush(color));
         }
 
-        public void FillInlines(string text, InlineCollection collection, Brush color = null)
+        public void FillInlines(string text, InlineCollection collection, Brush brush = null)
         {
             text = text.Replace("\r", "");
             var codeLexem = new CodeLexem(text);
             var list = codeLexem.Parse(CodeLanguage);
             foreach (var current in list)
             {
-                collection.Add(current.ToInline(CodeLanguage, color));
+                collection.Add(current.ToInline(CodeLanguage, brush));
             }
         }
 

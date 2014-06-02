@@ -103,9 +103,9 @@
             res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem, Brush color)
+        public override Inline ToInline(CodeLexem codeLexem, Brush brush)
         {
-            if (color != null) return base.ToInline(codeLexem, color);
+            if (brush != null) return base.ToInline(codeLexem, brush);
 
             switch (codeLexem.Type)
             {

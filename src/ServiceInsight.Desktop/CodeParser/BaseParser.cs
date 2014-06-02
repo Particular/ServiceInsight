@@ -110,19 +110,19 @@
             return CreateRun(text, new SolidColorBrush(color));
         }
 
-        protected static Run CreateRun(string text, Brush color)
+        protected static Run CreateRun(string text, Brush brush)
         {
             return new Run
             {
                 Text = text,
-                Foreground = color
+                Foreground = brush
             };
         }
 
-        public virtual Inline ToInline(CodeLexem codeLexem, Brush color = null)
+        public virtual Inline ToInline(CodeLexem codeLexem, Brush brush = null)
         {
-            if (color != null)
-                return CreateRun(codeLexem.Text, color);
+            if (brush != null)
+                return CreateRun(codeLexem.Text, brush);
 
             return new Run(codeLexem.Text);
         }

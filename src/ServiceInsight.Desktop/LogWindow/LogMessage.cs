@@ -6,13 +6,13 @@ namespace Particular.ServiceInsight.Desktop.LogWindow
     public class LogMessage
     {
         private readonly string log;
-        private readonly Brush color;
+        private readonly Brush brush;
         private readonly FontWeight weight;
 
         public LogMessage(string log, Color color, bool bold = false)
         {
             this.log = log;
-            this.color = new SolidColorBrush(color);
+            brush = new SolidColorBrush(color);
             weight = bold ? FontWeights.Bold : FontWeights.Normal;
         }
 
@@ -20,7 +20,7 @@ namespace Particular.ServiceInsight.Desktop.LogWindow
 
         public string DisplayLog { get { return log.TrimEnd(); } }
 
-        public Brush Color { get { return color; } }
+        public Brush Brush { get { return brush; } }
 
         public FontWeight Weight { get { return weight; } }
     }

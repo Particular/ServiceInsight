@@ -40,16 +40,16 @@
             }
         }
 
-        public Inline ToInline(CodeLanguage lang, Brush color = null)
+        public Inline ToInline(CodeLanguage lang, Brush brush = null)
         {
             switch (lang)
             {
                 case CodeLanguage.Xml:
-                    return new XmlParser().ToInline(this, color);
+                    return new XmlParser().ToInline(this, brush);
                 case CodeLanguage.Json:
-                    return new JsonParser().ToInline(this, color);
+                    return new JsonParser().ToInline(this, brush);
                 case CodeLanguage.Plain:
-                    return new BaseParser().ToInline(this, color);
+                    return new BaseParser().ToInline(this, brush);
                 default:
                     throw new NotImplementedException(string.Format("Conversion from {0} language is not supported.", lang));
             }
