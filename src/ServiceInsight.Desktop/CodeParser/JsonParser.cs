@@ -103,10 +103,10 @@
             res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem, Color? color)
+        public override Inline ToInline(CodeLexem codeLexem, Brush color)
         {
-            if (color.HasValue) return base.ToInline(codeLexem, color);
-        
+            if (color != null) return base.ToInline(codeLexem, color);
+
             switch (codeLexem.Type)
             {
                 case LexemType.Symbol:

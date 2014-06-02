@@ -9,7 +9,7 @@
     {
         protected static char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };
         protected static char[] XmlSymbol = new[] { '=', '/', '>', '"', '{', '}', ',' };
-        protected static char[] XmlQuotes = new[] { '"'  };
+        protected static char[] XmlQuotes = new[] { '"' };
         protected static char XmlNamespaceDelimeter = ':';
 
         protected bool IsInsideBlock;
@@ -43,7 +43,7 @@
                 ParseXmlKeyWord(list, ref text, IsInsideBlock ? LexemType.PlainText : LexemType.Property);
                 TryExtract(list, ref text, "\"", LexemType.Quotes);
                 TryExtract(list, ref text, "}", LexemType.Symbol);
-                
+
                 if (text.StartsWith(">"))
                     IsInsideBlock = true;
 
@@ -61,7 +61,7 @@
 
             if (index < 0)
                 return;
-            
+
             LineBreaks(res, ref text, index + lex.Length - 1, LexemType.Value);
         }
 
@@ -70,7 +70,7 @@
             var index = text.IndexOfAny(XmlSymbol);
             if (index != 0)
                 return;
-            
+
             res.Add(new CodeLexem(LexemType.Symbol, text.Substring(0, 1)));
             text = text.Substring(1);
         }
@@ -80,7 +80,7 @@
             var index = text.IndexOfAny(XmlEndOfTerm);
             if (index <= 0)
                 return;
-            
+
             var delimiterIndex = text.IndexOf(XmlNamespaceDelimeter);
             if (delimiterIndex > 0 && delimiterIndex < index)
             {
@@ -92,9 +92,9 @@
             res.Add(new CodeLexem(type, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem, Color? color = null)
+        public override Inline ToInline(CodeLexem codeLexem, Brush color = null)
         {
-            if (color.HasValue) return base.ToInline(codeLexem, color);
+            if (color != null) return base.ToInline(codeLexem, color);
 
             switch (codeLexem.Type)
             {

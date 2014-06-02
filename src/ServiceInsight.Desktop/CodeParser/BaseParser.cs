@@ -8,7 +8,7 @@
 
     public class BaseParser
     {
-        protected char[] SpaceChars = {' ', '\t'};
+        protected char[] SpaceChars = { ' ', '\t' };
         protected string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         protected string CutString(ref SourcePart text, int count)
@@ -64,10 +64,10 @@
                     index = text.IndexOf(lex, index + 1);
                 }
             }
-            
+
             if (index < 0)
                 return;
-            
+
             LineBreaks(res, ref text, index + lex.Length, type);
         }
 
@@ -107,17 +107,22 @@
 
         protected static Run CreateRun(string text, Color color)
         {
+            return CreateRun(text, new SolidColorBrush(color));
+        }
+
+        protected static Run CreateRun(string text, Brush color)
+        {
             return new Run
             {
                 Text = text,
-                Foreground = new SolidColorBrush(color)
+                Foreground = color
             };
         }
 
-        public virtual Inline ToInline(CodeLexem codeLexem, Color? color = null)
+        public virtual Inline ToInline(CodeLexem codeLexem, Brush color = null)
         {
-            if (color.HasValue)
-                return CreateRun(codeLexem.Text, color.Value);
+            if (color != null)
+                return CreateRun(codeLexem.Text, color);
 
             return new Run(codeLexem.Text);
         }

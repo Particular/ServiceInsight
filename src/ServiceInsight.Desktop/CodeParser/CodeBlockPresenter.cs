@@ -15,7 +15,12 @@
             CodeLanguage = language;
         }
 
-        public void FillInlines(string text, InlineCollection collection, Color? color = null)
+        public void FillInlines(string text, InlineCollection collection, Color color)
+        {
+            FillInlines(text, collection, new SolidColorBrush(color));
+        }
+
+        public void FillInlines(string text, InlineCollection collection, Brush color = null)
         {
             text = text.Replace("\r", "");
             var codeLexem = new CodeLexem(text);
@@ -28,7 +33,8 @@
 
         public CodeLanguage CodeLanguage
         {
-            get; set;
+            get;
+            set;
         }
     }
 }

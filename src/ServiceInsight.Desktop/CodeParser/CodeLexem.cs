@@ -28,7 +28,7 @@
             {
                 case CodeLanguage.Plain:
                     return new BaseParser().Parse(Text);
-                
+
                 case CodeLanguage.Xml:
                     return new XmlParser().Parse(Text);
 
@@ -40,7 +40,7 @@
             }
         }
 
-        public Inline ToInline(CodeLanguage lang, Color? color = null)
+        public Inline ToInline(CodeLanguage lang, Brush color = null)
         {
             switch (lang)
             {
