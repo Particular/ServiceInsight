@@ -6,20 +6,25 @@ namespace Particular.ServiceInsight.Desktop.LogWindow
 
     public partial class LogWindowView
     {
+        IDisposable logSubscription;
+
         public LogWindowView()
         {
             InitializeComponent();
 
-            DataContextChanged += LogWindowView_DataContextChanged;
+            DataContextChanged += OnDataContextChanged;
         }
 
-        void LogWindowView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var vm = DataContext as LogWindowViewModel;
             if (vm == null)
                 return;
 
-            vm.Logs.ItemsAdded.Subscribe(_ => scroll.ScrollToEnd());
+            if (logSubscription != null)
+                logSubscription.Dispose();
+
+            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => scroll.ScrollToEnd());
         }
     }
 }

@@ -4,16 +4,16 @@
     using Caliburn.Micro;
     using Core.UI;
     using Events;
+    using ReactiveUI;
     using Shell.Menu;
 
     public class MessageHeadersViewModel : Screen, IHaveContextMenu, IHandle<SelectedMessageChanged>
     {
         IMessageHeadersView view;
-        bool autoFitted;
 
         public MessageHeadersViewModel()
         {
-            KeyValues = new BindableCollection<MessageHeaderKeyValue>();
+            KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
 
             ContextMenuItems = new BindableCollection<IMenuItem>
             {
@@ -27,7 +27,7 @@
         {
         }
 
-        public IObservableCollection<MessageHeaderKeyValue> KeyValues { get; private set; }
+        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; private set; }
 
         protected override void OnViewLoaded(object view)
         {
@@ -47,16 +47,6 @@
                 Key = h.Key,
                 Value = h.Value
             }));
-
-            AutoFitKeys();
-        }
-
-        void AutoFitKeys()
-        {
-            if (autoFitted) return;
-
-            view.AutoFit();
-            autoFitted = true;
         }
 
         void CopyHeadersToClipboard()

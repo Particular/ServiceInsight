@@ -1,21 +1,38 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
+    using System;
+    using System.Reactive.Linq;
+    using System.Windows;
+    using ReactiveUI;
+
     public interface IMessageHeadersView
     {
-        void AutoFit();
         void CopyRowsToClipboard();
     }
 
     public partial class MessageHeadersView : IMessageHeadersView
     {
+        IDisposable kvSubscription;
+
         public MessageHeadersView()
         {
             InitializeComponent();
+
+            DataContextChanged += OnDataContextChanged;
         }
 
-        public void AutoFit()
+        void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            gridView.BestFitColumn(KeyColumn);
+            var vm = DataContext as MessageHeadersViewModel;
+            if (vm == null)
+                return;
+
+            if (kvSubscription != null)
+                kvSubscription.Dispose();
+
+            kvSubscription = vm.KeyValues.Changed
+                .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler) // Just to ignore multiple adds from a loop
+                .Subscribe(_ => gridView.BestFitColumn(KeyColumn));
         }
 
         public void CopyRowsToClipboard()
