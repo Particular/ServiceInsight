@@ -3,8 +3,9 @@
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using Caliburn.Micro;
 
-    public class ProfilerSettings : INotifyPropertyChanged
+    public class ProfilerSettings : PropertyChangedBase
     {
         int autoRefresh;
 
@@ -13,8 +14,6 @@
             RecentSearchEntries = new ObservableCollection<string>();
             RecentServiceControlEntries = new ObservableCollection<string>();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [DefaultValue(15)]
         [DisplayName("AutoRefresh Timer")]
