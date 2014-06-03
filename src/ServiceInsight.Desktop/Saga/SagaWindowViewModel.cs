@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Events;
     using Models;
@@ -55,23 +54,23 @@
             RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
         }
 
-        async void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
+        void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
         {
             foreach (var message in messages)
             {
-                await message.RefreshData(serviceControl);
+                message.RefreshData(serviceControl);
             }
 
             NotifyOfPropertyChange(() => Data);
         }
 
-        public async void Handle(SelectedMessageChanged @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
-            await RefreshSaga(message, a => true);
+            RefreshSaga(message, a => true);
         }
 
-        async Task RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
+        void RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -88,19 +87,19 @@
                 {
                     if (HasChanged(originatingSaga.SagaId.ToString()))
                     {
-                        await RefreshSaga(originatingSaga);
+                        RefreshSaga(originatingSaga);
                     }
                 }
             }
         }
 
-        async Task RefreshSaga(SagaInfo originatingSaga)
+        void RefreshSaga(SagaInfo originatingSaga)
         {
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
             if (Data == null || Data.SagaId != originatingSaga.SagaId)
             {
-                Data = await serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+                Data = serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
 
                 if (Data == SagaData.Empty)
                 {
@@ -174,9 +173,9 @@
             eventAggregator.Publish(new SwitchToFlowWindow());
         }
 
-        public async Task RefreshSaga()
+        public void RefreshSaga()
         {
-            await RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
+            RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
         }
 
         public SagaMessage SelectedMessage

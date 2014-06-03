@@ -4,7 +4,6 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Core.Settings;
     using Core.UI.ScreenManager;
@@ -141,15 +140,15 @@
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
-        public async Task RetryMessage(StoredMessage message)
+        public void RetryMessage(StoredMessage message)
         {
             eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
-            await serviceControl.RetryMessage(message.Id);
+            serviceControl.RetryMessage(message.Id);
             eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
             eventAggregator.Publish(new WorkFinished());
         }
 
-        public async void Handle(SelectedMessageChanged @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             if (loadingConversation) return;
 
@@ -176,7 +175,7 @@
 
             try
             {
-                var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
+                var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
                 CreateConversationNodes(storedMessage.Id, nodes);

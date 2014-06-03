@@ -6,7 +6,6 @@
     using Desktop.ServiceControl;
     using Desktop.Settings;
     using Desktop.Shell;
-    using Helpers;
     using NSubstitute;
     using NUnit.Framework;
     using Shouldly;
@@ -40,7 +39,7 @@
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            AsyncHelper.Run(() => connectTo.Accept());
+            connectTo.Accept();
 
             connectTo.CanAccept().ShouldBe(true);
             connectTo.IsAddressValid.ShouldBe(true);
@@ -51,7 +50,7 @@
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            AsyncHelper.Run(() => connectTo.Accept());
+            connectTo.Accept();
 
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
             storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);

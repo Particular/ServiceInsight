@@ -130,7 +130,6 @@
     <Compile Include="AboutViewModelTests.cs" />
     <Compile Include="CommandLineArgParserTests.cs" />
     <Compile Include="Framework\Attachments.cs" />
-    <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="ElapsedTimeTests.cs" />

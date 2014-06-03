@@ -71,9 +71,9 @@
             Owner.SearchByMessageId(Message, performSearch: true);
         }
 
-        public async void Retry()
+        public void Retry()
         {
-            await Owner.RetryMessage(Message);
+            Owner.RetryMessage(Message);
             Message.Status = MessageStatus.RetryIssued;
             OnPropertyChanged("HasFailed");
             OnPropertyChanged("HasRetried");

@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
@@ -23,7 +22,6 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
-    using ReactiveUI;
     using Saga;
     using Settings;
     using Startup;
@@ -99,9 +97,7 @@
             HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
             ConnectToServiceControlCommand = this.CreateCommand(vm => vm.CanConnectToServiceControl, ConnectToServiceControl);
 
-            var refreshAllCommand = new ReactiveCommand();
-            refreshAllCommand.RegisterAsyncTask(_ => RefreshAll());
-            RefreshAllCommand = refreshAllCommand;
+            RefreshAllCommand = this.CreateCommand(RefreshAll);
 
             RegisterCommand = this.CreateCommand(() =>
             {
@@ -194,14 +190,14 @@
 
         public ICommand OptionsCommand { get; private set; }
 
-        public async void ConnectToServiceControl()
+        public void ConnectToServiceControl()
         {
             var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
             var result = windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
             {
-                await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
                 eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
@@ -210,11 +206,11 @@
         {
         }
 
-        async Task RefreshAll()
+        void RefreshAll()
         {
-            await EndpointExplorer.RefreshData();
-            await Messages.RefreshMessages();
-            await SagaWindow.RefreshSaga();
+            EndpointExplorer.RefreshData();
+            Messages.RefreshMessages();
+            SagaWindow.RefreshSaga();
         }
 
         public void ImportMessage()

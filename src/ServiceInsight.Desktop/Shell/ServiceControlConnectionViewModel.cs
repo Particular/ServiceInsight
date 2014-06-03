@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Autofac;
     using Caliburn.Micro;
     using Core.Settings;
@@ -62,11 +61,10 @@
 
         public string Version { get; private set; }
 
-        //[AutoCheckAvailability]
-        public async virtual void Accept()
+        public virtual void Accept()
         {
             StartWorkInProgress();
-            IsAddressValid = await IsValidUrl(ServiceUrl);
+            IsAddressValid = IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 StoreConnectionAddress();
@@ -105,7 +103,7 @@
             settingsProvider.SaveSettings(appSettings);
         }
 
-        async Task<bool> IsValidUrl(string serviceUrl)
+        bool IsValidUrl(string serviceUrl)
         {
             if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
             {
@@ -115,7 +113,7 @@
                     var service = scope.Resolve<DefaultServiceControl>();
 
                     connection.ConnectTo(serviceUrl);
-                    Version = await service.GetVersion();
+                    Version = service.GetVersion();
 
                     return Version != null;
                 }

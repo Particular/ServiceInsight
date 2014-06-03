@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using System.Reactive.Linq;
-    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Core.UI;
     using Events;
@@ -100,11 +99,11 @@
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public async void RetryMessage()
+        public void RetryMessage()
         {
             eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", FocusedRow.SendingEndpoint));
             var msg = FocusedRow;
-            await serviceControl.RetryMessage(FocusedRow.Id);
+            serviceControl.RetryMessage(FocusedRow.Id);
             Rows.Remove(msg);
             eventAggregator.Publish(new WorkFinished());
         }
@@ -141,39 +140,39 @@
             FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
         }
 
-        async void DoFocusedRowChanged()
+        void DoFocusedRowChanged()
         {
             if (lockUpdate) return;
 
-            await LoadMessageBody();
+            LoadMessageBody();
 
             eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
 
             NotifyPropertiesChanged();
         }
 
-        public async Task RefreshMessages(string orderBy = null, bool ascending = false)
+        public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
             var serviceControl = SelectedExplorerItem.As<ServiceControlExplorerItem>();
             if (serviceControl != null)
             {
-                await RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                      endpoint: null,
-                                      orderBy: orderBy,
-                                      ascending: ascending);
+                RefreshMessages(searchQuery: SearchBar.SearchQuery,
+                                     endpoint: null,
+                                     orderBy: orderBy,
+                                     ascending: ascending);
             }
 
             var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
             if (endpointNode != null)
             {
-                await RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                      endpoint: endpointNode.Endpoint,
-                                      orderBy: orderBy,
-                                      ascending: ascending);
+                RefreshMessages(searchQuery: SearchBar.SearchQuery,
+                                     endpoint: endpointNode.Endpoint,
+                                     orderBy: orderBy,
+                                     ascending: ascending);
             }
         }
 
-        public async Task RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
@@ -187,7 +186,7 @@
 
             if (endpoint != null)
             {
-                pagedResult = await serviceControl.GetAuditMessages(endpoint,
+                pagedResult = serviceControl.GetAuditMessages(endpoint,
                                                                      pageIndex: pageIndex,
                                                                      searchQuery: searchQuery,
                                                                      orderBy: lastSortColumn,
@@ -195,14 +194,14 @@
             }
             else if (!searchQuery.IsEmpty())
             {
-                pagedResult = await serviceControl.Search(pageIndex: pageIndex,
+                pagedResult = serviceControl.Search(pageIndex: pageIndex,
                                                            searchQuery: searchQuery,
                                                            orderBy: lastSortColumn,
                                                            ascending: lastSortOrderAscending);
             }
             else
             {
-                pagedResult = await serviceControl.Search(pageIndex: pageIndex,
+                pagedResult = serviceControl.Search(pageIndex: pageIndex,
                                                            searchQuery: null,
                                                            orderBy: lastSortColumn,
                                                            ascending: lastSortOrderAscending);
@@ -241,12 +240,12 @@
             }
         }
 
-        public async void Handle(BodyTabSelectionChanged @event)
+        public void Handle(BodyTabSelectionChanged @event)
         {
             ShouldLoadMessageBody = @event.IsSelected;
             if (ShouldLoadMessageBody)
             {
-                var bodyLoaded = await LoadMessageBody();
+                var bodyLoaded = LoadMessageBody();
                 if (bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
             }
         }
@@ -271,9 +270,9 @@
             }
         }
 
-        public async void OnSelectedExplorerItemChanged()
+        public void OnSelectedExplorerItemChanged()
         {
-            await RefreshMessages();
+            RefreshMessages();
             NotifyPropertiesChanged();
         }
 
@@ -325,13 +324,13 @@
             return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
         }
 
-        async Task<bool> LoadMessageBody()
+        bool LoadMessageBody()
         {
             if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty()) return false;
 
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-            var body = await serviceControl.GetBody(FocusedRow.BodyUrl);
+            var body = serviceControl.GetBody(FocusedRow.BodyUrl);
 
             FocusedRow.Body = body;
 

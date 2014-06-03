@@ -82,18 +82,18 @@
             if (performSearch) Search();
         }
 
-        public async void Search()
+        public void Search()
         {
             SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
-            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        public async void CancelSearch()
+        public void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
@@ -105,17 +105,14 @@
             NotifyPropertiesChanged();
         }
 
-        public async void RefreshResult()
+        public void RefreshResult()
         {
-            await Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
         }
 
         public bool CanGoToLastPage
         {
-            get
-            {
-                return CurrentPage < PageCount && !WorkInProgress;
-            }
+            get { return CurrentPage < PageCount && !WorkInProgress; }
         }
 
         public bool CanCancelSearch
@@ -169,29 +166,17 @@
 
         public bool CanGoToFirstPage
         {
-            get
-            {
-                return CurrentPage > 1 &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage > 1 && !WorkInProgress; }
         }
 
         public bool CanGoToPreviousPage
         {
-            get
-            {
-                return CurrentPage - 1 >= 1 &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage - 1 >= 1 && !WorkInProgress; }
         }
 
         public bool CanGoToNextPage
         {
-            get
-            {
-                return CurrentPage + 1 <= PageCount &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage + 1 <= PageCount && !WorkInProgress; }
         }
 
         public IList<StoredMessage> Result { get; private set; }
@@ -210,19 +195,12 @@
 
         public bool CanSearch
         {
-            get
-            {
-                return !WorkInProgress &&
-                       !string.IsNullOrWhiteSpace(SearchQuery);
-            }
+            get { return !WorkInProgress && !string.IsNullOrWhiteSpace(SearchQuery); }
         }
 
         public bool CanRefreshResult
         {
-            get
-            {
-                return !WorkInProgress;
-            }
+            get { return !WorkInProgress; }
         }
 
         public void NotifyPropertiesChanged()

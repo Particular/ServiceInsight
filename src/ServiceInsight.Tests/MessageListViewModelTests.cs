@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
@@ -12,7 +11,6 @@
     using Desktop.Models;
     using Desktop.Search;
     using Desktop.ServiceControl;
-    using Helpers;
     using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
@@ -47,7 +45,7 @@
         {
             var endpoint = new Endpoint { HostDisplayName = "localhost", Name = "Service" };
             ServiceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
-                             .Returns(x => Task.FromResult(new PagedResult<StoredMessage>
+                             .Returns(x => new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,
                                  TotalCount = 100,
@@ -56,11 +54,11 @@
                                      new StoredMessage(),
                                      new StoredMessage()
                                  }
-                             }));
+                             });
 
             var messageList = MessageListFunc();
 
-            AsyncHelper.Run(() => messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint))));
+            messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
             EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
             EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
@@ -97,7 +95,7 @@
 
             messageList.FocusedRow = new StoredMessage { BodyUrl = uri };
 
-            AsyncHelper.Run(() => messageList.Handle(new BodyTabSelectionChanged(true)));
+            messageList.Handle(new BodyTabSelectionChanged(true));
 
             ServiceControl.Received(1).GetBody(uri);
         }

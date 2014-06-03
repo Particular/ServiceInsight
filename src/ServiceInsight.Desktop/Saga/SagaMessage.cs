@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Linq;
     using Caliburn.Micro;
@@ -28,7 +27,8 @@
 
         public string MessageType
         {
-            get; set;
+            get;
+            set;
         }
 
         public string MessageFriendlyTypeName
@@ -123,13 +123,13 @@
 
         public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
 
-        internal async Task RefreshData(DefaultServiceControl serviceControl)
+        internal void RefreshData(DefaultServiceControl serviceControl)
         {
             //TODO: Consider moving this into ServiceControl e.g. GetSageMessageBody or something, models should be just about data
             if (Data != null) return;
 
             var url = string.Format("/messages/{0}/body", MessageId);
-            var bodyString = await serviceControl.GetBody(url);
+            var bodyString = serviceControl.GetBody(url);
             if (bodyString != null)
             {
                 if (IsXml(bodyString))

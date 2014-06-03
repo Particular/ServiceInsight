@@ -4,7 +4,6 @@ namespace Particular.ServiceInsight.Desktop.Shell
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Core;
@@ -69,19 +68,19 @@ namespace Particular.ServiceInsight.Desktop.Shell
             return vm;
         }
 
-        public async void Activate()
+        public void Activate()
         {
-            await OnActivate();
+            OnActivate();
             IsActive = true;
             Activated(this, new ActivationEventArgs());
         }
 
-        async Task OnActivate()
+        void OnActivate()
         {
             ActivateLicense();
             LoadAppVersion();
             SetCopyrightText();
-            await LoadVersions();
+            LoadVersions();
         }
 
         void ActivateLicense()
@@ -116,14 +115,14 @@ namespace Particular.ServiceInsight.Desktop.Shell
             CopyrightText = string.Format("Copyright 2013-{0} NServiceBus Ltd. All rights reserved.", DateTime.Now.Year);
         }
 
-        async Task LoadVersions()
+        void LoadVersions()
         {
             if (serviceControl == null)
                 return;
 
             ServiceControlVersion = DetectingServiceControlVersion;
 
-            var version = await serviceControl.GetVersion();
+            var version = serviceControl.GetVersion();
             ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
     }

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading.Tasks;
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Core.MessageDecoders;
@@ -38,7 +37,7 @@
             settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
-        public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl());
 
@@ -47,13 +46,13 @@
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = await GetPagedResult<StoredMessage>(request);
+            var result = GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
@@ -62,61 +61,53 @@
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = await GetPagedResult<StoredMessage>(request);
+            var result = GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<List<StoredMessage>> GetConversationById(string conversationId)
+        public List<StoredMessage> GetConversationById(string conversationId)
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = await GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+            var messages = GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             return messages;
         }
 
-        public async Task<List<Endpoint>> GetEndpoints()
+        public List<Endpoint> GetEndpoints()
         {
             var request = new RestRequest("endpoints");
-            var messages = await GetModelAsync<List<Endpoint>>(request);
+            var messages = GetModelAsync<List<Endpoint>>(request);
 
             return messages ?? new List<Endpoint>();
         }
 
-        public async Task<bool> IsAlive()
+        public bool IsAlive()
         {
-            return await GetVersion() != null;
+            return GetVersion() != null;
         }
 
-        public async Task<string> GetVersion()
+        public string GetVersion()
         {
             var request = new RestRequest();
 
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<string>();
-            CreateClient()
-                .ExecuteAsync(request,
-                              response =>
-                              ProcessResponse(
-                                  restResponse =>
-                                  restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(),
-                                  response, completionSource));
-
-            return await completionSource.Task;
+            var response = CreateClient().Execute(request);
+            return ProcessResponse(restResponse => restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(), response);
         }
 
-        public async Task<bool> RetryMessage(string messageId)
+        public bool RetryMessage(string messageId)
         {
             var url = string.Format("errors/{0}/retry", messageId);
             var request = new RestRequest(url, Method.POST);
-            var response = await ExecuteAsync(request, HasSucceeded);
+            var response = ExecuteAsync(request, HasSucceeded);
 
             return response;
         }
 
-        public async Task<string> GetBody(string bodyUrl)
+        public string GetBody(string bodyUrl)
         {
             IRestClient client;
 
@@ -129,7 +120,7 @@
                 client = CreateClient();
             }
 
-            return await ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
+            return ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
         }
 
         public Uri GetUri(StoredMessage message)
@@ -189,32 +180,26 @@
             return endpointName != null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
         }
 
-        Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
+        PagedResult<T> GetPagedResult<T>(IRestRequest request) where T : class, new()
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<PagedResult<T>>();
-            var client = CreateClient();
+            var response = CreateClient().Execute<List<T>>(request);
 
-            client.ExecuteAsync<List<T>>(request, response =>
+            if (HasSucceeded(response))
             {
-                if (HasSucceeded(response))
+                LogResponse(response);
+                return new PagedResult<T>
                 {
-                    LogResponse(response);
-
-                    completionSource.SetResult(new PagedResult<T>
-                    {
-                        Result = response.Data,
-                        TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-                    });
-                }
-                else
-                {
-                    LogError(response);
-                    completionSource.SetResult(new PagedResult<T>());
-                }
-            });
-            return completionSource.Task;
+                    Result = response.Data,
+                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
+                };
+            }
+            else
+            {
+                LogError(response);
+                return new PagedResult<T>();
+            }
         }
 
         public bool HasSagaChanged(string sagaId)
@@ -222,9 +207,9 @@
             return HasChanged(CreateSagaRequest(sagaId));
         }
 
-        public async Task<SagaData> GetSagaById(string sagaId)
+        public SagaData GetSagaById(string sagaId)
         {
-            return await GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+            return GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
         }
 
         static RestRequest CreateSagaRequest(string sagaId)
@@ -256,50 +241,32 @@
             return true;
         }
 
-        Task<T> GetModelAsync<T>(IRestRequest request)
+        T GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
             return ExecuteAsync<T>(request, response => { CacheResponse(response); return response.Data; });
         }
 
-        Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
         {
             return ExecuteAsync(CreateClient(), request, selector);
         }
 
-        Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
+        T ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<T>();
-
-            client.ExecuteAsync(request, response => ProcessResponse(selector, response, completionSource));
-
-            return completionSource.Task;
+            var response = client.Execute(request);
+            return ProcessResponse(selector, response);
         }
 
-        Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
+        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<T>();
-            CreateClient().ExecuteAsync<T>(request, response => ProcessResponse(selector, response, completionSource));
-            return completionSource.Task;
-        }
-
-        void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
-        {
-            if (HasSucceeded(response))
-            {
-                LogResponse(response);
-                completionSource.SetResult(selector(response));
-            }
-            else
-            {
-                LogError(response);
-                completionSource.SetResult(default(T));
-            }
+            var response = CreateClient().Execute<T>(request);
+            return ProcessResponse(selector, response);
         }
 
         static void CacheResponse(IRestResponse response)
@@ -310,18 +277,31 @@
             }
         }
 
-        void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
-            where T : class, new()
+        T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)
         {
             if (HasSucceeded(response))
             {
                 LogResponse(response);
-                completionSource.SetResult(selector(response));
+                return selector(response);
             }
             else
             {
                 LogError(response);
-                completionSource.SetResult(null);
+                return default(T);
+            }
+        }
+
+        T ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response)
+        {
+            if (HasSucceeded(response))
+            {
+                LogResponse(response);
+                return selector(response);
+            }
+            else
+            {
+                LogError(response);
+                return default(T);
             }
         }
 

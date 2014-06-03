@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Core;
     using Core.Settings;
@@ -74,7 +73,7 @@
             get { return ServiceUrl != null; }
         }
 
-        protected async override void OnActivate()
+        protected override void OnActivate()
         {
             base.OnActivate();
 
@@ -82,12 +81,12 @@
 
             var configuredConnection = GetConfiguredAddress();
             var existingConnection = connectionProvider.Url;
-            var available = await ServiceAvailable(configuredConnection);
+            var available = ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
             eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
-            await ConnectToService(connectTo);
+            ConnectToService(connectTo);
 
             SelectDefaultEndpoint();
 
@@ -109,11 +108,11 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        async Task<bool> ServiceAvailable(string serviceUrl)
+        bool ServiceAvailable(string serviceUrl)
         {
             connectionProvider.ConnectTo(serviceUrl);
 
-            var connected = await serviceControl.IsAlive();
+            var connected = serviceControl.IsAlive();
 
             return connected;
         }
@@ -151,7 +150,7 @@
             }
         }
 
-        public async Task ConnectToService(string url)
+        public void ConnectToService(string url)
         {
             if (url == null)
                 return;
@@ -159,16 +158,16 @@
             connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
-            await RefreshData();
+            RefreshData();
             ExpandServiceNode();
         }
 
-        public async Task RefreshData()
+        public void RefreshData()
         {
-            if (ServiceControlRoot == null) await TryReconnectToServiceControl();
+            if (ServiceControlRoot == null) TryReconnectToServiceControl();
             if (ServiceControlRoot == null) return; //TODO: DO we need to check twice? Root node should have been added at this stage.
 
-            var endpoints = await serviceControl.GetEndpoints();
+            var endpoints = serviceControl.GetEndpoints();
             if (endpoints == null) return;
 
             foreach (var endpoint in endpoints.OrderBy(e => e.Name))
@@ -182,9 +181,9 @@
             //TODO: Remove non-existing endpoints efficiently
         }
 
-        async Task TryReconnectToServiceControl()
+        void TryReconnectToServiceControl()
         {
-            await ConnectToService(GetConfiguredAddress());
+            ConnectToService(GetConfiguredAddress());
         }
 
         public void Navigate(string navigateUri)
