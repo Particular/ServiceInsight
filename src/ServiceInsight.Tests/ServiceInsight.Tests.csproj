@@ -43,15 +43,6 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="ExceptionHandler">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="ExceptionHandler.IssueReporter.BitBucket">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.IssueReporter.BitBucket.dll</HintPath>
-    </Reference>
-    <Reference Include="ExceptionHandler.Wpf">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Reactive.Testing">
       <HintPath>..\packages\Rx-Testing.2.2.4\lib\net45\Microsoft.Reactive.Testing.dll</HintPath>
@@ -73,6 +64,12 @@
     </Reference>
     <Reference Include="ReactiveUI.Testing">
       <HintPath>..\packages\reactiveui-testing.5.5.1\lib\net45\ReactiveUI.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog">
+      <HintPath>..\packages\Serilog.1.3.24\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx">
+      <HintPath>..\packages\Serilog.1.3.24\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="Shouldly, Version=2.1.1.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -143,6 +140,7 @@
     <Compile Include="ShellViewModelTests.cs" />
     <Compile Include="StreamExtensionMethodTests.cs" />
     <Compile Include="StringDecoderTests.cs" />
+    <Compile Include="ViewModels\LogWindowViewModelTests.cs" />
     <Compile Include="XmlDecoderTests.cs" />
     <Compile Include="XmlParserTests.cs" />
     <Compile Include="XmlViewerViewModelTests.cs" />
