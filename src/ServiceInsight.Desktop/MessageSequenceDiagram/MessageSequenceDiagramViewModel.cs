@@ -165,7 +165,7 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
 
             // add connections
-            AddEventConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder" });
+            AddMessageConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder" });
             AddEventConnection(activitySales1, activityeCommerce, new { Name = "OrderPlaced" });
 
             // Layout it

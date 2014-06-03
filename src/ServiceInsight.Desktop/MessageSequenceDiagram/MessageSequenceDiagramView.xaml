@@ -26,7 +26,7 @@
                     <SolidColorBrush x:Key="RoleBackground" Color="#FFFFFF" />
                     <SolidColorBrush x:Key="RoleForeground" Color="#666666" />
                     <SolidColorBrush x:Key="RoleBottomLine" Color="#CCCCCC" />
-                    <SolidColorBrush x:Key="ActivityColor" Color="#333333" />
+                    <SolidColorBrush x:Key="ActivityColor" Color="#999999" />
 
                     <Style x:Key="ConnectionPointRelocatorStyle" TargetType="ms:ConnectionRelocatorThumb">
                         <Setter Property="Width" Value="18" />
@@ -62,16 +62,18 @@
                                     <TransformGroup>
                                         <TranslateTransform>
                                             <TranslateTransform.X>
-                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                </MultiBinding>
+                                                <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>-->
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
-                                                <MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                </MultiBinding>
+                                                <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>-->
                                             </TranslateTransform.Y>
                                         </TranslateTransform>
                                     </TransformGroup>
@@ -218,10 +220,23 @@
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Border x:Name="RoleRectangle" 
-                                            Background="{StaticResource RoleBackground}" 
-                                            BorderBrush="{StaticResource RoleBottomLine}"
-                                            BorderThickness="1" />
+                                    <Border x:Name="SequenceStartNodeBorder"
+                                            Background="Black" 
+                                            BorderBrush="Black"
+                                            Width="14"
+                                            Height="15"
+                                            BorderThickness="1">
+                                        <ContentControl x:Name="StartIcon"
+                                                        Margin="4,4">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <Canvas>
+                                                        <Path Width="5" Height="5" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 30.0833,22.1667L 50.6665,37.6043L 50.6665,38.7918L 30.0833,53.8333L 30.0833,22.1667 Z "/>
+                                                    </Canvas>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
+                                    </Border>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -268,7 +283,7 @@
                     </Style>
 
                     <DataTemplate x:Key="MessageEndArrowTemplate">
-                        <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Vertical">
                             <Path Data="M0,5 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" Margin="0" />
                             <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
                                 <ms:Arrowhead.RenderTransform>
