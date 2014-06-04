@@ -101,18 +101,21 @@
             {
                 Data = serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
 
-                if (Data == SagaData.Empty)
+                if (Data != null)
                 {
-                    ShowSagaNotFoundWarning = true;
-                    Data = null;
-                }
-                else if (Data != null && Data.Changes != null)
-                {
-                    ProcessDataValues(Data.Changes);
-                }
-                else
-                {
-                    Data = null;
+                    if (Data.SagaId == Guid.Empty)
+                    {
+                        ShowSagaNotFoundWarning = true;
+                        Data = null;
+                    }
+                    else if (Data.Changes != null)
+                    {
+                        ProcessDataValues(Data.Changes);
+                    }
+                    else
+                    {
+                        Data = null;
+                    }
                 }
             }
 

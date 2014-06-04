@@ -7,8 +7,6 @@
 
     public class SagaData : PropertyChangedBase
     {
-        public static SagaData Empty = new SagaData();
-
         public List<SagaUpdate> Changes { get; set; }
 
         public Guid SagaId { get; set; }
