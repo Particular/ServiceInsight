@@ -5,9 +5,10 @@
     using Caliburn.Micro;
     using Core.MessageDecoders;
     using Events;
+    using Framework.Rx;
     using Models;
 
-    public abstract class HeaderInfoViewModelBase : Screen, IHeaderInfoViewModel
+    public abstract class HeaderInfoViewModelBase : RxScreen, IHeaderInfoViewModel
     {
         IContentDecoder<IList<HeaderInfo>> decoder;
 

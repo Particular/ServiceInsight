@@ -7,6 +7,15 @@
 
     public static class ViewModelExtensions
     {
+        // ReSharper disable UnusedParameter.Global
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, IObservable<bool> canExecuteObservable, Action executAction) where TViewModel : class
+        // ReSharper restore UnusedParameter.Global
+        {
+            var command = new ReactiveCommand(canExecuteObservable);
+            command.Subscribe(_ => executAction());
+            return command;
+        }
+
         public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Expression<Func<TViewModel, bool>> canExecuteSelector, Action executAction) where TViewModel : class
         {
             var command = new ReactiveCommand(viewModel.ObservableForProperty(canExecuteSelector, b => b));

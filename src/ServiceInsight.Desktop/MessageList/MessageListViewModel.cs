@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using System.Reactive.Linq;
+    using System.Windows.Input;
     using Caliburn.Micro;
-    using Core.UI;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -17,11 +17,9 @@
     using Search;
     using ServiceControl;
     using Shell;
-    using Shell.Menu;
     using IScreen = Caliburn.Micro.IScreen;
 
     public class MessageListViewModel : RxConductor<IScreen>.Collection.AllActive,
-        IHaveContextMenu,
         ITableViewModel<StoredMessage>,
         IWorkTracker,
         IHandle<SelectedExplorerItemChanged>,
@@ -35,9 +33,6 @@
         IEventAggregator eventAggregator;
         DefaultServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
-        IMenuItem retryMessageMenu;
-        IMenuItem copyMessageIdMenu;
-        IMenuItem copyHeadersMenu;
         bool lockUpdate;
         string lastSortColumn;
         bool lastSortOrderAscending;
@@ -58,31 +53,15 @@
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
 
-            retryMessageMenu = new MenuItem("Retry Message", new RelayCommand(RetryMessage, CanRetryMessage), Properties.Resources.MessageReturn);
-            copyMessageIdMenu = new MenuItem("Copy Message URI", new RelayCommand(CopyMessageId, CanCopyMessageId));
-            copyHeadersMenu = new MenuItem("Copy Headers", new RelayCommand(CopyHeaders, CanCopyHeaders));
+            RetryMessageCommand = this.CreateCommand(vm => vm.CanRetryMessage, RetryMessage);
+            CopyMessageIdCommand = this.CreateCommand(vm => vm.CanCopyMessageId, CopyMessageId);
+            CopyHeadersCommand = this.CreateCommand(generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()), CopyHeaders);
 
             Rows = new BindableCollection<StoredMessage>();
-            ContextMenuItems = new BindableCollection<IMenuItem>
-            {
-                retryMessageMenu,
-                copyHeadersMenu,
-                copyMessageIdMenu
-            };
 
             this.WhenAnyValue(vm => vm.FocusedRow)
                 .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
                 .Subscribe(_ => DoFocusedRowChanged());
-        }
-
-        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
-
-        public void OnContextMenuOpening()
-        {
-            retryMessageMenu.IsVisible = CanRetryMessage();
-            copyMessageIdMenu.IsEnabled = CanCopyMessageId();
-            copyHeadersMenu.IsEnabled = CanCopyHeaders();
-            NotifyPropertiesChanged();
         }
 
         public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
@@ -98,6 +77,12 @@
         public bool ShouldLoadMessageBody { get; set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
+
+        public ICommand RetryMessageCommand { get; private set; }
+
+        public ICommand CopyMessageIdCommand { get; private set; }
+
+        public ICommand CopyHeadersCommand { get; private set; }
 
         public void RetryMessage()
         {
@@ -118,21 +103,19 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public bool CanRetryMessage()
+        public bool CanRetryMessage
         {
-            return FocusedRow != null &&
-                   (FocusedRow.Status == MessageStatus.Failed || FocusedRow.Status == MessageStatus.RepeatedFailure)
-                   && FocusedRow.Status != MessageStatus.ArchivedFailure;
+            get
+            {
+                return FocusedRow != null &&
+                       (FocusedRow.Status == MessageStatus.Failed || FocusedRow.Status == MessageStatus.RepeatedFailure)
+                       && FocusedRow.Status != MessageStatus.ArchivedFailure;
+            }
         }
 
-        public bool CanCopyHeaders()
+        public bool CanCopyMessageId
         {
-            return !generalHeaderDisplay.HeaderContent.IsEmpty();
-        }
-
-        public bool CanCopyMessageId()
-        {
-            return FocusedRow != null;
+            get { return FocusedRow != null; }
         }
 
         public void Focus(StoredMessage msg)
