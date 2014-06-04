@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+
     public class SearchMessageEventArgs : EventArgs
     {
         public SearchMessageEventArgs(MessageNode message)
         {
-            this.MessageNode = message;
+            MessageNode = message;
         }
 
         public MessageNode MessageNode { get; private set; }

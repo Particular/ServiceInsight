@@ -1,41 +1,37 @@
-﻿using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
-using DevExpress.Data;
-using DevExpress.Xpf.Core;
-using DevExpress.Xpf.Core.Native;
-using DevExpress.Xpf.Grid;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
-    public interface IMessageListView
-    {
-    }
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using DevExpress.Data;
+    using DevExpress.Xpf.Core;
+    using DevExpress.Xpf.Core.Native;
+    using DevExpress.Xpf.Grid;
+    using ExtensionMethods;
 
-    public partial class MessageListView : IMessageListView
+    public partial class MessageListView
     {
-        private static class UnboundColumns
+        static class UnboundColumns
         {
             public const string IsFaulted = "IsFaulted";
         }
 
-        private readonly PropertyInfo _sortUpProperty;
-        private readonly PropertyInfo _sortDownProperty;
+        PropertyInfo sortUpProperty;
+        PropertyInfo sortDownProperty;
 
         public MessageListView()
         {
             InitializeComponent();
-            _sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
-            _sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        private IMessageListViewModel Model
+        MessageListViewModel Model
         {
-            get { return (IMessageListViewModel)DataContext; }
+            get { return (MessageListViewModel)DataContext; }
         }
 
-        private void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
+        void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
             var msg = Model.Rows[e.ListSourceRowIndex];
 
@@ -45,17 +41,17 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        private void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
+        void OnBeforeLayoutRefresh(object sender, CancelRoutedEventArgs e)
         {
             e.Cancel = grid.ShowLoadingPanel;
         }
 
-        private void SortData(ColumnBase column, ColumnSortOrder order)
+        void SortData(ColumnBase column, ColumnSortOrder order)
         {
             Model.RefreshMessages(column.Tag as string, order == ColumnSortOrder.Ascending);
         }
 
-        private void OnGridControlClicked(object sender, MouseButtonEventArgs e)
+        void OnGridControlClicked(object sender, MouseButtonEventArgs e)
         {
             var columnHeader = LayoutHelper.FindLayoutOrVisualParentObject((DependencyObject)e.OriginalSource, typeof(GridColumnHeader)) as GridColumnHeader;
             if (columnHeader == null || Model == null || Model.WorkInProgress) return;
@@ -65,8 +61,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
             ClearSortExcept(columnHeader);
 
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(columnHeader, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(columnHeader, null);
+            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(columnHeader, null);
+            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(columnHeader, null);
             ColumnSortOrder sort;
 
             if (sortUpControl.Visibility != Visibility.Visible)
@@ -85,16 +81,16 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             SortData(clickedColumn, sort);
         }
 
-        private void HideIndicator(BaseGridColumnHeader header)
+        void HideIndicator(BaseGridColumnHeader header)
         {
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)_sortUpProperty.GetValue(header, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)_sortDownProperty.GetValue(header, null);
+            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(header, null);
+            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(header, null);
 
             sortUpControl.Visibility = Visibility.Hidden;
             sortDownControl.Visibility = Visibility.Hidden;
         }
 
-        private void ClearSortExcept(GridColumnHeader clickedHeader)
+        void ClearSortExcept(GridColumnHeader clickedHeader)
         {
             var headers = grid.FindVisualChildren<GridColumnHeader>();
             foreach (var header in headers)
@@ -106,7 +102,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             }
         }
 
-        private DataController Controller
+        DataController Controller
         {
             get { return grid.DataController; }
         }

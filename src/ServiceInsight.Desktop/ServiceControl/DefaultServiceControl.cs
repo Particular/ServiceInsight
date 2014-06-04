@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using log4net;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Settings;
-using RestSharp;
-using RestSharp.Contrib;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Desktop.ServiceControl
+﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
 {
-    public class DefaultServiceControl : IServiceControl
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Anotar.Serilog;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using Core.Settings;
+    using Events;
+    using Models;
+    using RestSharp;
+    using RestSharp.Contrib;
+    using Saga;
+    using Settings;
+
+    public class DefaultServiceControl
     {
         public class ServiceControlHeaders
         {
@@ -24,38 +23,36 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             public const string TotalCount = "Total-Count";
         }
 
-        private readonly IServiceControlConnectionProvider _connection;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly ProfilerSettings _settings;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(IServiceControl));
+        ServiceControlConnectionProvider connection;
+        IEventAggregator eventAggregator;
+        ProfilerSettings settings;
 
         public DefaultServiceControl(
-            IServiceControlConnectionProvider connection, 
+            ServiceControlConnectionProvider connection,
             IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
-            _connection = connection;
-            _eventAggregator = eventAggregator;
-            _settings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.connection = connection;
+            this.eventAggregator = eventAggregator;
+            settings = settingsProvider.GetSettings<ProfilerSettings>();
         }
 
-
-        public async Task<PagedResult<StoredMessage>> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl());
-            
+
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = await GetPagedResult<StoredMessage>(request);
+            var result = GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
             var request = new RestRequest(CreateBaseUrl(endpoint.Name));
 
@@ -64,61 +61,53 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             AppendPaging(request, pageIndex);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = await GetPagedResult<StoredMessage>(request);
+            var result = GetPagedResult<StoredMessage>(request);
             result.CurrentPage = pageIndex;
 
             return result;
         }
 
-        public async Task<List<StoredMessage>> GetConversationById(string conversationId)
+        public List<StoredMessage> GetConversationById(string conversationId)
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = await GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+            var messages = GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             return messages;
         }
 
-        public async Task<List<Endpoint>> GetEndpoints()
+        public List<Endpoint> GetEndpoints()
         {
             var request = new RestRequest("endpoints");
-            var messages = await GetModelAsync<List<Endpoint>>(request);
+            var messages = GetModelAsync<List<Endpoint>>(request);
 
             return messages ?? new List<Endpoint>();
         }
 
-        public async Task<bool> IsAlive()
+        public bool IsAlive()
         {
-            return await GetVersion() != null;
+            return GetVersion() != null;
         }
 
-        public async Task<string> GetVersion()
+        public string GetVersion()
         {
             var request = new RestRequest();
 
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<string>();
-            CreateClient()
-                .ExecuteAsync(request,
-                              response =>
-                              ProcessResponse(
-                                  restResponse =>
-                                  restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(),
-                                  response, completionSource));
-
-            return await completionSource.Task;
+            var response = CreateClient().Execute(request);
+            return ProcessResponse(restResponse => restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(), response);
         }
 
-        public async Task<bool> RetryMessage(string messageId)
+        public bool RetryMessage(string messageId)
         {
             var url = string.Format("errors/{0}/retry", messageId);
             var request = new RestRequest(url, Method.POST);
-            var response = await ExecuteAsync(request, HasSucceeded);
+            var response = ExecuteAsync(request, HasSucceeded);
 
             return response;
         }
 
-        public async Task<string> GetBody(string bodyUrl)
+        public string GetBody(string bodyUrl)
         {
             IRestClient client;
 
@@ -131,49 +120,49 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                 client = CreateClient();
             }
 
-            return await ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
+            return ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
         }
 
         public Uri GetUri(StoredMessage message)
         {
-            var connectionUri = new Uri(_connection.Url);
+            var connectionUri = new Uri(connection.Url);
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        private void AppendSystemMessages(IRestRequest request)
+        void AppendSystemMessages(IRestRequest request)
         {
-            request.AddParameter("include_system_messages", _settings.DisplaySystemMessages);
+            request.AddParameter("include_system_messages", settings.DisplaySystemMessages);
         }
 
-        private void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
+        void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
-            if(orderBy == null) return;
+            if (orderBy == null) return;
             request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
             request.AddParameter("direction", GetSortDirection(ascending), ParameterType.GetOrPost);
         }
 
-        private void AppendPaging(IRestRequest request, int pageIndex)
+        void AppendPaging(IRestRequest request, int pageIndex)
         {
             request.AddParameter("page", pageIndex, ParameterType.GetOrPost);
         }
 
-        private void AppendSearchQuery(IRestRequest request, string searchQuery)
+        void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
-            if(searchQuery == null) return;
+            if (searchQuery == null) return;
             request.Resource += string.Format("search/{0}", Encode(searchQuery));
         }
 
-        private string GetSortDirection(bool ascending)
+        string GetSortDirection(bool ascending)
         {
             return ascending ? "asc" : "desc";
         }
 
-        private IRestClient CreateClient()
+        IRestClient CreateClient()
         {
-            return CreateClient(_connection.Url);
+            return CreateClient(connection.Url);
         }
 
-        private IRestClient CreateClient(string url)
+        IRestClient CreateClient(string url)
         {
             var client = new RestClient(url);
             var deserializer = new JsonMessageDeserializer();
@@ -186,37 +175,31 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return client;
         }
 
-        private static string CreateBaseUrl(string endpointName = null)
+        static string CreateBaseUrl(string endpointName = null)
         {
             return endpointName != null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
         }
 
-        private Task<PagedResult<T>> GetPagedResult<T>(IRestRequest request) where T : class, new()
+        PagedResult<T> GetPagedResult<T>(IRestRequest request) where T : class, new()
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<PagedResult<T>>();
-            var client = CreateClient();
+            var response = CreateClient().Execute<List<T>>(request);
 
-            client.ExecuteAsync<List<T>>(request, response =>
+            if (HasSucceeded(response))
             {
-                if (HasSucceeded(response))
+                LogResponse(response);
+                return new PagedResult<T>
                 {
-                    LogResponse(response);
-
-                    completionSource.SetResult(new PagedResult<T>
-                    {
-                        Result = response.Data,
-                        TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-                    });
-                }
-                else
-                {
-                    LogError(response);
-                    completionSource.SetResult(new PagedResult<T>());
-                }
-            });
-            return completionSource.Task;
+                    Result = response.Data,
+                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
+                };
+            }
+            else
+            {
+                LogError(response);
+                return new PagedResult<T>();
+            }
         }
 
         public bool HasSagaChanged(string sagaId)
@@ -224,17 +207,17 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             return HasChanged(CreateSagaRequest(sagaId));
         }
 
-        public async Task<SagaData> GetSagaById(string sagaId)
+        public SagaData GetSagaById(string sagaId)
         {
-            return await GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+            return GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
         }
 
-        private static RestRequest CreateSagaRequest(string sagaId)
+        static RestRequest CreateSagaRequest(string sagaId)
         {
             return new RestRequest(string.Format("sagas/{0}", sagaId));
         }
 
-        private bool HasChanged(IRestRequest request)
+        bool HasChanged(IRestRequest request)
         {
             if (System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource))
             {
@@ -255,56 +238,38 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
                 }
             }
 
-            return true; 
+            return true;
         }
 
-        private Task<T> GetModelAsync<T>(IRestRequest request)
+        T GetModelAsync<T>(IRestRequest request)
             where T : class, new()
         {
             return ExecuteAsync<T>(request, response => { CacheResponse(response); return response.Data; });
         }
 
-        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
         {
             return ExecuteAsync(CreateClient(), request, selector);
         }
 
-        private Task<T> ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
+        T ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<T>();
-            
-            client.ExecuteAsync(request, response => ProcessResponse(selector, response, completionSource));
-            
-            return completionSource.Task;
+            var response = client.Execute(request);
+            return ProcessResponse(selector, response);
         }
 
-        private Task<T> ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
+        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
             LogRequest(request);
 
-            var completionSource = new TaskCompletionSource<T>();
-            CreateClient().ExecuteAsync<T>(request, response => ProcessResponse(selector, response, completionSource));
-            return completionSource.Task;
+            var response = CreateClient().Execute<T>(request);
+            return ProcessResponse(selector, response);
         }
 
-        private void ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response, TaskCompletionSource<T> completionSource)
-        {
-            if (HasSucceeded(response))
-            {
-                LogResponse(response);
-                completionSource.SetResult(selector(response));
-            }
-            else
-            {
-                LogError(response);
-                completionSource.SetResult(default(T));
-            }
-        }
-
-        private static void CacheResponse(IRestResponse response)
+        static void CacheResponse(IRestResponse response)
         {
             if (response.Request.Resource != null && response.Headers.Any(h => h.Name == "ETag"))
             {
@@ -312,76 +277,89 @@ namespace NServiceBus.Profiler.Desktop.ServiceControl
             }
         }
 
-        private void ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response, TaskCompletionSource<T> completionSource)
-            where T : class, new()
+        T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)
         {
             if (HasSucceeded(response))
             {
                 LogResponse(response);
-                completionSource.SetResult(selector(response));
+                return selector(response);
             }
             else
             {
                 LogError(response);
-                completionSource.SetResult(null);
+                return default(T);
             }
         }
 
-        private static string Encode(string parameterValue)
+        T ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response)
+        {
+            if (HasSucceeded(response))
+            {
+                LogResponse(response);
+                return selector(response);
+            }
+            else
+            {
+                LogError(response);
+                return default(T);
+            }
+        }
+
+        static string Encode(string parameterValue)
         {
             return HttpUtility.UrlEncode(parameterValue);
         }
 
-        private void LogRequest(IRestRequest request)
+        void LogRequest(IRestRequest request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
-            var url = _connection.Url != null ? _connection.Url.TrimEnd('/') : string.Empty;
+            var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
 
-            _logger.InfoFormat("HTTP {0} {1}/{2}", request.Method, url, resource);
-            
+            LogTo.Information("HTTP {Method} {url:l}/{resource:l}", request.Method, url, resource);
+
             foreach (var parameter in request.Parameters)
             {
-                _logger.DebugFormat("Request Parameter: {0} : {1}", 
-                                                       parameter.Name, 
+                LogTo.Debug("Request Parameter: {Name} : {Value}",
+                                                       parameter.Name,
                                                        parameter.Value);
             }
         }
 
-        private void LogResponse(IRestResponse response)
+        void LogResponse(IRestResponse response)
         {
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            _logger.DebugFormat("HTTP Status {0} ({1}) ({2})", code, (int)code, uri);
+            LogTo.Debug("HTTP Status {code} ({uri})", code, uri);
 
             foreach (var header in response.Headers)
             {
-                _logger.DebugFormat("Response Header: {0} : {1}", 
-                                                     header.Name, 
+                LogTo.Debug("Response Header: {Name} : {Value}",
+                                                     header.Name,
                                                      header.Value);
             }
         }
 
-        private void LogError(IRestResponse response)
+        void LogError(IRestResponse response)
         {
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
-            
+
             RaiseAsyncOperationFailed(errorMessage);
-            _logger.ErrorFormat(errorMessage, exception);
+            LogTo.Error(exception, errorMessage);
         }
 
-        private static bool HasSucceeded(IRestResponse response)
+        static bool HasSucceeded(IRestResponse response)
         {
             return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
-        private void RaiseAsyncOperationFailed(string errorMessage)
+        void RaiseAsyncOperationFailed(string errorMessage)
         {
-            _eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
+            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
         }
 
-        private static IEnumerable<HttpStatusCode> SuccessCodes
+        static IEnumerable<HttpStatusCode> SuccessCodes
         {
             get
             {

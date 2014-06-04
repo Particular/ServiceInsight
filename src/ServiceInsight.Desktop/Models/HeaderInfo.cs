@@ -1,8 +1,8 @@
-﻿namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     public class HeaderInfo
     {
-        private const string Null = "<Null>";
+        const string Null = "<Null>";
         public const string FailedQueueKey = "NServiceBus.FailedQ";
         public const string MessageDateFormat = "yyyy-MM-dd HH:mm:ss:ffffff Z";
 
@@ -14,12 +14,12 @@
             return string.Format("{0}: {1}", GetDisplayKey(), GetDisplayValue());
         }
 
-        private string GetDisplayValue()
+        string GetDisplayValue()
         {
             return Value ?? Null;
         }
 
-        private string GetDisplayKey()
+        string GetDisplayKey()
         {
             if (Key == null)
                 return Null;

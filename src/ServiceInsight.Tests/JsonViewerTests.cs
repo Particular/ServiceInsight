@@ -1,22 +1,23 @@
-﻿using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Caliburn.Micro;
+    using Desktop.MessageViewers.JsonViewer;
+    using Desktop.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class JsonViewerTests
     {
-        private IJsonMessageViewModel ViewModel;
-        private IJsonMessageView View;
+        JsonMessageViewModel ViewModel;
+        IJsonMessageView View;
 
         [SetUp]
         public void TestInitialize()
         {
             View = Substitute.For<IJsonMessageView>();
             ViewModel = new JsonMessageViewModel();
-            ViewModel.Activate();
+            ((IActivate)ViewModel).Activate();
         }
 
         [Test]
@@ -24,7 +25,7 @@ namespace NServiceBus.Profiler.Tests
         {
             const string TestMessage = @"[{""$type"":""NSB.Messages.CRM.RegisterCustomer, NSB.Messages"",""Name"":""Hadi"",""Password"":""123456"",""EmailAddress"":""h.eskandari@gmail.com"",""RegistrationDate"":""2013-01-28T03:24:05.0546437Z""}]";
 
-            ViewModel.AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
 
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 

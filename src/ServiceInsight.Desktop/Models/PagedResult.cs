@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System.Collections.Generic;
+
     public class PagedResult<T>
     {
         public PagedResult()

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class ZoomToCancelScaleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            double zoom = (double)value;
+            var zoom = (double)value;
             return new ScaleTransform(1 / zoom, 1 / zoom);
         }
 

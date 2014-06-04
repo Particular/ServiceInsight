@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IGatewayHeaderViewModel
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using Models;
+
+    public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public GatewayHeaderViewModel(
-            IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder)
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Gateway";
         }

@@ -1,8 +1,8 @@
-﻿using System.Windows.Automation;
-using TestStack.White.UIItems.TreeItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Extensions
+﻿namespace Particular.ServiceInsight.FunctionalTests.Extensions
 {
+    using System.Windows.Automation;
+    using TestStack.White.UIItems.TreeItems;
+
     public static class TreeNodeExtensions
     {
         public static void ExpandNode(this TreeNode node)

@@ -1,47 +1,41 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.Views;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
-    [View(typeof(EndpointExplorerView))]
-    public class EndpointExplorerViewModel : Screen, IEndpointExplorerViewModel
+    using System;
+    using System.Linq;
+    using Caliburn.Micro;
+    using Core;
+    using Core.Settings;
+    using Events;
+    using ExtensionMethods;
+    using ServiceControl;
+    using Settings;
+    using Shell;
+    using Startup;
+
+    public class EndpointExplorerViewModel : Screen,
+        IHandle<RequestSelectingEndpoint>
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly IServiceControl _serviceControl;
-        private readonly INetworkOperations _networkOperations;
-        private readonly IServiceControlConnectionProvider _connectionProvider;
-        private readonly ICommandLineArgParser _commandLineParser;
-        private bool _isFirstActivation = true;
-        private IExplorerView _view;
+        IEventAggregator eventAggregator;
+        ISettingsProvider settingsProvider;
+        DefaultServiceControl serviceControl;
+        NetworkOperations networkOperations;
+        ServiceControlConnectionProvider connectionProvider;
+        CommandLineArgParser commandLineParser;
 
         public EndpointExplorerViewModel(
-            IEventAggregator eventAggregator, 
+            IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider,
-            IServiceControlConnectionProvider connectionProvider,
-            ICommandLineArgParser commandLineParser,
-            IServiceControl serviceControl,
-            INetworkOperations networkOperations)
+            ServiceControlConnectionProvider connectionProvider,
+            CommandLineArgParser commandLineParser,
+            DefaultServiceControl serviceControl,
+            NetworkOperations networkOperations)
         {
-            _eventAggregator = eventAggregator;
-            _settingsProvider = settingsProvider;
-            _serviceControl = serviceControl;
-            _networkOperations = networkOperations;
-            _connectionProvider = connectionProvider;
-            _commandLineParser = commandLineParser;
+            this.eventAggregator = eventAggregator;
+            this.settingsProvider = settingsProvider;
+            this.serviceControl = serviceControl;
+            this.networkOperations = networkOperations;
+            this.connectionProvider = connectionProvider;
+            this.commandLineParser = commandLineParser;
             Items = new BindableCollection<ExplorerItem>();
         }
 
@@ -49,9 +43,9 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public ServiceControlExplorerItem ServiceControlRoot
         {
-            get 
-            { 
-                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault(); 
+            get
+            {
+                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
             }
         }
 
@@ -69,78 +63,61 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public string ServiceUrl { get; private set; }
 
-        public new IShellViewModel Parent
+        public new ShellViewModel Parent
         {
-            get { return (IShellViewModel)base.Parent; }
+            get { return (ShellViewModel)base.Parent; }
         }
 
-        private bool IsConnected
+        bool IsConnected
         {
             get { return ServiceUrl != null; }
         }
 
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
-            if (_isFirstActivation)
-            {
-                _view.ExpandNode(ServiceControlRoot);
-                _isFirstActivation = false;
-            }
-        }
-
-        public override void AttachView(object view, object context)
-        {
-            base.AttachView(view, context);
-            _view = view as IExplorerView;
-        }
-
-        protected async override void OnActivate()
+        protected override void OnActivate()
         {
             base.OnActivate();
 
             if (IsConnected) return;
 
             var configuredConnection = GetConfiguredAddress();
-            var existingConnection = _connectionProvider.Url;
-            var available = await ServiceAvailable(configuredConnection);
+            var existingConnection = connectionProvider.Url;
+            var available = ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
-            _eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
+            eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
-            await ConnectToService(connectTo);
-            
+            ConnectToService(connectTo);
+
             SelectDefaultEndpoint();
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
-        private string GetConfiguredAddress()
+        string GetConfiguredAddress()
         {
-            if (_commandLineParser.ParsedOptions.EndpointUri == null)
+            if (commandLineParser.ParsedOptions.EndpointUri == null)
             {
-                var appSettings = _settingsProvider.GetSettings<ProfilerSettings>();
+                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
                 if (appSettings != null && appSettings.LastUsedServiceControl != null)
                     return appSettings.LastUsedServiceControl;
 
-                var managementConfig = _settingsProvider.GetSettings<ServiceControlSettings>();
+                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);
             }
 
-            return _commandLineParser.ParsedOptions.EndpointUri.ToString();
+            return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        private async Task<bool> ServiceAvailable(string serviceUrl)
+        bool ServiceAvailable(string serviceUrl)
         {
-            _connectionProvider.ConnectTo(serviceUrl);
+            connectionProvider.ConnectTo(serviceUrl);
 
-            var connected = await _serviceControl.IsAlive();
+            var connected = serviceControl.IsAlive();
 
             return connected;
         }
 
-        private void AddServiceNode()
+        void AddServiceNode()
         {
             Items.Clear();
             Items.Add(new ServiceControlExplorerItem(ServiceUrl));
@@ -148,18 +125,18 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
 
         public void OnSelectedNodeChanged()
         {
-            _eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        private void SelectDefaultEndpoint()
+        void SelectDefaultEndpoint()
         {
             if (ServiceControlRoot == null) return;
 
-            if (!_commandLineParser.ParsedOptions.EndpointName.IsEmpty())
+            if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
                 foreach (var endpoint in ServiceControlRoot.Children)
                 {
-                    if (endpoint.Name.Equals(_commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                    if (endpoint.Name.Equals(commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                     {
                         //SelectedNode = endpoint;
                         SelectedNode = ServiceControlRoot;
@@ -173,24 +150,24 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             }
         }
 
-        public async Task ConnectToService(string url)
+        public void ConnectToService(string url)
         {
-            if(url == null)
+            if (url == null)
                 return;
 
-            _connectionProvider.ConnectTo(url);
+            connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
-            await RefreshData();
+            RefreshData();
             ExpandServiceNode();
         }
 
-        public async Task RefreshData()
+        public void RefreshData()
         {
-            if (ServiceControlRoot == null) await TryReconnectToServiceControl();
+            if (ServiceControlRoot == null) TryReconnectToServiceControl();
             if (ServiceControlRoot == null) return; //TODO: DO we need to check twice? Root node should have been added at this stage.
 
-            var endpoints = await _serviceControl.GetEndpoints();
+            var endpoints = serviceControl.GetEndpoints();
             if (endpoints == null) return;
 
             foreach (var endpoint in endpoints.OrderBy(e => e.Name))
@@ -204,19 +181,19 @@ namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
             //TODO: Remove non-existing endpoints efficiently
         }
 
-        private async Task TryReconnectToServiceControl()
+        void TryReconnectToServiceControl()
         {
-            await ConnectToService(GetConfiguredAddress());
+            ConnectToService(GetConfiguredAddress());
         }
 
         public void Navigate(string navigateUri)
         {
-            _networkOperations.Browse(navigateUri);
+            networkOperations.Browse(navigateUri);
         }
 
-        private void ExpandServiceNode()
+        void ExpandServiceNode()
         {
-            _view.ExpandNode(ServiceControlRoot);
+            ServiceControlRoot.IsExpanded = true;
         }
 
         public void Handle(RequestSelectingEndpoint message)

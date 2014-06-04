@@ -1,34 +1,33 @@
-﻿using System.Threading;
-using System.Windows;
-using NServiceBus.Profiler.FunctionalTests.Extensions;
-using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.TreeItems;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using System.Threading;
+    using System.Windows;
+    using Shouldly;
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.WindowItems;
+
     public class LayoutManager : ProfilerElement
     {
-        private readonly GroupBox _barManager;
-        private readonly IUIItem[] _autoHideGroups;
+        GroupBox barManager;
+        IUIItem[] autoHideGroups;
 
         public LayoutManager(Window mainWindow) : base(mainWindow)
         {
-            _barManager = mainWindow.Get<GroupBox>("BarManager");
-            _autoHideGroups = _barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
+            barManager = mainWindow.Get<GroupBox>("BarManager");
+            autoHideGroups = barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
         }
 
         public void DockAutoHideGroups()
         {
-            foreach (var item in _autoHideGroups)
+            foreach (var item in autoHideGroups)
             {
                 Dock(item);
                 Thread.Sleep(1000);
             }
         }
 
-        private void Dock(IUIItem item)
+        void Dock(IUIItem item)
         {
             //NOTE: Workaround. Can not find dockmanager's context menu
             item.RightClick();
@@ -36,25 +35,13 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
             Mouse.Click();
         }
 
-        public void ActivateQueueExplorer()
-        {
-            var queueExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("QueueExplorer"));
-            var computerNode = (TreeNode)queueExplorer.Get(SearchCriteria.ByText("hadi-pc"));
-            
-            computerNode.Focus();
-            computerNode.CollapseNode();
-            computerNode.ExpandNode();
-        }
-
         public void ActivateEndpointExplorer()
         {
-            var endpoint = ServiceControlStub.ServiceControl.StubServiceUrl;
-            var queueExplorer = _barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("QueueExplorer"));
-            var computerNode = (TreeNode)queueExplorer.Get(SearchCriteria.ByText(endpoint));
+            var endpointExplorer = barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
 
-            computerNode.Focus();
-            computerNode.CollapseNode();
-            computerNode.ExpandNode();
+            endpointExplorer.ShouldNotBe(null);
+
+            Dock(endpointExplorer);
         }
     }
 }

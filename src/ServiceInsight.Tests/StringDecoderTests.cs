@@ -1,15 +1,15 @@
-﻿using System.Text;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Text;
+    using Desktop.Core.MessageDecoders;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class StringDecoderTests
     {
-        private byte[] stringContent;
-        private IContentDecoder decoder;
+        byte[] stringContent;
+        IContentDecoder decoder;
 
         [SetUp]
         public void TestInitialize()
@@ -19,13 +19,13 @@ namespace NServiceBus.Profiler.Tests
         }
 
         [Test]
-        public void should_be_able_to_decode_conent_to_string()
+        public void should_be_able_to_decode_content_to_string()
         {
             decoder.Decode(stringContent).IsParsed.ShouldBe(true);
         }
 
         [Test]
-        public void should_decode_conent_to_string()
+        public void should_decode_content_to_string()
         {
             decoder.Decode(stringContent).Value.ShouldBe("This is a string content");
         }

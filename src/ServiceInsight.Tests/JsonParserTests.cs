@@ -1,13 +1,27 @@
-﻿using System.Linq;
-using NServiceBus.Profiler.Desktop.CodeParser;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Desktop.CodeParser;
+    using NUnit.Framework;
+    using System.Linq;
+    using Shouldly;
+
     [TestFixture]
     public class JsonParserTests
     {
+        [Test]
+        public void should_parse_values_from_json()
+        {
+            const string TestMessage = "[\n  \"shiny\",\n  \"day\",\n  \"need\"\n]";
+
+            var lexemes = new CodeLexem(TestMessage).Parse(CodeLanguage.Json);
+            var values = lexemes.Where(lx => lx.Type == LexemType.Value).ToList();
+
+            values.Count.ShouldBe(3);
+            values[0].Text.ShouldBe("shiny");
+            values[1].Text.ShouldBe("day");
+            values[2].Text.ShouldBe("need");
+        }
+
         [Test]
         public void should_parse_properties_objects_and_symbols()
         {

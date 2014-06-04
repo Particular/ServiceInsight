@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.FunctionalTests.Parts;
-
-namespace NServiceBus.Profiler.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests
 {
+    using Parts;
+
     public class ProfilerTestBase : TestBase
     {
         public ShellScreen Shell { get; set; }

@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IGeneralHeaderViewModel
-    {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using MessageFlow;
+    using Models;
 
-        private readonly IContentDecoder<IList<HeaderInfo>> _decoder;
+    public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
+    {
+        IContentDecoder<IList<HeaderInfo>> decoder;
 
         public GeneralHeaderViewModel(
-            IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager)
-            : base(eventAggregator, decoder, queueManager)
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder)
+            : base(eventAggregator, decoder)
         {
-            _decoder = decoder;
+            this.decoder = decoder;
             DisplayName = "General";
         }
 
@@ -49,7 +47,7 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
 
         protected override IList<HeaderInfo> DecodeHeader(MessageBody message)
         {
-            var headerDecoder = new MessageHeaderDecoder(_decoder, message);
+            var headerDecoder = new MessageHeaderDecoder(decoder, message);
             HeaderContent = headerDecoder.RawHeader;
 
             return headerDecoder.DecodedHeaders;
@@ -77,6 +75,5 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
             MessageId = null;
             HeaderContent = null;
         }
-
     }
 }

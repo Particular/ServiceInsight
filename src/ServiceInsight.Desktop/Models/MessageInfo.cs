@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Linq;
+    using Caliburn.Micro;
+
     [Serializable]
     public class MessageInfo : PropertyChangedBase
     {

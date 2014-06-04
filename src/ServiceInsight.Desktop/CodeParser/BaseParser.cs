@@ -1,24 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class BaseParser
     {
-        protected readonly char[] SpaceChars = new[] {' ', '\t'};
-        protected readonly string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-
-        protected char previousSimbol;
+        protected char[] SpaceChars = { ' ', '\t' };
+        protected string ByteOrderMark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         protected string CutString(ref SourcePart text, int count)
         {
             if (count == 0)
                 return string.Empty;
-            
-            previousSimbol = text[count - 1];
+
             var result = text.Substring(0, count);
             text = text.Substring(count);
             return result;
@@ -38,15 +35,12 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             }
         }
 
-        protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex)
+        protected void TryExtract(ref SourcePart text, string lex)
         {
             if (text.StartsWith(lex))
             {
                 CutString(ref text, lex.Length);
-                return true;
             }
-
-            return false;
         }
 
         protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
@@ -70,10 +64,10 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
                     index = text.IndexOf(lex, index + 1);
                 }
             }
-            
+
             if (index < 0)
                 return;
-            
+
             LineBreaks(res, ref text, index + lex.Length, type);
         }
 
@@ -113,15 +107,23 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
 
         protected static Run CreateRun(string text, Color color)
         {
+            return CreateRun(text, new SolidColorBrush(color));
+        }
+
+        protected static Run CreateRun(string text, Brush brush)
+        {
             return new Run
             {
                 Text = text,
-                Foreground = new SolidColorBrush(color)
+                Foreground = brush
             };
         }
 
-        public virtual Inline ToInline(CodeLexem codeLexem)
+        public virtual Inline ToInline(CodeLexem codeLexem, Brush brush = null)
         {
+            if (brush != null)
+                return CreateRun(codeLexem.Text, brush);
+
             return new Run(codeLexem.Text);
         }
     }

@@ -1,20 +1,24 @@
-﻿using System.ComponentModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Core.Settings;
+    using Settings;
+
     public class OptionsViewModel : Screen
     {
-        private readonly ISettingsProvider _settingsProvider;
-
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {
-            _settingsProvider = settingsProvider;
+            this.settingsProvider = settingsProvider;
 
             DisplayName = "Options";
         }
+
+        public ProfilerSettings Application { get; set; }
+
+        public ReportingSettings UsageReporting { get; set; }
+
+        public bool IsModified { get; set; }
 
         protected override void OnActivate()
         {
@@ -23,42 +27,33 @@ namespace NServiceBus.Profiler.Desktop.Options
             IsModified = false;
         }
 
-        private void LoadSettings()
+        void LoadSettings()
         {
-            Application = _settingsProvider.GetSettings<ProfilerSettings>();
-            UsageReporting = _settingsProvider.GetSettings<ReportingSettings>();
+            Application = settingsProvider.GetSettings<ProfilerSettings>();
+            UsageReporting = settingsProvider.GetSettings<ReportingSettings>();
+
+            var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
+            Application.DefaultLastUsedServiceControl = string.Format("http://localhost:{0}/api", managementConfig.Port);
+
             Application.PropertyChanged += OnSettingChanged;
         }
 
-        private void OnSettingChanged(object sender, PropertyChangedEventArgs e)
+        void OnSettingChanged(object sender, PropertyChangedEventArgs e)
         {
             IsModified = true;
         }
 
-        public ProfilerSettings Application
-        {
-            get; set;
-        }
-
-        public ReportingSettings UsageReporting
-        {
-            get; set;
-        }
-
-        public bool IsModified
-        {
-            get; set;
-        }
-
         public void Save()
         {
-            _settingsProvider.SaveSettings(Application);
-            _settingsProvider.SaveSettings(UsageReporting);
+            settingsProvider.SaveSettings(Application);
+            settingsProvider.SaveSettings(UsageReporting);
         }
 
-        public void Close()
+        public void Exit()
         {
             TryClose(false);
         }
+
+        ISettingsProvider settingsProvider;
     }
 }

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Diagnostics;
-using Autofac;
-using Castle.Core.Logging;
-using NServiceBus.Profiler.Desktop.Modules;
-using NServiceBus.Profiler.FunctionalTests.Infrastructure;
-using NServiceBus.Profiler.FunctionalTests.Parts;
-using NServiceBus.Profiler.FunctionalTests.ServiceControlStub;
-using NUnit.Framework;
-using TestStack.White;
-using TestStack.White.Configuration;
-using TestStack.White.InputDevices;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests
 {
+    using System;
+    using Autofac;
+    using Castle.Core.Logging;
+    using Desktop.Framework.Modules;
+    using Infrastructure;
+    using NUnit.Framework;
+    using Parts;
+    using ServiceControlStub;
+    using TestStack.White;
+    using TestStack.White.Configuration;
+    using TestStack.White.InputDevices;
+    using TestStack.White.UIItems.WindowItems;
+
     [TestFixture]
     public abstract class TestBase
     {
@@ -23,12 +22,16 @@ namespace NServiceBus.Profiler.FunctionalTests
         protected ProfilerConfiguration Configuration;
         protected IContainer Container;
         protected Waiter Wait;
-        protected NameGenerator NameGenerator;
+
+        //protected NameGenerator NameGenerator;
         protected ServiceControl ServiceControlStub;
+
         protected ILogger Logger;
 
         public ICoreConfiguration CoreConfiguration { get; set; }
+
         public IMouse Mouse { get; set; }
+
         public IKeyboard Keyboard { get; set; }
 
         [TestFixtureSetUp]
@@ -36,9 +39,9 @@ namespace NServiceBus.Profiler.FunctionalTests
         {
             try
             {
-                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof (TestBase));
+                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(TestBase));
                 Wait = new Waiter();
-                NameGenerator = new NameGenerator();
+                //NameGenerator = new NameGenerator();
                 ServiceControlStub = ServiceControl.Start();
                 Configuration = new ProfilerConfiguration();
                 Application = Configuration.LaunchApplication();
@@ -59,7 +62,7 @@ namespace NServiceBus.Profiler.FunctionalTests
         {
         }
 
-        private IContainer CreateContainer()
+        IContainer CreateContainer()
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(MainWindow);
@@ -96,17 +99,17 @@ namespace NServiceBus.Profiler.FunctionalTests
             TryCloseApplication();
         }
 
-        private void TryCloseApplication()
+        void TryCloseApplication()
         {
             try
             {
                 if (IsApplicationRunning())
                 {
                     Application.ApplicationSession.Save();
-//                    if (!Debugger.IsAttached)
-//                    {
-//                        Application.Kill();
-//                    }
+                    //                    if (!Debugger.IsAttached)
+                    //                    {
+                    //                        Application.Kill();
+                    //                    }
                 }
             }
             catch (Exception ex)
@@ -115,7 +118,7 @@ namespace NServiceBus.Profiler.FunctionalTests
             }
         }
 
-        private bool IsApplicationRunning()
+        bool IsApplicationRunning()
         {
             try
             {

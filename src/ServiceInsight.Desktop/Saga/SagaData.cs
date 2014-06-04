@@ -1,31 +1,31 @@
-﻿namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Caliburn.PresentationFramework;
+    using Caliburn.Micro;
 
     public class SagaData : PropertyChangedBase
     {
-        public static SagaData Empty = new SagaData();
-
         public List<SagaUpdate> Changes { get; set; }
+
         public Guid SagaId { get; set; }
 
-        private string sagaType;
+        string sagaType;
+
         public string SagaType
-        { 
-            get 
+        {
+            get
             {
                 return ProcessType(sagaType);
-            } 
-            set 
+            }
+            set
             {
                 sagaType = value;
-            } 
+            }
         }
 
-        private string ProcessType(string messageType)
+        string ProcessType(string messageType)
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;

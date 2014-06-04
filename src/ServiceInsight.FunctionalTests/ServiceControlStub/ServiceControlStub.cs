@@ -1,31 +1,43 @@
-﻿using System;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
-using Castle.Core.Logging;
-using TestStack.White.Configuration;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
+    using System;
+    using System.Web.Http;
+    using System.Web.Http.SelfHost;
+    using Castle.Core.Logging;
+    using TestStack.White.Configuration;
+
     public class ServiceControl : IDisposable
     {
-        private readonly ILogger _logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
-        private readonly HttpSelfHostServer _server;
+        ILogger logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(typeof(ServiceControl));
+        HttpSelfHostServer server;
 
-        public const string StubServiceUrl = "http://localhost:55555";
+        const int StubServicePort = 55555;
+        const string StubServiceUrl = "http://localhost";
 
-        private ServiceControl()
+        ServiceControl()
         {
-            var config = new HttpSelfHostConfiguration(StubServiceUrl);
+            var url = GetBaseUrl();
+            var config = new HttpSelfHostConfiguration(url);
 
             Configure(config);
 
-            _server = new HttpSelfHostServer(config);
-            _server.OpenAsync().Wait();
+            server = new HttpSelfHostServer(config);
+            server.OpenAsync().Wait();
 
-            _logger.DebugFormat("ServiceControl stub started at {0}", StubServiceUrl);
+            logger.DebugFormat("ServiceControl stub started at {0}", url);
         }
 
-        private static void Configure(HttpSelfHostConfiguration config)
+        public static string GetUrl()
+        {
+            return GetBaseUrl() + "api";
+        }
+
+        static string GetBaseUrl()
+        {
+            return StubServiceUrl + ":" + StubServicePort + "/";
+        }
+
+        static void Configure(HttpSelfHostConfiguration config)
         {
             config.Routes.MapHttpRoute("Default Route", "api/{controller}", new { controller = "Home" });
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
@@ -40,8 +52,8 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
 
         public void Stop()
         {
-            _server.CloseAsync().Wait();
-            _server.Dispose();
+            server.CloseAsync().Wait();
+            server.Dispose();
         }
 
         void IDisposable.Dispose()

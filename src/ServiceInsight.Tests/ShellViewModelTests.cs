@@ -1,103 +1,93 @@
-﻿using System;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.MessageViewers;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using Caliburn.Micro;
+    using Desktop;
+    using Desktop.Core.Licensing;
+    using Desktop.Core.Settings;
+    using Desktop.Core.UI.ScreenManager;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.LogWindow;
+    using Desktop.MessageFlow;
     using Desktop.MessageHeaders;
-
-    using Particular.Licensing;
+    using Desktop.MessageList;
+    using Desktop.MessageProperties;
+    using Desktop.MessageViewers;
+    using Desktop.Models;
+    using Desktop.Saga;
+    using Desktop.Settings;
+    using Desktop.Shell;
+    using Desktop.Startup;
+    using Licensing;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
 
     public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
+
         void Close();
     }
 
     [TestFixture]
     public class ShellViewModelTests
     {
-        private ShellViewModel shell;
-        private IScreenFactory ScreenFactory;
-        private IWindowManagerEx WindowManager;
-        private IQueueExplorerViewModel QueueExplorer;
-        private IEndpointExplorerViewModel EndpointExplorer;
-        private IMessageListViewModel MessageList;
-        private IConnectToMachineViewModel ConnectToViewModel;
-        private IMessageFlowViewModel MessageFlow;
-        private ISagaWindowViewModel SagaWindow;
-        private IEventAggregator EventAggregator;
-        private IStatusBarManager StatusbarManager;
-        private IMessageBodyViewModel MessageBodyView;
-        private IMessageHeadersViewModel HeaderView;
-        private ISettingsProvider SettingsProvider;
-        private AppLicenseManager LicenseManager;
-        private IShellViewStub View;
-        private IMessagePropertiesViewModel MessageProperties;
-        private ILogWindowViewModel LogWindow;
-        private IAppCommands App;
-        private ICommandLineArgParser CommandLineArgParser;
+        ShellViewModel shell;
+        ScreenFactory ScreenFactory;
+        WindowManagerEx WindowManager;
+        EndpointExplorerViewModel EndpointExplorer;
+        MessageListViewModel MessageList;
+        MessageFlowViewModel MessageFlow;
+        SagaWindowViewModel SagaWindow;
+        IEventAggregator EventAggregator;
+        StatusBarManager StatusbarManager;
+        MessageBodyViewModel MessageBodyView;
+        MessageHeadersViewModel HeaderView;
+        ISettingsProvider SettingsProvider;
+        AppLicenseManager LicenseManager;
+        IShellViewStub View;
+        MessagePropertiesViewModel MessageProperties;
+        LogWindowViewModel LogWindow;
+        IAppCommands App;
+        CommandLineArgParser CommandLineArgParser;
 
         [SetUp]
         public void TestInitialize()
         {
-            ScreenFactory = Substitute.For<IScreenFactory>();
-            WindowManager = Substitute.For<IWindowManagerEx>();
-            QueueExplorer = Substitute.For<IQueueExplorerViewModel>();
-            EndpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
-            MessageList = Substitute.For<IMessageListViewModel>();
-            StatusbarManager = Substitute.For<IStatusBarManager>();
+            ScreenFactory = Substitute.For<ScreenFactory>();
+            WindowManager = Substitute.For<WindowManagerEx>();
+            EndpointExplorer = Substitute.For<EndpointExplorerViewModel>();
+            MessageList = Substitute.For<MessageListViewModel>();
+            StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
-            MessageFlow = Substitute.For<IMessageFlowViewModel>();
-            SagaWindow = Substitute.For<ISagaWindowViewModel>();
-            MessageBodyView = Substitute.For<IMessageBodyViewModel>();
-            MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
+            MessageFlow = Substitute.For<MessageFlowViewModel>();
+            SagaWindow = Substitute.For<SagaWindowViewModel>();
+            MessageBodyView = Substitute.For<MessageBodyViewModel>();
+            MessageProperties = Substitute.For<MessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
-            HeaderView = Substitute.For<IMessageHeadersViewModel>();
+            HeaderView = Substitute.For<MessageHeadersViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
-            LogWindow = Substitute.For<ILogWindowViewModel>();
-            ConnectToViewModel = Substitute.For<IConnectToMachineViewModel>();
+            LogWindow = Substitute.For<LogWindowViewModel>();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();
 
-            shell = new ShellViewModel(App, ScreenFactory, WindowManager, QueueExplorer, 
-                                       EndpointExplorer, MessageList, StatusbarManager, 
+            shell = new ShellViewModel(App, ScreenFactory, WindowManager,
+                                       EndpointExplorer, MessageList, StatusbarManager,
                                        EventAggregator, LicenseManager, MessageFlow, SagaWindow,
-                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties, 
+                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
                                        LogWindow, CommandLineArgParser);
 
-            ScreenFactory.CreateScreen<IConnectToMachineViewModel>().Returns(ConnectToViewModel);
-
-            shell.AttachView(View, null);
+            ((IViewAware)shell).AttachView(View);
         }
 
-        private ICommandLineArgParser MockEmptyStartupOptions()
+        CommandLineArgParser MockEmptyStartupOptions()
         {
-            var parser = Substitute.For<ICommandLineArgParser>();
-            
+            var parser = Substitute.For<CommandLineArgParser>();
+
             parser.ParsedOptions.Returns(new CommandLineOptions());
 
             return parser;
@@ -114,15 +104,9 @@ namespace NServiceBus.Profiler.Tests
         {
             shell.Handle(new WorkStarted());
 
-            shell.CanDeleteCurrentQueue.ShouldBe(false);
             shell.CanDeleteSelectedMessages.ShouldBe(false);
-            shell.CanConnectToMachine.ShouldBe(false);
-            shell.CanCreateMessage.ShouldBe(false);
-            shell.CanCreateQueue.ShouldBe(false);
             shell.CanExportMessage.ShouldBe(false);
             shell.CanImportMessage.ShouldBe(false);
-            shell.CanPurgeCurrentQueue.ShouldBe(false);
-            shell.CanRefreshQueues.ShouldBe(false);
         }
 
         [Test]
@@ -148,19 +132,6 @@ namespace NServiceBus.Profiler.Tests
         }
 
         [Test]
-        public void should_display_connect_dialog_when_connecting_to_msmq()
-        {
-            ConnectToViewModel.ComputerName.Returns("NewMachine");
-            WindowManager.ShowDialog(Arg.Any<object>()).Returns(true);
-
-            shell.ConnectToMessageQueue();
-
-            ScreenFactory.Received().CreateScreen<IConnectToMachineViewModel>();
-            WindowManager.Received().ShowDialog(ConnectToViewModel);
-            QueueExplorer.Received().ConnectToQueue("NewMachine");
-        }
-
-        [Test]
         public void should_have_all_child_screens_ready_when_shell_is_activated()
         {
             ((IScreen)shell).Deactivate(true);
@@ -169,46 +140,22 @@ namespace NServiceBus.Profiler.Tests
         }
 
         [Test]
-        public void should_not_refresh_the_queues_when_auto_refresh_is_turned_off()
-        {
-            shell.AutoRefresh = false;
-
-            shell.OnAutoRefreshing();
-
-            QueueExplorer.DidNotReceive().RefreshData();
-        }
-
-        [Test]
-        [ExpectedException(typeof (NotImplementedException))]
+        [ExpectedException(typeof(NotImplementedException))]
         public void message_import()
         {
             shell.ImportMessage();
         }
 
         [Test]
-        [ExpectedException(typeof (NotImplementedException))]
+        [ExpectedException(typeof(NotImplementedException))]
         public void message_export()
         {
             shell.CreateMessage();
         }
 
-        [Test]
-        [Ignore] //TODO: NSubstitute doesn't play well with the inner async call
-        public void should_refresh_queue_exporer_when_new_queue_is_created()
-        {
-            var viewModel = Substitute.For<IQueueCreationViewModel>();
-            ScreenFactory.CreateScreen<IQueueCreationViewModel>().Returns(viewModel);
-            WindowManager.ShowDialog(viewModel).Returns(true);
-
-            AsyncHelper.Run(() => shell.CreateQueue());
-
-            QueueExplorer.RefreshData().ReceivedCalls(); //TODO: Comment?
-        }
-
-        [Test]
         public void should_track_selected_explorer()
         {
-            var selected = new QueueExplorerItem(new Queue("Error"));
+            var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
 
             shell.Handle(new SelectedExplorerItemChanged(selected));
 
@@ -216,7 +163,7 @@ namespace NServiceBus.Profiler.Tests
             shell.SelectedExplorerItem.ShouldBeSameAs(selected);
         }
 
-        [Test,Ignore("Need to figure out why this one is failing")]
+        [Test, Ignore("Need to figure out why this one is failing")]
         public void should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
@@ -244,13 +191,12 @@ namespace NServiceBus.Profiler.Tests
             ((IScreen)shell).Deactivate(true);
         }
 
-        private static ProfilerSettings DefaultAppSetting()
+        static ProfilerSettings DefaultAppSetting()
         {
             return new ProfilerSettings
             {
                 AutoRefreshTimer = 15,
             };
         }
-
     }
 }

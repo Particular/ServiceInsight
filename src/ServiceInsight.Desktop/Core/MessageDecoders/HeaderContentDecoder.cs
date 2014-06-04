@@ -1,25 +1,27 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+﻿namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
+    using Anotar.Serilog;
+    using Models;
+    using Newtonsoft.Json;
+
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {
-        private readonly IContentDecoder<string> _stringDecoder;
+        IContentDecoder<string> stringDecoder;
 
         public HeaderContentDecoder(IContentDecoder<string> stringDecoder)
         {
-            _stringDecoder = stringDecoder;
+            this.stringDecoder = stringDecoder;
         }
 
         public DecoderResult<IList<HeaderInfo>> Decode(byte[] headers)
         {
             if (headers != null && headers.Length != 0)
             {
-                var headerAsString = _stringDecoder.Decode(headers);
+                var headerAsString = stringDecoder.Decode(headers);
                 if (headerAsString.IsParsed)
                 {
                     var headerAsJson = TryParseJson(headerAsString.Value);
@@ -39,7 +41,7 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private static DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
+        static DecoderResult<IList<HeaderInfo>> TryParseJson(string value)
         {
             try
             {
@@ -49,26 +51,30 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
                     return new DecoderResult<IList<HeaderInfo>>(json, json != null);
                 }
             }
-            catch //Swallow
+            catch (Exception ex)
             {
+                LogTo.Error(ex, "Error trying to parse Json {value}", value);
+                // Swallow
             }
 
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        private static DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
+        static DecoderResult<IList<HeaderInfo>> TryParseXml(string value)
         {
             try
             {
                 if (value.StartsWith("<"))
                 {
-                    var serializer = new XmlSerializer(typeof (HeaderInfo[]));
-                    var deserialized = (HeaderInfo[]) serializer.Deserialize(new StringReader(value));
+                    var serializer = new XmlSerializer(typeof(HeaderInfo[]));
+                    var deserialized = (HeaderInfo[])serializer.Deserialize(new StringReader(value));
                     return new DecoderResult<IList<HeaderInfo>>(deserialized);
                 }
             }
-            catch //Swallow
+            catch (Exception ex)
             {
+                LogTo.Error(ex, "Error trying to parse XML {value}", value);
+                // Swallow
             }
 
             return new DecoderResult<IList<HeaderInfo>>();

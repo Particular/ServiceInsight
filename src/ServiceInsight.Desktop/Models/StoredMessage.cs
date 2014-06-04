@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using ExtensionMethods;
+
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
@@ -43,23 +43,23 @@ namespace NServiceBus.Profiler.Desktop.Models
         {
             get
             {
-                if (_statistics == null)
+                if (statistics == null)
                 {
-                    _statistics = new MessageStatistics
+                    statistics = new MessageStatistics
                     {
                         CriticalTime = CriticalTime,
                         ProcessingTime = ProcessingTime
                     };
                 }
-                return _statistics;
+                return statistics;
             }
             set
             {
-                _statistics = value;
+                statistics = value;
             }
         }
 
-        private MessageStatistics _statistics;
+        MessageStatistics statistics;
 
         public string ElapsedDeliveryTime
         {
@@ -104,8 +104,7 @@ namespace NServiceBus.Profiler.Desktop.Models
                     {
                         return InvokedSagas.Union(new List<SagaInfo> { OriginatesFromSaga }).ToList();
                     }
-                    else
-                        return InvokedSagas;
+                    return InvokedSagas;
                 }
 
                 if (OriginatesFromSaga != null)

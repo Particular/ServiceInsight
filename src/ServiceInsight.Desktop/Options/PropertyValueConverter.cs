@@ -1,12 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Data;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Data;
+
     public class PropertyValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -14,13 +14,21 @@ namespace NServiceBus.Profiler.Desktop.Options
             if (value == null)
                 return Binding.DoNothing;
 
-            return from p in value.GetType().GetProperties()
-                   where IsEditableProperty(p)
-                   select new OptionPropertyValue(p, value);
+            var properties = value.GetType().GetProperties();
+
+            var editableProperties = properties
+                .Where(IsEditableProperty)
+                .Select(p => new OptionPropertyValue(p, value, properties.FirstOrDefault(p2 => p2.Name == "Default" + p.Name)))
+                .ToList();
+
+            return editableProperties;
         }
 
-        private bool IsEditableProperty(MemberInfo propertyInfo)
+        bool IsEditableProperty(PropertyInfo propertyInfo)
         {
+            if (!propertyInfo.CanRead || !propertyInfo.CanWrite)
+                return false;
+
             var browsable = propertyInfo.GetCustomAttribute<EditorBrowsableAttribute>();
             return browsable == null || browsable.State != EditorBrowsableState.Never;
         }

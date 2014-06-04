@@ -1,18 +1,18 @@
-﻿using System;
-using System.Text;
-using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
-    public class HexContentViewModel : Screen, IHexContentViewModel
+    using System;
+    using System.Text;
+    using Caliburn.Micro;
+    using Events;
+    using ExtensionMethods;
+
+    public class HexContentViewModel : Screen,
+        IHandle<SelectedMessageChanged>
     {
         internal static Func<byte, string> ByteToStringConverter;
-        private static readonly Encoding Encoding;
+        static Encoding Encoding;
 
-        private IHexContentView _view;
+        IHexContentView view;
 
         static HexContentViewModel()
         {
@@ -29,13 +29,14 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 
         public IObservableCollection<HexPart> HexParts
         {
-            get; private set;
+            get;
+            private set;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
-            _view = (IHexContentView) view;
+            base.OnViewAttached(view, context);
+            this.view = (IHexContentView)view;
             OnSelectedMessageChanged();
         }
 
@@ -59,24 +60,24 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 
         public void OnSelectedMessageChanged()
         {
-            if (_view == null || SelectedMessage == null) 
+            if (view == null || SelectedMessage == null)
                 return;
 
             DisplayMessage();
         }
 
-        private void DisplayMessage()
+        void DisplayMessage()
         {
             ClearHexParts();
             CreateHexParts();
         }
 
-        private void ClearHexParts()
+        void ClearHexParts()
         {
             HexParts.Clear();
         }
 
-        private void CreateHexParts()
+        void CreateHexParts()
         {
             var columnNumber = 0;
             var lineNumber = 1;
@@ -84,7 +85,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 
             foreach (var currentByte in SelectedMessage)
             {
-                if(!HexParts.Contains(hexLine))
+                if (!HexParts.Contains(hexLine))
                     HexParts.Add(hexLine);
 
                 var hexChar = new HexNumber();
@@ -104,7 +105,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             }
         }
 
-        private static void AppendText(HexNumber number, byte b)
+        static void AppendText(HexNumber number, byte b)
         {
             var c = ByteToStringConverter.TryGetValue(b, " ");
             if (c == "\r" || c == "\n" || c == "\t")
@@ -117,7 +118,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
             }
         }
 
-        private static void AppendHex(HexNumber hexValue, byte b)
+        static void AppendHex(HexNumber hexValue, byte b)
         {
             hexValue.Hex = string.Format(b < 0x10 ? "0{0:X000} " : "{0:X000} ", b);
         }

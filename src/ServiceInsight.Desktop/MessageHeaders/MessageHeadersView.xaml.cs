@@ -1,26 +1,37 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
+﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
-    using System.Linq;
+    using System;
+    using System.Reactive.Linq;
+    using System.Windows;
+    using DevExpress.Xpf.Bars;
+    using ReactiveUI;
 
-    public interface IMessageHeadersView
+    public partial class MessageHeadersView
     {
-        void AutoFit();
-        void CopyRowsToClipboard();
-    }
+        IDisposable kvSubscription;
 
-    public partial class MessageHeadersView : IMessageHeadersView
-    {
         public MessageHeadersView()
         {
             InitializeComponent();
+
+            DataContextChanged += OnDataContextChanged;
         }
 
-        public void AutoFit()
+        void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            gridView.BestFitColumn(KeyColumn);
+            var vm = DataContext as MessageHeadersViewModel;
+            if (vm == null)
+                return;
+
+            if (kvSubscription != null)
+                kvSubscription.Dispose();
+
+            kvSubscription = vm.KeyValues.Changed
+                .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler) // Just to ignore multiple adds from a loop
+                .Subscribe(_ => gridView.BestFitColumn(KeyColumn));
         }
 
-        public void CopyRowsToClipboard()
+        void CopyToClipboard_OnItemClick(object sender, ItemClickEventArgs e)
         {
             gridView.DataControl.BeginSelection();
             gridView.DataControl.SelectAll();

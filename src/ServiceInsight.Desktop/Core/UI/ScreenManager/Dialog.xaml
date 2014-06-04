@@ -1,4 +1,4 @@
-﻿<Window x:Class="NServiceBus.Profiler.Desktop.ScreenManager.Dialog"
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.Core.UI.ScreenManager.Dialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Background="{StaticResource DialogBackgroundBrush}"
@@ -17,7 +17,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image x:Name="MessageIcon" Width="32" Height="32" Margin="0,0,8,0" VerticalAlignment="Center" Visibility="{Binding Path=ShowIcon, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                <Image x:Name="MessageIcon" Width="32" Height="32" Margin="0,0,8,0" VerticalAlignment="Center" Visibility="{Binding Path=ShowIcon, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Style.Triggers>
@@ -44,7 +44,7 @@
                       Content="Don't show this again" 
                       Margin="0,15,0,0" 
                       IsChecked="{Binding DontAskAgain , Mode=TwoWay}" 
-                      Visibility="{Binding EnableDontAskAgain, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                      Visibility="{Binding EnableDontAskAgain, Converter={StaticResource BoolToVisibilityConverter}}" />
             
             <ItemsControl HorizontalAlignment="Center" Focusable="false" Margin="-4,16,0,0" ItemsSource="{Binding Choices}">
                 <ItemsControl.Template>

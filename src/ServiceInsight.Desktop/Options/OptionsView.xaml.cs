@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
     public interface IOptionsView
     {

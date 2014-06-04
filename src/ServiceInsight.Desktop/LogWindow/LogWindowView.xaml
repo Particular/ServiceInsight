@@ -1,25 +1,38 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.LogWindow.LogWindowView"
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.LogWindow.LogWindowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:ui="clr-namespace:NServiceBus.Profiler.Desktop.Core.UI"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:logWindow="clr-namespace:Particular.ServiceInsight.Desktop.LogWindow"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
 
-        <RichTextBox x:Name="LogContainer" 
-                     IsReadOnly="True"
-                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <dxb:BarManager.DXContextMenu>
-                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
-                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
-                               Visibility="{Binding RelativeSource={RelativeSource Self}, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
-                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True" />
-            </dxb:BarManager.DXContextMenu>
-            <RichTextBox.Document>
-                <FlowDocument PageWidth="2000" />
-            </RichTextBox.Document>
-        </RichTextBox>
+    <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible">
+        <ItemsControl ItemsSource="{Binding Logs}">
+            <ItemsControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding ClearCommand}" Header="Clear All">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Clear.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="{Binding CopyCommand}" Header="Copy">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ItemsControl.ContextMenu>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type logWindow:LogMessage}">
+                    <TextBlock VerticalAlignment="Center"
+                               FontWeight="{Binding Weight}"
+                               Foreground="{Binding Color}"
+                               Text="{Binding DisplayLog}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
 </UserControl>

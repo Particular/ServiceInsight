@@ -1,46 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IErrorHeaderViewModel
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using ExtensionMethods;
+    using Models;
+
+    public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public ErrorHeaderViewModel(
-            IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManager queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder)
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Errors";
-        }
-
-        public virtual bool CanReturnToSource()
-        {
-            return SelectedQueue != null &&
-                   !SelectedQueue.IsRemoteQueue() &&
-                   SelectedMessage != null &&
-                   FailedQueue != null;
-        }
-
-        public virtual void ReturnToSource()
-        {
-            if (!CanReturnToSource()) return;
-
-            var destinationAddress = Address.Parse(FailedQueue);
-            var queues = QueueManager.GetQueues();
-            var destinationQueue = queues.FirstOrDefault(q => q.Address == destinationAddress);
-
-            if (destinationQueue != null)
-            {
-                QueueManager.MoveMessage(SelectedQueue, destinationQueue, SelectedMessage.Id);
-            }
         }
 
         [Description("Stack trace for the error")]

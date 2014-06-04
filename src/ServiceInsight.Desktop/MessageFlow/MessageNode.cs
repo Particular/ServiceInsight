@@ -1,19 +1,19 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.Models;
-using System;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows;
+    using Mindscape.WpfDiagramming;
+    using Models;
+
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        private int heightNoEndpoints = 56;
-        private const int endpointsHeight = 25;
+        int heightNoEndpoints = 56;
+        const int endpointsHeight = 25;
 
-        public MessageNode(IMessageFlowViewModel owner, StoredMessage message) 
+        public MessageNode(MessageFlowViewModel owner, StoredMessage message)
         {
             IsResizable = false;
             Owner = owner;
@@ -25,17 +25,17 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Bounds = new Rect(0, 0, 203, heightNoEndpoints);
         }
 
-        private string ProcessSagaType(StoredMessage message)
+        string ProcessSagaType(StoredMessage message)
         {
             if (message.Sagas == null) return string.Empty;
-            
+
             var originatingSaga = message.Sagas.FirstOrDefault();
             if (originatingSaga == null) return string.Empty;
-            
+
             return ProcessType(originatingSaga.SagaType);
         }
 
-        private static string ProcessType(string messageType)
+        static string ProcessType(string messageType)
         {
             if (string.IsNullOrEmpty(messageType))
                 return string.Empty;
@@ -54,10 +54,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             get { return Data as StoredMessage; }
         }
 
-        public IMessageFlowViewModel Owner
-        {
-            get; private set;
-        }
+        public MessageFlowViewModel Owner { get; private set; }
 
         public void CopyMessageUri()
         {
@@ -71,12 +68,12 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public void SearchMessage()
         {
-            Owner.SearchByMessageId(Message);
+            Owner.SearchByMessageId(Message, performSearch: true);
         }
 
-        public async void Retry()
+        public void Retry()
         {
-            await Owner.RetryMessage(Message);
+            Owner.RetryMessage(Message);
             Message.Status = MessageStatus.RetryIssued;
             OnPropertyChanged("HasFailed");
             OnPropertyChanged("HasRetried");
@@ -85,12 +82,11 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public bool CanRetry()
         {
             return HasFailed;
-
         }
 
         public void ShowBody()
         {
-            Owner.ShowMessageBody(Message);
+            Owner.ShowMessageBody();
         }
 
         public void ShowException()
@@ -102,10 +98,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
         }
 
-        public bool ShowEndpoints
-        {
-            get; set;
-        }
+        public bool ShowEndpoints { get; set; }
 
         public void OnShowEndpointsChanged()
         {
@@ -146,21 +139,21 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public bool IsTimeout
         {
-            get 
+            get
             {
                 var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
-                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString); 
+                return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString);
             }
         }
 
         public DateTime? TimeSent
         {
-            get 
-            { 
+            get
+            {
                 var timeString = Message.GetHeaderByKey(MessageHeaderKeys.TimeSent);
                 if (string.IsNullOrEmpty(timeString))
                     return null;
-                return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture); 
+                return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
 
@@ -191,10 +184,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        public string ExceptionMessage
-        {
-            get; set;
-        }
+        public string ExceptionMessage { get; set; }
 
         public bool IsFocused
         {

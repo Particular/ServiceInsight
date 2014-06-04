@@ -1,33 +1,31 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Caliburn.Micro;
     using Desktop.Core.Settings;
-    using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-    using NServiceBus.Profiler.Desktop.MessageList;
+    using Desktop.Core.UI.ScreenManager;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Framework;
+    using Desktop.MessageFlow;
+    using Desktop.MessageList;
+    using Desktop.Models;
+    using Desktop.Search;
+    using Desktop.ServiceControl;
+    using NSubstitute;
+    using NUnit.Framework;
 
     [TestFixture]
     public class MessageFlowViewModelTests
     {
-        private IServiceControl _serviceControl;
-        private IEventAggregator _eventAggregator;
-        private IClipboard _clipboard;
-        private IWindowManagerEx _windowManager;
-        private IScreenFactory _screenFactory;
-        private ISearchBarViewModel _searchBar;
-        private IMessageListViewModel _messageList;
-        private ISettingsProvider _settingProvider;
-        private IEndpointExplorerViewModel _endpointExplorer;
+        DefaultServiceControl serviceControl;
+        IEventAggregator eventAggregator;
+        WindowManagerEx windowManager;
+        ScreenFactory screenFactory;
+        SearchBarViewModel searchBar;
+        MessageListViewModel messageList;
+        ISettingsProvider settingProvider;
+        EndpointExplorerViewModel endpointExplorer;
+        IClipboard clipboard;
 
         [Test]
         public void Search_message_would_set_the_search_criteria_only()
@@ -35,10 +33,10 @@ namespace NServiceBus.Profiler.Tests
             var sut = CreateSUT();
             var messageId = "SomeMessageId";
             var msg = new StoredMessage { MessageId = messageId };
-            
+
             sut.SearchByMessageId(msg);
 
-            _searchBar.Received(1).Search(Arg.Is(messageId), Arg.Is(false));
+            searchBar.Received(1).Search(Arg.Is(messageId), Arg.Is(false));
         }
 
         [Test]
@@ -50,38 +48,37 @@ namespace NServiceBus.Profiler.Tests
             var sending = new Endpoint();
             var msg = new StoredMessage
             {
-                MessageId = messageId, 
+                MessageId = messageId,
                 ReceivingEndpoint = receiving,
                 SendingEndpoint = sending,
             };
-            
+
             sut.SearchByMessageId(msg);
 
-            _eventAggregator.Received(1).Publish(Arg.Is<RequestSelectingEndpoint>(m => m.Endpoint == receiving));
+            eventAggregator.Received(1).Publish(Arg.Is<RequestSelectingEndpoint>(m => m.Endpoint == receiving));
         }
 
-        private MessageFlowViewModel CreateSUT()
+        MessageFlowViewModel CreateSUT()
         {
-            _serviceControl = Substitute.For<IServiceControl>();
-            _eventAggregator = Substitute.For<IEventAggregator>();
-            _clipboard = Substitute.For<IClipboard>();
-            _windowManager = Substitute.For<IWindowManagerEx>();
-            _screenFactory = Substitute.For<IScreenFactory>();
-            _searchBar = Substitute.For<ISearchBarViewModel>();
-            _messageList = Substitute.For<IMessageListViewModel>();
-            _settingProvider = Substitute.For<ISettingsProvider>();
-            _endpointExplorer = Substitute.For<IEndpointExplorerViewModel>();
+            serviceControl = Substitute.For<DefaultServiceControl>();
+            eventAggregator = Substitute.For<IEventAggregator>();
+            clipboard = Substitute.For<IClipboard>();
+            windowManager = Substitute.For<WindowManagerEx>();
+            screenFactory = Substitute.For<ScreenFactory>();
+            searchBar = Substitute.For<SearchBarViewModel>();
+            messageList = Substitute.For<MessageListViewModel>();
+            settingProvider = Substitute.For<ISettingsProvider>();
+            endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
 
-            return new MessageFlowViewModel(_serviceControl, 
-                                            _eventAggregator, 
-                                            _clipboard, 
-                                            _windowManager,
-                                            _screenFactory, 
-                                            _searchBar,
-                                            _messageList,
-                                            _settingProvider,
-                                            _endpointExplorer);
+            return new MessageFlowViewModel(serviceControl,
+                                            eventAggregator,
+                                            windowManager,
+                                            screenFactory,
+                                            searchBar,
+                                            messageList,
+                                            settingProvider,
+                                            endpointExplorer,
+                                            clipboard);
         }
-
     }
 }

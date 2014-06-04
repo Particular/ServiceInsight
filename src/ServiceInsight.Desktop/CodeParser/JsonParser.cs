@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class JsonParser : BaseParser
     {
-        protected static readonly char[] JsonSymbol = new[] { ':', '[', ']', ',', '{', '}' };
-        protected static readonly char[] JsonQuotes = new[] { '"' };
+        protected static char[] JsonSymbol = { ':', '[', ']', ',', '{', '}' };
+        protected static char[] JsonQuotes = { '"' };
 
         protected bool IsInsideBlock;
 
@@ -18,9 +18,9 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
 
             while (text.Length > 0)
             {
-                var lenght = text.Length;
+                var length = text.Length;
 
-                TryExtract(list, ref text, ByteOrderMark);
+                TryExtract(ref text, ByteOrderMark);
                 TryExtract(list, ref text, "[", LexemType.Symbol);
                 TryExtract(list, ref text, "{", LexemType.Symbol);
 
@@ -40,14 +40,14 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
                 TryExtract(list, ref text, "}", LexemType.Symbol);
                 TryExtract(list, ref text, "]", LexemType.Symbol);
 
-                if (lenght == text.Length)
+                if (length == text.Length)
                     break;
             }
 
             return list;
         }
 
-        private void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
+        void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
         {
             if (text[0] == '{')
             {
@@ -66,13 +66,25 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             }
             else
             {
-                var end = text.IndexOfAny(new[] { ',', '}' });
-                res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
-                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+                var endOfValueQuote = text.IndexOfAny(new[] { '\"' });
+                if (endOfValueQuote > 0)
+                {
+                    res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueQuote)));
+                    res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
+                }
+                else
+                {
+                    var endOfValueOrCollection = text.IndexOfAny(new[] { ',', '}' });
+                    if (endOfValueOrCollection > 0)
+                    {
+                        res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueOrCollection)));
+                        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
+                    }
+                }
             }
         }
 
-        private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOfAny(JsonSymbol);
             if (index != 0)
@@ -82,7 +94,7 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             text = text.Substring(1);
         }
 
-        private void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOf("\":");
             if (index <= 0)
@@ -91,8 +103,10 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem)
+        public override Inline ToInline(CodeLexem codeLexem, Brush brush)
         {
+            if (brush != null) return base.ToInline(codeLexem, brush);
+
             switch (codeLexem.Type)
             {
                 case LexemType.Symbol:

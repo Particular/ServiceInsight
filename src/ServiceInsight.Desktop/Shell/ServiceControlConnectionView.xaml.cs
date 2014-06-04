@@ -1,10 +1,7 @@
-﻿using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
-    /// <summary>
-    /// Interaction logic for ServiceControlConnectionView.xaml
-    /// </summary>
+    using System.Windows;
+
     public partial class ServiceControlConnectionView
     {
         public ServiceControlConnectionView()
@@ -12,7 +9,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             InitializeComponent();
         }
 
-        private void SelectText(object sender, RoutedEventArgs e)
+        void SelectText(object sender, RoutedEventArgs e)
         {
             name.SelectAll();
         }

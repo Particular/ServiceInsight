@@ -1,74 +1,94 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Threading;
-using Autofac;
-using Caliburn.Core.InversionOfControl;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Conventions;
-using DevExpress.Xpf.Bars;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Shell;
-using IContainer = Autofac.IContainer;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
+    using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Markup;
+    using Autofac;
+    using Caliburn.Micro;
+    using DevExpress.Xpf.Bars;
+    using Framework;
+    using Framework.Logging;
+    using Shell;
+    using IContainer = Autofac.IContainer;
 
-    public class AppBootstrapper : Bootstrapper<IShellViewModel>
+    public class AppBootstrapper : Bootstrapper<ShellViewModel>
     {
-        private IContainer _container;
-        
-        protected override void PrepareApplication()
+        protected IContainer container;
+
+        protected override void Configure()
         {
-            base.PrepareApplication();
+            CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();
+
+            LoggingConfig.SetupCaliburnMicroLogging();
+
+            var newHandler = container.Resolve<AppExceptionHandler>();
+            var defaultHandler = ExceptionHandler.HandleException;
+            ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
 
-        private void ApplyBindingCulture()
+        private void CreateContainer()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
+            container = containerBuilder.Build();
+
+            // We reregister the container within itself.
+            // This is bad and we should feel bad about it.
+            containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterInstance(container).SingleInstance();
+            containerBuilder.Update(container);
+        }
+
+        void ApplyBindingCulture()
         {
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
 
-        private void ExtendConventions()
+        void ExtendConventions()
         {
-            var convention = Container.GetInstance<IConventionManager>();
-            convention.AddElementConvention(new DefaultElementConvention<BarButtonItem>("ItemClick", BarButtonItem.IsVisibleProperty, (item, o) => item.DataContext = o, item => item.DataContext));
+            ConventionManager.AddElementConvention<BarButtonItem>(BarButtonItem.IsVisibleProperty, "DataContext", "ItemClick");
         }
 
-        public IContainer GetContainer()
+        protected override void PrepareApplication()
         {
-            return _container;
+            Application.Startup += OnStartup;
+            Application.Exit += OnExit;
         }
 
-        protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            e.Handled = TryHandleException(e.Exception);
+            return container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
         }
 
-        protected override IServiceLocator CreateContainer()
+        protected override object GetInstance(Type service, string key)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
-            _container = builder.Build();
-
-            return new AutofacAdapter(_container);
-        }
-
-        protected virtual bool TryHandleException(Exception exception)
-        {
-            try
+            if (string.IsNullOrWhiteSpace(key))
             {
-                var handler = _container.Resolve<IExceptionHandler>();
-                handler.Handle(exception);
-                return true;
+                object result;
+                if (container.TryResolve(service, out result))
+                {
+                    return result;
+                }
             }
-            catch
+            else
             {
-                return false;
+                object result;
+                if (container.TryResolveNamed(key, service, out result))
+                {
+                    return result;
+                }
             }
+            throw new Exception(string.Format("Could not locate any instances of contract {0}.", key ?? service.Name));
+        }
+
+        protected override void BuildUp(object instance)
+        {
+            container.InjectProperties(instance);
         }
     }
 }

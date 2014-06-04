@@ -1,48 +1,47 @@
-﻿using System.ComponentModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    public class MessagePropertiesViewModel : Screen, IMessagePropertiesViewModel
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Framework;
+
+    public class MessagePropertiesViewModel : Screen
     {
-        private readonly IClipboard _clipboard;
+        readonly IClipboard clipboard;
 
         public MessagePropertiesViewModel(
-            IErrorHeaderViewModel error,
-            IGeneralHeaderViewModel general,
-            ISagaHeaderViewModel saga,
-            IPerformanceHeaderViewModel performance,
-            IGatewayHeaderViewModel gateway,
+            ErrorHeaderViewModel error,
+            GeneralHeaderViewModel general,
+            SagaHeaderViewModel saga,
+            PerformanceHeaderViewModel performance,
+            GatewayHeaderViewModel gateway,
             IClipboard clipboard)
         {
-            _clipboard = clipboard;
             Saga = saga;
             Performance = performance;
             Gateway = gateway;
             Errors = error;
             General = general;
+            this.clipboard = clipboard;
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IGeneralHeaderViewModel General { get; private set; }
+        public GeneralHeaderViewModel General { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IPerformanceHeaderViewModel Performance { get; private set; }
+        public PerformanceHeaderViewModel Performance { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IErrorHeaderViewModel Errors { get; private set; }
+        public ErrorHeaderViewModel Errors { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public IGatewayHeaderViewModel Gateway { get; private set; }
+        public GatewayHeaderViewModel Gateway { get; private set; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public ISagaHeaderViewModel Saga { get; private set; }
+        public SagaHeaderViewModel Saga { get; private set; }
 
         public void CopyPropertyValue(object value)
         {
-            _clipboard.CopyTo(value.ToString());
+            clipboard.CopyTo(value.ToString());
         }
-
     }
 }

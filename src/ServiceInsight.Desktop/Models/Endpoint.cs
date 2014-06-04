@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Endpoint
     {
         public string Name { get; set; }
@@ -28,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Models
             get { return string.Format("{0}{1}", Name, AtMachine()); }
         }
 
-        private string AtMachine()
+        string AtMachine()
         {
             return string.IsNullOrEmpty(HostDisplayName) ? string.Empty : string.Format("@{0}", HostDisplayName);
         }
@@ -68,7 +68,7 @@ namespace NServiceBus.Profiler.Desktop.Models
     }
 
     [Serializable]
-    public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hyrate it
+    public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hydrate it
     {
         public string Key { get; set; }
         public string Value { get; set; }

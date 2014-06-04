@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface ISettingsProvider
     {
         T GetSettings<T>() where T : new();

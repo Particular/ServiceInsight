@@ -1,10 +1,11 @@
-﻿using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using Caliburn.Micro;
+
     public interface ITableViewModel<T>
     {
-        IObservableCollection<T> Rows { get; } 
+        IObservableCollection<T> Rows { get; }
+
         T FocusedRow { get; set; }
     }
 }

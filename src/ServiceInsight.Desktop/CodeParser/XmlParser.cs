@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class XmlParser : BaseParser
     {
-        protected static readonly char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };
-        protected static readonly char[] XmlSymbol = new[] { '=', '/', '>', '"', '{', '}', ',' };
-        protected static readonly char[] XmlQuotes = new[] { '"'  };
-        protected static readonly char XmlNamespaceDelimeter = ':';
+        protected static char[] XmlEndOfTerm = new[] { ' ', '\t', '\n', '=', '/', '>', '<', '"', '{', '}', ',' };
+        protected static char[] XmlSymbol = new[] { '=', '/', '>', '"', '{', '}', ',' };
+        protected static char[] XmlQuotes = new[] { '"' };
+        protected static char XmlNamespaceDelimeter = ':';
 
         protected bool IsInsideBlock;
 
@@ -22,7 +22,7 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
                 if (TryExtract(list, ref text, "<!--", LexemType.Comment))
                     TryExtractTo(list, ref text, "-->", LexemType.Comment);
 
-                if (text.StartsWith("<", StringComparison.Ordinal))
+                if (text.StartsWith("<"))
                     IsInsideBlock = false;
 
                 if (TryExtract(list, ref text, "\"{}", LexemType.Value))
@@ -43,8 +43,8 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
                 ParseXmlKeyWord(list, ref text, IsInsideBlock ? LexemType.PlainText : LexemType.Property);
                 TryExtract(list, ref text, "\"", LexemType.Quotes);
                 TryExtract(list, ref text, "}", LexemType.Symbol);
-                
-                if (text.StartsWith(">", StringComparison.Ordinal))
+
+                if (text.StartsWith(">"))
                     IsInsideBlock = true;
 
                 ParseSymbol(list, ref text);
@@ -61,26 +61,26 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
 
             if (index < 0)
                 return;
-            
+
             LineBreaks(res, ref text, index + lex.Length - 1, LexemType.Value);
         }
 
-        private void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
         {
-            int index = text.IndexOfAny(XmlSymbol);
+            var index = text.IndexOfAny(XmlSymbol);
             if (index != 0)
                 return;
-            
+
             res.Add(new CodeLexem(LexemType.Symbol, text.Substring(0, 1)));
             text = text.Substring(1);
         }
 
-        private void ParseXmlKeyWord(ICollection<CodeLexem> res, ref SourcePart text, LexemType type)
+        void ParseXmlKeyWord(ICollection<CodeLexem> res, ref SourcePart text, LexemType type)
         {
             var index = text.IndexOfAny(XmlEndOfTerm);
             if (index <= 0)
                 return;
-            
+
             var delimiterIndex = text.IndexOf(XmlNamespaceDelimeter);
             if (delimiterIndex > 0 && delimiterIndex < index)
             {
@@ -92,8 +92,10 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             res.Add(new CodeLexem(type, CutString(ref text, index)));
         }
 
-        public override Inline ToInline(CodeLexem codeLexem)
+        public override Inline ToInline(CodeLexem codeLexem, Brush brush = null)
         {
+            if (brush != null) return base.ToInline(codeLexem, brush);
+
             switch (codeLexem.Type)
             {
                 case LexemType.Error:
@@ -125,7 +127,6 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             }
 
             throw new NotImplementedException(string.Format("Lexem type {0} has no specific colors.", codeLexem.Type));
-
         }
     }
 }

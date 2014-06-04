@@ -1,26 +1,27 @@
-﻿using System.Text;
-using System.Xml;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
-    public class XmlMessageViewModel : Screen, IXmlMessageViewModel
+    using System.Text;
+    using System.Xml;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using Events;
+    using ExtensionMethods;
+    using Framework;
+    using Models;
+
+    public class XmlMessageViewModel : Screen,
+        IHandle<SelectedMessageChanged>
     {
-        private readonly IContentDecoder<XmlDocument> _xmlDecoder;
-        private readonly IClipboard _clipboard;
-        private IXmlMessageView _messageView;
+        readonly IClipboard clipboard;
+        IContentDecoder<XmlDocument> xmlDecoder;
+        IXmlMessageView messageView;
 
         public XmlMessageViewModel(
             IContentDecoder<XmlDocument> xmlDecoder,
             IClipboard clipboard)
         {
-            _xmlDecoder = xmlDecoder;
-            _clipboard = clipboard;
+            this.clipboard = clipboard;
+            this.xmlDecoder = xmlDecoder;
         }
 
         protected override void OnActivate()
@@ -29,10 +30,10 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             DisplayName = "Xml";
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
-            _messageView = (IXmlMessageView)view;
+            base.OnViewAttached(view, context);
+            messageView = (IXmlMessageView)view;
             OnSelectedMessageChanged();
         }
 
@@ -40,9 +41,9 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
 
         public void OnSelectedMessageChanged()
         {
-            if(_messageView == null) return;
+            if (messageView == null) return;
 
-            _messageView.Clear();
+            messageView.Clear();
             ShowMessageBody();
         }
 
@@ -56,7 +57,7 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             var content = GetMessageBody();
             if (!content.IsEmpty())
             {
-                _clipboard.CopyTo(content);
+                clipboard.CopyTo(content);
             }
         }
 
@@ -72,18 +73,18 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer
             }
         }
 
-        private void ShowMessageBody()
+        void ShowMessageBody()
         {
             if (SelectedMessage == null) return;
-            _messageView.Display(GetMessageBody());
+            messageView.Display(GetMessageBody());
         }
 
-        private string GetMessageBody()
+        string GetMessageBody()
         {
             if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
 
             var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
-            var xml = _xmlDecoder.Decode(bytes);
+            var xml = xmlDecoder.Decode(bytes);
             return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;
         }
     }

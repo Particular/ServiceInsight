@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-using System.Linq;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
+    using System.Drawing;
+    using System.Linq;
+    using Models;
+    using Properties;
+
     public class ServiceControlExplorerItem : ExplorerItem
     {
         public ServiceControlExplorerItem(string name)

@@ -1,9 +1,8 @@
-﻿using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
+    using Caliburn.Micro;
+
     public interface IPropertyDataProvider : IScreen
     {
-         
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
-    /// <summary>
-    /// Interaction logic for MessageActionPopup.xaml
-    /// </summary>
+    using System;
+    using System.Windows;
+
     public partial class MessageActionPopup
     {
         public MessageActionPopup()
@@ -15,7 +12,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
         public event Action RequestToClose = () => { };
 
-        private void OnMenuClicked(object sender, RoutedEventArgs e)
+        void OnMenuClicked(object sender, RoutedEventArgs e)
         {
             RequestToClose();
         }

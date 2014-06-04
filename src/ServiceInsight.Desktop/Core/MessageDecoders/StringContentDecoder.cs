@@ -1,7 +1,9 @@
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
+    using System.Text;
+    using Anotar.Serilog;
+
     public class StringContentDecoder : IContentDecoder<string>
     {
         public DecoderResult<string> Decode(byte[] content)
@@ -12,8 +14,9 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
                 {
                     return new DecoderResult<string>(Encoding.UTF8.GetString(content));
                 }
-                catch
+                catch (Exception ex)
                 {
+                    LogTo.Error(ex, "Error trying to decode string {content}", content);
                 }
             }
 

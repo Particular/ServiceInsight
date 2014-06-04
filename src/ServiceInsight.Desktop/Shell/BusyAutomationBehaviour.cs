@@ -1,18 +1,18 @@
-﻿using System.Windows;
-using System.Windows.Automation;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System.Windows;
+    using System.Windows.Automation;
+
     public static class BusyAutomationBehaviour
     {
-        public static readonly DependencyProperty IsApplicationBusyProperty;
+        public static DependencyProperty IsApplicationBusyProperty;
 
         static BusyAutomationBehaviour()
         {
             IsApplicationBusyProperty = DependencyProperty.RegisterAttached("IsApplicationBusy", typeof (bool), typeof (BusyAutomationBehaviour), new PropertyMetadata(OnChanged));
         }
 
-        private static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             AutomationProperties.SetHelpText(d, GetIsApplicationBusy(d) ? "Busy" : string.Empty);
         }

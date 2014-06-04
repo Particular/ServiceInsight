@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-using Caliburn.PresentationFramework.Screens;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Input;
+    using Caliburn.Micro;
+
     public class DialogViewModel : Screen
     {
-        private Dialog _view;
+        Dialog view;
 
         internal static MessageChoice Show(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
@@ -17,12 +17,12 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return window.Result;
         }
 
-        private void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
+        void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
                 throw new ArgumentException();
 
-            _view = CreateWindow(parent);
+            view = CreateWindow(parent);
 
             Icon = icon;
             Title = title;
@@ -49,10 +49,10 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             if (IsSet(choices, MessageChoice.Help))
                 Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
 
-            _view.ShowDialog();
+            view.ShowDialog();
         }
 
-        private Dialog CreateWindow(Window parent)
+        Dialog CreateWindow(Window parent)
         {
             var dialog = new Dialog { Owner = parent, DataContext = this };
 
@@ -68,17 +68,17 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return dialog;
         }
 
-        private static bool IsSet(MessageChoice choices, MessageChoice bits)
+        static bool IsSet(MessageChoice choices, MessageChoice bits)
         {
             return ((choices & bits) == bits);
         }
 
-        private void HelpCommand(object target)
+        void HelpCommand(object target)
         {
-            Show(_view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
+            Show(view, MessageIcon.None, Title, HelpMessage, MessageChoice.OK, null, false, MessageChoice.Help);
         }
 
-        private void CloseCommand(object target)
+        void CloseCommand(object target)
         {
             var command = target as ChoiceCommand;
             if (command != null)
@@ -88,47 +88,55 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
         public void Close(MessageChoice closeResult)
         {
             Result = closeResult;
-            _view.Close();
+            view.Close();
         }
 
         public virtual ICollection<ICommand> Choices
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string Content
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool DontAskAgain
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool EnableDontAskAgain
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string HelpMessage
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual MessageIcon Icon
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual MessageChoice Result
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public virtual string Title
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool ShowIcon

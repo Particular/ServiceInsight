@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Caliburn.PresentationFramework.ApplicationModel;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPerformanceHeaderViewModel
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using Caliburn.Micro;
+    using Core.MessageDecoders;
+    using ExtensionMethods;
+    using Models;
+
+    public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public PerformanceHeaderViewModel(
-            IEventAggregator eventAggregator, 
-            IContentDecoder<IList<HeaderInfo>> decoder, 
-            IQueueManagerAsync queueManager) 
-            : base(eventAggregator, decoder, queueManager)
+            IEventAggregator eventAggregator,
+            IContentDecoder<IList<HeaderInfo>> decoder)
+            : base(eventAggregator, decoder)
         {
             DisplayName = "Performance";
         }

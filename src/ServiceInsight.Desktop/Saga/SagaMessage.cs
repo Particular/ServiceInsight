@@ -1,21 +1,20 @@
-﻿using Caliburn.PresentationFramework;
-using Newtonsoft.Json;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml;
+    using System.Xml.Linq;
+    using Caliburn.Micro;
+    using Models;
+    using ServiceControl;
+
     public class SagaMessage : PropertyChangedBase
     {
         public Guid MessageId { get; set; }
+
         public bool IsPublished { get; set; }
+
         public virtual bool IsTimeout
         {
             get
@@ -26,25 +25,23 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
-        private string messageType;
-        public string MessageType 
-        { 
-            get
-            {
-                return ProcessType();
-            }
-            set
-            {
-                messageType = value;
-            }
+        public string MessageType
+        {
+            get;
+            set;
         }
 
-        private string ProcessType()
+        public string MessageFriendlyTypeName
         {
-            if (string.IsNullOrEmpty(messageType))
+            get { return ProcessType(); }
+        }
+
+        string ProcessType()
+        {
+            if (string.IsNullOrEmpty(MessageType))
                 return string.Empty;
 
-            var clazz = messageType.Split(',').First();
+            var clazz = MessageType.Split(',').First();
             var objectName = clazz.Split('.').Last();
 
             if (objectName.Contains("+"))
@@ -54,23 +51,26 @@ namespace NServiceBus.Profiler.Desktop.Saga
         }
 
         public DateTime TimeSent { get; set; }
+
         public string ReceivingEndpoint { get; set; }
+
         public string OriginatingEndpoint { get; set; }
 
-        private MessageStatus status;
+        MessageStatus status;
+
         public MessageStatus Status
         {
             get
             {
                 return status == 0 ? MessageStatus.Successful : status;
             }
-            set 
+            set
             {
                 status = value;
             }
         }
 
-        private List<KeyValuePair<MessageStatus, string>> stati = new List<KeyValuePair<MessageStatus, string>> { 
+        List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> {
             new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
             new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
@@ -91,11 +91,11 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return stati.FirstOrDefault(k => k.Key == Status).Value;
+                return statuses.FirstOrDefault(k => k.Key == Status).Value;
             }
             set
             {
-                Status = stati.FirstOrDefault(k => k.Value == value).Key;
+                Status = statuses.FirstOrDefault(k => k.Value == value).Key;
             }
         }
 
@@ -107,7 +107,8 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private bool showData = false;
+        bool showData;
+
         public bool ShowData
         {
             get
@@ -117,19 +118,18 @@ namespace NServiceBus.Profiler.Desktop.Saga
             set
             {
                 showData = value;
-                NotifyOfPropertyChange("ShowData");
             }
         }
 
         public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
 
-        internal async Task RefreshData(IServiceControl serviceControl)
+        internal void RefreshData(DefaultServiceControl serviceControl)
         {
             //TODO: Consider moving this into ServiceControl e.g. GetSageMessageBody or something, models should be just about data
             if (Data != null) return;
 
             var url = string.Format("/messages/{0}/body", MessageId);
-            var bodyString = await serviceControl.GetBody(url);
+            var bodyString = serviceControl.GetBody(url);
             if (bodyString != null)
             {
                 if (IsXml(bodyString))
@@ -147,7 +147,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
+        IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
         {
             try
             {
@@ -167,12 +167,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
             return new List<KeyValuePair<string, string>>();
         }
 
-        private static bool IsXml(string bodyString)
+        static bool IsXml(string bodyString)
         {
             return bodyString.StartsWith("<?xml");
         }
 
-        private static string CleanupBodyString(string bodyString)
+        static string CleanupBodyString(string bodyString)
         {
             return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
         }
@@ -221,7 +221,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private string GetFriendly(int time, string text)
+        string GetFriendly(int time, string text)
         {
             if (time > 0)
             {

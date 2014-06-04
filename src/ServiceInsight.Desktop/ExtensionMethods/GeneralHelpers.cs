@@ -1,14 +1,14 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+
     public static class GeneralHelpers
     {
-        public static T TryGetValue<T>(this Func<T> retreival, T defaultValue = default(T))
+        public static T TryGetValue<T>(this Func<T> retrieval, T defaultValue = default(T))
         {
             try
             {
-                return retreival();
+                return retrieval();
             }
             catch (Exception)
             {
@@ -16,11 +16,11 @@ namespace NServiceBus.Profiler.Desktop.ExtensionMethods
             }
         }
 
-        public static R TryGetValue<T, R>(this Func<T, R> retreival, T parameter, R defaultValue = default(R))
+        public static R TryGetValue<T, R>(this Func<T, R> retrieval, T parameter, R defaultValue = default(R))
         {
             try
             {
-                return retreival(parameter);
+                return retrieval(parameter);
             }
             catch (Exception)
             {

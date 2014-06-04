@@ -1,0 +1,95 @@
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.Framework.ExceptionHandler"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ExceptionHandler"
+        Width="700"
+        Height="500"
+        BorderBrush="#45496D"
+        BorderThickness="2"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None">
+    <Window.Resources>
+        <SolidColorBrush x:Key="LightBrush" Color="#737799" />
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="Padding" Value="30,5" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Image Margin="10"
+               VerticalAlignment="Center"
+               Source="pack://application:,,,/ServiceInsight.png"
+               Stretch="None" />
+
+        <TextBlock Grid.Column="1"
+                   Grid.ColumnSpan="4"
+                   VerticalAlignment="Center"
+                   FontSize="48"
+                   FontWeight="Bold"
+                   Foreground="{StaticResource LightBrush}"
+                   Text="ServiceInsight" />
+
+        <Border Grid.Row="1"
+                Grid.ColumnSpan="5"
+                Margin="10 0"
+                BorderBrush="{StaticResource LightBrush}"
+                BorderThickness="0 2 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="48"
+                           FontWeight="Bold"
+                           Text="Oops!" />
+                <TextBox x:Name="ErrorDetails"
+                         Grid.Row="2"
+                         Margin="0 5"
+                         BorderBrush="Black"
+                         BorderThickness="0.5"
+                         IsReadOnly="True" />
+                <TextBlock Grid.Row="1"
+                           FontSize="14"
+                           Text="Something went wrong. Here are the details." />
+                <TextBlock Grid.Row="3"
+                           FontSize="14"
+                           Text="Please report this error and someone will take a look at it." />
+            </Grid>
+        </Border>
+
+        <Button Grid.Row="2"
+                Grid.Column="2"
+                Click="ReportClick"
+                Content="Report Error" />
+
+        <Button Grid.Row="2"
+                Grid.Column="3"
+                Click="CopyClick"
+                Content="Copy to Clipboard" />
+
+        <Button Grid.Row="2"
+                Grid.Column="4"
+                Click="ExitClick"
+                Content="Close" />
+    </Grid>
+</Window>

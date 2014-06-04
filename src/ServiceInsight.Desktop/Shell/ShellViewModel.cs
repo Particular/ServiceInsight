@@ -1,85 +1,88 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.LogWindow;
-using NServiceBus.Profiler.Desktop.MessageFlow;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.MessageProperties;
-using NServiceBus.Profiler.Desktop.MessageViewers;
-using NServiceBus.Profiler.Desktop.Options;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Startup;
-using System.Diagnostics;
-using NServiceBus.Profiler.Desktop.Saga;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.Diagnostics;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Threading;
+    using Caliburn.Micro;
+    using Core.Licensing;
+    using Core.Settings;
+    using Core.UI.ScreenManager;
+    using Events;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using ExtensionMethods;
+    using Framework.Rx;
+    using LogWindow;
+    using MessageFlow;
     using MessageHeaders;
+    using MessageList;
+    using MessageProperties;
+    using MessageViewers;
+    using Options;
+    using Saga;
+    using Settings;
+    using Startup;
+    using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShellViewModel
+    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
+        IDeactivate,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<SwitchToMessageBody>,
+        IHandle<SwitchToSagaWindow>,
+        IHandle<SwitchToFlowWindow>,
+        IWorkTracker
     {
-        private readonly IAppCommands _appCommander;
-        private readonly IScreenFactory _screenFactory;
-        private readonly IWindowManagerEx _windowManager;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly AppLicenseManager _licenseManager;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ICommandLineArgParser _comandLineArgParser;
-        private int _workCounter;
-        private DispatcherTimer _refreshTimer;
-        private DispatcherTimer _idleTimer;
-        
+        IAppCommands appCommander;
+        ScreenFactory screenFactory;
+        IWindowManagerEx windowManager;
+        IEventAggregator eventAggregator;
+        AppLicenseManager licenseManager;
+        ISettingsProvider settingsProvider;
+        CommandLineArgParser comandLineArgParser;
+        int workCounter;
+        DispatcherTimer refreshTimer;
+        DispatcherTimer idleTimer;
+
         public ShellViewModel(
             IAppCommands appCommander,
-            IScreenFactory screenFactory,
+            ScreenFactory screenFactory,
             IWindowManagerEx windowManager,
-            IQueueExplorerViewModel queueExplorer, 
-            IEndpointExplorerViewModel endpointExplorer,
-            IMessageListViewModel messages,
-            IStatusBarManager statusBarManager,
+            EndpointExplorerViewModel endpointExplorer,
+            MessageListViewModel messages,
+            StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
-            IMessageFlowViewModel messageFlow,
-            ISagaWindowViewModel sagaWindow,
-            IMessageBodyViewModel messageBodyViewer,
-            IMessageHeadersViewModel messageHeadersViewer,
+            MessageFlowViewModel messageFlow,
+            SagaWindowViewModel sagaWindow,
+            MessageBodyViewModel messageBodyViewer,
+            MessageHeadersViewModel messageHeadersViewer,
             ISettingsProvider settingsProvider,
-            IMessagePropertiesViewModel messageProperties,
-            ILogWindowViewModel logWindow,
-            ICommandLineArgParser comandLineArgParser)
+            MessagePropertiesViewModel messageProperties,
+            LogWindowViewModel logWindow,
+            CommandLineArgParser comandLineArgParser)
         {
-            _appCommander = appCommander;
-            _screenFactory = screenFactory;
-            _windowManager = windowManager;
-            _eventAggregator = eventAggregator;
-            _licenseManager = licenseManager;
-            _settingsProvider = settingsProvider;
-            _comandLineArgParser = comandLineArgParser;
+            this.appCommander = appCommander;
+            this.screenFactory = screenFactory;
+            this.windowManager = windowManager;
+            this.eventAggregator = eventAggregator;
+            this.licenseManager = licenseManager;
+            this.settingsProvider = settingsProvider;
+            this.comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
-            QueueExplorer = queueExplorer;
             EndpointExplorer = endpointExplorer;
             MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
             Messages = messages;
             LogWindow = logWindow;
 
-            Items.Add(queueExplorer);
             Items.Add(endpointExplorer);
             Items.Add(messages);
             Items.Add(messageHeadersViewer);
@@ -88,11 +91,28 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
+
+            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
+            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
+            ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+
+            RefreshAllCommand = this.CreateCommand(RefreshAll);
+
+            RegisterCommand = this.CreateCommand(() =>
+            {
+                this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
+                DisplayRegistrationStatus();
+            });
+
+            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
+
+            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             View = (IShellView)view;
 
             DisplayName = GetProductName();
@@ -103,198 +123,114 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public void Deactivate(bool close)
         {
             base.OnDeactivate(close);
-            _refreshTimer.Stop();
+            refreshTimer.Stop();
             SaveLayout();
         }
 
-        private void SaveLayout()
+        void SaveLayout()
         {
-            View.OnSaveLayout(_settingsProvider);
+            if (!comandLineArgParser.ParsedOptions.ResetLayout)
+            {
+                View.OnSaveLayout(settingsProvider);
+            }
         }
 
-        private void RestoreLayout()
+        void RestoreLayout()
         {
-            View.OnRestoreLayout(_settingsProvider);
-        }
-
-        public void ResetLayout()
-        {
-            View.OnResetLayout(_settingsProvider);
+            if (!comandLineArgParser.ParsedOptions.ResetLayout)
+            {
+                View.OnRestoreLayout(settingsProvider);
+            }
         }
 
         public bool AutoRefresh { get; set; }
-        
+
         public bool BodyTabSelected { get; set; }
 
         public IShellView View { get; private set; }
 
-        public IMessagePropertiesViewModel MessageProperties { get; private set; }
+        public MessagePropertiesViewModel MessageProperties { get; private set; }
 
-        public IQueueExplorerViewModel QueueExplorer { get; private set; }
+        public EndpointExplorerViewModel EndpointExplorer { get; private set; }
 
-        public IEndpointExplorerViewModel EndpointExplorer { get; private set; }
+        public MessageListViewModel Messages { get; private set; }
 
-        public IMessageListViewModel Messages { get; private set; }
+        public MessageFlowViewModel MessageFlow { get; private set; }
 
-        public IMessageFlowViewModel MessageFlow { get; private set; }
+        public MessageBodyViewModel MessageBody { get; private set; }
 
-        public IMessageBodyViewModel MessageBody { get; private set; }
+        public MessageHeadersViewModel MessageHeaders { get; private set; }
 
-        public IMessageHeadersViewModel MessageHeaders { get; private set; }
+        public SagaWindowViewModel SagaWindow { get; private set; }
 
-        public ISagaWindowViewModel SagaWindow { get; private set; }
+        public StatusBarManager StatusBarManager { get; private set; }
 
-        public IStatusBarManager StatusBarManager { get; private set; }
-
-        public ILogWindowViewModel LogWindow { get; private set; }
+        public LogWindowViewModel LogWindow { get; private set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public void OnSelectedTabbedViewChanged(object view)
-        {
-            
-        }
-
         public bool WorkInProgress
         {
-            get { return _workCounter > 0; }
+            get { return workCounter > 0; }
         }
 
-        public void ShutDown()
-        {
-            _appCommander.ShutdownImmediately();
-        }
+        public ICommand ShutDownCommand { get; private set; }
 
-        public void About()
-        {
-            _windowManager.ShowDialog<AboutViewModel>();
-        }
+        public ICommand AboutCommand { get; private set; }
 
-        public void Help()
-        {
-            Process.Start(@"http://docs.particular.net/");
-        }
+        public ICommand HelpCommand { get; private set; }
 
-        public void Options()
-        {
-            _windowManager.ShowDialog<OptionsViewModel>();
-        }
+        public ICommand ConnectToServiceControlCommand { get; private set; }
 
-        [AutoCheckAvailability]
-        public void ConnectToMessageQueue()
-        {
-            var machineViewModel = _screenFactory.CreateScreen<IConnectToMachineViewModel>();
-            var result = _windowManager.ShowDialog(machineViewModel);
+        public ICommand RefreshAllCommand { get; private set; }
 
-            if(result.GetValueOrDefault(false))
-            {
-                QueueExplorer.ConnectToQueue(machineViewModel.ComputerName);
-            }
-        }
+        public ICommand RegisterCommand { get; private set; }
 
-        [AutoCheckAvailability]
-        public async void ConnectToServiceControl()
+        public ICommand ResetLayoutCommand { get; private set; }
+
+        public ICommand OptionsCommand { get; private set; }
+
+        public void ConnectToServiceControl()
         {
-            var connectionViewModel = _screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
-            var result = _windowManager.ShowDialog(connectionViewModel);
+            var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
+            var result = windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
             {
-                await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                _eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
-        [AutoCheckAvailability]
         public void DeleteSelectedMessages()
         {
         }
 
-        [AutoCheckAvailability]
-        public void PurgeCurrentQueue()
+        void RefreshAll()
         {
+            EndpointExplorer.RefreshData();
+            Messages.RefreshMessages();
+            SagaWindow.RefreshSaga();
         }
 
-        [AutoCheckAvailability]
-        public void DeleteCurrentQueue()
-        {
-            QueueExplorer.DeleteSelectedQueue();
-        }
-
-        [AutoCheckAvailability]
-        public async void RefreshAll()
-        {
-            await EndpointExplorer.RefreshData();
-            await QueueExplorer.RefreshData();
-            await Messages.RefreshMessages();
-            await SagaWindow.RefreshSaga();
-        }
-
-        [AutoCheckAvailability]
         public void ImportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        [AutoCheckAvailability]
         public void ExportMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        [AutoCheckAvailability]
-        public async Task CreateQueue()
-        {
-            var screen = _screenFactory.CreateScreen<IQueueCreationViewModel>();
-            var result = _windowManager.ShowDialog(screen);
-
-            if(result.GetValueOrDefault(false))
-            {
-                await QueueExplorer.RefreshData();
-            }
-        }
-
-        [AutoCheckAvailability]
         public void CreateMessage()
         {
             throw new NotImplementedException("This feature is not yet implemented.");
         }
 
-        public void Register()
-        {
-            _windowManager.ShowDialog<ILicenseRegistrationViewModel>();
-            DisplayRegistrationStatus();
-        }
-
         public void OnAutoRefreshChanged()
         {
-            _refreshTimer.IsEnabled = AutoRefresh;
-        }
-
-        public bool CanCreateMessage
-        {
-            get { return QueueExplorer.SelectedQueue != null && !WorkInProgress; }
-        }
-
-        public bool CanRefreshQueues
-        {
-            get { return !WorkInProgress; }
-        }
-
-        public bool CanPurgeCurrentQueue
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public bool CanDeleteCurrentQueue
-        {
-            get
-            {
-                return false;
-            }
+            refreshTimer.IsEnabled = AutoRefresh;
         }
 
         public bool CanDeleteSelectedMessages
@@ -305,22 +241,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
         }
 
-        public bool CanCreateQueue
-        {
-            get
-            {
-                return !QueueExplorer.ConnectedToAddress.IsEmpty() &&
-                       !WorkInProgress &&
-                       SelectedExplorerItem.IsQueueExplorerSelected();
-            }
-        }
-
         public int SelectedMessageTabItem { get; set; }
-
-        public bool CanConnectToMachine
-        {
-            get { return !WorkInProgress || AutoRefresh; }
-        }
 
         public bool CanConnectToServiceControl
         {
@@ -336,29 +257,29 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get { return false; }
         }
-        
-        private void InitializeIdleTimer()
+
+        void InitializeIdleTimer()
         {
-            _idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) {Interval = TimeSpan.FromSeconds(10)};
-            _idleTimer.Tick += (s, e) => OnApplicationIdle();
-            _idleTimer.Start();
+            idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) { Interval = TimeSpan.FromSeconds(10) };
+            idleTimer.Tick += (s, e) => OnApplicationIdle();
+            idleTimer.Start();
         }
 
-        private void InitializeAutoRefreshTimer()
+        void InitializeAutoRefreshTimer()
         {
-            var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
-            var startupTime = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? _comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
+            var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
+            var startupTime = comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
-            _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
-            _refreshTimer.Tick += (s, e) => OnAutoRefreshing();
+            refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
+            refreshTimer.Tick += (s, e) => OnAutoRefreshing();
 
-            AutoRefresh = _comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
+            AutoRefresh = comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
 
         internal void OnApplicationIdle()
         {
-            if (_idleTimer != null)
-                _idleTimer.Stop();
+            if (idleTimer != null)
+                idleTimer.Stop();
 
             ValidateCommandLineArgs();
             ValidateLicense();
@@ -374,30 +295,30 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void OnBodyTabSelectedChanged()
         {
-            _eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
+            eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip
         {
             get
             {
-                var appSetting = _settingsProvider.GetSettings<ProfilerSettings>();
+                var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
         }
 
-        private void ValidateCommandLineArgs()
+        void ValidateCommandLineArgs()
         {
-            if (_comandLineArgParser.HasUnsupportedKeys)
+            if (comandLineArgParser.HasUnsupportedKeys)
             {
-                _windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                _appCommander.ShutdownImmediately();
+                windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                appCommander.ShutdownImmediately();
             }
         }
-        
-        private void ValidateLicense()
+
+        void ValidateLicense()
         {
-            if (_licenseManager.IsLicenseExpired())
+            if (licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
@@ -405,51 +326,45 @@ namespace NServiceBus.Profiler.Desktop.Shell
             DisplayRegistrationStatus();
         }
 
-        private void DisplayRegistrationStatus()
+        void DisplayRegistrationStatus()
         {
-            var license = _licenseManager.CurrentLicense;
-            
+            var license = licenseManager.CurrentLicense;
+
             if (license == null)
             {
                 return;
             }
             if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'",license.LicenseType,license.RegisteredTo);
+                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(licenseManager.GetRemainingTrialDays()));
             }
         }
 
-        private void RegisterLicense()
+        void RegisterLicense()
         {
-            var model = _screenFactory.CreateScreen<ILicenseRegistrationViewModel>();
-            var result = _windowManager.ShowDialog(model);
+            var model = screenFactory.CreateScreen<LicenseRegistrationViewModel>();
+            var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))
             {
-                ShutDown();
+                appCommander.ShutdownImmediately();
             }
         }
 
-        private void NotifyPropertiesChanged()
+        void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => CanConnectToMachine);
             NotifyOfPropertyChange(() => CanConnectToServiceControl);
-            NotifyOfPropertyChange(() => CanCreateMessage);
-            NotifyOfPropertyChange(() => CanCreateQueue);
-            NotifyOfPropertyChange(() => CanDeleteCurrentQueue);
             NotifyOfPropertyChange(() => CanDeleteSelectedMessages);
             NotifyOfPropertyChange(() => CanExportMessage);
             NotifyOfPropertyChange(() => CanImportMessage);
-            NotifyOfPropertyChange(() => CanPurgeCurrentQueue);
-            NotifyOfPropertyChange(() => CanRefreshQueues);
         }
 
-        private string GetProductName()
+        string GetProductName()
         {
             var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
             return productAttribute.Product;
@@ -457,16 +372,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public void Handle(WorkStarted @event)
         {
-            _workCounter++;
+            workCounter++;
             NotifyPropertiesChanged();
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (_workCounter <= 0) 
+            if (workCounter <= 0)
                 return;
 
-            _workCounter--;
+            workCounter--;
             NotifyPropertiesChanged();
         }
 
@@ -489,6 +404,5 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             View.SelectTab("MessageFlow");
         }
-
     }
 }

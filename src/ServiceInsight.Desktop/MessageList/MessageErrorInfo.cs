@@ -1,15 +1,15 @@
-﻿using System;
-using System.Windows.Media.Imaging;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.MessageList
+﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
+    using System;
+    using System.Windows.Media.Imaging;
+    using ExtensionMethods;
+    using Models;
+    using Properties;
+
     public class MessageErrorInfo : IComparable
     {
-        private MessageStatus _status;
-        private bool _statusSpecified;
+        MessageStatus status;
+        bool statusSpecified;
 
         public MessageErrorInfo()
         {
@@ -27,19 +27,19 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public MessageStatus Status
         {
-            get { return _status; }
+            get { return status; }
             private set
             {
-                _status = value;
-                _statusSpecified = true;
+                status = value;
+                statusSpecified = true;
             }
         }
 
         public string Description { get; private set; }
 
-        private BitmapImage GetImage()
+        BitmapImage GetImage()
         {
-            if(!_statusSpecified)
+            if(!statusSpecified)
                 return Resources.BulletWhite.ToBitmapImage();
             
             switch (Status)
@@ -66,8 +66,8 @@ namespace NServiceBus.Profiler.Desktop.MessageList
             var that = obj as MessageErrorInfo;
             if (that == null) return -1;
 
-            if (_statusSpecified == false &&
-                that._statusSpecified == false)
+            if (statusSpecified == false &&
+                that.statusSpecified == false)
             {
                 return 0;
             }
@@ -77,7 +77,7 @@ namespace NServiceBus.Profiler.Desktop.MessageList
 
         public override string ToString()
         {
-            if (!_statusSpecified)
+            if (!statusSpecified)
                 return "Not Specified";
 
             switch (Status)

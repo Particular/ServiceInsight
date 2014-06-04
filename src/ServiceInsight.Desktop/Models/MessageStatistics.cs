@@ -1,8 +1,8 @@
-﻿using System;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using ExtensionMethods;
+
     public class MessageStatistics
     {
         public TimeSpan CriticalTime { get; set; }

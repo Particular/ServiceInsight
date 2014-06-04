@@ -1,34 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Explorer.QueueExplorer;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageList;
-using NServiceBus.Profiler.Desktop.Explorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Startup;
-
-namespace NServiceBus.Profiler.Desktop.Search
+﻿namespace Particular.ServiceInsight.Desktop.Search
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using Caliburn.PresentationFramework;
+    using System.Windows.Input;
+    using Caliburn.Micro;
     using Core.Settings;
+    using Events;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using ExtensionMethods;
+    using MessageList;
+    using Models;
     using Settings;
+    using Shell;
+    using Startup;
 
-    public class SearchBarViewModel : Screen, ISearchBarViewModel
+    public class SearchBarViewModel : Screen,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IWorkTracker
     {
-        private readonly ICommandLineArgParser _commandLineArgParser;
-        readonly ISettingsProvider _settingProvider;
-        private int _workCount;
+        private const int MAX_SAVED_SEARCHES = 10;
+        CommandLineArgParser commandLineArgParser;
+        ISettingsProvider settingProvider;
+        int workCount;
 
-        public SearchBarViewModel(ICommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
-            _commandLineArgParser = commandLineArgParser;
-            _settingProvider = settingProvider;
+            this.commandLineArgParser = commandLineArgParser;
+            this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
+
+            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
+            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
         }
 
         protected override void OnActivate()
@@ -36,7 +42,9 @@ namespace NServiceBus.Profiler.Desktop.Search
             base.OnActivate();
 
             RestoreRecentSearchEntries();
-            Search(_commandLineArgParser.ParsedOptions.SearchQuery);
+
+            if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
+                Search(commandLineArgParser.ParsedOptions.SearchQuery);
         }
 
         public void GoToFirstPage()
@@ -59,6 +67,10 @@ namespace NServiceBus.Profiler.Desktop.Search
             Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
         }
 
+        public ICommand SearchCommand { get; private set; }
+
+        public ICommand CancelSearchCommand { get; private set; }
+
         public void Search(string searchQuery, bool performSearch = true)
         {
             SearchQuery = searchQuery;
@@ -66,23 +78,21 @@ namespace NServiceBus.Profiler.Desktop.Search
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
 
-            if(performSearch) Search();
+            if (performSearch) Search();
         }
 
-        [AutoCheckAvailability]
-        public async void Search()
+        public void Search()
         {
             SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
-            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
-        [AutoCheckAvailability]
-        public async void CancelSearch()
+        public void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            await Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
@@ -94,17 +104,14 @@ namespace NServiceBus.Profiler.Desktop.Search
             NotifyPropertiesChanged();
         }
 
-        public async void RefreshResult()
+        public void RefreshResult()
         {
-            await Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
         }
 
         public bool CanGoToLastPage
         {
-            get
-            {
-                return CurrentPage < PageCount && !WorkInProgress;
-            }
+            get { return CurrentPage < PageCount && !WorkInProgress; }
         }
 
         public bool CanCancelSearch
@@ -112,11 +119,11 @@ namespace NServiceBus.Profiler.Desktop.Search
             get { return SearchInProgress; }
         }
 
-        public new IMessageListViewModel Parent
+        public new MessageListViewModel Parent
         {
-            get { return base.Parent as IMessageListViewModel; }
+            get { return base.Parent as MessageListViewModel; }
         }
-        
+
         public int PageCount
         {
             get
@@ -132,13 +139,11 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public bool WorkInProgress
         {
-            get { return _workCount > 0; }
+            get { return workCount > 0; }
         }
 
         public Endpoint SelectedEndpoint { get; private set; }
 
-        public Queue SelectedQueue { get; private set; }
-        
         public string SearchQuery { get; set; }
 
         public string SearchResultMessage
@@ -160,29 +165,17 @@ namespace NServiceBus.Profiler.Desktop.Search
 
         public bool CanGoToFirstPage
         {
-            get
-            {
-                return CurrentPage > 1 &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage > 1 && !WorkInProgress; }
         }
 
         public bool CanGoToPreviousPage
         {
-            get
-            {
-                return CurrentPage - 1 >= 1 &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage - 1 >= 1 && !WorkInProgress; }
         }
 
         public bool CanGoToNextPage
         {
-            get
-            {
-                return CurrentPage + 1 <= PageCount &&
-                       !WorkInProgress;
-            }
+            get { return CurrentPage + 1 <= PageCount && !WorkInProgress; }
         }
 
         public IList<StoredMessage> Result { get; private set; }
@@ -190,30 +183,23 @@ namespace NServiceBus.Profiler.Desktop.Search
         public IObservableCollection<string> RecentSearchQueries { get; private set; }
 
         public int CurrentPage { get; private set; }
-        
+
         public int PageSize { get; private set; }
-        
+
         public int TotalItemCount { get; private set; }
-        
+
         public bool SearchInProgress { get; private set; }
-        
+
         public bool SearchEnabled { get; private set; }
 
         public bool CanSearch
         {
-            get
-            {
-                return !WorkInProgress &&
-                       !string.IsNullOrWhiteSpace(SearchQuery);
-            }
+            get { return !WorkInProgress && !string.IsNullOrWhiteSpace(SearchQuery); }
         }
 
         public bool CanRefreshResult
         {
-            get
-            {
-                return !WorkInProgress;
-            }
+            get { return !WorkInProgress; }
         }
 
         public void NotifyPropertiesChanged()
@@ -234,17 +220,7 @@ namespace NServiceBus.Profiler.Desktop.Search
         {
             if (SelectedEndpoint != null)
             {
-                SelectedQueue = null;
                 SearchEnabled = true;
-            }
-        }
-
-        public void OnSelectedQueueChanged()
-        {
-            if (SelectedQueue != null)
-            {
-                SelectedEndpoint = null;
-                SearchEnabled = false;
             }
         }
 
@@ -253,7 +229,7 @@ namespace NServiceBus.Profiler.Desktop.Search
             var endpointNode = @event.SelectedExplorerItem.As<EndpointExplorerItem>();
             if (endpointNode != null)
             {
-                SelectedEndpoint = endpointNode.Endpoint;                
+                SelectedEndpoint = endpointNode.Endpoint;
             }
 
             var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();
@@ -263,56 +239,56 @@ namespace NServiceBus.Profiler.Desktop.Search
                 SearchEnabled = true;
             }
 
-            var queueNode = @event.SelectedExplorerItem.As<QueueExplorerItem>();
-            if (queueNode != null)
-            {
-                SelectedQueue = queueNode.Queue;
-            }
-
             NotifyPropertiesChanged();
         }
 
         public void Handle(WorkStarted @event)
         {
-            _workCount++;
+            workCount++;
             NotifyPropertiesChanged();
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (_workCount > 0)
+            if (workCount > 0)
             {
-                _workCount--;
+                workCount--;
                 NotifyPropertiesChanged();
             }
         }
 
-        private void RestoreRecentSearchEntries()
+        void RestoreRecentSearchEntries()
         {
-            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            var setting = settingProvider.GetSettings<ProfilerSettings>();
             RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
         }
 
-        private void AddRecentSearchEntry(string searchQuery)
+        void AddRecentSearchEntry(string searchQuery)
         {
             if (searchQuery.IsEmpty()) return;
 
-            RecentSearchQueries.Add(searchQuery);
-
-            var setting = _settingProvider.GetSettings<ProfilerSettings>();
+            var setting = settingProvider.GetSettings<ProfilerSettings>();
             if (!setting.RecentSearchEntries.Contains(searchQuery, StringComparer.OrdinalIgnoreCase))
             {
-                setting.RecentSearchEntries.Add(searchQuery);
-                _settingProvider.SaveSettings(setting);
+                RecentSearchQueries.Insert(0, searchQuery);
+                setting.RecentSearchEntries.Insert(0, searchQuery);
+
+                while (RecentSearchQueries.Count < MAX_SAVED_SEARCHES)
+                    RecentSearchQueries.RemoveAt(RecentSearchQueries.Count - 1);
+
+                while (setting.RecentSearchEntries.Count < MAX_SAVED_SEARCHES)
+                    setting.RecentSearchEntries.RemoveAt(setting.RecentSearchEntries.Count - 1);
+
+                settingProvider.SaveSettings(setting);
             }
         }
 
-        private string GetSearchResultMessage()
+        string GetSearchResultMessage()
         {
             return string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
         }
 
-        private string GetSearchResultHeader()
+        string GetSearchResultHeader()
         {
             if (SearchInProgress)
             {
@@ -323,7 +299,7 @@ namespace NServiceBus.Profiler.Desktop.Search
                    SelectedEndpoint.Name : string.Empty;
         }
 
-        private string GetSearchResultResults()
+        string GetSearchResultResults()
         {
             if (SearchInProgress)
             {

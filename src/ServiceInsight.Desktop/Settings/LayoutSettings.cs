@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Configuration;
-using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.Settings
+﻿namespace Particular.ServiceInsight.Desktop.Settings
 {
+    using System.ComponentModel;
+    using System.Configuration;
+    using System.Windows;
+
     [SettingsProvider("IsolatedStore")]
     public class ShellLayoutSettings
     {

@@ -1,25 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using DevExpress.Xpf.Bars;
-using DevExpress.Xpf.Core;
-using DevExpress.Xpf.Core.Serialization;
-using DevExpress.Xpf.Docking;
-using DevExpress.Xpf.Docking.Base;
-using log4net;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
-    /// <summary>
-    /// Interaction logic for Shell.xaml
-    /// </summary>
+    using System;
+    using System.IO;
+    using System.Windows;
+    using Anotar.Serilog;
+    using Core.Settings;
+    using DevExpress.Xpf.Bars;
+    using DevExpress.Xpf.Core;
+    using DevExpress.Xpf.Core.Serialization;
+    using DevExpress.Xpf.Docking;
+    using DevExpress.Xpf.Docking.Base;
+    using ExtensionMethods;
+    using Settings;
+
     public partial class ShellView : IShellView
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (IShellView));
-
         public ShellView()
         {
             ChangeTheme(Theme.Office2013Name);
@@ -28,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             Loaded += OnShellLoaded;
         }
 
-        private void OnShellLoaded(object sender, RoutedEventArgs e)
+        void OnShellLoaded(object sender, RoutedEventArgs e)
         {
             DXSplashScreen.Close();
             Activate();
@@ -105,12 +100,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
             settingsProvider.SaveSettings(layoutSettings);
         }
 
-        private string GetCurrentLayoutVersion()
+        string GetCurrentLayoutVersion()
         {
             return DXSerializer.GetLayoutVersion(BarManager);
         }
 
-        private string GetLayout(dynamic control) //Lack of common interface :(
+        string GetLayout(dynamic control) //Lack of common interface :(
         {
             try
             {
@@ -120,32 +115,32 @@ namespace NServiceBus.Profiler.Desktop.Shell
             }
             catch (Exception ex)
             {
-                _logger.Info("Failed to save the layout, reason is: " + ex);
+                LogTo.Information(ex, "Failed to save the layout, reason is: {ex}", ex);
                 return null;
             }
         }
 
-        private void SetLayout(dynamic control, Stream layout)
+        void SetLayout(dynamic control, Stream layout)
         {
-            if(layout == null)
+            if (layout == null)
                 return;
 
             try
             {
                 control.RestoreLayoutFromStream(layout);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _logger.Info("Failed to restore layout, reason is: " + ex);
+                LogTo.Information(ex, "Failed to restore layout, reason is: {ex}", ex);
             }
         }
 
-        private IShellViewModel Model
+        ShellViewModel Model
         {
-            get { return DataContext as IShellViewModel; }
+            get { return DataContext as ShellViewModel; }
         }
 
-        private void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
+        void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
         {
             if (Model != null)
             {

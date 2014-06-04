@@ -1,50 +1,89 @@
-﻿using Caliburn.PresentationFramework;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.UI;
-using NServiceBus.Profiler.Desktop.Shell.Menu;
-
-namespace NServiceBus.Profiler.Desktop.LogWindow
+﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
-    public class LogWindowViewModel : Screen, ILogWindowViewModel
-    {
-        private ILogWindowView _view;
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Reactive.Subjects;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using Caliburn.Micro;
+    using ExtensionMethods;
+    using Framework;
+    using ReactiveUI;
+    using Serilog.Events;
+    using Serilog.Formatting;
+    using Serilog.Formatting.Display;
 
-        public LogWindowViewModel()
+    public class LogWindowViewModel : Screen
+    {
+        public static Subject<LogEvent> LogObserver = new Subject<LogEvent>();
+
+        readonly IClipboard clipboard;
+        ITextFormatter textFormatter;
+        const int MaxTextLength = 5000;
+
+        public LogWindowViewModel(IClipboard clipboard)
         {
-            ContextMenuItems = new BindableCollection<IMenuItem>
+            this.clipboard = clipboard;
+            Logs = new ReactiveList<LogMessage>();
+            textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
+            LogObserver.ObserveOn(RxApp.MainThreadScheduler).Subscribe(UpdateLog);
+
+            ClearCommand = this.CreateCommand(Clear);
+            CopyCommand = this.CreateCommand(Copy);
+        }
+
+        public ReactiveList<LogMessage> Logs { get; private set; }
+        public ICommand ClearCommand { get; private set; }
+        public ICommand CopyCommand { get; private set; }
+
+        void Clear()
+        {
+            Logs.Clear();
+        }
+
+        void Copy()
+        {
+            clipboard.CopyTo(Logs.Aggregate("", (s, l) => s + l.Log));
+        }
+
+        void UpdateLog(LogEvent loggingEvent)
+        {
+            if (Logs.Count > MaxTextLength)
+                Clear();
+
+            var sr = new StringWriter();
+            textFormatter.Format(loggingEvent, sr);
+            var log = sr.ToString();
+
+            switch (loggingEvent.Level)
             {
-                new MenuItem("Clear All", new RelayCommand(Clear), Properties.Resources.Clear),
-                new MenuItem("Copy", new RelayCommand(CopyToClipboard), Properties.Resources.Copy)
-            };
+                case LogEventLevel.Information:
+                    Logs.Add(new LogMessage(log, Colors.Black, true));
+                    break;
+
+                case LogEventLevel.Warning:
+                    Logs.Add(new LogMessage(log, Colors.DarkOrange));
+                    break;
+
+                case LogEventLevel.Error:
+                    Logs.Add(new LogMessage(log, Colors.Red));
+                    break;
+
+                case LogEventLevel.Fatal:
+                    Logs.Add(new LogMessage(log, Colors.DarkOrange));
+                    break;
+
+                case LogEventLevel.Debug:
+                    Logs.Add(new LogMessage(log, Colors.Green));
+                    break;
+
+                default:
+                    Logs.Add(new LogMessage(log, Colors.Black));
+                    break;
+            }
         }
-
-        public override void AttachView(object view, object context)
-        {
-            base.AttachView(view, context);
-            _view = (ILogWindowView)view;
-            _view.Initialize();
-        }
-
-        public void Clear()
-        {
-            _view.Clear();
-        }
-
-        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
-
-        public void OnContextMenuOpening()
-        {
-        }
-
-        public void CopyToClipboard()
-        {
-            _view.Copy();
-        }
-    }
-
-    public interface ILogWindowViewModel : IScreen, IHaveContextMenu
-    {
-        void Clear();
-        void CopyToClipboard();
     }
 }

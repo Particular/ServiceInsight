@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub.Controllers
 {
-    public class EndpointsController : ApiController
+    using System.Net.Http;
+    using Desktop.Models;
+
+    public class EndpointsController : ControllerBase
     {
-        public IEnumerable<Endpoint> Get()
+        public HttpResponseMessage Get()
         {
-            return new[]
+            return Response(new[]
             {
-                new Endpoint()
+                new Endpoint
                 {
                     Name = "Test",
                     HostDisplayName = "localhost",
                 }
-            };
+            });
         }
+
     }
 }

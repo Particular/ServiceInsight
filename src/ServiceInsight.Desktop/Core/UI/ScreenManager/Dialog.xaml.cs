@@ -1,13 +1,10 @@
-﻿using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
-    /// <summary>
-    /// Interaction logic for Dialog.xaml
-    /// </summary>
+    using System.Windows;
+
     public partial class Dialog
     {
-        public static readonly DependencyProperty IsModalProperty;
+        public static DependencyProperty IsModalProperty;
        
         static Dialog()
         {
@@ -59,7 +56,7 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
             return result;
         }
 
-        private static Window FindFirstModalDialog(Window ownerWindow)
+        static Window FindFirstModalDialog(Window ownerWindow)
         {
             if (ownerWindow != null)
             {

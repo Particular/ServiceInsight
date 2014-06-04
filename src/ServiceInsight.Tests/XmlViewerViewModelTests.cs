@@ -1,22 +1,23 @@
-﻿using System.Xml;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core.MessageDecoders;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-using NServiceBus.Profiler.Desktop.Models;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Xml;
+    using Caliburn.Micro;
+    using Desktop.Core.MessageDecoders;
+    using Desktop.Events;
+    using Desktop.Framework;
+    using Desktop.MessageViewers.XmlViewer;
+    using Desktop.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class XmlViewerViewModelTests
     {
-        private IXmlMessageViewModel ViewModel;
-        private IXmlMessageView View;
-        private IContentDecoder<XmlDocument> XmlDecoder;
-        private IClipboard Clipboard;
+        XmlMessageViewModel ViewModel;
+        IXmlMessageView View;
+        IContentDecoder<XmlDocument> XmlDecoder;
+        IClipboard Clipboard;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
@@ -26,7 +27,7 @@ namespace NServiceBus.Profiler.Tests
             Clipboard = Substitute.For<IClipboard>();
             View = Substitute.For<IXmlMessageView>();
             ViewModel = new XmlMessageViewModel(XmlDecoder, Clipboard);
-            ViewModel.Activate();
+            ((IActivate)ViewModel).Activate();
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace NServiceBus.Profiler.Tests
         {
             XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
-            ViewModel.AttachView(View, null);
+            ((IViewAware)ViewModel).AttachView(View);
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
 
             View.Received(1).Display(Arg.Any<string>());
@@ -55,7 +56,7 @@ namespace NServiceBus.Profiler.Tests
         {
             ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
 
-            View.DidNotReceive().Display(Arg.Any<string>()); 
+            View.DidNotReceive().Display(Arg.Any<string>());
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace NServiceBus.Profiler.Tests
         public void clipboard_should_have_message_content_when_copying_message()
         {
             ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
-            
+
             XmlDecoder.Decode(Arg.Any<byte[]>()).Returns(new DecoderResult<XmlDocument>(GetDocument(TestMessage)));
 
             ViewModel.CopyMessageXml();
@@ -78,7 +79,7 @@ namespace NServiceBus.Profiler.Tests
             Clipboard.Received().CopyTo(Arg.Any<string>());
         }
 
-        private static XmlDocument GetDocument(string content)
+        static XmlDocument GetDocument(string content)
         {
             var document = new XmlDocument();
             document.LoadXml(content);

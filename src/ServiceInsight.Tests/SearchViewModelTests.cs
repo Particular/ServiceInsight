@@ -1,27 +1,26 @@
-﻿using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.Startup;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
     using Desktop.Core.Settings;
+    using Desktop.Events;
+    using Desktop.Explorer.EndpointExplorer;
+    using Desktop.Models;
+    using Desktop.Search;
+    using Desktop.Startup;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
 
     [TestFixture]
     public class SearchViewModelTests
     {
-        private ISearchBarViewModel ViewModel;
-        private ICommandLineArgParser ArgParser;
-        private ISettingsProvider SettingProvider;
+        SearchBarViewModel ViewModel;
+        CommandLineArgParser ArgParser;
+        ISettingsProvider SettingProvider;
 
         [SetUp]
         public void TestInitialize()
         {
-            ArgParser = Substitute.For<ICommandLineArgParser>();
+            ArgParser = Substitute.For<CommandLineArgParser>();
             SettingProvider = Substitute.For<ISettingsProvider>();
             ViewModel = new SearchBarViewModel(ArgParser, SettingProvider);
         }

@@ -1,8 +1,9 @@
-﻿using System.Web.Http;
-using System.Web.Http.Results;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub.Controllers
 {
+    using System.Web.Http;
+    using System.Web.Http.Results;
+    using Models;
+
     public class HomeController : ApiController
     {
         public JsonResult<HomeModel> Get()

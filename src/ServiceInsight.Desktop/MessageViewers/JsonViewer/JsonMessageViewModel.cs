@@ -1,12 +1,13 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
-    public class JsonMessageViewModel : Screen, IJsonMessageViewModel
+    using Caliburn.Micro;
+    using Events;
+    using Models;
+
+    public class JsonMessageViewModel : Screen,
+        IHandle<SelectedMessageChanged>
     {
-        private IJsonMessageView _messageView;
+        IJsonMessageView messageView;
 
         protected override void OnActivate()
         {
@@ -14,10 +15,10 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
             DisplayName = "Json";
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
-            _messageView = (IJsonMessageView)view;
+            base.OnViewAttached(view, context);
+            messageView = (IJsonMessageView)view;
             OnSelectedMessageChanged();
         }
 
@@ -25,13 +26,13 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
 
         public void OnSelectedMessageChanged()
         {
-            if (_messageView == null) return;
+            if (messageView == null) return;
 
-            _messageView.Clear();
+            messageView.Clear();
 
             if (SelectedMessage == null || SelectedMessage.Body == null) return;
 
-            _messageView.Display(SelectedMessage.Body);
+            messageView.Display(SelectedMessage.Body);
         }
 
         public void Handle(SelectedMessageChanged @event)

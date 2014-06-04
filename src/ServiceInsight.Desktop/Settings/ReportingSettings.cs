@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace NServiceBus.Profiler.Desktop.Settings
+﻿namespace Particular.ServiceInsight.Desktop.Settings
 {
+    using System.ComponentModel;
+
     public class ReportingSettings
     {
         [DisplayName("Usage Data Collection Approved")]

@@ -1,36 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
-using Caliburn.PresentationFramework.Filters;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Autofac;
+    using Caliburn.Micro;
+    using Core.Settings;
+    using ServiceControl;
+    using Settings;
+
     public class ServiceControlConnectionViewModel : Screen
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
 
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ProfilerSettings _appSettings;
-        private readonly IContainer _container;
+        ISettingsProvider settingsProvider;
+        ProfilerSettings appSettings;
+        IContainer container;
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
             IContainer container)
         {
-            _settingsProvider = settingsProvider;
-            _container = container;
-            _appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.settingsProvider = settingsProvider;
+            this.container = container;
+            appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
         }
 
         public string ServiceUrl { get; set; }
-        
+
         public bool IsAddressValid { get; set; }
 
         public bool WorkInProgress { get; private set; }
@@ -40,13 +38,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             base.OnActivate();
 
             IsAddressValid = true;
-            ServiceUrl = _appSettings.LastUsedServiceControl;
+            ServiceUrl = appSettings.LastUsedServiceControl;
             RecentEntries = GetRecentServiceEntries();
         }
 
-        private List<string> GetRecentServiceEntries()
+        List<string> GetRecentServiceEntries()
         {
-            return _appSettings.RecentServiceControlEntries.ToList();
+            return appSettings.RecentServiceControlEntries.ToList();
         }
 
         public virtual void Close()
@@ -63,11 +61,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public string Version { get; private set; }
 
-        [AutoCheckAvailability]
-        public async virtual void Accept()
+        public virtual void Accept()
         {
             StartWorkInProgress();
-            IsAddressValid = await IsValidUrl(ServiceUrl);
+            IsAddressValid = IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 StoreConnectionAddress();
@@ -76,13 +73,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             StopWorkInProgress();
         }
 
-        private void StartWorkInProgress()
+        void StartWorkInProgress()
         {
             ProgressMessage = ConnectingToServiceControl;
             WorkInProgress = true;
         }
 
-        private void StopWorkInProgress()
+        void StopWorkInProgress()
         {
             ProgressMessage = string.Empty;
             WorkInProgress = false;
@@ -90,32 +87,33 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public string ProgressMessage
         {
-            get; set;
+            get;
+            set;
         }
 
-        private void StoreConnectionAddress()
+        void StoreConnectionAddress()
         {
-            var existingEntry = _appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
+            var existingEntry = appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
-                _appSettings.RecentServiceControlEntries.Remove(existingEntry);
+                appSettings.RecentServiceControlEntries.Remove(existingEntry);
 
-            _appSettings.RecentServiceControlEntries.Add(ServiceUrl);
-            _appSettings.LastUsedServiceControl = ServiceUrl;
+            appSettings.RecentServiceControlEntries.Add(ServiceUrl);
+            appSettings.LastUsedServiceControl = ServiceUrl;
 
-            _settingsProvider.SaveSettings(_appSettings);
+            settingsProvider.SaveSettings(appSettings);
         }
 
-        private async Task<bool> IsValidUrl(string serviceUrl)
+        bool IsValidUrl(string serviceUrl)
         {
             if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
             {
-                using (var scope = _container.BeginLifetimeScope())
+                using (var scope = container.BeginLifetimeScope())
                 {
-                    var connection = scope.Resolve<IServiceControlConnectionProvider>();
-                    var service = scope.Resolve<IServiceControl>();
+                    var connection = scope.Resolve<ServiceControlConnectionProvider>();
+                    var service = scope.Resolve<DefaultServiceControl>();
 
                     connection.ConnectTo(serviceUrl);
-                    Version = await service.GetVersion();
+                    Version = service.GetVersion();
 
                     return Version != null;
                 }

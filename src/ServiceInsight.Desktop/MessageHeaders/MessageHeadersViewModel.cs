@@ -1,48 +1,18 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageHeaders
+﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
     using System.Linq;
-    using Caliburn.PresentationFramework;
-    using Caliburn.PresentationFramework.ApplicationModel;
-    using Caliburn.PresentationFramework.Screens;
-    using Core.UI;
+    using Caliburn.Micro;
     using Events;
-    using Shell.Menu;
+    using ReactiveUI;
 
-    public interface IMessageHeadersViewModel : IScreen, IHaveContextMenu, IHandle<SelectedMessageChanged>
+    public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        IObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
-    }
-
-    public class MessageHeadersViewModel : Screen, IMessageHeadersViewModel
-    {
-        private readonly IMenuItem _copyAllHeaders;
-        private IMessageHeadersView _view;
-        private bool _autoFitted;
-
         public MessageHeadersViewModel()
         {
-            KeyValues = new BindableCollection<MessageHeaderKeyValue>();
-            _copyAllHeaders = new MenuItem("Copy To Clipboard", new RelayCommand(CopyHeadersToClipboard));
-
-            ContextMenuItems = new BindableCollection<IMenuItem>
-            {
-                _copyAllHeaders
-            };
+            KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
         }
 
-        public IObservableCollection<IMenuItem> ContextMenuItems { get; private set; }
-        
-        public void OnContextMenuOpening()
-        {
-        }
-
-        public IObservableCollection<MessageHeaderKeyValue> KeyValues { get; private set; }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            _view = (IMessageHeadersView) view;
-        }
+        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; private set; }
 
         public void Handle(SelectedMessageChanged @event)
         {
@@ -56,21 +26,6 @@
                 Key = h.Key,
                 Value = h.Value
             }));
-
-            AutoFitKeys();
-        }
-
-        private void AutoFitKeys()
-        {
-            if(_autoFitted) return;
-
-            _view.AutoFit();
-            _autoFitted = true;
-        }
-
-        private void CopyHeadersToClipboard()
-        {
-            _view.CopyRowsToClipboard();
         }
     }
 }

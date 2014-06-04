@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Properties;
-
-namespace NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer
+﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
+    using System.Drawing;
+    using Models;
+    using Properties;
+
     public class ErrorEndpointExplorerItem : EndpointExplorerItem
     {
         public ErrorEndpointExplorerItem(Endpoint endpoint) : base(endpoint)

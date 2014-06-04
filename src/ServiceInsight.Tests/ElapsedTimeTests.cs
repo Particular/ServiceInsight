@@ -1,10 +1,10 @@
-﻿using System;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System;
+    using Desktop.ExtensionMethods;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class ElapsedTimeTests
     {

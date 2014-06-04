@@ -1,15 +1,9 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System.Diagnostics;
+
     [DebuggerDisplay("Type={ExceptionType},Message={Message}")]
-    public class ExceptionDetails : IExceptionDetails
+    public class ExceptionDetails 
     {
         public ExceptionDetails() { }
         public ExceptionDetails(StoredMessage message)
@@ -26,11 +20,4 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string StackTrace { get; set; }
     }
 
-    public interface IExceptionDetails 
-    {
-        string ExceptionType { get; set; }
-        string Message { get; set; }
-        string Source { get; set; }
-        string StackTrace { get; set; }
-    }
 }

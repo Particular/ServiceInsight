@@ -1,40 +1,30 @@
-﻿using log4net;
-using log4net.Repository.Hierarchy;
+﻿using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.LogWindow
+namespace Particular.ServiceInsight.Desktop.LogWindow
 {
-    public interface ILogWindowView
-    {
-        void Initialize();
-        void Clear();
-        void Copy();
-    }
+    using System;
 
-    public partial class LogWindowView : ILogWindowView
+    public partial class LogWindowView
     {
-        private RichTextBoxAppender appender;
-
+        IDisposable logSubscription;
 
         public LogWindowView()
         {
             InitializeComponent();
+
+            DataContextChanged += OnDataContextChanged;
         }
 
-        public void Initialize()
+        void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            appender = new RichTextBoxAppender(LogContainer);
-            var hierarchy = (Hierarchy)LogManager.GetRepository();
-            hierarchy.Root.AddAppender(appender);
-        }
+            var vm = DataContext as LogWindowViewModel;
+            if (vm == null)
+                return;
 
-        public void Clear()
-        {
-            appender.Clear();
-        }
+            if (logSubscription != null)
+                logSubscription.Dispose();
 
-        public void Copy()
-        {
-            LogContainer.Copy();
+            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => scroll.ScrollToEnd());
         }
     }
 }

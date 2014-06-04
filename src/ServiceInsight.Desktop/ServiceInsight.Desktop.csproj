@@ -8,7 +8,7 @@
     <ProjectGuid>{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.Profiler.Desktop</RootNamespace>
+    <RootNamespace>Particular.ServiceInsight.Desktop</RootNamespace>
     <AssemblyName>Particular.ServiceInsight</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -32,8 +32,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <FodyPath>..\packages\Fody</FodyPath>
+    <NuGetPackageImportStamp>9c1d9b81</NuGetPackageImportStamp>
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +46,8 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -56,6 +58,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
@@ -63,22 +66,19 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <None Include="Saga\saga.data">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Fody.targets" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="Anotar.Serilog">
+      <HintPath>..\packages\Anotar.Serilog.Fody.2.10.0\Lib\portable-net4+sl4+wp7+windows8\Anotar.Serilog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Caliburn.Core">
-      <HintPath>..\packages\Caliburn\lib\net40\Caliburn.Core.dll</HintPath>
+    <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.4.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.PresentationFramework">
-      <HintPath>..\packages\Caliburn\lib\net40\Caliburn.PresentationFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core\lib\net45\Castle.Core.dll</HintPath>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Data.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
@@ -92,9 +92,6 @@
     <Reference Include="DevExpress.Xpf.Core.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1.Extensions">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.Docking.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
     </Reference>
@@ -104,26 +101,14 @@
     <Reference Include="DevExpress.Xpf.Grid.v13.1.Core">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Extensions">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.Layout.v13.1.Core">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Xpf.LayoutControl.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Mvvm.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Mvvm.v13.1.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Xpf.NavBar.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1.Service">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v13.1.Service.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
@@ -131,49 +116,52 @@
     <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
-    <Reference Include="ExceptionHandler">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="ExceptionHandler.Wpf">
-      <HintPath>..\..\lib\ExceptionHandler\ExceptionHandler.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mindscape.Raygun4Net">
+      <HintPath>..\packages\Mindscape.Raygun4Net.2.0.6\lib\net35\Mindscape.Raygun4Net.dll</HintPath>
+    </Reference>
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
     <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody\Lib\NET35\PropertyChanged.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Licensing">
-      <HintPath>..\packages\Rhino.Licensing\lib\Net45\Rhino.Licensing.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody\Lib\NET35\PropertyChanged.dll</HintPath>
+    <Reference Include="PropertyChanged, Version=1.38.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PropertyChanged.Fody.1.48.1.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="ReactiveUI, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\reactiveui-core.5.5.1\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Blend, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Blend.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Xaml, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=1.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Serilog.1.3.24\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx, Version=1.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Serilog.1.3.24\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -184,13 +172,33 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-XAML.2.1.30214.0\lib\Net45\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\packages\Caliburn.Micro.1.3.1\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -202,14 +210,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
-    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="CodeParser\CodeTextBox.cs" />
+    <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
+    <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Framework\Attachments\Attachment.cs" />
+    <Compile Include="Framework\DefaultClipboard.cs" />
+    <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Framework\ExceptionHandler.xaml.cs">
+      <DependentUpon>ExceptionHandler.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
+    <Compile Include="Framework\Rx\RxConductorWithCollectionOneActive.cs" />
+    <Compile Include="Framework\Rx\RxConductor.cs" />
+    <Compile Include="Framework\Rx\RxConductorWithCollectionAllActive.cs" />
+    <Compile Include="Framework\Rx\RxConductorBaseWithActiveItem.cs" />
+    <Compile Include="Framework\Rx\RxConductorBase.cs" />
+    <Compile Include="Framework\Rx\RxScreen.cs" />
+    <Compile Include="Framework\Rx\RxViewAware.cs" />
+    <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
+    <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="Particular.Licensing\License.cs" />
+    <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
+    <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
+    <Compile Include="Particular.Licensing\LicenseVerifier.cs" />
+    <Compile Include="Particular.Licensing\RegistryLicenseStore.cs" />
+    <Compile Include="Particular.Licensing\ReleaseDateReader.cs" />
+    <Compile Include="Particular.Licensing\TrialStartDateStore.cs" />
+    <Compile Include="Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="CodeParser\BaseParser.cs" />
     <Compile Include="CodeParser\CodeBlockPresenter.cs" />
     <Compile Include="CodeParser\CodeLanguage.cs" />
@@ -218,18 +248,14 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="Core\Infrastructure\CallForwarderInterceptor.cs" />
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
-    <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
-    <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\BodyTabSelectionChanged.cs" />
-    <Compile Include="Events\MessageStatusChanged.cs" />
+    <Compile Include="Events\RetryMessage.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\RequestSelectingEndpoint.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
     <Compile Include="Events\SwitchToSagaWindow.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
-    <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
     </Compile>
@@ -241,14 +267,28 @@
     </Compile>
     <Compile Include="MessageHeaders\MessageHeadersViewModel.cs" />
     <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
+    <Compile Include="MessageViewers\MessageContentType.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
-    <Compile Include="Modules\InterfacesModule.cs" />
+    <Compile Include="Framework\Modules\EnvironmentModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
+    <Compile Include="Saga\SagaContentViewer.xaml.cs">
+      <DependentUpon>SagaContentViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Saga\SagaData.cs" />
+    <Compile Include="Saga\SagaFooter.cs" />
+    <Compile Include="Saga\SagaHeader.cs" />
     <Compile Include="Saga\SagaMessage.cs" />
     <Compile Include="Saga\SagaUpdate.cs" />
+    <Compile Include="Saga\SagaUpdateControl.xaml.cs">
+      <DependentUpon>SagaUpdateControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Saga\SagaUpdatedValue.cs" />
     <Compile Include="Saga\SagaWindowView.xaml.cs">
       <DependentUpon>SagaWindowView.xaml</DependentUpon>
@@ -265,22 +305,13 @@
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\CommandConnection.cs" />
     <Compile Include="MessageFlow\IMessageFlowView.cs" />
-    <Compile Include="Core\DefaultMapper.cs" />
-    <Compile Include="Core\IMapper.cs" />
-    <Compile Include="Core\INetworkOperations.cs" />
-    <Compile Include="Core\IQueueManager.cs" />
-    <Compile Include="Core\IQueueOperations.cs" />
-    <Compile Include="Core\IQueueOperationsAsync.cs" />
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
     <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\IContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\StringContentDecoder.cs" />
     <Compile Include="Core\MessageDecoders\XmlContentDecoder.cs" />
-    <Compile Include="Core\MSMQueueOperations.cs" />
     <Compile Include="Core\NetworkOperations.cs" />
-    <Compile Include="Core\QueueManager.cs" />
-    <Compile Include="Core\QueueManagerException.cs" />
     <Compile Include="Core\Settings\ISettingsProvider.cs" />
     <Compile Include="Core\Settings\ISettingsStorage.cs" />
     <Compile Include="Core\Settings\IsolatedStorageSettingsStore.cs" />
@@ -288,8 +319,6 @@
     <Compile Include="Core\Settings\RegistrySettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsProvider.cs" />
     <Compile Include="Events\AsyncOperationFailed.cs" />
-    <Compile Include="Events\ExecuteSearchResult.cs" />
-    <Compile Include="Events\QueueMessageCountChanged.cs" />
     <Compile Include="Events\SelectedExplorerItemChanged.cs" />
     <Compile Include="Events\SelectedMessageChanged.cs" />
     <Compile Include="Events\WorkFinished.cs" />
@@ -302,48 +331,28 @@
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
     <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerItemExtensions.cs" />
-    <Compile Include="Explorer\IExplorerViewModel.cs" />
-    <Compile Include="Explorer\QueueExplorer\IQueueConnectionProvider.cs" />
-    <Compile Include="Explorer\ExplorerNodeChildSelector.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
-    <Compile Include="Explorer\FolderExplorerItem.cs" />
-    <Compile Include="Explorer\QueueExplorer\IQueueExplorerViewModel.cs" />
-    <Compile Include="Explorer\IExplorerView.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerItem.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueServerExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\ElementExtensions.cs" />
     <Compile Include="ExtensionMethods\GeneralHelpers.cs" />
-    <Compile Include="ExtensionMethods\GrammerExtensions.cs" />
+    <Compile Include="ExtensionMethods\GrammarExtensions.cs" />
     <Compile Include="ExtensionMethods\ImageExtensions.cs" />
-    <Compile Include="ExtensionMethods\QueueExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
-    <Compile Include="Guard.cs" />
     <Compile Include="LogWindow\LogWindowView.xaml.cs">
       <DependentUpon>LogWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LogWindow\LogWindowViewModel.cs" />
-    <Compile Include="LogWindow\RichTextBoxAppender.cs" />
     <Compile Include="ServiceControl\DefaultServiceControl.cs" />
-    <Compile Include="ServiceControl\IServiceControl.cs" />
-    <Compile Include="ServiceControl\IServiceControlConnectionProvider.cs" />
     <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
     <Compile Include="MessageFlow\MessageNode.cs" />
     <Compile Include="MessageFlow\MessagePopupControl.cs" />
     <Compile Include="MessageProperties\GatewayHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\HeaderInfoSerializer.cs" />
-    <Compile Include="MessageProperties\IErrorHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\IGatewayHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\IGeneralHeaderViewModel.cs" />
-    <Compile Include="MessageProperties\IMessagePropertiesViewModel.cs" />
-    <Compile Include="MessageProperties\IPerformanceHeaderViewModel.cs" />
     <Compile Include="MessageProperties\IPropertyDataProvider.cs" />
-    <Compile Include="MessageProperties\ISagaHeaderViewModel.cs" />
     <Compile Include="MessageFlow\MessageHeaderDecoder.cs" />
     <Compile Include="MessageProperties\MessagePropertiesView.xaml.cs">
       <DependentUpon>MessagePropertiesView.xaml</DependentUpon>
@@ -360,16 +369,11 @@
     <Compile Include="MessageViewers\HexViewer\HexNumber.cs" />
     <Compile Include="MessageViewers\HexViewer\HexPart.cs" />
     <Compile Include="MessageViewers\HexViewer\IHexContentView.cs" />
-    <Compile Include="MessageViewers\HexViewer\IHexContentViewModel.cs" />
     <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
-    <Compile Include="MessageViewers\JsonViewer\IJsonMessageViewModel.cs" />
     <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\JsonViewer\JsonMessageViewModel.cs" />
-    <Compile Include="Models\AccessMode.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\AddressMode.cs" />
     <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\FailureDetails.cs" />
     <Compile Include="Models\HeaderInfo.cs" />
@@ -378,8 +382,6 @@
     <Compile Include="Models\MessageIntent.cs" />
     <Compile Include="Models\MessageStatus.cs" />
     <Compile Include="Models\PagedResult.cs" />
-    <Compile Include="Models\Queue.cs" />
-    <Compile Include="Models\QueueTypes.cs" />
     <Compile Include="Models\StoredMessage.cs" />
     <Compile Include="Options\EditableListBox.xaml.cs">
       <DependentUpon>EditableListBox.xaml</DependentUpon>
@@ -394,26 +396,19 @@
     <Compile Include="Core\UI\ScreenManager\FileDialogModel.cs" />
     <Compile Include="Core\UI\ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
-    <Compile Include="Settings\LicenseSettings.cs" />
     <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
     <Compile Include="Settings\ReportingSettings.cs" />
-    <Compile Include="Settings\SettingBase.cs" />
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\AboutViewModel.cs" />
     <Compile Include="Shell\BusyAutomationBehaviour.cs" />
+    <Compile Include="Shell\AppExceptionHandler.cs" />
     <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
-    <Compile Include="Shell\Menu\IHaveContextMenu.cs" />
-    <Compile Include="Shell\Menu\IMenuItem.cs" />
-    <Compile Include="Shell\Menu\MenuItem.cs" />
-    <Compile Include="Shell\Menu\MenuItemBase.cs" />
-    <Compile Include="Shell\Menu\MenuItemDataTemplateSelector.cs" />
-    <Compile Include="Shell\Menu\SeparatorMenuItem.cs" />
     <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
       <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>
@@ -422,35 +417,23 @@
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
     <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
-    <Compile Include="MessageList\FileSizeFormatProvider.cs" />
-    <Compile Include="MessageList\FileSizeValueConverter.cs" />
-    <Compile Include="Explorer\ExplorerNodeImageSelector.cs" />
     <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
-    <Compile Include="Modules\CaliburnModule.cs" />
-    <Compile Include="Modules\EventAggregationAutoSubscriptionModule.cs" />
-    <Compile Include="Modules\PluginModule.cs" />
-    <Compile Include="Modules\SettingsModule.cs" />
-    <Compile Include="Modules\SettingsSource.cs" />
+    <Compile Include="Framework\Modules\CaliburnModule.cs" />
+    <Compile Include="Framework\Modules\EventAggregationAutoSubscriptionModule.cs" />
+    <Compile Include="Framework\Modules\SettingsModule.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Core\UI\ScreenManager\ChoiceCommand.cs" />
-    <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
-    <Compile Include="Search\ISearchBarView.cs" />
-    <Compile Include="Search\ISearchBarViewModel.cs" />
-    <Compile Include="Search\SearchBar.xaml.cs">
-      <DependentUpon>SearchBar.xaml</DependentUpon>
+    <Compile Include="Search\SearchBarView.xaml.cs">
+      <DependentUpon>SearchBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchBarViewModel.cs" />
-    <Compile Include="Shell\ConnectToMachineView.xaml.cs">
-      <DependentUpon>ConnectToMachineView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\ConnectToMachineViewModel.cs" />
     <Compile Include="Core\UI\ScreenManager\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
@@ -459,36 +442,19 @@
     <Compile Include="Core\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
-    <Compile Include="Shell\IShellViewModel.cs" />
-    <Compile Include="Shell\IStatusBarManager.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
-    <Compile Include="Shell\QueueCreationView.xaml.cs">
-      <DependentUpon>QueueCreationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\QueueCreationViewModel.cs" />
-    <Compile Include="Shell\DefaultExceptionHandler.cs" />
     <Compile Include="Core\UI\ScreenManager\ScreenFactory.cs" />
-    <Compile Include="Explorer\EndpointExplorer\IEndpointExplorerViewModel.cs" />
-    <Compile Include="Core\UI\ScreenManager\IScreenFactory.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
-    <Compile Include="Startup\AutofacAdapter.cs" />
-    <Compile Include="Startup\BuilderExtensions.cs" />
+    <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
-    <Compile Include="Startup\IEnvironment.cs" />
-    <Compile Include="Startup\LoggingConfig.cs" />
-    <Compile Include="MessageList\IMessageListViewModel.cs" />
+    <Compile Include="Startup\EnvironmentWrapper.cs" />
+    <Compile Include="Framework\Logging\LoggingConfig.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />
-    <Compile Include="Logging\CompositeLogger.cs" />
-    <Compile Include="Logging\Log4NetLogger.cs" />
-    <Compile Include="Logging\TraceLogger.cs" />
+    <Compile Include="Framework\Logging\CaliburnMicroLogAdapter.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />
-    <Compile Include="Modules\CoreModule.cs" />
-    <Compile Include="Modules\LoggerModule.cs" />
-    <Compile Include="Modules\ShellModule.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerViewModel.cs" />
-    <Compile Include="Explorer\QueueExplorer\QueueExplorerView.xaml.cs">
-      <DependentUpon>QueueExplorerView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Framework\Modules\CoreModule.cs" />
+    <Compile Include="Framework\Modules\LoggerModule.cs" />
+    <Compile Include="Framework\Modules\ShellModule.cs" />
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>
     </Compile>
@@ -502,13 +468,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\IXmlMessageView.cs" />
-    <Compile Include="MessageViewers\XmlViewer\IXmlMessageViewModel.cs" />
     <Compile Include="MessageViewers\XmlViewer\XmlMessageView.xaml.cs">
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
-    <Compile Include="ValueConverters\BoolToWindowBorderConverter.cs" />
+    <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
+    <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\HalvingConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
@@ -518,6 +485,10 @@
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
+    <Page Include="Framework\ExceptionHandler.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Images\Xaml\XamlIcons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -566,6 +537,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Saga\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaContentViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Saga\SagaUpdateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Saga\SagaWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -586,11 +573,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Search\SearchBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\ConnectToMachineView.xaml">
+    <Page Include="Search\SearchBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -598,15 +581,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Explorer\QueueExplorer\QueueExplorerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MessageList\MessageListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\QueueCreationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -620,9 +595,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
+    <None Include="Properties\AssemblyInfo.tt">
       <SubType>Code</SubType>
-    </Compile>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
+    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -671,14 +648,8 @@
     <Resource Include="Images\DiagramEndpointIcon.png" />
     <Resource Include="Images\Exclamation.png" />
     <Resource Include="Images\saga.png" />
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
+    <Resource Include="Images\Headers.png" />
     <None Include="License.lic" />
-    <None Include="ripple.dependencies.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -760,8 +731,52 @@
     <Resource Include="Images\Msg_Info.png" />
     <Resource Include="Images\Msg_Warning.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="Fody.targets" />
-  <Import Project="$(SolutionDir)..\BuildSupport\RippleRestoreTask.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
+  <Import Project="..\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\packages\Fody.1.23.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.23.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.23.2\build\Fody.targets'))" />
+  </Target>
+  <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
+    <ParameterGroup>
+      <Config Output="false" Required="true" ParameterType="Microsoft.Build.Framework.ITaskItem" />
+      <Files Output="false" Required="true" ParameterType="Microsoft.Build.Framework.ITaskItem[]" />
+    </ParameterGroup>
+    <Task Evaluate="true">
+      <Reference xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Include="System.Xml" />
+      <Reference xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Include="System.Xml.Linq" />
+      <Using xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Namespace="System" />
+      <Using xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Namespace="System.IO" />
+      <Using xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Namespace="System.Xml.Linq" />
+      <Code xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Type="Fragment" Language="cs"><![CDATA[
+var config = XElement.Load(Config.ItemSpec).Elements("Costura").FirstOrDefault();
+
+if (config == null) return true;
+
+var excludedAssemblies = new List<string>();
+var attribute = config.Attribute("ExcludeAssemblies");
+if (attribute != null)
+    foreach (var item in attribute.Value.Split('|').Select(x => x.Trim()).Where(x => x != string.Empty))
+        excludedAssemblies.Add(item);
+var element = config.Element("ExcludeAssemblies");
+if (element != null)
+    foreach (var item in element.Value.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x != string.Empty))
+        excludedAssemblies.Add(item);
+
+var filesToCleanup = Files.Select(f => f.ItemSpec).Where(f => !excludedAssemblies.Contains(Path.GetFileNameWithoutExtension(f), StringComparer.InvariantCultureIgnoreCase));
+
+foreach (var item in filesToCleanup)
+  File.Delete(item);
+]]></Code>
+    </Task>
+  </UsingTask>
+  <Target Name="CleanReferenceCopyLocalPaths" AfterTargets="AfterBuild;NonWinFodyTarget">
+    <CosturaCleanup Config="FodyWeavers.xml" Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+  </Target>
 </Project>

@@ -1,11 +1,11 @@
-﻿using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
-using TestStack.White.UIItems.WindowStripControls;
-using TestStack.White.UIItems.WPFUIItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.WindowItems;
+    using TestStack.White.UIItems.WindowStripControls;
+    using TestStack.White.UIItems.WPFUIItems;
+
     public class MainMenu : ProfilerElement
     {
         public MainMenu(Window mainWindow) : base(mainWindow)
@@ -32,11 +32,6 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
             get { return GetMenu("HelpMenu"); }
         }
 
-        public Button CreateQueue
-        {
-            get { return GetMenuItem(ToolsMenu, "CreateQueueMenuItem"); }
-        }
-
         public Button ConnectToServiceControl
         {
             get { return GetMenuItem(ToolsMenu, "ConnectToServiceControlMenuItem"); }
@@ -47,12 +42,12 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
             get { return GetByAutomationId<GroupBox>("BarManager"); }
         }
 
-        private MenuBar GetMenu(string name)
+        MenuBar GetMenu(string name)
         {
             return BarManager.Get<MenuBar>(name);
         }
 
-        private Button GetMenuItem(MenuBar menu, string name)
+        Button GetMenuItem(MenuBar menu, string name)
         {
             return menu.Get<Button>(SearchCriteria.ByAutomationId(name));
         }

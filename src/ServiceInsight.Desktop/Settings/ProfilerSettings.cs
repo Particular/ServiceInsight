@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-
-namespace NServiceBus.Profiler.Desktop.Settings
+﻿namespace Particular.ServiceInsight.Desktop.Settings
 {
-    public class ProfilerSettings : SettingBase
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using Caliburn.Micro;
+
+    public class ProfilerSettings : PropertyChangedBase
     {
-        private int _autoRefresh;
+        int autoRefresh;
 
         public ProfilerSettings()
         {
@@ -19,8 +20,8 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [Description("Auto refresh time in seconds")]
         public int AutoRefreshTimer
         {
-            get { return Math.Max(1, _autoRefresh); }
-            set { _autoRefresh = value; }
+            get { return Math.Max(1, autoRefresh); }
+            set { autoRefresh = value; }
         }
 
         [DefaultValue(false)]
@@ -49,5 +50,8 @@ namespace NServiceBus.Profiler.Desktop.Settings
         [DisplayName("ServiceControl URL")]
         [Description("Last used ServiceControl address")]
         public string LastUsedServiceControl { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string DefaultLastUsedServiceControl { get; set; }
     }
 }

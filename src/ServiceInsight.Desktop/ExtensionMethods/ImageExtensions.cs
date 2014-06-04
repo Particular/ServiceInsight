@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using System.IO;
-using System.Windows.Media.Imaging;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Media.Imaging;
+
     public static class ImageExtensions
     {
         public static BitmapImage ToBitmapImage(this Image image)

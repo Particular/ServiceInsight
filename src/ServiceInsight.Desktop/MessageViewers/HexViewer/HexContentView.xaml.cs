@@ -1,8 +1,5 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
-    /// <summary>
-    /// Interaction logic for HexContentView.xaml
-    /// </summary>
     public partial class HexContentView : IHexContentView
     {
         public HexContentView()

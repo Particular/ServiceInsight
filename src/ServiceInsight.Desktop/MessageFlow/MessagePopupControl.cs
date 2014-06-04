@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls.Primitives;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+
     public class MessagePopupControl : Popup
     {
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            this.CustomPopupPlacementCallback += new CustomPopupPlacementCallback(placeContextMenu);
+            CustomPopupPlacementCallback += placeContextMenu;
         }
 
-        private CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
+        CustomPopupPlacement[] placeContextMenu(Size popupSize, Size targetSize, Point offset)
         {
-            var ret = new List<CustomPopupPlacement>();
-            var target = this.PlacementTarget as FrameworkElement;
-
-            ret.Add(new CustomPopupPlacement(new Point(0, targetSize.Height / 2), PopupPrimaryAxis.Horizontal));
+            var ret = new List<CustomPopupPlacement>
+            {
+                new CustomPopupPlacement(new Point(0, targetSize.Height/2), PopupPrimaryAxis.Horizontal)
+            };
 
             return ret.ToArray();
         }
@@ -35,7 +35,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             base.OnClosed(e);
         }
 
-        private void SubscribeChildEvents()
+        void SubscribeChildEvents()
         {
             var actionPopup = (MessageActionPopup)Child;
             if (actionPopup != null)
@@ -44,7 +44,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        private void UnsubscribeChildEvents()
+        void UnsubscribeChildEvents()
         {
             var actionPopup = (MessageActionPopup)Child;
             if (actionPopup != null)
@@ -53,7 +53,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        private void ClosePopup()
+        void ClosePopup()
         {
             IsOpen = false;
         }

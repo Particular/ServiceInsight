@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
     public interface IJsonMessageView
     {

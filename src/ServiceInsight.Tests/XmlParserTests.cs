@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Documents;
-using NServiceBus.Profiler.Desktop.CodeParser;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Documents;
+    using Desktop.CodeParser;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class XmlParserTests
     {
-        private XmlParser Parser;
-        private IList<CodeLexem> Lexemes;
+        XmlParser Parser;
+        IList<CodeLexem> Lexemes;
 
         const string SimpleXml = "<xml version=\"1.0\" encoding=\"utf-8\"><packages>test package</packages>";
 

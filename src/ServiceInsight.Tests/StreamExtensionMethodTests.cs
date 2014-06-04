@@ -1,16 +1,16 @@
-﻿using System.IO;
-using System.Text;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using System.IO;
+    using System.Text;
+    using Desktop.ExtensionMethods;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class StreamExtensionMethodTests
     {
         const string SourceMesage = "This is a sample message";
-        private MemoryStream SourceStream;
+        MemoryStream SourceStream;
 
         [SetUp]
         public void TestInitialize()

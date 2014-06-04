@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub
 {
+    using System.Threading.Tasks;
+
     public static class AsyncTask
     {
-        public static readonly Task DefaultCompleted = FromResult(default(AsyncVoid));
+        public static Task DefaultCompleted = FromResult(default(AsyncVoid));
 
         public static Task<TResult> FromResult<TResult>(TResult result)
         {
@@ -13,7 +13,7 @@ namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub
             return tcs.Task;
         }
 
-        private struct AsyncVoid
+        struct AsyncVoid
         {
         }
     }

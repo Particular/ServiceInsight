@@ -1,9 +1,9 @@
-﻿using System;
-using System.Globalization;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+    using System.Globalization;
+    using Models;
+
     public static class DateTimeExtensions
     {
          public static string GetElapsedTime(this TimeSpan time)

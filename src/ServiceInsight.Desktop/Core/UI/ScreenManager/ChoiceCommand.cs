@@ -1,20 +1,20 @@
-﻿using System;
-using System.Windows.Input;
-using Caliburn.PresentationFramework;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System;
+    using System.Windows.Input;
+    using Caliburn.Micro;
+
     public delegate void ButtonCommandHandler(object target);
 
     public class ChoiceCommand : PropertyChangedBase, ICommand
     {
         public event EventHandler CanExecuteChanged = delegate { };
 
-        private readonly ButtonCommandHandler _commandHandler;
+        ButtonCommandHandler commandHandler;
 
         public ChoiceCommand(ButtonCommandHandler commandHandler, bool isDefault, bool isCancel, string label, MessageChoice result)
         {
-            _commandHandler = (ButtonCommandHandler)Delegate.Combine(_commandHandler, commandHandler);
+            this.commandHandler = (ButtonCommandHandler)Delegate.Combine(this.commandHandler, commandHandler);
             IsDefault = isDefault;
             IsCancel = isCancel;
             Label = label;
@@ -28,27 +28,31 @@ namespace NServiceBus.Profiler.Desktop.ScreenManager
 
         public virtual void Execute(object parameter)
         {
-            _commandHandler(this);
+            commandHandler(this);
         }
 
         public virtual bool IsCancel
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual bool IsDefault
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual string Label
         {
-            get; set;
+            get;
+            set;
         }
 
         public virtual MessageChoice Result
         {
-            get; private set;
+            get;
+            private set;
         }
     }
 }

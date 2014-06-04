@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+    using System.Collections.Generic;
+
     public static class CollectionExtensions
     {
-        public static void ForEach<T>(this IList<T> list, Action<T> action)
+        public static void ForEach<T>(this IEnumerable<T> list, Action<T> action)
         {
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 action(item);
             }
         }
 
-        public static bool IsEmpty<T>(this IList<T> list)
+        public static int IndexOf<T>(this IEnumerable<T> list, T item, IEqualityComparer<T> comparer = null)
         {
-            return list == null || list.Count == 0;
-        }
+            var comp = comparer ?? EqualityComparer<T>.Default;
 
-        public static void AddRange<T>(this IList<T> list, IList<T> collectionToAdd)
-        {
-            foreach (var item in collectionToAdd)
+            var i = 0;
+            foreach (var x in list)
             {
-                list.Add(item);
+                if (comp.Equals(x, item))
+                    return i;
+                i++;
             }
+            return -1;
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
+
     public static class ElementExtensions
     {
         public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj) where T : DependencyObject
@@ -17,12 +17,39 @@ namespace NServiceBus.Profiler.Desktop.ExtensionMethods
                     yield return (T)child;
                 }
 
-                foreach (T childOfChild in FindVisualChildren<T>(child))
+                foreach (var childOfChild in FindVisualChildren<T>(child))
                 {
                     yield return childOfChild;
                 }
             }
         }
- 
+
+        public static T GetResource<T>(this DependencyObject element, object key)
+        {
+            for (var dependencyObject = element; dependencyObject != null; dependencyObject = (LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject)))
+            {
+                var frameworkElement = dependencyObject as FrameworkElement;
+                if (frameworkElement != null)
+                {
+                    if (frameworkElement.Resources.Contains(key))
+                    {
+                        return (T)frameworkElement.Resources[key];
+                    }
+                }
+                else
+                {
+                    var frameworkContentElement = dependencyObject as FrameworkContentElement;
+                    if (frameworkContentElement != null && frameworkContentElement.Resources.Contains(key))
+                    {
+                        return (T)frameworkContentElement.Resources[key];
+                    }
+                }
+            }
+            if (Application.Current != null && Application.Current.Resources.Contains(key))
+            {
+                return (T)Application.Current.Resources[key];
+            }
+            return default(T);
+        }
     }
 }

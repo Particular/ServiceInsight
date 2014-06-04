@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Core
+﻿namespace Particular.ServiceInsight.Desktop.Core
 {
-    public class NetworkOperations : INetworkOperations
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Threading.Tasks;
+
+    public class NetworkOperations 
     {
         public Task<IList<string>> GetMachines()
         {
@@ -20,18 +20,18 @@ namespace NServiceBus.Profiler.Desktop.Core
             process.Start();
         }
 
-        private class NetworkBrowser
+        class NetworkBrowser
         {
             [DllImport("Netapi32", CharSet = CharSet.Auto, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
-            private static extern int NetServerEnum(string serverName, int dwLevel, ref IntPtr pBuf, int dwPrefMaxLen, out int dwEntriesRead, out int dwTotalEntries, int dwServerType, string domain, out int dwResumeHandle);
+            static extern int NetServerEnum(string serverName, int dwLevel, ref IntPtr pBuf, int dwPrefMaxLen, out int dwEntriesRead, out int dwTotalEntries, int dwServerType, string domain, out int dwResumeHandle);
 
             [DllImport("Netapi32", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
-            private static extern int NetApiBufferFree(IntPtr pBuf);
+            static extern int NetApiBufferFree(IntPtr pBuf);
 
             [StructLayout(LayoutKind.Sequential)]
-            private struct ServerInfo
+            struct ServerInfo
             {
                 internal int sv100_platform_id;
                 

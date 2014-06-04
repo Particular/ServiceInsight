@@ -1,12 +1,12 @@
-﻿using System;
-using System.Drawing;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.ValueConverters
+﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
+    using System;
+    using System.Drawing;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using ExtensionMethods;
+
     public class BitmapToGlyphConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

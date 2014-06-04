@@ -16,4 +16,9 @@
       <dependency id="DotNet4.5" version="4.5.20120822"  />
     </dependencies>
   </metadata>
+    <files>
+      <file src="chocolateyInstall.ps1" target="Tools" />
+      <file src="chocolateyUninstall.ps1" target="Tools" />
+      <file src="elevatedUninstall.ps1" target="Tools" />
+    </files>
 </package>

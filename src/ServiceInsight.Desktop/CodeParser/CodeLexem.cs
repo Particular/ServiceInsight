@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     public class CodeLexem
     {
         public CodeLexem(string text)
@@ -27,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             {
                 case CodeLanguage.Plain:
                     return new BaseParser().Parse(Text);
-                
+
                 case CodeLanguage.Xml:
                     return new XmlParser().Parse(Text);
 
@@ -39,16 +40,16 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             }
         }
 
-        public Inline ToInline(CodeLanguage lang)
+        public Inline ToInline(CodeLanguage lang, Brush brush = null)
         {
             switch (lang)
             {
                 case CodeLanguage.Xml:
-                    return new XmlParser().ToInline(this);
+                    return new XmlParser().ToInline(this, brush);
                 case CodeLanguage.Json:
-                    return new JsonParser().ToInline(this);
+                    return new JsonParser().ToInline(this, brush);
                 case CodeLanguage.Plain:
-                    return new BaseParser().ToInline(this);
+                    return new BaseParser().ToInline(this, brush);
                 default:
                     throw new NotImplementedException(string.Format("Conversion from {0} language is not supported.", lang));
             }

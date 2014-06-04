@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using RestSharp.Contrib;
-
-namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
+    using System;
+    using System.Text.RegularExpressions;
+    using RestSharp.Contrib;
+
     public class CommandLineOptions
     {
         public const string ApplicationScheme = "si://";
@@ -14,6 +14,7 @@ namespace NServiceBus.Profiler.Desktop.Models
         public string EndpointName { get; private set; }
         public int AutoRefreshRate { get; private set; }
         public bool ShouldAutoRefresh { get; private set; }
+        public bool ResetLayout { get; private set; }
         
         public void SetEndpointUri(string value)
         {
@@ -48,7 +49,12 @@ namespace NServiceBus.Profiler.Desktop.Models
             ShouldAutoRefresh = true;
         }
 
-        private string Decode(string encodedString)
+        public void SetResetLayout(bool value)
+        {
+            ResetLayout = value;
+        }
+
+        string Decode(string encodedString)
         {
             return HttpUtility.UrlDecode(encodedString);
         }

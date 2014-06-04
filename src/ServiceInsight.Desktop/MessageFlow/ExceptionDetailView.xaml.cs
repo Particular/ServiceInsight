@@ -1,26 +1,11 @@
-﻿using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
-    /// <summary>
-    /// Interaction logic for ExceptionDetailView.xaml
-    /// </summary>
-    public partial class ExceptionDetailView : Window, IPersistableLayout
+    using System.ComponentModel;
+    using System.Windows;
+    using Core.Settings;
+    using Shell;
+
+    public partial class ExceptionDetailView : IPersistableLayout
     {
         public ExceptionDetailView()
         {
@@ -30,11 +15,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         public void OnSaveLayout(ISettingsProvider settingsProvider)
         {
             var settings = new ExceptionViewSettings
-                                {
-                                    Left = this.Left, Top = this.Top,
-                                    Width = this.ActualWidth, Height = this.ActualHeight,
-                                    WindowState = this.WindowState
-                                };
+            {
+                Left = Left,
+                Top = Top,
+                Width = ActualWidth,
+                Height = ActualHeight,
+                WindowState = WindowState
+            };
+
             settingsProvider.SaveSettings(settings);
         }
 
@@ -42,16 +30,16 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
         {
             var settings = settingsProvider.GetSettings<ExceptionViewSettings>();
 
-            this.Height = settings.Height;
-            this.Width = settings.Width;
+            Height = settings.Height;
+            Width = settings.Width;
 
-            if (settings.WindowState == System.Windows.WindowState.Normal)
+            if (settings.WindowState == WindowState.Normal)
             {
-                this.Left = settings.Left;
-                this.Top = settings.Top;
+                Left = settings.Left;
+                Top = settings.Top;
             }
 
-            this.WindowState = settings.WindowState;
+            WindowState = settings.WindowState;
         }
 
         public void OnResetLayout(ISettingsProvider settingsProvider)

@@ -1,35 +1,32 @@
-﻿using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.Shell;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
-    class ExceptionDetailViewModel : Screen, IExceptionDetailViewModel
+    using Caliburn.Micro;
+    using Core.Settings;
+    using Models;
+    using Shell;
+
+    class ExceptionDetailViewModel : Screen
     {
-        private ISettingsProvider _settingsProvider;
+        ISettingsProvider settingsProvider;
+
         public virtual IPersistableLayout View { get; private set; }
 
-        public IExceptionDetails Exception { get; set; }
+        public ExceptionDetails Exception { get; set; }
 
-        public ExceptionDetailViewModel(ISettingsProvider settingsProvider) 
+        public ExceptionDetailViewModel(ISettingsProvider settingsProvider)
         {
-            this._settingsProvider = settingsProvider;
-            this.DisplayName = "Exception Details";
+            this.settingsProvider = settingsProvider;
+            DisplayName = "Exception Details";
         }
 
-        public ExceptionDetailViewModel(IExceptionDetails exception)
+        public ExceptionDetailViewModel(ExceptionDetails exception)
         {
-            this.Exception = exception;
+            Exception = exception;
         }
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
+            base.OnViewAttached(view, context);
             View = (IPersistableLayout)view;
         }
 
@@ -45,14 +42,14 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             SaveLayout();
         }
 
-        private void SaveLayout()
+        void SaveLayout()
         {
-            View.OnSaveLayout(_settingsProvider);
+            View.OnSaveLayout(settingsProvider);
         }
 
-        private void RestoreLayout()
+        void RestoreLayout()
         {
-            View.OnRestoreLayout(_settingsProvider);
+            View.OnRestoreLayout(settingsProvider);
         }
 
         public string FormattedSource
@@ -62,11 +59,5 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
                 return string.Format("{0} (@{1})", Exception.ExceptionType, Exception.Source);
             }
         }
-    }
-
-    interface IExceptionDetailViewModel : IScreen
-    {
-        IExceptionDetails Exception { get; set; }
-        string FormattedSource { get; }
     }
 }

@@ -1,53 +1,61 @@
-using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+namespace Particular.ServiceInsight.Desktop.Shell
 {
+    using System;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Reflection;
+    using System.Windows.Input;
+    using Caliburn.Micro;
+    using Core;
+    using ExtensionMethods;
+    using ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
-        public const string DetectingServiceControlVersion = "(Detecting...)";
-        public const string NotConnectedToServiceControl = "(Not Connected)";
+        const string DetectingServiceControlVersion = "(Detecting...)";
+        const string NotConnectedToServiceControl = "(Not Connected)";
 
-        private readonly INetworkOperations _networkOperations;
-        private readonly IServiceControl _serviceControl;
+        DefaultServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public bool IsSplash { get; set; }
+        public bool IsSplash { get; private set; }
+
         public bool HasFullLicense { get { return License != null && !License.HasTrialLicense; } }
-        public ILicenseRegistrationViewModel License { get; private set; }
-        public string AppVersion { get; set; }
-        public string ServiceControlVersion { get; set; }
+
+        public LicenseRegistrationViewModel License { get; private set; }
+
+        public string AppVersion { get; private set; }
+
+        public string ServiceControlVersion { get; private set; }
+
+        public string CopyrightText { get; private set; }
+
         public string DisplayName { get; set; }
-        public string CommitHash { get; set; }
+
+        public string CommitHash { get; private set; }
+
         public bool IsActive { get; private set; }
 
+        public ICommand NavigateToSiteCommand { get; private set; }
+
         public AboutViewModel(
-            INetworkOperations networkOperations, 
-            IServiceControl serviceControl,
-            ILicenseRegistrationViewModel licenseInfo)
+            NetworkOperations networkOperations,
+            DefaultServiceControl serviceControl,
+            LicenseRegistrationViewModel licenseInfo)
         {
-            _networkOperations = networkOperations;
-            _serviceControl = serviceControl;
-            
+            this.serviceControl = serviceControl;
+
             License = licenseInfo;
             IsSplash = false;
             DisplayName = "About";
+
+            NavigateToSiteCommand = this.CreateCommand(() => networkOperations.Browse("http://www.particular.net"));
         }
 
-        private AboutViewModel()
+        AboutViewModel()
         {
             IsSplash = true;
         }
@@ -55,72 +63,66 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public static AboutViewModel AsSplashScreenModel()
         {
             var vm = new AboutViewModel();
-            vm.LoadAppVersion();
+            vm.Activate();
             return vm;
         }
 
-        private async Task OnActivate()
+        public void Activate()
         {
-            ActivateLicense();
-            LoadAppVersion();
-            await LoadVersions();
-        }
-
-        public void NavigateToSite()
-        {
-            if (IsSplash) return;
-
-            var supportUrl = GetType().Assembly.GetAttribute<SupportWebUrlAttribute>();
-            _networkOperations.Browse(supportUrl.WebUrl);
-        }
-
-        public async void Activate()
-        {
-            await OnActivate();
+            OnActivate();
             IsActive = true;
             Activated(this, new ActivationEventArgs());
         }
 
-        private void LoadAppVersion()
+        void OnActivate()
         {
-            var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            var versionParts = version.Split(' ');
-            var appVersion = versionParts[0];
-            var commitHash = versionParts.Last();
-
-            AppVersion = appVersion;
-            CommitHash = GetShortCommitHash(commitHash);
+            ActivateLicense();
+            LoadAppVersion();
+            SetCopyrightText();
+            LoadVersions();
         }
 
-        private static string GetShortCommitHash(string commitHash)
-        {
-            var parts = commitHash.Split(':');
-            var shaValue = parts[1].Replace("'", "");
-            var shortCommitHash = shaValue.Substring(0, 7);
-
-            return shortCommitHash;
-        }
-
-        private void ActivateLicense()
+        void ActivateLicense()
         {
             if (License != null)
             {
-                License.Activate();
+                ((IActivate)License).Activate();
             }
         }
 
-        private async Task LoadVersions()
+        void LoadAppVersion()
         {
-            ServiceControlVersion = DetectingServiceControlVersion;
+            var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var versionParts = version.Split('+');
+            var appVersion = versionParts[0];
 
-            var version = await _serviceControl.GetVersion();
-            ServiceControlVersion = version ?? NotConnectedToServiceControl;
+            AppVersion = appVersion;
+
+            var metadata = versionParts.Last();
+            var parts = metadata.Split('.');
+            var shaIndex = parts.IndexOf("Sha", StringComparer.InvariantCultureIgnoreCase);
+            if (shaIndex != -1 && parts.Length > shaIndex + 1)
+            {
+                var shaValue = parts[shaIndex + 1];
+                var shortCommitHash = shaValue.Substring(0, 7);
+                CommitHash = shortCommitHash;
+            }
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        void SetCopyrightText()
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            CopyrightText = string.Format("Copyright 2013-{0} NServiceBus Ltd. All rights reserved.", DateTime.Now.Year);
+        }
+
+        void LoadVersions()
+        {
+            if (serviceControl == null)
+                return;
+
+            ServiceControlVersion = DetectingServiceControlVersion;
+
+            var version = serviceControl.GetVersion();
+            ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
     }
 }

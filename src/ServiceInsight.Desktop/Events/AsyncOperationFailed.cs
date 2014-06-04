@@ -1,7 +1,7 @@
-﻿using NServiceBus.Profiler.Desktop.ExtensionMethods;
-
-namespace NServiceBus.Profiler.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Events
 {
+    using ExtensionMethods;
+
     public class AsyncOperationFailed
     {
         public const string DefaultMessage = "Operation Failed.";

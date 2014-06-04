@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System.Collections.ObjectModel;
+    using System.Windows;
+
     public partial class EditableListBox
     {
         public EditableListBox()
@@ -10,9 +10,9 @@ namespace NServiceBus.Profiler.Desktop.Options
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(EditableListBox), new PropertyMetadata(OnItemsSourceChanged));
+        public static DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(EditableListBox), new PropertyMetadata(OnItemsSourceChanged));
 
-        private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
+        static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
         {
             ((EditableListBox) d).OnItemsSourceChanged();
         }
@@ -28,7 +28,7 @@ namespace NServiceBus.Profiler.Desktop.Options
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        private void OnRemoveSelectedItem(object sender, RoutedEventArgs e)
+        void OnRemoveSelectedItem(object sender, RoutedEventArgs e)
         {
             var selectedItem = List.SelectedItem as string;
             if (selectedItem != null && ItemsSource.Contains(selectedItem))
@@ -37,7 +37,7 @@ namespace NServiceBus.Profiler.Desktop.Options
             }
         }
 
-        private void OnAddNewItem(object sender, RoutedEventArgs e)
+        void OnAddNewItem(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(NewItem.Text))
             {

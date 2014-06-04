@@ -1,22 +1,22 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace NServiceBus.Profiler.Desktop.CodeParser
+﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
+    using System.Diagnostics;
+
     [DebuggerDisplay("{Remaining}")]
     public class SourcePart
     {
-        private string Source
+        string Source
         {
             get; set;
         }
 
-        private int StartIndex
+        int StartIndex
         {
             get; set;
         }
 
-        private string Remaining
+        string Remaining
         {
             get { return Source.Substring(StartIndex); }
         }
@@ -42,7 +42,7 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
 
         public int IndexOf(string text)
         {
-            int index = Source.IndexOf(text, StartIndex, StringComparison.Ordinal);
+            var index = Source.IndexOf(text, StartIndex, StringComparison.Ordinal);
             if (index < 0)
                 return index;
             

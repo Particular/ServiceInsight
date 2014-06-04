@@ -1,15 +1,11 @@
-﻿using Mindscape.WpfDiagramming;
-using Mindscape.WpfDiagramming.FlowDiagrams;
-using Mindscape.WpfDiagramming.Foundation;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
     using System;
+    using System.Windows.Input;
+    using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.FlowDiagrams;
+    using Mindscape.WpfDiagramming.Foundation;
 
-    /// <summary>
-    /// Interaction logic for MessageFlowView.xaml
-    /// </summary>
     public partial class MessageFlowView : IMessageFlowView
     {
         public event EventHandler<SearchMessageEventArgs> ShowMessage;
@@ -49,7 +45,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             Surface.UpdateLayout();
         }
 
-        private void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
@@ -58,7 +54,7 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             }
         }
 
-        private void Root_KeyUp(object sender, KeyEventArgs e)
+        void Root_KeyUp(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {

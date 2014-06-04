@@ -1,34 +1,33 @@
-﻿using Autofac;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using NServiceBus.Profiler.Desktop.Settings;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Tests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Autofac;
+    using Caliburn.Micro;
+    using Desktop.Core.Settings;
+    using Desktop.ServiceControl;
+    using Desktop.Settings;
+    using Desktop.Shell;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Shouldly;
+
     [TestFixture]
     public class ServiceControlConnectionDialogTests
     {
-        private IServiceControl serviceControl;
-        private IShellViewModel shell;
-        private ISettingsProvider settingsProvider;
-        private IContainer container;
-        private IServiceControlConnectionProvider connection;
-        private ProfilerSettings storedSetting;
-        private ServiceControlConnectionViewModel connectTo;
+        DefaultServiceControl serviceControl;
+        ShellViewModel shell;
+        ISettingsProvider settingsProvider;
+        IContainer container;
+        ServiceControlConnectionProvider connection;
+        ProfilerSettings storedSetting;
+        ServiceControlConnectionViewModel connectTo;
 
         [SetUp]
         public void TestInitialize()
         {
-            shell = Substitute.For<IShellViewModel>();
-            serviceControl = Substitute.For<IServiceControl>();
+            shell = Substitute.For<ShellViewModel>();
+            serviceControl = Substitute.For<DefaultServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            connection = Substitute.For<IServiceControlConnectionProvider>();
+            connection = Substitute.For<ServiceControlConnectionProvider>();
             container = RegisterContainer();
             storedSetting = GetReloadedSettings();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(storedSetting);
@@ -40,7 +39,7 @@ namespace NServiceBus.Profiler.Tests
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            AsyncHelper.Run(() => connectTo.Accept());
+            connectTo.Accept();
 
             connectTo.CanAccept().ShouldBe(true);
             connectTo.IsAddressValid.ShouldBe(true);
@@ -51,14 +50,14 @@ namespace NServiceBus.Profiler.Tests
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            AsyncHelper.Run(() => connectTo.Accept());
+            connectTo.Accept();
 
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
             storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);
             storedSetting.RecentServiceControlEntries.ShouldContain("http://localhost:8080/managemnetApi");
         }
 
-        private ProfilerSettings GetReloadedSettings()
+        ProfilerSettings GetReloadedSettings()
         {
             var settings = new ProfilerSettings();
 
@@ -68,7 +67,7 @@ namespace NServiceBus.Profiler.Tests
             return settings;
         }
 
-        private IContainer RegisterContainer()
+        IContainer RegisterContainer()
         {
             var builder = new ContainerBuilder();
 
@@ -77,6 +76,5 @@ namespace NServiceBus.Profiler.Tests
 
             return builder.Build();
         }
-
     }
 }

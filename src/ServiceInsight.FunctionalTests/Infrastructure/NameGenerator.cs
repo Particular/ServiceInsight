@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Profiler.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
 {
+    using System;
+
     public class NameGenerator
     {
         public string GetUniqueName(string prefix = "")

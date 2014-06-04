@@ -1,19 +1,25 @@
-﻿using Autofac;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
-    public class ScreenFactory : IScreenFactory
+    using Autofac;
+    using Caliburn.Micro;
+
+    public class ScreenFactory 
     {
-        private readonly IContainer _container;
+        IContainer container;
+
+        //TODO: SIMON remove when empty constructor fixed
+        public ScreenFactory()
+        {
+        }
 
         public ScreenFactory(IContainer container)
         {
-            _container = container;
+            this.container = container;
         }
 
-        public T CreateScreen<T>() where T : class
+        public T CreateScreen<T>() where T : IScreen
         {
-            return _container.Resolve<T>();
+            return container.Resolve<T>();
         }
     }
 }

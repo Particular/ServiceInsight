@@ -1,8 +1,7 @@
-﻿namespace NServiceBus.Profiler.Desktop.Models
+﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     public enum MessageIntent
     {
-        Init,
         Send,
         Publish,
         Subscribe,

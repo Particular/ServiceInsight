@@ -1,45 +1,43 @@
-﻿using System.Collections.Generic;
-using log4net;
-using NServiceBus.Profiler.Desktop.Models;
-
-namespace NServiceBus.Profiler.Desktop.Startup
+﻿namespace Particular.ServiceInsight.Desktop.Startup
 {
-    public class CommandLineArgParser : ICommandLineArgParser
+    using System.Collections.Generic;
+    using Anotar.Serilog;
+    using Models;
+
+    public class CommandLineArgParser
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (ICommandLineArgParser));
+        const char UriSeparator = '?';
+        const char TokenSeparator = '&';
+        const char KeyValueSeparator = '=';
 
-        private const char UriSeparator = '?';
-        private const char TokenSeparator = '&';
-        private const char KeyValueSeparator = '=';
+        EnvironmentWrapper environment;
+        IList<string> unsupportedKeys;
 
-        private readonly IEnvironment _environment;
-        private readonly IList<string> _unsupportedKeys;
-        
         public CommandLineOptions ParsedOptions { get; private set; }
 
         public bool HasUnsupportedKeys
         {
-            get { return _unsupportedKeys.Count > 0; }
+            get { return unsupportedKeys.Count > 0; }
         }
 
-        public CommandLineArgParser(IEnvironment environment)
+        public CommandLineArgParser(EnvironmentWrapper environment)
         {
-            _environment = environment;
-            _unsupportedKeys = new List<string>();
+            this.environment = environment;
+            unsupportedKeys = new List<string>();
             ParsedOptions = new CommandLineOptions();
         }
 
         public void Parse()
         {
-            var args = _environment.GetCommandLineArgs();
-            
-            Logger.DebugFormat("Application invoked with following arguments: {0}", string.Join(" ", args));
+            var args = environment.GetCommandLineArgs();
+
+            LogTo.Debug("Application invoked with following arguments: {args}", args);
 
             if (args.Length != 2) return;
 
             var uri = args[1].Split(UriSeparator);
 
-            if(uri.Length == 0) return;
+            if (uri.Length == 0) return;
 
             if (uri.Length > 0)
             {
@@ -62,7 +60,7 @@ namespace NServiceBus.Profiler.Desktop.Startup
             }
         }
 
-        private void PopulateKeyValue(string key, string value)
+        void PopulateKeyValue(string key, string value)
         {
             var parameter = key.ToLower();
 
@@ -71,28 +69,29 @@ namespace NServiceBus.Profiler.Desktop.Startup
                 case "search":
                     ParsedOptions.SetSearchQuery(value);
                     break;
+
                 case "endpointname":
                     ParsedOptions.SetEndpointName(value);
                     break;
+
                 case "autorefresh":
                     ParsedOptions.SetAutoRefresh(value);
                     break;
+
+                case "resetlayout":
+                    ParsedOptions.SetResetLayout(bool.Parse(value));
+                    break;
+
                 default:
                     AddUnsupportedKey(key);
                     break;
             }
         }
 
-        private void AddUnsupportedKey(string key)
+        void AddUnsupportedKey(string key)
         {
-            Logger.WarnFormat("Key '{0}' is not supported.", key);
-            _unsupportedKeys.Add(key);
+            LogTo.Warning("Key '{key}' is not supported.", key);
+            unsupportedKeys.Add(key);
         }
-    }
-
-    public interface ICommandLineArgParser
-    {
-        CommandLineOptions ParsedOptions { get; }
-        bool HasUnsupportedKeys { get; }
     }
 }

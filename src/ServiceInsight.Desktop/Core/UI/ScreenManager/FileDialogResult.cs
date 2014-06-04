@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace NServiceBus.Profiler.Desktop.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class FileDialogResult
     {
         public FileDialogResult(bool? result) : this(result, Enumerable.Empty<string>())

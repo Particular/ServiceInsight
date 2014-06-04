@@ -1,11 +1,8 @@
-﻿using DevExpress.Xpf.Bars;
-using DevExpress.Xpf.PropertyGrid;
-
-namespace NServiceBus.Profiler.Desktop.MessageProperties
+﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
 {
-    /// <summary>
-    /// Interaction logic for MessagePropertiesView.xaml
-    /// </summary>
+    using DevExpress.Xpf.Bars;
+    using DevExpress.Xpf.PropertyGrid;
+
     public partial class MessagePropertiesView : IMessagePropertiesView
     {
         public MessagePropertiesView()
@@ -13,7 +10,7 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
             InitializeComponent();
         }
 
-        private void OnPropertyContentCopy(object sender, ItemClickEventArgs e)
+        void OnPropertyContentCopy(object sender, ItemClickEventArgs e)
         {
             var data = e.Item.DataContext as RowData;
             if (data != null && data.Value != null)
@@ -25,9 +22,9 @@ namespace NServiceBus.Profiler.Desktop.MessageProperties
             }
         }
 
-        private IMessagePropertiesViewModel Model
+        MessagePropertiesViewModel Model
         {
-            get {  return (IMessagePropertiesViewModel)DataContext; }
+            get { return (MessagePropertiesViewModel)DataContext; }
         }
     }
 

@@ -1,30 +1,26 @@
-﻿namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
     using System.IO;
-    using Caliburn.PresentationFramework.Screens;
+    using Caliburn.Micro;
     using Core;
     using Core.Licensing;
-    using Particular.Licensing;
-    using ScreenManager;
+    using Core.UI.ScreenManager;
+    using Licensing;
 
-    public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
+    public class LicenseRegistrationViewModel : Screen
     {
-        private readonly AppLicenseManager licenseManager;
-        private readonly IDialogManager _dialogManager;
-        private readonly INetworkOperations _network;
-
-        public const string LicensingPageUrl = "http://particular.net/licensing";
-        public const string LicenseExtensionPageUrl = "http://particular.net/extend-your-trial-14";
-        public const string CustomLicenseExtensionPageUrl = "http://particular.net/extend-your-trial-45";
+        AppLicenseManager licenseManager;
+        IWindowManagerEx dialogManager;
+        NetworkOperations network;
 
         public LicenseRegistrationViewModel(
             AppLicenseManager licenseManager,
-            IDialogManager dialogManager,
-            INetworkOperations network)
+            IWindowManagerEx dialogManager,
+            NetworkOperations network)
         {
             this.licenseManager = licenseManager;
-            _dialogManager = dialogManager;
-            _network = network;
+            this.dialogManager = dialogManager;
+            this.network = network;
         }
 
         protected override void OnActivate()
@@ -33,34 +29,23 @@
             DisplayName = GetScreenTitle();
         }
 
-        private string GetScreenTitle()
+        string GetScreenTitle()
         {
             var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense);
-
 
             if (licenseManager.CurrentLicense.IsCommercialLicense)
             {
                 if (expired)
                 {
-                    return string.Format("ServiceInsight - License Expired");
+                    return "ServiceInsight - License Expired";
                 }
-                else
-                {
-                    return string.Format("ServiceInsight");
-                }
-
+                return "ServiceInsight";
             }
-            else
+            if (HasRemainingTrial)
             {
-                if (HasRemainingTrial)
-                {
-                    return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
-                }
-                else
-                {
-                    return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
-                }
+                return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
             }
+            return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
         }
 
         public string TrialTypeText
@@ -70,7 +55,6 @@
                 return licenseManager.CurrentLicense.IsExtendedTrial ? "Extended" : "Initial";
             }
         }
-
 
         public string LicenseType
         {
@@ -91,7 +75,6 @@
         {
             get { return licenseManager.CurrentLicense.IsTrialLicense; }
         }
-
 
         public bool HasFullLicense
         {
@@ -147,6 +130,7 @@
                 return HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
             }
         }
+
         public void OnLicenseChanged()
         {
             NotifyOfPropertyChange(() => LicenseType);
@@ -156,32 +140,27 @@
 
         public void LoadLicense()
         {
-            var dialog = _dialogManager.OpenFileDialog(new FileDialogModel
+            var dialog = dialogManager.OpenFileDialog(new FileDialogModel
             {
                 Filter = "License files (*.xml)|*.xml|All files (*.*)|*.*",
                 FilterIndex = 1
             });
 
             var validLicense = false;
-            
+
             if (dialog.Result.GetValueOrDefault(false))
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
 
                 validLicense = licenseManager.TryInstallLicense(licenseContent);
-
-
-
             }
 
             if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
             {
                 TryClose(true);
+                return;
             }
-            else
-            {
-                //todo: Display error saying that the license was invalid
-            }
+            //todo: Display error saying that the license was invalid
         }
 
         public void Close()
@@ -191,21 +170,20 @@
 
         public void Purchase()
         {
-            _network.Browse(LicensingPageUrl);
+            network.Browse("http://particular.net/licensing");
         }
 
         public void Extend()
         {
-            _network.Browse(LicenseExtensionPageUrl);
+            network.Browse("http://particular.net/extend-your-trial-14");
         }
 
         public void ContactSales()
         {
-            _network.Browse(CustomLicenseExtensionPageUrl);
+            network.Browse("http://particular.net/extend-your-trial-45");
         }
 
-
-        private string ReadAllTextWithoutLocking(string path)
+        string ReadAllTextWithoutLocking(string path)
         {
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var textReader = new StreamReader(fileStream))
@@ -213,15 +191,5 @@
                 return textReader.ReadToEnd();
             }
         }
-    }
-
-    public interface ILicenseRegistrationViewModel : IScreen
-    {
-        string LicenseType { get; }
-        string RegisteredTo { get; }
-        int TrialDaysRemaining { get; }
-        bool HasTrialLicense { get; }
-        void LoadLicense();
-        void Close();
     }
 }

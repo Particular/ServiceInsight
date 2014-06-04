@@ -1,24 +1,25 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.Models;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NServiceBus.Profiler.Desktop.Saga
+﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    public class SagaWindowViewModel : Screen, ISagaWindowViewModel, IHandle<SelectedMessageChanged>
-    {
-        private IEventAggregator _eventAggregator;
-        private IServiceControl _serviceControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Caliburn.Micro;
+    using Events;
+    using Models;
+    using ServiceControl;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
+    public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
+    {
+        SagaData data;
+        StoredMessage currentMessage;
+        SagaMessage selectedMessage;
+        IEventAggregator eventAggregator;
+        DefaultServiceControl serviceControl;
+
+        public SagaWindowViewModel(IEventAggregator eventAggregator, DefaultServiceControl serviceControl)
         {
-            _eventAggregator = eventAggregator;
-            _serviceControl = serviceControl;
+            this.eventAggregator = eventAggregator;
+            this.serviceControl = serviceControl;
             ShowSagaNotFoundWarning = false;
         }
 
@@ -32,7 +33,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private void RefreshShowData()
+        void RefreshShowData()
         {
             if (Data == null || Data.Changes == null) return;
 
@@ -48,28 +49,28 @@ namespace NServiceBus.Profiler.Desktop.Saga
             NotifyOfPropertyChange(() => Data);
         }
 
-        private void RefreshMessageProperties()
+        void RefreshMessageProperties()
         {
             RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
         }
 
-        private async void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
+        void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
         {
             foreach (var message in messages)
             {
-                await message.RefreshData(_serviceControl);
+                message.RefreshData(serviceControl);
             }
 
             NotifyOfPropertyChange(() => Data);
         }
 
-        public async void Handle(SelectedMessageChanged @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
-            await RefreshSaga(message, a => true);
+            RefreshSaga(message, a => true);
         }
 
-        private async Task RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
+        void RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -86,32 +87,35 @@ namespace NServiceBus.Profiler.Desktop.Saga
                 {
                     if (HasChanged(originatingSaga.SagaId.ToString()))
                     {
-                        await RefreshSaga(originatingSaga);
+                        RefreshSaga(originatingSaga);
                     }
                 }
             }
         }
 
-        private async Task RefreshSaga(SagaInfo originatingSaga)
+        void RefreshSaga(SagaInfo originatingSaga)
         {
-            _eventAggregator.Publish(new WorkStarted("Loading message body..."));
+            eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
             if (Data == null || Data.SagaId != originatingSaga.SagaId)
             {
-                Data = await _serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+                Data = serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
 
-                if (Data == SagaData.Empty)
+                if (Data != null)
                 {
-                    ShowSagaNotFoundWarning = true;
-                    Data = null;
-                }
-                else if (Data != null && Data.Changes != null)
-                {
-                    ProcessDataValues(Data.Changes);
-                }
-                else
-                {
-                    Data = null;
+                    if (Data.SagaId == Guid.Empty)
+                    {
+                        ShowSagaNotFoundWarning = true;
+                        Data = null;
+                    }
+                    else if (Data.Changes != null)
+                    {
+                        ProcessDataValues(Data.Changes);
+                    }
+                    else
+                    {
+                        Data = null;
+                    }
                 }
             }
 
@@ -122,12 +126,12 @@ namespace NServiceBus.Profiler.Desktop.Saga
 
             RefreshShowData();
 
-            _eventAggregator.Publish(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
-        private static void ProcessDataValues(IEnumerable<SagaUpdate> list)
+        static void ProcessDataValues(IEnumerable<SagaUpdate> list)
         {
-            IList<SagaUpdatedValue> oldValues = new List<SagaUpdatedValue>();
+            var oldValues = new List<SagaUpdatedValue>();
             foreach (var change in list)
             {
                 ProcessChange(oldValues, change.Values);
@@ -135,45 +139,84 @@ namespace NServiceBus.Profiler.Desktop.Saga
             }
         }
 
-        private static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
+        static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {
-                var oldValue = oldValues.FirstOrDefault(v => v.Name == value.Name);
-                value.OldValue = oldValue != null ? oldValue.NewValue : string.Empty;
+                var oldValueViewModel = oldValues.FirstOrDefault(v => v.Name == value.Name);
+                value.UpdateOldValue(oldValueViewModel);
             }
         }
-
-        private StoredMessage currentMessage;
 
         public bool ShowSagaNotFoundWarning { get; set; }
 
         public bool HasSaga { get { return Data != null; } }
-        public SagaData Data { get; private set; }
+
+        public SagaData Data
+        {
+            get { return data; }
+            private set
+            {
+                data = value;
+                Header = new SagaHeader(data);
+                Footer = new SagaFooter(data);
+            }
+        }
+
+        public SagaHeader Header { get; private set; }
+
+        public SagaFooter Footer { get; private set; }
+
         public bool ShowEndpoints { get; set; }
+
         public bool ShowMessageData { get; set; }
 
         public void ShowFlow()
         {
-            _eventAggregator.Publish(new SwitchToFlowWindow());
+            eventAggregator.Publish(new SwitchToFlowWindow());
         }
 
-
-        public async Task RefreshSaga()
+        public void RefreshSaga()
         {
-            await RefreshSaga(currentMessage, _serviceControl.HasSagaChanged);
+            RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
         }
-    }
 
-    public interface ISagaWindowViewModel : IScreen
-    {
-        bool ShowSagaNotFoundWarning { get; }
-        bool ShowMessageData { get; }
-        bool ShowEndpoints { get; set; }
-        bool HasSaga { get; }
-        SagaData Data { get; }
-        void ShowFlow();
+        public SagaMessage SelectedMessage
+        {
+            get { return selectedMessage; }
+            set
+            {
+                selectedMessage = value;
+                OnSelectedMessageChanged();
+            }
+        }
 
-        Task RefreshSaga();
+        void OnSelectedMessageChanged()
+        {
+            if (SelectedMessage == null)
+                return;
+
+            foreach (var step in Data.Changes)
+            {
+                SetSelected(step.InitiatingMessage, SelectedMessage.MessageId);
+                SetSelected(step.OutgoingMessages, SelectedMessage.MessageId);
+            }
+        }
+
+        void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        {
+            if (messages == null)
+                return;
+
+            foreach (var message in messages)
+            {
+                SetSelected(message, id);
+            }
+        }
+
+        void SetSelected(SagaMessage message, Guid id)
+        {
+            message.IsSelected = message.MessageId == id;
+        }
     }
 }

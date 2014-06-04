@@ -1,17 +1,17 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.ExtensionMethods
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+
     public static class ReflectionHelper
     {
          public static T GetAttribute<T>(this ICustomAttributeProvider provider, bool inherit = false) 
              where T : class 
          {
-             var attrib = provider.GetCustomAttributes(typeof (T), inherit);
-             if(attrib.Length > 0)
-                 return (T)attrib[0];
+             var customAttributes = provider.GetCustomAttributes(typeof (T), inherit);
+             if(customAttributes.Length > 0)
+                 return (T)customAttributes[0];
              
              return null;
          }

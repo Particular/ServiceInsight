@@ -1,17 +1,18 @@
-﻿using System;
-using Autofac;
-using NServiceBus.Profiler.Desktop.Shell;
-using NServiceBus.Profiler.Desktop.Startup;
-using NUnit.Framework;
-using Shouldly;
-
-namespace NServiceBus.Profiler.Tests
+﻿namespace Particular.ServiceInsight.Tests
 {
+    using Autofac;
+    using Desktop.Shell;
+    using Desktop.Startup;
+    using Microsoft.Reactive.Testing;
+    using NUnit.Framework;
+    using ReactiveUI.Testing;
+    using Shouldly;
+
     [TestFixture]
     public class ContainerRegistrationTests
     {
-        private AppBootstrapper Bootstrapper;
-        private IContainer Container;
+        TestableAppBootstrapper Bootstrapper;
+        IContainer Container;
 
         [SetUp]
         public void TestInitialize()
@@ -29,7 +30,10 @@ namespace NServiceBus.Profiler.Tests
         [Test]
         public void should_resolve_the_shell()
         {
-            Should.NotThrow(() => Container.Resolve<IShellViewModel>());
+            new TestScheduler().With(sched =>
+            {
+                Should.NotThrow(() => Container.Resolve<ShellViewModel>());
+            });
         }
     }
 
@@ -37,12 +41,11 @@ namespace NServiceBus.Profiler.Tests
     {
         protected override void PrepareApplication()
         {
-
         }
 
-        protected override bool TryHandleException(Exception exception)
+        public IContainer GetContainer()
         {
-            return false;
+            return container;
         }
     }
 }

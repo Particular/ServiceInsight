@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
-using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Events;
-using NServiceBus.Profiler.Desktop.ExtensionMethods;
-using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
-using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
-
-namespace NServiceBus.Profiler.Desktop.MessageViewers
+﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
 {
-    public interface IMessageBodyViewModel : IScreen,
+    using System.Collections.Generic;
+    using Caliburn.Micro;
+    using Events;
+    using ExtensionMethods;
+    using HexViewer;
+    using JsonViewer;
+    using XmlViewer;
+
+    public class MessageBodyViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-    }
-
-    public class MessageBodyViewModel : Screen, IMessageBodyViewModel
-    {
-        private static readonly IDictionary<string, MessageContentType> ContentTypeMaps;
+        static Dictionary<string, MessageContentType> ContentTypeMaps;
 
         static MessageBodyViewModel()
         {
@@ -31,26 +26,29 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
         }
 
         public MessageBodyViewModel(
-            IHexContentViewModel hexViewer, 
-            IJsonMessageViewModel jsonViewer,
-            IXmlMessageViewModel xmlViewer)
+            HexContentViewModel hexViewer,
+            JsonMessageViewModel jsonViewer,
+            XmlMessageViewModel xmlViewer)
         {
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
         }
 
-        public IHexContentViewModel HexViewer { get; private set; }
-        public IJsonMessageViewModel JsonViewer { get; private set; }
-        public IXmlMessageViewModel XmlViewer { get; private set; }
+        public HexContentViewModel HexViewer { get; private set; }
+
+        public JsonMessageViewModel JsonViewer { get; private set; }
+
+        public XmlMessageViewModel XmlViewer { get; private set; }
+
         public MessageContentType ContentType { get; private set; }
 
-        public bool JsonViewerVisibile
+        public bool JsonViewerVisible
         {
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json; }
         }
 
-        public bool XmlViewerVisibile
+        public bool XmlViewerVisible
         {
             get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml; }
         }
@@ -67,12 +65,5 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers
                 ContentType = MessageContentType.NotSpecified;
             }
         }
-    }
-
-    public enum MessageContentType
-    {
-        NotSpecified,
-        Json,
-        Xml,
     }
 }

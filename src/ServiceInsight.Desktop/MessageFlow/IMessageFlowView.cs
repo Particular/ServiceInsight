@@ -1,9 +1,9 @@
-﻿using Mindscape.WpfDiagramming;
-using Mindscape.WpfDiagramming.Foundation;
-using System;
-
-namespace NServiceBus.Profiler.Desktop.MessageFlow
+﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
+    using System;
+    using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.Foundation;
+
     public interface IMessageFlowView
     {
         void ApplyLayout();

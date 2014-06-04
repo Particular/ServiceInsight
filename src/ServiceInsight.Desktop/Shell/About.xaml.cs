@@ -1,11 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace Particular.ServiceInsight.Desktop.Shell
 {
-    /// <summary>
-    /// Interaction logic for About.xaml
-    /// </summary>
+    using System.Windows;
+
     public partial class AboutView
     {
         public AboutView()
@@ -16,19 +12,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         public static Window AsSplashScreen()
         {
             var vm = AboutViewModel.AsSplashScreenModel();
-            var view = new AboutView {DataContext = vm};
+            var view = new AboutView { DataContext = vm, WindowStyle = WindowStyle.None };
 
             return view;
-        }
-
-        private AboutViewModel Model 
-        {
-            get { return (AboutViewModel) DataContext; }
-        }
-
-        private void OnLinkClicked(object sender, RoutedEventArgs e)
-        {
-            Model.NavigateToSite();
         }
     }
 }

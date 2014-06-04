@@ -1,32 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.Core.Settings
+namespace Particular.ServiceInsight.Desktop.Core.Settings
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+
     public class SettingsProvider : ISettingsProvider
     {
-        private readonly ISettingsStorage _settingsRepository;
+        ISettingsStorage settingsRepository;
 
         public SettingsProvider(ISettingsStorage settingsRepository = null)
         {
-            _settingsRepository = settingsRepository ?? new IsolatedStorageSettingsStore();
+            this.settingsRepository = settingsRepository ?? new IsolatedStorageSettingsStore();
         }
 
         public T GetSettings<T>() where T : new()
         {
             try
             {
-                if (_settingsRepository.HasSettings(GetKey<T>()))
+                if (settingsRepository.HasSettings(GetKey<T>()))
                 {
                     return LoadSettings<T>(ReadSettingMetadata<T>());
                 }
-                else
-                {
-                    return GetDefaultSettings<T>();
-                }
+                return GetDefaultSettings<T>();
             }
             catch
             {
@@ -34,7 +31,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
             }
         }
 
-        private T GetDefaultSettings<T>() where T : new()
+        T GetDefaultSettings<T>() where T : new()
         {
             var settingMetadata = ReadSettingMetadata<T>();
             var defaultSetting = new T();
@@ -52,7 +49,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
 
         protected virtual T LoadSettings<T>(IList<SettingDescriptor> metadata) where T : new()
         {
-            return _settingsRepository.Load<T>(GetKey<T>(), metadata);
+            return settingsRepository.Load<T>(GetKey<T>(), metadata);
         }
 
         protected string GetKey<T>()
@@ -74,7 +71,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
                 setting.Write(settings, value);
             }
 
-            _settingsRepository.Save(GetKey<T>(), settings);
+            settingsRepository.Save(GetKey<T>(), settings);
         }
 
         public virtual IList<SettingDescriptor> ReadSettingMetadata<T>()
@@ -90,11 +87,11 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
                 .ToArray();
         }
 
-        private static string GetSettingTypeName(string name)
+        static string GetSettingTypeName(string name)
         {
             var namespaceSeparator = name.LastIndexOf('.');
             var internalClassName = name.IndexOf('+');
-            var settingName = string.Empty;
+            string settingName;
             if (namespaceSeparator > 0)
             {
                 if (internalClassName > 0)
@@ -127,7 +124,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Settings
             ReadAttribute<DisplayNameAttribute>(d => DisplayName = d.DisplayName);
         }
 
-        private void ReadAttribute<TAttribute>(Action<TAttribute> callback)
+        void ReadAttribute<TAttribute>(Action<TAttribute> callback)
         {
             var instances = Property.GetCustomAttributes(typeof(TAttribute), true).OfType<TAttribute>();
             foreach (var instance in instances)

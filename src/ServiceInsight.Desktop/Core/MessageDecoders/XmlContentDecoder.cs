@@ -1,9 +1,9 @@
-using System;
-using System.Text;
-using System.Xml;
-
-namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
+namespace Particular.ServiceInsight.Desktop.Core.MessageDecoders
 {
+    using System;
+    using System.Text;
+    using System.Xml;
+
     public class XmlContentDecoder : IContentDecoder<XmlDocument>
     {
         public DecoderResult<XmlDocument> Decode(byte[] content)
@@ -17,21 +17,18 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
                 {
                     return new DecoderResult<XmlDocument>(doc);
                 }
-                else
+                //TODO: Issues RESTSharp deserializer when reading byte array as string
+                xml = GetFromBase64String(content);
+                if (TryLoadIntoDocument(xml, doc))
                 {
-                    //TODO: Issues RESTSharp deserializer when reading byte array as string
-                    xml = GetFromBase64String(content);
-                    if (TryLoadIntoDocument(xml, doc))
-                    {
-                        return new DecoderResult<XmlDocument>(doc);
-                    }
+                    return new DecoderResult<XmlDocument>(doc);
                 }
             }
 
             return new DecoderResult<XmlDocument>(doc, false);
         }
 
-        private static string GetFromBase64String(byte[] content)
+        static string GetFromBase64String(byte[] content)
         {
             try
             {
@@ -45,7 +42,7 @@ namespace NServiceBus.Profiler.Desktop.Core.MessageDecoders
             }
         }
 
-        private bool TryLoadIntoDocument(string xml, XmlDocument document)
+        bool TryLoadIntoDocument(string xml, XmlDocument document)
         {
             if (string.IsNullOrWhiteSpace(xml)) return false;
 

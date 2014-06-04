@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Profiler.FunctionalTests.ServiceControlStub.Controllers
+﻿namespace Particular.ServiceInsight.FunctionalTests.ServiceControlStub.Models
 {
     public class HomeModel
     {

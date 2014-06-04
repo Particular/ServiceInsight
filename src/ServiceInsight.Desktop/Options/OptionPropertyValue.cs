@@ -1,29 +1,32 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-
-namespace NServiceBus.Profiler.Desktop.Options
+﻿namespace Particular.ServiceInsight.Desktop.Options
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+
     public class OptionPropertyValue : IDataErrorInfo
     {
-        private readonly PropertyInfo _propertyInfo;
-        private readonly object _owner;
-        private readonly DisplayNameAttribute _displayName;
-        private readonly DescriptionAttribute _description;
+        PropertyInfo propertyInfo;
+        object owner;
+        DisplayNameAttribute displayName;
+        DescriptionAttribute description;
 
-        public OptionPropertyValue(PropertyInfo propertyInfo, object owner)
+        public OptionPropertyValue(PropertyInfo propertyInfo, object owner, PropertyInfo defaultPropertyInfo)
         {
-            _propertyInfo = propertyInfo;
-            _owner = owner;
-            _displayName = _propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
-            _description = _propertyInfo.GetCustomAttribute<DescriptionAttribute>();
+            this.propertyInfo = propertyInfo;
+            this.owner = owner;
+            displayName = this.propertyInfo.GetCustomAttribute<DisplayNameAttribute>();
+            description = this.propertyInfo.GetCustomAttribute<DescriptionAttribute>();
+
+            if (defaultPropertyInfo != null)
+                DefaultValue = (string)defaultPropertyInfo.GetValue(owner);
         }
 
         public string Name
         {
             get
             {
-                return _displayName != null ? _displayName.DisplayName : _propertyInfo.Name;
+                return displayName != null ? displayName.DisplayName : propertyInfo.Name;
             }
         }
 
@@ -31,25 +34,27 @@ namespace NServiceBus.Profiler.Desktop.Options
         {
             get
             {
-                return _description == null ? string.Empty : _description.Description;
+                return description == null ? string.Empty : description.Description;
             }
         }
 
+        public string DefaultValue { get; set; }
+
         public Type PropertyType
         {
-            get { return _propertyInfo.PropertyType; }
+            get { return propertyInfo.PropertyType; }
         }
 
         public object Value
         {
-            get { return _propertyInfo.GetValue(_owner, null); }
+            get { return propertyInfo.GetValue(owner, null); }
             set { TrySetValue(value); }
         }
 
-        private void TrySetValue(object value)
+        void TrySetValue(object value)
         {
             var convertedValue = Convert.ChangeType(value, PropertyType);
-            _propertyInfo.SetValue(_owner, convertedValue, null);
+            propertyInfo.SetValue(owner, convertedValue, null);
         }
 
         public string this[string columnName]

@@ -1,12 +1,12 @@
-﻿using Castle.Core.Logging;
-using TestStack.White;
-using TestStack.White.InputDevices;
-using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
-
-namespace NServiceBus.Profiler.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
 {
+    using Castle.Core.Logging;
+    using TestStack.White;
+    using TestStack.White.InputDevices;
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.WindowItems;
+
     public abstract class ProfilerElement
     {
         protected ProfilerElement(Window mainWindow)
@@ -27,7 +27,7 @@ namespace NServiceBus.Profiler.FunctionalTests.Parts
 
         protected T GetByClassName<T>(string className) where T : IUIItem
         {
-            return (T) MainWindow.Get<T>(SearchCriteria.ByClassName(className));
+            return MainWindow.Get<T>(SearchCriteria.ByClassName(className));
         }
     }
 }
