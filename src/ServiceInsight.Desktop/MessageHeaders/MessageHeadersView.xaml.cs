@@ -3,14 +3,10 @@
     using System;
     using System.Reactive.Linq;
     using System.Windows;
+    using DevExpress.Xpf.Bars;
     using ReactiveUI;
 
-    public interface IMessageHeadersView
-    {
-        void CopyRowsToClipboard();
-    }
-
-    public partial class MessageHeadersView : IMessageHeadersView
+    public partial class MessageHeadersView
     {
         IDisposable kvSubscription;
 
@@ -35,7 +31,7 @@
                 .Subscribe(_ => gridView.BestFitColumn(KeyColumn));
         }
 
-        public void CopyRowsToClipboard()
+        void CopyToClipboard_OnItemClick(object sender, ItemClickEventArgs e)
         {
             gridView.DataControl.BeginSelection();
             gridView.DataControl.SelectAll();

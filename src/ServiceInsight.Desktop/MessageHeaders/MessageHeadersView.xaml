@@ -1,11 +1,10 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageHeaders.MessageHeadersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:ui="clr-namespace:Particular.ServiceInsight.Desktop.Core.UI"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -13,32 +12,38 @@
             <TextBlock FontWeight="Bold" Text="{Binding}" />
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
-        <dxg:GridControl x:Name="HeadersGrid" ItemsSource="{Binding KeyValues}">
-            <dxb:BarManager.DXContextMenu>
-                <dxb:PopupMenu ItemLinksSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
-                               ItemTemplateSelector="{StaticResource ContextMenuSelector}"
-                               Visibility="{Binding RelativeSource={RelativeSource Self}, Path=ItemLinks.Count, Converter={StaticResource PopupMenuItemCountVisibleConverter}}"
-                               ui:NotifyMenuOpeningBehavior.NotifyMenuOpening="True"/>
-            </dxb:BarManager.DXContextMenu>
+    <dxb:BarManager>
+        <dxb:BarManager.Items>
+            <dxb:BarButtonItem Name="copyToClipboard" Content="Copy To Clipboard" ItemClick="CopyToClipboard_OnItemClick" />
+        </dxb:BarManager.Items>
+        <Grid>
+            <dxg:GridControl x:Name="HeadersGrid" ItemsSource="{Binding KeyValues}">
+                <dxb:BarManager.DXContextMenu>
+                    <dxb:PopupMenu>
+                        <dxb:PopupMenu.ItemLinks>
+                            <dxb:BarButtonItemLink BarItemName="copyToClipboard" />
+                        </dxb:PopupMenu.ItemLinks>
+                    </dxb:PopupMenu>
+                </dxb:BarManager.DXContextMenu>
 
-            <dxg:GridControl.Columns>
-                <dxg:GridColumn x:Name="KeyColumn" BestFitMode="AllRows" AllowBestFit="True" FieldName="Key" SortOrder="Ascending" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
-                <dxg:GridColumn FieldName="Value" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
-            </dxg:GridControl.Columns>
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" 
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn x:Name="KeyColumn" BestFitMode="AllRows" AllowBestFit="True" FieldName="Key" SortOrder="Ascending" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                    <dxg:GridColumn FieldName="Value" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gridView"
                                IsColumnMenuEnabled="False"
                                ShowIndicator="False"
                                MultiSelectMode="Row"
-                               AllowCascadeUpdate="True" 
-                               AllowPerPixelScrolling="True" 
-                               AutoWidth="True" 
-                               AllowEditing="False" 
+                               AllowCascadeUpdate="True"
+                               AllowPerPixelScrolling="True"
+                               AutoWidth="True"
+                               AllowEditing="False"
                                ShowGroupPanel="False"
-                               NavigationStyle="Row" 
+                               NavigationStyle="Row"
                                FadeSelectionOnLostFocus="False" />
-            </dxg:GridControl.View>
-        </dxg:GridControl>
-    </Grid>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </Grid>
+    </dxb:BarManager>
 </UserControl>
