@@ -6,8 +6,6 @@
              xmlns:startup="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
              xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:menu="clr-namespace:Particular.ServiceInsight.Desktop.Shell.Menu"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -31,9 +29,6 @@
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:HalvingConverter x:Key="HalvingConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
-
-                    <!--Template Selectors-->
-                    <menu:MenuItemDataTemplateSelector x:Key="ContextMenuSelector" />
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -275,52 +270,6 @@
                         <dxe:TextEdit Name="PART_Editor"
                                       IsReadOnly="True"
                                       DisplayFormatString="{Binding Source={x:Static cnv:MessageDateTimeFormatProvider.MessageDateFormat}}" />
-                    </DataTemplate>
-
-                    <!--Menu DataTemplates-->
-                    <DataTemplate x:Key="ButtonContextMenu" DataType="menu:IMenuItem">
-                        <ContentControl>
-                            <dxb:BarButtonItem Content="{Binding Caption}"
-                                       Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
-                                       Command="{Binding Command}"
-                                       CommandParameter="{Binding}"
-                                       IsVisible="{Binding IsVisible}"
-                                       IsEnabled="{Binding IsEnabled}"
-                                       KeyGesture="{Binding KeyGesture}"
-                                       ToolTip="{Binding ToolTip}" />
-                        </ContentControl>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="SubButtonContextMenu" DataType="menu:IMenuItem">
-                        <ContentControl>
-                            <dxb:BarSubItem Content="{Binding Caption}"
-                                    Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
-                                    ItemTemplateSelector="{StaticResource ContextMenuSelector}"
-                                    ItemLinksSource="{Binding SubMenuItems}"
-                                    IsVisible="{Binding IsVisible}"
-                                    IsEnabled="{Binding IsEnabled}" />
-                        </ContentControl>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="CheckButtonContextMenu" DataType="menu:IMenuItem">
-                        <ContentControl>
-                            <dxb:BarCheckItem Content="{Binding Caption}"
-                                      Glyph="{Binding Icon, Converter={StaticResource BitmapToGlyphConverter}}"
-                                      IsChecked="{Binding IsChecked}"
-                                      IsVisible="{Binding IsVisible}"
-                                      IsEnabled="{Binding IsEnabled}"
-                                      KeyGesture="{Binding KeyGesture}"
-                                      ToolTip="{Binding ToolTip}"
-                                      Command="{Binding Command}"
-                                      CommandParameter="{Binding}"
-                                      CloseSubMenuOnClick="{Binding CloseSubMenuOnClick}" />
-                        </ContentControl>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="SeparatorContextMenu">
-                        <ContentControl>
-                            <dxb:BarItemSeparator />
-                        </ContentControl>
                     </DataTemplate>
 
                     <Style x:Key="ItemsControlVirtualisedStyle" TargetType="ItemsControl">

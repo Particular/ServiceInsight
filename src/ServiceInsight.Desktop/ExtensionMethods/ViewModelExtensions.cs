@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Rx
+﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
 {
     using System;
     using System.Linq.Expressions;
@@ -8,7 +8,7 @@
     public static class ViewModelExtensions
     {
         // ReSharper disable UnusedParameter.Global
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, IObservable<bool> canExecuteObservable, Action executAction) where TViewModel : class
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executAction, IObservable<bool> canExecuteObservable) where TViewModel : class
         // ReSharper restore UnusedParameter.Global
         {
             var command = new ReactiveCommand(canExecuteObservable);
@@ -16,7 +16,7 @@
             return command;
         }
 
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Expression<Func<TViewModel, bool>> canExecuteSelector, Action executAction) where TViewModel : class
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executAction, Expression<Func<TViewModel, bool>> canExecuteSelector) where TViewModel : class
         {
             var command = new ReactiveCommand(viewModel.ObservableForProperty(canExecuteSelector, b => b));
             command.Subscribe(_ => executAction());

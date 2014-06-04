@@ -229,7 +229,7 @@
     <Compile Include="Framework\Rx\RxConductorBase.cs" />
     <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\Rx\RxViewAware.cs" />
-    <Compile Include="Framework\Rx\ViewModelExtensions.cs" />
+    <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
@@ -249,8 +249,6 @@
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
-    <Compile Include="Core\UI\ContextMenuInvalidateOnOpen.cs" />
-    <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Events\RetryMessage.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
@@ -411,12 +409,6 @@
       <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
-    <Compile Include="Shell\Menu\IHaveContextMenu.cs" />
-    <Compile Include="Shell\Menu\IMenuItem.cs" />
-    <Compile Include="Shell\Menu\MenuItem.cs" />
-    <Compile Include="Shell\Menu\MenuItemBase.cs" />
-    <Compile Include="Shell\Menu\MenuItemDataTemplateSelector.cs" />
-    <Compile Include="Shell\Menu\SeparatorMenuItem.cs" />
     <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
       <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>

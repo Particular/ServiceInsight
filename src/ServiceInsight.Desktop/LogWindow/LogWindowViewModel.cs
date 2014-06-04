@@ -9,8 +9,8 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using Caliburn.Micro;
+    using ExtensionMethods;
     using Framework;
-    using Framework.Rx;
     using ReactiveUI;
     using Serilog.Events;
     using Serilog.Formatting;

@@ -6,7 +6,6 @@
     using System.Windows.Input;
     using Caliburn.Micro;
     using Core.Settings;
-    using Core.UI;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -34,8 +33,8 @@
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
 
-            SearchCommand = new RelayCommand(Search, () => CanSearch);
-            CancelSearchCommand = new RelayCommand(CancelSearch, () => CanCancelSearch);
+            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
+            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
         }
 
         protected override void OnActivate()

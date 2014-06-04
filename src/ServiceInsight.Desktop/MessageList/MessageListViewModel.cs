@@ -53,9 +53,9 @@
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
 
-            RetryMessageCommand = this.CreateCommand(vm => vm.CanRetryMessage, RetryMessage);
-            CopyMessageIdCommand = this.CreateCommand(vm => vm.CanCopyMessageId, CopyMessageId);
-            CopyHeadersCommand = this.CreateCommand(generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()), CopyHeaders);
+            RetryMessageCommand = this.CreateCommand(RetryMessage, vm => vm.CanRetryMessage);
+            CopyMessageIdCommand = this.CreateCommand(CopyMessageId, vm => vm.CanCopyMessageId);
+            CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
 
             Rows = new BindableCollection<StoredMessage>();
 
