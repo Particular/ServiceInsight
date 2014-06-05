@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="GitVersionTask.GetVersion" AssemblyFile="$(SolutionDir)..\buildsupport\GitVersionTask\GitVersionTask.dll" />
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)..\buildsupport\PepitaPackage.dll" />
+  <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\buildsupport\MSBuild.Community.Tasks.dll" />
+
+  <Target Name="Build">
+    <GetVersion SolutionDirectory="$(SolutionDir)">
+      <Output TaskParameter="SemVer" PropertyName="SemVer" />
+      <Output TaskParameter="LegacySemVerPadded" PropertyName="LegacySemVerPadded" />
+    </GetVersion>
+    <PropertyGroup>
+      <ChocoVersion>$(LegacySemVerPadded)</ChocoVersion>
+    </PropertyGroup>
+    <ItemGroup>
+      <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <MakeDir Directories="$(ProjectDir)Build" />
+    <Copy SourceFiles="$(ProjectDir)ServiceInsight.install.nuspec" DestinationFolder="$(ProjectDir)Build" />
+    <Copy SourceFiles="$(ProjectDir)chocolateyInstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
+    <Copy SourceFiles="$(ProjectDir)chocolateyUninstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
+    <Copy SourceFiles="$(ProjectDir)elevatedUninstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
+    <ItemGroup>
+      <InstallFile Include="$(ProjectDir)Build\Tools\chocolateyInstall.ps1" />
+      <InstallFile Include="$(ProjectDir)Build\Tools\chocolateyUninstall.ps1" />
+      <InstallFile Include="$(ProjectDir)Build\Tools\elevatedUninstall.ps1" />
+    </ItemGroup>
+    <FileUpdate Files="@(InstallFile)" Regex="{{FileVersion}}" ReplacementText="$(SemVer)" />
+    <FileUpdate Files="@(InstallFile)" Regex="{{ReleaseName}}" ReplacementText="$(ChocoVersion)" />
+    <CreatePackageTask NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
+  </Target>
+</Project>
