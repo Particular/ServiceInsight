@@ -18,6 +18,7 @@
 
     <PropertyGroup>
       <BuildFolder>$(ProjectDir)Build\</BuildFolder>
+      <OutputFolder>$(SolutionDir)..\nugets</OutputFolder>
       <ChocoVersion>$(LegacySemVerPadded)</ChocoVersion>
 
       <NuGetExePath>$(SolutionDir)packages\NuGet.CommandLine.2.8.2\tools\NuGet.exe</NuGetExePath>
@@ -27,7 +28,7 @@
 
       <BuildCommand>$(NuGetCommand) pack "$(BuildFolder)ServiceInsight.install.nuspec"</BuildCommand>
       <BuildCommand>$(BuildCommand) -Version $(ChocoVersion)</BuildCommand>
-      <BuildCommand>$(BuildCommand) -OutputDirectory "$(SolutionDir)..\nugets"</BuildCommand>
+      <BuildCommand>$(BuildCommand) -OutputDirectory "$(OutputFolder)"</BuildCommand>
       <BuildCommand>$(BuildCommand) -NoPackageAnalysis</BuildCommand>
       <BuildCommand>$(BuildCommand) -NonInteractive</BuildCommand>
     </PropertyGroup>
@@ -38,6 +39,7 @@
 
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(BuildFolder)" />
+    <MakeDir Directories="$(OutputFolder)" />
     <Copy SourceFiles="$(ProjectDir)ServiceInsight.install.nuspec" DestinationFolder="$(BuildFolder)" />
     <Copy SourceFiles="$(ProjectDir)chocolateyInstall.ps1" DestinationFolder="$(BuildFolder)Tools" />
     <Copy SourceFiles="$(ProjectDir)chocolateyUninstall.ps1" DestinationFolder="$(BuildFolder)Tools" />
