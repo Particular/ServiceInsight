@@ -29,12 +29,6 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ServiceInsight.Desktop\ServiceInsight.Desktop.csproj">
-      <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
-      <Name>ServiceInsight.Desktop</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Clean" />
   <Target Name="Build" />
   <Target Name="ReBuild" DependsOnTargets="Clean;Build" />

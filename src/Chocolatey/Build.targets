@@ -1,33 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="GitVersionTask.GetVersion" AssemblyFile="$(SolutionDir)..\buildsupport\GitVersionTask\GitVersionTask.dll" />
-  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)..\buildsupport\PepitaPackage.dll" />
   <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\buildsupport\MSBuild.Community.Tasks.dll" />
+
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="Build">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)packages\NuGet.CommandLine.2.8.2\tools\NuGet.exe')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\NuGet.CommandLine.2.8.2\tools\NuGet.exe'))" />
+  </Target>
 
   <Target Name="Build">
     <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="SemVer" PropertyName="SemVer" />
       <Output TaskParameter="LegacySemVerPadded" PropertyName="LegacySemVerPadded" />
     </GetVersion>
+
     <PropertyGroup>
+      <BuildFolder>$(ProjectDir)Build\</BuildFolder>
       <ChocoVersion>$(LegacySemVerPadded)</ChocoVersion>
+
+      <NuGetExePath>$(SolutionDir)packages\NuGet.CommandLine.2.8.2\tools\NuGet.exe</NuGetExePath>
+
+      <NuGetCommand Condition=" '$(OS)' == 'Windows_NT'">"$(NuGetExePath)"</NuGetCommand>
+      <NuGetCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(NuGetExePath)"</NuGetCommand>
+
+      <BuildCommand>$(NuGetCommand) pack "$(BuildFolder)ServiceInsight.install.nuspec"</BuildCommand>
+      <BuildCommand>$(BuildCommand) -Version $(ChocoVersion)</BuildCommand>
+      <BuildCommand>$(BuildCommand) -OutputDirectory "$(SolutionDir)..\nugets"</BuildCommand>
+      <BuildCommand>$(BuildCommand) -NoPackageAnalysis</BuildCommand>
+      <BuildCommand>$(BuildCommand) -NonInteractive</BuildCommand>
     </PropertyGroup>
+
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)Build\**\*.*" />
     </ItemGroup>
+
     <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="$(ProjectDir)Build" />
-    <Copy SourceFiles="$(ProjectDir)ServiceInsight.install.nuspec" DestinationFolder="$(ProjectDir)Build" />
-    <Copy SourceFiles="$(ProjectDir)chocolateyInstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
-    <Copy SourceFiles="$(ProjectDir)chocolateyUninstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
-    <Copy SourceFiles="$(ProjectDir)elevatedUninstall.ps1" DestinationFolder="$(ProjectDir)Build\Tools" />
+    <MakeDir Directories="$(BuildFolder)" />
+    <Copy SourceFiles="$(ProjectDir)ServiceInsight.install.nuspec" DestinationFolder="$(BuildFolder)" />
+    <Copy SourceFiles="$(ProjectDir)chocolateyInstall.ps1" DestinationFolder="$(BuildFolder)Tools" />
+    <Copy SourceFiles="$(ProjectDir)chocolateyUninstall.ps1" DestinationFolder="$(BuildFolder)Tools" />
+    <Copy SourceFiles="$(ProjectDir)elevatedUninstall.ps1" DestinationFolder="$(BuildFolder)Tools" />
     <ItemGroup>
-      <InstallFile Include="$(ProjectDir)Build\Tools\chocolateyInstall.ps1" />
-      <InstallFile Include="$(ProjectDir)Build\Tools\chocolateyUninstall.ps1" />
-      <InstallFile Include="$(ProjectDir)Build\Tools\elevatedUninstall.ps1" />
+      <InstallFile Include="$(BuildFolder)Tools\chocolateyInstall.ps1" />
+      <InstallFile Include="$(BuildFolder)Tools\chocolateyUninstall.ps1" />
+      <InstallFile Include="$(BuildFolder)Tools\elevatedUninstall.ps1" />
     </ItemGroup>
     <FileUpdate Files="@(InstallFile)" Regex="{{FileVersion}}" ReplacementText="$(SemVer)" />
     <FileUpdate Files="@(InstallFile)" Regex="{{ReleaseName}}" ReplacementText="$(ChocoVersion)" />
-    <CreatePackageTask NuGetBuildDirectory="$(ProjectDir)Build" Version="$(ChocoVersion)" TargetDir="$(SolutionDir)..\nugets" />
+
+    <Exec Command="$(BuildCommand)"
+          Condition=" '$(OS)' != 'Windows_NT' " />
+
+    <Exec Command="$(BuildCommand)"
+          LogStandardErrorAsError="true"
+          Condition=" '$(OS)' == 'Windows_NT' " />
   </Target>
 </Project>
