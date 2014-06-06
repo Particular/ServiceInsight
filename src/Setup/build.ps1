@@ -1,3 +1,9 @@
+param(
+    [parameter(Mandatory=$True)] [string]$baseDir,
+    [parameter(Mandatory=$True)] [string]$version,
+    [parameter(Mandatory=$True)] [string]$packageVersion
+)
+
 function Get-RegistryValue($key, $value) {
     (Get-ItemProperty $key $value -ErrorAction SilentlyContinue).$value
 }
@@ -8,12 +14,6 @@ function Get-RegistryValue($key, $value) {
 
 Function CreateInstaller
 {
-    param(
-        [parameter(Position=0,Mandatory=1)] [string]$baseDir,
-        [parameter(Position=1,Mandatory=1)] [string]$version,
-        [parameter(Position=2,Mandatory=1)] [string]$packageVersion
-    )
-
     #until we figure out why AI looks in the wrong dir
     Copy-Item .\binaries\* .\src\setup\binaries
 
