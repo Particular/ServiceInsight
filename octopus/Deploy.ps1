@@ -16,13 +16,13 @@ $requiredvariables | % {
 push-location .\content
 
 #rename .zip files back to .nupkg
-Get-ChildItem -Path "." -Include "*.nzip" | Rename-Item -NewName {$_.BaseName }
+Get-ChildItem -Path ".\*" -Include "*.nzip" | Rename-Item -NewName { $_.BaseName }
 
 Write-Host "Creating release for milestone {{milestone}} ..."
 
 & "..\tools\ReleaseNotesCompiler.CLI.exe" $ghusername $ghpassword "particular" "serviceinsight" "{{milestone}}"
 
-$files = Get-ChildItem -Path "." -Include "*.nupkg"
+$files = Get-ChildItem -Path ".\*" -Include "*.nupkg"
 foreach ($file in $files) { 
     $fileName =  $file.Name
 
