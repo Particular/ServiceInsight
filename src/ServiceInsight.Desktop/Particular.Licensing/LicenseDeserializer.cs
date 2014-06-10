@@ -55,6 +55,8 @@ namespace Particular.Licensing
                 license.RegisteredTo = name.InnerText;
             }
 
+            license.IsFromLicenseFile = true;
+
             return license;
         }
 

@@ -12,7 +12,7 @@ namespace Particular.Licensing
             {
                 LicenseType = "Trial",
                 ExpirationDate = trialStartDate.AddDays(14),
-                IsExtendedTrial = false,
+                IsFromLicenseFile = false,
                 ValidApplications = new List<string> { "All" }
             };
         }
@@ -29,7 +29,9 @@ namespace Particular.Licensing
             get { return !IsCommercialLicense; }
         }
 
-        public bool IsExtendedTrial { get; set; }
+        public bool IsFromLicenseFile { get; set; }
+
+        public bool IsExtendedTrial { get { return IsTrialLicense && IsFromLicenseFile; } }
 
         public bool IsCommercialLicense
         {
