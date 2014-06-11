@@ -1,7 +1,6 @@
 param(
     [parameter(Mandatory=$True)] [string]$baseDir,
-    [parameter(Mandatory=$True)] [string]$version,
-    [parameter(Mandatory=$True)] [string]$packageVersion
+    [parameter(Mandatory=$True)] [string]$version
 )
 
 function Get-RegistryValue($key, $value) {
@@ -10,7 +9,6 @@ function Get-RegistryValue($key, $value) {
 
 #$baseDir = "%teamcity.build.checkoutDir%"
 #$version = "%GitVersion.MajorMinorPatch%"
-#$packageVersion = "%GitVersion.ClassicVersionWithTag%"
 
 Function CreateInstaller
 {
@@ -23,7 +21,7 @@ Function CreateInstaller
 
     $setupProjectFile = "$baseDir\src\Setup\ServiceInsight.aip"
 
-    $packageName = "Particular.ServiceInsight-$packageVersion.exe"
+    $packageName = "Particular.ServiceInsight-$version.exe"
 
     # edit Advanced Installer Project   
     &$script:AdvinstCLI /edit $setupProjectFile /SetVersion $version

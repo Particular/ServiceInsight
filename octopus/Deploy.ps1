@@ -20,7 +20,7 @@ Get-ChildItem -Path ".\*" -Include "*.nzip" | Rename-Item -NewName { $_.BaseName
 
 Write-Host "Creating release for milestone {{milestone}} ..."
 
-& "..\tools\ReleaseNotesCompiler.CLI.exe" $ghusername $ghpassword "particular" "serviceinsight" "{{milestone}}"
+& "..\tools\ReleaseNotesCompiler.CLI.exe" $ghusername $ghpassword "particular" "serviceinsight" "{{milestone}}" "Particular.ServiceInsight-{{milestone}}.exe"
 
 $files = Get-ChildItem -Path ".\*" -Include "*.nupkg"
 foreach ($file in $files) { 

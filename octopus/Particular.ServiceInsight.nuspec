@@ -14,6 +14,7 @@
     <files>
 		<file src="*.ps1" target="" />
         <file src="*.nzip" target="content" />
+        <file src="Particular.ServiceInsight-$version$.exe" target="content" />
         <file src="ReleaseNotesCompiler.CLI.exe" target="tools" />
         <file src="NuGet.exe" target="tools" />
     </files>
