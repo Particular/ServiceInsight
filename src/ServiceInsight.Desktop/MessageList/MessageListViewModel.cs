@@ -31,7 +31,7 @@
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
-        DefaultServiceControl serviceControl;
+        IServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
         bool lockUpdate;
         string lastSortColumn;
@@ -40,7 +40,7 @@
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
-            DefaultServiceControl serviceControl,
+            IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
             IClipboard clipboard)

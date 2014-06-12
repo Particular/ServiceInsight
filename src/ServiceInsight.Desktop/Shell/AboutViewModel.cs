@@ -15,7 +15,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
         const string DetectingServiceControlVersion = "(Detecting...)";
         const string NotConnectedToServiceControl = "(Not Connected)";
 
-        DefaultServiceControl serviceControl;
+        IServiceControl serviceControl;
 
         public event EventHandler<ActivationEventArgs> Activated = delegate { };
 
@@ -43,7 +43,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
 
         public AboutViewModel(
             NetworkOperations networkOperations,
-            DefaultServiceControl serviceControl,
+            IServiceControl serviceControl,
             LicenseRegistrationViewModel licenseInfo)
         {
             this.serviceControl = serviceControl;

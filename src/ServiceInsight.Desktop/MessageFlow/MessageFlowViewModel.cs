@@ -24,7 +24,7 @@
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;
         ScreenFactory screenFactory;
-        DefaultServiceControl serviceControl;
+        IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
@@ -35,7 +35,7 @@
         EndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
-            DefaultServiceControl serviceControl,
+            IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
             ScreenFactory screenFactory,

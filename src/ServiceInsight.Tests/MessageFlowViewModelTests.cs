@@ -17,7 +17,7 @@
     [TestFixture]
     public class MessageFlowViewModelTests
     {
-        DefaultServiceControl serviceControl;
+        IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         WindowManagerEx windowManager;
         ScreenFactory screenFactory;
@@ -60,7 +60,7 @@
 
         MessageFlowViewModel CreateSUT()
         {
-            serviceControl = Substitute.For<DefaultServiceControl>();
+            serviceControl = Substitute.For<IServiceControl>();
             eventAggregator = Substitute.For<IEventAggregator>();
             clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<WindowManagerEx>();

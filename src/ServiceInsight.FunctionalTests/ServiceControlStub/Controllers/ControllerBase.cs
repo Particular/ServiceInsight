@@ -12,8 +12,8 @@
         protected HttpResponseMessage Response<T>(IList<T> result)
         {
             var response = Request.CreateResponse(HttpStatusCode.OK, result);
-            
-            response.Headers.Add(DefaultServiceControl.ServiceControlHeaders.TotalCount, result.Count.ToString(CultureInfo.InvariantCulture));
+
+            response.Headers.Add(ServiceControlHeaders.TotalCount, result.Count.ToString(CultureInfo.InvariantCulture));
 
             return response;
         }

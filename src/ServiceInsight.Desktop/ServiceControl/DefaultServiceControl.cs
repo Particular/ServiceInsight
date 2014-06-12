@@ -15,14 +15,8 @@
     using Saga;
     using Settings;
 
-    public class DefaultServiceControl
+    public class DefaultServiceControl : IServiceControl
     {
-        public class ServiceControlHeaders
-        {
-            public const string ParticularVersion = "X-Particular-Version";
-            public const string TotalCount = "Total-Count";
-        }
-
         ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;

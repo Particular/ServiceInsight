@@ -110,7 +110,7 @@
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var connection = scope.Resolve<ServiceControlConnectionProvider>();
-                    var service = scope.Resolve<DefaultServiceControl>();
+                    var service = scope.Resolve<IServiceControl>();
 
                     connection.ConnectTo(serviceUrl);
                     Version = service.GetVersion();

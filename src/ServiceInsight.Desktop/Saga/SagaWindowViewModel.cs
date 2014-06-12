@@ -14,9 +14,9 @@
         StoredMessage currentMessage;
         SagaMessage selectedMessage;
         IEventAggregator eventAggregator;
-        DefaultServiceControl serviceControl;
+        IServiceControl serviceControl;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, DefaultServiceControl serviceControl)
+        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
