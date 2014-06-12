@@ -273,10 +273,10 @@
                 RecentSearchQueries.Insert(0, searchQuery);
                 setting.RecentSearchEntries.Insert(0, searchQuery);
 
-                while (RecentSearchQueries.Count < MAX_SAVED_SEARCHES)
+                while (RecentSearchQueries.Count > MAX_SAVED_SEARCHES)
                     RecentSearchQueries.RemoveAt(RecentSearchQueries.Count - 1);
 
-                while (setting.RecentSearchEntries.Count < MAX_SAVED_SEARCHES)
+                while (setting.RecentSearchEntries.Count > MAX_SAVED_SEARCHES)
                     setting.RecentSearchEntries.RemoveAt(setting.RecentSearchEntries.Count - 1);
 
                 settingProvider.SaveSettings(setting);

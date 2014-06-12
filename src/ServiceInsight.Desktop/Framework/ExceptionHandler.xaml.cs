@@ -74,13 +74,16 @@
         {
             var dialog = new ExceptionHandler
             {
-                Owner = Application.Current.MainWindow,
                 ErrorDetails =
                 {
                     Text = ex.ToString()
                 },
                 Exception = ex
             };
+            if (Application.Current.MainWindow != null && Application.Current.MainWindow.IsLoaded)
+            {
+                dialog.Owner = Application.Current.MainWindow;
+            }
             dialog.ShowDialog();
         }
 
