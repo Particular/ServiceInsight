@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Windows.Data;
+    using Anotar.Serilog;
 
     public class PropertyValueConverter : IValueConverter
     {
@@ -26,8 +27,23 @@
 
         bool IsEditableProperty(PropertyInfo propertyInfo)
         {
-            if (!propertyInfo.CanRead || !propertyInfo.CanWrite)
+            if (!propertyInfo.CanRead)
+            {
+                LogTo.Debug("Property {Name} of {DeclaringType} is not readable.", propertyInfo.Name, propertyInfo.DeclaringType);
                 return false;
+            }
+
+            if (!propertyInfo.CanWrite)
+            {
+                LogTo.Debug("Property {Name} of {DeclaringType} is not writable.", propertyInfo.Name, propertyInfo.DeclaringType);
+                return false;
+            }
+
+            if (propertyInfo.GetCustomAttribute<DisplayNameAttribute>() == null)
+            {
+                LogTo.Debug("Property {Name} of {DeclaringType} does not have DisplayNameAttribute.", propertyInfo.Name, propertyInfo.DeclaringType);
+                return false;
+            }
 
             var browsable = propertyInfo.GetCustomAttribute<EditorBrowsableAttribute>();
             return browsable == null || browsable.State != EditorBrowsableState.Never;

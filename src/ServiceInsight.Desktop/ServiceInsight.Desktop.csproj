@@ -391,7 +391,6 @@
     <Compile Include="Settings\LayoutSettings.cs" />
     <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
-    <Compile Include="Settings\ReportingSettings.cs" />
     <Compile Include="Shell\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

@@ -114,13 +114,6 @@
                     </ScrollViewer>
                 </dxc:DXTabItem.Content>
             </dxc:DXTabItem>
-            <dxc:DXTabItem Header="Usage Reporting">
-                <dxc:DXTabItem.Content>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding UsageReporting, Converter={StaticResource PropertyValueConverter}}" />
-                    </ScrollViewer>
-                </dxc:DXTabItem.Content>
-            </dxc:DXTabItem>
             <dxc:DXTabControl.View>
                 <dxc:TabControlScrollView HeaderAutoFill="True" />
             </dxc:DXTabControl.View>

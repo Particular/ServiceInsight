@@ -16,8 +16,6 @@
 
         public ProfilerSettings Application { get; set; }
 
-        public ReportingSettings UsageReporting { get; set; }
-
         public bool IsModified { get; set; }
 
         protected override void OnActivate()
@@ -30,7 +28,6 @@
         void LoadSettings()
         {
             Application = settingsProvider.GetSettings<ProfilerSettings>();
-            UsageReporting = settingsProvider.GetSettings<ReportingSettings>();
 
             var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
             Application.DefaultLastUsedServiceControl = string.Format("http://localhost:{0}/api", managementConfig.Port);
@@ -46,7 +43,6 @@
         public void Save()
         {
             settingsProvider.SaveSettings(Application);
-            settingsProvider.SaveSettings(UsageReporting);
         }
 
         public void Exit()

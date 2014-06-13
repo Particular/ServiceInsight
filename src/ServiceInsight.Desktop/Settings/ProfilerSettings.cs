@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using Caliburn.Micro;
 
+    // Properties without a DisplayNameAttribute aren't automatically added to the options dialog.
     public class ProfilerSettings : PropertyChangedBase
     {
         int autoRefresh;
@@ -39,8 +40,8 @@
         [Description("Whether or not display Endpoint information in diagrams")]
         public bool ShowEndpoints { get; set; }
 
-        [DisplayName("Recent Search Entries")]
-        [Description("List of recent keywords used in search box")]
+        //[DisplayName("Recent Search Entries")]
+        //[Description("List of recent keywords used in search box")]
         public ObservableCollection<string> RecentSearchEntries { get; set; }
 
         [DisplayName("Recent ServiceControl Entries")]
@@ -51,7 +52,10 @@
         [Description("Last used ServiceControl address")]
         public string LastUsedServiceControl { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DefaultLastUsedServiceControl { get; set; }
+
+        [DisplayName("Usage Data Collection Approved")]
+        [DefaultValue(false)]
+        public bool DataCollectionApproved { get; set; }
     }
 }
