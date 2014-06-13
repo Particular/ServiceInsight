@@ -42,7 +42,7 @@
             builder.RegisterType<ScreenFactory>().SingleInstance();
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
-            builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
         }
 
         protected static IEnumerable<Type> ExemptTypes

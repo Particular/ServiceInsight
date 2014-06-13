@@ -116,7 +116,7 @@
         {
             var model = screenFactory.CreateScreen<ExceptionDetailViewModel>();
             model.Exception = exception;
-            windowManager.ShowDialog(model, true);
+            windowManager.ShowDialog(model);
         }
 
         public void ToggleEndpointData()
