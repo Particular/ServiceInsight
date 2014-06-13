@@ -16,7 +16,7 @@
     using ExtensionMethods;
     using Framework.Rx;
     using LogWindow;
-using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
+    using MessageSequenceDiagram;
     using MessageFlow;
     using MessageHeaders;
     using MessageList;
@@ -36,6 +36,7 @@ using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
         IHandle<SwitchToMessageBody>,
         IHandle<SwitchToSagaWindow>,
         IHandle<SwitchToFlowWindow>,
+        IHandle<SwitchToSequenceDiagramWindow>, 
         IWorkTracker
     {
         IAppCommands appCommander;
@@ -59,7 +60,7 @@ using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
-            IMessageSequenceDiagramViewModel messageSequenceDiagram,
+            MessageSequenceDiagramViewModel messageSequenceDiagram,
             SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
             MessageHeadersViewModel messageHeadersViewer,
@@ -90,8 +91,9 @@ using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
             Items.Add(messages);
             Items.Add(messageHeadersViewer);
             Items.Add(messageBodyViewer);
+            Items.Add(messageSequenceDiagram); 
             Items.Add(messageFlow);
-            Items.Add(messageSequenceDiagram);
+
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
@@ -161,7 +163,7 @@ using NServiceBus.Profiler.Desktop.MessageSequenceDiagram;
 
         public MessageFlowViewModel MessageFlow { get; private set; }
 
-        public IMessageSequenceDiagramViewModel MessageSequenceDiagram { get; private set; }
+        public MessageSequenceDiagramViewModel MessageSequenceDiagram { get; private set; }
 
         public MessageBodyViewModel MessageBody { get; private set; }
 

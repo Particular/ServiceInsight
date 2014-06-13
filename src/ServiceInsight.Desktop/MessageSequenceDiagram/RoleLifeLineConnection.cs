@@ -1,6 +1,6 @@
 ﻿using Mindscape.WpfDiagramming;
 
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
     public class RoleLifelineConnection : DiagramConnection
     {

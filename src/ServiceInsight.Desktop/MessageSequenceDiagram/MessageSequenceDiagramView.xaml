@@ -1,13 +1,14 @@
-﻿<UserControl x:Class="NServiceBus.Profiler.Desktop.MessageSequenceDiagram.MessageSequenceDiagramView"
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageSequenceDiagram.MessageSequenceDiagramView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageSequenceDiagram"
-             xmlns:cnv="clr-namespace:NServiceBus.Profiler.Desktop.ValueConverters"
-             xmlns:cal="http://www.caliburnproject.org"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageSequenceDiagram"
+             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:MessageSequenceDiagramViewModel}"
              d:DesignHeight="300" d:DesignWidth="300"
              IsHitTestVisible="True">
 
@@ -19,7 +20,7 @@
 
                     <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
                     <cnv:StartSegmentValueConverter x:Key="StartSegmentConverter" />
-                    <cnv:EndSegmentValueConverter x:Key="EndSegmentConverter" />
+                    <cnv:ArrowEndSegmentValueConverter x:Key="ArrowEndSegmentConverter" />
                     <ms:SegmentsToAngleConverter x:Key="EndArrowRotationConverter" ConnectionEnd="Finish" />
                     <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
                     
@@ -62,17 +63,17 @@
                                     <TransformGroup>
                                         <TranslateTransform>
                                             <TranslateTransform.X>
-                                                <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>-->
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
-                                                <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>-->
                                             </TranslateTransform.Y>
                                         </TranslateTransform>
@@ -95,13 +96,13 @@
                                             <TranslateTransform.X>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
                                                     <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
                                                     <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
                                                 </MultiBinding>
                                             </TranslateTransform.Y>
                                         </TranslateTransform>
@@ -191,9 +192,19 @@
                             <Setter.Value>
                                 <DataTemplate>
                                     <Canvas>
-                                        <Path Data="M75,0 L75,16 Z" Stroke="{StaticResource RoleBottomLine}" Fill="{StaticResource RoleBottomLine}" />
-                                        <Path Data="M0,0 L0,16 L16,16 L24,8 L150,8 L24,8 L16,0 Z" Stroke="OrangeRed" Fill="OrangeRed" />
-                                        <TextBlock Text="!" Foreground="White" Canvas.Top="0" Canvas.Left="8" FontSize="12"/>
+                                        <Path Data="M50,0 L50,16 Z" Stroke="{StaticResource RoleBottomLine}" Fill="{StaticResource RoleBottomLine}" />
+                                        <Rectangle Fill="OrangeRed" Stroke="OrangeRed" Margin="0,0,0,0" Height="16" Width="100" />
+                                        <ContentControl x:Name="ExclamationMarkInCircleIcon" Margin="4,4">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <Canvas>
+                                                        <Path Width="8" Height="8" Canvas.Left="0" Canvas.Top="0" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 34.0417,25.7292L 36.0208,41.9584L 39.9792,41.9583L 41.9583,25.7292L 34.0417,25.7292 Z M 38,44.3333C 36.2511,44.3333 34.8333,45.7511 34.8333,47.5C 34.8333,49.2489 36.2511,50.6667 38,50.6667C 39.7489,50.6667 41.1667,49.2489 41.1667,47.5C 41.1667,45.7511 39.7489,44.3333 38,44.3333 Z "/>
+                                                    </Canvas>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
+                                        <TextBlock Text="Processing Failed" Foreground="White" Canvas.Top="2" Canvas.Left="20" FontSize="8"/>
+                                        <Path Width="4" Height="4" Canvas.Left="90" Canvas.Top="6" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
                                     </Canvas>
                                 </DataTemplate>
                             </Setter.Value>
@@ -284,7 +295,7 @@
 
                     <DataTemplate x:Key="MessageEndArrowTemplate">
                         <StackPanel Orientation="Vertical">
-                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" Margin="0" />
+                            <Path Data="M0,9 L0,20 Z" Style="{StaticResource MessageConnectionPathStyle}" Margin="0" />
                             <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
                                 <ms:Arrowhead.RenderTransform>
                                     <RotateTransform Angle="180" />
@@ -295,7 +306,7 @@
 
                     <DataTemplate x:Key="EventEndArrowTemplate">
                         <StackPanel Orientation="Vertical" >
-                            <Path Data="M0,5 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" Margin="0" />
+                            <Path Data="M0,9 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" Margin="0" />
                             <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
                                 <ms:Arrowhead.RenderTransform>
                                     <RotateTransform Angle="180" />
@@ -304,7 +315,7 @@
                         </StackPanel>
                     </DataTemplate>
 
-                    <ms:CorneredPathBuilder x:Key="PathBuilder" ArrowLength="20"/>
+                    <ms:CorneredPathBuilder x:Key="PathBuilder"  ArrowLength="0"/>
 
                     <Style x:Key="MessageConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="{Binding Data.Name}" />
@@ -362,7 +373,6 @@
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
             <StackPanel Orientation="Horizontal" Margin="5" >

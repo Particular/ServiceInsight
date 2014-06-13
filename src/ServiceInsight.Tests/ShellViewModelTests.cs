@@ -41,7 +41,7 @@
         EndpointExplorerViewModel EndpointExplorer;
         MessageListViewModel MessageList;
         MessageFlowViewModel MessageFlow;
-        private IMessageSequenceDiagramViewModel MessageSequenceDiagram;
+        MessageSequenceDiagramViewModel MessageSequenceDiagram;
         SagaWindowViewModel SagaWindow;
         IEventAggregator EventAggregator;
         StatusBarManager StatusbarManager;
@@ -65,7 +65,7 @@
             StatusbarManager = Substitute.For<StatusBarManager>();
             EventAggregator = Substitute.For<IEventAggregator>();
             MessageFlow = Substitute.For<MessageFlowViewModel>();
-            MessageSequenceDiagram = Substitute.For<IMessageSequenceDiagramViewModel>();
+            MessageSequenceDiagram = Substitute.For<MessageSequenceDiagramViewModel>();
             SagaWindow = Substitute.For<SagaWindowViewModel>();
             MessageBodyView = Substitute.For<MessageBodyViewModel>();
             MessageProperties = Substitute.For<MessagePropertiesViewModel>();

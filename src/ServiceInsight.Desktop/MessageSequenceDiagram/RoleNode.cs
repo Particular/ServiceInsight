@@ -1,7 +1,6 @@
-﻿using Mindscape.WpfDiagramming;
-
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+﻿namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
+    using Mindscape.WpfDiagramming;
     using System.Windows;
 
     public class RoleNode : DiagramNode

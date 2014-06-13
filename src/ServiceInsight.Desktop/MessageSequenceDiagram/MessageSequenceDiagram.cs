@@ -1,6 +1,6 @@
 ﻿using Mindscape.WpfDiagramming.FlowDiagrams;
 
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
     public class MessageSequenceDiagram : FlowDiagramModel
     {

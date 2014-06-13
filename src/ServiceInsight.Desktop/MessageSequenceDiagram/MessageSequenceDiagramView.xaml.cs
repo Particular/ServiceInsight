@@ -1,13 +1,11 @@
-﻿using System.Windows.Input;
-using Mindscape.WpfDiagramming;
-using Mindscape.WpfDiagramming.FlowDiagrams;
-using Mindscape.WpfDiagramming.Foundation;
-
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+﻿namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
-    /// <summary>
-    /// Interaction logic for MessageSequenceDiagramView.xaml
-    /// </summary>
+    using System;
+    using System.Windows.Input;
+    using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.FlowDiagrams;
+    using Mindscape.WpfDiagramming.Foundation;
+
     public partial class MessageSequenceDiagramView : IMessageSequenceDiagramView
     {
         public MessageSequenceDiagramView()
@@ -19,10 +17,10 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
         {
             Surface.ApplyLayoutAlgorithm(new GridLayoutAlgorithm()
             {
-                Info = new FlowDiagramLayoutAlgorithmInfo(),
-                HorizontalOffset = 20.0,
+                Info = new FlowDiagramLayoutAlgorithmInfo(), 
+                HorizontalOffset = 0.0,
                 HorizontalSpacing = 20.0,
-                VerticalOffset = 20.0,
+                VerticalOffset = 0.0,
                 VerticalSpacing = 20.0
             });
         }
@@ -30,6 +28,16 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
         public DiagramSurface Surface
         {
             get { return ds; }
+        }
+
+        public void UpdateNode(IDiagramNode node)
+        {
+            Surface.Formatter.Layout.SetNodeBounds(node, node.Bounds);
+        }
+
+        public void UpdateConnections()
+        {
+            Surface.UpdateLayout();
         }
 
         public void SizeToFit()

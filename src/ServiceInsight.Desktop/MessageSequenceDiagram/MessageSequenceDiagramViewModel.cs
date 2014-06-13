@@ -1,83 +1,70 @@
-﻿using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Events;
-using ExceptionHandler;
-using NServiceBus.Profiler.Desktop.Explorer.EndpointExplorer;
-using NServiceBus.Profiler.Desktop.MessageList;
-using Mindscape.WpfDiagramming;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-using NServiceBus.Profiler.Desktop.Search;
-using NServiceBus.Profiler.Desktop.ServiceControl;
-
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+﻿namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
-    public interface IMessageSequenceDiagramViewModel : IScreen,
-    IHandle<SelectedMessageChanged>
-    {
-        MessageSequenceDiagram Diagram { get; }
-        //MessageNode SelectedMessage { get; set; }
-        bool ShowEndpoints { get; set; }
-        //void CopyMessageUri(StoredMessage message);
-        //void CopyConversationId(StoredMessage message);
-        //void SearchByMessageId(StoredMessage message);
-        //Task RetryMessage(StoredMessage message);
-        //void ShowMessageBody(StoredMessage message);
-        //void ShowSagaWindow(StoredMessage message);
-        //void ToggleEndpointData();
-        //void ShowException(IExceptionDetails exception);
-        void ZoomIn();
-        void ZoomOut();
-        //bool IsFocused(MessageInfo message);
-    }
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Caliburn.Micro;
+    using Core.Settings;
+    using Core.UI.ScreenManager;
+    using Events;
+    using Explorer.EndpointExplorer;
+    using Framework;
+    using MessageList;
+    using Mindscape.WpfDiagramming;
+    using Search;
+    using ServiceControl;
+    using Settings;
 
 
-    public class MessageSequenceDiagramViewModel : Screen, IMessageSequenceDiagramViewModel
+    public class MessageSequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        private readonly ISearchBarViewModel _searchBar;
-        private readonly IMessageListViewModel _messageList;
-        private readonly IScreenFactory _screenFactory;
-        private readonly IServiceControl _serviceControl;
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IClipboard _clipboard;
-        private readonly IWindowManagerEx _windowManager;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly IEndpointExplorerViewModel _endpointExplorer;
-        private IMessageSequenceDiagramView _view;
-        private bool _loadingConversation;
-        //private readonly ConcurrentDictionary<string, MessageNode> _nodeMap;
+        private readonly IClipboard clipboard;
+        SearchBarViewModel searchBar;
+        MessageListViewModel messageList;
+        ScreenFactory screenFactory;
+        DefaultServiceControl serviceControl;
+        IEventAggregator eventAggregator;
+        IWindowManagerEx windowManager;
+        ISettingsProvider settingsProvider;
+        //ConcurrentDictionary<string, MessageNode> nodeMap;
+        IMessageSequenceDiagramView view;
+        string originalSelectionId = string.Empty;
+        bool loadingConversation;
+        EndpointExplorerViewModel endpointExplorer;
 
         public MessageSequenceDiagramViewModel(
-            IServiceControl serviceControl,
+            DefaultServiceControl serviceControl,
             IEventAggregator eventAggregator,
-            IClipboard clipboard,
             IWindowManagerEx windowManager,
-            IScreenFactory screenFactory,
-            ISearchBarViewModel searchBar,
-            IMessageListViewModel messageList,
+            ScreenFactory screenFactory,
+            SearchBarViewModel searchBar,
+            MessageListViewModel messageList,
             ISettingsProvider settingsProvider,
-            IEndpointExplorerViewModel endpointExplorer)
+            EndpointExplorerViewModel endpointExplorer,
+            IClipboard clipboard)
         {
-            _serviceControl = serviceControl;
-            _eventAggregator = eventAggregator;
-            _clipboard = clipboard;
-            _windowManager = windowManager;
-            _screenFactory = screenFactory;
-            _searchBar = searchBar;
-            _settingsProvider = settingsProvider;
-            _messageList = messageList;
-            _endpointExplorer = endpointExplorer;
+            this.serviceControl = serviceControl;
+            this.eventAggregator = eventAggregator;
+            this.clipboard = clipboard;
+            this.windowManager = windowManager;
+            this.screenFactory = screenFactory;
+            this.searchBar = searchBar;
+            this.settingsProvider = settingsProvider;
+            this.messageList = messageList;
+            this.endpointExplorer = endpointExplorer;
             
             //Diagram = new MessageSequenceDiagram();
-            //_nodeMap = new ConcurrentDictionary<string, MessageNode>();
+            //nodeMap = new ConcurrentDictionary<string, MessageNode>();
             ShowSequenceDiagram();
         }
 
 
-        public override void AttachView(object view, object context)
+        protected override void OnViewAttached(object view, object context)
         {
-            base.AttachView(view, context);
-            _view = (IMessageSequenceDiagramView)view;
+            base.OnViewAttached(view, context);
+            this.view = (IMessageSequenceDiagramView)view;
+            //this.view.ShowMessage += OnShowMessage;
         }
         
 
@@ -217,7 +204,9 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
         private DiagramConnection AddMessageConnection(DiagramNode startNode, DiagramNode endNode, object data)
         {
-            var fromPoint = new DiagramConnectionPoint(startNode, Edge.Bottom);
+            var fromPoint = startNode.GetType() == typeof(SequenceStartNode) ? 
+                new DiagramConnectionPoint(startNode, Edge.Right) :
+                new DiagramConnectionPoint(startNode, Edge.Bottom);
             var toPoint = new DiagramConnectionPoint(endNode, Edge.Top);
 
             startNode.ConnectionPoints.Add(fromPoint);
@@ -238,56 +227,56 @@ namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
 
         public void ZoomIn()
         {
-            _view.Surface.Zoom += 0.1;
+            view.Surface.Zoom += 0.1;
         }
 
         public void ZoomOut()
         {
-            _view.Surface.Zoom -= 0.1;
+            view.Surface.Zoom -= 0.1;
         }
 
         public async void Handle(SelectedMessageChanged @event)
         {
-            if (_loadingConversation) return;
+            if (loadingConversation) return;
 
-            _loadingConversation = true;
-            //_nodeMap.Clear();
+            loadingConversation = true;
+            //nodeMap.Clear();
             //Diagram = new MessageSequenceDiagram();
             ShowSequenceDiagram();
 
             var storedMessage = @event.Message;
             if (storedMessage == null)
             {
-                _loadingConversation = false;
+                loadingConversation = false;
                 return;
             }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
             {
-                _loadingConversation = false;
+                loadingConversation = false;
                 return;
             }
 
             try
             {
-                //var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
+                //var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
                 //var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
                 //UpdateLayout();
             }
             finally
             {
-                _loadingConversation = false;
+                loadingConversation = false;
             }
         }
 
         private void UpdateLayout()
         {
-            if (_view != null)
+            if (view != null)
             {
-                _view.ApplyLayout();
-                _view.SizeToFit();
+                view.ApplyLayout();
+                view.SizeToFit();
             }
         }
 

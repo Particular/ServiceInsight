@@ -178,7 +178,7 @@
 
         public void ShowSequenceDiagram()
         {
-            _eventAggregator.Publish(new SwitchToSequenceDiagramWindow());
+            eventAggregator.Publish(new SwitchToSequenceDiagramWindow());
         }
 
         public void RefreshSaga()

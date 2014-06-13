@@ -1,7 +1,7 @@
 ﻿using Mindscape.WpfDiagramming;
 using System.Windows;
 
-namespace NServiceBus.Profiler.Desktop.MessageSequenceDiagram
+namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
     public class SequenceStartNode : DiagramNode
     {

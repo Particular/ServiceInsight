@@ -266,7 +266,7 @@
                                              AllowClose="False"
                                              AllowFloat="False"
                                              GroupBorderStyle="Tabbed"
-                                             ItemWidth="3*"
+                                             ItemWidth="6*"
                                              SelectedItemChanged="OnSelectedItemChanged">
 
                                 <dxd:LayoutPanel x:Name="MessageFlow"
@@ -279,12 +279,12 @@
                                     <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageSequenceDiagram" 
-                                                 AutomationProperties.AutomationId="MessageSequenceDiagram"
-                                                 Caption="Sequence Diagram"  
                                                  AllowClose="False"
                                                  AllowFloat="False"
-                                                 ShowBorder="False"
-                                                 CaptionImage="/Images/SequenceDiagram.png">
+                                                 AutomationProperties.AutomationId="MessageSequenceDiagram"
+                                                 Caption="Sequence Diagram"  
+                                                 CaptionImage="/Images/SequenceDiagram.png"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageSequenceDiagram}" />
                                 </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="SagaWindow"
