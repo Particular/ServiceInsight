@@ -135,7 +135,7 @@
                     Visibility="{Binding HasSaga,
                                          Converter={StaticResource BoolToVisibilityConverterInverted}}">
             <StackPanel HorizontalAlignment="Center">
-                <ContentControl Template="{StaticResource NoSaga}" />
+                <ContentControl Template="{StaticResource NoSaga}" Width="128" Height="128" />
                 <TextBlock Margin="5,0,0,0"
                            FontSize="24px"
                            FontWeight="Bold"
