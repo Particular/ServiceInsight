@@ -72,12 +72,12 @@
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public bool HasSagaChanged(string sagaId)
+        public bool HasSagaChanged(Guid sagaId)
         {
             return HasChanged(CreateSagaRequest(sagaId));
         }
 
-        public SagaData GetSagaById(string sagaId)
+        public SagaData GetSagaById(Guid sagaId)
         {
             return GetModel<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
         }
@@ -188,7 +188,7 @@
             return client;
         }
 
-        static RestRequest CreateSagaRequest(string sagaId)
+        static RestRequest CreateSagaRequest(Guid sagaId)
         {
             return new RestRequest(string.Format(SagaEndpoint, sagaId));
         }

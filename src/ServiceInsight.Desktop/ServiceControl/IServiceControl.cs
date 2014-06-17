@@ -15,9 +15,9 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
         Uri CreateServiceInsightUri(StoredMessage message);
 
-        bool HasSagaChanged(string sagaId);
+        bool HasSagaChanged(Guid sagaId);
 
-        SagaData GetSagaById(string sagaId);
+        SagaData GetSagaById(Guid sagaId);
 
         PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false);
 

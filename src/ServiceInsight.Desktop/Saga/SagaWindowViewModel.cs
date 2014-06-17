@@ -70,7 +70,7 @@
             RefreshSaga(message, a => true);
         }
 
-        void RefreshSaga(StoredMessage message, Func<string, bool> HasChanged)
+        void RefreshSaga(StoredMessage message, Func<Guid, bool> HasChanged)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -85,7 +85,7 @@
 
                 if (originatingSaga != null)
                 {
-                    if (HasChanged(originatingSaga.SagaId.ToString()))
+                    if (HasChanged(originatingSaga.SagaId))
                     {
                         RefreshSaga(originatingSaga);
                     }
@@ -99,7 +99,7 @@
 
             if (Data == null || Data.SagaId != originatingSaga.SagaId)
             {
-                Data = serviceControl.GetSagaById(originatingSaga.SagaId.ToString());
+                Data = serviceControl.GetSagaById(originatingSaga.SagaId);
 
                 if (Data != null)
                 {
