@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml;
-    using System.Xml.Linq;
     using Caliburn.Micro;
     using Models;
     using ServiceControl;
@@ -125,56 +123,9 @@
 
         internal void RefreshData(IServiceControl serviceControl)
         {
-            //TODO: Consider moving this into ServiceControl e.g. GetSageMessageBody or something, models should be just about data
             if (Data != null) return;
 
-            var url = string.Format("/messages/{0}/body", MessageId);
-            var bodyString = serviceControl.GetBody(url);
-            if (bodyString != null)
-            {
-                if (IsXml(bodyString))
-                {
-                    Data = GetXmlData(bodyString.Replace("\\\"", "\"").Replace("\\r", "\r").Replace("\\n", "\n"));
-                }
-                else
-                {
-                    Data = JsonPropertiesHelper.ProcessValues(bodyString, CleanupBodyString);
-                }
-            }
-            else
-            {
-                Data = new List<KeyValuePair<string, string>>();
-            }
-        }
-
-        IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
-        {
-            try
-            {
-                var xml = XDocument.Parse(bodyString);
-                if (xml.Root != null)
-                {
-                    var root = xml.Root.Nodes().FirstOrDefault() as XElement;
-                    if (root != null)
-                    {
-                        return root.Nodes()
-                                   .OfType<XElement>()
-                                   .Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
-                    }
-                }
-            }
-            catch (XmlException) { }
-            return new List<KeyValuePair<string, string>>();
-        }
-
-        static bool IsXml(string bodyString)
-        {
-            return bodyString.StartsWith("<?xml");
-        }
-
-        static string CleanupBodyString(string bodyString)
-        {
-            return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
+            Data = serviceControl.GetMessageData(MessageId);
         }
     }
 

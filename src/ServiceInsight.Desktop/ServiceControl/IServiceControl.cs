@@ -7,27 +7,29 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
     public interface IServiceControl
     {
-        PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false);
-
-        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
-
-        List<StoredMessage> GetConversationById(string conversationId);
-
-        IEnumerable<Endpoint> GetEndpoints();
-
         bool IsAlive();
 
         string GetVersion();
 
         void RetryMessage(string messageId);
 
-        string GetBody(string bodyUrl);
-
-        Uri GetUri(StoredMessage message);
+        Uri CreateServiceInsightUri(StoredMessage message);
 
         bool HasSagaChanged(string sagaId);
 
         SagaData GetSagaById(string sagaId);
+
+        PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false);
+
+        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
+
+        IEnumerable<StoredMessage> GetConversationById(string conversationId);
+
+        IEnumerable<Endpoint> GetEndpoints();
+
+        IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId);
+
+        void LoadBody(StoredMessage message);
     }
 
     public class ServiceControlHeaders

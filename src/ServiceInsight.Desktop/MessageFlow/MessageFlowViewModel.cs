@@ -131,7 +131,7 @@
 
         public void CopyMessageUri(StoredMessage message)
         {
-            clipboard.CopyTo(serviceControl.GetUri(message).ToString());
+            clipboard.CopyTo(serviceControl.CreateServiceInsightUri(message).ToString());
         }
 
         public void SearchByMessageId(StoredMessage message, bool performSearch = false)
@@ -176,7 +176,9 @@
             try
             {
                 var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
-                var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
+                var nodes = relatedMessagesTask
+                    .Select(x => new MessageNode(this, x) { ShowEndpoints = ShowEndpoints })
+                    .ToList();
 
                 CreateConversationNodes(storedMessage.Id, nodes);
                 LinkConversationNodes(nodes);
@@ -296,11 +298,6 @@
                 view.ApplyLayout();
                 view.SizeToFit();
             }
-        }
-
-        MessageNode CreateMessageNode(StoredMessage x)
-        {
-            return new MessageNode(this, x) { ShowEndpoints = ShowEndpoints };
         }
     }
 }

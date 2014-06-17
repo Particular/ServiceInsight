@@ -95,7 +95,7 @@
 
         public void CopyMessageId()
         {
-            clipboard.CopyTo(serviceControl.GetUri(FocusedRow).ToString());
+            clipboard.CopyTo(serviceControl.CreateServiceInsightUri(FocusedRow).ToString());
         }
 
         public void CopyHeaders()
@@ -316,9 +316,11 @@
 
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-            var body = serviceControl.GetBody(FocusedRow.BodyUrl);
+            serviceControl.LoadBody(FocusedRow);
 
-            FocusedRow.Body = body;
+            //var body = serviceControl.GetBody(FocusedRow.BodyUrl);
+
+            //FocusedRow.Body = body;
 
             eventAggregator.Publish(new WorkFinished());
 

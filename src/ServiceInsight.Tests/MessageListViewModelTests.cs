@@ -82,7 +82,7 @@
 
                 sched.AdvanceByMs(500);
 
-                ServiceControl.Received(1).GetBody(uri);
+                ServiceControl.Received(1).LoadBody(messageList.FocusedRow);
             });
         }
 
@@ -97,7 +97,7 @@
 
             messageList.Handle(new BodyTabSelectionChanged(true));
 
-            ServiceControl.Received(1).GetBody(uri);
+            ServiceControl.Received(1).LoadBody(messageList.FocusedRow);
         }
     }
 }

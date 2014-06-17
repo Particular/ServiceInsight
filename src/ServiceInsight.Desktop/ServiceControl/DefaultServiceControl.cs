@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Xml;
+    using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Core.MessageDecoders;
@@ -20,6 +22,14 @@
     {
         private static ILogger AnotarLogger = Log.ForContext<IServiceControl>();
 
+        private const string ConversationEndpoint = "conversations/{0}";
+        private const string EndpointsEndpoint = "endpoints";
+        private const string EndpointMessagesEndpoint = "endpoints/{0}/messages/";
+        private const string RetryEndpoint = "errors/{0}/retry";
+        private const string MessagesEndpoint = "messages/";
+        private const string MessageBodyEndpoint = "messages/{0}/body";
+        private const string SagaEndpoint = "sagas/{0}";
+
         ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
@@ -32,52 +42,6 @@
             this.connection = connection;
             this.eventAggregator = eventAggregator;
             settings = settingsProvider.GetSettings<ProfilerSettings>();
-        }
-
-        public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
-        {
-            var request = new RestRequest(CreateBaseUrl());
-
-            AppendSystemMessages(request);
-            AppendSearchQuery(request, searchQuery);
-            AppendPaging(request, pageIndex);
-            AppendOrdering(request, orderBy, ascending);
-
-            var result = GetPagedResult<StoredMessage>(request);
-            result.CurrentPage = pageIndex;
-
-            return result;
-        }
-
-        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
-        {
-            var request = new RestRequest(CreateBaseUrl(endpoint.Name));
-
-            AppendSystemMessages(request);
-            AppendSearchQuery(request, searchQuery);
-            AppendPaging(request, pageIndex);
-            AppendOrdering(request, orderBy, ascending);
-
-            var result = GetPagedResult<StoredMessage>(request);
-            result.CurrentPage = pageIndex;
-
-            return result;
-        }
-
-        public List<StoredMessage> GetConversationById(string conversationId)
-        {
-            var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
-
-            return messages;
-        }
-
-        public IEnumerable<Endpoint> GetEndpoints()
-        {
-            var request = new RestRequest("endpoints");
-            var messages = GetModel<List<Endpoint>>(request);
-
-            return messages ?? new List<Endpoint>();
         }
 
         public bool IsAlive()
@@ -97,31 +61,90 @@
 
         public void RetryMessage(string messageId)
         {
-            var url = string.Format("errors/{0}/retry", messageId);
+            var url = string.Format(RetryEndpoint, messageId);
             var request = new RestRequest(url, Method.POST);
             Execute(request, HasSucceeded);
         }
 
-        public string GetBody(string bodyUrl)
-        {
-            IRestClient client;
-
-            if (bodyUrl.StartsWith("http"))
-            {
-                client = CreateClient(bodyUrl);
-            }
-            else
-            {
-                client = CreateClient();
-            }
-
-            return Execute(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
-        }
-
-        public Uri GetUri(StoredMessage message)
+        public Uri CreateServiceInsightUri(StoredMessage message)
         {
             var connectionUri = new Uri(connection.Url);
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
+        }
+
+        public bool HasSagaChanged(string sagaId)
+        {
+            return HasChanged(CreateSagaRequest(sagaId));
+        }
+
+        public SagaData GetSagaById(string sagaId)
+        {
+            return GetModel<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+        }
+
+        public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        {
+            var request = CreateMessagesRequest();
+
+            AppendSystemMessages(request);
+            AppendSearchQuery(request, searchQuery);
+            AppendPaging(request, pageIndex);
+            AppendOrdering(request, orderBy, ascending);
+
+            var result = GetPagedResult<StoredMessage>(request);
+            result.CurrentPage = pageIndex;
+
+            return result;
+        }
+
+        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        {
+            var request = CreateMessagesRequest(endpoint.Name);
+
+            AppendSystemMessages(request);
+            AppendSearchQuery(request, searchQuery);
+            AppendPaging(request, pageIndex);
+            AppendOrdering(request, orderBy, ascending);
+
+            var result = GetPagedResult<StoredMessage>(request);
+            result.CurrentPage = pageIndex;
+
+            return result;
+        }
+
+        public IEnumerable<StoredMessage> GetConversationById(string conversationId)
+        {
+            var request = new RestRequest(string.Format(ConversationEndpoint, conversationId));
+            var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+
+            return messages;
+        }
+
+        public IEnumerable<Endpoint> GetEndpoints()
+        {
+            var request = new RestRequest(EndpointsEndpoint);
+            var messages = GetModel<List<Endpoint>>(request);
+
+            return messages ?? new List<Endpoint>();
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId)
+        {
+            var request = new RestRequest(String.Format(MessageBodyEndpoint, messageId));
+
+            return Execute(request, response =>
+                response.Content.StartsWith("<?xml") ?
+                    GetXmlData(response.Content) :
+                    JsonPropertiesHelper.ProcessValues(response.Content, CleanupBodyString));
+        }
+
+        public void LoadBody(StoredMessage message)
+        {
+            var client = message.BodyUrl.StartsWith("http") ? CreateClient(message.BodyUrl) : CreateClient();
+
+            var request = new RestRequest(message.BodyUrl, Method.GET);
+
+            message.Body = Execute(client, request, response => response.Content);
         }
 
         void AppendSystemMessages(IRestRequest request)
@@ -144,7 +167,7 @@
         void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
             if (searchQuery == null) return;
-            request.Resource += string.Format("search/{0}", Encode(searchQuery));
+            request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
         }
 
         IRestClient CreateClient()
@@ -165,46 +188,14 @@
             return client;
         }
 
-        static string CreateBaseUrl(string endpointName = null)
-        {
-            return endpointName != null ? string.Format("endpoints/{0}/messages/", endpointName) : "messages/";
-        }
-
-        PagedResult<T> GetPagedResult<T>(IRestRequest request) where T : class, new()
-        {
-            LogRequest(request);
-
-            var response = CreateClient().Execute<List<T>>(request);
-
-            if (HasSucceeded(response))
-            {
-                LogResponse(response);
-                return new PagedResult<T>
-                {
-                    Result = response.Data,
-                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-                };
-            }
-            else
-            {
-                LogError(response);
-                return new PagedResult<T>();
-            }
-        }
-
-        public bool HasSagaChanged(string sagaId)
-        {
-            return HasChanged(CreateSagaRequest(sagaId));
-        }
-
-        public SagaData GetSagaById(string sagaId)
-        {
-            return GetModel<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
-        }
-
         static RestRequest CreateSagaRequest(string sagaId)
         {
-            return new RestRequest(string.Format("sagas/{0}", sagaId));
+            return new RestRequest(string.Format(SagaEndpoint, sagaId));
+        }
+
+        static RestRequest CreateMessagesRequest(string endpointName = null)
+        {
+            return endpointName != null ? new RestRequest(string.Format(EndpointMessagesEndpoint, endpointName)) : new RestRequest(MessagesEndpoint);
         }
 
         bool HasChanged(IRestRequest request)
@@ -229,6 +220,28 @@
             }
 
             return true;
+        }
+
+        PagedResult<T> GetPagedResult<T>(IRestRequest request) where T : class, new()
+        {
+            LogRequest(request);
+
+            var response = CreateClient().Execute<List<T>>(request);
+
+            if (HasSucceeded(response))
+            {
+                LogResponse(response);
+                return new PagedResult<T>
+                {
+                    Result = response.Data,
+                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
+                };
+            }
+            else
+            {
+                LogError(response);
+                return new PagedResult<T>();
+            }
         }
 
         T GetModel<T>(IRestRequest request)
@@ -295,9 +308,29 @@
             }
         }
 
-        static string Encode(string parameterValue)
+        IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
         {
-            return HttpUtility.UrlEncode(parameterValue);
+            try
+            {
+                var xml = XDocument.Parse(bodyString);
+                if (xml.Root != null)
+                {
+                    var root = xml.Root.Nodes().FirstOrDefault() as XElement;
+                    if (root != null)
+                    {
+                        return root.Nodes()
+                                   .OfType<XElement>()
+                                   .Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
+                    }
+                }
+            }
+            catch (XmlException) { }
+            return new List<KeyValuePair<string, string>>();
+        }
+
+        static string CleanupBodyString(string bodyString)
+        {
+            return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
         }
 
         void LogRequest(IRestRequest request)
