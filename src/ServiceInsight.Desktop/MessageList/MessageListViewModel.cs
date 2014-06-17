@@ -265,10 +265,13 @@
             {
                 lockUpdate = !ShouldUpdateMessages(pagedResult);
 
-                using (new GridFocusedRowPreserver<StoredMessage>(this))
+                if (!lockUpdate)
                 {
-                    Rows.Clear();
-                    Rows.AddRange(pagedResult.Result);
+                    using (new GridFocusedRowPreserver<StoredMessage>(this))
+                    {
+                        Rows.Clear();
+                        Rows.AddRange(pagedResult.Result);
+                    }
                 }
             }
             finally
