@@ -202,10 +202,6 @@
             }
         }
 
-        public void DeleteSelectedMessages()
-        {
-        }
-
         void RefreshAll()
         {
             EndpointExplorer.RefreshData();

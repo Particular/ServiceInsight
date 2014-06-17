@@ -13,10 +13,13 @@
     using RestSharp;
     using RestSharp.Contrib;
     using Saga;
+    using Serilog;
     using Settings;
 
     public class DefaultServiceControl : IServiceControl
     {
+        private static ILogger AnotarLogger = Log.ForContext<IServiceControl>();
+
         ServiceControlConnectionProvider connection;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
@@ -64,15 +67,15 @@
         public List<StoredMessage> GetConversationById(string conversationId)
         {
             var request = new RestRequest(string.Format("conversations/{0}", conversationId));
-            var messages = GetModelAsync<List<StoredMessage>>(request) ?? new List<StoredMessage>();
+            var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             return messages;
         }
 
-        public List<Endpoint> GetEndpoints()
+        public IEnumerable<Endpoint> GetEndpoints()
         {
             var request = new RestRequest("endpoints");
-            var messages = GetModelAsync<List<Endpoint>>(request);
+            var messages = GetModel<List<Endpoint>>(request);
 
             return messages ?? new List<Endpoint>();
         }
@@ -92,13 +95,11 @@
             return ProcessResponse(restResponse => restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(), response);
         }
 
-        public bool RetryMessage(string messageId)
+        public void RetryMessage(string messageId)
         {
             var url = string.Format("errors/{0}/retry", messageId);
             var request = new RestRequest(url, Method.POST);
-            var response = ExecuteAsync(request, HasSucceeded);
-
-            return response;
+            Execute(request, HasSucceeded);
         }
 
         public string GetBody(string bodyUrl)
@@ -114,7 +115,7 @@
                 client = CreateClient();
             }
 
-            return ExecuteAsync(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
+            return Execute(client, new RestRequest(bodyUrl, Method.GET), r => HasSucceeded(r) ? r.Content : string.Empty);
         }
 
         public Uri GetUri(StoredMessage message)
@@ -132,7 +133,7 @@
         {
             if (orderBy == null) return;
             request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
-            request.AddParameter("direction", GetSortDirection(ascending), ParameterType.GetOrPost);
+            request.AddParameter("direction", ascending ? "asc" : "desc", ParameterType.GetOrPost);
         }
 
         void AppendPaging(IRestRequest request, int pageIndex)
@@ -144,11 +145,6 @@
         {
             if (searchQuery == null) return;
             request.Resource += string.Format("search/{0}", Encode(searchQuery));
-        }
-
-        string GetSortDirection(bool ascending)
-        {
-            return ascending ? "asc" : "desc";
         }
 
         IRestClient CreateClient()
@@ -203,7 +199,7 @@
 
         public SagaData GetSagaById(string sagaId)
         {
-            return GetModelAsync<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+            return GetModel<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
         }
 
         static RestRequest CreateSagaRequest(string sagaId)
@@ -235,18 +231,18 @@
             return true;
         }
 
-        T GetModelAsync<T>(IRestRequest request)
+        T GetModel<T>(IRestRequest request)
             where T : class, new()
         {
-            return ExecuteAsync<T>(request, response => { CacheResponse(response); return response.Data; });
+            return Execute<T>(request, response => { CacheResponse(response); return response.Data; });
         }
 
-        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        T Execute<T>(IRestRequest request, Func<IRestResponse, T> selector)
         {
-            return ExecuteAsync(CreateClient(), request, selector);
+            return Execute(CreateClient(), request, selector);
         }
 
-        T ExecuteAsync<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
+        T Execute<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
         {
             LogRequest(request);
 
@@ -254,7 +250,7 @@
             return ProcessResponse(selector, response);
         }
 
-        T ExecuteAsync<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
+        T Execute<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
             where T : class, new()
         {
             LogRequest(request);
@@ -339,7 +335,7 @@
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
-            RaiseAsyncOperationFailed(errorMessage);
+            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
         }
 
@@ -348,18 +344,6 @@
             return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
-        void RaiseAsyncOperationFailed(string errorMessage)
-        {
-            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
-        }
-
-        static IEnumerable<HttpStatusCode> SuccessCodes
-        {
-            get
-            {
-                yield return HttpStatusCode.OK;
-                yield return HttpStatusCode.Accepted;
-            }
-        }
+        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted };
     }
 }

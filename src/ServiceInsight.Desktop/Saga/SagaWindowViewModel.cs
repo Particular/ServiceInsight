@@ -139,7 +139,7 @@
             }
         }
 
-        static void ProcessChange(IList<SagaUpdatedValue> oldValues, IList<SagaUpdatedValue> newValues)
+        static void ProcessChange(IList<SagaUpdatedValue> oldValues, IEnumerable<SagaUpdatedValue> newValues)
         {
             foreach (var value in newValues)
             {

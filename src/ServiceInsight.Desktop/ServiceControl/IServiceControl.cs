@@ -13,13 +13,13 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
         List<StoredMessage> GetConversationById(string conversationId);
 
-        List<Endpoint> GetEndpoints();
+        IEnumerable<Endpoint> GetEndpoints();
 
         bool IsAlive();
 
         string GetVersion();
 
-        bool RetryMessage(string messageId);
+        void RetryMessage(string messageId);
 
         string GetBody(string bodyUrl);
 
