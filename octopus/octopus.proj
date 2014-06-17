@@ -49,7 +49,7 @@
       <MainFiles Include="$(NuGetExePath)" />
       <MainFiles Include="$(SolutionDir)..\Output\Particular.ServiceInsight-$(SemVer).exe" />
 
-      <ContentFiles Include="$(OutputFolder)\ServiceInsight.install.$(SemVer).nupkg" />
+      <ContentFiles Include="$(OutputFolder)\ServiceInsight.install.$(LegacySemVerPadded).nupkg" />
     </ItemGroup>
 
     <Delete Files="@(FilesToDelete)" />
