@@ -213,32 +213,9 @@
             SagaWindow.RefreshSaga();
         }
 
-        public void ImportMessage()
-        {
-            throw new NotImplementedException("This feature is not yet implemented.");
-        }
-
-        public void ExportMessage()
-        {
-            throw new NotImplementedException("This feature is not yet implemented.");
-        }
-
-        public void CreateMessage()
-        {
-            throw new NotImplementedException("This feature is not yet implemented.");
-        }
-
         public void OnAutoRefreshChanged()
         {
             refreshTimer.IsEnabled = AutoRefresh;
-        }
-
-        public bool CanDeleteSelectedMessages
-        {
-            get
-            {
-                return false;
-            }
         }
 
         public int SelectedMessageTabItem { get; set; }
@@ -246,16 +223,6 @@
         public bool CanConnectToServiceControl
         {
             get { return !WorkInProgress || AutoRefresh; }
-        }
-
-        public bool CanExportMessage
-        {
-            get { return false; }
-        }
-
-        public bool CanImportMessage
-        {
-            get { return false; }
         }
 
         void InitializeIdleTimer()
@@ -359,9 +326,6 @@
         {
             NotifyOfPropertyChange(() => WorkInProgress);
             NotifyOfPropertyChange(() => CanConnectToServiceControl);
-            NotifyOfPropertyChange(() => CanDeleteSelectedMessages);
-            NotifyOfPropertyChange(() => CanExportMessage);
-            NotifyOfPropertyChange(() => CanImportMessage);
         }
 
         string GetProductName()

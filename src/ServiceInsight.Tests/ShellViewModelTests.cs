@@ -100,16 +100,6 @@
         }
 
         [Test]
-        public void should_toggle_toolbar_status_when_work_is_in_progress()
-        {
-            shell.Handle(new WorkStarted());
-
-            shell.CanDeleteSelectedMessages.ShouldBe(false);
-            shell.CanExportMessage.ShouldBe(false);
-            shell.CanImportMessage.ShouldBe(false);
-        }
-
-        [Test]
         public void should_still_report_work_in_progress_when_only_part_of_the_work_is_finished()
         {
             shell.Handle(new WorkStarted("Some Work"));
@@ -137,20 +127,6 @@
             ((IScreen)shell).Deactivate(true);
 
             View.Received().OnSaveLayout(SettingsProvider);
-        }
-
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void message_import()
-        {
-            shell.ImportMessage();
-        }
-
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void message_export()
-        {
-            shell.CreateMessage();
         }
 
         public void should_track_selected_explorer()
