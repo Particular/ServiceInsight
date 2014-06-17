@@ -2,27 +2,44 @@
 {
     using System;
     using Anotar.Serilog;
+    using Microsoft.Win32;
     using Particular.Licensing;
 
     public class AppLicenseManager
     {
         public AppLicenseManager()
         {
-            string licenseText;
-
-            if (licenseStore.TryReadLicense(out licenseText))
+            var licenseText = GetExistingLicense();
+            if (!String.IsNullOrEmpty(licenseText))
             {
                 Exception ex;
-
                 if (LicenseVerifier.TryVerify(licenseText, out ex))
                 {
                     CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
-
                     return;
                 }
             }
 
             CurrentLicense = CreateTrialLicense();
+        }
+
+        string GetExistingLicense()
+        {
+            string existingLicense;
+
+            //look in HKCU
+            if (licenseStore.TryReadLicense(out existingLicense))
+            {
+                return existingLicense;
+            }
+
+            //look in HKLM
+            if (new RegistryLicenseStore(Registry.LocalMachine).TryReadLicense(out existingLicense))
+            {
+                return existingLicense;
+            }
+
+            return "";
         }
 
         public bool TryInstallLicense(string licenseText)

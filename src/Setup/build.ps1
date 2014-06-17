@@ -8,7 +8,7 @@ function Get-RegistryValue($key, $value) {
 }
 
 #$baseDir = "%teamcity.build.checkoutDir%"
-#$version = "%GitVersion.MajorMinorPatch%"
+#$version = "%GitVersion.SemVer%"
 
 Function CreateInstaller
 {
