@@ -47,7 +47,7 @@
       <MainFiles Include="$(ProjectDir)*.ps1" />
       <MainFiles Include="$(ProjectDir)ReleaseNotesCompiler.CLI.exe" />
       <MainFiles Include="$(NuGetExePath)" />
-      <MainFiles Include="$(SolutionDir)..\Output\Particular.ServiceInsight-$(LegacySemVerPadded).exe" />
+      <MainFiles Include="$(SolutionDir)..\Output\Particular.ServiceInsight-$(SemVer).exe" />
 
       <ContentFiles Include="$(OutputFolder)\ServiceInsight.install.$(SemVer).nupkg" />
     </ItemGroup>

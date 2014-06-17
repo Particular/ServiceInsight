@@ -39,7 +39,7 @@
                 return existingLicense;
             }
 
-            return existingLicense;
+            return "";
         }
 
         public bool TryInstallLicense(string licenseText)
