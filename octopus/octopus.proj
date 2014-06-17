@@ -59,6 +59,7 @@
     <Copy SourceFiles="@(ContentFiles)" DestinationFiles="@(ContentFiles -> '$(BuildFolder)%(Filename)%(Extension).nzip')" />
     <ItemGroup>
       <InstallFile Include="$(BuildFolder)**\*.ps1" />
+      <InstallFile Include="$(BuildFolder)**\*.nuspec" />
     </ItemGroup>
     <FileUpdate Files="@(InstallFile)" Regex="{{milestone}}" ReplacementText="$(SemVer)" />
 
