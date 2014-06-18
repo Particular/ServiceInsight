@@ -2,7 +2,6 @@
 {
     using System;
     using Anotar.Serilog;
-    using Microsoft.Win32;
     using Particular.Licensing;
 
     public class AppLicenseManager
@@ -27,14 +26,7 @@
         {
             string existingLicense;
 
-            //look in HKCU
             if (licenseStore.TryReadLicense(out existingLicense))
-            {
-                return existingLicense;
-            }
-
-            //look in HKLM
-            if (new RegistryLicenseStore(Registry.LocalMachine).TryReadLicense(out existingLicense))
             {
                 return existingLicense;
             }
