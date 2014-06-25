@@ -87,7 +87,6 @@
 
         public string MessageId { get; set; }
 
-
         public List<StoredMessageHeader> Headers
         {
             get;
@@ -114,9 +113,9 @@
             }
         }
 
-        public List<SagaInfo> InvokedSagas{get;set;}
+        public List<SagaInfo> InvokedSagas { get; set; }
 
-        public SagaInfo OriginatesFromSaga{get;set;}
+        public SagaInfo OriginatesFromSaga { get; set; }
 
         public string GetURIQuery()
         {
@@ -134,13 +133,12 @@
 
         public bool DisplayPropertiesChanged(StoredMessage focusedMessage)
         {
-            if (focusedMessage == null) return true;
-
-            return (Status != focusedMessage.Status) ||
+            return (focusedMessage == null) ||
+                   (Status != focusedMessage.Status) ||
                    (TimeSent != focusedMessage.TimeSent) ||
                    (ProcessingTime != focusedMessage.ProcessingTime) ||
-                   (ReceivingEndpoint.ToString() != focusedMessage.ReceivingEndpoint.ToString()) ||
-                   (SendingEndpoint.ToString() != focusedMessage.SendingEndpoint.ToString());
+                   (ReceivingEndpoint != focusedMessage.ReceivingEndpoint) ||
+                   (SendingEndpoint != focusedMessage.SendingEndpoint);
         }
     }
 
@@ -181,7 +179,4 @@
         public const string OriginatedSagaId = "OriginatingSagaId";
         public const string SagaStatus = "ServiceControl.SagaChangeStatus";
     }
-
 }
-
-

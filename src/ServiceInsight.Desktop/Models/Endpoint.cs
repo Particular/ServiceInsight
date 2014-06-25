@@ -35,7 +35,7 @@
 
         protected bool Equals(Endpoint other)
         {
-            return string.Equals(Address, other.Address);
+            return other != null && string.Equals(Address, other.Address);
         }
 
         public override bool Equals(object obj)
@@ -43,7 +43,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Endpoint) obj);
+            return Equals((Endpoint)obj);
         }
 
         public override int GetHashCode()
