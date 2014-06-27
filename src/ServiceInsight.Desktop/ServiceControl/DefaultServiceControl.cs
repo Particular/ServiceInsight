@@ -14,6 +14,7 @@
     using Models;
     using RestSharp;
     using RestSharp.Contrib;
+    using RestSharp.Deserializers;
     using Saga;
     using Serilog;
     using Settings;
@@ -179,12 +180,19 @@
         {
             var client = new RestClient(url);
             var deserializer = new JsonMessageDeserializer();
+            var xdeserializer = new XmlDeserializer();
             client.ClearHandlers();
             client.AddHandler("application/json", deserializer);
             client.AddHandler("text/json", deserializer);
             client.AddHandler("text/x-json", deserializer);
             client.AddHandler("text/javascript", deserializer);
+
+            client.AddHandler("application/xml", xdeserializer);
+            client.AddHandler("text/xml", xdeserializer);
+            client.AddHandler("*", xdeserializer);
+
             client.AddDefaultHeader("Accept-Encoding", "gzip,deflate");
+
             return client;
         }
 
