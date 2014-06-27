@@ -484,7 +484,6 @@
                         </TextBlock>
                     </StackPanel>
                     <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}"
-                           CustomPopupPlacementCallback=""
                            Placement="Center"
                            StaysOpen="True">
                         <local:SagaContentViewer DataContext="{Binding}" />
