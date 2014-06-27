@@ -17,9 +17,10 @@
 
         static ExceptionHandler()
         {
+            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             client = new RaygunClient("uX5c/PiCVqF31xlEm3jShA==")
             {
-                ApplicationVersion = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
+                ApplicationVersion = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version"
             };
         }
 

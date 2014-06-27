@@ -92,7 +92,8 @@ namespace Particular.ServiceInsight.Desktop.Shell
 
         void LoadAppVersion()
         {
-            var version = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
+            var version = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version";
             var versionParts = version.Split('+');
             var appVersion = versionParts[0];
 
