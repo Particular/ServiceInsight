@@ -16,12 +16,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
-                <ResourceDictionary>
-
+                <ResourceDictionary>                    
                     <cnv:MiddlePointValueConverter x:Key="MiddlePointConverter" />
                     <cnv:StartSegmentValueConverter x:Key="StartSegmentConverter" />
                     <cnv:ArrowEndSegmentValueConverter x:Key="ArrowEndSegmentConverter" />
-                    <ms:SegmentsToAngleConverter x:Key="EndArrowRotationConverter" ConnectionEnd="Finish" />
                     <ms:PointToTranslateTransformConverter x:Key="PointToTranslationConverter" />
                     
                     <SolidColorBrush x:Key="RoleBackground" Color="#FFFFFF" />
@@ -53,28 +51,20 @@
                     <ControlTemplate x:Key="ConnectionStyleTemplate" TargetType="{x:Type ms:DiagramConnectionElement}">
                         <Canvas>
                             <!-- Path: -->
-                            <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Gray" StrokeThickness="2" />
+                            <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Black" StrokeThickness="2" />
                             <Path Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="#00FFFFFF" StrokeThickness="1" />
-                            <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" />
+                            <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="Black" />
                             
                             <!-- arrow: -->
-                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Center" ContentTemplate="{TemplateBinding EndArrowTemplate}">
+                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Center" ContentTemplate="{TemplateBinding EndArrowTemplate}" Name="Arrow">
                                 <ContentControl.RenderTransform>
                                     <TransformGroup>
                                         <TranslateTransform>
                                             <TranslateTransform.X>
                                                 <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                </MultiBinding>-->
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
                                                 <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                <!--<MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource ArrowEndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                </MultiBinding>-->
                                             </TranslateTransform.Y>
                                         </TranslateTransform>
                                     </TransformGroup>
@@ -84,10 +74,11 @@
                             <!-- label -->
                             <ContentControl VerticalAlignment="Top" HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
-                                    <ContentControl Template="{StaticResource EventIcon}" />
+                                    <ContentControl />
                                     <TextBlock Foreground="Black"
-                                               Text="{Binding Data.Name}"
-                                               FontSize="9px" />
+                                               
+                                               FontSize="9px"
+                                               />
                                 </StackPanel>
                             
                                 <ContentControl.RenderTransform>
@@ -305,8 +296,8 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="EventEndArrowTemplate">
-                        <StackPanel Orientation="Vertical" >
-                            <Path Data="M0,9 L0,20 Z" Style="{StaticResource EventConnectionPathStyle}" Margin="0" />
+                        <StackPanel Orientation="Vertical">
+                            <Path Data="M0,0 L0,21 Z" Style="{StaticResource EventConnectionPathStyle}" Margin="0" />
                             <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="7" BackWidth="7" Margin="0">
                                 <ms:Arrowhead.RenderTransform>
                                     <RotateTransform Angle="180" />

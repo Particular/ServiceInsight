@@ -234,6 +234,10 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceDiagramLayoutAlgorithm.cs" />
+    <Compile Include="MessageSequenceDiagram\TimeoutConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\EventConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageConnection.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />

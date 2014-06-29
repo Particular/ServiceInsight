@@ -5,13 +5,13 @@
 
     public class RoleNode : DiagramNode
     {
-        const int nodeHeaderHeight = 16;
-        const int nodeHeaderWidth = 150;
+        const double nodeHeaderHeight = 16.0;
+        public const double nodeHeaderWidth = 150.0;
 
         public RoleNode()
         {
             IsResizable = false;
-            Bounds = new Rect(0, 0, nodeHeaderWidth, nodeHeaderHeight);
+            Bounds = new Rect(0.0, 0.0, nodeHeaderWidth, nodeHeaderHeight);
         }
     }
 }

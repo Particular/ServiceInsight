@@ -15,14 +15,17 @@
 
         public void ApplyLayout()
         {
-            Surface.ApplyLayoutAlgorithm(new GridLayoutAlgorithm()
-            {
-                Info = new FlowDiagramLayoutAlgorithmInfo(), 
-                HorizontalOffset = 0.0,
-                HorizontalSpacing = 20.0,
-                VerticalOffset = 0.0,
-                VerticalSpacing = 20.0
-            });
+            Surface.ApplyLayoutAlgorithm(new SequenceDiagramLayoutAlgorithm());
+            /*
+             new GridLayoutAlgorithm()
+             {
+                 Info = new FlowDiagramLayoutAlgorithmInfo(), 
+                 HorizontalOffset = 0.0,
+                 HorizontalSpacing = 20.0,
+                 VerticalOffset = 0.0,
+                 VerticalSpacing = 20.0
+             }
+             */
         }
 
         public DiagramSurface Surface

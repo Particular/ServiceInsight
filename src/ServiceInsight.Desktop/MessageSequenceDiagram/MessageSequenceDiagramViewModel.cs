@@ -152,8 +152,8 @@
 
 
             // add connections
-            AddMessageConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder" });
-            AddEventConnection(activitySales1, activityeCommerce, new { Name = "OrderPlaced" });
+            AddMessageConnection(startSequenceNode, activitySales1, new { Name = "SubmitOrder", Type = "Message" });
+            AddEventConnection(activitySales1, activityeCommerce, new { Name = "OrderPlaced", Type = "Event" });
 
             // Layout it
             UpdateLayout();

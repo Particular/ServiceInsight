@@ -8,40 +8,7 @@ namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
             : base(fromConnectionPoint, toConnectionPoint)
         {
             LineType = null;
-            ZOrder = 10;
-            IsUserModified = false;
-        }
-    }
-
-    public class TimeoutConnection : DiagramConnection
-    {
-        public TimeoutConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
-            : base(fromConnectionPoint, toConnectionPoint)
-        {
-            LineType = null;
-            ZOrder = 10;
-            IsUserModified = false;
-        }
-    }
-
-    public class MessageConnection : DiagramConnection
-    {
-        public MessageConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
-            : base(fromConnectionPoint, toConnectionPoint)
-        {
-            LineType = null;
-            ZOrder = 10;
-            IsUserModified = false;
-        }
-    }
-
-    public class EventConnection : DiagramConnection
-    {
-        public EventConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
-            : base(fromConnectionPoint, toConnectionPoint)
-        {
-            LineType = null;
-            ZOrder = 10;
+            ZOrder = 10.0;
             IsUserModified = false;
         }
     }

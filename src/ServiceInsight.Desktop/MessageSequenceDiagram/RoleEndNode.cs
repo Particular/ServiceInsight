@@ -5,12 +5,12 @@
 
     public class RoleEndNode : DiagramNode
     {
-        const int endNodeSize = 1;
+        const double endNodeSize = 1.0;
 
         public RoleEndNode()
         {
             IsResizable = false;
-            Bounds = new Rect(0, 0, endNodeSize, endNodeSize);
+            Bounds = new Rect(0.0, 0.0, endNodeSize, endNodeSize);
         }   
     }
 }

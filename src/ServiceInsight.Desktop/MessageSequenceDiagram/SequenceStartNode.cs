@@ -5,14 +5,14 @@ namespace Particular.ServiceInsight.Desktop.MessageSequenceDiagram
 {
     public class SequenceStartNode : DiagramNode
     {
-        const int sequenceStartNodeHeight = 15;
-        const int sequenceStartNodeWidth = 14;
+        const double sequenceStartNodeHeight = 15.0;
+        const double sequenceStartNodeWidth = 14.0;
 
         public SequenceStartNode()
         {
             IsResizable = false;
 
-            Bounds = new Rect(0, 0, sequenceStartNodeWidth, sequenceStartNodeHeight);
+            Bounds = new Rect(0.0, 0.0, sequenceStartNodeWidth, sequenceStartNodeHeight);
         }
     }
 }

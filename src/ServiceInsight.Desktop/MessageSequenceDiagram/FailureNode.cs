@@ -5,14 +5,14 @@
     
     public class FailureNode : DiagramNode
     {
-        const int sequenceStartHeight = 16;
-        const int sequenceEndWidth = 100;
+        const double sequenceStartHeight = 16.0;
+        const double sequenceEndWidth = 100.0;
 
         public FailureNode()
         {
             IsResizable = false;
 
-            Bounds = new Rect(0, 0, sequenceEndWidth, sequenceStartHeight);
+            Bounds = new Rect(0.0, 0.0, sequenceEndWidth, sequenceStartHeight);
         }
     }
 }

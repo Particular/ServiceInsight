@@ -5,13 +5,13 @@
 
     public class ActivityNode : DiagramNode
     {
-        const int heightActivity = 30;
-        const int widthActivity = 10;
+        const double heightActivity = 30.0;
+        const double widthActivity = 10.0;
 
         public ActivityNode()
         {
             IsResizable = false;
-            Bounds = new Rect(0, 0, widthActivity, heightActivity);
+            Bounds = new Rect(0.0, 0.0, widthActivity, heightActivity);
         }
     }
 }
