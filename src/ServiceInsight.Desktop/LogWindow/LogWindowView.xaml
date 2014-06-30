@@ -4,35 +4,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:logWindow="clr-namespace:Particular.ServiceInsight.Desktop.LogWindow"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
 
-    <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible">
-        <ItemsControl ItemsSource="{Binding Logs}">
-            <ItemsControl.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Command="{Binding ClearCommand}" Header="Clear All">
-                        <MenuItem.Icon>
-                            <Image Source="/Images/Clear.png" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Command="{Binding CopyCommand}" Header="Copy">
-                        <MenuItem.Icon>
-                            <Image Source="/Images/Copy.png" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </ItemsControl.ContextMenu>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type logWindow:LogMessage}">
-                    <TextBlock VerticalAlignment="Center"
-                               FontWeight="{Binding Weight}"
-                               Foreground="{Binding Color}"
-                               Text="{Binding DisplayLog}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <Button Margin="2" Command="{Binding ClearCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/Clear.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Clear All" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="2" Command="{Binding CopyCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/Copy.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Copy All" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <xctk:RichTextBox x:Name="richTextBox"
+                          Grid.Row="1"
+                          Background="White"
+                          IsReadOnly="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          Text="{Binding LogText}">
+            <xctk:RichTextBox.TextFormatter>
+                <logWindow:LogMessageFormatter />
+            </xctk:RichTextBox.TextFormatter>
+        </xctk:RichTextBox>
+    </Grid>
 </UserControl>

@@ -1,7 +1,9 @@
 namespace Particular.ServiceInsight.Desktop.LogWindow
 {
+    using System;
     using System.Windows;
     using System.Windows.Media;
+    using RestSharp.Contrib;
 
     public class LogMessage
     {
@@ -23,5 +25,10 @@ namespace Particular.ServiceInsight.Desktop.LogWindow
         public Brush Brush { get { return brush; } }
 
         public FontWeight Weight { get { return weight; } }
+
+        public string ToXaml()
+        {
+            return "<Run FontWeight=\"" + Weight + "\" Foreground=\"" + Brush + "\" >" + HttpUtility.HtmlEncode(DisplayLog) + "</Run>" + Environment.NewLine;
+        }
     }
 }

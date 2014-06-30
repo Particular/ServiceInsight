@@ -1,8 +1,7 @@
-﻿using System.Windows;
-
-namespace Particular.ServiceInsight.Desktop.LogWindow
+﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     using System;
+    using System.Windows;
 
     public partial class LogWindowView
     {
@@ -24,7 +23,7 @@ namespace Particular.ServiceInsight.Desktop.LogWindow
             if (logSubscription != null)
                 logSubscription.Dispose();
 
-            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => scroll.ScrollToEnd());
+            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }
