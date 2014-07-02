@@ -10,8 +10,9 @@
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <SolidColorBrush x:Key="LightBrush">#E6E6E6E6</SolidColorBrush>
-        <SolidColorBrush x:Key="MediumBrush">#CCCCCCCC</SolidColorBrush>
+        <SolidColorBrush x:Key="LightBrush">#ffE6E6E6</SolidColorBrush>
+        <SolidColorBrush x:Key="MediumBrush">#ffCCCCCC</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkBrush">#ff333333</SolidColorBrush>
 
         <Style x:Key="HorizontalItemsControlStyle" TargetType="ItemsControl">
             <Setter Property="ItemsPanel">
@@ -22,65 +23,119 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Placement" Value="Center" />
+            <Setter Property="VerticalOffset" Value="55" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Grid Background="Transparent" SnapsToDevicePixels="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="8" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Polygon HorizontalAlignment="Center"
+                                     Fill="{StaticResource DarkBrush}"
+                                     Points="0,8 8,0 16,8"
+                                     Stroke="{StaticResource DarkBrush}" />
+                            <Border Grid.Row="1" Background="{StaticResource DarkBrush}">
+                                <ContentPresenter Margin="8"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="TooltipLabelStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Disabled">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <ScrollViewer Name="ScrollViewer_Header"
+                      HorizontalAlignment="Left"
+                      HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="260"
+                                BorderBrush="{StaticResource LightBrush}"
+                                BorderThickness="0,0,0,6">
 
-            <ScrollViewer Name="ScrollViewer_Header"
-                          HorizontalAlignment="Left"
-                          HorizontalScrollBarVisibility="Hidden"
-                          VerticalScrollBarVisibility="Disabled">
+                            <!--Endpoint Tooltip-->
+                            <Border.ToolTip>
+                                <ToolTip Style="{StaticResource EndpointTooltipStyle}">
+                                    <UniformGrid Columns="2" Rows="3">
+                                        <Label Content="NSB Version" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Content="{Binding Version}" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Content="Host" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Content="{Binding Host}" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Content="Active" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Content="{Binding Active}" Style="{StaticResource TooltipLabelStyle}" />
+                                    </UniformGrid>
+                                </ToolTip>
+                            </Border.ToolTip>
+
+                            <!--Endpoint Title-->
+                            <Border Margin="30,0,30,-6"
+                                    BorderBrush="{StaticResource MediumBrush}"
+                                    BorderThickness="0,0,0,6">
+                                <Grid Margin="8"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Margin="2" Source="/Particular.ServiceInsight;component/Images/TreeAuditFolder.png" />
+
+                                    <Label Grid.Column="1"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Content="{Binding Name}" />
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <ScrollViewer Name="ScrollViewer_Body"
+                      Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
                 <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="260"
-                                    BorderBrush="{StaticResource LightBrush}"
-                                    BorderThickness="0,0,0,6">
-                                <Border Margin="30,0,30,-6"
-                                        BorderBrush="{StaticResource MediumBrush}"
-                                        BorderThickness="0,0,0,6">
-                                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Margin="2" Source="/Particular.ServiceInsight;component/Images/TreeAuditFolder.png" />
 
-                                        <TextBlock Grid.Column="1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Text="{Binding}" />
-                                    </Grid>
-                                </Border>
-                            </Border>
+                            <!--Endpoint line-->
+                            <UniformGrid Width="260" Columns="2">
+                                <Border />
+                                <Border BorderBrush="{StaticResource MediumBrush}" BorderThickness="2 0 0 0" />
+                            </UniformGrid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </ScrollViewer>
-
-            <ScrollViewer Name="ScrollViewer_Body"
-                          Grid.Row="1"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <UniformGrid Width="260" Columns="2">
-                                    <Border />
-                                    <Border BorderBrush="{StaticResource MediumBrush}" BorderThickness="2 0 0 0" />
-                                </UniformGrid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
-    </ScrollViewer>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

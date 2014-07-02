@@ -1,9 +1,34 @@
 ﻿<SequenceDiagram:SequenceDiagramViewModel xmlns:SequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram" xmlns:System="clr-namespace:System;assembly=mscorlib">
 	<SequenceDiagram:SequenceDiagramViewModel.Endpoints>
-		<System:String>ECommerce</System:String>
-		<System:String>Sales</System:String>
-		<System:String>CustomerRelations</System:String>
-		<System:String>ContentManagement</System:String>
-		<System:String>Operations</System:String>
+		<SequenceDiagram:EndpointInfo>
+			<SequenceDiagram:EndpointInfo.Name>ECommerce</SequenceDiagram:EndpointInfo.Name>
+			<SequenceDiagram:EndpointInfo.Version>4.6.1</SequenceDiagram:EndpointInfo.Version>
+			<SequenceDiagram:EndpointInfo.Host>@machinename</SequenceDiagram:EndpointInfo.Host>
+			<SequenceDiagram:EndpointInfo.Active>Yes</SequenceDiagram:EndpointInfo.Active>
+		</SequenceDiagram:EndpointInfo>
+		<SequenceDiagram:EndpointInfo>
+			<SequenceDiagram:EndpointInfo.Name>Sales</SequenceDiagram:EndpointInfo.Name>
+			<SequenceDiagram:EndpointInfo.Version>4.6.1</SequenceDiagram:EndpointInfo.Version>
+			<SequenceDiagram:EndpointInfo.Host>@machinename</SequenceDiagram:EndpointInfo.Host>
+			<SequenceDiagram:EndpointInfo.Active>Yes</SequenceDiagram:EndpointInfo.Active>
+		</SequenceDiagram:EndpointInfo>
+		<SequenceDiagram:EndpointInfo>
+			<SequenceDiagram:EndpointInfo.Name>CustomerRelations</SequenceDiagram:EndpointInfo.Name>
+			<SequenceDiagram:EndpointInfo.Version>4.6.1</SequenceDiagram:EndpointInfo.Version>
+			<SequenceDiagram:EndpointInfo.Host>@machinename</SequenceDiagram:EndpointInfo.Host>
+			<SequenceDiagram:EndpointInfo.Active>Yes</SequenceDiagram:EndpointInfo.Active>
+		</SequenceDiagram:EndpointInfo>
+		<SequenceDiagram:EndpointInfo>
+			<SequenceDiagram:EndpointInfo.Name>ContentManagement</SequenceDiagram:EndpointInfo.Name>
+			<SequenceDiagram:EndpointInfo.Version>4.6.1</SequenceDiagram:EndpointInfo.Version>
+			<SequenceDiagram:EndpointInfo.Host>@machinename</SequenceDiagram:EndpointInfo.Host>
+			<SequenceDiagram:EndpointInfo.Active>Yes</SequenceDiagram:EndpointInfo.Active>
+		</SequenceDiagram:EndpointInfo>
+		<SequenceDiagram:EndpointInfo>
+			<SequenceDiagram:EndpointInfo.Name>Operations</SequenceDiagram:EndpointInfo.Name>
+			<SequenceDiagram:EndpointInfo.Version>4.6.1</SequenceDiagram:EndpointInfo.Version>
+			<SequenceDiagram:EndpointInfo.Host>@machinename</SequenceDiagram:EndpointInfo.Host>
+			<SequenceDiagram:EndpointInfo.Active>Yes</SequenceDiagram:EndpointInfo.Active>
+		</SequenceDiagram:EndpointInfo>
 	</SequenceDiagram:SequenceDiagramViewModel.Endpoints>
 </SequenceDiagram:SequenceDiagramViewModel>
