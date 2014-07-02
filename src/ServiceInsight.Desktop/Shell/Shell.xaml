@@ -287,6 +287,15 @@
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding SagaWindow}" />
                                 </dxd:LayoutPanel>
+                                <dxd:LayoutPanel x:Name="SequenceDiagram"
+                                                 AllowClose="False"
+                                                 AllowFloat="False"
+                                                 AutomationProperties.AutomationId="SequenceDiagram"
+                                                 Caption="Saga"
+                                                 CaptionImage="/Images/Alert.png"
+                                                 ShowBorder="False">
+                                    <ContentControl cal:View.Model="{Binding SequenceDiagram}" />
+                                </dxd:LayoutPanel>
                                 <dxd:LayoutPanel x:Name="MessageHeaders"
                                                  AllowClose="False"
                                                  AllowFloat="False"

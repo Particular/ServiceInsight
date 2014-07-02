@@ -227,6 +227,11 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="LogWindow\LogMessageFormatter.cs" />
+    <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
+      <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceDiagram\SequenceDiagramViewModel.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
@@ -517,6 +522,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MessageViewers\HexViewer\HexContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -729,6 +738,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\SequenceDiagramViewModelSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />

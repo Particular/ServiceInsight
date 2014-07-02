@@ -1,0 +1,9 @@
+﻿<SequenceDiagram:SequenceDiagramViewModel xmlns:SequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram" xmlns:System="clr-namespace:System;assembly=mscorlib">
+	<SequenceDiagram:SequenceDiagramViewModel.Endpoints>
+		<System:String>ECommerce</System:String>
+		<System:String>Sales</System:String>
+		<System:String>CustomerRelations</System:String>
+		<System:String>ContentManagement</System:String>
+		<System:String>Operations</System:String>
+	</SequenceDiagram:SequenceDiagramViewModel.Endpoints>
+</SequenceDiagram:SequenceDiagramViewModel>

@@ -20,6 +20,7 @@
     using MessageHeaders;
     using MessageList;
     using MessageProperties;
+    using SequenceDiagram;
     using MessageViewers;
     using Options;
     using Saga;
@@ -61,6 +62,7 @@
             SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
             MessageHeadersViewModel messageHeadersViewer,
+            SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
@@ -80,6 +82,7 @@
             EndpointExplorer = endpointExplorer;
             MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
+            SequenceDiagram = sequenceDiagramViewer;
             Messages = messages;
             LogWindow = logWindow;
 
@@ -160,6 +163,8 @@
         public MessageBodyViewModel MessageBody { get; private set; }
 
         public MessageHeadersViewModel MessageHeaders { get; private set; }
+
+        public SequenceDiagramViewModel SequenceDiagram { get; private set; }
 
         public SagaWindowViewModel SagaWindow { get; private set; }
 

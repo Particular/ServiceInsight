@@ -13,6 +13,7 @@
     using Desktop.MessageHeaders;
     using Desktop.MessageList;
     using Desktop.MessageProperties;
+    using Desktop.SequenceDiagram;
     using Desktop.MessageViewers;
     using Desktop.Models;
     using Desktop.Saga;
@@ -45,6 +46,7 @@
         StatusBarManager StatusbarManager;
         MessageBodyViewModel MessageBodyView;
         MessageHeadersViewModel HeaderView;
+        SequenceDiagramViewModel SequenceDiagramView;
         ISettingsProvider SettingsProvider;
         AppLicenseManager LicenseManager;
         IShellViewStub View;
@@ -68,6 +70,7 @@
             MessageProperties = Substitute.For<MessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
             HeaderView = Substitute.For<MessageHeadersViewModel>();
+            SequenceDiagramView = Substitute.For<SequenceDiagramViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
             LogWindow = Substitute.For<LogWindowViewModel>();
@@ -78,7 +81,7 @@
             shell = new ShellViewModel(App, ScreenFactory, WindowManager,
                                        EndpointExplorer, MessageList, StatusbarManager,
                                        EventAggregator, LicenseManager, MessageFlow, SagaWindow,
-                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
+                                       MessageBodyView, HeaderView, SequenceDiagramView, SettingsProvider, MessageProperties,
                                        LogWindow, CommandLineArgParser);
 
             ((IViewAware)shell).AttachView(View);
