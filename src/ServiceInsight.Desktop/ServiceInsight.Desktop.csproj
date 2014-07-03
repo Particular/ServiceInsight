@@ -228,6 +228,10 @@
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="LogWindow\LogMessageFormatter.cs" />
+    <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
+    <Compile Include="SequenceDiagram\SequenceDiagramMessage.xaml.cs">
+      <DependentUpon>SequenceDiagramMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
     </Compile>
@@ -522,6 +526,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramSharedResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SequenceDiagram\SequenceDiagramView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -740,6 +752,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <DesignData Include="SampleData\MessageInfoSampleData.xaml" />
     <DesignData Include="SampleData\SequenceDiagramViewModelSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

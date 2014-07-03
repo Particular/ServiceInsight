@@ -3,63 +3,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              Background="White"
              d:DataContext="{d:DesignData /SampleData/SequenceDiagramViewModelSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SequenceDiagramSharedResources.xaml" />
 
-        <SolidColorBrush x:Key="LightBrush">#ffE6E6E6</SolidColorBrush>
-        <SolidColorBrush x:Key="MediumBrush">#ffCCCCCC</SolidColorBrush>
-        <SolidColorBrush x:Key="DarkBrush">#ff333333</SolidColorBrush>
+                <ResourceDictionary>
+                    <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="Placement" Value="Center" />
+                        <Setter Property="VerticalOffset" Value="55" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToolTip">
+                                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="8" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Polygon HorizontalAlignment="Center"
+                                                 Fill="{StaticResource DarkBrush}"
+                                                 Points="0,8 8,0 16,8"
+                                                 Stroke="{StaticResource DarkBrush}" />
+                                        <Border Grid.Row="1" Background="{StaticResource DarkBrush}">
+                                            <ContentPresenter Margin="8"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch" />
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
 
-        <Style x:Key="HorizontalItemsControlStyle" TargetType="ItemsControl">
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="Placement" Value="Center" />
-            <Setter Property="VerticalOffset" Value="55" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToolTip">
-                        <Grid Background="Transparent" SnapsToDevicePixels="True">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="8" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Polygon HorizontalAlignment="Center"
-                                     Fill="{StaticResource DarkBrush}"
-                                     Points="0,8 8,0 16,8"
-                                     Stroke="{StaticResource DarkBrush}" />
-                            <Border Grid.Row="1" Background="{StaticResource DarkBrush}">
-                                <ContentPresenter Margin="8"
-                                                  HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Stretch" />
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Label">
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
-
-        <Style x:Key="TooltipLabelStyle" TargetType="Label">
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
-            <Setter Property="Margin" Value="4" />
-        </Style>
+                    <Style x:Key="TooltipLabelStyle" TargetType="Label">
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+                        <Setter Property="Margin" Value="4" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -79,7 +69,7 @@
                                 BorderBrush="{StaticResource LightBrush}"
                                 BorderThickness="0,0,0,6">
 
-                            <!--Endpoint Tooltip-->
+                            <!--  Endpoint Tooltip  -->
                             <Border.ToolTip>
                                 <ToolTip Style="{StaticResource EndpointTooltipStyle}">
                                     <UniformGrid Columns="2" Rows="3">
@@ -93,7 +83,7 @@
                                 </ToolTip>
                             </Border.ToolTip>
 
-                            <!--Endpoint Title-->
+                            <!--  Endpoint Title  -->
                             <Border Margin="30,0,30,-6"
                                     BorderBrush="{StaticResource MediumBrush}"
                                     BorderThickness="0,0,0,6">
@@ -127,11 +117,19 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
 
-                            <!--Endpoint line-->
+                            <!--  Endpoint line  -->
                             <UniformGrid Width="260" Columns="2">
                                 <Border />
                                 <Border BorderBrush="{StaticResource MediumBrush}" BorderThickness="2 0 0 0" />
                             </UniformGrid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ItemsControl Margin="0 72 0 0" ItemsSource="{Binding Messages}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <sequenceDiagram:SequenceDiagramMessage />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

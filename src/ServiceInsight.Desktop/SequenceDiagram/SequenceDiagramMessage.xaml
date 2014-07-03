@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.SequenceDiagram.SequenceDiagramMessage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
+             d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SequenceDiagramSharedResources.xaml" />
+
+                <ResourceDictionary>
+
+                    <sequenceDiagram:EndpointPositionConverter x:Key="MiddleEndpointConverter"
+                                                               ColumnWidth="260"
+                                                               Middle="True" />
+
+                    <sequenceDiagram:EndpointThicknessConverter x:Key="MarginEndpointConverter" ColumnWidth="260" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="260" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Canvas>
+            <Grid Canvas.Left="{Binding MessagePopupIndex,
+                                        Converter={StaticResource MiddleEndpointConverter}}"
+                  Canvas.Top="-36"
+                  Width="260"
+                  Height="36">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Name}" />
+            </Grid>
+        </Canvas>
+
+        <Line Fill="Black"
+              Stroke="Black"
+              StrokeEndLineCap="Square"
+              StrokeThickness="4"
+              X1="{Binding FromEndpointIndex,
+                           Converter={StaticResource MiddleEndpointConverter}}"
+              X2="{Binding LastToEndpointIndex,
+                           Converter={StaticResource MiddleEndpointConverter}}"
+              Y1="0"
+              Y2="0" />
+
+        <ItemsControl ItemsSource="{Binding ToEndpointIndicies}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="260"
+                                Margin="{Binding Converter={StaticResource MarginEndpointConverter}}"
+                                HorizontalAlignment="Left">
+                        <Line HorizontalAlignment="Center"
+                              Fill="Black"
+                              Stroke="Black"
+                              StrokeEndLineCap="Square"
+                              StrokeThickness="4"
+                              X1="0"
+                              X2="0"
+                              Y1="0"
+                              Y2="25" />
+                        <Polygon HorizontalAlignment="Center"
+                                 Fill="Black"
+                                 Points="0,0 7,11 14,0"
+                                 Stroke="Black" />
+                        <Rectangle Width="14"
+                                   Height="36"
+                                   HorizontalAlignment="Center"
+                                   Fill="{StaticResource MediumBrush}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
