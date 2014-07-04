@@ -80,14 +80,41 @@
 
         <!--  Message Popup  -->
         <Grid Width="260"
-              Height="36"
+              Height="72"
               Margin="{Binding MessagePopupIndex,
                                Converter={StaticResource MessageEndpointMarginConverter}}"
               HorizontalAlignment="Left"
               VerticalAlignment="Top">
-            <TextBlock HorizontalAlignment="Center"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <Path Width="16"
+                      Height="16"
+                      Margin="2 0"
+                      Data="{StaticResource StartMessageGeometry}"
+                      Fill="{StaticResource DarkBrush}"
+                      Stretch="Fill"
+                      Visibility="{Binding IsStartMessage,
+                                           Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                <Path Width="16"
+                      Height="16"
+                      Margin="2 0"
+                      Data="{StaticResource MessageGeometry}"
+                      Fill="{StaticResource DarkBrush}"
+                      Stretch="Fill"
+                      Visibility="{Binding IsStartMessage,
+                                           Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+
+                <Label HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Text="{Binding Name}" />
+                       Content="{Binding Name}" />
+            </StackPanel>
         </Grid>
 
         <!--  Vertical arrow for each to endpoint  -->
