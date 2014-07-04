@@ -19,12 +19,22 @@
                                                                ColumnWidth="260"
                                                                Middle="True" />
 
-                    <sequenceDiagram:EndpointThicknessConverter x:Key="MarginEndpointConverter" ColumnWidth="260" />
+                    <sequenceDiagram:EndpointThicknessConverter x:Key="ToEndpointMarginConverter" ColumnWidth="260" />
+
+                    <sequenceDiagram:EndpointThicknessConverter x:Key="MessageEndpointMarginConverter"
+                                                                ColumnWidth="260"
+                                                                Middle="True"
+                                                                Top="-36" />
+
+                    <sequenceDiagram:EndpointThicknessConverter x:Key="StartMessageMarginConverter"
+                                                                ColumnWidth="260"
+                                                                Top="-36" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <!--  Padding for endpoints  -->
         <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -33,18 +43,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Canvas>
-            <Grid Canvas.Left="{Binding MessagePopupIndex,
-                                        Converter={StaticResource MiddleEndpointConverter}}"
-                  Canvas.Top="-36"
-                  Width="260"
-                  Height="36">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="{Binding Name}" />
-            </Grid>
-        </Canvas>
-
+        <!--  Horizontal line  -->
         <Line Fill="Black"
               Stroke="Black"
               StrokeEndLineCap="Square"
@@ -56,6 +55,42 @@
               Y1="0"
               Y2="0" />
 
+        <!--  Start message arrow  -->
+        <Grid Width="260"
+              Height="72"
+              Margin="{Binding FromEndpointIndex,
+                               Converter={StaticResource StartMessageMarginConverter}}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Visibility="{Binding IsStartMessage,
+                                   Converter={StaticResource BoolToVisibilityConverter}}">
+            <Rectangle Width="25"
+                       Height="25"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Fill="Black" />
+            <Path Width="10"
+                  Height="10"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="{StaticResource RightArrow}"
+                  Fill="White"
+                  Stretch="Fill" />
+        </Grid>
+
+        <!--  Message Popup  -->
+        <Grid Width="260"
+              Height="36"
+              Margin="{Binding MessagePopupIndex,
+                               Converter={StaticResource MessageEndpointMarginConverter}}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top">
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Name}" />
+        </Grid>
+
+        <!--  Vertical arrow for each to endpoint  -->
         <ItemsControl ItemsSource="{Binding ToEndpointIndicies}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -65,8 +100,9 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="260"
-                                Margin="{Binding Converter={StaticResource MarginEndpointConverter}}"
+                                Margin="{Binding Converter={StaticResource ToEndpointMarginConverter}}"
                                 HorizontalAlignment="Left">
+                        <!--  Line  -->
                         <Line HorizontalAlignment="Center"
                               Fill="Black"
                               Stroke="Black"
@@ -76,10 +112,14 @@
                               X2="0"
                               Y1="0"
                               Y2="25" />
-                        <Polygon HorizontalAlignment="Center"
-                                 Fill="Black"
-                                 Points="0,0 7,11 14,0"
-                                 Stroke="Black" />
+                        <!--  Arrow  -->
+                        <Path Width="14"
+                              Height="11"
+                              HorizontalAlignment="Center"
+                              Data="{StaticResource DownArrow}"
+                              Fill="Black"
+                              Stretch="Fill" />
+                        <!--  Grey box  -->
                         <Rectangle Width="14"
                                    Height="36"
                                    HorizontalAlignment="Center"
