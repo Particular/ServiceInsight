@@ -12,7 +12,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 new EndpointInfo { Name = "Sales", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
                 new EndpointInfo { Name = "CustomerRelations", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
                 new EndpointInfo { Name = "ContentManagement", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
-                new EndpointInfo { Name = "Operations", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
+                new EndpointInfo { Name = "Operations", Version = "4.6.1", Host = "@machinename", Active = "Yes" }
             };
 
             Messages = new[]
@@ -22,7 +22,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 new MessageInfo { Endpoints = Endpoints, Name = "OrderAccepted", FromEndpoint = "Sales", ToEndpoints = new[] { "CustomerRelations", "ContentManagement" }, },
                 new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadRequest", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "Operations" }, },
                 new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadResponse", FromEndpoint = "Operations", ToEndpoints = new[] { "ContentManagement" }, },
-                new MessageInfo { Endpoints = Endpoints, Name = "DownloadIsReady", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "ECommerce" }, },
+                new MessageInfo { Endpoints = Endpoints, Name = "DownloadIsReady", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "ECommerce" }, }
             };
         }
 
