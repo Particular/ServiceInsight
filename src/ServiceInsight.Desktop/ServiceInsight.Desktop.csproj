@@ -228,7 +228,10 @@
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="LogWindow\LogMessageFormatter.cs" />
+    <Compile Include="SequenceDiagram\EndpointInfo.cs" />
     <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
+    <Compile Include="SequenceDiagram\EndpointThicknessConverter.cs" />
+    <Compile Include="SequenceDiagram\MessageInfo.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramMessage.xaml.cs">
       <DependentUpon>SequenceDiagramMessage.xaml</DependentUpon>
     </Compile>
