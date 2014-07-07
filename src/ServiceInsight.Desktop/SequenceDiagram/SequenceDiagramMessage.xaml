@@ -16,18 +16,18 @@
                 <ResourceDictionary>
 
                     <sequenceDiagram:EndpointPositionConverter x:Key="MiddleEndpointConverter"
-                                                               ColumnWidth="260"
+                                                               ColumnWidth="{StaticResource ColumnWidth}"
                                                                Middle="True" />
 
-                    <sequenceDiagram:EndpointThicknessConverter x:Key="ToEndpointMarginConverter" ColumnWidth="260" />
+                    <sequenceDiagram:EndpointThicknessConverter x:Key="ToEndpointMarginConverter" ColumnWidth="{StaticResource ColumnWidth}" />
 
                     <sequenceDiagram:EndpointThicknessConverter x:Key="MessageEndpointMarginConverter"
-                                                                ColumnWidth="260"
+                                                                ColumnWidth="{StaticResource ColumnWidth}"
                                                                 Middle="True"
                                                                 Top="-36" />
 
                     <sequenceDiagram:EndpointThicknessConverter x:Key="StartMessageMarginConverter"
-                                                                ColumnWidth="260"
+                                                                ColumnWidth="{StaticResource ColumnWidth}"
                                                                 Top="-36" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
@@ -38,7 +38,7 @@
         <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Width="260" />
+                    <Border Width="{StaticResource ColumnWidth}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -56,7 +56,7 @@
               Y2="0" />
 
         <!--  Start message arrow  -->
-        <Grid Width="260"
+        <Grid Width="{StaticResource ColumnWidth}"
               Height="72"
               Margin="{Binding FromEndpointIndex,
                                Converter={StaticResource StartMessageMarginConverter}}"
@@ -79,7 +79,7 @@
         </Grid>
 
         <!--  Message Popup  -->
-        <Grid Width="260"
+        <Grid Width="{StaticResource ColumnWidth}"
               Height="72"
               Margin="{Binding MessagePopupIndex,
                                Converter={StaticResource MessageEndpointMarginConverter}}"
@@ -90,14 +90,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
+            <!-- Top Line -->
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Path Width="16"
                       Height="16"
                       Margin="2 0"
                       Data="{StaticResource StartMessageGeometry}"
-                      Fill="{StaticResource DarkBrush}"
+                      Fill="{StaticResource Grey40Brush}"
                       Stretch="Fill"
                       Visibility="{Binding IsStartMessage,
                                            Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -106,14 +105,56 @@
                       Height="16"
                       Margin="2 0"
                       Data="{StaticResource MessageGeometry}"
-                      Fill="{StaticResource DarkBrush}"
+                      Fill="{StaticResource Grey40Brush}"
                       Stretch="Fill"
                       Visibility="{Binding IsStartMessage,
                                            Converter={StaticResource BoolToVisibilityConverterInverted}}" />
 
                 <Label HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Content="{Binding Name}" />
+                       Content="{Binding Name}"
+                       Foreground="{StaticResource Grey40Brush}" />
+
+                <Path Width="4"
+                      Height="4"
+                      Margin="2,0,2,13"
+                      VerticalAlignment="Bottom"
+                      Data="{StaticResource DownArrow}"
+                      Fill="{StaticResource Grey40Brush}"
+                      Stretch="Fill" />
+            </StackPanel>
+
+            <!-- Bottom Line -->
+            <StackPanel Grid.Row="1"
+                        Margin="0,3,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal"
+                        Visibility="{Binding SagaName,
+                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                <Grid Margin="0,0,1,0">
+                    <Rectangle Width="18"
+                               Height="18"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{StaticResource Grey40Brush}" />
+                    <Path Width="9"
+                          Height="9"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource RightArrow}"
+                          Fill="White"
+                          Stretch="Fill"
+                          Visibility="{Binding IsStartMessage,
+                                               Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
+                <Label Height="18"
+                       Padding="5 0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Background="{StaticResource Grey40Brush }"
+                       Content="{Binding SagaName}"
+                       Foreground="White" />
             </StackPanel>
         </Grid>
 
@@ -126,7 +167,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Width="260"
+                    <StackPanel Width="{StaticResource ColumnWidth}"
                                 Margin="{Binding Converter={StaticResource ToEndpointMarginConverter}}"
                                 HorizontalAlignment="Left">
                         <!--  Line  -->
@@ -150,7 +191,7 @@
                         <Rectangle Width="14"
                                    Height="36"
                                    HorizontalAlignment="Center"
-                                   Fill="{StaticResource MediumBrush}" />
+                                   Fill="{StaticResource Grey60Brush}" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

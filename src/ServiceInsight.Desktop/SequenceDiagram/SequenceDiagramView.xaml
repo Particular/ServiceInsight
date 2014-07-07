@@ -28,10 +28,9 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Polygon HorizontalAlignment="Center"
-                                                 Fill="{StaticResource DarkBrush}"
-                                                 Points="0,8 8,0 16,8"
-                                                 Stroke="{StaticResource DarkBrush}" />
-                                        <Border Grid.Row="1" Background="{StaticResource DarkBrush}">
+                                                 Fill="{StaticResource Grey20Brush}"
+                                                 Points="0,8 8,0 16,8" />
+                                        <Border Grid.Row="1" Background="{StaticResource Grey20Brush}">
                                             <ContentPresenter Margin="8"
                                                               HorizontalAlignment="Stretch"
                                                               VerticalAlignment="Stretch" />
@@ -44,7 +43,7 @@
 
                     <Style x:Key="TooltipLabelStyle" TargetType="Label">
                         <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+                        <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
                         <Setter Property="Margin" Value="4" />
                     </Style>
                 </ResourceDictionary>
@@ -66,7 +65,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Width="260"
-                                BorderBrush="{StaticResource LightBrush}"
+                                BorderBrush="{StaticResource Grey90Brush}"
                                 BorderThickness="0,0,0,6">
 
                             <!--  Endpoint Tooltip  -->
@@ -85,7 +84,7 @@
 
                             <!--  Endpoint Title  -->
                             <Border Margin="30,0,30,-6"
-                                    BorderBrush="{StaticResource MediumBrush}"
+                                    BorderBrush="{StaticResource Grey60Brush}"
                                     BorderThickness="0,0,0,6">
                                 <Grid Margin="8"
                                       HorizontalAlignment="Center"
@@ -120,7 +119,7 @@
                             <!--  Endpoint line  -->
                             <UniformGrid Width="260" Columns="2">
                                 <Border />
-                                <Border BorderBrush="{StaticResource MediumBrush}" BorderThickness="2 0 0 0" />
+                                <Border BorderBrush="{StaticResource Grey80Brush}" BorderThickness="2 0 0 0" />
                             </UniformGrid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

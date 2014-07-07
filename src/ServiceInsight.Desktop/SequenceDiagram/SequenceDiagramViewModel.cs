@@ -17,9 +17,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
             Messages = new[]
             {
-                new MessageInfo { Endpoints = Endpoints, Name = "SubmitOrder", IsStartMessage = true, FromEndpoint = "ECommerce", ToEndpoints = new[] { "Sales" } },
+                new MessageInfo { Endpoints = Endpoints, Name = "SubmitOrder", SagaName = "ProcessOrderSaga", IsStartMessage = true, FromEndpoint = "ECommerce", ToEndpoints = new[] { "Sales" } },
                 new MessageInfo { Endpoints = Endpoints, Name = "OrderPlaced", FromEndpoint = "Sales", ToEndpoints = new[] { "ECommerce" }, TimeoutEndpoints = new[] { "Sales" } },
-                new MessageInfo { Endpoints = Endpoints, Name = "OrderAccepted", FromEndpoint = "Sales", ToEndpoints = new[] { "CustomerRelations", "ContentManagement" }, },
+                new MessageInfo { Endpoints = Endpoints, Name = "OrderAccepted", SagaName = "ProcessOrderSaga", FromEndpoint = "Sales", ToEndpoints = new[] { "CustomerRelations", "ContentManagement" }, },
                 new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadRequest", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "Operations" }, },
                 new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadResponse", FromEndpoint = "Operations", ToEndpoints = new[] { "ContentManagement" }, },
                 new MessageInfo { Endpoints = Endpoints, Name = "DownloadIsReady", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "ECommerce" }, }

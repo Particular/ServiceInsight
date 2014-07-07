@@ -2,6 +2,7 @@
     <!-- ReSharper disable Xaml.InvalidType -->
     <SequenceDiagram:MessageInfo.IsStartMessage>true</SequenceDiagram:MessageInfo.IsStartMessage>
     <SequenceDiagram:MessageInfo.Name>SubmitOrder</SequenceDiagram:MessageInfo.Name>
+    <SequenceDiagram:MessageInfo.SagaName>ProcessOrderSaga</SequenceDiagram:MessageInfo.SagaName>
     <SequenceDiagram:MessageInfo.FromEndpoint>ECommerce</SequenceDiagram:MessageInfo.FromEndpoint>
     <SequenceDiagram:MessageInfo.ToEndpoints>
         <System:String>Sales</System:String>

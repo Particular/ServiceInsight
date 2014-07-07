@@ -10,6 +10,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     {
         public string Name { get; set; }
 
+        public string SagaName { get; set; }
+
         public bool IsStartMessage { get; set; }
 
         public string FromEndpoint { get; set; }
