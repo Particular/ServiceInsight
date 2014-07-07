@@ -147,6 +147,15 @@
                           Stretch="Fill"
                           Visibility="{Binding IsStartMessage,
                                                Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <Path Width="9"
+                          Height="9"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource SagaGeometry}"
+                          Fill="White"
+                          Stretch="Fill"
+                          Visibility="{Binding IsStartMessage,
+                                               Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                 </Grid>
                 <Label Height="18"
                        Padding="5 0"

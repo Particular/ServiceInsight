@@ -93,7 +93,13 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Margin="2" Source="/Particular.ServiceInsight;component/Images/TreeAuditFolder.png" />
+                                    <Path Width="18"
+                                          Height="18"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Data="{StaticResource EndpointGeometry}"
+                                          Fill="{StaticResource Grey40Brush}"
+                                          Stretch="Fill" />
 
                                     <Label Grid.Column="1"
                                            HorizontalAlignment="Center"
