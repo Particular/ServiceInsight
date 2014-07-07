@@ -35,7 +35,9 @@
     </UserControl.Resources>
     <Grid>
         <!--  Padding for endpoints  -->
-        <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
+        <ItemsControl x:Name="EndpointPaddings"
+                      ItemsSource="{Binding Endpoints}"
+                      Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border Width="{StaticResource ColumnWidth}" />
@@ -44,7 +46,8 @@
         </ItemsControl>
 
         <!--  Horizontal line  -->
-        <Line Fill="Black"
+        <Line x:Name="HorizontalLine"
+              Fill="Black"
               Stroke="Black"
               StrokeEndLineCap="Square"
               StrokeThickness="4"
@@ -56,7 +59,8 @@
               Y2="0" />
 
         <!--  Start message arrow  -->
-        <Grid Width="{StaticResource ColumnWidth}"
+        <Grid x:Name="StartMessageArrow"
+              Width="{StaticResource ColumnWidth}"
               Height="72"
               Margin="{Binding FromEndpointIndex,
                                Converter={StaticResource StartMessageMarginConverter}}"
@@ -79,100 +83,143 @@
         </Grid>
 
         <!--  Message Popup  -->
-        <Grid Width="{StaticResource ColumnWidth}"
-              Height="72"
-              Margin="{Binding MessagePopupIndex,
-                               Converter={StaticResource MessageEndpointMarginConverter}}"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Border x:Name="MessagePopup"
+                Width="{StaticResource ColumnWidth}"
+                Height="72"
+                Margin="{Binding MessagePopupIndex,
+                                 Converter={StaticResource MessageEndpointMarginConverter}}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
 
-            <!--  Top Line  -->
-            <StackPanel Margin="0,0,0,4"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal">
-                <Path Width="16"
-                      Height="16"
-                      Margin="2 0"
-                      Data="{StaticResource StartMessageGeometry}"
-                      Fill="{StaticResource Grey40Brush}"
-                      Stretch="Fill"
-                      Visibility="{Binding IsStartMessage,
-                                           Converter={StaticResource BoolToVisibilityConverter}}" />
-
-                <Path Width="16"
-                      Height="16"
-                      Margin="2 0"
-                      Data="{StaticResource MessageGeometry}"
-                      Fill="{StaticResource Grey40Brush}"
-                      Stretch="Fill"
-                      Visibility="{Binding IsStartMessage,
-                                           Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-
-                <Label Padding="5 0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Content="{Binding Name}"
-                       Foreground="{StaticResource Grey40Brush}" />
-
-                <Path Width="4"
-                      Height="4"
-                      Margin="2,0,2,3"
-                      VerticalAlignment="Bottom"
-                      Data="{StaticResource DownArrow}"
-                      Fill="{StaticResource Grey40Brush}"
-                      Stretch="Fill" />
-            </StackPanel>
-
-            <!--  Bottom Line  -->
-            <StackPanel Grid.Row="1"
-                        Margin="0,3,0,0"
-                        HorizontalAlignment="Center"
+            <Grid x:Name="PopupBorder"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Border Height="29"
                         VerticalAlignment="Top"
-                        Orientation="Horizontal"
+                        Background="{Binding (sequenceDiagram:Palette.Brush3),
+                                             ElementName=PopupBorder}" />
+                <Border Height="27"
+                        VerticalAlignment="Bottom"
+                        Background="{Binding (sequenceDiagram:Palette.Brush3),
+                                             ElementName=PopupBorder}"
                         Visibility="{Binding SagaName,
-                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
-                <Grid Margin="0,0,1,0">
-                    <Rectangle Width="18"
-                               Height="18"
+                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Top Line  -->
+                    <StackPanel x:Name="TopLine"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                        <Path Width="16"
+                              Height="16"
+                              Margin="2 0"
+                              Data="{StaticResource StartMessageGeometry}"
+                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
+                                             ElementName=PopupBorder}"
+                              Stretch="Fill"
+                              Visibility="{Binding IsStartMessage,
+                                                   Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                        <Path Width="16"
+                              Height="16"
+                              Margin="2 0"
+                              Data="{StaticResource MessageGeometry}"
+                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
+                                             ElementName=PopupBorder}"
+                              Stretch="Fill"
+                              Visibility="{Binding IsStartMessage,
+                                                   Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+
+                        <Label Padding="5 0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Fill="{StaticResource Grey40Brush}" />
-                    <Path Width="9"
-                          Height="9"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Data="{StaticResource RightArrow}"
-                          Fill="White"
-                          Stretch="Fill"
-                          Visibility="{Binding IsStartMessage,
-                                               Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <Path Width="9"
-                          Height="9"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Data="{StaticResource SagaGeometry}"
-                          Fill="White"
-                          Stretch="Fill"
-                          Visibility="{Binding IsStartMessage,
-                                               Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                               Content="{Binding Name}"
+                               Foreground="{Binding (sequenceDiagram:Palette.Brush1),
+                                                    ElementName=PopupBorder}" />
+
+                        <Path Width="4"
+                              Height="4"
+                              Margin="2,0,2,3"
+                              VerticalAlignment="Bottom"
+                              Data="{StaticResource DownArrow}"
+                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
+                                             ElementName=PopupBorder}"
+                              Stretch="Fill" />
+                    </StackPanel>
+
+                    <!--  Bottom Line  -->
+                    <StackPanel x:Name="BottomLine"
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal"
+                                Visibility="{Binding SagaName,
+                                                     Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                        <Grid Margin="0,0,1,0">
+                            <Rectangle Width="18"
+                                       Height="18"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Fill="{Binding (sequenceDiagram:Palette.Brush1),
+                                                      ElementName=PopupBorder}" />
+                            <Path Width="9"
+                                  Height="9"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="{StaticResource RightArrow}"
+                                  Fill="{Binding (sequenceDiagram:Palette.Brush2),
+                                                 ElementName=PopupBorder}"
+                                  Stretch="Fill"
+                                  Visibility="{Binding IsStartMessage,
+                                                       Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Path Width="9"
+                                  Height="9"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="{StaticResource SagaGeometry}"
+                                  Fill="{Binding (sequenceDiagram:Palette.Brush2),
+                                                 ElementName=PopupBorder}"
+                                  Stretch="Fill"
+                                  Visibility="{Binding IsStartMessage,
+                                                       Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                        </Grid>
+                        <Label Height="18"
+                               Padding="5 0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Background="{Binding (sequenceDiagram:Palette.Brush1),
+                                                    ElementName=PopupBorder}"
+                               Content="{Binding SagaName}"
+                               Foreground="{Binding (sequenceDiagram:Palette.Brush2),
+                                                    ElementName=PopupBorder}" />
+                    </StackPanel>
                 </Grid>
-                <Label Height="18"
-                       Padding="5 0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Background="{StaticResource Grey40Brush}"
-                       Content="{Binding SagaName}"
-                       Foreground="White" />
-            </StackPanel>
-        </Grid>
+
+                <Grid.Style>
+                    <Style>
+                        <Setter Property="sequenceDiagram:Palette.Brush1" Value="{StaticResource Grey40Brush}" />
+                        <Setter Property="sequenceDiagram:Palette.Brush2" Value="White" />
+                        <Setter Property="sequenceDiagram:Palette.Brush3" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Selected}" Value="True">
+                                <Setter Property="sequenceDiagram:Palette.Brush1" Value="White" />
+                                <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource HiliteDarkBrush}" />
+                                <Setter Property="sequenceDiagram:Palette.Brush3" Value="{StaticResource HiliteDarkBrush}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+        </Border>
 
         <!--  Vertical arrow for each to endpoint  -->
-        <ItemsControl ItemsSource="{Binding ToEndpointIndicies}">
+        <ItemsControl x:Name="SendMessageArrows" ItemsSource="{Binding ToEndpointIndicies}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid />

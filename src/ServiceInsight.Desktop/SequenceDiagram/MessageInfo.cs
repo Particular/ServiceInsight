@@ -22,6 +22,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public IEnumerable<EndpointInfo> Endpoints { get; set; }
 
+        public bool Selected { get; set; }
+
         public int FromEndpointIndex { get; private set; }
 
         public int LastToEndpointIndex { get; private set; }
