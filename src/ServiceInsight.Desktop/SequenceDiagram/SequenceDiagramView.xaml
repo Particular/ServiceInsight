@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignData /SampleData/SequenceDiagramViewModelSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
-             mc:Ignorable="d">
+             mc:Ignorable="d" SnapsToDevicePixels="True">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,7 +18,7 @@
                     <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
                         <Setter Property="OverridesDefaultStyle" Value="true" />
                         <Setter Property="Placement" Value="Center" />
-                        <Setter Property="VerticalOffset" Value="55" />
+                        <Setter Property="VerticalOffset" Value="54" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ToolTip">
@@ -95,6 +95,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Path Width="18"
                                           Height="18"
+                                          Margin="2 0"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource EndpointGeometry}"
