@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
+             xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
@@ -29,6 +30,8 @@
                     <sequenceDiagram:EndpointThicknessConverter x:Key="StartMessageMarginConverter"
                                                                 ColumnWidth="{StaticResource ColumnWidth}"
                                                                 Top="-36" />
+
+                    <valueConverters:BoolToStrokeDashArrayConverter x:Key="BoolToStrokeDashArrayConverter" StrokeDashArray="1.5" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -49,6 +52,8 @@
         <Line x:Name="HorizontalLine"
               Fill="Black"
               Stroke="Black"
+              StrokeDashArray="{Binding IsEvent,
+                                        Converter={StaticResource BoolToStrokeDashArrayConverter}}"
               StrokeEndLineCap="Square"
               StrokeThickness="4"
               X1="{Binding FromEndpointIndex,
@@ -219,7 +224,9 @@
         </Border>
 
         <!--  Vertical arrow for each to endpoint  -->
-        <ItemsControl x:Name="SendMessageArrows" ItemsSource="{Binding ToEndpointIndicies}">
+        <ItemsControl x:Name="SendMessageArrows"
+                      ItemsSource="{Binding ToEndpointIndicies}"
+                      Tag="{Binding}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid />
@@ -234,6 +241,9 @@
                         <Line HorizontalAlignment="Center"
                               Fill="Black"
                               Stroke="Black"
+                              StrokeDashArray="{Binding Tag.IsEvent,
+                                                        Converter={StaticResource BoolToStrokeDashArrayConverter},
+                                                        RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                               StrokeEndLineCap="Square"
                               StrokeThickness="4"
                               X1="0"
