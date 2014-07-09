@@ -1,11 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
-    using System.Reflection;
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
     using System.Windows;
-    using System.Windows.Input;
     using DevExpress.Data;
     using DevExpress.Xpf.Core;
-    using DevExpress.Xpf.Core.Native;
     using DevExpress.Xpf.Grid;
     using ExtensionMethods;
 
@@ -16,14 +16,9 @@
             public const string IsFaulted = "IsFaulted";
         }
 
-        PropertyInfo sortUpProperty;
-        PropertyInfo sortDownProperty;
-
         public MessageListView()
         {
             InitializeComponent();
-            sortUpProperty = typeof(BaseGridColumnHeader).GetProperty("SortUpIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
-            sortDownProperty = typeof(BaseGridColumnHeader).GetProperty("SortDownIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
         MessageListViewModel Model
@@ -46,60 +41,9 @@
             e.Cancel = grid.ShowLoadingPanel;
         }
 
-        void SortData(ColumnBase column, ColumnSortOrder order)
+        void SortData(ColumnBase column, ListSortDirection order)
         {
-            Model.RefreshMessages(column.Tag as string, order == ColumnSortOrder.Ascending);
-        }
-
-        void OnGridControlClicked(object sender, MouseButtonEventArgs e)
-        {
-            var columnHeader = LayoutHelper.FindLayoutOrVisualParentObject((DependencyObject)e.OriginalSource, typeof(GridColumnHeader)) as GridColumnHeader;
-            if (columnHeader == null || Model == null || Model.WorkInProgress) return;
-
-            var clickedColumn = (GridColumn)columnHeader.DataContext;
-            if (clickedColumn.Tag == null) return;
-
-            ClearSortExcept(columnHeader);
-
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(columnHeader, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(columnHeader, null);
-            ColumnSortOrder sort;
-
-            if (sortUpControl.Visibility != Visibility.Visible)
-            {
-                sortUpControl.Visibility = Visibility.Visible;
-                sortDownControl.Visibility = Visibility.Hidden;
-                sort = ColumnSortOrder.Ascending;
-            }
-            else
-            {
-                sortUpControl.Visibility = Visibility.Hidden;
-                sortDownControl.Visibility = Visibility.Visible;
-                sort = ColumnSortOrder.Descending;
-            }
-
-            SortData(clickedColumn, sort);
-        }
-
-        void HideIndicator(BaseGridColumnHeader header)
-        {
-            var sortUpControl = (ColumnHeaderSortIndicatorControl)sortUpProperty.GetValue(header, null);
-            var sortDownControl = (ColumnHeaderSortIndicatorControl)sortDownProperty.GetValue(header, null);
-
-            sortUpControl.Visibility = Visibility.Hidden;
-            sortDownControl.Visibility = Visibility.Hidden;
-        }
-
-        void ClearSortExcept(GridColumnHeader clickedHeader)
-        {
-            var headers = grid.FindVisualChildren<GridColumnHeader>();
-            foreach (var header in headers)
-            {
-                if (header == clickedHeader)
-                    continue;
-
-                HideIndicator(header);
-            }
+            Model.RefreshMessages(column.Tag as string, order == ListSortDirection.Ascending);
         }
 
         DataController Controller
@@ -115,6 +59,31 @@
         public void EndSelection()
         {
             Controller.Selection.EndSelection();
+        }
+
+        void Grid_OnCustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+        {
+            if (e.Value is TimeSpan)
+            {
+                e.DisplayText = ((TimeSpan)e.Value).GetElapsedTime();
+            }
+        }
+
+        void Grid_OnStartSorting(object sender, RoutedEventArgs e)
+        {
+            var grid = e.Source as GridControl;
+
+            if (grid == null || Model == null || Model.WorkInProgress) return;
+
+            var sortInfo = grid.SortInfo.FirstOrDefault();
+
+            if (sortInfo == null) return;
+
+            var column = grid.Columns.First(c => c.FieldName == sortInfo.FieldName);
+
+            SortData(column, sortInfo.SortOrder);
+
+            e.Handled = true;
         }
     }
 }

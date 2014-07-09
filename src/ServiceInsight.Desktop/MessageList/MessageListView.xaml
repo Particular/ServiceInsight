@@ -39,13 +39,14 @@
                              Grid.Row="1"
                              CurrentItem="{Binding FocusedRow,
                                                    Mode=TwoWay}"
+                             CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
                              CustomUnboundColumnData="OnRequestAdvancedMessageData"
                              IsHitTestVisible="{Binding WorkInProgress,
                                                         Converter={StaticResource BooleanInverseConverter}}"
                              ItemsSource="{Binding Rows}"
-                             PreviewMouseLeftButtonDown="OnGridControlClicked"
                              SelectionMode="None"
-                             ShowLoadingPanel="{Binding WorkInProgress}">
+                             ShowLoadingPanel="{Binding WorkInProgress}"
+                             StartSorting="Grid_OnStartSorting">
                 <dxb:BarManager.DXContextMenu>
                     <dxb:PopupMenu>
                         <dxb:PopupMenu.ItemLinks>
@@ -96,19 +97,19 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
-                                    FieldName="ElapsedCriticalTime"
+                                    FieldName="CriticalTime"
                                     Header="Critical Time"
                                     HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint"
                                     Tag="critical_time" />
                     <dxg:GridColumn AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
-                                    FieldName="ElapsedProcessingTime"
+                                    FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
                     <dxg:GridColumn AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
-                                    FieldName="ElapsedDeliveryTime"
+                                    FieldName="DeliveryTime"
                                     Header="Delivery Time"
                                     HeaderToolTip="Calculated duration of delivery"
                                     Tag="delivery_time" />
@@ -120,7 +121,7 @@
                                    AllowEditing="False"
                                    AllowGrouping="True"
                                    AllowPerPixelScrolling="True"
-                                   AllowSorting="False"
+                                   AllowSorting="True"
                                    AutoWidth="True"
                                    BeforeLayoutRefresh="OnBeforeLayoutRefresh"
                                    FadeSelectionOnLostFocus="False"
