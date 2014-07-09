@@ -1,10 +1,21 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTemplate x:Key="msgFailureIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="2.986" Height="13">
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="3" Canvas.Left="-0.014" Canvas.Top="10" />
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="8" Canvas.Left="-0.014" Canvas.Top="0" />
+                <Rectangle Canvas.Left="-0.014"
+                           Canvas.Top="10"
+                           Width="3"
+                           Height="3"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
+                <Rectangle Canvas.Left="-0.014"
+                           Canvas.Top="0"
+                           Width="3"
+                           Height="8"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -22,19 +33,45 @@
     <ControlTemplate x:Key="msgRepeatedFailureIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="7.986" Height="13">
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="3" Canvas.Left="-0.014" Canvas.Top="10" />
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="8" Canvas.Left="-0.014" Canvas.Top="0" />
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="3" Canvas.Left="4.986" Canvas.Top="10" />
-                <Rectangle RadiusX="0" RadiusY="0" Fill="#FF1A1A1A" Width="3" Height="8" Canvas.Left="4.986" Canvas.Top="0" />
+                <Rectangle Canvas.Left="-0.014"
+                           Canvas.Top="10"
+                           Width="3"
+                           Height="3"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
+                <Rectangle Canvas.Left="-0.014"
+                           Canvas.Top="0"
+                           Width="3"
+                           Height="8"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
+                <Rectangle Canvas.Left="4.986"
+                           Canvas.Top="10"
+                           Width="3"
+                           Height="3"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
+                <Rectangle Canvas.Left="4.986"
+                           Canvas.Top="0"
+                           Width="3"
+                           Height="8"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="msgRetriedIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas Width="13.986" Height="12" ClipToBounds="True">
+            <Canvas Width="13.986"
+                    Height="12"
+                    ClipToBounds="True">
                 <Path Fill="#FF1A1A1A">
                     <Path.Data>
-                        <PathGeometry FillRule="Nonzero" Figures="M4.275,11.018C6.166,12.256 8.68,12.369 10.727,11.099 13.543,9.353 14.41,5.655 12.664,2.839 10.918,0.0230000000000006 7.22,-0.843999999999999 4.404,0.902 2.665,1.98 1.67,3.798 1.573,5.697L0,5.697 2.522,9.232 5.057,5.697 3.499,5.697C3.591,4.439 4.263,3.25 5.417,2.535 7.33,1.348 9.844,1.938 11.03,3.851 12.217,5.765 11.627,8.278 9.714,9.465 8.4,10.28 6.805,10.257 5.549,9.544L4.275,11.018z" />
+                        <PathGeometry Figures="M4.275,11.018C6.166,12.256 8.68,12.369 10.727,11.099 13.543,9.353 14.41,5.655 12.664,2.839 10.918,0.0230000000000006 7.22,-0.843999999999999 4.404,0.902 2.665,1.98 1.67,3.798 1.573,5.697L0,5.697 2.522,9.232 5.057,5.697 3.499,5.697C3.591,4.439 4.263,3.25 5.417,2.535 7.33,1.348 9.844,1.938 11.03,3.851 12.217,5.765 11.627,8.278 9.714,9.465 8.4,10.28 6.805,10.257 5.549,9.544L4.275,11.018z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
             </Canvas>
@@ -42,17 +79,27 @@
     </ControlTemplate>
     <ControlTemplate x:Key="CommandIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="28.15" Height="12" ClipToBounds="True">
+            <Canvas Width="28.15"
+                    Height="12"
+                    Background="Transparent"
+                    ClipToBounds="True">
                 <Canvas.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform ScaleX=".7" ScaleY=".7" CenterY=".7" />
+                        <ScaleTransform CenterY=".7"
+                                        ScaleX=".7"
+                                        ScaleY=".7" />
                         <TranslateTransform Y="-4" />
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <Ellipse Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="0.655" />
+                <Ellipse Canvas.Left="0"
+                         Canvas.Top="0.655"
+                         Width="10.894"
+                         Height="10.69"
+                         Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl},
+                                        Path=Foreground}" />
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
-                        <PathGeometry FillRule="Nonzero" Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" />
+                        <PathGeometry Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
             </Canvas>
@@ -60,26 +107,34 @@
     </ControlTemplate>
     <ControlTemplate x:Key="EventIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="28.15" Height="32" ClipToBounds="True">
+            <Canvas Width="28.15"
+                    Height="32"
+                    Background="Transparent"
+                    ClipToBounds="True">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX=".7" ScaleY=".7" />
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <Ellipse Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}" Width="10.894" Height="10.69" Canvas.Left="0" Canvas.Top="10.655" />
+                <Ellipse Canvas.Left="0"
+                         Canvas.Top="10.655"
+                         Width="10.894"
+                         Height="10.69"
+                         Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl},
+                                        Path=Foreground}" />
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
-                        <PathGeometry FillRule="Nonzero" Figures="M11.749,2.569L13.696,4.48 8.413,9.664C9.849,10.313,11.027,11.413,11.754,12.785L16.957,7.68 18.904,9.59 21.521,0 11.749,2.569z" />
+                        <PathGeometry Figures="M11.749,2.569L13.696,4.48 8.413,9.664C9.849,10.313,11.027,11.413,11.754,12.785L16.957,7.68 18.904,9.59 21.521,0 11.749,2.569z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
-                        <PathGeometry FillRule="Nonzero" Figures="M28.15,16L19.997,11 19.997,13 12.186,13C12.424,14 12.558,15.24 12.558,16.016 12.558,16.78 12.429,18 12.198,19L19.998,19 19.998,21 28.15,16z" />
+                        <PathGeometry Figures="M28.15,16L19.997,11 19.997,13 12.186,13C12.424,14 12.558,15.24 12.558,16.016 12.558,16.78 12.429,18 12.198,19L19.998,19 19.998,21 28.15,16z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
-                        <PathGeometry FillRule="Nonzero" Figures="M21.521,32L18.903,22.41 16.956,24.32 11.753,19.215C11.025,20.586,9.848,21.687,8.412,22.336L13.695,27.52 11.748,29.431 21.521,32z" />
+                        <PathGeometry Figures="M21.521,32L18.903,22.41 16.956,24.32 11.753,19.215C11.025,20.586,9.848,21.687,8.412,22.336L13.695,27.52 11.748,29.431 21.521,32z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
             </Canvas>
@@ -87,11 +142,13 @@
     </ControlTemplate>
     <ControlTemplate x:Key="TimeoutIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="32" Height="32">
+            <Canvas Width="32"
+                    Height="32"
+                    Background="Transparent">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX=".8" ScaleY=".8" />
-                        <TranslateTransform Y="-4" X="2" />
+                        <TranslateTransform X="2" Y="-4" />
                     </TransformGroup>
                 </Canvas.RenderTransform>
                 <Path Fill="#000000">
@@ -104,7 +161,7 @@
     </ControlTemplate>
     <ControlTemplate x:Key="ReceivingEndpoint">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14">
+            <Canvas Width="14">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="180" />
@@ -112,29 +169,39 @@
                         <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <Polygon Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " FillRule="NonZero" Fill="#FF666666" />
-                <Polygon Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " FillRule="NonZero" Fill="#FF666666" />
+                <Polygon Fill="#FF666666"
+                         FillRule="NonZero"
+                         Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " />
+                <Polygon Fill="#FF666666"
+                         FillRule="NonZero"
+                         Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SendingEndpoint">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14">
+            <Canvas Width="14">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <TranslateTransform X="9" Y="10" />
                         <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <Polygon Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " FillRule="NonZero" Fill="#FF666666" />
-                <Polygon Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " FillRule="NonZero" Fill="#FF666666" />
+                <Polygon Fill="#FF666666"
+                         FillRule="NonZero"
+                         Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " />
+                <Polygon Fill="#FF666666"
+                         FillRule="NonZero"
+                         Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="Exception">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="17" Height="13">
-                <Polygon Points="0,13 8.526,-0.035 17,13   " FillRule="NonZero" Fill="#FFFF0000" />
+            <Canvas Width="17" Height="13">
+                <Polygon Fill="#FFFF0000"
+                         FillRule="NonZero"
+                         Points="0,13 8.526,-0.035 17,13   " />
                 <Path Fill="#FFFFFFFF">
                     <Path.Data>
                         <PathGeometry Figures="M8 5h1v4H8V5z" FillRule="NonZero" />
@@ -150,7 +217,7 @@
     </ControlTemplate>
     <ControlTemplate x:Key="ZoomInIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="10.919" Height="11">
+            <Canvas Width="10.919" Height="11">
                 <Path Fill="#FF007BC6">
                     <Path.Data>
                         <PathGeometry Figures="M10.919 9.57L8.006 6.658C8.432 5.987 8.679 5.192 8.679 4.34    C8.679 1.947 6.733 0 4.34 0C1.947 0 0 1.947 0 4.34s1.947 4.34 4.34 4.34c0.81 0 1.568-0.223 2.217-0.611L9.489 11L10.919 9.57z     M1.196 4.34c0-1.733 1.41-3.144 3.144-3.144c1.733 0 3.144 1.41 3.144 3.144c0 1.733-1.41 3.144-3.144 3.144    S1.196 6.073 1.196 4.34z M6.161 4.856H4.887V6.13H3.902V4.856H2.628V3.872h1.274V2.598h0.984v1.274h1.274V4.856z" FillRule="NonZero" />
@@ -161,7 +228,7 @@
     </ControlTemplate>
     <ControlTemplate x:Key="ZoomOutIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="10.919" Height="11">
+            <Canvas Width="10.919" Height="11">
                 <Path Fill="#FF007BC6">
                     <Path.Data>
                         <PathGeometry Figures="M10.919 9.57L8.006 6.658C8.432 5.987 8.679 5.192 8.679 4.34    C8.679 1.947 6.733 0 4.34 0C1.947 0 0 1.947 0 4.34s1.947 4.34 4.34 4.34c0.81 0 1.568-0.223 2.217-0.611L9.489 11L10.919 9.57z     M1.196 4.34c0-1.733 1.41-3.144 3.144-3.144c1.733 0 3.144 1.41 3.144 3.144c0 1.733-1.41 3.144-3.144 3.144    S1.196 6.073 1.196 4.34z M6.161 4.856H2.628V3.872h3.533V4.856z" FillRule="NonZero" />
@@ -172,7 +239,7 @@
     </ControlTemplate>
     <ControlTemplate x:Key="CopyIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="11" Height="11">
+            <Canvas Width="11" Height="11">
                 <Path Fill="#FF007BC6">
                     <Path.Data>
                         <PathGeometry Figures="M8.284 2.72V0H0v8.28h2.716V11H11V2.72H8.284z M1.068 7.212V1.068h6.148V2.72h-4.5    v4.493L1.068 7.212L1.068 7.212z M9.932 9.932H3.784V3.788h6.148V9.932z" FillRule="NonZero" />
@@ -183,25 +250,44 @@
     </ControlTemplate>
     <ControlTemplate x:Key="SagaTriggerIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0" Width="15" Height="15" Fill="#FF333333" />
-                <Line X1="2.986" Y1="12" X2="9.051" Y2="5.935" StrokeThickness="2" Stroke="#FFE6E6E6" StrokeMiterLimit="10" />
-                <Polygon Points="10.493,8.571 11.986,3 6.415,4.492      " FillRule="NonZero" Fill="#FFE6E6E6" />
+            <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
+                <Line Stroke="#FFE6E6E6"
+                      StrokeMiterLimit="10"
+                      StrokeThickness="2"
+                      X1="2.986"
+                      X2="9.051"
+                      Y1="12"
+                      Y2="5.935" />
+                <Polygon Fill="#FFE6E6E6"
+                         FillRule="NonZero"
+                         Points="10.493,8.571 11.986,3 6.415,4.492      " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaInitiatedIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0" Width="15" Height="15" Fill="#FF333333" />
-                <Polygon Points="4.986,4 11.048,7.5 4.986,11    " FillRule="NonZero" Fill="#FFCCCCCC" />
+            <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
+                <Polygon Fill="#FFCCCCCC"
+                         FillRule="NonZero"
+                         Points="4.986,4 11.048,7.5 4.986,11    " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaUpdatedIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0" Width="15" Height="15" Fill="#FF333333" />
+            <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M3.612 5.274l2.74 0.885V3H8.62v3.159l2.74-0.885l0.616 1.953L9.183 8.086l1.822 2.609l-1.678 1.193     L7.51 9.423l-1.879 2.464l-1.678-1.193l1.835-2.609L2.996 7.228L3.612 5.274z" FillRule="NonZero" />
@@ -212,16 +298,26 @@
     </ControlTemplate>
     <ControlTemplate x:Key="SagaCompletedIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="15" Height="15">
-                <Rectangle Canvas.Left="0" Width="15" Height="15" Fill="#FF333333" />
-                <Rectangle Canvas.Left="4" Canvas.Top="4" Width="7" Height="7" Fill="#FFCCCCCC" />
+            <Canvas Width="15" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
+                <Rectangle Canvas.Left="4"
+                           Canvas.Top="4"
+                           Width="7"
+                           Height="7"
+                           Fill="#FFCCCCCC" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaTimeoutIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0" Width="15" Height="15" Fill="#FF333333" />
+            <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M10.986 8h-4V4h1v3h3V8z M7.486 3.201c-2.376 0-4.299 1.923-4.299 4.299    c0 2.376 1.923 4.299 4.299 4.299c2.376 0 4.299-1.923 4.299-4.299C11.784 5.124 9.861 3.201 7.486 3.201 M7.486 2    c3.038 0 5.5 2.462 5.5 5.5s-2.462 5.5-5.5 5.5s-5.5-2.462-5.5-5.5S4.448 2 7.486 2z" FillRule="NonZero" />
@@ -246,7 +342,7 @@
     </ControlTemplate>
     <ControlTemplate x:Key="SagaIcon">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="16" Height="16">
+            <Canvas Width="16" Height="16">
                 <Path Fill="#FF222222">
                     <Path.Data>
                         <PathGeometry Figures="M6 5.362C4.217 4.655 3 3.411 3 0H1c0 5.082 2.461 6.665 5 7.482V5.362z" FillRule="NonZero" />
@@ -257,13 +353,15 @@
                         <PathGeometry Figures="M14.911 12.17C14.382 8.505 12.209 7.217 10 6.508v2.109c1.462 0.567 2.54 1.48 2.906 3.619l-1.182 0.039   L14.042 16l2.068-3.87L14.911 12.17z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
-                <Polygon Points="9,12.201 9,0 7,0 7,12.201 5.806,12.201 8,16 10.194,12.201 " FillRule="NonZero" Fill="#FF777777" />
+                <Polygon Fill="#FF777777"
+                         FillRule="NonZero"
+                         Points="9,12.201 9,0 7,0 7,12.201 5.806,12.201 8,16 10.194,12.201 " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="NoSaga">
         <Viewbox Stretch="Uniform">
-            <Canvas  Width="128" Height="128">
+            <Canvas Width="128" Height="128">
                 <Path Fill="#FFD3D3D3">
                     <Path.Data>
                         <PathGeometry Figures="M44 42.9C29.7 37.2 19.1 27.3 19.1 0h-16c0 40.7 20.6 53.3 40.9 59.9V42.9z" FillRule="NonZero" />
@@ -274,7 +372,9 @@
                         <PathGeometry Figures="M114.3 97C110.1 67.7 93 57.7 75 52.1V69c12 4.5 20.4 12 23.3 29.1l-9.4 0.2l18.5 29.7L124 97H114.3z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
-                <Polygon Points="68,98 68,0 51,0 51,98 41.6,98 59.1,128 76.7,98  " FillRule="NonZero" Fill="#FFE4E4E4" />
+                <Polygon Fill="#FFE4E4E4"
+                         FillRule="NonZero"
+                         Points="68,98 68,0 51,0 51,98 41.6,98 59.1,128 76.7,98  " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
