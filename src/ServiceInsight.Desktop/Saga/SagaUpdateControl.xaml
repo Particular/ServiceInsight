@@ -149,12 +149,16 @@
             </Style>
 
             <DataTemplate x:Key="MessageDataItem">
-                <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal">
+                <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal" MaxWidth="250" HorizontalAlignment="Left">
                     <TextBlock FontWeight="Bold"
                                Foreground="{StaticResource SagaForeground}"
                                Text="{Binding Key}" />
                     <TextBlock Foreground="{StaticResource SagaForeground}" Text=" = " />
-                    <TextBlock Foreground="{StaticResource SagaForeground}" Text="{Binding Value}" />
+                    <TextBlock Foreground="{StaticResource SagaForeground}" Text="{Binding Value}" TextTrimming="CharacterEllipsis">
+                        <TextBlock.ToolTip>
+                            <TextBlock Text="{Binding Value}" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
                 </StackPanel>
             </DataTemplate>
 
