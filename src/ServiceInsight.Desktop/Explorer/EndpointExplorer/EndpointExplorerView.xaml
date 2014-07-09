@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:model="clr-namespace:Particular.ServiceInsight.Desktop.Models"
              xmlns:tree="clr-namespace:Particular.ServiceInsight.Desktop.Explorer"
              xmlns:vm="clr-namespace:Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer"
              d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
@@ -33,26 +32,6 @@
                            Text="{Binding Name}" />
             </Grid>
         </HierarchicalDataTemplate>
-
-        <Style TargetType="{x:Type ToolTip}">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <StackPanel d:DataContext="{d:DesignInstance model:Endpoint}">
-                            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
-                                <TextBlock Text="Configured for Monitoring: " />
-                                <TextBlock Text="Yes" Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                <TextBlock Text="No" Visibility="{Binding EmitsHeartbeats, Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                            </StackPanel>
-                            <TextBlock>
-                                <Run Text="Installed On: " />
-                                <Run Text="{Binding HostDisplayName}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
         <Style x:Key="ExpandedStyle" TargetType="{x:Type TreeViewItem}">
             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
