@@ -59,7 +59,7 @@
                 <dxg:GridControl.Columns>
                     <dxg:GridColumn Width="16"
                                     AllowColumnFiltering="False"
-                                    AllowSorting="False"
+                                    AllowSorting="True"
                                     FieldName="IsFaulted"
                                     Header="Status"
                                     Tag="status"
