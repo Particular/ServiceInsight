@@ -37,9 +37,9 @@
                                                Foreground="{StaticResource SagaBlue}"
                                                Text="&#x2190; Back to Message View"
                                                cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
-                                    <Border BorderBrush="{StaticResource SagaBlue}"
-                                            BorderThickness="0 0 0 2"
-                                            Padding="0 5 0 5">
+                                    <Border Padding="0 5 0 5"
+                                            BorderBrush="{StaticResource SagaBlue}"
+                                            BorderThickness="0 0 0 2">
                                         <dxe:TextEdit EditMode="InplaceInactive"
                                                       FontSize="24"
                                                       FontWeight="Bold"
@@ -134,42 +134,42 @@
                     Orientation="Vertical"
                     Visibility="{Binding HasSaga,
                                          Converter={StaticResource BoolToVisibilityConverterInverted}}">
-            <StackPanel HorizontalAlignment="Center">
-                <ContentControl Template="{StaticResource NoSaga}" Width="128" Height="128" />
-                <TextBlock Margin="5,0,0,0"
+            <ContentControl Width="128"
+                            Height="128"
+                            Template="{StaticResource NoSaga}" />
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="24px"
+                       FontWeight="Bold"
+                       Foreground="#D3D3D3"
+                       Text="No Saga Data Available"
+                       Visibility="{Binding ShowSagaNotFoundWarning,
+                                            Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+            <StackPanel Visibility="{Binding ShowSagaNotFoundWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock HorizontalAlignment="Center"
                            FontSize="24px"
                            FontWeight="Bold"
-                           Foreground="#d3d3d3"
-                           Text="No Saga Data Available" />
-            </StackPanel>
-            <TextBlock Margin="0,5,0,0"
-                       FontSize="16px"
-                       Foreground="#d3d3d3"
-                       Visibility="{Binding ShowSagaNotFoundWarning,
-                                            Converter={StaticResource BoolToVisibilityConverter}}">
-                <Run Text="Saga data display requires that the SagaAudit Plugin be deployed with the Saga endpoints when the Saga code is executed." />
-            </TextBlock>
-            <StackPanel Margin="5"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Visibility="{Binding ShowSagaNotFoundWarning,
-                                             Converter={StaticResource BoolToVisibilityConverter}}">
-                <TextBlock VerticalAlignment="Center"
-                           FontSize="16px"
-                           Foreground="#d3d3d3"
-                           Text="Install from Nuget: " />
-                <Border Margin="2"
-                        BorderBrush="#DDDDDD"
-                        BorderThickness="1"
-                        CornerRadius="4">
-                    <TextBlock HorizontalAlignment="Center"
-                               FontSize="16px"
-                               Padding="2"
-                               Style="{StaticResource CodeStyle}"
-                               Text="install-package ServiceControl.Plugin.SagaAudit" />
+                           Foreground="#D3D3D3"
+                           Text="Saga audit plugin needed to visualize saga" />
+                <Border Margin="0,20,0,0" Background="#FFE4E4E4">
+                    <StackPanel Margin="40,20">
+                        <TextBlock Margin="5,5,5,2"
+                                   HorizontalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#FF565656"
+                                   Text="To install plugin, type in VS Package Manager Console:" />
+                        <TextBlock Margin="5,2,5,5"
+                                   Padding="2"
+                                   HorizontalAlignment="Center"
+                                   Background="{x:Null}"
+                                   FontFamily="Consolas"
+                                   FontSize="16"
+                                   Style="{StaticResource CodeStyle}"
+                                   Text="install-package ServiceControl.Plugin.SagaAudit &lt;NameProjectWithSaga&gt;" />
+                    </StackPanel>
                 </Border>
             </StackPanel>
+
         </StackPanel>
     </Grid>
 </UserControl>
