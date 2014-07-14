@@ -27,6 +27,16 @@
         {
             DXSplashScreen.Close();
             Activate();
+
+            OpenClosedPanels();
+        }
+
+        private void OpenClosedPanels()
+        {
+            foreach (var panel in DockManager.ClosedPanels.ToArray())
+            {
+                DockManager.DockController.Restore(panel);
+            }
         }
 
         public void ChangeTheme(string name)

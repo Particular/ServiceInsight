@@ -56,9 +56,9 @@
                                         Converter={StaticResource BoolToStrokeDashArrayConverter}}"
               StrokeEndLineCap="Square"
               StrokeThickness="4"
-              X1="{Binding FromEndpointIndex,
+              X1="{Binding MinEndpointIndex,
                            Converter={StaticResource MiddleEndpointConverter}}"
-              X2="{Binding LastToEndpointIndex,
+              X2="{Binding MaxEndpointIndex,
                            Converter={StaticResource MiddleEndpointConverter}}"
               Y1="0"
               Y2="0" />
@@ -67,7 +67,7 @@
         <Grid x:Name="StartMessageArrow"
               Width="{StaticResource ColumnWidth}"
               Height="72"
-              Margin="{Binding FromEndpointIndex,
+              Margin="{Binding MinEndpointIndex,
                                Converter={StaticResource StartMessageMarginConverter}}"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
@@ -263,6 +263,31 @@
                                    HorizontalAlignment="Center"
                                    Fill="{StaticResource Grey60Brush}" />
                     </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--  Vertical arrow for each to endpoint  -->
+        <ItemsControl x:Name="TimeoutArrows"
+                      ItemsSource="{Binding TimeoutEndpointIndicies}"
+                      Tag="{Binding}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="{StaticResource ColumnWidth}"
+                            Margin="{Binding Converter={StaticResource ToEndpointMarginConverter}}"
+                            HorizontalAlignment="Left"
+                            Background="#BDFF0000"
+                            BorderBrush="Black" BorderThickness="3">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="ExtraBlack"
+                                   Text="[PLACEHOLDER_TIMEOUT]" />
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

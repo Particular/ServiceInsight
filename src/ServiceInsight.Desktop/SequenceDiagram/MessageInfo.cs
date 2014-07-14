@@ -9,31 +9,19 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     public class MessageInfo : ReactiveObject
     {
         public string Name { get; set; }
-
         public string SagaName { get; set; }
-
         public bool IsStartMessage { get; set; }
-
         public string FromEndpoint { get; set; }
-
         public IEnumerable<string> ToEndpoints { get; set; }
-
         public IEnumerable<string> TimeoutEndpoints { get; set; }
-
         public IEnumerable<EndpointInfo> Endpoints { get; set; }
-
         public bool IsEvent { get; set; }
-
         public bool Selected { get; set; }
 
-        public int FromEndpointIndex { get; private set; }
-
-        public int LastToEndpointIndex { get; private set; }
-
+        public int MinEndpointIndex { get; private set; }
+        public int MaxEndpointIndex { get; private set; }
         public IEnumerable<int> ToEndpointIndicies { get; private set; }
-
         public IEnumerable<int> TimeoutEndpointIndicies { get; private set; }
-
         public int MessagePopupIndex { get; private set; }
 
         private int FindEndpointIndex(string endpointName)
@@ -50,32 +38,32 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         private void OnFromEndpointChanged()
         {
-            FromEndpointIndex = FindEndpointIndex(FromEndpoint);
+            RefreshLastEndpointIndex();
         }
 
         private void OnToEndpointsChanged()
         {
+            ToEndpointIndicies = (ToEndpoints ?? Enumerable.Empty<string>()).Select(FindEndpointIndex).ToList();
             RefreshLastEndpointIndex();
-            ToEndpointIndicies = ToEndpoints.Select(FindEndpointIndex).ToList();
         }
 
         private void OnTimeoutEndpointsChanged()
         {
+            TimeoutEndpointIndicies = (TimeoutEndpoints ?? Enumerable.Empty<string>()).Select(FindEndpointIndex).ToList();
             RefreshLastEndpointIndex();
-            TimeoutEndpointIndicies = TimeoutEndpoints.Select(FindEndpointIndex).ToList();
         }
 
         private void RefreshLastEndpointIndex()
         {
-            LastToEndpointIndex = ToEndpoints
-                .Concat(TimeoutEndpoints ?? Enumerable.Empty<string>())
-                .Select(FindEndpointIndex)
-                .Aggregate((accum, next) => Math.Abs(next - FromEndpointIndex) > Math.Abs(accum - FromEndpointIndex) ? next : accum);
+            var endpointIndicies = new[] { FindEndpointIndex(FromEndpoint) }
+                .Concat(ToEndpointIndicies ?? Enumerable.Empty<int>())
+                .Concat(TimeoutEndpointIndicies ?? Enumerable.Empty<int>())
+                .ToList();
 
-            if (LastToEndpointIndex > FromEndpointIndex)
-                MessagePopupIndex = FromEndpointIndex;
-            else
-                MessagePopupIndex = LastToEndpointIndex;
+            MinEndpointIndex = endpointIndicies.Min();
+            MaxEndpointIndex = endpointIndicies.Max();
+
+            MessagePopupIndex = MinEndpointIndex + (MaxEndpointIndex - MinEndpointIndex) / 2;
         }
     }
 }
