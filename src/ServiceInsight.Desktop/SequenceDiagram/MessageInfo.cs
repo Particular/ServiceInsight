@@ -1,27 +1,40 @@
-using System;
-using System.Collections.Generic;
-
 namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using Models;
     using ReactiveUI;
 
     public class MessageInfo : ReactiveObject
     {
-        public string Name { get; set; }
+        public MessageInfo(StoredMessage message, IEnumerable<EndpointInfo> endpoints)
+        {
+            Endpoints = endpoints;
+
+            Name = message.FriendlyMessageType;
+            if (message.Sagas != null && message.Sagas.Any())
+                SagaName = message.Sagas.First().SagaType;
+            FromEndpoint = message.ReceivingEndpoint.Name;
+            ToEndpoints = new[] { message.SendingEndpoint.Name };
+
+            RefreshLastEndpointIndex();
+        }
+
+        public string Name { get; private set; }
         public string SagaName { get; set; }
         public bool IsStartMessage { get; set; }
-        public string FromEndpoint { get; set; }
-        public IEnumerable<string> ToEndpoints { get; set; }
-        public IEnumerable<string> TimeoutEndpoints { get; set; }
+        public string FromEndpoint { get; private set; }
+        public IEnumerable<string> ToEndpoints { get; private set; }
+        //public IEnumerable<string> TimeoutEndpoints { get; set; }
         public IEnumerable<EndpointInfo> Endpoints { get; set; }
-        public bool IsEvent { get; set; }
+        //public bool IsEvent { get; set; }
         public bool Selected { get; set; }
 
         public int MinEndpointIndex { get; private set; }
         public int MaxEndpointIndex { get; private set; }
         public IEnumerable<int> ToEndpointIndicies { get; private set; }
-        public IEnumerable<int> TimeoutEndpointIndicies { get; private set; }
+        //public IEnumerable<int> TimeoutEndpointIndicies { get; private set; }
         public int MessagePopupIndex { get; private set; }
 
         private int FindEndpointIndex(string endpointName)
@@ -29,7 +42,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             var i = 0;
             foreach (var endpoint in Endpoints)
             {
-                if (string.Equals(endpointName, endpoint.Name, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(endpointName, endpoint.FullName, StringComparison.InvariantCultureIgnoreCase))
                     return i;
                 i++;
             }
@@ -47,17 +60,17 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             RefreshLastEndpointIndex();
         }
 
-        private void OnTimeoutEndpointsChanged()
-        {
-            TimeoutEndpointIndicies = (TimeoutEndpoints ?? Enumerable.Empty<string>()).Select(FindEndpointIndex).ToList();
-            RefreshLastEndpointIndex();
-        }
+        //private void OnTimeoutEndpointsChanged()
+        //{
+        //    TimeoutEndpointIndicies = (TimeoutEndpoints ?? Enumerable.Empty<string>()).Select(FindEndpointIndex).ToList();
+        //    RefreshLastEndpointIndex();
+        //}
 
         private void RefreshLastEndpointIndex()
         {
             var endpointIndicies = new[] { FindEndpointIndex(FromEndpoint) }
                 .Concat(ToEndpointIndicies ?? Enumerable.Empty<int>())
-                .Concat(TimeoutEndpointIndicies ?? Enumerable.Empty<int>())
+                //.Concat(TimeoutEndpointIndicies ?? Enumerable.Empty<int>())
                 .ToList();
 
             MinEndpointIndex = endpointIndicies.Min();
