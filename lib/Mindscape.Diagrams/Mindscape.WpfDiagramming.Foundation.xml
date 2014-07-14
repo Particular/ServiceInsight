@@ -115,6 +115,11 @@
             This will be null whenever it is not needed for the connection validation.
             </summary>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.Foundation.ConnectionDropTarget.Position">
+            <summary>
+            Gets the actual position where the connection was dropped in diagram model co-ordinates.
+            </summary>
+        </member>
         <member name="T:Mindscape.WpfDiagramming.Foundation.ConnectionEnd">
             <summary>
             Identifies the two ends of a connection.
@@ -1263,6 +1268,11 @@
             <summary>
             Gets the <see cref="P:Mindscape.WpfDiagramming.DiagramBitmapRenderer.PixelFormat"/> of the rendered bitmap.
             The default is <see cref="P:System.Windows.Media.PixelFormats.Pbgra32"/>.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.DiagramBitmapRenderer.Zoom">
+            <summary>
+            Sets the zoom level of the exported diagram image. When set to 0, the zoom level of the original DiagramSurface will be used. The default is 0.
             </summary>
         </member>
         <member name="P:Mindscape.WpfDiagramming.DiagramBitmapRenderer.BitmapEncoder">
@@ -3490,6 +3500,11 @@
             Gets the connections attached to this connection point.
             </summary>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.Foundation.DiagramConnectionPointBase`1.HasConnections">
+            <summary>
+            Gets whether or not this connection point currently has any connections mounted on it.
+            </summary>
+        </member>
         <member name="M:Mindscape.WpfDiagramming.DiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.Foundation.IDiagramConnectable,Mindscape.WpfDiagramming.Edge)">
             <summary>
             Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.DiagramConnectionPoint"/> class.
@@ -5265,6 +5280,24 @@
             Gets or sets the layout direction of this <see cref="T:Mindscape.WpfDiagramming.Foundation.TreeLayoutAlgorithm"/>.
             </summary>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.Foundation.TreeLayoutAlgorithm.LayoutOrientation">
+            <summary>
+            Gets or sets the orientation of arranging individual trees.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.Foundation.TreeLayoutAlgorithm.StationaryNode">
+            <summary>
+            Gets or sets an <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramNode"/> that will not be affected by this algorithm. All other nodes will be positioned based on this node.
+            </summary>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.Foundation.TreeLayoutAlgorithm.GroupSpacing">
+            <summary>
+            Gets or sets the spacing put between individual groups of connected nodes.
+            If this value is negative, instead of spacing out the groups, adjacent groups will be placed as close together as possible.
+            i.e. Nodes from different groups can occupy the same columns/rows if their structures allow them to be nested in that way.
+            The default is -1.
+            </summary>
+        </member>
         <member name="T:Mindscape.WpfDiagramming.Foundation.LayoutDirection">
             <summary>
             Specifies the layout direction of a <see cref="T:Mindscape.WpfDiagramming.Foundation.TreeLayoutAlgorithm"/>.
@@ -5288,6 +5321,26 @@
         <member name="F:Mindscape.WpfDiagramming.Foundation.LayoutDirection.BottomToTop">
             <summary>
             Bottom to top layout.
+            </summary>
+        </member>
+        <member name="T:Mindscape.WpfDiagramming.Foundation.LayoutOrientation">
+            <summary>
+            Specifies the orientation of groups of nodes in a layout algorithm.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.Foundation.LayoutOrientation.Auto">
+            <summary>
+            The groups of nodes are automatically arranged.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.Foundation.LayoutOrientation.Horizontal">
+            <summary>
+            The groups of nodes are arranged horizontally.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.Foundation.LayoutOrientation.Vertical">
+            <summary>
+            The groups of nodes are arranged vertically.
             </summary>
         </member>
         <member name="T:Infralution.Licensing.LicenseResources">
@@ -6532,6 +6585,14 @@
             <param name="segments">The connection segments.</param>
             <returns>A <see cref="T:System.Windows.Media.PathFigure"/> representing the connection path.</returns>
         </member>
+        <member name="M:Mindscape.WpfDiagramming.Foundation.CorneredPathBuilder.CanDrawBridge(Mindscape.WpfDiagramming.Foundation.IDiagramConnection,Mindscape.WpfDiagramming.Foundation.IDiagramConnection)">
+            <summary>
+            Can be overriden to provide custom bridge logic.
+            </summary>
+            <param name="connection1">One of the connections involved in the intersection.</param>
+            <param name="connection2">One of the connections involved in the intersection.</param>
+            <returns>Whether or not a connection bridge will be drawn.</returns>
+        </member>
         <member name="P:Mindscape.WpfDiagramming.Foundation.CorneredPathBuilder.EndOffset">
             <summary>
             Gets or sets how much to cut off the end of the segment.  This is used when an arrow is displayed on the
@@ -7434,6 +7495,12 @@
             </summary>
         </member>
         <member name="M:Mindscape.WpfDiagramming.Foundation.DiagramElement.OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Called when the mouse is pressed over this element.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.Foundation.DiagramElement.OnMouseDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             Called when the mouse is pressed over this element.
             </summary>
@@ -8521,6 +8588,12 @@
             Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.DiagramSurface"/> class.
             </summary>
         </member>
+        <member name="M:Mindscape.WpfDiagramming.DiagramSurface.OnLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs)">
+            <summary>
+            Called when the <see cref="T:Mindscape.WpfDiagramming.DiagramSurface"/> loses keyboard focus.
+            </summary>
+            <param name="e">The event args.</param>
+        </member>
         <member name="M:Mindscape.WpfDiagramming.DiagramSurface.InstallLicense(System.String)">
             <summary>
             Performs manual licensing for specialized deployment scenarios.
@@ -8621,6 +8694,18 @@
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.SelectedItem"/> property.
             </summary>
         </member>
+        <member name="M:Mindscape.WpfDiagramming.DiagramSurface.SelectItem(System.Object)">
+            <summary>
+            Selects the given item.
+            </summary>
+            <param name="item">The model item to select</param>
+        </member>
+        <member name="M:Mindscape.WpfDiagramming.DiagramSurface.DeselectItem(System.Object)">
+            <summary>
+            Deselects the given item.
+            </summary>
+            <param name="item">The model item to deselect.</param>
+        </member>
         <member name="F:Mindscape.WpfDiagramming.DiagramSurface.SelectedItemsProperty">
             <summary>
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.SelectedItems"/> property.
@@ -8629,6 +8714,16 @@
         <member name="F:Mindscape.WpfDiagramming.DiagramSurface.SelectionModeProperty">
             <summary>
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.SelectionMode"/> property.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.DiagramSurface.CanCalculateConnectionIntersectionsProperty">
+            <summary>
+            Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.CanCalculateConnectionIntersections"/> property.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.DiagramSurface.IsVirtualizingProperty">
+            <summary>
+            Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.IsVirtualizing"/> property.
             </summary>
         </member>
         <member name="F:Mindscape.WpfDiagramming.DiagramSurface.DiagramProperty">
@@ -8671,6 +8766,11 @@
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.CanModifyConnectivity"/> property.
             </summary>
         </member>
+        <member name="F:Mindscape.WpfDiagramming.DiagramSurface.CanRelocateConnectionsProperty">
+            <summary>
+            Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.CanRelocateConnections"/> property.
+            </summary>
+        </member>
         <member name="F:Mindscape.WpfDiagramming.DiagramSurface.CanModifyNodeContentProperty">
             <summary>
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.CanModifyNodeContent"/> property.
@@ -8694,6 +8794,11 @@
         <member name="F:Mindscape.WpfDiagramming.DiagramSurface.AllowInfiniteScrollingProperty">
             <summary>
             Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.AllowInfiniteScrolling"/> property.
+            </summary>
+        </member>
+        <member name="F:Mindscape.WpfDiagramming.DiagramSurface.ScrollChangeProperty">
+            <summary>
+            Identifies the <see cref="P:Mindscape.WpfDiagramming.DiagramSurface.ScrollChange"/> property.
             </summary>
         </member>
         <member name="M:Mindscape.WpfDiagramming.DiagramSurface.SizeToFit">
@@ -8886,7 +8991,7 @@
             Returns the <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/> that the mouse is currently over.
             Returns null if the mouse is not currently over any <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/>.
             </summary>
-            <returns></returns>
+            <returns>The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/> at the mouse position, or null.</returns>
         </member>
         <member name="E:Mindscape.WpfDiagramming.DiagramSurface.MarqueeDragCompleted">
             <summary>
@@ -9063,6 +9168,34 @@
             </table>
             </remarks>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.DiagramSurface.CanCalculateConnectionIntersections">
+            <summary>
+            Gets or sets whether or not the DiagramSurface keeps track connection intersections.
+            This is for drawing connection bridges and should be set to false for exeptionally large diagrams.
+            The default is true.
+            This is a dependency property.
+            </summary>
+            <remarks>
+            <strong>Dependency Property Information</strong>
+            <table>
+              <tr><td>Identifier field</td><td><see cref="F:Mindscape.WpfDiagramming.DiagramSurface.CanCalculateConnectionIntersectionsProperty"/></td></tr>
+              <tr><td>Metadata properties set to true</td><td>None</td></tr>
+            </table>
+            </remarks>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.DiagramSurface.IsVirtualizing">
+            <summary>
+            Gets or sets whether or not the <see cref="T:Mindscape.WpfDiagramming.DiagramSurface"/> virtualizes the elements. The default is true.
+            This is a dependency property.
+            </summary>
+            <remarks>
+            <strong>Dependency Property Information</strong>
+            <table>
+              <tr><td>Identifier field</td><td><see cref="F:Mindscape.WpfDiagramming.DiagramSurface.IsVirtualizingProperty"/></td></tr>
+              <tr><td>Metadata properties set to true</td><td>None</td></tr>
+            </table>
+            </remarks>
+        </member>
         <member name="P:Mindscape.WpfDiagramming.DiagramSurface.Diagram">
             <summary>
             Gets or sets the diagram to be displayed.
@@ -9177,6 +9310,19 @@
             </table>
             </remarks>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.DiagramSurface.CanRelocateConnections">
+            <summary>
+            Gets or sets whether or not any connections can be relocated. The default is true.
+            This is a dependency property.
+            </summary>
+            <remarks>
+            <strong>Dependency Property Information</strong>
+            <table>
+              <tr><td>Identifier field</td><td><see cref="F:Mindscape.WpfDiagramming.DiagramSurface.CanRelocateConnectionsProperty"/></td></tr>
+              <tr><td>Metadata properties set to true</td><td>None</td></tr>
+            </table>
+            </remarks>
+        </member>
         <member name="P:Mindscape.WpfDiagramming.DiagramSurface.CanModifyNodeContent">
             <summary>
             Gets or sets if the content of a node within this <see cref="T:Mindscape.WpfDiagramming.DiagramSurface"/> can be changed or not.
@@ -9240,6 +9386,19 @@
             <strong>Dependency Property Information</strong>
             <table>
               <tr><td>Identifier field</td><td><see cref="F:Mindscape.WpfDiagramming.DiagramSurface.AllowInfiniteScrollingProperty"/></td></tr>
+              <tr><td>Metadata properties set to true</td><td>None</td></tr>
+            </table>
+            </remarks>
+        </member>
+        <member name="P:Mindscape.WpfDiagramming.DiagramSurface.ScrollChange">
+            <summary>
+            Gets or sets the magnitude of mouse wheel scrolling.
+            This is a dependency property.
+            </summary>
+            <remarks>
+            <strong>Dependency Property Information</strong>
+            <table>
+              <tr><td>Identifier field</td><td><see cref="F:Mindscape.WpfDiagramming.DiagramSurface.ScrollChangeProperty"/></td></tr>
               <tr><td>Metadata properties set to true</td><td>None</td></tr>
             </table>
             </remarks>
@@ -10581,8 +10740,7 @@
         </member>
         <member name="T:Mindscape.WpfDiagramming.Foundation.SizedEventArgs">
             <summary>
-            Provides information about the <see cref="E:Mindscape.WpfDiagramming.Foundation.SizeThumb.Sized"/> event of a
-            <see cref="T:Mindscape.WpfDiagramming.Foundation.SizeThumb"/>.
+            Provides information about the Sized event of a <see cref="P:Mindscape.WpfDiagramming.Foundation.SizedEventArgs.SizeThumb"/>.
             </summary>
         </member>
         <member name="M:Mindscape.WpfDiagramming.Foundation.SizedEventArgs.#ctor(System.Double,System.Double)">

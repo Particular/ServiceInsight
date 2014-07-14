@@ -454,6 +454,13 @@
             </summary>
             <param name="node">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that this connection point is to be situated on.</param>
         </member>
+        <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint.#ctor(Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode,Mindscape.WpfDiagramming.Edge)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint"/> class.
+            </summary>
+            <param name="node">The <see cref="T:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramNode"/> that this connection point is to be situated on.</param>
+            <param name="edge">The <see cref="T:Mindscape.WpfDiagramming.Edge"/> of the gievn node that this connection point will be situated on.</param>
+        </member>
         <member name="M:Mindscape.WpfDiagramming.StarDiagrams.StarDiagramConnectionPoint.AddConnection(Mindscape.WpfDiagramming.Foundation.IDiagramConnection)">
             <summary>
             Attaches the given <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnection"/> to this <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionPoint"/>.

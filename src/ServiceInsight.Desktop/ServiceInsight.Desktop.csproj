@@ -119,10 +119,12 @@
     <Reference Include="Mindscape.Raygun4Net">
       <HintPath>..\packages\Mindscape.Raygun4Net.2.0.6\lib\net35\Mindscape.Raygun4Net.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams, Version=3.0.1998.23291, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll</HintPath>
     </Reference>
-    <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1315.22118, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+    <Reference Include="Mindscape.WpfDiagramming.Foundation, Version=3.0.1998.23291, Culture=neutral, PublicKeyToken=c2e9c4ef235fd77f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

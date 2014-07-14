@@ -76,6 +76,11 @@
             For <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> objects, this will be false.
             </summary>
         </member>
+        <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection.Pathfinder">
+            <summary>
+            Gets the <see cref="T:Mindscape.WpfDiagramming.Foundation.IPathfinder"/> used to route the path of the connection.
+            </summary>
+        </member>
         <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionBuilder">
             <summary>
             A type of <see cref="T:Mindscape.WpfDiagramming.Foundation.IDiagramConnectionBuilder"/> that can build <see cref="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection"/> objects
