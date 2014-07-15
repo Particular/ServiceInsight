@@ -136,7 +136,7 @@
 
         public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
-            var serviceControl = SelectedExplorerItem.As<ServiceControlExplorerItem>();
+            var serviceControl = SelectedExplorerItem as ServiceControlExplorerItem;
             if (serviceControl != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
@@ -145,7 +145,7 @@
                                      ascending: ascending);
             }
 
-            var endpointNode = SelectedExplorerItem.As<AuditEndpointExplorerItem>();
+            var endpointNode = SelectedExplorerItem as AuditEndpointExplorerItem;
             if (endpointNode != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,

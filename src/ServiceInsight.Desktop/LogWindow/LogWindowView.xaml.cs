@@ -1,7 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.LogWindow
 {
     using System;
+    using System.Reactive.Linq;
     using System.Windows;
+    using ReactiveUI;
 
     public partial class LogWindowView
     {
@@ -23,7 +25,7 @@
             if (logSubscription != null)
                 logSubscription.Dispose();
 
-            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = vm.Logs.ItemsAdded.SubscribeOn(RxApp.MainThreadScheduler).Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }

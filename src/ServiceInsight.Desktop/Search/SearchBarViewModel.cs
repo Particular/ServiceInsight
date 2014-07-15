@@ -7,7 +7,6 @@
     using Caliburn.Micro;
     using Core.Settings;
     using Events;
-    using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using MessageList;
@@ -226,13 +225,13 @@
 
         public virtual void Handle(SelectedExplorerItemChanged @event)
         {
-            var endpointNode = @event.SelectedExplorerItem.As<EndpointExplorerItem>();
+            var endpointNode = @event.SelectedExplorerItem as EndpointExplorerItem;
             if (endpointNode != null)
             {
                 SelectedEndpoint = endpointNode.Endpoint;
             }
 
-            var serviceNode = @event.SelectedExplorerItem.As<ServiceControlExplorerItem>();
+            var serviceNode = @event.SelectedExplorerItem as ServiceControlExplorerItem;
             if (serviceNode != null)
             {
                 SelectedEndpoint = null;
