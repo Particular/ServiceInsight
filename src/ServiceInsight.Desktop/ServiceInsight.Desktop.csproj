@@ -227,7 +227,6 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
-    <Compile Include="LogWindow\LogMessageFormatter.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\Palette.cs" />
     <Compile Include="SequenceDiagram\EndpointInfo.cs" />
