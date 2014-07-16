@@ -10,7 +10,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     {
         private readonly StoredMessage message;
 
-        public MessageInfo(StoredMessage message, IEnumerable<EndpointInfo> endpoints)
+        public MessageInfo(StoredMessage message, ReactiveList<EndpointInfo> endpoints)
         {
             this.message = message;
             Endpoints = endpoints;
@@ -18,6 +18,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
                 SagaName = message.Sagas.First().SagaType;
+
+            endpoints.Changed.Subscribe(_ => UpdateIndicies());
 
             UpdateIndicies();
         }

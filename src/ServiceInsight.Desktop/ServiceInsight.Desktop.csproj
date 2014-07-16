@@ -115,6 +115,9 @@
     <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.1\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mindscape.Raygun4Net">
       <HintPath>..\packages\Mindscape.Raygun4Net.2.0.6\lib\net35\Mindscape.Raygun4Net.dll</HintPath>

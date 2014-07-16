@@ -6,6 +6,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using System.Linq;
     using Caliburn.Micro;
     using Events;
+    using ReactiveUI;
     using ServiceControl;
 
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
@@ -39,7 +40,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         //    };
         //}
 
-        public IEnumerable<EndpointInfo> Endpoints { get; set; }
+        public ReactiveList<EndpointInfo> Endpoints { get; set; }
 
         public IEnumerable<MessageInfo> Messages { get; set; }
 
@@ -62,12 +63,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         private void CreateEndpoints(IEnumerable<StoredMessage> messages)
         {
-            Endpoints = messages
+            Endpoints = new ReactiveList<EndpointInfo>(messages
                 .OrderBy(m => m.TimeSent)
                 .SelectMany(m => new[] { m.SendingEndpoint, m.ReceivingEndpoint })
                 .Select(e => new EndpointInfo(e))
-                .Distinct()
-                .ToList();
+                .Distinct());
         }
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
