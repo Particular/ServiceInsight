@@ -5,10 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
-             d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
-             mc:Ignorable="d">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance {x:Type sequenceDiagram:MessageInfo}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -71,7 +70,7 @@
                                Converter={StaticResource StartMessageMarginConverter}}"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Visibility="{Binding IsStartMessage,
+              Visibility="{Binding IsFirst,
                                    Converter={StaticResource BoolToVisibilityConverter}}">
             <Rectangle Width="25"
                        Height="25"
@@ -224,21 +223,11 @@
         </Border>
 
         <!--  Vertical arrow for each to endpoint  -->
-        <ItemsControl x:Name="SendMessageArrows"
-                      ItemsSource="{Binding ToEndpointIndicies}"
-                      Tag="{Binding}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Width="{StaticResource ColumnWidth}"
-                                Margin="{Binding Converter={StaticResource ToEndpointMarginConverter}}"
+        <StackPanel Width="{StaticResource ColumnWidth}"
+                                Margin="{Binding ReceivingEndpointIndex, Converter={StaticResource ToEndpointMarginConverter}}"
                                 HorizontalAlignment="Left">
-                        <!--  Line  -->
-                        <Line HorizontalAlignment="Center"
+            <!--  Line  -->
+            <Line HorizontalAlignment="Center"
                               Fill="Black"
                               Stroke="Black"
                               StrokeDashArray="{Binding Tag.IsEvent,
@@ -250,46 +239,19 @@
                               X2="0"
                               Y1="0"
                               Y2="25" />
-                        <!--  Arrow  -->
-                        <Path Width="14"
+            <!--  Arrow  -->
+            <Path Width="14"
                               Height="11"
                               HorizontalAlignment="Center"
                               Data="{StaticResource DownArrow}"
                               Fill="Black"
                               Stretch="Fill" />
-                        <!--  Grey box  -->
-                        <Rectangle Width="14"
+            <!--  Grey box  -->
+            <Rectangle Width="14"
                                    Height="36"
                                    HorizontalAlignment="Center"
                                    Fill="{StaticResource Grey60Brush}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </StackPanel>
 
-        <!--  Vertical arrow for each to endpoint  -->
-        <ItemsControl x:Name="TimeoutArrows"
-                      ItemsSource="{Binding TimeoutEndpointIndicies}"
-                      Tag="{Binding}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Width="{StaticResource ColumnWidth}"
-                            Margin="{Binding Converter={StaticResource ToEndpointMarginConverter}}"
-                            HorizontalAlignment="Left"
-                            Background="#BDFF0000"
-                            BorderBrush="Black" BorderThickness="3">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontWeight="ExtraBlack"
-                                   Text="[PLACEHOLDER_TIMEOUT]" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
     </Grid>
 </UserControl>

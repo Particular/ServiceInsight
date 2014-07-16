@@ -62,12 +62,19 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         private void CreateEndpoints(IEnumerable<StoredMessage> messages)
         {
-            Endpoints = messages.SelectMany(m => new[] { m.ReceivingEndpoint, m.SendingEndpoint }).Select(e => new EndpointInfo(e)).Distinct().ToList();
+            Endpoints = messages
+                .OrderBy(m => m.TimeSent)
+                .SelectMany(m => new[] { m.SendingEndpoint, m.ReceivingEndpoint })
+                .Select(e => new EndpointInfo(e))
+                .Distinct()
+                .ToList();
         }
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
             Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(m, Endpoints)).ToList();
+
+            Messages.First().IsFirst = true;
         }
     }
 }

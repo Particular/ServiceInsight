@@ -2,9 +2,11 @@ using System;
 
 namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
+    using System.Diagnostics;
     using System.Linq;
     using Models;
 
+    [DebuggerDisplay("{Name}")]
     public class EndpointInfo
     {
         public EndpointInfo(Endpoint endpoint)
@@ -33,7 +35,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             if (other != null)
                 return Name.Equals(other.Name);
 
-            return base.Equals(obj);
+            return false;
         }
     }
 }
