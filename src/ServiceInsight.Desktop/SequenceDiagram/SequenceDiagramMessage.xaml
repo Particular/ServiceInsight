@@ -5,9 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
+             d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance {x:Type sequenceDiagram:MessageInfo}}">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -51,7 +52,7 @@
         <Line x:Name="HorizontalLine"
               Fill="Black"
               Stroke="Black"
-              StrokeDashArray="{Binding IsEvent,
+              StrokeDashArray="{Binding IsPublished,
                                         Converter={StaticResource BoolToStrokeDashArrayConverter}}"
               StrokeEndLineCap="Square"
               StrokeThickness="4"
@@ -224,33 +225,34 @@
 
         <!--  Vertical arrow for each to endpoint  -->
         <StackPanel Width="{StaticResource ColumnWidth}"
-                                Margin="{Binding ReceivingEndpointIndex, Converter={StaticResource ToEndpointMarginConverter}}"
-                                HorizontalAlignment="Left">
+                    Margin="{Binding ReceivingEndpointIndex,
+                                     Converter={StaticResource ToEndpointMarginConverter}}"
+                    HorizontalAlignment="Left">
             <!--  Line  -->
-            <Line HorizontalAlignment="Center"
-                              Fill="Black"
-                              Stroke="Black"
-                              StrokeDashArray="{Binding Tag.IsEvent,
-                                                        Converter={StaticResource BoolToStrokeDashArrayConverter},
-                                                        RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
-                              StrokeEndLineCap="Square"
-                              StrokeThickness="4"
-                              X1="0"
-                              X2="0"
-                              Y1="0"
-                              Y2="25" />
+            <Line Margin="2,0,0,0"
+                  HorizontalAlignment="Center"
+                  Fill="Black"
+                  Stroke="Black"
+                  StrokeDashArray="{Binding IsPublished,
+                                            Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                  StrokeEndLineCap="Square"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="25" />
             <!--  Arrow  -->
             <Path Width="14"
-                              Height="11"
-                              HorizontalAlignment="Center"
-                              Data="{StaticResource DownArrow}"
-                              Fill="Black"
-                              Stretch="Fill" />
+                  Height="11"
+                  HorizontalAlignment="Center"
+                  Data="{StaticResource DownArrow}"
+                  Fill="Black"
+                  Stretch="Fill" />
             <!--  Grey box  -->
             <Rectangle Width="14"
-                                   Height="36"
-                                   HorizontalAlignment="Center"
-                                   Fill="{StaticResource Grey60Brush}" />
+                       Height="36"
+                       HorizontalAlignment="Center"
+                       Fill="{StaticResource Grey60Brush}" />
         </StackPanel>
 
     </Grid>

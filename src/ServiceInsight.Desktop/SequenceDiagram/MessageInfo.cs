@@ -51,6 +51,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             }
         }
 
+        public bool IsPublished
+        {
+            get { return message.MessageIntent == MessageIntent.Publish; }
+        }
+
         public int SendingEndpointIndex { get; private set; }
         public int ReceivingEndpointIndex { get; private set; }
 
