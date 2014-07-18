@@ -57,6 +57,29 @@
                         </Style.Triggers>
                     </Style>
 
+                    <Style x:Key="SagaIconStyle" TargetType="controls:IconControl">
+                        <Setter Property="Data" Value="{StaticResource RightArrow}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True">
+                                <Setter Property="Data" Value="{StaticResource SagaTriggerGeometry}" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                    <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource RightArrow}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                    <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource SagaCompletedGeometry}" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -181,6 +204,7 @@
                                 Orientation="Horizontal"
                                 Visibility="{Binding SagaName,
                                                      Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+
                         <Grid Margin="0,0,1,0">
                             <Rectangle Width="18"
                                        Height="18"
@@ -188,27 +212,13 @@
                                        VerticalAlignment="Center"
                                        Fill="{Binding (sequenceDiagram:Palette.Brush1),
                                                       ElementName=PopupBorder}" />
-                            <Path Width="9"
-                                  Height="9"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="{StaticResource RightArrow}"
-                                  Fill="{Binding (sequenceDiagram:Palette.Brush2),
-                                                 ElementName=PopupBorder}"
-                                  Stretch="Fill"
-                                  Visibility="{Binding IsStartMessage,
-                                                       Converter={StaticResource BoolToVisibilityConverter}}" />
-                            <Path Width="9"
-                                  Height="9"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="{StaticResource SagaGeometry}"
-                                  Fill="{Binding (sequenceDiagram:Palette.Brush2),
-                                                 ElementName=PopupBorder}"
-                                  Stretch="Fill"
-                                  Visibility="{Binding IsStartMessage,
-                                                       Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                            <controls:IconControl x:Name="SagaTypeIcon"
+                                                  Width="9"
+                                                  Height="9"
+                                                  Foreground="{Binding (sequenceDiagram:Palette.Brush2),
+                                                                 ElementName=PopupBorder}" Style="{StaticResource SagaIconStyle}" />
                         </Grid>
+
                         <Label Height="18"
                                Padding="5 0"
                                HorizontalAlignment="Center"
@@ -218,6 +228,7 @@
                                Content="{Binding SagaName}"
                                Foreground="{Binding (sequenceDiagram:Palette.Brush2),
                                                     ElementName=PopupBorder}" />
+
                     </StackPanel>
                 </Grid>
 

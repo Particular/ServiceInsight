@@ -42,15 +42,6 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             get { return message.ReceivingEndpoint.Name; }
         }
 
-        //public bool IsSagaInitiated
-        //{
-        //    get
-        //    {
-        //        return string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.SagaId))
-        //            && !string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
-        //    }
-        //}
-
         public bool IsPublished
         {
             get { return message.MessageIntent == MessageIntent.Publish; }
@@ -66,6 +57,24 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public bool IsCommand { get { return !IsTimeout && !IsPublished; } }
         public bool IsEvent { get { return !IsTimeout && IsPublished; } }
+
+        public bool IsSagaInitiated
+        {
+            get
+            {
+                return string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.SagaId))
+                    && !string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
+            }
+        }
+
+        public bool IsSagaCompleted
+        {
+            get
+            {
+                var status = message.InvokedSagas == null ? null : message.InvokedSagas.FirstOrDefault();
+                return status != null && status.ChangeStatus == "Completed";
+            }
+        }
 
         public int SendingEndpointIndex { get; private set; }
         public int ReceivingEndpointIndex { get; private set; }
