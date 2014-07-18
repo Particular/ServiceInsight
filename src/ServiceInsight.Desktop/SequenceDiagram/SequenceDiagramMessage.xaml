@@ -1,14 +1,15 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.SequenceDiagram.SequenceDiagramMessage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
-             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
+             x:Name="Root"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -84,6 +85,20 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="sequenceDiagram:Palette.Brush1" Value="Black" />
+            <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource Grey60Brush}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="sequenceDiagram:Palette.Brush1" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource HiliteLightBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
     <Grid>
 
         <!--  Padding for endpoints  -->
@@ -99,8 +114,8 @@
 
         <!--  Horizontal line  -->
         <Line x:Name="HorizontalLine"
-              Fill="Black"
-              Stroke="Black"
+              Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
+              Stroke="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
               StrokeDashArray="{Binding IsPublished,
                                         Converter={StaticResource BoolToStrokeDashArrayConverter}}"
               StrokeEndLineCap="Square"
@@ -126,7 +141,7 @@
                        Height="25"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Fill="Black" />
+                       Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}" />
             <Path Width="10"
                   Height="10"
                   HorizontalAlignment="Center"
@@ -172,11 +187,12 @@
                                 Orientation="Horizontal">
 
                         <controls:IconControl x:Name="MessageTypeIcon"
-                              Width="16"
-                              Height="16"
-                              Margin="2 0"
-                              Foreground="{Binding (sequenceDiagram:Palette.Brush1),
-                                             ElementName=PopupBorder}" Style="{StaticResource MessageIconStyle}" />
+                                              Width="16"
+                                              Height="16"
+                                              Margin="2 0"
+                                              Foreground="{Binding (sequenceDiagram:Palette.Brush1),
+                                                                   ElementName=PopupBorder}"
+                                              Style="{StaticResource MessageIconStyle}" />
 
                         <Label Padding="5 0"
                                HorizontalAlignment="Center"
@@ -216,7 +232,8 @@
                                                   Width="9"
                                                   Height="9"
                                                   Foreground="{Binding (sequenceDiagram:Palette.Brush2),
-                                                                 ElementName=PopupBorder}" Style="{StaticResource SagaIconStyle}" />
+                                                                       ElementName=PopupBorder}"
+                                                  Style="{StaticResource SagaIconStyle}" />
                         </Grid>
 
                         <Label Height="18"
@@ -257,8 +274,8 @@
             <!--  Line  -->
             <Line Margin="2,0,0,0"
                   HorizontalAlignment="Center"
-                  Fill="Black"
-                  Stroke="Black"
+                  Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
+                  Stroke="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
                   StrokeDashArray="{Binding IsPublished,
                                             Converter={StaticResource BoolToStrokeDashArrayConverter}}"
                   StrokeEndLineCap="Square"
@@ -272,13 +289,13 @@
                   Height="11"
                   HorizontalAlignment="Center"
                   Data="{StaticResource DownArrow}"
-                  Fill="Black"
+                  Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
                   Stretch="Fill" />
             <!--  Grey box  -->
             <Rectangle Width="14"
                        Height="36"
                        HorizontalAlignment="Center"
-                       Fill="{StaticResource Grey60Brush}" />
+                       Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush2)}" />
         </StackPanel>
 
     </Grid>
