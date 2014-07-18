@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
+             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
@@ -32,11 +33,36 @@
                                                                 Top="-36" />
 
                     <valueConverters:BoolToStrokeDashArrayConverter x:Key="BoolToStrokeDashArrayConverter" StrokeDashArray="1.5" />
+
+                    <Style x:Key="MessageIconStyle" TargetType="controls:IconControl">
+                        <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsTimeout}" Value="True">
+                                <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                    <Condition Binding="{Binding IsPublished}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource EventGeometry}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                    <Condition Binding="{Binding IsPublished}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+
         <!--  Padding for endpoints  -->
         <ItemsControl x:Name="EndpointPaddings"
                       ItemsSource="{Binding Endpoints}"
@@ -121,25 +147,13 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal">
-                        <Path Width="16"
-                              Height="16"
-                              Margin="2 0"
-                              Data="{StaticResource StartMessageGeometry}"
-                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
-                                             ElementName=PopupBorder}"
-                              Stretch="Fill"
-                              Visibility="{Binding IsStartMessage,
-                                                   Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                        <Path Width="16"
+                        <controls:IconControl x:Name="MessageTypeIcon"
+                              Width="16"
                               Height="16"
                               Margin="2 0"
-                              Data="{StaticResource MessageGeometry}"
-                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
-                                             ElementName=PopupBorder}"
-                              Stretch="Fill"
-                              Visibility="{Binding IsStartMessage,
-                                                   Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                              Foreground="{Binding (sequenceDiagram:Palette.Brush1),
+                                             ElementName=PopupBorder}" Style="{StaticResource MessageIconStyle}" />
 
                         <Label Padding="5 0"
                                HorizontalAlignment="Center"
@@ -156,6 +170,7 @@
                               Fill="{Binding (sequenceDiagram:Palette.Brush1),
                                              ElementName=PopupBorder}"
                               Stretch="Fill" />
+
                     </StackPanel>
 
                     <!--  Bottom Line  -->

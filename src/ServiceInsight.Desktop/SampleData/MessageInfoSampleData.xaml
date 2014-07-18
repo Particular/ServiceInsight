@@ -1,6 +1,6 @@
 ﻿<SequenceDiagram:MessageInfo xmlns:SequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
-		IsSagaInitiated="True"
-		IsPublished="True"
+		IsPublished="False"
+        IsTimeout="False"
 		IsFirst="True"
 		MinEndpointIndex="0"
 		MessagePopupIndex="0"
@@ -11,7 +11,7 @@
 		SendingEndpointIndex="0"
 		SendingEndpoint="Endpoint1"
 		SagaName="Saga1"
-		Selected="False">
+		Selected="True">
     <SequenceDiagram:MessageInfo.Endpoints>
         <!-- ReSharper disable Xaml.InvalidType -->
         <SequenceDiagram:EndpointInfo Active="Yes" FullName="LOCALHOST@Endpoint1" Host="LOCALHOST" Name="Endpoint1" Version="1.2.3" />
