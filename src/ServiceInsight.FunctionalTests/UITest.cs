@@ -1,20 +1,21 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests
 {
     using System;
+    using System.Reflection;
     using Autofac;
     using Castle.Core.Logging;
     using Desktop.Framework.Modules;
     using Infrastructure;
     using NUnit.Framework;
-    using Parts;
-    using ServiceControlStub;
     using TestStack.White;
     using TestStack.White.Configuration;
     using TestStack.White.InputDevices;
     using TestStack.White.UIItems.WindowItems;
+    using UI.Parts;
+    using UI.Steps;
 
     [TestFixture]
-    public abstract class TestBase
+    public abstract class UITest
     {
         protected LoggerLevel TestLoggerLevel = LoggerLevel.Debug;
         protected Window MainWindow;
@@ -22,10 +23,6 @@
         protected ProfilerConfiguration Configuration;
         protected IContainer Container;
         protected Waiter Wait;
-
-        //protected NameGenerator NameGenerator;
-        protected ServiceControl ServiceControlStub;
-
         protected ILogger Logger;
 
         public ICoreConfiguration CoreConfiguration { get; set; }
@@ -39,16 +36,13 @@
         {
             try
             {
-                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(TestBase));
+                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(UITest));
                 Wait = new Waiter();
-                //NameGenerator = new NameGenerator();
-                ServiceControlStub = ServiceControl.Start();
                 Configuration = new ProfilerConfiguration();
                 Application = Configuration.LaunchApplication();
                 MainWindow = Configuration.GetMainWindow(Application);
                 Container = CreateContainer();
                 OnApplicationInitialized();
-                OnSetupUI();
             }
             catch (Exception ex)
             {
@@ -58,15 +52,15 @@
             }
         }
 
-        protected virtual void OnSetupUI()
-        {
-        }
-
         IContainer CreateContainer()
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(MainWindow);
-            builder.RegisterAssemblyTypes(GetType().Assembly)
+            builder.RegisterAssemblyTypes(TestAssembly)
+                   .Where(c => c.IsAssignableTo<IStep>())
+                   .AsSelf()
+                   .PropertiesAutowired();
+            builder.RegisterAssemblyTypes(TestAssembly)
                    .Where(c => c.IsAssignableTo<ProfilerElement>())
                    .AsSelf()
                    .AsImplementedInterfaces()
@@ -94,7 +88,6 @@
         [TestFixtureTearDown]
         public void CleanUpTest()
         {
-            ServiceControlStub.Stop();
             Container.Dispose();
             TryCloseApplication();
         }
@@ -106,10 +99,6 @@
                 if (IsApplicationRunning())
                 {
                     Application.ApplicationSession.Save();
-                    //                    if (!Debugger.IsAttached)
-                    //                    {
-                    //                        Application.Kill();
-                    //                    }
                 }
             }
             catch (Exception ex)
@@ -128,6 +117,11 @@
             {
                 return false;
             }
+        }
+
+        private Assembly TestAssembly
+        {
+            get { return GetType().Assembly; }
         }
     }
 }

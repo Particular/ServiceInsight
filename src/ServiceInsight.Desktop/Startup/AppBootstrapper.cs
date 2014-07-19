@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Markup;
     using Autofac;
+    using Autofac.Configuration;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
     using Framework;
@@ -34,7 +34,8 @@
         private void CreateContainer()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
+            containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
+            containerBuilder.RegisterModule(new ConfigurationSettingsReader());
             container = containerBuilder.Build();
 
             // We reregister the container within itself.

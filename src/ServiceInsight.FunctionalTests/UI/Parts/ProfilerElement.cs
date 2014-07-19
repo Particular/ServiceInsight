@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
     using Castle.Core.Logging;
     using TestStack.White;

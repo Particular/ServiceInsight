@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Particular.ServiceInsight.FunctionalTests</RootNamespace>
-    <AssemblyName>NServiceBus.Profiler.FunctionalTests</AssemblyName>
+    <AssemblyName>Particular.ServiceInsight.FunctionalTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ApprovalTests">
+      <HintPath>..\packages\ApprovalTests.3.0.7\lib\net40\ApprovalTests.dll</HintPath>
+    </Reference>
+    <Reference Include="ApprovalUtilities">
+      <HintPath>..\packages\ApprovalUtilities.3.0.7\lib\net35\ApprovalUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
@@ -67,6 +73,18 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.4\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.4\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.4\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.4\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
@@ -78,6 +96,8 @@
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TestStack.White, Version=0.12.0.0, Culture=neutral, PublicKeyToken=2672efbf3e161801, processorArchitecture=MSIL">
@@ -90,28 +110,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="ApplicationShellTests.cs" />
+    <Compile Include="FakeServiceControl.cs" />
     <Compile Include="Infrastructure\NameGenerator.cs" />
     <Compile Include="Infrastructure\ProfilerConfiguration.cs" />
     <Compile Include="Infrastructure\Waiter.cs" />
-    <Compile Include="Parts\LayoutManager.cs" />
-    <Compile Include="Parts\ServiceControlConnectionDialog.cs" />
-    <Compile Include="Parts\StatusBar.cs" />
-    <Compile Include="ProfilerTestBase.cs" />
-    <Compile Include="Parts\MainMenu.cs" />
-    <Compile Include="Parts\ProfilerElement.cs" />
-    <Compile Include="Parts\ShellScreen.cs" />
-    <Compile Include="ServiceControlStub\AsyncTask.cs" />
-    <Compile Include="ServiceControlStub\Controllers\ControllerBase.cs" />
-    <Compile Include="ServiceControlStub\Controllers\EndpointsController.cs" />
-    <Compile Include="ServiceControlStub\Controllers\HomeController.cs" />
-    <Compile Include="ServiceControlStub\Controllers\MessagesController.cs" />
-    <Compile Include="ServiceControlStub\Models\HomeModel.cs" />
-    <Compile Include="ServiceControlStub\ServiceControlErrorFilter.cs" />
-    <Compile Include="ServiceControlStub\ServiceControlStub.cs" />
-    <Compile Include="ServiceControlStub\VersionInformationFilter.cs" />
-    <Compile Include="TestBase.cs" />
-    <Compile Include="Tests\Journeys\EndpointManagementJourney.cs" />
+    <Compile Include="UI\Parts\LayoutManager.cs" />
+    <Compile Include="UI\Parts\MainMenu.cs" />
+    <Compile Include="UI\Parts\ProfilerElement.cs" />
+    <Compile Include="UI\Parts\ServiceControlConnectionDialog.cs" />
+    <Compile Include="UI\Parts\ShellScreen.cs" />
+    <Compile Include="UI\Parts\StatusBar.cs" />
+    <Compile Include="UI\Steps\ConnectToServiceControl.cs" />
+    <Compile Include="UI\Steps\IStep.cs" />
+    <Compile Include="UI\Steps\DockLayoutManager.cs" />
+    <Compile Include="UITest.cs" />
+    <Compile Include="Tests\EndpointManagementJourney.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ServiceInsight.Desktop\ServiceInsight.Desktop.csproj">
@@ -121,7 +134,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Particular.ServiceInsight.exe.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

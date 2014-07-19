@@ -1,12 +1,12 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Steps
 {
     using Parts;
 
-    public class ProfilerTestBase : TestBase
+    public class DockLayoutManager : IStep
     {
         public ShellScreen Shell { get; set; }
 
-        protected override void OnSetupUI()
+        public void Execute()
         {
             Shell.LayoutManager.DockAutoHideGroups();
         }

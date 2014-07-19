@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Parts
+﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
     using System.Windows.Automation;
     using TestStack.White.UIItems;
