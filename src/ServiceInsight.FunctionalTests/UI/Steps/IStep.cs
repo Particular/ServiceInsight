@@ -1,7 +1,8 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Steps
 {
-    public interface IStep
+    using Services;
+
+    public interface IStep : IAutoRegister
     {
-        void Execute();
     }
 }

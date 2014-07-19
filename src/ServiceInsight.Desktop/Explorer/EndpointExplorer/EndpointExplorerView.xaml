@@ -41,7 +41,8 @@
     <TreeView ItemContainerStyle="{StaticResource ExpandedStyle}"
               ItemTemplate="{StaticResource TreeTemplate}"
               ItemsSource="{Binding Items}"
-              ScrollViewer.VerticalScrollBarVisibility="Visible">
+              ScrollViewer.VerticalScrollBarVisibility="Visible"
+              AutomationProperties.AutomationId="EndpointTree">
         <i:Interaction.Behaviors>
             <behaviors:BindableSelectedItemBehavior SelectedItem="{Binding SelectedNode}" />
         </i:Interaction.Behaviors>

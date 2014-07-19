@@ -15,6 +15,8 @@
 
         public LayoutManager LayoutManager { get; set; }
 
+        public EndpointExplorer EndpointExplorer { get; set; }
+
         public StatusBar StatusBar { get; set; }
 
         public void WaitWhileBusy()

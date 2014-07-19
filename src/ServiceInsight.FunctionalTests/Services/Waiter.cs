@@ -1,10 +1,10 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests.Services
 {
     using System;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class Waiter
+    public class Waiter : IAutoRegister
     {
         public TimeSpan UIInteractionTimeout = TimeSpan.FromSeconds(10);
 

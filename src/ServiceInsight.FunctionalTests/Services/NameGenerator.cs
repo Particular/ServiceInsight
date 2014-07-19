@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests.Services
 {
     using System;
 
-    public class NameGenerator
+    public class NameGenerator : IAutoRegister
     {
         public string GetUniqueName(string prefix = "")
         {

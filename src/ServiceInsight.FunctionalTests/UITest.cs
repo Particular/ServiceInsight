@@ -5,14 +5,13 @@
     using Autofac;
     using Castle.Core.Logging;
     using Desktop.Framework.Modules;
-    using Infrastructure;
     using NUnit.Framework;
+    using Services;
     using TestStack.White;
     using TestStack.White.Configuration;
     using TestStack.White.InputDevices;
     using TestStack.White.UIItems.WindowItems;
     using UI.Parts;
-    using UI.Steps;
 
     [TestFixture]
     public abstract class UITest
@@ -20,9 +19,8 @@
         protected LoggerLevel TestLoggerLevel = LoggerLevel.Debug;
         protected Window MainWindow;
         protected Application Application;
-        protected ProfilerConfiguration Configuration;
+        protected TestConfiguration Configuration;
         protected IContainer Container;
-        protected Waiter Wait;
         protected ILogger Logger;
 
         public ICoreConfiguration CoreConfiguration { get; set; }
@@ -31,14 +29,15 @@
 
         public IKeyboard Keyboard { get; set; }
 
+        public Waiter Wait { get; set; }
+
         [TestFixtureSetUp]
         public void InitializeApplication()
         {
             try
             {
                 Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(UITest));
-                Wait = new Waiter();
-                Configuration = new ProfilerConfiguration();
+                Configuration = new TestConfiguration();
                 Application = Configuration.LaunchApplication();
                 MainWindow = Configuration.GetMainWindow(Application);
                 Container = CreateContainer();
@@ -57,7 +56,7 @@
             var builder = new ContainerBuilder();
             builder.RegisterInstance(MainWindow);
             builder.RegisterAssemblyTypes(TestAssembly)
-                   .Where(c => c.IsAssignableTo<IStep>())
+                   .Where(c => c.IsAssignableTo<IAutoRegister>())
                    .AsSelf()
                    .PropertiesAutowired();
             builder.RegisterAssemblyTypes(TestAssembly)
@@ -83,6 +82,7 @@
             CoreConfiguration.WaitBasedOnHourGlass = false;
             CoreConfiguration.InProc = true;
             CoreConfiguration.FindWindowTimeout = 60000;
+            TestDataWriter.DeleteAll();
         }
 
         [TestFixtureTearDown]

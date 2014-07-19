@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Infrastructure
+﻿namespace Particular.ServiceInsight.FunctionalTests
 {
     using System;
     using System.Diagnostics;
@@ -10,7 +10,7 @@
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
 
-    public class ProfilerConfiguration          
+    public class TestConfiguration          
     {
         const int ExtraIdleWaitSecs = 3;
         const string ApplicationProcess = "Particular.ServiceInsight.exe";

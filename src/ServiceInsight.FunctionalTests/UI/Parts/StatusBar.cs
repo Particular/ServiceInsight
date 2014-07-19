@@ -3,6 +3,7 @@
     using System.Windows.Automation;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.TreeItems;
     using TestStack.White.UIItems.WindowItems;
     using TestStack.White.UIItems.WindowStripControls;
     using TestStack.White.UIItems.WPFUIItems;

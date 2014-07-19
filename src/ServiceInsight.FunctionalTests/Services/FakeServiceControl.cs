@@ -1,10 +1,12 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Desktop.Models;
     using Desktop.Saga;
     using Desktop.ServiceControl;
+    using Newtonsoft.Json;
 
     public class FakeServiceControl : IServiceControl
     {
@@ -56,7 +58,7 @@
 
         public IEnumerable<Endpoint> GetEndpoints()
         {
-            return new List<Endpoint>();
+            return Get<IList<Endpoint>>("GetEndpoints");
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId)
@@ -66,6 +68,23 @@
 
         public void LoadBody(StoredMessage message)
         {
+        }
+
+        private T Get<T>(string scenarioName)
+        {
+            var scenarioFile = Path.Combine(TestDataFolder, scenarioName + ".json");
+            if (File.Exists(scenarioFile))
+            {
+                var scenarioContent = File.ReadAllText(scenarioFile);
+                return JsonConvert.DeserializeObject<T>(scenarioContent);
+            }
+
+            return default(T);
+        }
+
+        private string TestDataFolder
+        {
+            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData"); }
         }
     }
 }
