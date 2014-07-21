@@ -1,15 +1,16 @@
-namespace Particular.ServiceInsight.FunctionalTests.Services.TestDataBuilders
+namespace Particular.ServiceInsight.FunctionalTests.DataBuilders
 {
     using System.Collections.Generic;
     using Desktop.Models;
+    using Services;
 
     public class EndpointBuilder
     {
-        private List<Endpoint> endpoints;
+        private List<Endpoint> defaultEndpoints;
 
         public EndpointBuilder()
         {
-            endpoints = new List<Endpoint>
+            defaultEndpoints = new List<Endpoint>
             {
                 new Endpoint
                 {
@@ -26,15 +27,15 @@ namespace Particular.ServiceInsight.FunctionalTests.Services.TestDataBuilders
 
         public EndpointBuilder WithEndpoints(params Endpoint[] endpoints)
         {
-            this.endpoints = new List<Endpoint>();
-            this.endpoints.AddRange(endpoints);
+            defaultEndpoints = new List<Endpoint>();
+            defaultEndpoints.AddRange(endpoints);
 
             return this;
         }
 
         public void Build()
         {
-            TestDataWriter.Write("GetEndpoints", endpoints);
+            TestDataWriter.Write("GetEndpoints", defaultEndpoints);
         }
     }
 }

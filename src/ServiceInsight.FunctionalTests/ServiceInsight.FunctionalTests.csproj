@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="Services\TestDataBuilders\EndpointBuilder.cs" />
+    <Compile Include="DataBuilders\EndpointBuilder.cs" />
     <Compile Include="Services\FakeServiceControl.cs" />
     <Compile Include="Services\IAutoRegister.cs" />
     <Compile Include="Services\NameGenerator.cs" />

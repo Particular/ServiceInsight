@@ -1,15 +1,15 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
 {
-﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
- {
-     using System.Linq;
-     using Desktop.Models;
-     using NUnit.Framework;
-     using Services;
-     using Shouldly;
-     using UI.Parts;
-     using UI.Steps;
+    using System.Linq;
+    using Desktop.Models;
+    using Services;
+    using UI.Parts;
+    using UI.Steps;
+    using NUnit.Framework;
+    using Shouldly;
 
+    namespace Particular.ServiceInsight.FunctionalTests.Tests
+ {
      public class EndpointExplorerTests : UITest
      {
          public ShellScreen Shell { get; set; }
