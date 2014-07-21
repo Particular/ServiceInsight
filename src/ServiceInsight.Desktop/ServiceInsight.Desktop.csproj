@@ -140,6 +140,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -217,6 +218,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Framework\Attachments\Attachment.cs" />
+    <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="LogWindow\LoggingRichTextBoxBehavior.cs" />
     <Compile Include="Framework\DefaultClipboard.cs" />
     <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
