@@ -213,6 +213,7 @@
     <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExtensionMethods\ContainerExtensions.cs" />
     <Compile Include="Framework\Attachments\Attachment.cs" />
     <Compile Include="LogWindow\LoggingRichTextBoxBehavior.cs" />
     <Compile Include="Framework\DefaultClipboard.cs" />
@@ -446,6 +447,7 @@
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
+    <Compile Include="Startup\ConfigurationSettingsReader.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Framework\Logging\LoggingConfig.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />

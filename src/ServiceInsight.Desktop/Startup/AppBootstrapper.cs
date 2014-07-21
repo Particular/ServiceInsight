@@ -6,9 +6,9 @@
     using System.Windows;
     using System.Windows.Markup;
     using Autofac;
-    using Autofac.Configuration;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
+    using ExtensionMethods;
     using Framework;
     using Framework.Logging;
     using Shell;
@@ -35,7 +35,7 @@
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
-            containerBuilder.RegisterModule(new ConfigurationSettingsReader());
+            containerBuilder.RegisterExternalModules();
             container = containerBuilder.Build();
 
             // We reregister the container within itself.
