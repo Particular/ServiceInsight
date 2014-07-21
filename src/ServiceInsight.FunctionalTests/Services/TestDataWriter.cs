@@ -29,7 +29,7 @@
             var folder = new DirectoryInfo(TestDataFolder);
             var files = folder.GetFiles();
 
-            files.ForEach(f => TryDelete(f.Name));
+            files.ForEach(f => TryDelete(f.FullName));
         }
 
         static void TryDelete(string scenarioFile)

@@ -11,6 +11,7 @@
     public class FakeServiceControl : IServiceControl
     {
         public const string Version = "1.0-fake";
+        public const string Address = "localhost:1234";
 
         public bool IsAlive()
         {
@@ -28,7 +29,7 @@
 
         public Uri CreateServiceInsightUri(StoredMessage message)
         {
-            return new Uri(string.Format("si://localhost/api{0}", message.GetURIQuery()));
+            return new Uri(string.Format("si://{0}/api{1}", Address, message.GetURIQuery()));
         }
 
         public bool HasSagaChanged(Guid sagaId)

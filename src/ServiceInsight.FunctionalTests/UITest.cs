@@ -90,6 +90,7 @@
         {
             Container.Dispose();
             TryCloseApplication();
+            TestDataWriter.DeleteAll();
         }
 
         void TryCloseApplication()
