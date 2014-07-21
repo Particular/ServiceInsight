@@ -2,6 +2,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:Double x:Key="ColumnWidth">260</system:Double>
+    <system:Double x:Key="HalfColumnWidth">130</system:Double>
 
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>

@@ -27,8 +27,8 @@
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
-                    <cnv:HalvingConverter x:Key="HalvingConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
+                    <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
 
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />

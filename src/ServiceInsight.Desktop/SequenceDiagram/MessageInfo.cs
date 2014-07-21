@@ -18,6 +18,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
                 SagaName = message.Sagas.First().SagaType;
+            CriticalTime = message.CriticalTime;
+            DeliveryTime = message.DeliveryTime;
+            ProcessingTime = message.ProcessingTime;
 
             endpoints.Changed.Subscribe(_ => UpdateIndicies());
 
@@ -31,7 +34,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public bool IsFirst { get; set; }
 
         public string Name { get; private set; }
-        public string SagaName { get; set; }
+        public string SagaName { get; private set; }
+
+        public TimeSpan CriticalTime { get; private set; }
+        public TimeSpan DeliveryTime { get; private set; }
+        public TimeSpan ProcessingTime { get; private set; }
 
         public string SendingEndpoint
         {

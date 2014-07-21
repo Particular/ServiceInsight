@@ -1,13 +1,19 @@
-﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
+namespace Particular.ServiceInsight.Desktop.ValueConverters
 {
     using System;
+    using System.Windows;
     using System.Windows.Data;
+    using Humanizer;
 
-    class HalvingConverter : IValueConverter
+    public class TimeSpanHumanizedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return (double)value * -1.0;
+            if (value is TimeSpan)
+            {
+                return ((TimeSpan)value).Humanize();
+            }
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

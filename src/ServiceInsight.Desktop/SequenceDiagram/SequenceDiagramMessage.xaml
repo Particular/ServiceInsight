@@ -322,7 +322,44 @@
                        Height="36"
                        HorizontalAlignment="Center"
                        Fill="{Binding ElementName=Root,
-                                      Path=(sequenceDiagram:SagaPalette.EndpointBox)}" />
+                                      Path=(sequenceDiagram:SagaPalette.EndpointBox)}">
+                <Rectangle.ToolTip>
+                    <ToolTip OverridesDefaultStyle="True" Placement="Center" HorizontalOffset="{StaticResource HalfColumnWidth}" Width="{StaticResource ColumnWidth}">
+                        <ToolTip.Template>
+                            <ControlTemplate TargetType="ToolTip">
+                                <Grid Background="Transparent" SnapsToDevicePixels="True" Margin="8,0,16,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Path Stretch="Fill" Data="{StaticResource LeftArrow}" VerticalAlignment="Center" Width="8" Height="16" Fill="{StaticResource Grey20Brush}" />
+                                    <Border Grid.Column="1" Background="{StaticResource Grey20Brush}">
+                                        <ContentPresenter Margin="8"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch" />
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </ToolTip.Template>
+
+                        <UniformGrid Rows="3" Columns="2">
+                            <UniformGrid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+                                    <Setter Property="Margin" Value="4" />
+                                </Style>
+                            </UniformGrid.Resources>
+
+                            <TextBlock FontWeight="Bold" Text="Critical time" />
+                            <TextBlock Text="{Binding CriticalTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                            <TextBlock FontWeight="Bold" Text="Delivery time" />
+                            <TextBlock Text="{Binding DeliveryTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                            <TextBlock FontWeight="Bold" Text="Processing time" />
+                            <TextBlock Text="{Binding ProcessingTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                        </UniformGrid>
+                    </ToolTip>
+                </Rectangle.ToolTip>
+            </Rectangle>
         </StackPanel>
 
     </Grid>
