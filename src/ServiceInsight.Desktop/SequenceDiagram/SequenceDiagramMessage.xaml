@@ -6,10 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
              xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
+             x:Name="Root"
              d:DataContext="{d:DesignData /SampleData/MessageInfoSampleData.xaml}"
              d:DesignHeight="600"
              d:DesignWidth="900"
-             x:Name="Root"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -81,6 +81,14 @@
                         </Style.Triggers>
                     </Style>
 
+                    <Style x:Key="UnderlineTextBlockStyle" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="TextDecorations" Value="Underline" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -88,13 +96,38 @@
 
     <UserControl.Style>
         <Style TargetType="UserControl">
-            <Setter Property="sequenceDiagram:Palette.Brush1" Value="Black" />
-            <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource Grey60Brush}" />
+
+            <Setter Property="sequenceDiagram:SagaPalette.Line" Value="Black" />
+            <Setter Property="sequenceDiagram:SagaPalette.EndpointBox" Value="{StaticResource Grey60Brush}" />
+            <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="Transparent" />
+            <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="{StaticResource Grey40Brush}" />
+            <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="{StaticResource Grey40Brush}" />
+            <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="White" />
+
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="sequenceDiagram:Palette.Brush1" Value="{StaticResource HiliteDarkBrush}" />
-                    <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource HiliteLightBrush}" />
+                    <Setter Property="sequenceDiagram:SagaPalette.Line" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="sequenceDiagram:SagaPalette.EndpointBox" Value="{StaticResource HiliteLightBrush}" />
                 </Trigger>
+
+                <DataTrigger Binding="{Binding Selected}" Value="True">
+                    <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="White" />
+                    <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="White" />
+                    <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="{StaticResource HiliteDarkBrush}" />
+                </DataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Selected}" Value="False" />
+                        <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="Transparent" />
+                    <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="White" />
+                </MultiDataTrigger>
+
             </Style.Triggers>
         </Style>
     </UserControl.Style>
@@ -114,8 +147,10 @@
 
         <!--  Horizontal line  -->
         <Line x:Name="HorizontalLine"
-              Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
-              Stroke="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
+              Fill="{Binding ElementName=Root,
+                             Path=(sequenceDiagram:SagaPalette.Line)}"
+              Stroke="{Binding ElementName=Root,
+                               Path=(sequenceDiagram:SagaPalette.Line)}"
               StrokeDashArray="{Binding IsPublished,
                                         Converter={StaticResource BoolToStrokeDashArrayConverter}}"
               StrokeEndLineCap="Square"
@@ -141,7 +176,8 @@
                        Height="25"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}" />
+                       Fill="{Binding ElementName=Root,
+                                      Path=(sequenceDiagram:SagaPalette.Line)}" />
             <Path Width="10"
                   Height="10"
                   HorizontalAlignment="Center"
@@ -165,12 +201,12 @@
                   VerticalAlignment="Center">
                 <Border Height="29"
                         VerticalAlignment="Top"
-                        Background="{Binding (sequenceDiagram:Palette.Brush3),
-                                             ElementName=PopupBorder}" />
+                        Background="{Binding Path=(sequenceDiagram:SagaPalette.MessageBackground),
+                                             ElementName=Root}" />
                 <Border Height="27"
                         VerticalAlignment="Bottom"
-                        Background="{Binding (sequenceDiagram:Palette.Brush3),
-                                             ElementName=PopupBorder}"
+                        Background="{Binding Path=(sequenceDiagram:SagaPalette.MessageBackground),
+                                             ElementName=Root}"
                         Visibility="{Binding SagaName,
                                              Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
 
@@ -190,24 +226,25 @@
                                               Width="16"
                                               Height="16"
                                               Margin="2 0"
-                                              Foreground="{Binding (sequenceDiagram:Palette.Brush1),
-                                                                   ElementName=PopupBorder}"
+                                              Foreground="{Binding Path=(sequenceDiagram:SagaPalette.MessageForeground),
+                                                                   ElementName=Root}"
                                               Style="{StaticResource MessageIconStyle}" />
 
-                        <Label Padding="5 0"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Content="{Binding Name}"
-                               Foreground="{Binding (sequenceDiagram:Palette.Brush1),
-                                                    ElementName=PopupBorder}" />
+                        <TextBlock Padding="5 0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{Binding Path=(sequenceDiagram:SagaPalette.MessageForeground),
+                                                        ElementName=Root}"
+                                   Style="{StaticResource UnderlineTextBlockStyle}"
+                                   Text="{Binding Name}" />
 
                         <Path Width="4"
                               Height="4"
                               Margin="2,0,2,3"
                               VerticalAlignment="Bottom"
                               Data="{StaticResource DownArrow}"
-                              Fill="{Binding (sequenceDiagram:Palette.Brush1),
-                                             ElementName=PopupBorder}"
+                              Fill="{Binding Path=(sequenceDiagram:SagaPalette.MessageForeground),
+                                             ElementName=Root}"
                               Stretch="Fill" />
 
                     </StackPanel>
@@ -226,43 +263,29 @@
                                        Height="18"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Fill="{Binding (sequenceDiagram:Palette.Brush1),
-                                                      ElementName=PopupBorder}" />
+                                       Fill="{Binding Path=(sequenceDiagram:SagaPalette.SagaBackground),
+                                                      ElementName=Root}" />
                             <controls:IconControl x:Name="SagaTypeIcon"
                                                   Width="9"
                                                   Height="9"
-                                                  Foreground="{Binding (sequenceDiagram:Palette.Brush2),
-                                                                       ElementName=PopupBorder}"
+                                                  Foreground="{Binding Path=(sequenceDiagram:SagaPalette.SagaForeground),
+                                                                       ElementName=Root}"
                                                   Style="{StaticResource SagaIconStyle}" />
                         </Grid>
 
-                        <Label Height="18"
-                               Padding="5 0"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Background="{Binding (sequenceDiagram:Palette.Brush1),
-                                                    ElementName=PopupBorder}"
-                               Content="{Binding SagaName}"
-                               Foreground="{Binding (sequenceDiagram:Palette.Brush2),
-                                                    ElementName=PopupBorder}" />
+                        <TextBlock Height="18"
+                                   Padding="5 0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Background="{Binding Path=(sequenceDiagram:SagaPalette.SagaBackground),
+                                                        ElementName=Root}"
+                                   Foreground="{Binding Path=(sequenceDiagram:SagaPalette.SagaForeground),
+                                                        ElementName=Root}"
+                                   Style="{StaticResource UnderlineTextBlockStyle}"
+                                   Text="{Binding SagaName}" />
 
                     </StackPanel>
                 </Grid>
-
-                <Grid.Style>
-                    <Style>
-                        <Setter Property="sequenceDiagram:Palette.Brush1" Value="{StaticResource Grey40Brush}" />
-                        <Setter Property="sequenceDiagram:Palette.Brush2" Value="White" />
-                        <Setter Property="sequenceDiagram:Palette.Brush3" Value="Transparent" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Selected}" Value="True">
-                                <Setter Property="sequenceDiagram:Palette.Brush1" Value="White" />
-                                <Setter Property="sequenceDiagram:Palette.Brush2" Value="{StaticResource HiliteDarkBrush}" />
-                                <Setter Property="sequenceDiagram:Palette.Brush3" Value="{StaticResource HiliteDarkBrush}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Style>
             </Grid>
         </Border>
 
@@ -274,8 +297,10 @@
             <!--  Line  -->
             <Line Margin="2,0,0,0"
                   HorizontalAlignment="Center"
-                  Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
-                  Stroke="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
+                  Fill="{Binding ElementName=Root,
+                                 Path=(sequenceDiagram:SagaPalette.Line)}"
+                  Stroke="{Binding ElementName=Root,
+                                   Path=(sequenceDiagram:SagaPalette.Line)}"
                   StrokeDashArray="{Binding IsPublished,
                                             Converter={StaticResource BoolToStrokeDashArrayConverter}}"
                   StrokeEndLineCap="Square"
@@ -289,13 +314,15 @@
                   Height="11"
                   HorizontalAlignment="Center"
                   Data="{StaticResource DownArrow}"
-                  Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush1)}"
+                  Fill="{Binding ElementName=Root,
+                                 Path=(sequenceDiagram:SagaPalette.Line)}"
                   Stretch="Fill" />
             <!--  Grey box  -->
             <Rectangle Width="14"
                        Height="36"
                        HorizontalAlignment="Center"
-                       Fill="{Binding ElementName=Root, Path=(sequenceDiagram:Palette.Brush2)}" />
+                       Fill="{Binding ElementName=Root,
+                                      Path=(sequenceDiagram:SagaPalette.EndpointBox)}" />
         </StackPanel>
 
     </Grid>
