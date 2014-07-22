@@ -16,6 +16,15 @@
          public ConnectToServiceControl ConnectToServiceControl { get; set; }
          public EndpointExplorer EndpointExplorer { get; set; }
 
+         [SetUp]
+         public void Initialize()
+         {
+             var sales = new Endpoint { Name = "Sales" };
+             var customerRelations = new Endpoint { Name = "CustomerRelations" };
+
+             TestDataBuilder.EndpointBuilder().WithEndpoints(sales, customerRelations).Build();
+         }
+
          [Test]
          public void Can_connect_to_fake_service_control_service()
          {
@@ -27,20 +36,17 @@
          [Test]
          public void Can_see_service_control_address_and_available_endpoint_names_in_explorer()
          {
-             var sales = new Endpoint { Name = "Sales" };
-             var customerRelations = new Endpoint { Name = "CustomerRelations" };
-
-             TestDataBuilder.EndpointBuilder().WithEndpoints(sales, customerRelations).Build();
-
              ConnectToServiceControl.Execute();
 
-             var rootNode = EndpointExplorer.GetTree().Nodes[0];
+             var tree = EndpointExplorer.GetTree();
+             var rootNode = tree.Nodes[0];
              rootNode.Text.ShouldContain(FakeServiceControl.Address);
 
-             var endpoints = rootNode.Nodes.Select(n => n.Text).ToList();
-             endpoints.Count.ShouldBe(2);
-             endpoints.ShouldContain(sales.Name);
-             endpoints.ShouldContain(customerRelations.Name);
+             var children = rootNode.Nodes.Select(n => n.Text).ToList();
+
+             children.Count.ShouldBe(2);
+             children.ShouldContain("Sales");
+             children.ShouldContain("CustomerRelations");
          }
      }
  }

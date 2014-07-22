@@ -36,7 +36,7 @@
         public Window GetMainWindow(Application application)
         {
             WaitForApplicationIdle(application);
-            var mainWindow = application.GetWindow(SearchCriteria.ByAutomationId("ShellWindow"), InitializeOption.WithCache);
+            var mainWindow = application.GetWindow(SearchCriteria.ByAutomationId("ShellWindow"), InitializeOption.NoCache);
 
             return mainWindow;
         }
