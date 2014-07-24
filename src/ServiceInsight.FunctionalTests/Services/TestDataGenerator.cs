@@ -8,5 +8,10 @@
         {
             return new EndpointBuilder();
         }
+
+        public static MessageListBuilder MessageBuilder()
+        {
+            return new MessageListBuilder();
+        }
     }
 }

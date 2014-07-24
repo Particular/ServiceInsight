@@ -7,7 +7,7 @@
     using TestStack.White.UIItems.WindowStripControls;
     using TestStack.White.UIItems.WPFUIItems;
 
-    public class StatusBar : ProfilerElement
+    public class StatusBar : UIElement
     {
         public StatusBar(Window mainWindow) : base(mainWindow)
         {

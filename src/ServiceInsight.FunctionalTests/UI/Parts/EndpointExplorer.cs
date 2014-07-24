@@ -5,7 +5,7 @@
     using TestStack.White.UIItems.TreeItems;
     using TestStack.White.UIItems.WindowItems;
 
-    public class EndpointExplorer : ProfilerElement
+    public class EndpointExplorer : UIElement
     {
         public EndpointExplorer(Window mainWindow) : base(mainWindow)
         {
@@ -18,6 +18,22 @@
             var endpointTree = endpoint.Get<Tree>(SearchCriteria.ByAutomationId("EndpointTree"));
 
             return endpointTree;
+        }
+    }
+
+    public class MessagesWindow : UIElement
+    {
+        public MessagesWindow(Window mainWindow) : base(mainWindow)
+        {
+        }
+
+        public int GetMessageCount()
+        {
+            var barManager = GetByAutomationId<GroupBox>("BarManager");
+            var grid = barManager.Get<ListView>(SearchCriteria.ByAutomationId("grid"));
+
+            return grid.Rows.Count;
+
         }
     }
 }

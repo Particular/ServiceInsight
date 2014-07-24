@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Desktop.Models;
     using Desktop.Saga;
     using Desktop.ServiceControl;
@@ -44,7 +45,16 @@
 
         public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool @ascending = false)
         {
-            return new PagedResult<StoredMessage>();
+            const int PageSize = 10;
+
+            var messages = Get<List<StoredMessage>>("Messages");
+            var pagedResult = new PagedResult<StoredMessage>
+            {
+                Result = messages.Skip(pageIndex - 1*10).Take(PageSize).ToList(),
+                TotalCount = messages.Count
+            };
+
+            return pagedResult;
         }
 
         public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool @ascending = false)
@@ -59,7 +69,7 @@
 
         public IEnumerable<Endpoint> GetEndpoints()
         {
-            return Get<IList<Endpoint>>("GetEndpoints");
+            return Get<List<Endpoint>>("GetEndpoints");
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId)
@@ -71,7 +81,7 @@
         {
         }
 
-        private T Get<T>(string scenarioName)
+        private T Get<T>(string scenarioName) where T : new()
         {
             var scenarioFile = Path.Combine(TestDataFolder, scenarioName + ".json");
             if (File.Exists(scenarioFile))
@@ -80,7 +90,7 @@
                 return JsonConvert.DeserializeObject<T>(scenarioContent);
             }
 
-            return default(T);
+            return new T();
         }
 
         private string TestDataFolder

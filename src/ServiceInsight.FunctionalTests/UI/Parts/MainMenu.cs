@@ -6,7 +6,7 @@
     using TestStack.White.UIItems.WindowStripControls;
     using TestStack.White.UIItems.WPFUIItems;
 
-    public class MainMenu : ProfilerElement
+    public class MainMenu : UIElement
     {
         public MainMenu(Window mainWindow) : base(mainWindow)
         {

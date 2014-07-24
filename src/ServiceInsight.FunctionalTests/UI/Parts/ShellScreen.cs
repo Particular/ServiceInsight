@@ -5,7 +5,7 @@
     using TestStack.White.UIItems.WindowItems;
     using TestStack.White.Utility;
 
-    public class ShellScreen : ProfilerElement
+    public class ShellScreen : UIElement
     {
         public ShellScreen(Window mainWindow) : base(mainWindow)
         {

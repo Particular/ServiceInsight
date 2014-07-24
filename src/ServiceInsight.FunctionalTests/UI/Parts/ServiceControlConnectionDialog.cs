@@ -5,7 +5,7 @@
     using TestStack.White.UIItems.ListBoxItems;
     using TestStack.White.UIItems.WindowItems;
 
-    public class ServiceControlConnectionDialog : ProfilerElement
+    public class ServiceControlConnectionDialog : UIElement
     {
         Window dialog;
 

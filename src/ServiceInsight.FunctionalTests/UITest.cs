@@ -60,7 +60,7 @@
                    .AsSelf()
                    .PropertiesAutowired();
             builder.RegisterAssemblyTypes(TestAssembly)
-                   .Where(c => c.IsAssignableTo<ProfilerElement>())
+                   .Where(c => c.IsAssignableTo<UIElement>())
                    .AsSelf()
                    .AsImplementedInterfaces()
                    .PropertiesAutowired();
@@ -82,7 +82,7 @@
             CoreConfiguration.WaitBasedOnHourGlass = false;
             CoreConfiguration.InProc = true;
             CoreConfiguration.FindWindowTimeout = 60000;
-            TestDataWriter.DeleteAll();
+            //TestDataWriter.DeleteAll();
         }
 
         [TestFixtureTearDown]
@@ -90,7 +90,7 @@
         {
             Container.Dispose();
             TryCloseApplication();
-            TestDataWriter.DeleteAll();
+            //TestDataWriter.DeleteAll();
         }
 
         void TryCloseApplication()

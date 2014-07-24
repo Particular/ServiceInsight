@@ -7,9 +7,9 @@
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
 
-    public abstract class ProfilerElement
+    public abstract class UIElement
     {
-        protected ProfilerElement(Window mainWindow)
+        protected UIElement(Window mainWindow)
         {
             MainWindow = mainWindow;
         }

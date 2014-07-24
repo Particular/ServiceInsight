@@ -7,7 +7,7 @@
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
 
-    public class LayoutManager : ProfilerElement
+    public class LayoutManager : UIElement
     {
         GroupBox barManager;
         IUIItem[] autoHideGroups;
