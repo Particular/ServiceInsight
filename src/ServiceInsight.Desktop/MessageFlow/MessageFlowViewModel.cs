@@ -22,7 +22,6 @@
     public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-        private readonly IClipboard clipboard;
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;
         ScreenFactory screenFactory;
@@ -47,7 +46,6 @@
             EndpointExplorerViewModel endpointExplorer,
             IClipboard clipboard)
         {
-            this.clipboard = clipboard;
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
