@@ -1,48 +1,39 @@
-﻿using System.Collections.Generic;
-using Particular.ServiceInsight.Desktop.Models;
-
-namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using Caliburn.Micro;
+    using Common;
     using Events;
+    using Framework;
+    using Models;
     using ReactiveUI;
+    using Search;
     using ServiceControl;
 
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         private readonly IServiceControl serviceControl;
 
-        public SequenceDiagramViewModel(IServiceControl serviceControl)
+        public SequenceDiagramViewModel(IClipboard clipboard, IEventAggregator eventAggregator, IServiceControl serviceControl, SearchBarViewModel searchBar)
         {
             this.serviceControl = serviceControl;
+
+            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
+            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
+            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
         }
-
-        //public SequenceDiagramViewModel()
-        //{
-        //    Endpoints = new[]
-        //    {
-        //        new EndpointInfo { Name = "ECommerce", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
-        //        new EndpointInfo { Name = "Sales", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
-        //        new EndpointInfo { Name = "CustomerRelations", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
-        //        new EndpointInfo { Name = "ContentManagement", Version = "4.6.1", Host = "@machinename", Active = "Yes" },
-        //        new EndpointInfo { Name = "Operations", Version = "4.6.1", Host = "@machinename", Active = "Yes" }
-        //    };
-
-        //    Messages = new[]
-        //    {
-        //        new MessageInfo { Endpoints = Endpoints, Name = "SubmitOrder", SagaName = "ProcessOrderSaga", IsStartMessage = true, FromEndpoint = "ECommerce", ToEndpoints = new[] { "Sales" } },
-        //        new MessageInfo { Endpoints = Endpoints, Name = "OrderPlaced", IsEvent = true, FromEndpoint = "Sales", ToEndpoints = new[] { "ECommerce" }, TimeoutEndpoints = new[] { "Sales" } },
-        //        new MessageInfo { Endpoints = Endpoints, Name = "OrderAccepted", SagaName = "ProcessOrderSaga", IsEvent = true, FromEndpoint = "Sales", ToEndpoints = new[] { "CustomerRelations", "ContentManagement" }, },
-        //        new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadRequest", FromEndpoint = "ContentManagement", ToEndpoints = new[] { "Operations" }, },
-        //        new MessageInfo { Endpoints = Endpoints, Name = "ProvisionDownloadResponse", FromEndpoint = "Operations", ToEndpoints = new[] { "ContentManagement" }, },
-        //        new MessageInfo { Endpoints = Endpoints, Name = "DownloadIsReady", IsEvent = true, FromEndpoint = "ContentManagement", ToEndpoints = new[] { "ECommerce" }, }
-        //    };
-        //}
 
         public ReactiveList<EndpointInfo> Endpoints { get; set; }
 
         public IEnumerable<MessageInfo> Messages { get; set; }
+
+        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand CopyConversationIDCommand { get; private set; }
+        public ICommand CopyMessageURICommand { get; private set; }
+        public ICommand SearchByMessageIDCommand { get; private set; }
 
         public void Handle(SelectedMessageChanged message)
         {
@@ -72,7 +63,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
-            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(m, Endpoints)).ToList();
+            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(this, m, Endpoints)).ToList();
 
             Messages.First().IsFirst = true;
         }

@@ -250,10 +250,22 @@
 
                         <Button.ContextMenu>
                             <ContextMenu Style="{StaticResource DarkContextMenuStyle}">
-                                <MenuItem Header="Retry message" Style="{StaticResource DarkMenuItemStyle}" />
-                                <MenuItem Header="Copy conversation ID" Style="{StaticResource DarkMenuItemStyle}" />
-                                <MenuItem Header="Copy message URI" Style="{StaticResource DarkMenuItemStyle}" />
-                                <MenuItem Header="Search by message ID" Style="{StaticResource DarkMenuItemStyle}" />
+                                <MenuItem Header="Retry message"
+                                          Style="{StaticResource DarkMenuItemStyle}"
+                                          CommandParameter="{Binding Message}"
+                                          Command="{Binding RetryMessageCommand}" />
+                                <MenuItem Header="Copy conversation ID"
+                                          Style="{StaticResource DarkMenuItemStyle}"
+                                          CommandParameter="{Binding Message}"
+                                          Command="{Binding CopyConversationIDCommand}" />
+                                <MenuItem Header="Copy message URI"
+                                          Style="{StaticResource DarkMenuItemStyle}"
+                                          CommandParameter="{Binding Message}"
+                                          Command="{Binding CopyMessageURICommand}" />
+                                <MenuItem Header="Search by message ID"
+                                          Style="{StaticResource DarkMenuItemStyle}"
+                                          CommandParameter="{Binding Message}"
+                                          Command="{Binding SearchByMessageIDCommand}" />
                             </ContextMenu>
                         </Button.ContextMenu>
 

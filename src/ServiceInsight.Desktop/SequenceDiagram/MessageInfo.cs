@@ -3,17 +3,21 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using Models;
     using ReactiveUI;
 
     public class MessageInfo : ReactiveObject
     {
-        private readonly StoredMessage message;
-
-        public MessageInfo(StoredMessage message, ReactiveList<EndpointInfo> endpoints)
+        public MessageInfo(SequenceDiagramViewModel viewModel, StoredMessage message, ReactiveList<EndpointInfo> endpoints)
         {
-            this.message = message;
+            Message = message;
             Endpoints = endpoints;
+
+            RetryMessageCommand = viewModel.RetryMessageCommand;
+            CopyConversationIDCommand = viewModel.CopyConversationIDCommand;
+            CopyMessageURICommand = viewModel.CopyMessageURICommand;
+            SearchByMessageIDCommand = viewModel.SearchByMessageIDCommand;
 
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
@@ -26,6 +30,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
             UpdateIndicies();
         }
+
+        public StoredMessage Message { get; private set; }
 
         public IEnumerable<EndpointInfo> Endpoints { get; set; }
 
@@ -42,22 +48,22 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public string SendingEndpoint
         {
-            get { return message.SendingEndpoint.Name; }
+            get { return Message.SendingEndpoint.Name; }
         }
         public string ReceivingEndpoint
         {
-            get { return message.ReceivingEndpoint.Name; }
+            get { return Message.ReceivingEndpoint.Name; }
         }
 
         public bool IsPublished
         {
-            get { return message.MessageIntent == MessageIntent.Publish; }
+            get { return Message.MessageIntent == MessageIntent.Publish; }
         }
         public bool IsTimeout
         {
             get
             {
-                var isTimeoutString = message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
+                var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
                 return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString);
             }
         }
@@ -69,8 +75,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
             get
             {
-                return string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.SagaId))
-                    && !string.IsNullOrEmpty(message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
+                return string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId))
+                    && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
             }
         }
 
@@ -78,7 +84,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
             get
             {
-                var status = message.InvokedSagas == null ? null : message.InvokedSagas.FirstOrDefault();
+                var status = Message.InvokedSagas == null ? null : Message.InvokedSagas.FirstOrDefault();
                 return status != null && status.ChangeStatus == "Completed";
             }
         }
@@ -89,6 +95,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public int MinEndpointIndex { get; private set; }
         public int MaxEndpointIndex { get; private set; }
         public int MessagePopupIndex { get; private set; }
+
+        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand CopyConversationIDCommand { get; private set; }
+        public ICommand CopyMessageURICommand { get; private set; }
+        public ICommand SearchByMessageIDCommand { get; private set; }
 
         private void OnEndpointsChanged()
         {
@@ -119,6 +130,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         private void UpdateIndicies()
         {
+            if (Endpoints == null)
+                return;
+
             SendingEndpointIndex = FindEndpointIndex(Endpoints, SendingEndpoint);
             ReceivingEndpointIndex = FindEndpointIndex(Endpoints, ReceivingEndpoint);
 

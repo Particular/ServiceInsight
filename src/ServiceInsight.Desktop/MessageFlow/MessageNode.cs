@@ -4,8 +4,10 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Input;
     using Mindscape.WpfDiagramming;
     using Models;
+    using ReactiveUI;
 
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
@@ -23,6 +25,17 @@
 
             heightNoEndpoints += HasSaga ? 10 : 0;
             Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+
+            CopyConversationIDCommand = owner.CopyConversationIDCommand;
+            CopyMessageURICommand = owner.CopyMessageURICommand;
+            SearchByMessageIDCommand = owner.SearchByMessageIDCommand;
+            RetryMessageCommand = owner.RetryMessageCommand;
+
+            message.ObservableForProperty(m => m.Status).Subscribe(_ =>
+            {
+                OnPropertyChanged("HasFailed");
+                OnPropertyChanged("HasRetried");
+            });
         }
 
         string ProcessSagaType(StoredMessage message)
@@ -56,33 +69,23 @@
 
         public MessageFlowViewModel Owner { get; private set; }
 
-        public void CopyMessageUri()
-        {
-            Owner.CopyMessageUri(Message);
-        }
+        public ICommand CopyConversationIDCommand { get; private set; }
+        public ICommand CopyMessageURICommand { get; private set; }
+        public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand RetryMessageCommand { get; private set; }
 
-        public void CopyConversationId()
-        {
-            Owner.CopyConversationId(Message);
-        }
+        //public void Retry()
+        //{
+        //    Owner.RetryMessage(Message);
+        //    Message.Status = MessageStatus.RetryIssued;
+        //    OnPropertyChanged("HasFailed");
+        //    OnPropertyChanged("HasRetried");
+        //}
 
-        public void SearchMessage()
-        {
-            Owner.SearchByMessageId(Message, performSearch: true);
-        }
-
-        public void Retry()
-        {
-            Owner.RetryMessage(Message);
-            Message.Status = MessageStatus.RetryIssued;
-            OnPropertyChanged("HasFailed");
-            OnPropertyChanged("HasRetried");
-        }
-
-        public bool CanRetry()
-        {
-            return HasFailed;
-        }
+        //public bool CanRetry()
+        //{
+        //    return HasFailed;
+        //}
 
         public void ShowBody()
         {

@@ -4,7 +4,9 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using Caliburn.Micro;
+    using Common;
     using Core.Settings;
     using Core.UI.ScreenManager;
     using Events;
@@ -54,6 +56,11 @@
             this.settingsProvider = settingsProvider;
             this.messageList = messageList;
             this.endpointExplorer = endpointExplorer;
+
+            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
+            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
+            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
 
             Diagram = new MessageFlowDiagram();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -124,15 +131,10 @@
             ShowEndpoints = !ShowEndpoints;
         }
 
-        public void CopyConversationId(StoredMessage message)
-        {
-            clipboard.CopyTo(message.ConversationId);
-        }
-
-        public void CopyMessageUri(StoredMessage message)
-        {
-            clipboard.CopyTo(serviceControl.CreateServiceInsightUri(message).ToString());
-        }
+        public ICommand CopyConversationIDCommand { get; private set; }
+        public ICommand CopyMessageURICommand { get; private set; }
+        public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand RetryMessageCommand { get; private set; }
 
         public void SearchByMessageId(StoredMessage message, bool performSearch = false)
         {
@@ -140,13 +142,13 @@
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
 
-        public void RetryMessage(StoredMessage message)
-        {
-            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
-            serviceControl.RetryMessage(message.Id);
-            eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
-            eventAggregator.Publish(new WorkFinished());
-        }
+        //public void RetryMessage(StoredMessage message)
+        //{
+        //    eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
+        //    serviceControl.RetryMessage(message.Id);
+        //    eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
+        //    eventAggregator.Publish(new WorkFinished());
+        //}
 
         public void Handle(SelectedMessageChanged @event)
         {
