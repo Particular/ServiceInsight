@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
 {
-    using System.Linq;
     using Desktop.Models;
     using Services;
     using UI.Parts;
@@ -10,14 +9,36 @@
 
     namespace Particular.ServiceInsight.FunctionalTests.Tests
     {
+        using TestStack.BDDfy;
+        using TestStack.BDDfy.Scanners.StepScanners.Fluent;
+
         public class EndpointExplorerTests : UITest
         {
             public ShellScreen Shell { get; set; }
             public ConnectToServiceControl ConnectToServiceControl { get; set; }
             public EndpointExplorer EndpointExplorer { get; set; }
 
-            [SetUp]
-            public void Initialize()
+            [Test]
+            public void Execute()
+            {
+                this.Given(s => s.ThereAreTwoEndpointsAvailable())
+                    .When(s => s.ConnectedToServiceControl())
+                    .Then(s => s.ServiceControlVersionIsDisplayedOnStatusBar())
+                    .And(s => s.EndpointsAreDisplayedInEndpointExplorer())
+                    .BDDfy("Connecting to Service Control and displaying the endpoints");
+            }
+
+            void ServiceControlVersionIsDisplayedOnStatusBar()
+            {
+                Shell.StatusBar.GetStatusMessage().ShouldContain(FakeServiceControl.Version);                
+            }
+
+            void ConnectedToServiceControl()
+            {
+                ConnectToServiceControl.Execute();
+            }
+
+            void ThereAreTwoEndpointsAvailable()
             {
                 var sales = new Endpoint
                 {
@@ -28,31 +49,19 @@
                     Name = "CustomerRelations"
                 };
 
-                TestDataBuilder.EndpointBuilder().WithEndpoints(sales, customerRelations).Build();
+                TestDataBuilder.EndpointBuilder().WithEndpoints(sales, customerRelations).Build();                
             }
 
-            [Test]
-            public void Can_connect_to_fake_service_control_service()
+            void EndpointsAreDisplayedInEndpointExplorer()
             {
-                ConnectToServiceControl.Execute();
+                var connectionNode = EndpointExplorer.GetConnectionNode();
+                connectionNode.Text.ShouldContain(FakeServiceControl.Address);
 
-                Shell.StatusBar.GetStatusMessage().ShouldContain(FakeServiceControl.Version);
-            }
+                var endpointNames = EndpointExplorer.GetEndpointNames();
 
-            [Test]
-            public void Can_see_service_control_address_and_available_endpoint_names_in_explorer()
-            {
-                ConnectToServiceControl.Execute();
-
-                var tree = EndpointExplorer.GetTree();
-                var rootNode = tree.Nodes[0];
-                rootNode.Text.ShouldContain(FakeServiceControl.Address);
-
-                var children = rootNode.Nodes.Select(n => n.Text).ToList();
-
-                children.Count.ShouldBe(2);
-                children.ShouldContain("Sales");
-                children.ShouldContain("CustomerRelations");
+                endpointNames.Count.ShouldBe(2);
+                endpointNames.ShouldContain("Sales");
+                endpointNames.ShouldContain("CustomerRelations");                
             }
         }
     }

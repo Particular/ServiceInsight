@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Windows;
     using System.Windows.Markup;
     using Autofac;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
+    using DevExpress.Xpf.Core;
     using ExtensionMethods;
     using Framework;
     using Framework.Logging;
@@ -23,12 +25,19 @@
             CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();
+            SetupUIAutomation();
 
             LoggingConfig.SetupCaliburnMicroLogging();
 
-            var newHandler = container.Resolve<AppExceptionHandler>();
+            var newHandler = container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
             var defaultHandler = ExceptionHandler.HandleException;
             ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
+        }
+
+        [Conditional("DEBUG")]
+        static void SetupUIAutomation()
+        {
+            ClearAutomationEventsHelper.IsEnabled = false;
         }
 
         private void CreateContainer()

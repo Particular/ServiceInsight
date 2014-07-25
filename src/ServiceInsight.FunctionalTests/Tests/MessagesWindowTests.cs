@@ -5,6 +5,9 @@
     using NUnit.Framework;
     using Services;
     using Shouldly;
+    using TestData;
+    using TestStack.BDDfy;
+    using TestStack.BDDfy.Scanners.StepScanners.Fluent;
     using UI.Parts;
     using UI.Steps;
 
@@ -14,9 +17,23 @@
         public ConnectToServiceControl ConnectToServiceControl { get; set; }
         public EndpointExplorer EndpointExplorer { get; set; }
         public MessagesWindow MessagesWindow { get; set; }
+        
+        [Test]
+        public void Execute()
+        {
+            this.Given(s => s.GivenMessagesAreProcessedBySalesEndpoint())
+                .And(s => s.GivenConnectedToServiceControl())
+                .When(s => s.WhenCheckingMessagesForEndpoint("Sales"))
+                .Then(s => s.ThenShouldSeeEndpointMessagesInMessagesWindow())
+                .BDDfy("Endpoint selected and related messages are displayed");
+        }
 
-        [SetUp]
-        public void Initialize()
+        void GivenConnectedToServiceControl()
+        {
+            ConnectToServiceControl.Execute();
+        }
+
+        void GivenMessagesAreProcessedBySalesEndpoint()
         {
             var messages = new[]
             {
@@ -24,15 +41,20 @@
                 CreateMessage(typeof(CancelOrder))
             };
 
-            TestDataBuilder.EndpointBuilder().Build();
-            TestDataBuilder.MessageBuilder().WithMessages(messages).Build();
+            var salesEndpoint = new Endpoint { Name  = "Sales" };
+            
+            TestDataBuilder.EndpointBuilder().WithEndpoints(salesEndpoint).Build();
+            TestDataBuilder.MessageBuilder(salesEndpoint).WithMessages(messages).Build();
         }
 
-        [Test]
-        public void Shows_single_node_when_a_message_is_sent()
-        {
-            ConnectToServiceControl.Execute();
 
+        void WhenCheckingMessagesForEndpoint(string endpoint)
+        {
+            EndpointExplorer.SelectEndpoint(endpoint);
+        }
+
+        void ThenShouldSeeEndpointMessagesInMessagesWindow()
+        {
             MessagesWindow.GetMessageCount().ShouldBe(2);
         }
 
@@ -49,21 +71,6 @@
                 ProcessingTime = TimeSpan.FromSeconds(3),
                 Status = status
             };
-        }
-
-        public class SubmitOrder
-        {
-            public int OrderNumber { get; set; }
-            public string[] VideoIds { get; set; }
-            public string ClientId { get; set; }
-            public string EncryptedCreditCardNumber { get; set; }
-            public string EncryptedExpirationDate { get; set; }
-        }
-
-        public class CancelOrder
-        {
-            public int OrderNumber { get; set; }
-            public string ClientId { get; set; }
         }
     }
 }

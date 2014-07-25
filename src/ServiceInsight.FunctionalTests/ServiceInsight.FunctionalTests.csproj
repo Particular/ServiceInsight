@@ -70,6 +70,9 @@
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="TestStack.BDDfy">
+      <HintPath>..\packages\TestStack.BDDfy.3.19.1\lib\NET40\TestStack.BDDfy.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -93,6 +96,8 @@
     <Compile Include="Services\TestDataWriter.cs" />
     <Compile Include="Services\Waiter.cs" />
     <Compile Include="Services\TestDataGenerator.cs" />
+    <Compile Include="TestData\CancelOrder.cs" />
+    <Compile Include="TestData\SubmitOrder.cs" />
     <Compile Include="Tests\EndpointExplorerTests.cs" />
     <Compile Include="Tests\MessagesWindowTests.cs" />
     <Compile Include="UI\Parts\EndpointExplorer.cs" />
@@ -123,8 +128,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestData\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

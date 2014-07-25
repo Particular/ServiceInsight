@@ -59,7 +59,16 @@
 
         public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool @ascending = false)
         {
-            return new PagedResult<StoredMessage>();
+            const int PageSize = 10;
+
+            var messages = Get<List<StoredMessage>>(string.Format("{0}-Messages", endpoint.Name));
+            var pagedResult = new PagedResult<StoredMessage>
+            {
+                Result = messages.Skip(pageIndex - 1 * 10).Take(PageSize).ToList(),
+                TotalCount = messages.Count
+            };
+
+            return pagedResult;            
         }
 
         public IEnumerable<StoredMessage> GetConversationById(string conversationId)

@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests
 {
     using System;
+    using System.Diagnostics;
     using System.Reflection;
     using Autofac;
     using Castle.Core.Logging;
@@ -81,8 +82,9 @@
             Container.InjectProperties(this);
             CoreConfiguration.WaitBasedOnHourGlass = false;
             CoreConfiguration.InProc = true;
+            CoreConfiguration.BusyTimeout = 5000;
             CoreConfiguration.FindWindowTimeout = 60000;
-            //TestDataWriter.DeleteAll();
+            TestDataWriter.DeleteAll();
         }
 
         [TestFixtureTearDown]
@@ -90,7 +92,8 @@
         {
             Container.Dispose();
             TryCloseApplication();
-            //TestDataWriter.DeleteAll();
+            
+            if(!Debugger.IsAttached) TestDataWriter.DeleteAll();
         }
 
         void TryCloseApplication()
