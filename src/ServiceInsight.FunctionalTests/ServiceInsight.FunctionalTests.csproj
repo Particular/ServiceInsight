@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="DataBuilders\EndpointBuilder.cs" />
+    <Compile Include="DataBuilders\EndpointListBuilder.cs" />
     <Compile Include="Services\FakeServiceControl.cs" />
     <Compile Include="Services\IAutoRegister.cs" />
     <Compile Include="Services\MessageListBuilder.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="UI\Parts\EndpointExplorer.cs" />
     <Compile Include="UI\Parts\LayoutManager.cs" />
     <Compile Include="UI\Parts\MainMenu.cs" />
+    <Compile Include="UI\Parts\MessagesWindow.cs" />
     <Compile Include="UI\Parts\UIElement.cs" />
     <Compile Include="UI\Parts\ServiceControlConnectionDialog.cs" />
     <Compile Include="UI\Parts\ShellScreen.cs" />

@@ -1,16 +1,15 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Services
 {
     using DataBuilders;
-    using Desktop.Models;
 
     public class TestDataBuilder
     {
-        public static EndpointBuilder EndpointBuilder()
+        public static EndpointListBuilder EndpointBuilder()
         {
-            return new EndpointBuilder();
+            return new EndpointListBuilder();
         }
 
-        public static MessageListBuilder MessageBuilder(Endpoint endpoint = null)
+        public static MessageListBuilder MessageBuilder(string endpoint = null)
         {
             return new MessageListBuilder(endpoint);
         }

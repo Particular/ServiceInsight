@@ -92,8 +92,12 @@
         {
             Container.Dispose();
             TryCloseApplication();
-            
-            if(!Debugger.IsAttached) TestDataWriter.DeleteAll();
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+            if (!Debugger.IsAttached) TestDataWriter.DeleteAll();
         }
 
         void TryCloseApplication()

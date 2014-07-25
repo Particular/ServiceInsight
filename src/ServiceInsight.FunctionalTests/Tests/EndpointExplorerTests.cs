@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
 {
-    using Desktop.Models;
     using Services;
     using UI.Parts;
     using UI.Steps;
@@ -19,13 +18,13 @@
             public EndpointExplorer EndpointExplorer { get; set; }
 
             [Test]
-            public void Execute()
+            public void ConnectingToServiceControlAndDisplayingTheEndpoints()
             {
                 this.Given(s => s.ThereAreTwoEndpointsAvailable())
                     .When(s => s.ConnectedToServiceControl())
                     .Then(s => s.ServiceControlVersionIsDisplayedOnStatusBar())
                     .And(s => s.EndpointsAreDisplayedInEndpointExplorer())
-                    .BDDfy("Connecting to Service Control and displaying the endpoints");
+                    .BDDfy();
             }
 
             void ServiceControlVersionIsDisplayedOnStatusBar()
@@ -40,16 +39,7 @@
 
             void ThereAreTwoEndpointsAvailable()
             {
-                var sales = new Endpoint
-                {
-                    Name = "Sales"
-                };
-                var customerRelations = new Endpoint
-                {
-                    Name = "CustomerRelations"
-                };
-
-                TestDataBuilder.EndpointBuilder().WithEndpoints(sales, customerRelations).Build();                
+                TestDataBuilder.EndpointBuilder().WithEndpoints("Sales", "CustomerRelations").Build();                
             }
 
             void EndpointsAreDisplayedInEndpointExplorer()

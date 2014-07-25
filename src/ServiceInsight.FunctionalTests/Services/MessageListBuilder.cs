@@ -6,9 +6,9 @@
     public class MessageListBuilder
     {
         List<StoredMessage> messagesList;
-        Endpoint endpoint;
+        string endpoint;
 
-        public MessageListBuilder(Endpoint endpoint = null)
+        public MessageListBuilder(string endpoint = null)
         {
             this.endpoint = endpoint;
             messagesList = new List<StoredMessage>();
@@ -22,7 +22,7 @@
 
         public void Build()
         {
-            var outputFile = endpoint != null ? string.Format("{0}-Messages", endpoint.Name) : "Messages";
+            var outputFile = endpoint != null ? string.Format("{0}-Messages", endpoint) : "Messages";
             TestDataWriter.Write(outputFile, messagesList);
         }
     }

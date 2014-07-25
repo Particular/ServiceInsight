@@ -52,20 +52,4 @@
             endpointNode.Click();
         }
     }
-
-    public class MessagesWindow : UIElement
-    {
-        public MessagesWindow(Window mainWindow) : base(mainWindow)
-        {
-        }
-
-        public int GetMessageCount()
-        {
-            var barManager = GetByAutomationId<GroupBox>("BarManager");
-            var grid = barManager.Get<ListView>(SearchCriteria.ByAutomationId("grid"));
-
-            return grid.Rows.Count;
-
-        }
-    }
 }
