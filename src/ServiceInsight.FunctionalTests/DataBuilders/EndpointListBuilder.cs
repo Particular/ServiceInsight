@@ -7,22 +7,28 @@ namespace Particular.ServiceInsight.FunctionalTests.DataBuilders
 
     public class EndpointListBuilder
     {
-        private List<Endpoint> defaultEndpoints;
+        private List<Endpoint> endpoints;
 
         public EndpointListBuilder()
         {
-            defaultEndpoints = new List<Endpoint>();
+            endpoints = new List<Endpoint>();
         }
 
-        public EndpointListBuilder WithEndpoints(params string[] endpoints)
+        public EndpointListBuilder WithEndpoints(params string[] endpointList)
         {
-            defaultEndpoints = new List<Endpoint>(endpoints.Select(e => new Endpoint { Name = e }));
+            endpoints.AddRange(endpointList.Select(e => new Endpoint { Name = e }));
+            return this;
+        }
+
+        public EndpointListBuilder WithEndpoints(params Endpoint[] endpointList)
+        {
+            endpoints.AddRange(endpointList);
             return this;
         }
 
         public void Build()
         {
-            TestDataWriter.Write("GetEndpoints", defaultEndpoints);
+            TestDataWriter.Write("GetEndpoints", endpoints);
         }
     }
 }

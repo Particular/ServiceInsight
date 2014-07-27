@@ -73,7 +73,8 @@
 
         public IEnumerable<StoredMessage> GetConversationById(string conversationId)
         {
-            return new List<StoredMessage>();
+            var messages = Get<List<StoredMessage>>("Conversation-Messages");
+            return new List<StoredMessage>(messages);
         }
 
         public IEnumerable<Endpoint> GetEndpoints()

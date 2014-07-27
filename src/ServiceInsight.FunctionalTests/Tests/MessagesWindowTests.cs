@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
 {
-    using System;
     using Desktop.Models;
     using NUnit.Framework;
     using Services;
@@ -56,9 +55,11 @@
 
         void GivenMessagesAreSentToTheEndpoint()
         {
-            TestDataBuilder.MessageBuilder("Sales")
-                           .WithMessages(CreateMessage(typeof(SubmitOrder)), 
-                                         CreateMessage(typeof(CancelOrder), MessageStatus.Failed))
+            var orderSubmittedMessage = TestDataBuilder.MessageBuilder().WithMessageType(typeof(SubmitOrder)).Build();
+            var orderCancelledMessage = TestDataBuilder.MessageBuilder().WithMessageType(typeof(CancelOrder)).WithMessageStatus(MessageStatus.Failed).Build();
+
+            TestDataBuilder.MessageListBuilder("Sales")
+                           .WithMessages(orderSubmittedMessage, orderCancelledMessage)
                            .Build();
         }
 
@@ -90,21 +91,6 @@
         void ThenShouldSeeEndpointMessagesInMessagesWindow(int count)
         {
             MessagesWindow.GetMessageCount().ShouldBe(count);
-        }
-
-        StoredMessage CreateMessage(Type messageType, MessageStatus status = MessageStatus.Successful)
-        {
-            return new StoredMessage
-            {
-                Id = Guid.NewGuid().ToString(),
-                MessageId = Guid.NewGuid().ToString(),
-                MessageType = messageType.FullName,
-                TimeSent = DateTime.Now,
-                CriticalTime = TimeSpan.FromSeconds(5),
-                DeliveryTime = TimeSpan.FromSeconds(4),
-                ProcessingTime = TimeSpan.FromSeconds(3),
-                Status = status
-            };
         }
     }
 }

@@ -2,10 +2,12 @@
 {
     using System.Threading;
     using System.Windows;
+    using System.Windows.Automation;
     using Shouldly;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
+    using TestStack.White.UIItems.WPFUIItems;
 
     public class LayoutManager : UIElement
     {
@@ -42,6 +44,42 @@
             endpointExplorer.ShouldNotBe(null);
 
             Dock(endpointExplorer);
+        }
+
+        public void SelectFlowDiagramTab()
+        {
+            SelectTab("MessageFlow");
+        }
+
+        public void SelectSagaTab()
+        {
+            SelectTab("SagaWindow");
+        }
+
+        public void SelectHeadersTab()
+        {
+            SelectTab("MessageHeaders");
+        }
+
+        public void SelectBodyTab()
+        {
+            SelectTab("MessageBody");
+        }
+
+        public void SelectLogsTab()
+        {
+            SelectTab("LogWindow");
+        }
+
+        private void SelectTab(string automationId)
+        {
+            var tabbedGroup = barManager.Get(SearchCriteria.ByControlType(ControlType.Tab).AndAutomationId("MainTabbedView"));
+            tabbedGroup.ShouldNotBe(null);
+
+            var tabToSelect = tabbedGroup.Get<Button>(automationId + "TabButtonId");
+            tabToSelect.ShouldNotBe(null);
+
+            tabToSelect.Click();
         }
     }
 }

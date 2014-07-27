@@ -86,21 +86,29 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBuilders\ConversationBuilder.cs" />
+    <Compile Include="Extensions\MessageBuilder.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="DataBuilders\EndpointListBuilder.cs" />
     <Compile Include="Services\FakeServiceControl.cs" />
     <Compile Include="Services\IAutoRegister.cs" />
-    <Compile Include="Services\MessageListBuilder.cs" />
+    <Compile Include="DataBuilders\MessageListBuilder.cs" />
     <Compile Include="Services\NameGenerator.cs" />
     <Compile Include="TestConfiguration.cs" />
     <Compile Include="Services\TestDataWriter.cs" />
     <Compile Include="Services\Waiter.cs" />
     <Compile Include="Services\TestDataGenerator.cs" />
     <Compile Include="TestData\CancelOrder.cs" />
+    <Compile Include="TestData\ClientBecamePreferred.cs" />
+    <Compile Include="TestData\OrderAccepted.cs" />
+    <Compile Include="TestData\OrderPlaced.cs" />
     <Compile Include="TestData\SubmitOrder.cs" />
     <Compile Include="Tests\EndpointExplorerTests.cs" />
+    <Compile Include="Tests\FlowDiagramTests.cs" />
     <Compile Include="Tests\MessagesWindowTests.cs" />
     <Compile Include="UI\Parts\EndpointExplorer.cs" />
+    <Compile Include="UI\Parts\GridColumn.cs" />
+    <Compile Include="UI\Parts\GridPatternHelper.cs" />
     <Compile Include="UI\Parts\LayoutManager.cs" />
     <Compile Include="UI\Parts\MainMenu.cs" />
     <Compile Include="UI\Parts\MessagesWindow.cs" />
@@ -110,7 +118,7 @@
     <Compile Include="UI\Parts\StatusBar.cs" />
     <Compile Include="UI\Steps\ConnectToServiceControl.cs" />
     <Compile Include="UI\Steps\IStep.cs" />
-    <Compile Include="UI\Steps\DockLayoutWindowToRight.cs" />
+    <Compile Include="UI\Steps\DockLayoutWindowToLeft.cs" />
     <Compile Include="UITest.cs" />
   </ItemGroup>
   <ItemGroup>

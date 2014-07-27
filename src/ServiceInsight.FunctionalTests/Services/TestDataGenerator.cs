@@ -9,9 +9,19 @@
             return new EndpointListBuilder();
         }
 
-        public static MessageListBuilder MessageBuilder(string endpoint = null)
+        public static MessageListBuilder MessageListBuilder(string endpoint = null)
         {
             return new MessageListBuilder(endpoint);
+        }
+
+        public static MessageBuilder MessageBuilder()
+        {
+            return new MessageBuilder();
+        }
+
+        public static ConversationBuilder ConversationBuilder()
+        {
+            return new ConversationBuilder();
         }
     }
 }

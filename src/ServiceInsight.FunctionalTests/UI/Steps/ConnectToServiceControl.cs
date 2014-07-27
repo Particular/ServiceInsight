@@ -19,7 +19,8 @@
             Shell.MainMenu.ConnectToServiceControl.Click();
 
             Dialog.Activate();
-            Dialog.ServiceUrl.EditableText = "http://" + FakeServiceControl.Address;
+            Dialog.ServiceUrl.Focus();
+            Keyboard.Enter("http://" + FakeServiceControl.Address);
             Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.DELETE); //NOTE: To delete any auto-completed text on the dropdown
             Dialog.Okay.Click();
 

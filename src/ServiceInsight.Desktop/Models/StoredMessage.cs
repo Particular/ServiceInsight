@@ -48,7 +48,7 @@
         {
             get
             {
-                return GetHeaderByKey("NServiceBus.RelatedTo");
+                return GetHeaderByKey(MessageHeaderKeys.RelatedTo);
             }
         }
 
@@ -56,7 +56,7 @@
         {
             get
             {
-                return GetHeaderByKey("NServiceBus.ContentType");
+                return GetHeaderByKey(MessageHeaderKeys.ContentType);
             }
         }
 
@@ -64,8 +64,7 @@
 
         public List<StoredMessageHeader> Headers
         {
-            get;
-            set;
+            get; set;
         }
 
         public List<SagaInfo> Sagas
@@ -99,7 +98,7 @@
 
         public string GetHeaderByKey(string key)
         {
-            //Note: Some keys start with NServiceBus, some don't
+            //NOTE: Some keys start with NServiceBus, some don't
             var keyWithPrefix = "NServiceBus." + key;
             var pair = Headers.FirstOrDefault(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
                                                    x.Key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));

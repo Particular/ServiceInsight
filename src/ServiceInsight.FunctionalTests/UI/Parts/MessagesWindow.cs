@@ -1,23 +1,8 @@
 namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Automation;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
-
-    public class GridColumn
-    {
-        public int Index { get; private set; }
-        public string Name { get; private set; }
-
-        public GridColumn(int index, string name)
-        {
-            Index = index;
-            Name = name;
-        }
-    }
 
     public class MessagesWindow : UIElement
     {
@@ -53,12 +38,20 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
             return grid.Rows.Count;
         }
 
-        public string GetCellValue(int row, GridColumn column)
+        public string GetCellValue(int rowIndex, GridColumn column)
         {
             var grid = GetGrid();
             var element = grid.AutomationElement;
             
-            return element.GetCellValue(row, column.Index);
+            return element.GetCellValue(rowIndex, column.Index);
+        }
+
+        public void SelectRow(int rowIndex)
+        {
+            var grid = GetGrid();
+            var row = grid.Rows[rowIndex];
+            
+            row.Select();
         }
 
         ListView GetGrid()
@@ -68,17 +61,4 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
             return grid;
         }
     }
-
-    public static class GridPatternHelper
-    {
-        public static string GetCellValue(this AutomationElement grid, int row, int col)
-        {
-            var gridPattern = (GridPattern)grid.GetCurrentPattern(GridPattern.Pattern);
-            var item = gridPattern.GetItem(row, col);
-            var valuePattern = (ValuePattern)item.GetCurrentPattern(ValuePattern.Pattern);
-            
-            return valuePattern.Current.Value;
-        }
-    }
-
 }

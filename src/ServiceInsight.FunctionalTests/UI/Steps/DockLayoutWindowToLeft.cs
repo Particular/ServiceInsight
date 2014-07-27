@@ -2,7 +2,7 @@
 {
     using Parts;
 
-    public class DockLayoutWindowToRight : IStep
+    public class DockLayoutWindowToLeft : IStep
     {
         public ShellScreen Shell { get; set; }
 
