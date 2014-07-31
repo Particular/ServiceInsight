@@ -10,7 +10,7 @@
     using UI.Parts;
     using UI.Steps;
 
-    public class MessagesWindowTests : UITest
+    public class MessagesWindowTests : ShellTests
     {
         public ShellScreen Shell { get; set; }
         public ConnectToServiceControl ConnectToServiceControl { get; set; }

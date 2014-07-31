@@ -77,7 +77,7 @@
             return builder.Build();
         }
 
-        protected void OnApplicationInitialized()
+        protected virtual void OnApplicationInitialized()
         {
             Container.InjectProperties(this);
             CoreConfiguration.WaitBasedOnHourGlass = false;

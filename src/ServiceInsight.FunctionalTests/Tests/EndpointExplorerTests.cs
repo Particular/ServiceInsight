@@ -11,7 +11,7 @@
         using TestStack.BDDfy;
         using TestStack.BDDfy.Scanners.StepScanners.Fluent;
 
-        public class EndpointExplorerTests : UITest
+        public class EndpointExplorerTests : ShellTests
         {
             public ShellScreen Shell { get; set; }
             public ConnectToServiceControl ConnectToServiceControl { get; set; }

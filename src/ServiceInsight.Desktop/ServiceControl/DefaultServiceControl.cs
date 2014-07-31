@@ -57,7 +57,7 @@
             LogRequest(request);
 
             var response = CreateClient().Execute(request);
-            return ProcessResponse(restResponse => restResponse.Headers.First(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(), response);
+            return ProcessResponse(restResponse => restResponse.Headers.Single(x => x.Name == ServiceControlHeaders.ParticularVersion).Value.ToString(), response);
         }
 
         public void RetryMessage(string messageId)

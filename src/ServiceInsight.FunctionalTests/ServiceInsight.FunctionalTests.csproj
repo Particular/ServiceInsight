@@ -106,6 +106,7 @@
     <Compile Include="Tests\EndpointExplorerTests.cs" />
     <Compile Include="Tests\FlowDiagramTests.cs" />
     <Compile Include="Tests\MessagesWindowTests.cs" />
+    <Compile Include="Tests\ShellTests.cs" />
     <Compile Include="UI\Parts\EndpointExplorer.cs" />
     <Compile Include="UI\Parts\GridColumn.cs" />
     <Compile Include="UI\Parts\GridPatternHelper.cs" />

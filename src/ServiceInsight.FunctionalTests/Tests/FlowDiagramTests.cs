@@ -9,7 +9,7 @@
     using UI.Parts;
     using UI.Steps;
 
-    public class FlowDiagramTests : UITest
+    public class FlowDiagramTests : ShellTests
     {
         public ShellScreen Shell { get; set; }
         public ConnectToServiceControl ConnectToServiceControl { get; set; }

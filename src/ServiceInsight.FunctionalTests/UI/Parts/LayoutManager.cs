@@ -31,7 +31,7 @@
 
         void Dock(IUIItem item)
         {
-            //NOTE: Workaround. Can not find dockmanager's context menu
+            //TODO: Workaround. Can not find dockmanager's context menu. Try to remove as it should have been fixed now.
             item.RightClick();
             Mouse.Location = new Point(Mouse.Location.X + 10, Mouse.Location.Y + 10); //First item in the menu
             Mouse.Click();

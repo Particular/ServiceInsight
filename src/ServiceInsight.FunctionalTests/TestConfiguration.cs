@@ -27,6 +27,7 @@
                 FileName = app,
                 UseShellExecute = false,
                 CreateNoWindow = true,
+                Arguments = "Execute?ResetLayout=True",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
             };

@@ -22,9 +22,9 @@
         public MessageBuilder()
         {
             messageId = Guid.NewGuid().ToString();
-            criticalTime = TimeSpan.FromSeconds(3);
+            criticalTime = TimeSpan.FromSeconds(5);
+            deliveryTime = TimeSpan.FromSeconds(4);
             processingTime = TimeSpan.FromSeconds(3);
-            deliveryTime = TimeSpan.FromSeconds(3);
             messageType = typeof(SubmitOrder);
             messageStatus = MessageStatus.Successful;
             timeSent = DateTime.Now.AddMinutes(-5);
