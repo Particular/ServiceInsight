@@ -1,20 +1,15 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests
+﻿namespace Particular.ServiceInsight.FunctionalTests.Framework
 {
     using System.Diagnostics;
-    using System.IO;
     using TestStack.White;
 
     public class ApplicationLauncher
     {
-        const string ApplicationProcess = "Particular.ServiceInsight.exe";
-
-        public static Application LaunchApplication()
+        public static Application LaunchApplication(string processPath)
         {
-            var app = Path.Combine(TestConfiguration.ApplicationPath, ApplicationProcess);
-
             var processStartInfo = new ProcessStartInfo
             {
-                FileName = app,
+                FileName = processPath,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 Arguments = "Execute?ResetLayout=True", //to restore to default layout for each test

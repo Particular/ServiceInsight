@@ -1,18 +1,12 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
     using Shouldly;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
-    using TestStack.White.UIItems.WindowItems;
     using TestStack.White.UIItems.WPFUIItems;
 
     public class MainMenu : UIElement
     {
-        public MainMenu(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
-
         public void ClickToolsMenu()
         {
             GetMenu("ToolsMenu");

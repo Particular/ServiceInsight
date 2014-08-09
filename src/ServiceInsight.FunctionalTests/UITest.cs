@@ -7,6 +7,7 @@
     using System.Threading;
     using Autofac;
     using Castle.Core.Logging;
+    using Framework;
     using NUnit.Framework;
     using Services;
     using TestStack.White;
@@ -34,8 +35,6 @@
 
         public Waiter Wait { get; set; }
 
-        public ILoggerFactory LoggerFactory { get; set; }
-
         public ILogger Logger { get; set; }
 
         [TestFixtureSetUp]
@@ -44,7 +43,7 @@
             try
             {
                 ConfigureLogging();
-                Container = CreateContainer();
+                CreateContainer();
                 OnApplicationInitializing();
             }
             catch (Exception ex)
@@ -74,25 +73,24 @@
 
         protected string GetTestName()
         {
-            var name = TestContext.CurrentContext.Test.FullName;
-            var nameParts = name.Split('.');
-
-            return string.Format("{0}.{1}", nameParts[nameParts.Length - 2], nameParts[nameParts.Length - 1]);
+            return TestContext.CurrentContext.Test.Name;
         }
 
         void ConfigureLogging()
         {
-            LoggerFactory = new NLogFactory();
-            CoreAppXmlConfiguration.Instance.LoggerFactory = LoggerFactory;
+            CoreAppXmlConfiguration.Instance.LoggerFactory = new NLogFactory();
+            Logger = CoreAppXmlConfiguration.Instance.LoggerFactory.Create(GetTestName());
         }
 
-        IContainer CreateContainer()
+        void CreateContainer()
         {
             var builder = new ContainerBuilder();
+
             builder.RegisterAssemblyTypes(TestAssembly)
                    .Where(c => c.IsAssignableTo<IAutoRegister>())
                    .AsSelf()
                    .PropertiesAutowired();
+            
             builder.RegisterAssemblyTypes(TestAssembly)
                    .Where(c => c.IsAssignableTo<UIElement>())
                    .AsSelf()
@@ -102,12 +100,11 @@
             builder.RegisterInstance(TestStack.White.InputDevices.Keyboard.Instance).As<IKeyboard>();
             builder.RegisterInstance(TestStack.White.InputDevices.Mouse.Instance).As<IMouse>();
             builder.RegisterInstance(CoreAppXmlConfiguration.Instance).As<ICoreConfiguration>();
-            builder.Register(c => ApplicationLauncher.LaunchApplication());
+            builder.RegisterInstance(Logger);
+            builder.Register(c => ApplicationLauncher.LaunchApplication(TestConfiguration.ApplicationExecutablePath));
             builder.Register(c => GetMainWindow(c.Resolve<Application>()));
-            builder.RegisterInstance(LoggerFactory);
-            builder.Register(c => c.Resolve<ILoggerFactory>().Create(GetType()));
-
-            return builder.Build();
+            
+            Container = builder.Build();
         }
 
         void OnApplicationInitializing()

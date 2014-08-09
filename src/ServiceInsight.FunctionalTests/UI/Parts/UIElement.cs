@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
     using Castle.Core.Logging;
     using TestStack.White;
     using TestStack.White.InputDevices;
@@ -10,13 +9,8 @@
 
     public abstract class UIElement
     {
-        protected UIElement(Lazy<Window> mainWindow)
-        {
-            MainWindow = mainWindow.Value;
-        }
-
-        public Window MainWindow { get; private set; }
-        public Application App { get; set; }
+        public Window MainWindow { get; set; }
+        public Application Application { get; set; }
         public ILogger Logger { get; set; }
         public IKeyboard Keyboard { get; set; }
         public IMouse Mouse { get; set; }

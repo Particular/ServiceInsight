@@ -1,19 +1,13 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
     using System.Windows.Automation;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
-    using TestStack.White.UIItems.WindowItems;
     using TestStack.White.UIItems.WindowStripControls;
     using TestStack.White.UIItems.WPFUIItems;
 
     public class StatusBar : UIElement
     {
-        public StatusBar(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
-
         public string GetStatusMessage()
         {
             var barManager = GetByAutomationId<GroupBox>("BarManager");

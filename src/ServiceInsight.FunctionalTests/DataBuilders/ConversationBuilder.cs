@@ -1,7 +1,8 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Services
+﻿namespace Particular.ServiceInsight.FunctionalTests.DataBuilders
 {
     using System.Collections.Generic;
     using Desktop.Models;
+    using Services;
 
     public class ConversationBuilder
     {

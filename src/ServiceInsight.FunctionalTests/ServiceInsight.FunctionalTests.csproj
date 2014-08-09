@@ -89,7 +89,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationLauncher.cs" />
+    <Compile Include="Framework\ApplicationLauncher.cs" />
     <Compile Include="DataBuilders\ConversationBuilder.cs" />
     <Compile Include="Extensions\MessageBuilder.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
@@ -114,12 +114,12 @@
     <Compile Include="Tests\MessagesWindowTests.cs" />
     <Compile Include="Tests\ShellTests.cs" />
     <Compile Include="UI\Parts\EndpointExplorer.cs" />
-    <Compile Include="UI\Parts\GridColumn.cs" />
+    <Compile Include="Framework\GridColumn.cs" />
     <Compile Include="UI\Parts\GridPatternHelper.cs" />
     <Compile Include="UI\Parts\LayoutManager.cs" />
     <Compile Include="UI\Parts\MainMenu.cs" />
     <Compile Include="UI\Parts\MessagesWindow.cs" />
-    <Compile Include="Framework\UIElement.cs" />
+    <Compile Include="UI\Parts\UIElement.cs" />
     <Compile Include="UI\Parts\ServiceControlConnectionDialog.cs" />
     <Compile Include="UI\Parts\ShellScreen.cs" />
     <Compile Include="UI\Parts\StatusBar.cs" />

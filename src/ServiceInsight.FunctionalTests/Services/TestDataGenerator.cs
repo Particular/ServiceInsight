@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.Services
 {
     using DataBuilders;
+    using Extensions;
 
     public class TestDataBuilder
     {

@@ -1,33 +1,35 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Windows;
     using System.Windows.Automation;
     using Shouldly;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
-    using TestStack.White.UIItems.WindowItems;
     using TestStack.White.UIItems.WPFUIItems;
 
     public class LayoutManager : UIElement
     {
-        GroupBox barManager;
-        IUIItem[] autoHideGroups;
-
-        public LayoutManager(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-            barManager = MainWindow.Get<GroupBox>("BarManager");
-            autoHideGroups = barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
-        }
-
         public void DockAutoHideGroups()
         {
-            foreach (var item in autoHideGroups)
+            foreach (var item in AutoHideGroups())
             {
                 Dock(item);
                 Thread.Sleep(1000);
             }
+        }
+
+        GroupBox BarManager()
+        {
+            var barManager = MainWindow.Get<GroupBox>("BarManager");
+            barManager.ShouldNotBe(null);
+            return barManager;
+        }
+
+        IEnumerable<IUIItem> AutoHideGroups()
+        {
+            return BarManager().GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
         }
 
         void Dock(IUIItem item)
@@ -40,8 +42,7 @@
 
         public void ActivateEndpointExplorer()
         {
-            var endpointExplorer = barManager.Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
-
+            var endpointExplorer = BarManager().Get<GroupBox>(SearchCriteria.ByClassName("LayoutPanel").AndAutomationId("EndpointExplorer"));
             endpointExplorer.ShouldNotBe(null);
 
             Dock(endpointExplorer);
@@ -74,7 +75,7 @@
 
         private void SelectTab(string automationId)
         {
-            var tabbedGroup = barManager.Get(SearchCriteria.ByControlType(ControlType.Tab).AndAutomationId("MainTabbedView"));
+            var tabbedGroup = BarManager().Get(SearchCriteria.ByControlType(ControlType.Tab).AndAutomationId("MainTabbedView"));
             tabbedGroup.ShouldNotBe(null);
 
             var tabToSelect = tabbedGroup.Get<Button>(automationId + "TabButtonId");

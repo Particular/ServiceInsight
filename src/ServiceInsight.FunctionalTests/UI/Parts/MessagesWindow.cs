@@ -1,9 +1,8 @@
 namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
+    using Framework;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
-    using TestStack.White.UIItems.WindowItems;
 
     public class MessagesWindow : UIElement
     {
@@ -29,10 +28,6 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
             }
         }
 
-        public MessagesWindow(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
-
         public int GetMessageCount()
         {
             var grid = GetGrid();
@@ -41,6 +36,7 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 
         public string GetCellValue(int rowIndex, GridColumn column)
         {
+            //TODO: Remove direct use of automation
             var grid = GetGrid();
             var element = grid.AutomationElement;
             

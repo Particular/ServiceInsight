@@ -2,15 +2,10 @@
 {
     using System;
     using System.Windows.Automation;
-    using TestStack.White.UIItems.WindowItems;
     using TestStack.White.Utility;
 
     public class ShellScreen : UIElement
     {
-        public ShellScreen(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
-
         public MainMenu MainMenu { get; set; }
 
         public LayoutManager LayoutManager { get; set; }

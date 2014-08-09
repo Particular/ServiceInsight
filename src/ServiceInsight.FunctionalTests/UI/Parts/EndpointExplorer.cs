@@ -7,14 +7,9 @@
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.TreeItems;
-    using TestStack.White.UIItems.WindowItems;
 
     public class EndpointExplorer : UIElement
     {
-        public EndpointExplorer(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
-
         public Tree GetTree()
         {
             var barManager = GetByAutomationId<GroupBox>("BarManager");

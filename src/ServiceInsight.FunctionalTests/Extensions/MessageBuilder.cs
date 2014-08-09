@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.DataBuilders
+﻿namespace Particular.ServiceInsight.FunctionalTests.Extensions
 {
     using System;
     using System.Collections.Generic;

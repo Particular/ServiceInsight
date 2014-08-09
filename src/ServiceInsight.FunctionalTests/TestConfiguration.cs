@@ -8,6 +8,8 @@
     {
         public const int ExtraIdleWaitSecs = 3;
 
+        const string ApplicationProcess = "Particular.ServiceInsight.exe";
+
         static TestConfiguration()
         {
             ApplicationPath = GetApplicationPath();
@@ -31,5 +33,10 @@
         public static string LogsFolder { get; private set; }
 
         public static string ApplicationPath { get; private set; }
+
+        public static string ApplicationExecutablePath
+        {
+            get { return Path.Combine(ApplicationPath, ApplicationProcess); }
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
-    using System;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.ListBoxItems;
@@ -9,10 +8,6 @@
     public class ServiceControlConnectionDialog : UIElement
     {
         Window dialog;
-
-        public ServiceControlConnectionDialog(Lazy<Window> mainWindow) : base(mainWindow)
-        {
-        }
 
         public void Activate()
         {
