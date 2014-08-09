@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
+    using System;
     using System.Threading;
     using System.Windows;
     using System.Windows.Automation;
@@ -14,9 +15,9 @@
         GroupBox barManager;
         IUIItem[] autoHideGroups;
 
-        public LayoutManager(Window mainWindow) : base(mainWindow)
+        public LayoutManager(Lazy<Window> mainWindow) : base(mainWindow)
         {
-            barManager = mainWindow.Get<GroupBox>("BarManager");
+            barManager = MainWindow.Get<GroupBox>("BarManager");
             autoHideGroups = barManager.GetMultiple(SearchCriteria.ByClassName("AutoHideGroup"));
         }
 

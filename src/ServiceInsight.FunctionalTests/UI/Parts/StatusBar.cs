@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
 {
+    using System;
     using System.Windows.Automation;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
@@ -9,7 +10,7 @@
 
     public class StatusBar : UIElement
     {
-        public StatusBar(Window mainWindow) : base(mainWindow)
+        public StatusBar(Lazy<Window> mainWindow) : base(mainWindow)
         {
         }
 

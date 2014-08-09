@@ -11,7 +11,7 @@
 
     public class EndpointExplorer : UIElement
     {
-        public EndpointExplorer(Window mainWindow) : base(mainWindow)
+        public EndpointExplorer(Lazy<Window> mainWindow) : base(mainWindow)
         {
         }
 

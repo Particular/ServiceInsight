@@ -7,7 +7,7 @@
 
     public class ShellScreen : UIElement
     {
-        public ShellScreen(Window mainWindow) : base(mainWindow)
+        public ShellScreen(Lazy<Window> mainWindow) : base(mainWindow)
         {
         }
 

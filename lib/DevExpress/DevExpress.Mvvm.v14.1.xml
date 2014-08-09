@@ -1,0 +1,4099 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.Mvvm.v14.1</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.PropertyLocation">
+
+            <summary>
+                <para>Lists values that specify whether the property is positioned before or after properties without the specified location. 
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.PropertyLocation.AfterPropertiesWithoutSpecifiedLocation">
+            <summary>
+                <para>The property is positioned after properties without the specified location.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.PropertyLocation.BeforePropertiesWithoutSpecifiedLocation">
+            <summary>
+                <para>The property is positioned before properties without the specified location.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode">
+
+            <summary>
+                <para>Lists the values used to specify the formatting applied to date-time values. 
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode.Date">
+            <summary>
+                <para>Displays a date.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode.DateTime">
+            <summary>
+                <para>Displays a date and time.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode.Time">
+            <summary>
+                <para>Displays a time.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ServiceSearchMode">
+
+            <summary>
+                <para>Lists values that specify whether a search for a service must be carried out within the current service container, or within the current and parent service containers.
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.Mvvm.ServiceSearchMode.LocalOnly">
+            <summary>
+                <para>A search for a service is carried out within the current service container.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.ServiceSearchMode.PreferLocal">
+            <summary>
+                <para>A search for a service is carried out within both the current and parent service containers. A service found in the current container has a higher priority.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.ServiceSearchMode.PreferParents">
+            <summary>
+                <para>A search for a service is carried out within both the current and parent service containers. A service found in parent containers has a higher priority.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.LayoutBuilderBase`2">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute">
+
+            <summary>
+                <para>Provides bindable properties generating functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the BindablePropertyAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute.#ctor(System.Boolean)">
+            <summary>
+                <para>Initializes a new instance of the BindablePropertyAttribute class with the specified settings.
+</para>
+            </summary>
+            <param name="isBindable">
+		<b>true</b>, to make the property bindable; otherwise, <b>false</b>.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute.IsBindable">
+            <summary>
+                <para>Gets whether the property is bindable.
+</para>
+            </summary>
+            <value><b>true</b>, if the property is bindable; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute.OnPropertyChangedMethodName">
+            <summary>
+                <para>Gets or sets the name of the function that is invoked after the property has been changed.
+</para>
+            </summary>
+            <value>A <see cref="T:System.String"/> value that specifies the name of the function.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.BindablePropertyAttribute.OnPropertyChangingMethodName">
+            <summary>
+                <para>Gets or sets the name of the function that is invoked when the property is being changed.
+</para>
+            </summary>
+            <value>A <see cref="T:System.String"/> value that specifies the name of the function.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.DateTimeMaskAttribute">
+
+            <summary>
+                <para>Provides date-time mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DateTimeMaskAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the DateTimeMaskAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.DateTimeMaskAttribute.AutomaticallyAdvanceCaret">
+            <summary>
+                <para>Specifies whether to enable the caret automatic movement feature.
+</para>
+            </summary>
+            <value><b>true</b>, to enable the caret automatic movement feature; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.DateTimeMaskAttribute.Culture">
+            <summary>
+                <para>Specifies the name of the culture whose settings are used by the mask.
+</para>
+            </summary>
+            <value>A culture's name.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute">
+
+            <summary>
+                <para>Provides attributes for the instance initializer builder.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.#ctor(System.Type)">
+            <summary>
+                <para>Initializes a new instance of the InstanceInitializerAttribute class.
+</para>
+            </summary>
+            <param name="type">
+		A <see cref="T:System.Type"/> object that specifies the instance type.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.#ctor(System.Type,System.String)">
+            <summary>
+                <para>Initializes a new instance of the InstanceInitializerAttribute class.
+</para>
+            </summary>
+            <param name="type">
+		A <see cref="T:System.Type"/> object that specifies the instance type.
+
+            </param>
+            <param name="name">
+		A <see cref="T:System.String"/> value that specifies the instance name.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.CreateInstance">
+            <summary>
+                <para>Creates an instance of the specified type.
+</para>
+            </summary>
+            <returns>The created instance.
+</returns>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.Name">
+            <summary>
+                <para>Gets the object name.
+</para>
+            </summary>
+            <value>The object name.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.Type">
+            <summary>
+                <para>Gets the type of object to be created.
+</para>
+            </summary>
+            <value>The type of object to be created.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.InstanceInitializerAttribute.TypeId">
+            <summary>
+                <para>Gets a unique identifier for this attribute.
+</para>
+            </summary>
+            <value>An object that is a unique identifier for the attribute.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IDialogService">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDialogService.ShowDialog(System.Collections.Generic.IEnumerable`1,System.String,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="dialogCommands">
+		 [To be supplied] 
+            </param>
+            <param name="title">
+		 [To be supplied] 
+            </param>
+            <param name="documentType">
+		 [To be supplied] 
+            </param>
+            <param name="viewModel">
+		 [To be supplied] 
+            </param>
+            <param name="parameter">
+		 [To be supplied] 
+            </param>
+            <param name="parentViewModel">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ICurrentWindowService">
+
+            <summary>
+                <para>Provides methods to work with a window.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ICurrentWindowService.Activate">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ICurrentWindowService.Close">
+            <summary>
+                <para>Closes the current window.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ICurrentWindowService.Hide">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ICurrentWindowService.SetWindowState(System.Windows.WindowState)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="state">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ICurrentWindowService.Show">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ContextMenuGroupLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ContextMenuGroupLayoutBuilder`1.EndGroup">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandAttribute">
+
+            <summary>
+                <para>Provides commands generating functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandAttribute.#ctor(System.Boolean)">
+            <summary>
+                <para>Initializes a new instance of the CommandAttribute class with specified settings.
+</para>
+            </summary>
+            <param name="isCommand">
+		<b>true</b>, to generate a command from the method; otherwise, <b>false</b>.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the CommandAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.CommandAttribute.CanExecuteMethodName">
+            <summary>
+                <para>Gets or sets the name of the function that defines whether the command can be executed.
+</para>
+            </summary>
+            <value>A <see cref="T:System.String"/> value that is the function name.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.CommandAttribute.IsCommand">
+            <summary>
+                <para>Gets whether to generate a command from the method.
+</para>
+            </summary>
+            <value><b>true</b>, to generate a command from the method; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.CommandAttribute.Name">
+            <summary>
+                <para>Gets or sets the name of the generated command.
+</para>
+            </summary>
+            <value>A <see cref="T:System.String"/> value that is the name of the generated command.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.CommandAttribute.UseCommandManager">
+            <summary>
+                <para>Gets or sets whether to use a function that manages the command execution.
+</para>
+            </summary>
+            <value><b>true</b>, to use the command manager; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.GroupBuilder`1">
+
+            <summary>
+                <para>Provides methods for building groups.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.GroupBuilder`1.ContainsProperty``1(System.Linq.Expressions.Expression{System.Func`2})">
+            <summary>
+                <para>Configures the specified ViewModel property to be displayed within the group.
+</para>
+            </summary>
+            <param name="propertyExpression">
+		A lambda expression that returns a ViewModel property.
+
+            </param>
+            <returns>The group builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.GroupBuilder`1.EndGroup">
+            <summary>
+                <para>Moves the method call chain from the group builder to the metadata builder.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ISupportServices">
+
+            <summary>
+                <para>Provides a member to access an object containing services.
+</para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.ISupportServices.ServiceContainer">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3">
+
+            <summary>
+                <para>The base class for the data source configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.Description(System.String)">
+            <summary>
+                <para>Configures the description of the property.
+</para>
+            </summary>
+            <param name="description">
+		The property's description.
+
+            </param>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.DisplayName(System.String)">
+            <summary>
+                <para>Configures the display name of the property.
+</para>
+            </summary>
+            <param name="name">
+		The property's display name.
+
+            </param>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.DisplayShortName(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="shortName">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.DoNotScaffold">
+            <summary>
+                <para>Prevents the property from being scaffolded.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.DoNotScaffoldDetailCollection">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.LocatedAt(System.Int32,DevExpress.Mvvm.DataAnnotations.PropertyLocation)">
+            <summary>
+                <para>Specifies the property position.
+</para>
+            </summary>
+            <param name="position">
+		The property position.
+
+            </param>
+            <param name="propertyLocation">
+		A <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyLocation"/> enumeration value that specifies whether the property is positioned before or after properties without the specified location.
+
+            </param>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderBase`3.NotAutoGenerated">
+            <summary>
+                <para>Prevents the property from being autogenerated.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IDocumentManagerService">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocumentManagerService.ActiveDocument">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="E:DevExpress.Mvvm.IDocumentManagerService.ActiveDocumentChanged">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDocumentManagerService.CreateDocument(System.String,System.Object,System.Object,System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="documentType">
+		 [To be supplied] 
+            </param>
+            <param name="viewModel">
+		 [To be supplied] 
+            </param>
+            <param name="parameter">
+		 [To be supplied] 
+            </param>
+            <param name="parentViewModel">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocumentManagerService.Documents">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ViewModelBase">
+
+            <summary>
+                <para>The base class for ViewModels.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ViewModelBase.#ctor">
+            <summary>
+                <para>Initializes a new instance of the ViewModelBase class.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.ViewModelBase.IsInDesignMode">
+            <summary>
+                <para>Gets whether design-time mode is active.
+</para>
+            </summary>
+            <value><b>true</b>, if design-time mode is active; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ServiceContainer">
+
+            <summary>
+                <para>An object that contains services.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.#ctor(System.Object)">
+            <summary>
+                <para>Initializes a new instance of the ServiceContainer class with the specified owner.
+</para>
+            </summary>
+            <param name="owner">
+		An object that will be the owner of the created service container.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.Clear">
+            <summary>
+                <para>Clears services stored in the current service container.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.ServiceContainer.Default">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.GetService``1(System.String,DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="key">
+		 [To be supplied] 
+            </param>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.GetService``1(DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.RegisterService(System.Object)">
+            <summary>
+                <para>Adds the specified service to the current service container.
+</para>
+            </summary>
+            <param name="service">
+		A service to be added to the current service container. 
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ServiceContainer.RegisterService(System.String,System.Object)">
+            <summary>
+                <para>Adds the specified service to the current service container and associates it with a specific key.
+</para>
+            </summary>
+            <param name="key">
+		A key with which a service is associated.
+
+            </param>
+            <param name="service">
+		A service to be added to the service container.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.NavigationViewModelBase">
+
+            <summary>
+                <para>A View Model for Views between which navigation can be organized if they are placed within a <see cref="T:DevExpress.Xpf.WindowsUI.NavigationFrame"/>.
+</para>
+            </summary>
+
+        </member>
+        <member name="T:DevExpress.Mvvm.Messenger">
+
+            <summary>
+                <para>Allows you to send messages and register handlers that will process these messages.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.#ctor">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.#ctor(System.Boolean,DevExpress.Mvvm.Native.IActionInvokerFactory)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="isMultiThreadSafe">
+		 [To be supplied] 
+            </param>
+            <param name="actionInvokerFactory">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.#ctor(System.Boolean,DevExpress.Mvvm.ActionReferenceType)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="isMultiThreadSafe">
+		 [To be supplied] 
+            </param>
+            <param name="actionReferenceType">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.Cleanup">
+            <summary>
+                <para>Removes all references to the actions that belong to non-existing recipients.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.Messenger.Default">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.Register``1(System.Object,System.Object,System.Boolean,System.Action{``0})">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="recipient">
+		 [To be supplied] 
+            </param>
+            <param name="token">
+		 [To be supplied] 
+            </param>
+            <param name="receiveInheritedMessages">
+		 [To be supplied] 
+            </param>
+            <param name="action">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.RequestCleanup">
+            <summary>
+                <para>Executes the <see cref="M:DevExpress.Mvvm.Messenger.Cleanup"/> method asynchronously when the current application is idle.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.Send``1(``0,System.Type,System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="message">
+		 [To be supplied] 
+            </param>
+            <param name="messageTargetType">
+		 [To be supplied] 
+            </param>
+            <param name="token">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.Unregister(System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="recipient">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.Messenger.Unregister``1(System.Object,System.Object,System.Action{``0})">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="recipient">
+		 [To be supplied] 
+            </param>
+            <param name="token">
+		 [To be supplied] 
+            </param>
+            <param name="action">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.BindableBase">
+
+            <summary>
+                <para>Provides support for the INotifyPropertyChanged interface.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.BindableBase.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func`1})">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="expression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="E:DevExpress.Mvvm.BindableBase.PropertyChanged">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ISupportParentViewModel">
+
+            <summary>
+                <para>Provides a member that allows a Main ViewModel to be passed to a Detail ViewModel. In addition, this allows the Main ViewModel's services to be used within the Detail ViewModel.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.ISupportParentViewModel.ParentViewModel">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ToolBarItemAttribute">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarItemAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the ToolBarItemAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ToolBarItemAttribute.Page">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ToolBarItemAttribute.PageGroup">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ISupportParameter">
+
+            <summary>
+                <para>Provides a member that allows data to be passed from a Main to a Detail ViewModel, when these ViewModels are loosely coupled.
+</para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.ISupportParameter.Parameter">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ISplashScreenService">
+
+            <summary>
+                <para>Provides methods to display splash screens.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISplashScreenService.HideSplashScreen">
+            <summary>
+                <para>Hides the splash screen.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.ISplashScreenService.IsSplashScreenActive">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISplashScreenService.SetSplashScreenProgress(System.Double,System.Double)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="progress">
+		 [To be supplied] 
+            </param>
+            <param name="maxProgress">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISplashScreenService.SetSplashScreenState(System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="state">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISplashScreenService.ShowSplashScreen(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="documentType">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.TableGroupContainerLayoutBuilder`1">
+
+            <summary>
+                <para>Provides methods for building table group containers.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.TableGroupContainerLayoutBuilder`1.EndGroupContainer">
+            <summary>
+                <para>Moves the method call chain one level higher.
+</para>
+            </summary>
+            <returns>The table group container builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.TableGroupContainerLayoutBuilder`1.Group(System.String)">
+            <summary>
+                <para>Initializes a group builder.
+</para>
+            </summary>
+            <param name="groupName">
+		A group name.
+
+            </param>
+            <returns>The table group layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.TableGroupContainerLayoutBuilder`1.GroupContainer(System.String)">
+            <summary>
+                <para>Initializes a group container builder.
+</para>
+            </summary>
+            <param name="groupName">
+		A group container name.
+
+            </param>
+            <returns>The table group container layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.ISupportNavigation">
+
+            <summary>
+                <para>Provides members that occur when navigating to an object and when navigating away from it.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISupportNavigation.OnNavigatedFrom">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.ISupportNavigation.OnNavigatedTo">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.NumericMaskAttribute">
+
+            <summary>
+                <para>Provides numeric mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericMaskAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the NumericMaskAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.NumericMaskAttribute.Culture">
+            <summary>
+                <para>Specifies the name of the culture whose settings are used by the mask.
+</para>
+            </summary>
+            <value>A culture's name.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.INavigationService">
+
+            <summary>
+                <para>Provides members to navigate between Views.
+</para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.INavigationService.CanGoBack">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.INavigationService.CanGoForward">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.INavigationService.Current">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.INavigationService.GoBack">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.INavigationService.GoForward">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.INavigationService.Navigate(System.String,System.Object,System.Object)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="target">
+		 [To be supplied] 
+            </param>
+            <param name="param">
+		 [To be supplied] 
+            </param>
+            <param name="parentViewModel">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.INavigationService.Navigate(System.String,System.Object,System.Object,System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="target">
+		 [To be supplied] 
+            </param>
+            <param name="param">
+		 [To be supplied] 
+            </param>
+            <param name="parentViewModel">
+		 [To be supplied] 
+            </param>
+            <param name="saveToJournal">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.MaskBuilderBase`4">
+
+            <summary>
+                <para>Provides base mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MaskBuilderBase`4.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the MaskBuilderBase&lt;T, TProperty, TMaskAttribute, TBuilder&gt; class.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MaskBuilderBase`4.EndMask">
+            <summary>
+                <para>Moves the method call chain from the mask builder to the metadata builder.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IMessenger">
+
+            <summary>
+                <para>Provides methods to send messages and register message handlers.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IMessenger.Register``1(System.Object,System.Object,System.Boolean,System.Action{``0})">
+            <summary>
+                <para>Registers a handler of a specific message type.
+</para>
+            </summary>
+            <param name="recipient">
+		An object that will receive messages.
+
+            </param>
+            <param name="token">
+		An object (marker) that can be used to identify a specific message. <b>null</b> if you want to process messages without tokens.
+<para>
+When sending a message, a token can be assigned to the message via the Send method's parameter. Only message recipients that registered the same token via the Register method are invoked when this message occurs.
+</para>
+
+            </param>
+            <param name="receiveInheritedMessages">
+		<b>true</b> to receive messages of the TMessage type and all derived types; <b>false</b> to receive messages of the TMessage type only.
+
+            </param>
+            <param name="action">
+		An action that will be invoked when the specified message occurs.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IMessenger.Send``1(``0,System.Type,System.Object)">
+            <summary>
+                <para>Sends the specified message.
+</para>
+            </summary>
+            <param name="message">
+		The message of the TMessage type to be sent.
+
+            </param>
+            <param name="messageTargetType">
+		Only recipients of the <i>messageTargetType</i> or inherited type will receive the current message. Set this parameter to <b>null</b> to send a message without an addressee type.
+
+            </param>
+            <param name="token">
+		An object (marker) that can be used to identify a specific message. <b>null</b> if you want to send regular messages (without tokens).
+<para>
+When sending a message, a token can be assigned to the message via the current <i>token</i> parameter. Only message recipients that registered the same token via the Register method are invoked when this message occurs.
+</para>
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IMessenger.Unregister(System.Object)">
+            <summary>
+                <para>Unsubscribes the specified object from receiving any messages.
+</para>
+            </summary>
+            <param name="recipient">
+		An object to be unsubscribed from receiving any messages.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IMessenger.Unregister``1(System.Object,System.Object,System.Action{``0})">
+            <summary>
+                <para>Unsubscribes the specified object's action from being invoked when a specific message occurs.
+</para>
+            </summary>
+            <param name="recipient">
+		An object containing an action to be unsubscribed from receiving the messages of TMessage type.
+
+
+            </param>
+            <param name="token">
+		An object (marker) that was used to identify a specific message when subscribing to it via the Register method. <b>null</b> to unsubscribe from the message regardless of the token assigned to it.
+
+
+            </param>
+            <param name="action">
+		An action to be unsubscribed from receiving messages.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IMessageBoxService">
+
+            <summary>
+                <para>Provides methods to show dialog boxes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IMessageBoxService.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult)">
+            <summary>
+                <para>Displays a message box and returns its result.
+</para>
+            </summary>
+            <param name="messageBoxText">
+		The text to be displayed within the message box.
+
+            </param>
+            <param name="caption">
+		The dialog's title.
+
+            </param>
+            <param name="button">
+		A MessageBoxButton value that specifies which button or buttons to display.
+
+            </param>
+            <param name="icon">
+		A MessageBoxImage value that specifies the icon to display.
+
+            </param>
+            <param name="defaultResult">
+		A MessageBoxResult value that specifies the default result of the message box.
+
+            </param>
+            <returns>A MessageBoxResult value that specifies which button has been clicked to close the message box.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.MaskAttributeBase">
+
+            <summary>
+                <para>Provides base mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.MaskAttributeBase.Mask">
+            <summary>
+                <para>Specifies a mask expression.
+</para>
+            </summary>
+            <value>A string representing a mask expression.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.MaskAttributeBase.UseAsDisplayFormat">
+            <summary>
+                <para>Specifies whether display values are still formatted using the mask when the editor is not focused. This is a dependency property.
+</para>
+            </summary>
+            <value><b>true</b> if the mask settings are used to format display values when the editor is not focused; <b>false</b> if the settings specified by the <see cref="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.DisplayFormatString"/> method are used.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1">
+
+            <summary>
+                <para>The base metadata builder class.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.#ctor">
+            <summary>
+                <para>Initializes a new instance of the MetadataBuilder class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.Command(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="propertyExpression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.CommandFromMethod(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="methodExpression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.DataFormLayout">
+            <summary>
+                <para>Initializes a data form layout builder.
+</para>
+            </summary>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.Group(System.String)">
+            <summary>
+                <para>Initializes a group builder.
+</para>
+            </summary>
+            <param name="groupName">
+		A group name.
+
+            </param>
+            <returns>The group builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.Property``1(System.Linq.Expressions.Expression{System.Func`2})">
+            <summary>
+                <para>Initializes a property metadata builder.
+</para>
+            </summary>
+            <param name="propertyExpression">
+		A lambda expression that returns a ViewModel property.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.TableLayout">
+            <summary>
+                <para>Initializes a table group container builder.
+</para>
+            </summary>
+            <returns>The table group container builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1.ToolBarLayout">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IDocument">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDocument.Close(System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="force">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocument.Content">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocument.DestroyOnClose">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDocument.Hide">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocument.Id">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDocument.Show">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocument.Title">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.IMetadataProvider`1">
+
+            <summary>
+                <para>Provides methods to build metadata.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.IMetadataProvider`1.BuildMetadata(DevExpress.Mvvm.DataAnnotations.MetadataBuilder`1)">
+            <summary>
+                <para>Builds data source configurations.
+</para>
+            </summary>
+            <param name="builder">
+		A metadata builder instance.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1">
+
+            <summary>
+                <para>Provides the command generating functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1.CanExecuteMethod(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para>Specifies the function that defines whether the command can be executed.
+</para>
+            </summary>
+            <param name="canExecuteMethodExpression">
+		The function that defines whether the command can be executed.
+
+            </param>
+            <returns>The command metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1.CommandName(System.String)">
+            <summary>
+                <para>Specifies the name of the command generated from the method.
+</para>
+            </summary>
+            <param name="commandName">
+		A <see cref="T:System.String"/> value that is the command's name.
+
+            </param>
+            <returns>The command metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1.DoNotCreateCommand">
+            <summary>
+                <para>Prevents the command from being generated from the method.
+</para>
+            </summary>
+            <returns>The command metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1.DoNotUseCommandManager">
+            <summary>
+                <para>Disables the function that manages whether the command can be executed.
+</para>
+            </summary>
+            <returns>The command metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMethodMetadataBuilder`1.UseMethodNameAsCommandName">
+            <summary>
+                <para>Specifies that the name of the command generated from the method is the same as the method's name.
+</para>
+            </summary>
+            <returns>The command metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.HiddenAttribute">
+
+            <summary>
+                <para>Configures the property to be hidden.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.HiddenAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the HiddenAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.DXImageAttribute">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DXImageAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the DXImageAttribute class with the specified owner.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DXImageAttribute.#ctor(System.String)">
+            <summary>
+                <para>Initializes a new instance of the DXImageAttribute class with the specified image name.
+</para>
+            </summary>
+            <param name="imageName">
+		The image name.
+
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.DXImageAttribute.ImageName">
+            <summary>
+                <para>Gets the image name.
+</para>
+            </summary>
+            <value>The image name.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.DXImageAttribute.LargeImageUri">
+            <summary>
+                <para>Gets or sets the absolute Uri that defines the location of an image file.
+</para>
+            </summary>
+            <value>A string that is a Uri to the image file.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.DXImageAttribute.SmallImageUri">
+            <summary>
+                <para>Gets or sets the Uri that defines the relative location of an image file.
+</para>
+            </summary>
+            <value>A string that is a Uri to the image file.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ToolBarCategoryLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarCategoryLayoutBuilder`1.Page(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="pageName">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2">
+
+            <summary>
+                <para>Provides base command generating functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2.EndCommand">
+            <summary>
+                <para>Moves the method call chain from the command metadata builder to the metadata builder.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2.ImageName(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="imageName">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2.ImageUriLarge(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="uri">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2.ImageUriSmall(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="uri">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandMetadataBuilderBase`2.Parameter``1(System.Linq.Expressions.Expression{System.Func`2})">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="propertyExpression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ToolBarPageLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarPageLayoutBuilder`1.EndPage">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarPageLayoutBuilder`1.PageGroup(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="pageGroupName">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandGroupLayoutBuilderBase`2">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandGroupLayoutBuilderBase`2.ContainsCommand(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="methodExpression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandGroupLayoutBuilderBase`2.ContainsCommand(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="propertyExpression">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1">
+
+            <summary>
+                <para>Provides methods for building layouts.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1.ContainsProperty``1(System.Linq.Expressions.Expression{System.Func`2})">
+            <summary>
+                <para>Configures the specified ViewModel property to be displayed within the group.
+</para>
+            </summary>
+            <param name="propertyExpression">
+		A lambda expression that returns a ViewModel property.
+
+            </param>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1.EndGroup">
+            <summary>
+                <para>Moves the method call chain from the group builder to the data form layout builder.
+</para>
+            </summary>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1.Group(System.String,System.Nullable`1)">
+            <summary>
+                <para>Initializes a group builder.
+
+</para>
+            </summary>
+            <param name="groupName">
+		A group name.
+
+            </param>
+            <param name="orientation">
+		A nullable <see cref="T:System.Windows.Controls.Orientation"/> value that specifies whether child items are arranged horizontally or vertically within the group.
+
+            </param>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1.GroupBox(System.String,System.Nullable`1)">
+            <summary>
+                <para>Initializes a group box builder.
+</para>
+            </summary>
+            <param name="groupName">
+		A group box name.
+
+            </param>
+            <param name="orientation">
+		A nullable <see cref="T:System.Windows.Controls.Orientation"/> value that specifies whether child items are arranged horizontally or vertically within the group.
+
+            </param>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DataFormLayoutBuilder`1.TabbedGroup(System.String)">
+            <summary>
+                <para>Initializes a tabbed box builder.
+</para>
+            </summary>
+            <param name="groupName">
+		A group name.
+
+            </param>
+            <returns>The data form layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.CommandParameterAttribute">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.CommandParameterAttribute.#ctor(System.String)">
+            <summary>
+                <para>Initializes a new instance of the CommandParameterAttribute class with specified settings.
+</para>
+            </summary>
+            <param name="commandParameter">
+		A <see cref="T:System.String"/> object that is the command parameter.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.CommandParameterAttribute.CommandParameter">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.TableGroupLayoutBuilder`1">
+
+            <summary>
+                <para>Provides methods for building table groups.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.TableGroupLayoutBuilder`1.ContainsProperty``1(System.Linq.Expressions.Expression{System.Func`2})">
+            <summary>
+                <para>Configures the specified ViewModel property to be displayed within the group.
+</para>
+            </summary>
+            <param name="propertyExpression">
+		A lambda expression that returns a ViewModel property.
+
+            </param>
+            <returns>The table group layout builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.TableGroupLayoutBuilder`1.EndGroup">
+            <summary>
+                <para>Moves the method call chain from the group builder to the table group container builder.
+</para>
+            </summary>
+            <returns>The table group container builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DelegateCommand`1">
+
+            <summary>
+                <para>A command that calls your parameterized delegates when Execute and CanExecute logic is invoked on the command.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DelegateCommand`1.#ctor(System.Action`1,System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="executeMethod">
+		 [To be supplied] 
+            </param>
+            <param name="useCommandManager">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DelegateCommand`1.#ctor(System.Action`1,System.Func`2,System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="executeMethod">
+		 [To be supplied] 
+            </param>
+            <param name="canExecuteMethod">
+		 [To be supplied] 
+            </param>
+            <param name="useCommandManager">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DelegateCommand`1.Execute(DevExpress.Mvvm.T)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="parameter">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IServiceContainer">
+
+            <summary>
+                <para>Provides methods to retrieve services and register them in a service container.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IServiceContainer.Clear">
+            <summary>
+                <para>Clears services stored in the current service container.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IServiceContainer.GetService``1(System.String,DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="key">
+		 [To be supplied] 
+            </param>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IServiceContainer.GetService``1(DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IServiceContainer.RegisterService(System.Object)">
+            <summary>
+                <para>Adds the specified service to the current service container.
+</para>
+            </summary>
+            <param name="service">
+		A service to be added to the current service container. 
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IServiceContainer.RegisterService(System.String,System.Object)">
+            <summary>
+                <para>Adds the specified service to the current service container and associates it with a specific key.
+</para>
+            </summary>
+            <param name="key">
+		A key with which a service is associated.
+
+            </param>
+            <param name="service">
+		A service to be added to the service container.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ToolBarPageGroupLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarPageGroupLayoutBuilder`1.EndPageGroup">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.PredefinedMasks">
+
+            <summary>
+                <para>Contains predefined mask expressions.
+</para>
+            </summary>
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ContextMenuItemAttribute">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ContextMenuItemAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the ContextMenuItemAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ContextMenuItemAttribute.Group">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DelegateCommand">
+
+            <summary>
+                <para>A command that calls your parameterless delegates when Execute and CanExecute logic is invoked on the command.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DelegateCommand.#ctor(System.Action,System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="executeMethod">
+		 [To be supplied] 
+            </param>
+            <param name="useCommandManager">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DelegateCommand.#ctor(System.Action,System.Func`1,System.Boolean)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="executeMethod">
+		 [To be supplied] 
+            </param>
+            <param name="canExecuteMethod">
+		 [To be supplied] 
+            </param>
+            <param name="useCommandManager">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ToolBarLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ToolBarLayoutBuilder`1.DefaultCategory">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.POCOViewModelAttribute">
+
+            <summary>
+                <para>Provides attributes for generating POCO View models.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.POCOViewModelAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the POCOViewModelAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.POCOViewModelAttribute.ImplementIDataErrorInfo">
+            <summary>
+                <para><para>Specifies whether to implement the <i>IDataErrorInfo</i> interface.</para>
+<para>The <i>IDataErrorInfo</i> interface provides the functionality to offer custom error information that a user interface can bind to.</para>
+</para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2">
+
+            <summary>
+                <para>Provides data source configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.DisplayFormatString(System.String,System.Boolean)">
+            <summary>
+                <para>Specifies the pattern used to format the editor's value for display purposes.
+</para>
+            </summary>
+            <param name="dataFormatString">
+		A <see cref="T:System.String"/> value that is the format pattern.
+
+            </param>
+            <param name="applyDisplayFormatInEditMode">
+		<b>true</b>, to use the pattern in edit mode; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.DoesNotReturnService">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.DoNotConvertEmptyStringToNull">
+            <summary>
+                <para>Prevents conversion of empty string values to a null reference when an inplace editor's value is retrieved from a data source field.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.DoNotMakeBindable">
+            <summary>
+                <para>Specifies that a property change notification should not be raised for the property when it changes its value in the data source.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.EndProperty">
+            <summary>
+                <para>Moves the method call chain from the property builder to the metadata builder.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.Hidden">
+            <summary>
+                <para>Configures the property to be hidden.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.Initializer``1(System.Func{``0},System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="createDelegate">
+		 [To be supplied] 
+            </param>
+            <param name="name">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MakeBindable">
+            <summary>
+                <para>Specifies that a property change notification should be raised for the property when it changes its value in the data source.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MatchesInstanceRule(System.Func`2,System.Func`1)">
+            <summary>
+                <para>Configures a custom valdiation rule for the property.
+</para>
+            </summary>
+            <param name="isValidFunction">
+		A function that is the validation rule.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MatchesRegularExpression(System.String,System.Func`1)">
+            <summary>
+                <para>Configures a custom valdiation rule for the property based on a regular expression.
+</para>
+            </summary>
+            <param name="pattern">
+		A regular expression.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MatchesRule(System.Func`2,System.Func`1)">
+            <summary>
+                <para>Configures a custom valdiation rule for the property.
+</para>
+            </summary>
+            <param name="isValidFunction">
+		A function that is the validation rule.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MaxLength(System.Int32,System.Func`1)">
+            <summary>
+                <para>Sets the maximum number of characters an end-user can enter in the property's editor.
+</para>
+            </summary>
+            <param name="maxLength">
+		A positive integer specifying the maximum number of characters an end-user can enter.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.MinLength(System.Int32,System.Func`1)">
+            <summary>
+                <para>Sets the minimum number of characters an end-user can enter into the property's editor.
+</para>
+            </summary>
+            <param name="minLength">
+		A positive integer specifying the minimum number of characters an end-user can enter.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.NotEditable">
+            <summary>
+                <para>Configures the property to be not editable.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.NullDisplayText(System.String)">
+            <summary>
+                <para>Specifies the text displayed within the edit box when the editor's value is <b>null</b>.
+</para>
+            </summary>
+            <param name="nullDisplayText">
+		A <see cref="T:System.String"/> value that specifies the string displayed within the edit box when the editor's value is set to <b>null</b>.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.OnPropertyChangedCall(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para>Specifies a function to be called after the property has changed its value.
+</para>
+            </summary>
+            <param name="onPropertyChangedExpression">
+		A lambda expression to be called on a property value update.
+
+            </param>
+            <returns>The property metadata builder.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.OnPropertyChangingCall(System.Linq.Expressions.Expression`1)">
+            <summary>
+                <para>Specifies a function to be called when the property changes its value.
+</para>
+            </summary>
+            <param name="onPropertyChangingExpression">
+		A lambda expression to be called on a property value update.
+
+            </param>
+            <returns>The property metadata builder.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.ReadOnly">
+            <summary>
+                <para>Configures the property to be read-only.
+</para>
+            </summary>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.Required(System.Boolean,System.Func`1)">
+            <summary>
+                <para>Configures the property to require a value.
+</para>
+            </summary>
+            <param name="allowEmptyStrings">
+		<b>true</b>, to allow an empty string value; otherwise, <b>false</b>.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.Required(System.Func`1)">
+            <summary>
+                <para>Configures the property to require a value.
+</para>
+            </summary>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.ReturnsService(DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.ReturnsService(System.String,DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="key">
+		 [To be supplied] 
+            </param>
+            <param name="searchMode">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.TypeConverter">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2.TypeConverter``1">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.IDocumentViewModel">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.IDocumentViewModel.Close">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.IDocumentViewModel.Title">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.IMetadataLocator">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.IMetadataLocator.GetMetadataTypes(System.Type)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="type">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.SimpleMaskBuilder`2">
+
+            <summary>
+                <para>Provides simple mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.SimpleMaskBuilder`2.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the SimpleMaskBuilder&lt;T, TProperty&gt; class with specified settings.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.SimpleMaskBuilder`2.MaskDoNotSaveLiteral">
+            <summary>
+                <para>Disables including constantly displayed mask characters (literals) in an editor's value.
+</para>
+            </summary>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.SimpleMaskAttribute">
+
+            <summary>
+                <para>Provides simple mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.SimpleMaskAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the SimpleMaskAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.SimpleMaskAttribute.SaveLiteral">
+            <summary>
+                <para>Gets or sets whether constantly displayed mask characters (literals) are included in an editor's value.
+</para>
+            </summary>
+            <value><b>true</b> if the constantly displayed mask characters are included in an editor's value; otherwise, <b>false</b>. 
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute">
+
+            <summary>
+                <para>Provides service generating functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.#ctor(System.Boolean)">
+            <summary>
+                <para>Initializes a new instance of the ServicePropertyAttribute class with specified settings.
+</para>
+            </summary>
+            <param name="isServiceProperty">
+		<b>true</b>, to allow service generation; otherwise, <b>false</b>.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the ServicePropertyAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.#ctor(DevExpress.Mvvm.ServiceSearchMode)">
+            <summary>
+                <para>Initializes a new instance of the ServicePropertyAttribute class with specified settings.
+</para>
+            </summary>
+            <param name="searchMode">
+		A <see cref="T:DevExpress.Mvvm.ServiceSearchMode"/> enumeration value.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.IsServiceProperty">
+            <summary>
+                <para>Gets whether service generation is allowed.
+
+</para>
+            </summary>
+            <value><b>true</b>, if service generation is allowed; otherwise, <b>false</b>.
+
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.Key">
+            <summary>
+                <para>Gets or sets the service key name.
+</para>
+            </summary>
+            <value>A <see cref="T:System.String"/> value that is the service key name.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.ServicePropertyAttribute.SearchMode">
+            <summary>
+                <para>Gets or sets whether a search for a service must be carried out within the current service container, or within the current and parent service containers.
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.Mvvm.ServiceSearchMode"/> enumeration value.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegularMaskBuilder`2">
+
+            <summary>
+                <para>Provides regular mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegularMaskBuilder`2.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the RegularMaskBuilder&lt;T, TProperty&gt; class with specified settings.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegularMaskBuilder`2.MaskDoNotSaveLiteral">
+            <summary>
+                <para>Disables including constantly displayed mask characters (literals) in an editor's value.
+</para>
+            </summary>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegExMaskAttributeBase">
+
+            <summary>
+                <para>Provides base RegEx mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskAttributeBase.#ctor">
+            <summary>
+                <para>Initializes a new instance of the RegExMaskAttributeBase class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.RegExMaskAttributeBase.IgnoreBlank">
+            <summary>
+                <para>Specifies whether the editor can lose focus when a value has not been completely filled.
+</para>
+            </summary>
+            <value><b>true</b>, if the editor can lose focus when a value has not been completely filled; otherwise, <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.RegExMaskAttributeBase.PlaceHolder">
+            <summary>
+                <para>Gets or sets the character used as the placeholder in a masked editor.
+</para>
+            </summary>
+            <value>The character used as the placeholder.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegExMaskAttribute">
+
+            <summary>
+                <para>Provides RegEx mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the RegExMaskAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.RegExMaskAttribute.ShowPlaceHolders">
+            <summary>
+                <para>Gets or sets whether placeholders are displayed in a masked editor.
+</para>
+            </summary>
+            <value><b>true</b> to display placeholders in a masked editor; otherwise <b>false</b>.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions">
+
+            <summary>
+                <para>Provides additional data source configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CreditCardDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.Func{System.String})">
+            <summary>
+                <para>Configures the property editor to display credit card data values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Int64})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.DateTimeDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.DateTime},DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode)">
+            <summary>
+                <para>Configures the property editor to display date-time values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="displayMode">
+		The required <see cref="T:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode"/> value. 
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.DateTimeDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1},DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode)">
+            <summary>
+                <para>Configures the property editor to display date-time values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="displayMode">
+		The required <see cref="T:DevExpress.Mvvm.DataAnnotations.DateTimeDisplayMode"/> value. 
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.DateTimeMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.DateTime},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a date-time mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.EmailAddressDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.Func{System.String})">
+            <summary>
+                <para>Configures the property editor to display email address values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.ImageUrlDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String})">
+            <summary>
+                <para>Configures the property editor to display image url values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.InRange``2(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,``1},``1,``1,System.Func{System.String})">
+            <summary>
+                <para>Specifies property value boundaries.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder instance.
+
+            </param>
+            <param name="minimum">
+		The initial boundary.
+
+            </param>
+            <param name="maximum">
+		The final boundary.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.InRange``2(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1},System.Nullable{``1},System.Nullable{``1},System.Func{System.String})">
+            <summary>
+                <para>Specifies property value boundaries.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder instance.
+
+            </param>
+            <param name="minimum">
+		The initial boundary.
+
+            </param>
+            <param name="maximum">
+		The final boundary.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.MultilineTextDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String})">
+            <summary>
+                <para>Configures the property editor to display multiline data values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Int16},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Double},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.PasswordDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String})">
+            <summary>
+                <para>Configures the property editor to display password values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.PhoneNumberDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.Func{System.String})">
+            <summary>
+                <para>Configures the property editor to display phone number values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.RegExMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a RegEx mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		 [To be supplied] 
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.RegularMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a regular mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		 [To be supplied] 
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.ScaffoldDetailCollection``2(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Collections.Generic.IEnumerable`1})">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="builder">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.SimpleMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a simple mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilderExtensions.UrlDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.String},System.Func{System.String})">
+            <summary>
+                <para>Configures the property editor to display URL values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <param name="errorMessageAccessor">
+		A function that returns an error message.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.OrderAttribute">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.OrderAttribute.GetOrder">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.OrderAttribute.Order">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.MetadataLocator">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataLocator.AddMetadata(System.Type,System.Type)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="type">
+		 [To be supplied] 
+            </param>
+            <param name="metadataType">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataLocator.AddMetadata(System.Type)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="metadataType">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataLocator.AddMetadata``2">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataLocator.AddMetadata``1">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.MetadataLocator.Create">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="F:DevExpress.Mvvm.DataAnnotations.MetadataLocator.Default">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.DateTimeMaskBuilder`1">
+
+            <summary>
+                <para>Provides date-time mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DateTimeMaskBuilder`1.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the DateTimeMaskBuilder class.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DateTimeMaskBuilder`1.MaskAutomaticallyAdvanceCaret">
+            <summary>
+                <para>Enables the caret automatic movement feature.
+</para>
+            </summary>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.DateTimeMaskBuilder`1.MaskCulture(System.Globalization.CultureInfo)">
+            <summary>
+                <para>Specifies the culture whose settings are used by masks. This is a dependency property.
+</para>
+            </summary>
+            <param name="culture">
+		A <see cref="T:System.Globalization.CultureInfo"/> object whose settings are used by masks.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.ContextMenuLayoutBuilder`1">
+
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.ContextMenuLayoutBuilder`1.Group(System.String)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="pageGroupName">
+		 [To be supplied] 
+            </param>
+            <returns> [To be supplied] </returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilderBase`4">
+
+            <summary>
+                <para>Provides base RegEx mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilderBase`4.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the RegExMaskBuilderBase&lt;T, TProperty, TMaskAttribute, TBuilder&gt; class with specified settings.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilderBase`4.MaskDoNotIgnoreBlank">
+            <summary>
+                <para>Prevents the editor from losing focus when a value hasn't been completely filled.
+</para>
+            </summary>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilderBase`4.MaskPlaceHolder(System.Char)">
+            <summary>
+                <para>Gets or sets the character used as the placeholder in a masked editor.
+</para>
+            </summary>
+            <param name="placeHolder">
+		The character used as the placeholder in a masked editor.
+
+            </param>
+            <returns>The metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilder`2">
+
+            <summary>
+                <para>Provides RegEx mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilder`2.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the RegExMaskBuilder&lt;T, TProperty&gt; class with specified settings.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegExMaskBuilder`2.MaskDoNotShowPlaceHolders">
+            <summary>
+                <para>Disables displaying placeholders in a masked editor.
+</para>
+            </summary>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.RegularMaskAttribute">
+
+            <summary>
+                <para>Provides regular mask attributes.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.RegularMaskAttribute.#ctor">
+            <summary>
+                <para>Initializes a new instance of the RegularMaskAttribute class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.Mvvm.DataAnnotations.RegularMaskAttribute.SaveLiteral">
+            <summary>
+                <para>Gets or sets whether constantly displayed mask characters (literals) are included in an editor's value.
+</para>
+            </summary>
+            <value><b>true</b> if the constantly displayed mask characters are included in an editor's value; otherwise, <b>false</b>. 
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions">
+
+            <summary>
+                <para>Contains methods specific to numeric unsigned data types.
+
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.CurrencyDataType``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32})">
+            <summary>
+                <para>Configures the property editor to display currency values.
+</para>
+            </summary>
+            <param name="builder">
+		A property metadata builder.
+
+            </param>
+            <returns>The property metadata builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt32},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.UInt64},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericUnsignedPropertyMetadataBuilderExtensions.NumericMask``1(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder{``0,System.Nullable`1},System.String,System.Boolean)">
+            <summary>
+                <para>Configures a numeric mask for the property.
+</para>
+            </summary>
+            <param name="builder">
+		The property metadata builder instance.
+
+            </param>
+            <param name="mask">
+		A string representing a mask expression. 
+
+            </param>
+            <param name="useMaskAsDisplayFormat">
+		<b>true</b>, to format display values using the mask when the editor is not focused; otherwise, <b>false</b>.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+        <member name="T:DevExpress.Mvvm.DataAnnotations.NumericMaskBuilder`2">
+
+            <summary>
+                <para>Provides numeric mask configuration functionality.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericMaskBuilder`2.#ctor(DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2)">
+            <summary>
+                <para>Initializes a new instance of the NumericMaskBuilder&lt;T, TProperty&gt; class with specified settings.
+</para>
+            </summary>
+            <param name="parent">
+		A parent <see cref="T:DevExpress.Mvvm.DataAnnotations.PropertyMetadataBuilder`2"/> object.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.Mvvm.DataAnnotations.NumericMaskBuilder`2.MaskCulture(System.Globalization.CultureInfo)">
+            <summary>
+                <para>Gets or sets the culture whose settings are used by masks. This is a dependency property.
+</para>
+            </summary>
+            <param name="culture">
+		A <see cref="T:System.Globalization.CultureInfo"/> object whose settings are used by masks.
+
+            </param>
+            <returns>The mask builder instance.
+</returns>
+
+
+        </member>
+    </members>
+</doc>

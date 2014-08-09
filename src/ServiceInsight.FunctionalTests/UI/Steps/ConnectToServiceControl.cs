@@ -15,7 +15,7 @@
 
         public void Execute()
         {
-            Shell.MainMenu.ToolsMenu.Click();
+            Shell.MainMenu.ClickToolsMenu();
             Shell.MainMenu.ConnectToServiceControl.Click();
 
             Dialog.Activate();

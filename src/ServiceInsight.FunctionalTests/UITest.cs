@@ -2,28 +2,30 @@
 {
     using System;
     using System.Diagnostics;
+    using System.IO;
     using System.Reflection;
+    using System.Threading;
     using Autofac;
     using Castle.Core.Logging;
-    using Desktop.Framework.Modules;
     using NUnit.Framework;
     using Services;
     using TestStack.White;
     using TestStack.White.Configuration;
+    using TestStack.White.Factory;
     using TestStack.White.InputDevices;
+    using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.WindowItems;
     using UI.Parts;
 
     [TestFixture]
     public abstract class UITest
     {
-        protected LoggerLevel TestLoggerLevel = LoggerLevel.Debug;
-        protected Window MainWindow;
-        protected Application Application;
-        protected TestConfiguration Configuration;
-        protected IContainer Container;
-        protected ILogger Logger;
+        public Window MainWindow { get; set; }
 
+        public Application Application { get; set; }
+        
+        public IContainer Container { get; set; }
+        
         public ICoreConfiguration CoreConfiguration { get; set; }
 
         public IMouse Mouse { get; set; }
@@ -32,30 +34,61 @@
 
         public Waiter Wait { get; set; }
 
+        public ILoggerFactory LoggerFactory { get; set; }
+
+        public ILogger Logger { get; set; }
+
         [TestFixtureSetUp]
         public void InitializeApplication()
         {
             try
             {
-                Logger = new WhiteDefaultLoggerFactory(TestLoggerLevel).Create(typeof(UITest));
-                Configuration = new TestConfiguration();
-                Application = Configuration.LaunchApplication();
-                MainWindow = Configuration.GetMainWindow(Application);
+                ConfigureLogging();
                 Container = CreateContainer();
-                OnApplicationInitialized();
+                OnApplicationInitializing();
             }
             catch (Exception ex)
             {
                 Logger.Error("Failed to launch application and get main window", ex);
+                TryCaptureScreenshot();
                 TryCloseApplication();
                 throw;
             }
         }
 
+        protected void TryCaptureScreenshot()
+        {
+            try
+            {
+                var screenshot = Desktop.CaptureScreenshot();
+                var testName = GetTestName();
+                var screenshotFile = Path.Combine(TestConfiguration.ScreenshotFolder, string.Format(@"{0}.png", testName));
+                
+                screenshot.Save(screenshotFile);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Failed to get the screenshot. Reason is: " + ex.GetBaseException().Message);
+            }
+        }
+
+        protected string GetTestName()
+        {
+            var name = TestContext.CurrentContext.Test.FullName;
+            var nameParts = name.Split('.');
+
+            return string.Format("{0}.{1}", nameParts[nameParts.Length - 2], nameParts[nameParts.Length - 1]);
+        }
+
+        void ConfigureLogging()
+        {
+            LoggerFactory = new NLogFactory();
+            CoreAppXmlConfiguration.Instance.LoggerFactory = LoggerFactory;
+        }
+
         IContainer CreateContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(MainWindow);
             builder.RegisterAssemblyTypes(TestAssembly)
                    .Where(c => c.IsAssignableTo<IAutoRegister>())
                    .AsSelf()
@@ -69,22 +102,28 @@
             builder.RegisterInstance(TestStack.White.InputDevices.Keyboard.Instance).As<IKeyboard>();
             builder.RegisterInstance(TestStack.White.InputDevices.Mouse.Instance).As<IMouse>();
             builder.RegisterInstance(CoreAppXmlConfiguration.Instance).As<ICoreConfiguration>();
-            builder.RegisterInstance(Application);
-            builder.RegisterInstance(Logger);
-
-            builder.RegisterModule<CoreModule>();
+            builder.Register(c => ApplicationLauncher.LaunchApplication());
+            builder.Register(c => GetMainWindow(c.Resolve<Application>()));
+            builder.RegisterInstance(LoggerFactory);
+            builder.Register(c => c.Resolve<ILoggerFactory>().Create(GetType()));
 
             return builder.Build();
         }
 
-        protected virtual void OnApplicationInitialized()
+        void OnApplicationInitializing()
         {
             Container.InjectProperties(this);
             CoreConfiguration.WaitBasedOnHourGlass = false;
             CoreConfiguration.InProc = true;
             CoreConfiguration.BusyTimeout = 5000;
             CoreConfiguration.FindWindowTimeout = 60000;
+            MainWindow.TitleBar.MaximizeButton.Click();
             TestDataWriter.DeleteAll();
+            OnApplicationInitialized();
+        }
+
+        protected virtual void OnApplicationInitialized()
+        {
         }
 
         [TestFixtureTearDown]
@@ -94,9 +133,18 @@
             TryCloseApplication();
         }
 
+        void CaptureScreenIfTestFailed()
+        {
+            if (TestContext.CurrentContext.Result.Status == TestStatus.Failed)
+            {
+                TryCaptureScreenshot();
+            }
+        }
+
         [TearDown]
         public void CleanUp()
         {
+            CaptureScreenIfTestFailed();
             if (!Debugger.IsAttached) TestDataWriter.DeleteAll();
         }
 
@@ -125,6 +173,18 @@
             {
                 return false;
             }
+        }
+
+        Window GetMainWindow(Application app)
+        {
+            var mainWindow = app.GetWindow(SearchCriteria.ByAutomationId("ShellWindow"), InitializeOption.NoCache);
+            return mainWindow;
+        }
+
+        protected void WaitWhileBusy()
+        {
+            if(Application != null) Application.WaitWhileBusy();
+            Thread.Sleep(TestConfiguration.ExtraIdleWaitSecs * 1000);
         }
 
         private Assembly TestAssembly
