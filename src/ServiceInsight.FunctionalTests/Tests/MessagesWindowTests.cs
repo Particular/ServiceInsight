@@ -71,6 +71,7 @@
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.CriticalTime).ShouldBe("5s");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.DeliveryTime).ShouldBe("4s");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.ProcessingTime).ShouldBe("3s");
+            MessagesWindow.GetCellValue(0, MessagesWindow.Columns.TimeSent).ShouldNotBeEmpty();
         }
 
         void ShouldSeeFailedMessage()
@@ -81,6 +82,7 @@
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.CriticalTime).ShouldBe("5s");
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.DeliveryTime).ShouldBe("4s");
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.ProcessingTime).ShouldBe("3s");
+            MessagesWindow.GetCellValue(0, MessagesWindow.Columns.TimeSent).ShouldNotBeEmpty();
         }
 
         void WhenCheckingMessagesForEndpoint(string endpoint)
