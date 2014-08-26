@@ -34,6 +34,9 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <NuGetPackageImportStamp>fc1a60af</NuGetPackageImportStamp>
     <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
+    <RestorePackages>true</RestorePackages>
+    <FodyPath>..\</FodyPath>
+    <ExpressionBlendVersion>12.0.50320.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -251,6 +254,10 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceDiagramLayoutAlgorithm.cs" />
+    <Compile Include="MessageSequenceDiagram\TimeoutConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\EventConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageConnection.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
@@ -271,6 +278,7 @@
     <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Events\RetryMessage.cs" />
+    <Compile Include="Events\SwitchToSequenceDiagramWindow.cs" />
     <Compile Include="Events\SwitchToFlowWindow.cs" />
     <Compile Include="Events\RequestSelectingEndpoint.cs" />
     <Compile Include="Events\SwitchToMessageBody.cs" />
@@ -288,6 +296,19 @@
     <Compile Include="MessageHeaders\MessageHeadersViewModel.cs" />
     <Compile Include="MessageList\GridFocusedRowPreserver.cs" />
     <Compile Include="MessageViewers\MessageContentType.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceDiagramConnectionBuilder.cs" />
+    <Compile Include="MessageSequenceDiagram\IMessageSequenceDiagramView.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagram.cs" />
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagramView.xaml.cs">
+      <DependentUpon>MessageSequenceDiagramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageSequenceDiagram\MessageSequenceDiagramViewModel.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleLifeLineConnection.cs" />
+    <Compile Include="MessageSequenceDiagram\FailureNode.cs" />
+    <Compile Include="MessageSequenceDiagram\ActivityNode.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleNode.cs" />
+    <Compile Include="MessageSequenceDiagram\RoleEndNode.cs" />
+    <Compile Include="MessageSequenceDiagram\SequenceStartNode.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
     <Compile Include="Models\MessageStatistics.cs" />
@@ -493,6 +514,7 @@
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\XmlViewer\XmlMessageViewModel.cs" />
+    <Compile Include="ValueConverters\ArrowEndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
@@ -509,6 +531,10 @@
     <Page Include="Framework\ExceptionHandler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Images\Xaml\ExclamationMarkWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Images\Xaml\XamlIcons.xaml">
       <SubType>Designer</SubType>
@@ -539,6 +565,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageProperties\MessagePropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageSequenceDiagram\MessageSequenceDiagramView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -754,6 +784,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SequenceDiagram.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />

@@ -16,6 +16,7 @@
     using ExtensionMethods;
     using Framework.Rx;
     using LogWindow;
+    using MessageSequenceDiagram;
     using MessageFlow;
     using MessageHeaders;
     using MessageList;
@@ -35,6 +36,7 @@
         IHandle<SwitchToMessageBody>,
         IHandle<SwitchToSagaWindow>,
         IHandle<SwitchToFlowWindow>,
+        IHandle<SwitchToSequenceDiagramWindow>, 
         IWorkTracker
     {
         IAppCommands appCommander;
@@ -58,6 +60,7 @@
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
+            MessageSequenceDiagramViewModel messageSequenceDiagram,
             SagaWindowViewModel sagaWindow,
             MessageBodyViewModel messageBodyViewer,
             MessageHeadersViewModel messageHeadersViewer,
@@ -75,6 +78,7 @@
             this.comandLineArgParser = comandLineArgParser;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
+            MessageSequenceDiagram = messageSequenceDiagram;
             SagaWindow = sagaWindow;
             StatusBarManager = statusBarManager;
             EndpointExplorer = endpointExplorer;
@@ -87,7 +91,9 @@
             Items.Add(messages);
             Items.Add(messageHeadersViewer);
             Items.Add(messageBodyViewer);
+            Items.Add(messageSequenceDiagram); 
             Items.Add(messageFlow);
+
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
@@ -156,6 +162,8 @@
         public MessageListViewModel Messages { get; private set; }
 
         public MessageFlowViewModel MessageFlow { get; private set; }
+
+        public MessageSequenceDiagramViewModel MessageSequenceDiagram { get; private set; }
 
         public MessageBodyViewModel MessageBody { get; private set; }
 
@@ -363,6 +371,10 @@
         public virtual void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
+        }
+        public virtual void Handle(SwitchToSequenceDiagramWindow @event)
+        {
+            View.SelectTab("MessageSequenceDiagram");
         }
     }
 }
