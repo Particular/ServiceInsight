@@ -188,7 +188,7 @@
         <Grid x:Name="StartMessageArrow"
               Width="{StaticResource ColumnWidth}"
               Height="72"
-              Margin="{Binding MinEndpointIndex,
+              Margin="{Binding SendingEndpointIndex,
                                Converter={StaticResource StartMessageMarginConverter}}"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
