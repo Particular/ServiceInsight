@@ -9,20 +9,25 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     [DebuggerDisplay("{Name}")]
     public class EndpointInfo
     {
-        public EndpointInfo(Endpoint endpoint)
+        public EndpointInfo(Endpoint endpoint, StoredMessage message)
         {
             if (endpoint == null)
                 throw new ArgumentNullException("endpoint", "endpoint is null.");
+            if (message == null)
+                throw new ArgumentNullException("message", "message is null.");
 
             Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
             FullName = endpoint.Name;
+            Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
+            Host = endpoint.HostDisplayName;
+            Active = "UNKNOWN";
         }
 
         public string Name { get; private set; }
         public string FullName { get; private set; }
-        public string Version { get { return "UNKNOWN"; } }
-        public string Host { get { return "UNKNOWN"; } }
-        public string Active { get { return "UNKNOWN"; } }
+        public string Version { get; private set; }
+        public string Host { get; private set; }
+        public string Active { get; private set; }
 
         public override int GetHashCode()
         {
