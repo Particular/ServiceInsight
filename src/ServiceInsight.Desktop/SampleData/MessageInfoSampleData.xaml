@@ -2,6 +2,7 @@
 		IsFirst="True"
         IsPublished="False"
         IsTimeout="False"
+        IsFailed="True"
 		IsSagaInitiated="False"
         IsSagaCompleted="True"
 		MinEndpointIndex="0"

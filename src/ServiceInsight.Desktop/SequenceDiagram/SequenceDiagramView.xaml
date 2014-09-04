@@ -152,7 +152,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <ListBox Margin="0 72 0 0"
+                <ListBox Margin="0 72 0 200"
                          ItemContainerStyle="{StaticResource MessageContainerStyle}"
                          ItemsSource="{Binding Messages}">
                     <ListBox.ItemTemplate>

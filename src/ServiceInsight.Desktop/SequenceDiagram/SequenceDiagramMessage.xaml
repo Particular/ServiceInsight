@@ -113,6 +113,28 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="FailedPopupButtonStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    SnapsToDevicePixels="true">
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -373,7 +395,9 @@
                        Height="36"
                        HorizontalAlignment="Center"
                        Fill="{Binding (sequenceDiagram:SagaPalette.EndpointBox),
-                                      ElementName=Root}">
+                                      ElementName=Root}"
+                       Visibility="{Binding IsFailed,
+                                            Converter={StaticResource BoolToVisibilityConverterInverted}}">
                 <Rectangle.ToolTip>
                     <ToolTip Width="{StaticResource ColumnWidth}"
                              HorizontalOffset="{StaticResource HalfColumnWidth}"
@@ -421,6 +445,112 @@
                     </ToolTip>
                 </Rectangle.ToolTip>
             </Rectangle>
+            <!--  Error box  -->
+            <ToggleButton x:Name="FailedButton"
+                          Height="36"
+                          HorizontalAlignment="Center"
+                          Style="{StaticResource FailedPopupButtonStyle}">
+                <Grid Height="36"
+                      HorizontalAlignment="Center"
+                      Background="Red"
+                      Visibility="{Binding IsFailed,
+                                           Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Path Width="16"
+                          Height="16"
+                          Margin="6,0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource FailedGeometry}"
+                          Fill="White"
+                          Stretch="Fill" />
+
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Text="Processing failed" />
+
+                    <Path Grid.Column="2"
+                          Width="4"
+                          Height="4"
+                          Margin="6,6,6,0"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource DownArrow}"
+                          Fill="White"
+                          Stretch="Fill" />
+                </Grid>
+            </ToggleButton>
+            <Popup x:Name="FailedMessagePopup"
+                HorizontalAlignment="Center"
+                   IsOpen="{Binding IsChecked,
+                                    ElementName=FailedButton}"
+                   StaysOpen="False">
+                <Border Background="Black" MaxWidth="455">
+                    <Grid Margin="0,6,6,6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Margin="6,0,6,6">
+                            <controls:IconControl x:Name="FailedMessageTypeIcon"
+                                                  Width="16"
+                                                  Height="16"
+                                                  Margin="2 0"
+                                                  Foreground="{StaticResource Grey60Brush}"
+                                                  Style="{StaticResource MessageIconStyle}" />
+
+                            <TextBlock Padding="5 0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource Grey60Brush}"
+                                       Text="{Binding Name}" />
+                        </StackPanel>
+
+                        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource Grey20Brush}" />
+
+                        <StackPanel Grid.Row="1" Margin="0,1,0,0">
+                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Retry message" Command="{Binding RetryMessageCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
+                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Copy conversation ID" Command="{Binding CopyConversationIDCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
+                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Copy message URL" Command="{Binding CopyMessageURICommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
+                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Search by message ID" Command="{Binding SearchByMessageIDCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="6">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Rectangle Width="4" Height="12" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Path Width="16"
+                                        Height="16"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{StaticResource FailedGeometry}"
+                                        Fill="Red"
+                                        Stretch="Fill" />
+                                </Grid>
+
+                                <TextBlock Margin="6,0" FontWeight="Bold" Foreground="Red" Text="{Binding ExceptionType}" />
+                            </StackPanel>
+
+                            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Foreground="{StaticResource Grey60Brush}" Text="{Binding ExceptionMessage}" />
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+            </Popup>
+
         </StackPanel>
 
     </Grid>

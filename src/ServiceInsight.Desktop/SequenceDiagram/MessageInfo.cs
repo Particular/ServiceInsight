@@ -26,6 +26,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             DeliveryTime = message.DeliveryTime;
             ProcessingTime = message.ProcessingTime;
 
+            ExceptionType = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
+            ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionMessage);
+
             endpoints.Changed.Subscribe(_ => UpdateIndicies());
 
             UpdateIndicies();
@@ -46,6 +49,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public TimeSpan DeliveryTime { get; private set; }
         public TimeSpan ProcessingTime { get; private set; }
 
+        public string ExceptionType { get; private set; }
+        public string ExceptionMessage { get; private set; }
+
         public string SendingEndpoint
         {
             get { return Message.SendingEndpoint.Name; }
@@ -65,6 +71,14 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             {
                 var isTimeoutString = Message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
                 return !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString);
+            }
+        }
+        public bool IsFailed
+        {
+            get
+            {
+                var exceptionType = Message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
+                return !string.IsNullOrEmpty(exceptionType);
             }
         }
 
