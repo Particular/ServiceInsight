@@ -139,26 +139,26 @@
     </UserControl.Resources>
 
     <UserControl.Style>
-        <Style TargetType="{x:Type UserControl}">
+        <Style TargetType="{x:Type sequenceDiagram:SequenceDiagramMessage}">
 
-            <Setter Property="sequenceDiagram:SagaPalette.Line" Value="Black" />
-            <Setter Property="sequenceDiagram:SagaPalette.EndpointBox" Value="{StaticResource Grey60Brush}" />
-            <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="Transparent" />
-            <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="{StaticResource Grey40Brush}" />
-            <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="{StaticResource Grey40Brush}" />
-            <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="White" />
+            <Setter Property="Line" Value="Black" />
+            <Setter Property="EndpointBox" Value="{StaticResource Grey60Brush}" />
+            <Setter Property="MessageBackground" Value="Transparent" />
+            <Setter Property="MessageForeground" Value="{StaticResource Grey40Brush}" />
+            <Setter Property="SagaBackground" Value="{StaticResource Grey40Brush}" />
+            <Setter Property="SagaForeground" Value="White" />
 
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="sequenceDiagram:SagaPalette.Line" Value="{StaticResource HiliteDarkBrush}" />
-                    <Setter Property="sequenceDiagram:SagaPalette.EndpointBox" Value="{StaticResource HiliteLightBrush}" />
+                    <Setter Property="Line" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="EndpointBox" Value="{StaticResource HiliteLightBrush}" />
                 </Trigger>
 
                 <DataTrigger Binding="{Binding Selected}" Value="True">
-                    <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="{StaticResource HiliteDarkBrush}" />
-                    <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="White" />
-                    <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="White" />
-                    <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="MessageBackground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="MessageForeground" Value="White" />
+                    <Setter Property="SagaBackground" Value="White" />
+                    <Setter Property="SagaForeground" Value="{StaticResource HiliteDarkBrush}" />
                 </DataTrigger>
 
                 <MultiDataTrigger>
@@ -166,10 +166,10 @@
                         <Condition Binding="{Binding Selected}" Value="False" />
                         <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="sequenceDiagram:SagaPalette.MessageBackground" Value="Transparent" />
-                    <Setter Property="sequenceDiagram:SagaPalette.MessageForeground" Value="{StaticResource HiliteDarkBrush}" />
-                    <Setter Property="sequenceDiagram:SagaPalette.SagaBackground" Value="{StaticResource HiliteDarkBrush}" />
-                    <Setter Property="sequenceDiagram:SagaPalette.SagaForeground" Value="White" />
+                    <Setter Property="MessageBackground" Value="Transparent" />
+                    <Setter Property="MessageForeground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="SagaBackground" Value="{StaticResource HiliteDarkBrush}" />
+                    <Setter Property="SagaForeground" Value="White" />
                 </MultiDataTrigger>
 
             </Style.Triggers>
@@ -191,9 +191,9 @@
 
         <!--  Horizontal line  -->
         <Line x:Name="HorizontalLine"
-              Fill="{Binding (sequenceDiagram:SagaPalette.Line),
+              Fill="{Binding Line,
                              ElementName=Root}"
-              Stroke="{Binding (sequenceDiagram:SagaPalette.Line),
+              Stroke="{Binding Line,
                                ElementName=Root}"
               StrokeDashArray="{Binding IsPublished,
                                         Converter={StaticResource BoolToStrokeDashArrayConverter}}"
@@ -220,7 +220,7 @@
                        Height="25"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Fill="{Binding (sequenceDiagram:SagaPalette.Line),
+                       Fill="{Binding Line,
                                       ElementName=Root}" />
             <Path Width="10"
                   Height="10"
@@ -246,11 +246,11 @@
                   VerticalAlignment="Center">
                 <Border Height="29"
                         VerticalAlignment="Top"
-                        Background="{Binding (sequenceDiagram:SagaPalette.MessageBackground),
+                        Background="{Binding MessageBackground,
                                              ElementName=Root}" />
                 <Border Height="27"
                         VerticalAlignment="Bottom"
-                        Background="{Binding (sequenceDiagram:SagaPalette.MessageBackground),
+                        Background="{Binding MessageBackground,
                                              ElementName=Root}"
                         Visibility="{Binding SagaName,
                                              Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
@@ -297,14 +297,14 @@
                                                   Width="16"
                                                   Height="16"
                                                   Margin="2 0"
-                                                  Foreground="{Binding (sequenceDiagram:SagaPalette.MessageForeground),
+                                                  Foreground="{Binding MessageForeground,
                                                                        ElementName=Root}"
                                                   Style="{StaticResource MessageIconStyle}" />
 
                             <TextBlock Padding="5 0"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Foreground="{Binding (sequenceDiagram:SagaPalette.MessageForeground),
+                                       Foreground="{Binding MessageForeground,
                                                             ElementName=Root}"
                                        Style="{StaticResource UnderlineTextBlockStyle}"
                                        Text="{Binding Name}" />
@@ -314,7 +314,7 @@
                                   Margin="2,0,2,3"
                                   VerticalAlignment="Bottom"
                                   Data="{StaticResource DownArrow}"
-                                  Fill="{Binding (sequenceDiagram:SagaPalette.MessageForeground),
+                                  Fill="{Binding MessageForeground,
                                                  ElementName=Root}"
                                   Stretch="Fill" />
 
@@ -336,12 +336,12 @@
                                        Height="18"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Fill="{Binding (sequenceDiagram:SagaPalette.SagaBackground),
+                                       Fill="{Binding SagaBackground,
                                                       ElementName=Root}" />
                             <controls:IconControl x:Name="SagaTypeIcon"
                                                   Width="9"
                                                   Height="9"
-                                                  Foreground="{Binding (sequenceDiagram:SagaPalette.SagaForeground),
+                                                  Foreground="{Binding SagaForeground,
                                                                        ElementName=Root}"
                                                   Style="{StaticResource SagaIconStyle}" />
                         </Grid>
@@ -350,9 +350,9 @@
                                    Padding="5 0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   Background="{Binding (sequenceDiagram:SagaPalette.SagaBackground),
+                                   Background="{Binding SagaBackground,
                                                         ElementName=Root}"
-                                   Foreground="{Binding (sequenceDiagram:SagaPalette.SagaForeground),
+                                   Foreground="{Binding SagaForeground,
                                                         ElementName=Root}"
                                    Style="{StaticResource UnderlineTextBlockStyle}"
                                    Text="{Binding SagaName}" />
@@ -370,9 +370,9 @@
             <!--  Line  -->
             <Line Margin="2,0,0,0"
                   HorizontalAlignment="Center"
-                  Fill="{Binding (sequenceDiagram:SagaPalette.Line),
+                  Fill="{Binding Line,
                                  ElementName=Root}"
-                  Stroke="{Binding (sequenceDiagram:SagaPalette.Line),
+                  Stroke="{Binding Line,
                                    ElementName=Root}"
                   StrokeDashArray="{Binding IsPublished,
                                             Converter={StaticResource BoolToStrokeDashArrayConverter}}"
@@ -387,14 +387,14 @@
                   Height="11"
                   HorizontalAlignment="Center"
                   Data="{StaticResource DownArrow}"
-                  Fill="{Binding (sequenceDiagram:SagaPalette.Line),
+                  Fill="{Binding Line,
                                  ElementName=Root}"
                   Stretch="Fill" />
             <!--  Grey box  -->
             <Rectangle Width="14"
                        Height="36"
                        HorizontalAlignment="Center"
-                       Fill="{Binding (sequenceDiagram:SagaPalette.EndpointBox),
+                       Fill="{Binding EndpointBox,
                                       ElementName=Root}"
                        Visibility="{Binding IsFailed,
                                             Converter={StaticResource BoolToVisibilityConverterInverted}}">
@@ -488,11 +488,11 @@
                 </Grid>
             </ToggleButton>
             <Popup x:Name="FailedMessagePopup"
-                HorizontalAlignment="Center"
+                   HorizontalAlignment="Center"
                    IsOpen="{Binding IsChecked,
                                     ElementName=FailedButton}"
                    StaysOpen="False">
-                <Border Background="Black" MaxWidth="455">
+                <Border MaxWidth="455" Background="Black">
                     <Grid Margin="0,6,6,6">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -503,7 +503,9 @@
                             <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Margin="6,0,6,6">
+                        <StackPanel Grid.ColumnSpan="2"
+                                    Margin="6,0,6,6"
+                                    Orientation="Horizontal">
                             <controls:IconControl x:Name="FailedMessageTypeIcon"
                                                   Width="16"
                                                   Height="16"
@@ -519,32 +521,62 @@
                                        Text="{Binding Name}" />
                         </StackPanel>
 
-                        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource Grey20Brush}" />
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                Background="{StaticResource Grey20Brush}" />
 
                         <StackPanel Grid.Row="1" Margin="0,1,0,0">
-                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Retry message" Command="{Binding RetryMessageCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
-                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Copy conversation ID" Command="{Binding CopyConversationIDCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
-                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Copy message URL" Command="{Binding CopyMessageURICommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
-                            <MenuItem Style="{StaticResource DarkMenuItemStyle}" Header="Search by message ID" Command="{Binding SearchByMessageIDCommand}" CommandParameter="{Binding Message}" Click="CloseFailedMessagePopup" />
+                            <MenuItem Click="CloseFailedMessagePopup"
+                                      Header="Retry message"
+                                      Style="{StaticResource DarkMenuItemStyle}"
+                                      CommandParameter="{Binding Message}"
+                                      Command="{Binding RetryMessageCommand}" />
+                            <MenuItem Click="CloseFailedMessagePopup"
+                                      Header="Copy conversation ID"
+                                      Style="{StaticResource DarkMenuItemStyle}"
+                                      CommandParameter="{Binding Message}"
+                                      Command="{Binding CopyConversationIDCommand}" />
+                            <MenuItem Click="CloseFailedMessagePopup"
+                                      Header="Copy message URL"
+                                      Style="{StaticResource DarkMenuItemStyle}"
+                                      CommandParameter="{Binding Message}"
+                                      Command="{Binding CopyMessageURICommand}" />
+                            <MenuItem Click="CloseFailedMessagePopup"
+                                      Header="Search by message ID"
+                                      Style="{StaticResource DarkMenuItemStyle}"
+                                      CommandParameter="{Binding Message}"
+                                      Command="{Binding SearchByMessageIDCommand}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="6">
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="6">
                             <StackPanel Orientation="Horizontal">
                                 <Grid>
-                                    <Rectangle Width="4" Height="12" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Rectangle Width="4"
+                                               Height="12"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Fill="White" />
                                     <Path Width="16"
-                                        Height="16"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Data="{StaticResource FailedGeometry}"
-                                        Fill="Red"
-                                        Stretch="Fill" />
+                                          Height="16"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Data="{StaticResource FailedGeometry}"
+                                          Fill="Red"
+                                          Stretch="Fill" />
                                 </Grid>
 
-                                <TextBlock Margin="6,0" FontWeight="Bold" Foreground="Red" Text="{Binding ExceptionType}" />
+                                <TextBlock Margin="6,0"
+                                           FontWeight="Bold"
+                                           Foreground="Red"
+                                           Text="{Binding ExceptionType}" />
                             </StackPanel>
 
-                            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Foreground="{StaticResource Grey60Brush}" Text="{Binding ExceptionMessage}" />
+                            <TextBlock Margin="0,6,0,0"
+                                       Foreground="{StaticResource Grey60Brush}"
+                                       Text="{Binding ExceptionMessage}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                     </Grid>
