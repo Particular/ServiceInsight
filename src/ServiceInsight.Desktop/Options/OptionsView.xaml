@@ -16,13 +16,13 @@
     <dxc:DXWindow.Resources>
         <local:PropertyValueConverter x:Key="PropertyValueConverter" />
 
-        <DataTemplate x:Key="CheckBoxTemplate">
+        <DataTemplate x:Key="CheckBoxTemplate" DataType="{x:Type local:OptionPropertyValue}">
             <dxe:CheckEdit EditValue="{Binding Value, ValidatesOnExceptions=True}" />
         </DataTemplate>
-        <DataTemplate x:Key="TextBoxTemplate">
+        <DataTemplate x:Key="TextBoxTemplate" DataType="{x:Type local:OptionPropertyValue}">
             <dxe:TextEdit EditValue="{Binding Value, ValidatesOnExceptions=True}" NullText="{Binding DefaultValue}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListTemplate">
+        <DataTemplate x:Key="ListTemplate" DataType="{x:Type local:OptionPropertyValue}">
             <local:EditableListBox ItemsSource="{Binding Value}" />
         </DataTemplate>
 

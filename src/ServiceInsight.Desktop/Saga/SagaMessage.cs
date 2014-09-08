@@ -7,6 +7,12 @@
     using Models;
     using ServiceControl;
 
+    public class SagaMessageDataItem
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+    }
+
     public class SagaMessage : PropertyChangedBase
     {
         public Guid MessageId { get; set; }
@@ -119,13 +125,13 @@
             }
         }
 
-        public IEnumerable<KeyValuePair<string, string>> Data { get; private set; }
+        public IEnumerable<SagaMessageDataItem> Data { get; private set; }
 
         internal void RefreshData(IServiceControl serviceControl)
         {
             if (Data != null) return;
 
-            Data = serviceControl.GetMessageData(MessageId);
+            Data = serviceControl.GetMessageData(MessageId).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
         }
     }
 

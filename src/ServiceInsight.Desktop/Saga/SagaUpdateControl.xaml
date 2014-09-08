@@ -148,7 +148,7 @@
                 </Style.Triggers>
             </Style>
 
-            <DataTemplate x:Key="MessageDataItem">
+            <DataTemplate x:Key="MessageDataItem" DataType="{x:Type local:SagaMessageDataItem}">
                 <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal" MaxWidth="250" HorizontalAlignment="Left">
                     <TextBlock FontWeight="Bold"
                                Foreground="{StaticResource SagaForeground}"

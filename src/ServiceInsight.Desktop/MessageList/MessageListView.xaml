@@ -65,11 +65,13 @@
                                     Tag="status"
                                     UnboundType="Object">
                         <dxg:GridColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type dxg:GridColumnDataEventArgs}">
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <Image Width="16"
                                        Height="16"
                                        Source="{Binding Value.Image}"
                                        ToolTip="{Binding Value.Description}" />
+                                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
                     </dxg:GridColumn>
