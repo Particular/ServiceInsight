@@ -154,6 +154,10 @@
                     <Setter Property="EndpointBox" Value="{StaticResource HiliteLightBrush}" />
                 </Trigger>
 
+                <DataTrigger Binding="{Binding HiliteHandler}" Value="True">
+                    <Setter Property="EndpointBox" Value="{StaticResource HiliteLightBrush}" />
+                </DataTrigger>
+
                 <DataTrigger Binding="{Binding Selected}" Value="True">
                     <Setter Property="MessageBackground" Value="{StaticResource HiliteDarkBrush}" />
                     <Setter Property="MessageForeground" Value="White" />

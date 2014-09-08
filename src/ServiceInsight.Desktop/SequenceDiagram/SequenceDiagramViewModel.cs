@@ -14,10 +14,12 @@
 
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
+        private readonly IEventAggregator eventAggregator;
         private readonly IServiceControl serviceControl;
 
         public SequenceDiagramViewModel(IClipboard clipboard, IEventAggregator eventAggregator, IServiceControl serviceControl, SearchBarViewModel searchBar)
         {
+            this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
 
             CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
@@ -62,9 +64,14 @@
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
-            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(this, m, Endpoints)).ToList();
+            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, this, m, Endpoints)).ToList();
 
             Messages.First().IsFirst = true;
+
+            foreach (var message in Messages)
+            {
+                eventAggregator.Subscribe(message);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
 
     public partial class SequenceDiagramMessage
@@ -59,6 +60,15 @@
             set { SetValue(SagaForegroundProperty, value); }
         }
 
+        public static readonly DependencyProperty MouseOverProperty = DependencyProperty.Register(
+            "MouseOver", typeof(bool), typeof(SequenceDiagramMessage), new PropertyMetadata(default(bool)));
+
+        public bool MouseOver
+        {
+            get { return (bool)GetValue(MouseOverProperty); }
+            set { SetValue(MouseOverProperty, value); }
+        }
+
         public SequenceDiagramMessage()
         {
             InitializeComponent();
@@ -67,6 +77,16 @@
         void CloseFailedMessagePopup(object sender, RoutedEventArgs e)
         {
             FailedMessagePopup.IsOpen = false;
+        }
+
+        protected override void OnMouseEnter(MouseEventArgs e)
+        {
+            MouseOver = true;
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            MouseOver = false;
         }
     }
 }

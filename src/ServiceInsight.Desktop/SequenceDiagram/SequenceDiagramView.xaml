@@ -155,7 +155,7 @@
                          ItemsSource="{Binding Messages}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <sequenceDiagram:SequenceDiagramMessage />
+                            <sequenceDiagram:SequenceDiagramMessage MouseOver="{Binding Hilited, Mode=OneWayToSource}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.Template>

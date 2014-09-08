@@ -4,13 +4,26 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
+    using Caliburn.Micro;
     using Models;
     using ReactiveUI;
 
-    public class MessageInfo : ReactiveObject
+    public class MessageInfo : ReactiveObject, IHandle<MessageInfo.HiliteEvent>
     {
-        public MessageInfo(SequenceDiagramViewModel viewModel, StoredMessage message, ReactiveList<EndpointInfo> endpoints)
+        public class HiliteEvent
         {
+            public string MessageID { get; set; }
+        }
+
+        private readonly IEventAggregator eventAggregator;
+
+        public MessageInfo(
+            IEventAggregator eventAggregator,
+            SequenceDiagramViewModel viewModel,
+            StoredMessage message,
+            ReactiveList<EndpointInfo> endpoints)
+        {
+            this.eventAggregator = eventAggregator;
             Message = message;
             Endpoints = endpoints;
 
@@ -39,6 +52,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public IEnumerable<EndpointInfo> Endpoints { get; set; }
 
         public bool Selected { get; set; }
+        public bool Hilited { get; set; }
+        public bool HiliteHandler { get; set; }
 
         public bool IsFirst { get; set; }
 
@@ -115,6 +130,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
 
+        private void OnHilitedChanged()
+        {
+            eventAggregator.Publish(new HiliteEvent { MessageID = Hilited ? Message.RelatedToMessageId : "" });
+        }
+
         private void OnEndpointsChanged()
         {
             UpdateIndicies();
@@ -154,6 +174,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             MaxEndpointIndex = Math.Max(ReceivingEndpointIndex, SendingEndpointIndex);
 
             MessagePopupIndex = MinEndpointIndex + (MaxEndpointIndex - MinEndpointIndex) / 2;
+        }
+
+        public void Handle(HiliteEvent message)
+        {
+            HiliteHandler = message.MessageID == Message.MessageId;
         }
     }
 }
