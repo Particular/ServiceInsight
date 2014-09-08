@@ -91,13 +91,11 @@
                             <!--  Endpoint Tooltip  -->
                             <Border.ToolTip>
                                 <ToolTip Style="{StaticResource EndpointTooltipStyle}">
-                                    <UniformGrid Columns="2" Rows="3">
+                                    <UniformGrid Columns="2" Rows="2">
                                         <Label Content="NSB Version" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Content="{Binding Version}" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Content="Host" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Content="{Binding Host}" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Content="Active" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Content="{Binding Active}" Style="{StaticResource TooltipLabelStyle}" />
                                     </UniformGrid>
                                 </ToolTip>
                             </Border.ToolTip>

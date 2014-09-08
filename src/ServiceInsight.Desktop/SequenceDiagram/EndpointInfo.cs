@@ -20,14 +20,12 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             FullName = endpoint.Name;
             Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
             Host = endpoint.HostDisplayName;
-            Active = "UNKNOWN";
         }
 
         public string Name { get; private set; }
         public string FullName { get; private set; }
         public string Version { get; private set; }
         public string Host { get; private set; }
-        public string Active { get; private set; }
 
         public override int GetHashCode()
         {
