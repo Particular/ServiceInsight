@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using ExtensionMethods;
 
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
@@ -21,6 +22,22 @@
         public TimeSpan ProcessingTime { get; set; }
         public TimeSpan DeliveryTime { get; set; }
         public string ConversationId { get; set; }
+
+        public string ElapsedCriticalTime
+        {
+            get
+            {
+                return CriticalTime.GetElapsedTime();
+            }
+        }
+
+        public string ElapsedProcessingTime
+        {
+            get
+            {
+                return ProcessingTime.GetElapsedTime();
+            }
+        }
 
         public MessageStatistics Statistics
         {
@@ -43,6 +60,14 @@
         }
 
         MessageStatistics statistics;
+
+        public string ElapsedDeliveryTime
+        {
+            get
+            {
+                return DeliveryTime.GetElapsedTime();
+            }
+        }
 
         public string RelatedToMessageId
         {
