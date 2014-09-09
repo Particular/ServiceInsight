@@ -323,16 +323,20 @@
                 var xml = XDocument.Parse(bodyString);
                 if (xml.Root != null)
                 {
-                    var root = xml.Root.Nodes().FirstOrDefault() as XElement;
+                    // < v5 Messages were wrapped in a root "Messages" node
+                    // v5+ A message is the root node
+                    var root = xml.Root.Name.LocalName == "Messages" ? xml.Root.Elements().FirstOrDefault() : xml.Root;
                     if (root != null)
                     {
-                        return root.Nodes()
-                                   .OfType<XElement>()
+                        return root.Elements()
                                    .Select(n => new KeyValuePair<string, string>(n.Name.LocalName, n.Value));
                     }
                 }
             }
-            catch (XmlException) { }
+            catch (XmlException ex)
+            {
+                LogTo.Error(ex, "Error parsing message data.");
+            }
             return new List<KeyValuePair<string, string>>();
         }
 
