@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     using System;
-    using System.Linq;
     using Caliburn.Micro;
+    using Framework;
 
     [Serializable]
     public class MessageInfo : PropertyChangedBase
@@ -26,20 +26,6 @@
 
         public DateTime TimeSent { get; set; }
 
-        public string FriendlyMessageType { get; private set; }
-
-        public void OnMessageTypeChanged()
-        {
-            if (string.IsNullOrEmpty(MessageType))
-                return;
-
-            var clazz = MessageType.Split(',').First();
-            var objectName = clazz.Split('.').Last();
-
-            if (objectName.Contains("+"))
-                objectName = objectName.Split('+').Last();
-
-            FriendlyMessageType = objectName;
-        }
+        public string FriendlyMessageType { get { return TypeHumanizer.ToName(MessageType); } }
     }
 }

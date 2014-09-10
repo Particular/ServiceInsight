@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
+    using Framework;
     using Mindscape.WpfDiagramming;
     using Models;
     using ReactiveUI;
@@ -45,21 +46,7 @@
             var originatingSaga = message.Sagas.FirstOrDefault();
             if (originatingSaga == null) return string.Empty;
 
-            return ProcessType(originatingSaga.SagaType);
-        }
-
-        static string ProcessType(string messageType)
-        {
-            if (string.IsNullOrEmpty(messageType))
-                return string.Empty;
-
-            var clazz = messageType.Split(',').First();
-            var objectName = clazz.Split('.').Last();
-
-            if (objectName.Contains("+"))
-                objectName = objectName.Split('+').Last();
-
-            return objectName;
+            return TypeHumanizer.ToName(originatingSaga.SagaType);
         }
 
         public StoredMessage Message

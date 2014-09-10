@@ -223,6 +223,7 @@
     </Compile>
     <Compile Include="Framework\Attachments\Attachment.cs" />
     <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
+    <Compile Include="Framework\TypeHumanizer.cs" />
     <Compile Include="LogWindow\LoggingRichTextBoxBehavior.cs" />
     <Compile Include="Framework\DefaultClipboard.cs" />
     <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />

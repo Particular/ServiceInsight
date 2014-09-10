@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Caliburn.Micro;
+    using Framework;
 
     public class SagaData : PropertyChangedBase
     {
@@ -15,28 +16,8 @@
 
         public string SagaType
         {
-            get
-            {
-                return ProcessType(sagaType);
-            }
-            set
-            {
-                sagaType = value;
-            }
-        }
-
-        string ProcessType(string messageType)
-        {
-            if (string.IsNullOrEmpty(messageType))
-                return string.Empty;
-
-            var clazz = messageType.Split(',').First();
-            var objectName = clazz.Split('.').Last();
-
-            if (objectName.Contains("+"))
-                objectName = objectName.Split('+').Last();
-
-            return objectName;
+            get { return TypeHumanizer.ToName(sagaType); }
+            set { sagaType = value; }
         }
 
         public bool IsCompleted

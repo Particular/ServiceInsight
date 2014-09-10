@@ -5,6 +5,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
+    using Framework;
     using Models;
     using ReactiveUI;
 
@@ -34,7 +35,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
-                SagaName = message.Sagas.First().SagaType;
+                SagaName = TypeHumanizer.ToName(message.Sagas.First().SagaType);
             CriticalTime = message.CriticalTime;
             DeliveryTime = message.DeliveryTime;
             ProcessingTime = message.ProcessingTime;
