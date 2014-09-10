@@ -17,6 +17,8 @@
         private readonly IEventAggregator eventAggregator;
         private readonly IServiceControl serviceControl;
 
+        private bool donotReselect;
+
         public SequenceDiagramViewModel(IClipboard clipboard, IEventAggregator eventAggregator, IServiceControl serviceControl, SearchBarViewModel searchBar)
         {
             this.eventAggregator = eventAggregator;
@@ -31,11 +33,20 @@
         public ReactiveList<EndpointInfo> Endpoints { get; set; }
 
         public IEnumerable<MessageInfo> Messages { get; set; }
+        public MessageInfo SelectedMessage { get; set; }
 
         public ICommand RetryMessageCommand { get; private set; }
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
+
+        private void OnSelectedMessageChanged()
+        {
+            if (!donotReselect && SelectedMessage != null)
+                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
+
+            donotReselect = false;
+        }
 
         public void Handle(SelectedMessageChanged message)
         {
@@ -52,6 +63,13 @@
             CreateEndpoints(messages);
 
             CreateMessages(messages);
+
+            donotReselect = true;
+
+            SelectedMessage = Messages.FirstOrDefault(m =>
+                m.Message.MessageId == message.Message.MessageId &&
+                m.Message.TimeSent == message.Message.TimeSent &&
+                m.Message.Id == message.Message.Id);
         }
 
         private void CreateEndpoints(IEnumerable<StoredMessage> messages)

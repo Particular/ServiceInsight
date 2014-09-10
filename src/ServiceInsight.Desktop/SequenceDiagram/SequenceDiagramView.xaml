@@ -152,7 +152,8 @@
 
                 <ListBox Margin="0 72 0 200"
                          ItemContainerStyle="{StaticResource MessageContainerStyle}"
-                         ItemsSource="{Binding Messages}">
+                         ItemsSource="{Binding Messages}"
+                         SelectedItem="{Binding SelectedMessage}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <sequenceDiagram:SequenceDiagramMessage MouseOver="{Binding Hilited, Mode=OneWayToSource}" />

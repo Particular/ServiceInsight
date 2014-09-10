@@ -27,7 +27,8 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<BodyTabSelectionChanged>
+        IHandle<BodyTabSelectionChanged>,
+        IHandle<SelectedMessageChanged>
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
@@ -251,6 +252,11 @@
             {
                 msg.Status = MessageStatus.RetryIssued;
             }
+        }
+
+        public void Handle(SelectedMessageChanged message)
+        {
+            Focus(message.Message);
         }
 
         public void OnSelectedExplorerItemChanged()
