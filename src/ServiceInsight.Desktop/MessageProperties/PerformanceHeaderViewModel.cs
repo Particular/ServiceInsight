@@ -6,6 +6,7 @@
     using Caliburn.Micro;
     using Core.MessageDecoders;
     using ExtensionMethods;
+    using Humanizer;
     using Models;
 
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
@@ -45,9 +46,9 @@
                 return;
             }
 
-            ProcessingTime = (ProcessingEnded.Value - ProcessingStarted.Value).GetElapsedTime();
-            CriticalTime = (ProcessingEnded.Value - TimeSent.Value).GetElapsedTime();
-            DeliveryTime = (ProcessingStarted.Value - TimeSent.Value).GetElapsedTime();
+            ProcessingTime = (ProcessingEnded.Value - ProcessingStarted.Value).Humanize();
+            CriticalTime = (ProcessingEnded.Value - TimeSent.Value).Humanize();
+            DeliveryTime = (ProcessingStarted.Value - TimeSent.Value).Humanize();
         }
 
         protected override void MapHeaderKeys()
