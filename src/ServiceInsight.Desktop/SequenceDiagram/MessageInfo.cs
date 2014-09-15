@@ -7,6 +7,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using Caliburn.Micro;
     using Framework;
     using Models;
+    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.MessageFlow;
     using ReactiveUI;
 
     public class MessageInfo : ReactiveObject, IHandle<MessageInfo.HiliteEvent>
@@ -17,13 +19,19 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         }
 
         private readonly IEventAggregator eventAggregator;
+        private readonly ScreenFactory screenFactory;
+        private readonly IWindowManagerEx windowManager;
 
         public MessageInfo(
             IEventAggregator eventAggregator,
+            ScreenFactory screenFactory,
+            IWindowManagerEx windowManager,
             SequenceDiagramViewModel viewModel,
             StoredMessage message,
             ReactiveList<EndpointInfo> endpoints)
         {
+            this.windowManager = windowManager;
+            this.screenFactory = screenFactory;
             this.eventAggregator = eventAggregator;
             Message = message;
             Endpoints = endpoints;
@@ -32,6 +40,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             CopyConversationIDCommand = viewModel.CopyConversationIDCommand;
             CopyMessageURICommand = viewModel.CopyMessageURICommand;
             SearchByMessageIDCommand = viewModel.SearchByMessageIDCommand;
+            var cmd = new ReactiveCommand();
+            cmd.Subscribe(_ => ShowException());
+            DisplayExceptionDetailsCommand = cmd;
 
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
@@ -130,6 +141,12 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand DisplayExceptionDetailsCommand { get; private set; }
+
+        public void Handle(HiliteEvent message)
+        {
+            HiliteHandler = message.MessageID == Message.MessageId;
+        }
 
         private void OnHilitedChanged()
         {
@@ -177,9 +194,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             MessagePopupIndex = MinEndpointIndex + (MaxEndpointIndex - MinEndpointIndex) / 2;
         }
 
-        public void Handle(HiliteEvent message)
+        public void ShowException()
         {
-            HiliteHandler = message.MessageID == Message.MessageId;
+            var model = screenFactory.CreateScreen<ExceptionDetailViewModel>();
+            model.Exception = new ExceptionDetails(Message);
+            windowManager.ShowDialog(model);
         }
     }
 }

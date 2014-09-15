@@ -8,6 +8,7 @@
     using Events;
     using Framework;
     using Models;
+    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
     using ReactiveUI;
     using Search;
     using ServiceControl;
@@ -15,12 +16,22 @@
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         private readonly IEventAggregator eventAggregator;
+        private readonly ScreenFactory screenFactory;
+        private readonly IWindowManagerEx windowManager;
         private readonly IServiceControl serviceControl;
 
         private bool donotReselect;
 
-        public SequenceDiagramViewModel(IClipboard clipboard, IEventAggregator eventAggregator, IServiceControl serviceControl, SearchBarViewModel searchBar)
+        public SequenceDiagramViewModel(
+            IClipboard clipboard,
+            IEventAggregator eventAggregator,
+            ScreenFactory screenFactory,
+            IWindowManagerEx windowManager,
+            IServiceControl serviceControl,
+            SearchBarViewModel searchBar)
         {
+            this.windowManager = windowManager;
+            this.screenFactory = screenFactory;
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
 
@@ -82,7 +93,7 @@
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
-            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, this, m, Endpoints)).ToList();
+            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, screenFactory, windowManager, this, m, Endpoints)).ToList();
 
             Messages.First().IsFirst = true;
 

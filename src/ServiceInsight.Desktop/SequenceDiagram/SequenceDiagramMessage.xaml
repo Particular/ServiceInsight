@@ -577,10 +577,14 @@
                                           Stretch="Fill" />
                                 </Grid>
 
-                                <TextBlock Margin="6,0"
-                                           FontWeight="Bold"
-                                           Foreground="Red"
-                                           Text="{Binding ExceptionType}" />
+                                <Button Margin="6,0"
+                                        Style="{StaticResource MessagePopupButtonStyle}"
+                                        Command="{Binding DisplayExceptionDetailsCommand}">
+                                    <TextBlock FontWeight="Bold"
+                                               Foreground="Red"
+                                               Style="{StaticResource UnderlineTextBlockStyle}"
+                                               Text="{Binding ExceptionType}" />
+                                </Button>
                             </StackPanel>
 
                             <TextBlock Margin="0,6,0,0"
