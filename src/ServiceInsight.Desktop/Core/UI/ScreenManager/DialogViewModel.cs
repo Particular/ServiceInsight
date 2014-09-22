@@ -54,7 +54,7 @@
 
         Dialog CreateWindow(Window parent)
         {
-            var dialog = new Dialog { Owner = parent, DataContext = this };
+            var dialog = new Dialog { DataContext = this };
 
             if (parent == null)
             {

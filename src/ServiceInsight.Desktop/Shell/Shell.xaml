@@ -249,8 +249,9 @@
                     </dxd:AutoHideGroup>
                 </dxd:DockLayoutManager.AutoHideGroups>
 
-                <dxd:LayoutGroup>
-                    <dxd:LayoutGroup ItemWidth="4*" Orientation="Vertical">
+                <dxd:LayoutGroup AutomationProperties.AutomationId="ContentGroup">
+                    <dxd:LayoutGroup ItemWidth="4*" Orientation="Vertical" 
+                                     AutomationProperties.AutomationId="RightSideContentGroup">
                         <dxd:LayoutPanel x:Name="Messages"
                                          AllowClose="False"
                                          AllowFloat="False"
@@ -261,7 +262,8 @@
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
-                        <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal">
+                        <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal" 
+                                         AutomationProperties.AutomationId="RightBottomContentGroup"> 
                             <dxd:TabbedGroup x:Name="MainTabbedView"
                                              AllowClose="False"
                                              AllowFloat="False"

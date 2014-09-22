@@ -23,7 +23,7 @@
             ShowInTaskbar = false;
             SnapsToDevicePixels = true;
 
-            if (parent != null)
+            if (parent != null && parent.IsVisible)
             {
                 Owner = parent;
                 FlowDirection = parent.FlowDirection;

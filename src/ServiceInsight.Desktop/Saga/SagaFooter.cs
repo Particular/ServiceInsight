@@ -13,5 +13,10 @@ namespace Particular.ServiceInsight.Desktop.Saga
         {
             get { return data; }
         }
+
+        public bool IsCompleted
+        {
+            get { return data.IsCompleted; }
+        }
     }
 }

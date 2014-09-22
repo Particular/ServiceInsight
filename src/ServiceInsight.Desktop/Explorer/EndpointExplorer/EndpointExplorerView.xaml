@@ -13,7 +13,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <HierarchicalDataTemplate x:Key="TreeTemplate"
-                                  DataType="tree:ExplorerItem"
+                                  DataType="vm:EndpointExplorerItem"
                                   ItemsSource="{Binding Path=Children}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -33,12 +33,15 @@
             </Grid>
         </HierarchicalDataTemplate>
 
-        <Style x:Key="ExpandedStyle" TargetType="{x:Type TreeViewItem}">
+        <Style x:Key="ExpandedStyle"
+               TargetType="{x:Type TreeViewItem}"
+               d:DataContext="{d:DesignInstance tree:ExplorerItem}">
             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
         </Style>
     </UserControl.Resources>
 
-    <TreeView ItemContainerStyle="{StaticResource ExpandedStyle}"
+    <TreeView AutomationProperties.AutomationId="EndpointTree"
+              ItemContainerStyle="{StaticResource ExpandedStyle}"
               ItemTemplate="{StaticResource TreeTemplate}"
               ItemsSource="{Binding Items}"
               ScrollViewer.VerticalScrollBarVisibility="Visible">

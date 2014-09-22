@@ -75,44 +75,67 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Caliburn.Micro">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Data.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Data.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Utils.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Utils.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Utils.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Controls.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Controls.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Controls.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Mvvm.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Mvvm.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Core.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Docking.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v13.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Printing.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v13.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v14.1.Core">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v14.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Layout.v14.1.Core">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v14.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v13.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v13.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.NavBar.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v14.1">
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v14.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.1\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
@@ -221,6 +244,7 @@
     <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExtensionMethods\ContainerExtensions.cs" />
     <Compile Include="Framework\Attachments\Attachment.cs" />
     <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Framework\TypeHumanizer.cs" />
@@ -468,6 +492,7 @@
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
+    <Compile Include="Startup\ConfigurationSettingsReader.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Framework\Logging\LoggingConfig.cs" />
     <Compile Include="Startup\AppBootstrapper.cs" />

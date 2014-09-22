@@ -2,12 +2,13 @@
 {
     using System.Drawing;
     using Caliburn.Micro;
+    using EndpointExplorer;
 
     public abstract class ExplorerItem : PropertyChangedBase
     {
         protected ExplorerItem(string name)
         {
-            Children = new BindableCollection<ExplorerItem>();
+            Children = new BindableCollection<EndpointExplorerItem>();
             Name = name;
         }
 
@@ -21,7 +22,7 @@
 
         public virtual string DisplayName { get { return Name; } }
 
-        public IObservableCollection<ExplorerItem> Children { get; private set; }
+        public IObservableCollection<EndpointExplorerItem> Children { get; private set; }
 
         public override string ToString()
         {

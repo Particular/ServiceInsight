@@ -19,14 +19,12 @@
 
         public bool EndpointExists(Endpoint endpoint)
         {
-            return Children.OfType<EndpointExplorerItem>()
-                           .Any(item => item.Endpoint == endpoint);
+            return Children.Any(item => item.Endpoint == endpoint);
         }
 
         public EndpointExplorerItem GetEndpointNode(Endpoint endpoint)
         {
-            return Children.OfType<EndpointExplorerItem>()
-                           .First(item => item.Endpoint == endpoint);
+            return Children.First(item => item.Endpoint == endpoint);
         }
     }
 }

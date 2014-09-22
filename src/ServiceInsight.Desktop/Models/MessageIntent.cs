@@ -6,5 +6,6 @@
         Publish,
         Subscribe,
         Unsubscribe,
+        Reply
     }
 }

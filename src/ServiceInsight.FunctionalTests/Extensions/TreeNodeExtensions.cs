@@ -7,14 +7,14 @@
     {
         public static void ExpandNode(this TreeNode node)
         {
-            var patterns = (ExpandCollapsePattern)node.AutomationElement.GetCurrentPattern(AutomationPattern.LookupById(ExpandCollapsePatternIdentifiers.Pattern.Id));
+            var patterns = (ExpandCollapsePattern)node.AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
             patterns.Expand();
         }
 
         public static void CollapseNode(this TreeNode node)
         {
-            var patterns = (ExpandCollapsePattern)node.AutomationElement.GetCurrentPattern(AutomationPattern.LookupById(ExpandCollapsePatternIdentifiers.Pattern.Id));
-            patterns.Expand();
+            var patterns = (ExpandCollapsePattern)node.AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
+            patterns.Collapse();
         }
     }
 }
