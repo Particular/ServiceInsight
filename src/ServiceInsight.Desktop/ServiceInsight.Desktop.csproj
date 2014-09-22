@@ -251,6 +251,7 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageViewers\HexViewer\HexControl.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
     <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
@@ -387,9 +388,6 @@
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\HexViewer\HexContentViewModel.cs" />
-    <Compile Include="MessageViewers\HexViewer\HexNumber.cs" />
-    <Compile Include="MessageViewers\HexViewer\HexPart.cs" />
-    <Compile Include="MessageViewers\HexViewer\IHexContentView.cs" />
     <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
     <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
@@ -611,6 +609,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageViewers\XmlViewer\XmlMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
