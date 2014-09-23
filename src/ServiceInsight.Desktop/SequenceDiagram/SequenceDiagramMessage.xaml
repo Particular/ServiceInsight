@@ -68,7 +68,7 @@
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True">
                         <Setter Property="Data" Value="{StaticResource SagaTriggerGeometry}" />
-                        <Setter Property="ToolTip" Value="Saga Initiated" />
+                        <Setter Property="ToolTip" Value="Message originated from Saga" />
                     </DataTrigger>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
@@ -76,7 +76,7 @@
                             <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
                         </MultiDataTrigger.Conditions>
                         <Setter Property="Data" Value="{StaticResource RightArrow}" />
-                        <Setter Property="ToolTip" Value="Saga continued" />
+                        <Setter Property="ToolTip" Value="Saga Initiated / Updated" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
@@ -84,7 +84,7 @@
                             <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
                         </MultiDataTrigger.Conditions>
                         <Setter Property="Data" Value="{StaticResource SagaCompletedGeometry}" />
-                        <Setter Property="ToolTip" Value="Saga completed" />
+                        <Setter Property="ToolTip" Value="Saga Completed" />
                     </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
