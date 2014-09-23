@@ -15,7 +15,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     {
         public class HiliteEvent
         {
-            public string MessageID { get; set; }
+            public string RelatedToMessageId { get; set; }
+            public string SendingEndpointName { get; set; }
         }
 
         private readonly IEventAggregator eventAggregator;
@@ -143,14 +144,22 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public ICommand SearchByMessageIDCommand { get; private set; }
         public ICommand DisplayExceptionDetailsCommand { get; private set; }
 
-        public void Handle(HiliteEvent message)
+        public void Handle(HiliteEvent hiliteEvent)
         {
-            HiliteHandler = message.MessageID == Message.MessageId;
+            HiliteHandler =
+                hiliteEvent.RelatedToMessageId != null &&
+                hiliteEvent.RelatedToMessageId == Message.MessageId &&
+                Message.ReceivingEndpoint != null &&
+                Message.ReceivingEndpoint.Name == hiliteEvent.SendingEndpointName;
         }
 
         private void OnHilitedChanged()
         {
-            eventAggregator.Publish(new HiliteEvent { MessageID = Hilited ? Message.RelatedToMessageId : "" });
+            eventAggregator.Publish(new HiliteEvent
+            {
+                RelatedToMessageId = Hilited ? Message.RelatedToMessageId : "",
+                SendingEndpointName = Hilited && Message.SendingEndpoint != null ? Message.SendingEndpoint.Name : ""
+            });
         }
 
         private void OnEndpointsChanged()
