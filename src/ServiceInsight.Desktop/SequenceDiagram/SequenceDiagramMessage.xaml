@@ -599,5 +599,47 @@
 
         </StackPanel>
 
+        <!--  Vertical Hilite Line  -->
+        <Grid Width="{StaticResource ColumnWidth}"
+              Margin="{Binding VerticalHiliteIndex,
+                               Converter={StaticResource ToEndpointMarginConverter}}"
+              HorizontalAlignment="Left"
+              Visibility="{Binding VerticalHilite,
+                                   Converter={StaticResource BoolToVisibilityConverter}}">
+            <Line Margin="0,-38,0,0"
+                  HorizontalAlignment="Center"
+                  Fill="{StaticResource HiliteDarkBrush}"
+                  Stretch="Fill"
+                  Stroke="{StaticResource HiliteDarkBrush}"
+                  StrokeDashArray="{Binding VerticalHiliteIsPublished,
+                                            Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                  StrokeEndLineCap="Square"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="1" />
+        </Grid>
+
+        <Grid Width="{StaticResource ColumnWidth}"
+              Margin="{Binding SendingEndpointIndex,
+                               Converter={StaticResource ToEndpointMarginConverter}}"
+              HorizontalAlignment="Left"
+              Visibility="{Binding VerticalHiliteStart,
+                                   Converter={StaticResource BoolToVisibilityConverter}}">
+            <Line Margin="2,-36,0,0"
+                  HorizontalAlignment="Center"
+                  Fill="{StaticResource HiliteDarkBrush}"
+                  Stroke="{StaticResource HiliteDarkBrush}"
+                  StrokeDashArray="{Binding IsPublished,
+                                            Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                  StrokeEndLineCap="Square"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="36" />
+        </Grid>
+
     </Grid>
 </UserControl>

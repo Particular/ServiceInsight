@@ -15,8 +15,12 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     {
         public class HiliteEvent
         {
+            public bool Hilite { get; set; }
             public string RelatedToMessageId { get; set; }
             public string SendingEndpointName { get; set; }
+            public int VerticalHiliteIndex { get; set; }
+            public string TriggerMessageId { get; set; }
+            public bool IsPublished { get; set; }
         }
 
         private readonly IEventAggregator eventAggregator;
@@ -67,6 +71,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public bool Selected { get; set; }
         public bool Hilited { get; set; }
         public bool HiliteHandler { get; set; }
+
+        public bool VerticalHilite { get; set; }
+        public int VerticalHiliteIndex { get; set; }
+        public bool VerticalHiliteIsPublished { get; set; }
+        public bool VerticalHiliteStart { get; set; }
 
         public bool IsFirst { get; set; }
 
@@ -147,6 +156,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public void Handle(HiliteEvent hiliteEvent)
         {
             HiliteHandler =
+                hiliteEvent.Hilite &&
                 hiliteEvent.RelatedToMessageId != null &&
                 hiliteEvent.RelatedToMessageId == Message.MessageId &&
                 Message.ReceivingEndpoint != null &&
@@ -157,9 +167,15 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
             eventAggregator.Publish(new HiliteEvent
             {
-                RelatedToMessageId = Hilited ? Message.RelatedToMessageId : "",
-                SendingEndpointName = Hilited && Message.SendingEndpoint != null ? Message.SendingEndpoint.Name : ""
+                Hilite = Hilited,
+                RelatedToMessageId = Message.RelatedToMessageId,
+                SendingEndpointName = Message.SendingEndpoint != null ? Message.SendingEndpoint.Name : "",
+                VerticalHiliteIndex = SendingEndpointIndex,
+                TriggerMessageId = Message.Id,
+                IsPublished = IsPublished
             });
+
+            VerticalHiliteStart = Hilited && !IsFirst;
         }
 
         private void OnEndpointsChanged()

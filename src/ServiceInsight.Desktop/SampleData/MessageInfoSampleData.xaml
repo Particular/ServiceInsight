@@ -2,7 +2,7 @@
 		IsFirst="True"
         IsPublished="False"
         IsTimeout="False"
-        IsFailed="True"
+        IsFailed="False"
 		IsSagaInitiated="False"
         IsSagaCompleted="True"
 		MinEndpointIndex="0"
@@ -14,7 +14,9 @@
 		SendingEndpointIndex="0"
 		SendingEndpoint="Endpoint1"
 		SagaName=""
-		Selected="False">
+		Selected="False"
+        VerticalHilite="False"
+        VerticalHiliteStart="True">
     <SequenceDiagram:MessageInfo.Endpoints>
         <!-- ReSharper disable Xaml.InvalidType -->
         <SequenceDiagram:EndpointInfo FullName="LOCALHOST@Endpoint1" Host="LOCALHOST" Name="Endpoint1" Version="1.2.3" />

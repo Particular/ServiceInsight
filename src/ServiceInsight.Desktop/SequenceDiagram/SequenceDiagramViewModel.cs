@@ -13,7 +13,7 @@
     using Search;
     using ServiceControl;
 
-    public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>, IHandle<MessageInfo.HiliteEvent>
     {
         private readonly IEventAggregator eventAggregator;
         private readonly ScreenFactory screenFactory;
@@ -81,6 +81,35 @@
                 m.Message.MessageId == message.Message.MessageId &&
                 m.Message.TimeSent == message.Message.TimeSent &&
                 m.Message.Id == message.Message.Id);
+        }
+
+        public void Handle(MessageInfo.HiliteEvent hiliteEvent)
+        {
+            var hiliteOn = false;
+
+            foreach (var messageInfo in Messages)
+            {
+                if (!hiliteEvent.Hilite)
+                {
+                    messageInfo.VerticalHilite = false;
+                    continue;
+                }
+
+                if (messageInfo.Message.Id == hiliteEvent.TriggerMessageId)
+                    hiliteOn = false;
+
+                if (hiliteOn)
+                {
+                    messageInfo.VerticalHilite = true;
+                    messageInfo.VerticalHiliteIndex = hiliteEvent.VerticalHiliteIndex;
+                    messageInfo.VerticalHiliteIsPublished = hiliteEvent.IsPublished;
+                }
+
+                if (hiliteEvent.RelatedToMessageId == messageInfo.Message.MessageId &&
+                    messageInfo.Message.ReceivingEndpoint != null &&
+                    messageInfo.Message.ReceivingEndpoint.Name == hiliteEvent.SendingEndpointName)
+                    hiliteOn = true;
+            }
         }
 
         private void CreateEndpoints(IEnumerable<StoredMessage> messages)
