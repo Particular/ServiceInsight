@@ -804,6 +804,9 @@
   <ItemGroup>
     <DesignData Include="SampleData\MessageInfoSampleData.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SequenceDiagram.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
   <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">

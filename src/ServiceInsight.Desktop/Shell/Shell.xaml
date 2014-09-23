@@ -294,7 +294,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="SequenceDiagram"
                                                  Caption="Sequence Diagram"
-                                                 CaptionImage="/Images/Alert.png"
+                                                 CaptionImage="/Images/SequenceDiagram.png"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding SequenceDiagram}" />
                                 </dxd:LayoutPanel>
