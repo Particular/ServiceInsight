@@ -23,7 +23,7 @@
         private readonly IClipboard clipboard;
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;
-        ScreenFactory screenFactory;
+        Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
@@ -38,9 +38,9 @@
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            ScreenFactory screenFactory,
             SearchBarViewModel searchBar,
             MessageListViewModel messageList,
+            Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
             EndpointExplorerViewModel endpointExplorer,
             IClipboard clipboard)
@@ -49,11 +49,11 @@
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
-            this.screenFactory = screenFactory;
             this.searchBar = searchBar;
             this.settingsProvider = settingsProvider;
             this.messageList = messageList;
             this.endpointExplorer = endpointExplorer;
+            this.exceptionDetail = exceptionDetail;
 
             Diagram = new MessageFlowDiagram();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -114,7 +114,7 @@
 
         public void ShowException(ExceptionDetails exception)
         {
-            var model = screenFactory.CreateScreen<ExceptionDetailViewModel>();
+            var model = exceptionDetail();
             model.Exception = exception;
             windowManager.ShowDialog(model);
         }

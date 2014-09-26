@@ -38,7 +38,6 @@
         IWorkTracker
     {
         IAppCommands appCommander;
-        ScreenFactory screenFactory;
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
@@ -47,13 +46,16 @@
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
+        Func<ServiceControlConnectionViewModel> serviceControlConnection;
+        Func<LicenseRegistrationViewModel> licenceRegistration;
 
         public ShellViewModel(
             IAppCommands appCommander,
-            ScreenFactory screenFactory,
             IWindowManagerEx windowManager,
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
+            Func<ServiceControlConnectionViewModel> serviceControlConnection,
+            Func<LicenseRegistrationViewModel> licenceRegistration,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
@@ -67,12 +69,13 @@
             CommandLineArgParser comandLineArgParser)
         {
             this.appCommander = appCommander;
-            this.screenFactory = screenFactory;
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
             this.licenseManager = licenseManager;
             this.settingsProvider = settingsProvider;
             this.comandLineArgParser = comandLineArgParser;
+            this.serviceControlConnection = serviceControlConnection;
+            this.licenceRegistration = licenceRegistration;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -192,7 +195,7 @@
 
         public void ConnectToServiceControl()
         {
-            var connectionViewModel = screenFactory.CreateScreen<ServiceControlConnectionViewModel>();
+            var connectionViewModel = serviceControlConnection();
             var result = windowManager.ShowDialog(connectionViewModel);
 
             if (result.GetValueOrDefault(false))
@@ -309,7 +312,7 @@
 
         void RegisterLicense()
         {
-            var model = screenFactory.CreateScreen<LicenseRegistrationViewModel>();
+            var model = licenceRegistration();
             var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))

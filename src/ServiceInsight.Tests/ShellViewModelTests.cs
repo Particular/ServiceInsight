@@ -35,7 +35,6 @@
     public class ShellViewModelTests
     {
         ShellViewModel shell;
-        ScreenFactory ScreenFactory;
         WindowManagerEx WindowManager;
         EndpointExplorerViewModel EndpointExplorer;
         MessageListViewModel MessageList;
@@ -56,7 +55,6 @@
         [SetUp]
         public void TestInitialize()
         {
-            ScreenFactory = Substitute.For<ScreenFactory>();
             WindowManager = Substitute.For<WindowManagerEx>();
             EndpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             MessageList = Substitute.For<MessageListViewModel>();
@@ -75,11 +73,24 @@
             App = Substitute.For<IAppCommands>();
             CommandLineArgParser = MockEmptyStartupOptions();
 
-            shell = new ShellViewModel(App, ScreenFactory, WindowManager,
-                                       EndpointExplorer, MessageList, StatusbarManager,
-                                       EventAggregator, LicenseManager, MessageFlow, SagaWindow,
-                                       MessageBodyView, HeaderView, SettingsProvider, MessageProperties,
-                                       LogWindow, CommandLineArgParser);
+            shell = new ShellViewModel(
+                        App,
+                        WindowManager,
+                        EndpointExplorer,
+                        MessageList,
+                        () => Substitute.For<ServiceControlConnectionViewModel>(),
+                        () => Substitute.For<LicenseRegistrationViewModel>(),
+                        StatusbarManager,
+                        EventAggregator,
+                        LicenseManager,
+                        MessageFlow,
+                        SagaWindow,
+                        MessageBodyView,
+                        HeaderView,
+                        SettingsProvider,
+                        MessageProperties,
+                        LogWindow,
+                        CommandLineArgParser);
 
             ((IViewAware)shell).AttachView(View);
         }
