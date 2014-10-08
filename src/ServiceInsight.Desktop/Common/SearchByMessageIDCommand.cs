@@ -1,13 +1,11 @@
 namespace Particular.ServiceInsight.Desktop.Common
 {
-    using System;
-    using System.Windows.Input;
     using Caliburn.Micro;
     using Events;
     using Models;
     using Search;
 
-    class SearchByMessageIDCommand : ICommand
+    class SearchByMessageIDCommand : BaseCommand
     {
         private readonly IEventAggregator eventAggregator;
         private readonly SearchBarViewModel searchBar;
@@ -18,14 +16,7 @@ namespace Particular.ServiceInsight.Desktop.Common
             this.searchBar = searchBar;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             var message = parameter as StoredMessage;
             if (message == null)

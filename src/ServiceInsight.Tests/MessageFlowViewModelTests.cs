@@ -20,7 +20,6 @@
         IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         WindowManagerEx windowManager;
-        ScreenFactory screenFactory;
         SearchBarViewModel searchBar;
         MessageListViewModel messageList;
         ISettingsProvider settingProvider;
@@ -64,7 +63,6 @@
             eventAggregator = Substitute.For<IEventAggregator>();
             clipboard = Substitute.For<IClipboard>();
             windowManager = Substitute.For<WindowManagerEx>();
-            screenFactory = Substitute.For<ScreenFactory>();
             searchBar = Substitute.For<SearchBarViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
             settingProvider = Substitute.For<ISettingsProvider>();
@@ -73,9 +71,9 @@
             return new MessageFlowViewModel(serviceControl,
                                             eventAggregator,
                                             windowManager,
-                                            screenFactory,
                                             searchBar,
                                             messageList,
+                                            () => Substitute.For<ExceptionDetailViewModel>(),
                                             settingProvider,
                                             endpointExplorer,
                                             clipboard);

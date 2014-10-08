@@ -1,12 +1,10 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Common
 {
-    using System;
-    using System.Windows.Input;
     using Framework;
     using Models;
     using ServiceControl;
 
-    class CopyMessageURICommand : ICommand
+    class CopyMessageURICommand : BaseCommand
     {
         private readonly IClipboard clipboard;
         private readonly IServiceControl serviceControl;
@@ -17,14 +15,7 @@
             this.serviceControl = serviceControl;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             var message = parameter as StoredMessage;
             if (message == null)

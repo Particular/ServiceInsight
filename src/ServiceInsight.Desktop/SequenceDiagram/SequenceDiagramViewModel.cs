@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
@@ -9,6 +10,7 @@
     using Framework;
     using Models;
     using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.MessageFlow;
     using ReactiveUI;
     using Search;
     using ServiceControl;
@@ -16,24 +18,24 @@
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>, IHandle<MessageInfo.HiliteEvent>
     {
         private readonly IEventAggregator eventAggregator;
-        private readonly ScreenFactory screenFactory;
         private readonly IWindowManagerEx windowManager;
         private readonly IServiceControl serviceControl;
+        private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
 
         private bool donotReselect;
 
         public SequenceDiagramViewModel(
             IClipboard clipboard,
             IEventAggregator eventAggregator,
-            ScreenFactory screenFactory,
             IWindowManagerEx windowManager,
             IServiceControl serviceControl,
+            Func<ExceptionDetailViewModel> exceptionDetailViewModel,
             SearchBarViewModel searchBar)
         {
             this.windowManager = windowManager;
-            this.screenFactory = screenFactory;
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
+            this.exceptionDetailViewModel = exceptionDetailViewModel;
 
             CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
             CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
@@ -122,7 +124,7 @@
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
-            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, screenFactory, windowManager, this, m, Endpoints)).ToList();
+            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, windowManager, exceptionDetailViewModel, this, m, Endpoints)).ToList();
 
             Messages.First().IsFirst = true;
 

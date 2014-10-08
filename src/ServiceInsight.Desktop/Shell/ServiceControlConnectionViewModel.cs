@@ -64,6 +64,7 @@
         public virtual void Accept()
         {
             StartWorkInProgress();
+            ServiceUrl = ServiceUrl.Trim();
             IsAddressValid = IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {

@@ -24,20 +24,20 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         }
 
         private readonly IEventAggregator eventAggregator;
-        private readonly ScreenFactory screenFactory;
         private readonly IWindowManagerEx windowManager;
+        private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
 
         public MessageInfo(
             IEventAggregator eventAggregator,
-            ScreenFactory screenFactory,
             IWindowManagerEx windowManager,
+            Func<ExceptionDetailViewModel> exceptionDetailViewModel,
             SequenceDiagramViewModel viewModel,
             StoredMessage message,
             ReactiveList<EndpointInfo> endpoints)
         {
             this.windowManager = windowManager;
-            this.screenFactory = screenFactory;
             this.eventAggregator = eventAggregator;
+            this.exceptionDetailViewModel = exceptionDetailViewModel;
             Message = message;
             Endpoints = endpoints;
 
@@ -221,7 +221,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public void ShowException()
         {
-            var model = screenFactory.CreateScreen<ExceptionDetailViewModel>();
+            var model = exceptionDetailViewModel();
             model.Exception = new ExceptionDetails(Message);
             windowManager.ShowDialog(model);
         }

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Autofac;
-    using Core.UI.ScreenManager;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using MessageFlow;
@@ -39,7 +38,6 @@
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
-            builder.RegisterType<ScreenFactory>().SingleInstance();
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();

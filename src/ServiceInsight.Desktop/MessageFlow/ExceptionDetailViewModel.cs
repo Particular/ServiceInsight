@@ -5,7 +5,7 @@
     using Models;
     using Shell;
 
-    class ExceptionDetailViewModel : Screen
+    public class ExceptionDetailViewModel : Screen
     {
         ISettingsProvider settingsProvider;
 
