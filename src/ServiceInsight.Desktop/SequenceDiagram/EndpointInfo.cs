@@ -19,7 +19,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
             FullName = endpoint.Name;
             Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
-            Host = endpoint.HostDisplayName;
+            Host = endpoint.Host;
         }
 
         public string Name { get; private set; }
