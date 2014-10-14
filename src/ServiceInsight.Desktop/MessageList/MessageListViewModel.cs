@@ -121,6 +121,12 @@
 
         public void Focus(StoredMessage msg)
         {
+            if (msg == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
             FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
         }
 

@@ -10,7 +10,9 @@
     using Framework;
     using Models;
     using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
     using Particular.ServiceInsight.Desktop.MessageFlow;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using ReactiveUI;
     using Search;
     using ServiceControl;
@@ -30,7 +32,9 @@
             IWindowManagerEx windowManager,
             IServiceControl serviceControl,
             Func<ExceptionDetailViewModel> exceptionDetailViewModel,
-            SearchBarViewModel searchBar)
+            SearchBarViewModel searchBar,
+            EndpointExplorerViewModel endpointExplorer,
+            MessageListViewModel messageList)
         {
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
@@ -41,6 +45,7 @@
             CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
             SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
+            ShowSagaCommand = new ShowSagaCommand(eventAggregator, endpointExplorer, messageList);
         }
 
         public ReactiveList<EndpointInfo> Endpoints { get; set; }
@@ -52,6 +57,7 @@
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand ShowSagaCommand { get; private set; }
 
         private void OnSelectedMessageChanged()
         {

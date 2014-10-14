@@ -97,7 +97,7 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="MessagePopupButtonStyle" TargetType="{x:Type Button}">
+            <Style x:Key="BlankButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -119,7 +119,7 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="FailedPopupButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Style x:Key="BlankToggleButtonStyle" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -275,7 +275,7 @@
                     <Button x:Name="TopLine"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
-                            Style="{StaticResource MessagePopupButtonStyle}">
+                            Style="{StaticResource BlankButtonStyle}">
                         <i:Interaction.Behaviors>
                             <behaviors:DropDownButtonBehavior />
                         </i:Interaction.Behaviors>
@@ -333,41 +333,46 @@
                     </Button>
 
                     <!--  Bottom Line  -->
-                    <StackPanel x:Name="BottomLine"
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Bottom"
-                                Orientation="Horizontal"
-                                Visibility="{Binding SagaName,
-                                                     Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                    <Button x:Name="BottomLine"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource BlankButtonStyle}"
+                            Visibility="{Binding SagaName,
+                                                 Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}"
+                            CommandParameter="{Binding Message}"
+                            Command="{Binding ShowSagaCommand}">
 
-                        <Grid Margin="0,0,1,0">
-                            <Rectangle Width="18"
-                                       Height="18"
+                        <StackPanel Orientation="Horizontal">
+
+                            <Grid Margin="0,0,1,0">
+                                <Rectangle Width="18"
+                                           Height="18"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Fill="{Binding SagaBackground,
+                                                          ElementName=Root}" />
+                                <controls:IconControl x:Name="SagaTypeIcon"
+                                                      Width="9"
+                                                      Height="9"
+                                                      Foreground="{Binding SagaForeground,
+                                                                           ElementName=Root}"
+                                                      Style="{StaticResource SagaIconStyle}" />
+                            </Grid>
+
+                            <TextBlock Height="18"
+                                       Padding="5 0"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Fill="{Binding SagaBackground,
-                                                      ElementName=Root}" />
-                            <controls:IconControl x:Name="SagaTypeIcon"
-                                                  Width="9"
-                                                  Height="9"
-                                                  Foreground="{Binding SagaForeground,
-                                                                       ElementName=Root}"
-                                                  Style="{StaticResource SagaIconStyle}" />
-                        </Grid>
+                                       Background="{Binding SagaBackground,
+                                                            ElementName=Root}"
+                                       Foreground="{Binding SagaForeground,
+                                                            ElementName=Root}"
+                                       Style="{StaticResource UnderlineTextBlockStyle}"
+                                       Text="{Binding SagaName}" />
 
-                        <TextBlock Height="18"
-                                   Padding="5 0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Background="{Binding SagaBackground,
-                                                        ElementName=Root}"
-                                   Foreground="{Binding SagaForeground,
-                                                        ElementName=Root}"
-                                   Style="{StaticResource UnderlineTextBlockStyle}"
-                                   Text="{Binding SagaName}" />
-
-                    </StackPanel>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Grid>
         </Border>
@@ -459,7 +464,7 @@
             <ToggleButton x:Name="FailedButton"
                           Height="36"
                           HorizontalAlignment="Center"
-                          Style="{StaticResource FailedPopupButtonStyle}">
+                          Style="{StaticResource BlankToggleButtonStyle}">
                 <Grid Height="36"
                       HorizontalAlignment="Center"
                       Background="Red"
@@ -578,7 +583,7 @@
                                 </Grid>
 
                                 <Button Margin="6,0"
-                                        Style="{StaticResource MessagePopupButtonStyle}"
+                                        Style="{StaticResource BlankButtonStyle}"
                                         Command="{Binding DisplayExceptionDetailsCommand}">
                                     <TextBlock FontWeight="Bold"
                                                Foreground="Red"

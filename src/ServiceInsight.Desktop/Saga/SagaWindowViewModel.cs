@@ -173,7 +173,7 @@
 
         public void ShowFlow()
         {
-            eventAggregator.Publish(new SwitchToFlowWindow());
+            eventAggregator.Publish(SwitchToFlowWindow.Instance);
         }
 
         public void RefreshSaga()

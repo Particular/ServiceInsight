@@ -221,6 +221,7 @@
     <Compile Include="Common\CopyMessageURICommand.cs" />
     <Compile Include="Common\RetryMessageCommand.cs" />
     <Compile Include="Common\SearchByMessageIDCommand.cs" />
+    <Compile Include="Common\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">

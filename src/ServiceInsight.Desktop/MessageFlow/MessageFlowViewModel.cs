@@ -104,7 +104,7 @@
 
         public void ShowMessageBody()
         {
-            eventAggregator.Publish(new SwitchToMessageBody());
+            eventAggregator.Publish(SwitchToMessageBody.Instance);
         }
 
         public void ShowSagaWindow()
@@ -114,7 +114,7 @@
                 endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
             }
             messageList.Focus(SelectedMessage.Message);
-            eventAggregator.Publish(new SwitchToSagaWindow());
+            eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
 
         public void ShowException(ExceptionDetails exception)

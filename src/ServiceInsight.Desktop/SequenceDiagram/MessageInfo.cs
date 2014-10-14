@@ -45,6 +45,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             CopyConversationIDCommand = viewModel.CopyConversationIDCommand;
             CopyMessageURICommand = viewModel.CopyMessageURICommand;
             SearchByMessageIDCommand = viewModel.SearchByMessageIDCommand;
+            ShowSagaCommand = viewModel.ShowSagaCommand;
             var cmd = new ReactiveCommand();
             cmd.Subscribe(_ => ShowException());
             DisplayExceptionDetailsCommand = cmd;
@@ -151,6 +152,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand ShowSagaCommand { get; private set; }
         public ICommand DisplayExceptionDetailsCommand { get; private set; }
 
         public void Handle(HiliteEvent hiliteEvent)
