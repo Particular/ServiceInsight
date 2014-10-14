@@ -2,43 +2,64 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Windows.Documents;
     using System.Windows.Media;
+    using Newtonsoft.Json;
 
     public class JsonParser : BaseParser
     {
-        protected static char[] JsonSymbol = { ':', '[', ']', ',', '{', '}' };
-        protected static char[] JsonQuotes = { '"' };
-
-        protected bool IsInsideBlock;
-
         protected override List<CodeLexem> Parse(SourcePart text)
         {
             var list = new List<CodeLexem>();
+
+            TryExtract(ref text, ByteOrderMark);
+
+            var s = text.Substring(0, text.Length);
+
+            using (var sreader = new StringReader(s))
+            using (var reader = new JsonTextReader(sreader))
+            {
+                reader.DateParseHandling = DateParseHandling.None;
+
+                while (reader.Read())
+                {
+                    switch (reader.TokenType)
+                    {
+                        case JsonToken.StartArray: Extract(list, ref text, "[", LexemType.Symbol); break;
+                        case JsonToken.EndArray: Extract(list, ref text, "]", LexemType.Symbol); break;
+
+                        case JsonToken.StartObject: Extract(list, ref text, "{", LexemType.Symbol); break;
+                        case JsonToken.EndObject: Extract(list, ref text, "}", LexemType.Symbol); break;
+
+                        case JsonToken.PropertyName: Extract(list, ref text, reader.Value.ToString(), LexemType.Property); break;
+
+                        case JsonToken.Raw:
+                        case JsonToken.Integer:
+                        case JsonToken.Float:
+                        case JsonToken.String:
+                        case JsonToken.Boolean:
+                        case JsonToken.Date:
+                        case JsonToken.Bytes:
+                            Extract(list, ref text, reader.Value.ToString(), LexemType.Value);
+                            break;
+
+                        case JsonToken.Null:
+                            Extract(list, ref text, "null", LexemType.Value);
+                            break;
+
+                        case JsonToken.Comment: Extract(list, ref text, reader.Value.ToString(), LexemType.Comment); break;
+
+                        default: list.Add(new CodeLexem(LexemType.Error, reader.TokenType.ToString())); break;
+                    }
+                }
+            }
 
             while (text.Length > 0)
             {
                 var length = text.Length;
 
-                TryExtract(ref text, ByteOrderMark);
-                TryExtract(list, ref text, "[", LexemType.Symbol);
-                TryExtract(list, ref text, "{", LexemType.Symbol);
-
-                if (TryExtract(list, ref text, "\"", LexemType.Quotes))
-                {
-                    ParseJsonPropertyName(list, ref text); // Extract Name
-                    TryExtract(list, ref text, "\"", LexemType.Quotes);
-                    TryExtract(list, ref text, ":", LexemType.Symbol);
-                    TrySpace(list, ref text);
-                    TryExtractValue(list, ref text); // Extract Value
-                }
-
-                ParseSymbol(list, ref text); // Parse extras
-                TrySpace(list, ref text);
-                TryExtract(list, ref text, "\r\n", LexemType.LineBreak);
-                TryExtract(list, ref text, "\n", LexemType.LineBreak);
-                TryExtract(list, ref text, "}", LexemType.Symbol);
-                TryExtract(list, ref text, "]", LexemType.Symbol);
+                ExtractUnparsedItems(list, ref text);
 
                 if (length == text.Length)
                     break;
@@ -47,60 +68,27 @@
             return list;
         }
 
-        void TryExtractValue(List<CodeLexem> res, ref SourcePart text)
+        void Extract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
         {
-            if (text[0] == '{')
+            while (!TryExtract(res, ref text, lex, type))
             {
-                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
-            }
-            else if (text[0] == '[')
-            {
-                res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
-            }
-            else if (text[0] == '"')
-            {
-                res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
-                var end = text.IndexOf('"');
-                res.Add(new CodeLexem(LexemType.Value, CutString(ref text, end)));
-                res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
-            }
-            else
-            {
-                var endOfValueQuote = text.IndexOfAny(new[] { '\"' });
-                if (endOfValueQuote > 0)
-                {
-                    res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueQuote)));
-                    res.Add(new CodeLexem(LexemType.Quotes, CutString(ref text, 1)));
-                }
-                else
-                {
-                    var endOfValueOrCollection = text.IndexOfAny(new[] { ',', '}' });
-                    if (endOfValueOrCollection > 0)
-                    {
-                        res.Add(new CodeLexem(LexemType.Value, CutString(ref text, endOfValueOrCollection)));
-                        res.Add(new CodeLexem(LexemType.Symbol, CutString(ref text, 1)));
-                    }
-                }
+                var length = text.Length;
+
+                ExtractUnparsedItems(res, ref text);
+
+                if (length == text.Length)
+                    break;
             }
         }
 
-        void ParseSymbol(ICollection<CodeLexem> res, ref SourcePart text)
+        void ExtractUnparsedItems(List<CodeLexem> res, ref SourcePart text)
         {
-            var index = text.IndexOfAny(JsonSymbol);
-            if (index != 0)
-                return;
-
-            res.Add(new CodeLexem(LexemType.Symbol, text.Substring(0, 1)));
-            text = text.Substring(1);
-        }
-
-        void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
-        {
-            var index = text.IndexOf("\":");
-            if (index <= 0)
-                return;
-
-            res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
+            TrySpace(res, ref text);
+            TryExtract(res, ref text, "\r\n", LexemType.LineBreak);
+            TryExtract(res, ref text, "\n", LexemType.LineBreak);
+            TryExtract(res, ref text, "\"", LexemType.Quotes);
+            TryExtract(res, ref text, ",", LexemType.Symbol);
+            TryExtract(res, ref text, ":", LexemType.Symbol);
         }
 
         public override Inline ToInline(CodeLexem codeLexem, Brush brush)
@@ -112,15 +100,19 @@
                 case LexemType.Symbol:
                 case LexemType.Object:
                     return CreateRun(codeLexem.Text, Colors.LightGray);
+
                 case LexemType.Property:
                     return CreateRun(codeLexem.Text, Colors.Blue);
+
                 case LexemType.Value:
                 case LexemType.Space:
                 case LexemType.PlainText:
                 case LexemType.String:
                     return CreateRun(codeLexem.Text, Colors.Black);
+
                 case LexemType.LineBreak:
                     return new LineBreak();
+
                 case LexemType.Complex:
                 case LexemType.Quotes:
                     return CreateRun(codeLexem.Text, Colors.Brown);
