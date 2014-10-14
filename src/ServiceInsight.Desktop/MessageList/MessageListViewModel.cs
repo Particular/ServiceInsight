@@ -27,7 +27,8 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<BodyTabSelectionChanged>
+        IHandle<BodyTabSelectionChanged>,
+        IHandle<SelectedMessageChanged>
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
@@ -120,6 +121,12 @@
 
         public void Focus(StoredMessage msg)
         {
+            if (msg == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
             FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
         }
 
@@ -251,6 +258,11 @@
             {
                 msg.Status = MessageStatus.RetryIssued;
             }
+        }
+
+        public void Handle(SelectedMessageChanged message)
+        {
+            Focus(message.Message);
         }
 
         public void OnSelectedExplorerItemChanged()

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -40,6 +41,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -114,6 +118,12 @@
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v14.1.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.1\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>..\packages\Humanizer.1.28.0\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mindscape.Raygun4Net">
       <HintPath>..\packages\Mindscape.Raygun4Net.2.0.6\lib\net35\Mindscape.Raygun4Net.dll</HintPath>
@@ -134,6 +144,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -205,12 +216,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CodeParser\CodeTextBox.cs" />
+    <Compile Include="Common\BaseCommand.cs" />
+    <Compile Include="Common\CopyConversationIDCommand.cs" />
+    <Compile Include="Common\CopyMessageURICommand.cs" />
+    <Compile Include="Common\RetryMessageCommand.cs" />
+    <Compile Include="Common\SearchByMessageIDCommand.cs" />
+    <Compile Include="Common\ShowSagaCommand.cs" />
+    <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtensionMethods\ContainerExtensions.cs" />
     <Compile Include="Framework\Attachments\Attachment.cs" />
+    <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
+    <Compile Include="Framework\TypeHumanizer.cs" />
     <Compile Include="LogWindow\LoggingRichTextBoxBehavior.cs" />
     <Compile Include="Framework\DefaultClipboard.cs" />
     <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
@@ -227,6 +247,18 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
+    <Compile Include="SequenceDiagram\EndpointInfo.cs" />
+    <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
+    <Compile Include="SequenceDiagram\EndpointThicknessConverter.cs" />
+    <Compile Include="SequenceDiagram\MessageInfo.cs" />
+    <Compile Include="SequenceDiagram\SequenceDiagramMessage.xaml.cs">
+      <DependentUpon>SequenceDiagramMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
+      <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceDiagram\SequenceDiagramViewModel.cs" />
     <Compile Include="MessageViewers\HexViewer\HexControl.cs" />
     <Compile Include="Particular.Licensing\License.cs" />
     <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
@@ -471,13 +503,13 @@
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
-    <Compile Include="ValueConverters\HalvingConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
     <Page Include="Framework\ExceptionHandler.xaml">
       <SubType>Designer</SubType>
@@ -512,6 +544,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageProperties\MessagePropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\DarkMenus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramSharedResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\SequenceDiagramView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -709,6 +757,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\MessageInfoSampleData.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SequenceDiagram.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />

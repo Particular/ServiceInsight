@@ -16,6 +16,7 @@
     using Desktop.MessageViewers;
     using Desktop.Models;
     using Desktop.Saga;
+    using Desktop.SequenceDiagram;
     using Desktop.Settings;
     using Desktop.Shell;
     using Desktop.Startup;
@@ -44,6 +45,7 @@
         StatusBarManager StatusbarManager;
         MessageBodyViewModel MessageBodyView;
         MessageHeadersViewModel HeaderView;
+        SequenceDiagramViewModel SequenceDiagramView;
         ISettingsProvider SettingsProvider;
         AppLicenseManager LicenseManager;
         IShellViewStub View;
@@ -66,6 +68,7 @@
             MessageProperties = Substitute.For<MessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
             HeaderView = Substitute.For<MessageHeadersViewModel>();
+            SequenceDiagramView = Substitute.For<SequenceDiagramViewModel>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
             LicenseManager = Substitute.For<AppLicenseManager>();
             LogWindow = Substitute.For<LogWindowViewModel>();
@@ -87,6 +90,7 @@
                         SagaWindow,
                         MessageBodyView,
                         HeaderView,
+                        SequenceDiagramView,
                         SettingsProvider,
                         MessageProperties,
                         LogWindow,

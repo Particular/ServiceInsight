@@ -507,7 +507,7 @@
                         <ColumnDefinition Width=".95*" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="1" Background="{DynamicResource SagaBackground}">
+                    <Grid Grid.Column="1" Background="{StaticResource SagaBackground}">
                         <Border Margin="15 0 0 0"
                                 BorderBrush="Black"
                                 BorderThickness="2,0,0,0" />
@@ -539,7 +539,7 @@
 
                     <Border Grid.Row="1"
                             Grid.Column="1"
-                            Background="{DynamicResource SagaBackground}">
+                            Background="{StaticResource SagaBackground}">
                         <Border x:Name="NextTimeoutBorder"
                                 Margin="15,0,0,0"
                                 BorderBrush="Black"

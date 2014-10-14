@@ -8,7 +8,7 @@
     {
         public string Name { get; set; }
 
-        public string HostDisplayName { get; set; }
+        public string Host { get; set; }
 
         public List<EndpointProperty> EndpointProperties { get; set; }
 
@@ -30,7 +30,7 @@
 
         string AtMachine()
         {
-            return string.IsNullOrEmpty(HostDisplayName) ? string.Empty : string.Format("@{0}", HostDisplayName);
+            return string.IsNullOrEmpty(Host) ? string.Empty : string.Format("@{0}", Host);
         }
 
         protected bool Equals(Endpoint other)

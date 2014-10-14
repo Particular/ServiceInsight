@@ -23,7 +23,7 @@
                 <Grid.ToolTip>
                     <TextBlock>
                         <Run Text="Installed On: " />
-                        <Run Text="{Binding Endpoint.HostDisplayName}" />
+                        <Run Text="{Binding Endpoint.Host}" />
                     </TextBlock>
                 </Grid.ToolTip>
                 <Image Source="{Binding Image, Converter={StaticResource BitmapToGlyphConverter}}" />

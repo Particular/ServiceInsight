@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Caliburn.Micro;
+    using Framework;
     using Models;
     using ServiceControl;
 
@@ -37,21 +38,7 @@
 
         public string MessageFriendlyTypeName
         {
-            get { return ProcessType(); }
-        }
-
-        string ProcessType()
-        {
-            if (string.IsNullOrEmpty(MessageType))
-                return string.Empty;
-
-            var clazz = MessageType.Split(',').First();
-            var objectName = clazz.Split('.').Last();
-
-            if (objectName.Contains("+"))
-                objectName = objectName.Split('+').Last();
-
-            return objectName;
+            get { return TypeHumanizer.ToName(MessageType); }
         }
 
         public DateTime TimeSent { get; set; }
@@ -64,14 +51,8 @@
 
         public MessageStatus Status
         {
-            get
-            {
-                return status == 0 ? MessageStatus.Successful : status;
-            }
-            set
-            {
-                status = value;
-            }
+            get { return status == 0 ? MessageStatus.Successful : status; }
+            set { status = value; }
         }
 
         List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> {
@@ -85,44 +66,26 @@
 
         public bool HasFailed
         {
-            get
-            {
-                return (Status == MessageStatus.Failed) || (Status == MessageStatus.RepeatedFailure);
-            }
+            get { return (Status == MessageStatus.Failed) || (Status == MessageStatus.RepeatedFailure); }
         }
 
         public string StatusText
         {
-            get
-            {
-                return statuses.FirstOrDefault(k => k.Key == Status).Value;
-            }
-            set
-            {
-                Status = statuses.FirstOrDefault(k => k.Value == value).Key;
-            }
+            get { return statuses.FirstOrDefault(k => k.Key == Status).Value; }
+            set { Status = statuses.FirstOrDefault(k => k.Value == value).Key; }
         }
 
         public bool HasRetried
         {
-            get
-            {
-                return Status == MessageStatus.RetryIssued;
-            }
+            get { return Status == MessageStatus.RetryIssued; }
         }
 
         bool showData;
 
         public bool ShowData
         {
-            get
-            {
-                return showData && Data != null && Data.Any();
-            }
-            set
-            {
-                showData = value;
-            }
+            get { return showData && Data != null && Data.Any(); }
+            set { showData = value; }
         }
 
         public IEnumerable<SagaMessageDataItem> Data { get; private set; }
@@ -147,24 +110,15 @@
 
         public override bool IsTimeout
         {
-            get
-            {
-                return (DeliverAt != DateTime.MinValue || Timeout != TimeSpan.MinValue);
-            }
+            get { return (DeliverAt != DateTime.MinValue || Timeout != TimeSpan.MinValue); }
         }
 
         public DateTime DeliverAt { get; set; }
 
         public string DeliveryDelay
         {
-            get
-            {
-                return Timeout.ToString(@"hh\:mm\:ss");
-            }
-            set
-            {
-                Timeout = TimeSpan.Parse(value);
-            }
+            get { return Timeout.ToString(@"hh\:mm\:ss"); }
+            set { Timeout = TimeSpan.Parse(value); }
         }
 
         public string TimeoutFriendly

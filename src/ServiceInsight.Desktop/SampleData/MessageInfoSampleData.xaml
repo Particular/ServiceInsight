@@ -1,0 +1,26 @@
+﻿<SequenceDiagram:MessageInfo xmlns:SequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
+		IsFirst="True"
+        IsPublished="False"
+        IsTimeout="False"
+        IsFailed="False"
+		IsSagaInitiated="False"
+        IsSagaCompleted="True"
+		MinEndpointIndex="0"
+		MessagePopupIndex="0"
+		MaxEndpointIndex="1"
+		Name="Message1"
+		ReceivingEndpoint="Endpoint2"
+		ReceivingEndpointIndex="1"
+		SendingEndpointIndex="0"
+		SendingEndpoint="Endpoint1"
+		SagaName=""
+		Selected="False"
+        VerticalHilite="False"
+        VerticalHiliteStart="True">
+    <SequenceDiagram:MessageInfo.Endpoints>
+        <!-- ReSharper disable Xaml.InvalidType -->
+        <SequenceDiagram:EndpointInfo FullName="LOCALHOST@Endpoint1" Host="LOCALHOST" Name="Endpoint1" Version="1.2.3" />
+        <SequenceDiagram:EndpointInfo FullName="LOCALHOST@Endpoint2" Host="LOCALHOST" Name="Endpoint2" Version="1.2.3" />
+        <!-- ReSharper restore Xaml.InvalidType -->
+    </SequenceDiagram:MessageInfo.Endpoints>
+</SequenceDiagram:MessageInfo>

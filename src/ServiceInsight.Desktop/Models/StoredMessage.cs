@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using ExtensionMethods;
 
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
+        MessageStatistics statistics;
+
         public StoredMessage()
         {
             Headers = new List<StoredMessageHeader>();
@@ -22,22 +23,6 @@
         public TimeSpan ProcessingTime { get; set; }
         public TimeSpan DeliveryTime { get; set; }
         public string ConversationId { get; set; }
-
-        public string ElapsedCriticalTime
-        {
-            get
-            {
-                return CriticalTime.GetElapsedTime();
-            }
-        }
-
-        public string ElapsedProcessingTime
-        {
-            get
-            {
-                return ProcessingTime.GetElapsedTime();
-            }
-        }
 
         public MessageStatistics Statistics
         {
@@ -59,37 +44,22 @@
             }
         }
 
-        MessageStatistics statistics;
-
-        public string ElapsedDeliveryTime
-        {
-            get
-            {
-                return DeliveryTime.GetElapsedTime();
-            }
-        }
-
         public string RelatedToMessageId
         {
-            get
-            {
-                return GetHeaderByKey(MessageHeaderKeys.RelatedTo);
-            }
+            get { return GetHeaderByKey(MessageHeaderKeys.RelatedTo); }
         }
 
         public string ContentType
         {
-            get
-            {
-                return GetHeaderByKey(MessageHeaderKeys.ContentType);
-            }
+            get { return GetHeaderByKey(MessageHeaderKeys.ContentType); }
         }
 
         public string MessageId { get; set; }
 
         public List<StoredMessageHeader> Headers
         {
-            get; set;
+            get;
+            set;
         }
 
         public List<SagaInfo> Sagas

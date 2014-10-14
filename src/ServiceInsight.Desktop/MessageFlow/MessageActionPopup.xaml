@@ -337,26 +337,26 @@
                           Click="OnMenuClicked"
                           Header="Retry Message"
                           Style="{StaticResource ContextMenuItem}"
-                          cal:Action.TargetWithoutContext="{Binding}"
-                          cal:Message.Attach="[Event Click]=[Action Retry]" />
+                          CommandParameter="{Binding Message}"
+                          Command="{Binding RetryMessageCommand}" />
                 <MenuItem Grid.Row="3"
                           Click="OnMenuClicked"
                           Header="Copy Conversation Id"
                           Style="{StaticResource ContextMenuItem}"
-                          cal:Action.TargetWithoutContext="{Binding}"
-                          cal:Message.Attach="[Event Click]=[Action CopyConversationId]" />
+                          CommandParameter="{Binding Message}"
+                          Command="{Binding CopyConversationIDCommand}" />
                 <MenuItem Grid.Row="4"
                           Click="OnMenuClicked"
                           Header="Copy Message URI"
                           Style="{StaticResource ContextMenuItem}"
-                          cal:Action.TargetWithoutContext="{Binding}"
-                          cal:Message.Attach="[Event Click]=[Action CopyMessageUri]" />
+                          CommandParameter="{Binding Message}"
+                          Command="{Binding CopyMessageURICommand}" />
                 <MenuItem Grid.Row="5"
                           Click="OnMenuClicked"
                           Header="Search by Message Id"
                           Style="{StaticResource ContextMenuItem}"
-                          cal:Action.TargetWithoutContext="{Binding}"
-                          cal:Message.Attach="[Event Click]=[Action SearchMessage]" />
+                          CommandParameter="{Binding Message}"
+                          Command="{Binding SearchByMessageIDCommand}" />
             </Grid>
             <Grid Grid.Row="1"
                   Grid.Column="1"
