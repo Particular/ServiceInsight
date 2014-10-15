@@ -5,6 +5,8 @@
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:messageHeaders="clr-namespace:Particular.ServiceInsight.Desktop.MessageHeaders"
+             d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">

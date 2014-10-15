@@ -10,6 +10,7 @@
               Height="400"
               ResizeMode="NoResize"
               ShowInTaskbar="False"
+              d:DataContext="{d:DesignInstance local:OptionsViewModel}"
               d:DesignHeight="300"
               d:DesignWidth="300"
               mc:Ignorable="d">
@@ -78,6 +79,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Image Width="16"
+                       Height="16"
+                       Margin="{StaticResource SmallMargin}"
+                       VerticalAlignment="Center"
+                       Source="/Images/Alert.png" />
+                <TextBlock VerticalAlignment="Center" Text="Changes will take effect when you restart" />
+            </StackPanel>
             <Button x:Name="Save"
                     Grid.Column="1"
                     Content="Save"
@@ -94,14 +103,6 @@
                 </Button.Margin>
             </Button>
 
-            <StackPanel Orientation="Horizontal" Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Image Width="16"
-                       Height="16"
-                       Margin="{StaticResource SmallMargin}"
-                       VerticalAlignment="Center"
-                       Source="/Images/Alert.png" />
-                <TextBlock VerticalAlignment="Center" Text="Changes will take effect when you restart" />
-            </StackPanel>
         </Grid>
 
         <dxc:DXTabControl Margin="{StaticResource DialogMargin}"

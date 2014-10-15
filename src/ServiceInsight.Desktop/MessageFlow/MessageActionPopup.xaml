@@ -4,8 +4,10 @@
       xmlns:cal="http://www.caliburnproject.org"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:messageFlow="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
       Height="215"
       MinWidth="450"
+      d:DataContext="{d:DesignInstance messageFlow:MessageNode}"
       mc:Ignorable="d">
     <Grid.Resources>
         <ResourceDictionary>
@@ -171,6 +173,19 @@
                                                   Margin="6,0,6,0"
                                                   VerticalAlignment="Center"
                                                   ContentSource="Icon" />
+                                <Popup Name="Popup"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       HorizontalOffset="-4"
+                                       IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                       Placement="Right"
+                                       PopupAnimation="Fade">
+                                    <Border Name="SubmenuBorder"
+                                            Background="{StaticResource WindowBackgroundBrush}"
+                                            SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
                                 <ContentPresenter Name="HeaderHost"
                                                   Grid.Column="1"
                                                   VerticalAlignment="Center"
@@ -188,19 +203,6 @@
                                       VerticalAlignment="Center"
                                       Data="M 0 0 L 0 7 L 4 3.5 Z"
                                       Fill="{StaticResource GlyphBrush}" />
-                                <Popup Name="Popup"
-                                       AllowsTransparency="True"
-                                       Focusable="False"
-                                       HorizontalOffset="-4"
-                                       IsOpen="{TemplateBinding IsSubmenuOpen}"
-                                       Placement="Right"
-                                       PopupAnimation="Fade">
-                                    <Border Name="SubmenuBorder"
-                                            Background="{StaticResource WindowBackgroundBrush}"
-                                            SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
-                                    </Border>
-                                </Popup>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -381,18 +383,37 @@
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
                            Text="Critical Time" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           Style="{StaticResource MessagePropertyValue}"
+                           Text="{Binding Message.CriticalTime,
+                                          Converter={StaticResource TimeSpanHumanizedConverter}}" />
                 <TextBlock Grid.Row="2"
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
                            Text="Delivery Time" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="2"
+                           Style="{StaticResource MessagePropertyValue}"
+                           Text="{Binding Message.DeliveryTime,
+                                          Converter={StaticResource TimeSpanHumanizedConverter}}" />
                 <TextBlock Grid.Row="3"
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
                            Text="Processing Time" />
+                <TextBlock Grid.Row="3"
+                           Grid.Column="2"
+                           Style="{StaticResource MessagePropertyValue}"
+                           Text="{Binding Message.ProcessingTime,
+                                          Converter={StaticResource TimeSpanHumanizedConverter}}" />
                 <TextBlock Grid.Row="4"
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
                            Text="NSB Version" />
+                <TextBlock Grid.Row="4"
+                           Grid.Column="2"
+                           Style="{StaticResource MessagePropertyValue}"
+                           Text="{Binding NSBVersion}" />
                 <StackPanel Grid.Row="6"
                             Grid.Column="1"
                             Margin="4"
@@ -406,22 +427,6 @@
                     <TextBlock Style="{StaticResource MessageExceptionKey}" Text="Exception" />
                 </StackPanel>
 
-                <TextBlock Grid.Row="1"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding Message.ElapsedCriticalTime}" />
-                <TextBlock Grid.Row="2"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding Message.ElapsedDeliveryTime}" />
-                <TextBlock Grid.Row="3"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding Message.ElapsedProcessingTime}" />
-                <TextBlock Grid.Row="4"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding NSBVersion}" />
                 <TextBlock Grid.Row="6"
                            Grid.Column="2"
                            MaxWidth="260"
