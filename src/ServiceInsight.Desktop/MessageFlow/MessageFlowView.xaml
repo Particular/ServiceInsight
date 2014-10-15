@@ -9,6 +9,7 @@
              xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:MessageFlowViewModel}"
              d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
@@ -16,6 +17,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/Geometry.xaml" />
                 <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
                 <ResourceDictionary>
 
@@ -191,6 +193,32 @@
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
 
+                    <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
+                        <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsTimeout}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
+                                <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
+                                <Setter Property="ToolTip" Value="Timeout" />
+                            </DataTrigger>
+                            <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                    <Condition Binding="{Binding IsPublished}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource EventGeometry}" />
+                                <Setter Property="ToolTip" Value="Event" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                    <Condition Binding="{Binding IsPublished}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+                                <Setter Property="ToolTip" Value="Command" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
                     <Style x:Key="MessageNodeStyle" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Foreground" Value="Black" />
                         <Setter Property="Cursor" Value="Arrow" />
@@ -235,11 +263,9 @@
                                                             Grid.Row="1" Grid.Column="2">
                                             </ContentControl>
 
-                                            <ContentControl x:Name="MessageTypeIcon" Template="{StaticResource CommandIcon}"
-                                                            ToolTip="Command"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Grid.Column="0" Grid.Row="1" />
+                                            <controls:IconControl x:Name="MessageTypeIcon" HorizontalAlignment="Center" VerticalAlignment="Center" Width="24" Height="24"
+                                                                  Style="{StaticResource MessageIconStyle}"
+                                                                  Grid.Column="0" Grid.Row="1" />
 
                                             <StackPanel Grid.Column="1" Grid.Row="1">
                                                 <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
@@ -304,33 +330,6 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}" />
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Completed" />
-                                        </MultiDataTrigger>
-
-                                        <DataTrigger Binding="{Binding IsTimeout}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource TimeoutIcon}" />
-                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Timeout" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="300" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,8,0,0" />
-                                        </DataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
-                                                <Condition Binding="{Binding IsPublished}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource EventIcon}" />
-                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Event" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="20" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
-                                        </MultiDataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsTimeout}" Value="False" />
-                                                <Condition Binding="{Binding IsPublished}" Value="False" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="MessageTypeIcon" Property="Template" Value="{StaticResource CommandIcon}" />
-                                            <Setter TargetName="MessageTypeIcon" Property="ToolTip" Value="Command" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Width" Value="24" />
-                                            <Setter TargetName="MessageTypeIcon" Property="Margin" Value="0,4,0,0" />
                                         </MultiDataTrigger>
 
                                         <DataTrigger Binding="{Binding HasFailed}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">

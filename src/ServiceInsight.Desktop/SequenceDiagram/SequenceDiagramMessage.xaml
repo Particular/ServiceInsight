@@ -16,6 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Images/Xaml/Geometry.xaml" />
                 <ResourceDictionary Source="SequenceDiagramSharedResources.xaml" />
                 <ResourceDictionary Source="DarkMenus.xaml" />
             </ResourceDictionary.MergedDictionaries>
