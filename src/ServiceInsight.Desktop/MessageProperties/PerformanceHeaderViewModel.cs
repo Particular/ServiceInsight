@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
     using ExtensionMethods;
     using Humanizer;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {

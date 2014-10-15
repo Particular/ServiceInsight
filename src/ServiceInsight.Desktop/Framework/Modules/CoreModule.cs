@@ -3,10 +3,9 @@
     using System.Collections.Generic;
     using System.Xml;
     using Autofac;
-    using Core;
-    using Core.Licensing;
-    using Core.MessageDecoders;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Licensing;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using ServiceControl;
     using Startup;
 

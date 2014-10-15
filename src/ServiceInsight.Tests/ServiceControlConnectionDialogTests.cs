@@ -2,12 +2,12 @@
 {
     using Autofac;
     using Caliburn.Micro;
-    using Desktop.Core.Settings;
     using Desktop.ServiceControl;
     using Desktop.Settings;
     using Desktop.Shell;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Shouldly;
 
     [TestFixture]

@@ -4,13 +4,13 @@
     using System.IO;
     using System.Windows;
     using Anotar.Serilog;
-    using Core.Settings;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Core.Serialization;
     using DevExpress.Xpf.Docking;
     using DevExpress.Xpf.Docking.Base;
     using ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Settings;
 
     public partial class ShellView : IShellView

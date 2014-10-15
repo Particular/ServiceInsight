@@ -3,10 +3,11 @@
     using System;
     using System.Linq;
     using Caliburn.Micro;
-    using Core;
-    using Core.Settings;
     using Events;
     using ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using ServiceControl;
     using Settings;
     using Shell;

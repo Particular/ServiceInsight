@@ -2,10 +2,10 @@
 {
     using System.IO;
     using Caliburn.Micro;
-    using Core;
-    using Core.Licensing;
-    using Core.UI.ScreenManager;
     using Licensing;
+    using Particular.ServiceInsight.Desktop.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Licensing;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
 
     public class LicenseRegistrationViewModel : Screen
     {

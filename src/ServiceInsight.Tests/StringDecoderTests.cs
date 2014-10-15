@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using System.Text;
-    using Desktop.Core.MessageDecoders;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Shouldly;
 
     [TestFixture]

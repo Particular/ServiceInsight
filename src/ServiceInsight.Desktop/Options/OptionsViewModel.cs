@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using Caliburn.Micro;
-    using Core.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Settings;
 
     public class OptionsViewModel : Screen

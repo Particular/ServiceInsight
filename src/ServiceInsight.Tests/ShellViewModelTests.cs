@@ -3,9 +3,6 @@
     using System;
     using Caliburn.Micro;
     using Desktop;
-    using Desktop.Core.Licensing;
-    using Desktop.Core.Settings;
-    using Desktop.Core.UI.ScreenManager;
     using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.LogWindow;
@@ -23,6 +20,10 @@
     using Licensing;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Licensing;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Shouldly;
 
     public interface IShellViewStub : IShellView

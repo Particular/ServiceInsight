@@ -3,11 +3,11 @@
     using System.Text;
     using System.Xml;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
-    using Events;
     using ExtensionMethods;
     using Framework;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public class XmlMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>

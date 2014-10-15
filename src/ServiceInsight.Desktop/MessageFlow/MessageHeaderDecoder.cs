@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Text;
-    using Core.MessageDecoders;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public class MessageHeaderDecoder
     {

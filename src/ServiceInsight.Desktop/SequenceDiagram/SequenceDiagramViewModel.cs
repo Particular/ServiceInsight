@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Common;
-    using Events;
     using Framework;
     using Models;
-    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
     using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
+    using Particular.ServiceInsight.Desktop.Framework.Commands;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Particular.ServiceInsight.Desktop.MessageFlow;
     using Particular.ServiceInsight.Desktop.MessageList;
     using ReactiveUI;

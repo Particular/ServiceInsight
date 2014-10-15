@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using Caliburn.Micro;
-    using Events;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
     using ReactiveUI;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>

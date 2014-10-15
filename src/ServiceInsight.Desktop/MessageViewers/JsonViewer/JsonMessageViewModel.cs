@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
     using Caliburn.Micro;
-    using Events;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
 
     public class JsonMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>

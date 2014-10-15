@@ -7,7 +7,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using Caliburn.Micro;
     using Framework;
     using Models;
-    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Particular.ServiceInsight.Desktop.MessageFlow;
     using ReactiveUI;
 

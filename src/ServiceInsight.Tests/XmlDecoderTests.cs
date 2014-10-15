@@ -2,8 +2,8 @@
 {
     using System.Text;
     using System.Xml;
-    using Desktop.Core.MessageDecoders;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Shouldly;
 
     [TestFixture]

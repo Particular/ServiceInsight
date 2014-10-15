@@ -14,6 +14,7 @@
     using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
     using ReactiveUI.Testing;
     using Shouldly;
 

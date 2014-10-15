@@ -5,12 +5,13 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Core.Settings;
     using Events;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using MessageList;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Settings;
     using Shell;
     using Startup;

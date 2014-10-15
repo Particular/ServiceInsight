@@ -3,8 +3,8 @@
     using System;
     using System.Windows;
     using Caliburn.Micro;
-    using Core.UI.ScreenManager;
-    using Events;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
 
     public class AppExceptionHandler
     {

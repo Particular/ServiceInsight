@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using Events;
     using ExtensionMethods;
     using HexViewer;
     using JsonViewer;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
     using XmlViewer;
 
     public class MessageBodyViewModel : Screen,

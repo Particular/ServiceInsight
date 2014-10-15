@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
     using MessageFlow;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {

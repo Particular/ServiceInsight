@@ -216,15 +216,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CodeParser\CodeTextBox.cs" />
-    <Compile Include="Common\BaseCommand.cs" />
-    <Compile Include="Common\CopyConversationIDCommand.cs" />
-    <Compile Include="Common\CopyMessageURICommand.cs" />
-    <Compile Include="Common\RetryMessageCommand.cs" />
-    <Compile Include="Common\SearchByMessageIDCommand.cs" />
-    <Compile Include="Common\ShowSagaCommand.cs" />
+    <Compile Include="Framework\Commands\BaseCommand.cs" />
+    <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
+    <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />
+    <Compile Include="Framework\Commands\RetryMessageCommand.cs" />
+    <Compile Include="Framework\Commands\SearchByMessageIDCommand.cs" />
+    <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
-    <Compile Include="Core\UI\ScreenManager\IWindowManagerEx.cs" />
-    <Compile Include="Core\UI\ScreenManager\WindowManagerEx.cs">
+    <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
+    <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtensionMethods\ContainerExtensions.cs" />
@@ -277,13 +277,13 @@
     <Compile Include="CodeParser\LexemType.cs" />
     <Compile Include="CodeParser\SourcePart.cs" />
     <Compile Include="CodeParser\XmlParser.cs" />
-    <Compile Include="Core\MessageDecoders\JsonMessageDeserializer.cs" />
-    <Compile Include="Events\BodyTabSelectionChanged.cs" />
-    <Compile Include="Events\RetryMessage.cs" />
-    <Compile Include="Events\SwitchToFlowWindow.cs" />
-    <Compile Include="Events\RequestSelectingEndpoint.cs" />
-    <Compile Include="Events\SwitchToMessageBody.cs" />
-    <Compile Include="Events\SwitchToSagaWindow.cs" />
+    <Compile Include="Framework\MessageDecoders\JsonMessageDeserializer.cs" />
+    <Compile Include="Framework\Events\BodyTabSelectionChanged.cs" />
+    <Compile Include="Framework\Events\RetryMessage.cs" />
+    <Compile Include="Framework\Events\SwitchToFlowWindow.cs" />
+    <Compile Include="Framework\Events\RequestSelectingEndpoint.cs" />
+    <Compile Include="Framework\Events\SwitchToMessageBody.cs" />
+    <Compile Include="Framework\Events\SwitchToSagaWindow.cs" />
     <Compile Include="ExtensionMethods\DictionaryExtensions.cs" />
     <Compile Include="MessageFlow\ExceptionDetailView.xaml.cs">
       <DependentUpon>ExceptionDetailView.xaml</DependentUpon>
@@ -335,24 +335,24 @@
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\CommandConnection.cs" />
     <Compile Include="MessageFlow\IMessageFlowView.cs" />
-    <Compile Include="Core\Licensing\AppLicenseManager.cs" />
-    <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
-    <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />
-    <Compile Include="Core\MessageDecoders\IContentDecoder.cs" />
-    <Compile Include="Core\MessageDecoders\StringContentDecoder.cs" />
-    <Compile Include="Core\MessageDecoders\XmlContentDecoder.cs" />
-    <Compile Include="Core\NetworkOperations.cs" />
-    <Compile Include="Core\Settings\ISettingsProvider.cs" />
-    <Compile Include="Core\Settings\ISettingsStorage.cs" />
-    <Compile Include="Core\Settings\IsolatedStorageSettingsStore.cs" />
-    <Compile Include="Core\Settings\JsonSettingsStoreBase.cs" />
-    <Compile Include="Core\Settings\RegistrySettingsStore.cs" />
-    <Compile Include="Core\Settings\SettingsProvider.cs" />
-    <Compile Include="Events\AsyncOperationFailed.cs" />
-    <Compile Include="Events\SelectedExplorerItemChanged.cs" />
-    <Compile Include="Events\SelectedMessageChanged.cs" />
-    <Compile Include="Events\WorkFinished.cs" />
-    <Compile Include="Events\WorkStarted.cs" />
+    <Compile Include="Framework\Licensing\AppLicenseManager.cs" />
+    <Compile Include="Framework\MessageDecoders\DecoderResult.cs" />
+    <Compile Include="Framework\MessageDecoders\HeaderContentDecoder.cs" />
+    <Compile Include="Framework\MessageDecoders\IContentDecoder.cs" />
+    <Compile Include="Framework\MessageDecoders\StringContentDecoder.cs" />
+    <Compile Include="Framework\MessageDecoders\XmlContentDecoder.cs" />
+    <Compile Include="Framework\NetworkOperations.cs" />
+    <Compile Include="Framework\Settings\ISettingsProvider.cs" />
+    <Compile Include="Framework\Settings\ISettingsStorage.cs" />
+    <Compile Include="Framework\Settings\IsolatedStorageSettingsStore.cs" />
+    <Compile Include="Framework\Settings\JsonSettingsStoreBase.cs" />
+    <Compile Include="Framework\Settings\RegistrySettingsStore.cs" />
+    <Compile Include="Framework\Settings\SettingsProvider.cs" />
+    <Compile Include="Framework\Events\AsyncOperationFailed.cs" />
+    <Compile Include="Framework\Events\SelectedExplorerItemChanged.cs" />
+    <Compile Include="Framework\Events\SelectedMessageChanged.cs" />
+    <Compile Include="Framework\Events\WorkFinished.cs" />
+    <Compile Include="Framework\Events\WorkStarted.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerView.xaml.cs">
       <DependentUpon>EndpointExplorerView.xaml</DependentUpon>
     </Compile>
@@ -420,8 +420,8 @@
     </Compile>
     <Compile Include="Options\OptionsViewModel.cs" />
     <Compile Include="Options\PropertyValueConverter.cs" />
-    <Compile Include="Core\UI\ScreenManager\FileDialogModel.cs" />
-    <Compile Include="Core\UI\ScreenManager\FileDialogResult.cs" />
+    <Compile Include="Framework\UI\ScreenManager\FileDialogModel.cs" />
+    <Compile Include="Framework\UI\ScreenManager\FileDialogResult.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
     <Compile Include="Settings\ServiceControlSettings.cs" />
     <Compile Include="Settings\ProfilerSettings.cs" />
@@ -455,17 +455,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\UI\ScreenManager\ChoiceCommand.cs" />
+    <Compile Include="Framework\UI\ScreenManager\ChoiceCommand.cs" />
     <Compile Include="Search\SearchBarView.xaml.cs">
       <DependentUpon>SearchBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchBarViewModel.cs" />
-    <Compile Include="Core\UI\ScreenManager\Dialog.xaml.cs">
+    <Compile Include="Framework\UI\ScreenManager\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\UI\ScreenManager\DialogViewModel.cs" />
-    <Compile Include="Core\UI\ScreenManager\MessageChoice.cs" />
-    <Compile Include="Core\UI\ScreenManager\MessageIcon.cs" />
+    <Compile Include="Framework\UI\ScreenManager\DialogViewModel.cs" />
+    <Compile Include="Framework\UI\ScreenManager\MessageChoice.cs" />
+    <Compile Include="Framework\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
     <Compile Include="Shell\IShellView.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
@@ -515,7 +515,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Images\Xaml\Geometry.xaml">
+    <Page Include="XAML\Geometry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -623,7 +623,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Core\UI\ScreenManager\Dialog.xaml">
+    <Page Include="Framework\UI\ScreenManager\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,13 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
-    using Desktop.Core.Settings;
-    using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.Models;
     using Desktop.Search;
     using Desktop.Startup;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Shouldly;
 
     [TestFixture]
@@ -38,7 +38,7 @@
         {
             ViewModel.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem("http://localhost")));
 
-            ViewModel.SearchEnabled.ShouldBe(true);            
+            ViewModel.SearchEnabled.ShouldBe(true);
         }
     }
 }

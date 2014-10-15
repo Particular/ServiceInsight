@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.Windows;
-    using Core.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Shell;
 
     public partial class ExceptionDetailView : IPersistableLayout

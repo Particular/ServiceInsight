@@ -7,9 +7,6 @@
     using System.Windows.Input;
     using System.Windows.Threading;
     using Caliburn.Micro;
-    using Core.Licensing;
-    using Core.Settings;
-    using Core.UI.ScreenManager;
     using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -20,10 +17,14 @@
     using MessageHeaders;
     using MessageList;
     using MessageProperties;
-    using SequenceDiagram;
     using MessageViewers;
     using Options;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Licensing;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Saga;
+    using SequenceDiagram;
     using Settings;
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;

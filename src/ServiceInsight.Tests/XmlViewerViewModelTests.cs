@@ -2,13 +2,13 @@
 {
     using System.Xml;
     using Caliburn.Micro;
-    using Desktop.Core.MessageDecoders;
-    using Desktop.Events;
     using Desktop.Framework;
     using Desktop.MessageViewers.XmlViewer;
     using Desktop.Models;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Shouldly;
 
     [TestFixture]

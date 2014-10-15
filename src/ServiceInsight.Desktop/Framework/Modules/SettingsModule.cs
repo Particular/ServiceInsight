@@ -5,8 +5,7 @@
     using System.Linq;
     using Autofac;
     using Caliburn.Micro;
-    using Core.Settings;
-    using SettingsProvider = Core.Settings.SettingsProvider;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
 
     public class SettingsModule : Module
     {
@@ -19,7 +18,7 @@
             base.Load(builder);
         }
 
-        class SettingProviderProxy : SettingsProvider
+        class SettingProviderProxy : Settings.SettingsProvider
         {
             IContainer container;
 

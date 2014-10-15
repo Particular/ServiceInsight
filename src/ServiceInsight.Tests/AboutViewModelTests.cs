@@ -1,11 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using Desktop.Core;
     using Desktop.ServiceControl;
     using Desktop.Shell;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework;
     using Shouldly;
 
     [TestFixture]

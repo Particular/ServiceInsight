@@ -1,0 +1,88 @@
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.Core.UI.ScreenManager.Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:screenManager="clr-namespace:Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager"
+        Title="{Binding Path=Title}"
+        MaxWidth="800"
+        Background="{StaticResource DialogBackgroundBrush}"
+        Icon="{Binding ElementName=MessageIcon,
+                       Path=Source}"
+        ResizeMode="NoResize"
+        ShowInTaskbar="false"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance screenManager:DialogViewModel}"
+        mc:Ignorable="d">
+
+    <Border Style="{StaticResource DialogRootContainer}">
+        <StackPanel Orientation="Vertical">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="MessageIcon"
+                       Width="32"
+                       Height="32"
+                       Margin="0,0,8,0"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding Path=ShowIcon,
+                                            Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Icon}" Value="Error">
+                                    <Setter Property="Source" Value="/Images/Msg_Error.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Icon}" Value="Warning">
+                                    <Setter Property="Source" Value="/Images/Msg_Warning.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Icon}" Value="Information">
+                                    <Setter Property="Source" Value="/Images/Msg_Info.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Icon}" Value="Question">
+                                    <Setter Property="Source" Value="/Images/Msg_Help.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Text="{Binding Content}"
+                           TextWrapping="Wrap" />
+            </Grid>
+
+            <CheckBox x:Name="DontAskAgain"
+                      Margin="0,15,0,0"
+                      Content="Don't show this again"
+                      IsChecked="{Binding DontAskAgain,
+                                          Mode=TwoWay}"
+                      Visibility="{Binding EnableDontAskAgain,
+                                           Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <ItemsControl Margin="-4,16,0,0"
+                          HorizontalAlignment="Center"
+                          Focusable="false"
+                          ItemsSource="{Binding Choices}">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <UniformGrid IsItemsHost="true" Rows="1" />
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type screenManager:ChoiceCommand}">
+                        <Button Content="{Binding Path=Label}"
+                                IsCancel="{Binding Path=IsCancel}"
+                                IsDefault="{Binding Path=IsDefault}"
+                                Style="{StaticResource DialogButton}"
+                                Command="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
+
+</Window>

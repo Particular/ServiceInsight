@@ -8,10 +8,10 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
-    using Core.Settings;
-    using Events;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using RestSharp;
     using RestSharp.Contrib;
     using RestSharp.Deserializers;

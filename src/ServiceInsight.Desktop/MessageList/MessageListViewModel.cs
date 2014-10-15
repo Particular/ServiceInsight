@@ -13,6 +13,7 @@
     using Framework.Rx;
     using MessageProperties;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
     using ReactiveUI;
     using Search;
     using ServiceControl;

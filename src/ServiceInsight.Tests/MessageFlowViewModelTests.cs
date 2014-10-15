@@ -1,9 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using Desktop.Core.Settings;
-    using Desktop.Core.UI.ScreenManager;
-    using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.Framework;
     using Desktop.MessageFlow;
@@ -13,6 +10,9 @@
     using Desktop.ServiceControl;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
 
     [TestFixture]
     public class MessageFlowViewModelTests

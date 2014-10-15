@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {

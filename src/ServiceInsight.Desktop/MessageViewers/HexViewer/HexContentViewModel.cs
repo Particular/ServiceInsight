@@ -2,7 +2,7 @@
 {
     using System.Text;
     using Caliburn.Micro;
-    using Events;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
 
     public class HexContentViewModel : Screen, IHandle<SelectedMessageChanged>
     {

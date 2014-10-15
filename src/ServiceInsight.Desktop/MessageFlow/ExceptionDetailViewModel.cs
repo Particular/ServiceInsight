@@ -1,8 +1,8 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
     using Caliburn.Micro;
-    using Core.Settings;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Shell;
 
     public class ExceptionDetailViewModel : Screen

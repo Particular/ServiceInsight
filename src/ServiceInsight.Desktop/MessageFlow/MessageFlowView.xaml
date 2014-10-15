@@ -17,7 +17,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Images/Xaml/Geometry.xaml" />
+                <ResourceDictionary Source="/Xaml/Geometry.xaml" />
                 <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
                 <ResourceDictionary>
 

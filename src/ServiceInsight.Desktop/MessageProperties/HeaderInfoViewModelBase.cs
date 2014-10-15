@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using Core.MessageDecoders;
-    using Events;
     using Framework.Rx;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
     public abstract class HeaderInfoViewModelBase : RxScreen, IHeaderInfoViewModel
     {

@@ -5,7 +5,7 @@
     using System.Linq;
     using Autofac;
     using Caliburn.Micro;
-    using Core.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using ServiceControl;
     using Settings;
 
