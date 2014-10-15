@@ -1,7 +1,6 @@
 namespace Particular.ServiceInsight.Desktop.Framework.Commands
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Events;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;

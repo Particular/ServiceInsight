@@ -5,7 +5,6 @@
     using System.Reactive.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;

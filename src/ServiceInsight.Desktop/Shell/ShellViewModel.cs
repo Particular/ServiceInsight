@@ -7,7 +7,6 @@
     using System.Windows.Input;
     using System.Windows.Threading;
     using Caliburn.Micro;
-    using Events;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;

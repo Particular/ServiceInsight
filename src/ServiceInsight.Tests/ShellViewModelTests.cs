@@ -3,7 +3,6 @@
     using System;
     using Caliburn.Micro;
     using Desktop;
-    using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.LogWindow;
     using Desktop.MessageFlow;

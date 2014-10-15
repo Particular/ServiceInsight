@@ -1,4 +1,4 @@
-﻿<Window x:Class="Particular.ServiceInsight.Desktop.Core.UI.ScreenManager.Dialog"
+﻿<Window x:Class="Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager.Dialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

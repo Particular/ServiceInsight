@@ -5,7 +5,6 @@
     using System.Windows;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
 
     public class DialogViewModel : Screen
     {

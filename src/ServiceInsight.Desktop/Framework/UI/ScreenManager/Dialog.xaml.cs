@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Desktop.Core.UI.ScreenManager
+﻿namespace Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager
 {
     using System.Windows;
 
     public partial class Dialog
     {
         public static DependencyProperty IsModalProperty;
-       
+
         static Dialog()
         {
             IsModalProperty = DependencyProperty.RegisterAttached("IsModalProperty", typeof(bool), typeof(Dialog), new PropertyMetadata(false));

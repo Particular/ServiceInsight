@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
 {
     public class SwitchToSagaWindow
     {

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using Desktop.Events;
     using Desktop.Explorer.EndpointExplorer;
     using Desktop.Framework;
     using Desktop.MessageList;

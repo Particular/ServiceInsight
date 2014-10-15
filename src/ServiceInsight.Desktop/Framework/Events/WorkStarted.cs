@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.Events
+﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
 {
     public class WorkStarted
     {
-        public WorkStarted() 
+        public WorkStarted()
             : this("Wait...")
         {
         }

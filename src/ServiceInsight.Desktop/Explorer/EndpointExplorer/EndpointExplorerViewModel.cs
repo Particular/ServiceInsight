@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using Caliburn.Micro;
-    using Events;
     using ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;

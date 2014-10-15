@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Events;
     using Explorer.EndpointExplorer;
     using Framework;
     using MessageList;

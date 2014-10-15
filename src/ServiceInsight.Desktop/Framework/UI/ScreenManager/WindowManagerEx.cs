@@ -4,7 +4,6 @@
     using System.Windows;
     using System.Windows.Forms;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Core.UI.ScreenManager;
 
     public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
