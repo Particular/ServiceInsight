@@ -9,6 +9,22 @@
     public class JsonParserTests
     {
         [Test]
+        public void bad_character_dumps_rest_of_string_and_continues()
+        {
+            const string TestMessage = "{ \"foo\":<\"bar>\" }";
+
+            var lexemes = new CodeLexem(TestMessage).Parse(CodeLanguage.Json);
+
+            lexemes.Count.ShouldBe(5);
+            lexemes.Count(lx => lx.Type == LexemType.Property).ShouldBe(1);
+            lexemes.Count(lx => lx.Type == LexemType.Value).ShouldBe(0);
+            lexemes.Count(lx => lx.Type == LexemType.Quotes).ShouldBe(1);
+            lexemes.Count(lx => lx.Type == LexemType.Space).ShouldBe(1);
+            lexemes.Count(lx => lx.Type == LexemType.Symbol).ShouldBe(1);
+            lexemes.Count(lx => lx.Type == LexemType.Complex).ShouldBe(1);
+        }
+
+        [Test]
         public void should_handle_null_value_without_quotes()
         {
             const string TestMessage = "{\"Id\":\"outer\",\"SubMessages\":[{\"Id\":\"inner1\",\"SubMessages\":null},{\"Id\":\"inner2\",\"SubMessages\":null}]}";

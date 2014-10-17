@@ -5,6 +5,7 @@
     using System.IO;
     using System.Windows.Documents;
     using System.Windows.Media;
+    using Anotar.Serilog;
     using Newtonsoft.Json;
 
     public class JsonParser : BaseParser
@@ -13,56 +14,65 @@
         {
             var list = new List<CodeLexem>();
 
-            TryExtract(ref text, ByteOrderMark);
-
-            var s = text.Substring(0, text.Length);
-
-            using (var sreader = new StringReader(s))
-            using (var reader = new JsonTextReader(sreader))
+            try
             {
-                reader.DateParseHandling = DateParseHandling.None;
+                TryExtract(ref text, ByteOrderMark);
 
-                while (reader.Read())
+                var s = text.Substring(0, text.Length);
+
+                using (var sreader = new StringReader(s))
+                using (var reader = new JsonTextReader(sreader))
                 {
-                    switch (reader.TokenType)
+                    reader.DateParseHandling = DateParseHandling.None;
+
+                    while (reader.Read())
                     {
-                        case JsonToken.StartArray: Extract(list, ref text, "[", LexemType.Symbol); break;
-                        case JsonToken.EndArray: Extract(list, ref text, "]", LexemType.Symbol); break;
+                        switch (reader.TokenType)
+                        {
+                            case JsonToken.StartArray: Extract(list, ref text, "[", LexemType.Symbol); break;
+                            case JsonToken.EndArray: Extract(list, ref text, "]", LexemType.Symbol); break;
 
-                        case JsonToken.StartObject: Extract(list, ref text, "{", LexemType.Symbol); break;
-                        case JsonToken.EndObject: Extract(list, ref text, "}", LexemType.Symbol); break;
+                            case JsonToken.StartObject: Extract(list, ref text, "{", LexemType.Symbol); break;
+                            case JsonToken.EndObject: Extract(list, ref text, "}", LexemType.Symbol); break;
 
-                        case JsonToken.PropertyName: Extract(list, ref text, reader.Value.ToString(), LexemType.Property); break;
+                            case JsonToken.PropertyName: Extract(list, ref text, reader.Value.ToString(), LexemType.Property); break;
 
-                        case JsonToken.Raw:
-                        case JsonToken.Integer:
-                        case JsonToken.Float:
-                        case JsonToken.String:
-                        case JsonToken.Boolean:
-                        case JsonToken.Date:
-                        case JsonToken.Bytes:
-                            Extract(list, ref text, reader.Value.ToString(), LexemType.Value);
-                            break;
+                            case JsonToken.Raw:
+                            case JsonToken.Integer:
+                            case JsonToken.Float:
+                            case JsonToken.String:
+                            case JsonToken.Boolean:
+                            case JsonToken.Date:
+                            case JsonToken.Bytes:
+                                Extract(list, ref text, reader.Value.ToString(), LexemType.Value);
+                                break;
 
-                        case JsonToken.Null:
-                            Extract(list, ref text, "null", LexemType.Value);
-                            break;
+                            case JsonToken.Null:
+                                Extract(list, ref text, "null", LexemType.Value);
+                                break;
 
-                        case JsonToken.Comment: Extract(list, ref text, reader.Value.ToString(), LexemType.Comment); break;
+                            case JsonToken.Comment: Extract(list, ref text, reader.Value.ToString(), LexemType.Comment); break;
 
-                        default: list.Add(new CodeLexem(LexemType.Error, reader.TokenType.ToString())); break;
+                            default: list.Add(new CodeLexem(LexemType.Error, reader.TokenType.ToString())); break;
+                        }
                     }
                 }
+
+                while (text.Length > 0)
+                {
+                    var length = text.Length;
+
+                    ExtractUnparsedItems(list, ref text);
+
+                    if (length == text.Length)
+                        break;
+                }
             }
-
-            while (text.Length > 0)
+            catch (JsonReaderException ex)
             {
-                var length = text.Length;
+                LogTo.Error(ex, "Json parsing error, dumping rest of string without parsing.");
 
-                ExtractUnparsedItems(list, ref text);
-
-                if (length == text.Length)
-                    break;
+                list.Add(new CodeLexem(CutString(ref text, text.Length)));
             }
 
             return list;
