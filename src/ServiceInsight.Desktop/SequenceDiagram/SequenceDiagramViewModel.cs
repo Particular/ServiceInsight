@@ -132,7 +132,11 @@
         {
             Endpoints = new ReactiveList<EndpointInfo>(messages
                 .OrderBy(m => m.TimeSent)
-                .SelectMany(m => new[] { new EndpointInfo(m.SendingEndpoint, m), new EndpointInfo(m.ReceivingEndpoint, m) })
+                .SelectMany(m => new[] {
+                    m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m) : null,
+                    m.ReceivingEndpoint != null ? new EndpointInfo(m.ReceivingEndpoint, m) : null
+                })
+                .Where(e => e != null) // TODO report these as they shouldn't happen
                 .Distinct());
         }
 
