@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
+    using Anotar.Serilog;
     using Caliburn.Micro;
     using Framework;
     using Models;
@@ -78,6 +79,13 @@
                 return;
 
             var messages = serviceControl.GetConversationById(conversationId).ToList();
+
+            if (messages.Count == 0)
+            {
+                // SC is being silly
+                LogTo.Warning("No messages found for conversation id {0}", conversationId);
+                return;
+            }
 
             CreateEndpoints(messages);
 
