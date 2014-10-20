@@ -26,5 +26,18 @@
             }
             return -1;
         }
+
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("collection", "collection is null.");
+            if (items == null)
+                throw new ArgumentNullException("items", "items is null.");
+
+            foreach (var item in items)
+            {
+                collection.Add(item);
+            }
+        }
     }
 }

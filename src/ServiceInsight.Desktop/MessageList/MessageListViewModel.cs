@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reactive.Linq;
     using System.Windows.Input;
@@ -20,7 +21,6 @@
     using IScreen = Caliburn.Micro.IScreen;
 
     public class MessageListViewModel : RxConductor<IScreen>.Collection.AllActive,
-        ITableViewModel<StoredMessage>,
         IWorkTracker,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
@@ -279,11 +279,13 @@
 
                 if (!lockUpdate)
                 {
-                    using (new GridFocusedRowPreserver<StoredMessage>(this))
-                    {
-                        Rows.Clear();
-                        Rows.AddRange(pagedResult.Result);
-                    }
+                    var currentItem = FocusedRow;
+
+                    Rows.Clear();
+                    Rows.AddRange(pagedResult.Result);
+
+                    if (currentItem != null)
+                        FocusedRow = Rows.FirstOrDefault(item => item.Id == currentItem.Id);
                 }
             }
             finally
