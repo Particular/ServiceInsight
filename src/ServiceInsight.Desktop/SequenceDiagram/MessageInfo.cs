@@ -92,11 +92,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public string SendingEndpoint
         {
-            get { return Message.SendingEndpoint.Name; }
+            get { return Message.SendingEndpoint != null ? Message.SendingEndpoint.Name : null; }
         }
         public string ReceivingEndpoint
         {
-            get { return Message.ReceivingEndpoint.Name; }
+            get { return Message.ReceivingEndpoint != null ? Message.ReceivingEndpoint.Name : null; }
         }
 
         public bool IsPublished
