@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageList
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reactive.Linq;
     using System.Windows.Input;
@@ -13,6 +12,7 @@
     using Framework.Rx;
     using MessageProperties;
     using Models;
+    using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using ReactiveUI;
     using Search;
@@ -34,7 +34,6 @@
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
-        bool lockUpdate;
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
@@ -54,8 +53,9 @@
             SearchBar = searchBarViewModel;
             Items.Add(SearchBar);
 
-            RetryMessageCommand = this.CreateCommand(RetryMessage, vm => vm.CanRetryMessage);
-            CopyMessageIdCommand = this.CreateCommand(CopyMessageId, vm => vm.CanCopyMessageId);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
+            CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
+
             CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
 
             Rows = new BindableCollection<StoredMessage>();
@@ -85,38 +85,9 @@
 
         public ICommand CopyHeadersCommand { get; private set; }
 
-        public void RetryMessage()
-        {
-            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", FocusedRow.SendingEndpoint));
-            var msg = FocusedRow;
-            serviceControl.RetryMessage(FocusedRow.Id);
-            Rows.Remove(msg);
-            eventAggregator.Publish(new WorkFinished());
-        }
-
-        public void CopyMessageId()
-        {
-            clipboard.CopyTo(serviceControl.CreateServiceInsightUri(FocusedRow).ToString());
-        }
-
         public void CopyHeaders()
         {
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
-        }
-
-        public bool CanRetryMessage
-        {
-            get
-            {
-                return FocusedRow != null &&
-                       (FocusedRow.Status == MessageStatus.Failed || FocusedRow.Status == MessageStatus.RepeatedFailure)
-                       && FocusedRow.Status != MessageStatus.ArchivedFailure;
-            }
-        }
-
-        public bool CanCopyMessageId
-        {
-            get { return FocusedRow != null; }
         }
 
         public void Focus(StoredMessage msg)
@@ -132,8 +103,6 @@
 
         void DoFocusedRowChanged()
         {
-            if (lockUpdate) return;
-
             LoadMessageBody();
 
             eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
@@ -150,6 +119,13 @@
                                      endpoint: null,
                                      orderBy: orderBy,
                                      ascending: ascending);
+
+                // The DX Grid doesn't update properly
+                // So this refreshes the focused value
+                // when selecting the SC node.
+                var temp = FocusedRow;
+                FocusedRow = null;
+                FocusedRow = temp;
             }
 
             var endpointNode = SelectedExplorerItem as AuditEndpointExplorerItem;
@@ -273,31 +249,17 @@
 
         void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
         {
-            try
+            if (ShouldUpdateMessages(pagedResult))
             {
-                lockUpdate = !ShouldUpdateMessages(pagedResult);
+                var currentItem = FocusedRow;
 
-                if (!lockUpdate)
-                {
-                    var currentItem = FocusedRow;
+                Rows.Clear();
+                Rows.AddRange(pagedResult.Result);
 
-                    Rows.Clear();
-                    Rows.AddRange(pagedResult.Result);
-
-                    if (currentItem != null)
-                        FocusedRow = Rows.FirstOrDefault(item => item.Id == currentItem.Id);
-                }
-            }
-            finally
-            {
-                lockUpdate = false;
+                if (currentItem != null)
+                    FocusedRow = Rows.FirstOrDefault(item => item.Id == currentItem.Id);
             }
 
-            AutoFocusFirstRow();
-        }
-
-        void AutoFocusFirstRow()
-        {
             if (FocusedRow == null && Rows.Count > 0)
             {
                 FocusedRow = Rows[0];
@@ -306,22 +268,7 @@
 
         bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
         {
-            if (FocusedRow == null)
-                return true;
-
-            var hasNewMessageInConversation = Rows.Count(m => m.ConversationId == FocusedRow.ConversationId) != pagedResult.Result.Count(p => p.ConversationId == FocusedRow.ConversationId);
-            if (hasNewMessageInConversation)
-                return true;
-
-            var messagesInConversation = Rows.Where(m => m.ConversationId == FocusedRow.ConversationId);
-            var anyConversationMessageChanged = messagesInConversation.Any(message => ShouldUpdateMessage(message, pagedResult.Result.FirstOrDefault(m => m.Id == message.Id)));
-
-            return anyConversationMessageChanged;
-        }
-
-        static bool ShouldUpdateMessage(StoredMessage focusedMessage, StoredMessage newMessage)
-        {
-            return newMessage == null || newMessage.DisplayPropertiesChanged(focusedMessage);
+            return Rows.Select(m => m.Id).FullExcept(pagedResult.Result.Select(m => m.Id)).Any();
         }
 
         bool LoadMessageBody()

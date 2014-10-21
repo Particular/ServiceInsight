@@ -15,16 +15,20 @@
     <dxb:BarManager>
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
-                               Command="{Binding RetryMessageCommand}"
                                Content="Retry Message"
                                Glyph="pack://application:,,,/Images/MessageReturn.png"
-                               IsVisible="{Binding CanRetryMessage}" />
+                               IsVisible="{Binding IsEnabled,
+                                                   RelativeSource={RelativeSource Self}}"
+                               CommandParameter="{Binding FocusedRow}"
+                               Command="{Binding RetryMessageCommand}" />
             <dxb:BarButtonItem Name="copyHeaders"
-                               Command="{Binding CopyHeadersCommand}"
-                               Content="Copy Headers" />
+                               Content="Copy Headers"
+                               CommandParameter="{Binding FocusedRow}"
+                               Command="{Binding CopyHeadersCommand}" />
             <dxb:BarButtonItem Name="copyMessageId"
-                               Command="{Binding CopyMessageIdCommand}"
-                               Content="Copy Message URI" />
+                               Content="Copy Message URI"
+                               CommandParameter="{Binding FocusedRow}"
+                               Command="{Binding CopyMessageIdCommand}" />
         </dxb:BarManager.Items>
 
         <Grid>
@@ -66,12 +70,12 @@
                                     UnboundType="Object">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type dxg:GridColumnDataEventArgs}">
-                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+                                <!--  ReSharper disable Xaml.BindingWithContextNotResolved  -->
                                 <Image Width="16"
                                        Height="16"
                                        Source="{Binding Value.Image}"
                                        ToolTip="{Binding Value.Description}" />
-                                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
+                                <!--  ReSharper restore Xaml.BindingWithContextNotResolved  -->
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
                     </dxg:GridColumn>

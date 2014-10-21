@@ -39,5 +39,29 @@
                 collection.Add(item);
             }
         }
+
+        public static IEnumerable<T> FullExcept<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        {
+            if (first == null)
+                throw new ArgumentNullException("first", "first is null.");
+            if (second == null)
+                throw new ArgumentNullException("second", "second is null.");
+
+            return InternalFullExcept(first, second);
+        }
+
+        private static IEnumerable<T> InternalFullExcept<T>(IEnumerable<T> first, IEnumerable<T> second)
+        {
+            var set = new HashSet<T>(second);
+            foreach (var item in first)
+            {
+                if (!set.Remove(item))
+                    yield return item;
+            }
+            foreach (var item in set)
+            {
+                yield return item;
+            }
+        }
     }
 }

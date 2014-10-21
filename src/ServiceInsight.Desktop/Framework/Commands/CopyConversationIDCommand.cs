@@ -12,6 +12,12 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
             this.clipboard = clipboard;
         }
 
+        public override bool CanExecute(object parameter)
+        {
+            var message = parameter as StoredMessage;
+            return message != null;
+        }
+
         public override void Execute(object parameter)
         {
             var message = parameter as StoredMessage;
