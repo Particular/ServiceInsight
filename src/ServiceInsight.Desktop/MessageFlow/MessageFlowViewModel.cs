@@ -134,19 +134,11 @@
         public ICommand SearchByMessageIDCommand { get; private set; }
         public ICommand RetryMessageCommand { get; private set; }
 
-        public void SearchByMessageId(StoredMessage message, bool performSearch = false)
+        void SearchByMessageId(StoredMessage message, bool performSearch = false)
         {
             searchBar.Search(performSearch: performSearch, searchQuery: message.MessageId);
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
-
-        //public void RetryMessage(StoredMessage message)
-        //{
-        //    eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
-        //    serviceControl.RetryMessage(message.Id);
-        //    eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
-        //    eventAggregator.Publish(new WorkFinished());
-        //}
 
         public void Handle(SelectedMessageChanged @event)
         {

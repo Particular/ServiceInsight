@@ -29,7 +29,6 @@
     using IScreen = Caliburn.Micro.IScreen;
 
     public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
-        IDeactivate,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<SelectedExplorerItemChanged>,
@@ -126,7 +125,7 @@
             RestoreLayout();
         }
 
-        public void Deactivate(bool close)
+        protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
             refreshTimer.Stop();

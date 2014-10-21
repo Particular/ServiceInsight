@@ -36,7 +36,7 @@
             RestoreLayout();
         }
 
-        public virtual void Deactivate(bool close)
+        protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
             SaveLayout();

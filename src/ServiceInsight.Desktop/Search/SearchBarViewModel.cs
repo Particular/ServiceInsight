@@ -10,12 +10,13 @@
     using MessageList;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Rx;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Settings;
     using Shell;
     using Startup;
 
-    public class SearchBarViewModel : Screen,
+    public class SearchBarViewModel : RxScreen,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,

@@ -18,9 +18,8 @@
     using Search;
     using ServiceControl;
     using Shell;
-    using IScreen = Caliburn.Micro.IScreen;
 
-    public class MessageListViewModel : RxConductor<IScreen>.Collection.AllActive,
+    public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
         IWorkTracker,
         IHandle<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
