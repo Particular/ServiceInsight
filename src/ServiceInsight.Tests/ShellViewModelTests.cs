@@ -137,8 +137,10 @@
         }
 
         [Test]
-        public void should_have_all_child_screens_ready_when_shell_is_activated()
+        public void deactivating_shell_saves_layout()
         {
+            ((IScreen)shell).Activate();
+
             ((IScreen)shell).Deactivate(true);
 
             View.Received().OnSaveLayout(SettingsProvider);
