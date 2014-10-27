@@ -47,11 +47,8 @@
 
         void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2)
-            {
-                var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
-                ShowMessage(sender, new SearchMessageEventArgs(node));
-            }
+            var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
+            ShowMessage(sender, new SearchMessageEventArgs(node));
         }
 
         void Root_KeyUp(object sender, KeyEventArgs e)
@@ -66,7 +63,7 @@
                 {
                     Surface.Zoom -= 0.1;
                 }
-                else if (e.Key == Key.D0 || e.Key == Key.NumPad0) 
+                else if (e.Key == Key.D0 || e.Key == Key.NumPad0)
                 {
                     Surface.Zoom = 1;
                 }

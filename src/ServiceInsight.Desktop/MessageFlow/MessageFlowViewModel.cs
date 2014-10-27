@@ -91,7 +91,11 @@
 
         void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
-            SearchByMessageId(e.MessageNode.Message);
+            var message = e.MessageNode.Message;
+
+            searchBar.Search(performSearch: false, searchQuery: message.MessageId);
+            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.Publish(new SelectedMessageChanged(message));
         }
 
         protected override void OnActivate()
@@ -133,12 +137,6 @@
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
         public ICommand RetryMessageCommand { get; private set; }
-
-        void SearchByMessageId(StoredMessage message, bool performSearch = false)
-        {
-            searchBar.Search(performSearch: performSearch, searchQuery: message.MessageId);
-            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
-        }
 
         public void Handle(SelectedMessageChanged @event)
         {
