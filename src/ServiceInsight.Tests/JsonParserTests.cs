@@ -93,5 +93,21 @@
             lexemes.Count(lx => lx.Type == LexemType.Value).ShouldBe(8);
             lexemes.Count(lx => lx.Type == LexemType.LineBreak).ShouldBe(11);
         }
+
+        [Test]
+        public void issue357()
+        {
+            const string JsonGraph = "{ \"foo\":true, \"bar\":false }";
+
+            var lexemes = new CodeLexem(JsonGraph).Parse(CodeLanguage.Json);
+
+            lexemes.Count().ShouldBe(17);
+            lexemes.Count(lx => lx.Type == LexemType.Property).ShouldBe(2);
+            lexemes.Count(lx => lx.Type == LexemType.Value).ShouldBe(2);
+            lexemes.Count(lx => lx.Type == LexemType.Quotes).ShouldBe(4);
+            lexemes.Count(lx => lx.Type == LexemType.Space).ShouldBe(3);
+            lexemes.Count(lx => lx.Type == LexemType.Symbol).ShouldBe(5);
+            lexemes.Count(lx => lx.Type == LexemType.Complex).ShouldBe(0);
+        }
     }
 }

@@ -27,6 +27,8 @@
 
                     while (reader.Read())
                     {
+                        var length = text.Length;
+
                         switch (reader.TokenType)
                         {
                             case JsonToken.StartArray: Extract(list, ref text, "[", LexemType.Symbol); break;
@@ -55,6 +57,14 @@
 
                             default: list.Add(new CodeLexem(LexemType.Error, reader.TokenType.ToString())); break;
                         }
+
+                        if (length == text.Length)
+                        {
+                            // Parser chocked on something, dump the rest of the
+                            // string and exit.
+                            list.Add(new CodeLexem(CutString(ref text, text.Length)));
+                            return list;
+                        }
                     }
                 }
 
@@ -80,7 +90,7 @@
 
         void Extract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
         {
-            while (!TryExtract(res, ref text, lex, type))
+            while (!TryExtract(res, ref text, lex, type, StringComparison.OrdinalIgnoreCase))
             {
                 var length = text.Length;
 

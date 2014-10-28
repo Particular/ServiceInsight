@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.CodeParser
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -43,9 +44,9 @@
             }
         }
 
-        protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type)
+        protected bool TryExtract(List<CodeLexem> res, ref SourcePart text, string lex, LexemType type, StringComparison comparisonType = StringComparison.Ordinal)
         {
-            if (text.StartsWith(lex))
+            if (text.StartsWith(lex, comparisonType))
             {
                 res.Add(new CodeLexem(type, CutString(ref text, lex.Length)));
                 return true;
