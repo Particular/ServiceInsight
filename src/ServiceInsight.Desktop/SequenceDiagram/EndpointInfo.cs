@@ -17,6 +17,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 throw new ArgumentNullException("message", "message is null.");
 
             Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
+            if (string.IsNullOrEmpty(Name))
+                Name = endpoint.Name;
             FullName = endpoint.Name;
             Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
             Host = endpoint.Host;
@@ -29,16 +31,18 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return FullName.GetHashCode() ^ Host.GetHashCode() ^ Version.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as EndpointInfo;
-            if (other != null)
-                return Name.Equals(other.Name);
+            if (other == null)
+                return false;
 
-            return false;
+            return string.Equals(FullName, other.FullName, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
