@@ -136,7 +136,8 @@
             return Execute(request, response =>
                 response.Content.StartsWith("<?xml") ?
                     GetXmlData(response.Content) :
-                    JsonPropertiesHelper.ProcessValues(response.Content, CleanupBodyString));
+                    JsonPropertiesHelper.ProcessValues(response.Content, CleanupBodyString))
+                ?? Enumerable.Empty<KeyValuePair<string, string>>();
         }
 
         public void LoadBody(StoredMessage message)
