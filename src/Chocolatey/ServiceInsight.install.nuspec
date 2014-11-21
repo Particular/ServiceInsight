@@ -8,6 +8,7 @@
     <owners>Particular Software</owners>
     <projectUrl>http://particular.net/ServiceInsight</projectUrl>
     <iconUrl>http://s3.amazonaws.com/nuget.images/ServiceInsight_128.png</iconUrl>
+    <licenseUrl>http://particular.net/LicenseAgreement</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ServiceInsight for NServiceBus</description>
     <summary></summary>
