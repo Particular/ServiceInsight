@@ -232,15 +232,17 @@
                     continue;
                 }
 
-                var parentMessage = nodeMap.Values.SingleOrDefault(m =>
+                // [CM] I don't know how it's happening, but a user reported an
+                // error where multiple results were returned from this query.
+                var parentMessages = nodeMap.Values.Where(m =>
                     m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                     m.Message.MessageId == msg.Message.RelatedToMessageId &&
                     m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
 
-                if (parentMessage == null)
-                    continue;
-
-                AddConnection(parentMessage, msg);
+                foreach (var parentMessage in parentMessages)
+                {
+                    AddConnection(parentMessage, msg);
+                }
             }
         }
 
