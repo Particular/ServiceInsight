@@ -157,7 +157,7 @@
                                    FontSize="16"
                                    FontWeight="Bold"
                                    Foreground="#FF565656"
-                                   Text="To install plugin, type in VS Package Manager Console:" />
+                                   Text="To visualize your saga, please install the appropriate nuget package in your endpoint" />
                         <TextBlock Margin="5,2,5,5"
                                    Padding="2"
                                    HorizontalAlignment="Center"
@@ -165,7 +165,23 @@
                                    FontFamily="Consolas"
                                    FontSize="16"
                                    Style="{StaticResource CodeStyle}"
-                                   Text="install-package ServiceControl.Plugin.SagaAudit &lt;NameProjectWithSaga&gt;" />
+                                   Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit &lt;NameProjectWithSaga&gt;" />
+                        <TextBlock Margin="5,2,5,5"
+                                   Padding="2"
+                                   HorizontalAlignment="Center"
+                                   Background="{x:Null}"
+                                   FontFamily="Consolas"
+                                   FontSize="16"
+                                   Style="{StaticResource CodeStyle}"
+                                   Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit &lt;NameProjectWithSaga&gt;" />
+                        <TextBlock Margin="5,2,5,5"
+                                   Padding="2"
+                                   HorizontalAlignment="Center"
+                                   Background="{x:Null}"
+                                   FontFamily="Consolas"
+                                   FontSize="16"
+                                   Style="{StaticResource CodeStyle}"
+                                   Text="For NSB v3 endpoints, install-package ServiceControl.Plugin.Nsb3.SagaAudit &lt;NameProjectWithSaga&gt;" />
                     </StackPanel>
                 </Border>
             </StackPanel>
