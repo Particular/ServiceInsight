@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using Caliburn.Micro;
     using ExtensionMethods;
-    using Humanizer;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
 
@@ -46,9 +45,9 @@
                 return;
             }
 
-            ProcessingTime = (ProcessingEnded.Value - ProcessingStarted.Value).Humanize();
-            CriticalTime = (ProcessingEnded.Value - TimeSent.Value).Humanize();
-            DeliveryTime = (ProcessingStarted.Value - TimeSent.Value).Humanize();
+            ProcessingTime = (ProcessingEnded.Value - ProcessingStarted.Value).SubmillisecondHumanize();
+            CriticalTime = (ProcessingEnded.Value - TimeSent.Value).SubmillisecondHumanize();
+            DeliveryTime = (ProcessingStarted.Value - TimeSent.Value).SubmillisecondHumanize();
         }
 
         protected override void MapHeaderKeys()

@@ -7,7 +7,6 @@
     using DevExpress.Data;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
-    using Humanizer;
 
     public partial class MessageListView
     {
@@ -65,7 +64,7 @@
         {
             if (e.Value is TimeSpan)
             {
-                e.DisplayText = ((TimeSpan)e.Value).Humanize();
+                e.DisplayText = ((TimeSpan)e.Value).SubmillisecondHumanize();
             }
         }
 

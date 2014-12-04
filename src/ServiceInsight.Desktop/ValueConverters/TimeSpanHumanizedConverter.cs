@@ -3,7 +3,6 @@ namespace Particular.ServiceInsight.Desktop.ValueConverters
     using System;
     using System.Windows;
     using System.Windows.Data;
-    using Humanizer;
 
     public class TimeSpanHumanizedConverter : IValueConverter
     {
@@ -11,7 +10,7 @@ namespace Particular.ServiceInsight.Desktop.ValueConverters
         {
             if (value is TimeSpan)
             {
-                return ((TimeSpan)value).Humanize();
+                return ((TimeSpan)value).SubmillisecondHumanize();
             }
             return DependencyProperty.UnsetValue;
         }

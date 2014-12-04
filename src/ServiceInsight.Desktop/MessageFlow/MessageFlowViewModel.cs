@@ -22,7 +22,6 @@
     public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-        SearchBarViewModel searchBar;
         MessageListViewModel messageList;
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
@@ -49,7 +48,6 @@
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
-            this.searchBar = searchBar;
             this.settingsProvider = settingsProvider;
             this.messageList = messageList;
             this.endpointExplorer = endpointExplorer;
@@ -93,7 +91,6 @@
         {
             var message = e.MessageNode.Message;
 
-            searchBar.Search(performSearch: false, searchQuery: message.MessageId);
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
             eventAggregator.Publish(new SelectedMessageChanged(message));
         }

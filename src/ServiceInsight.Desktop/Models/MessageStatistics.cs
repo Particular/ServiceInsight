@@ -1,7 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     using System;
-    using Humanizer;
 
     public class MessageStatistics
     {
@@ -11,17 +10,17 @@
 
         public string ElapsedCriticalTime
         {
-            get { return CriticalTime.Humanize(); }
+            get { return CriticalTime.SubmillisecondHumanize(); }
         }
 
         public string ElapsedProcessingTime
         {
-            get { return ProcessingTime.Humanize(); }
+            get { return ProcessingTime.SubmillisecondHumanize(); }
         }
 
         public string ElapsedDeliveryTime
         {
-            get { return DeliveryTime.Humanize(); }
+            get { return DeliveryTime.SubmillisecondHumanize(); }
         }
     }
 }
