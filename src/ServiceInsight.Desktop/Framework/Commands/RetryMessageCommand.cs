@@ -35,7 +35,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
 
             eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             serviceControl.RetryMessage(message.Id);
-            eventAggregator.Publish(new RetryMessage { MessageId = message.MessageId });
+            eventAggregator.Publish(new RetryMessage { MessageId = message.Id });
             eventAggregator.Publish(new WorkFinished());
 
             message.Status = MessageStatus.RetryIssued;
