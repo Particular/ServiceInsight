@@ -6,6 +6,8 @@
         Publish,
         Subscribe,
         Unsubscribe,
-        Reply
+        Reply,
+        Init
+
     }
 }
