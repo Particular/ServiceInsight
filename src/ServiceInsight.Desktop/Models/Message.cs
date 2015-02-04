@@ -11,11 +11,6 @@
             HeaderRaw = new byte[0];
         }
 
-        public MessageBody(string id, string label, DateTime sentAt) 
-            : base(id, label, sentAt)
-        {
-        }
-
         public int BodySize { get; set; }
         public string BodyUrl { get; set; }
 

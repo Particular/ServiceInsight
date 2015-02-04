@@ -8,8 +8,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="uc"
              d:DataContext="{d:DesignInstance {x:Type l:SagaWindowViewModel}}"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="800"
+             d:DesignWidth="1000"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -174,14 +174,6 @@
                                    FontSize="16"
                                    Style="{StaticResource CodeStyle}"
                                    Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit &lt;NameProjectWithSaga&gt;" />
-                        <TextBlock Margin="5,2,5,5"
-                                   Padding="2"
-                                   HorizontalAlignment="Center"
-                                   Background="{x:Null}"
-                                   FontFamily="Consolas"
-                                   FontSize="16"
-                                   Style="{StaticResource CodeStyle}"
-                                   Text="For NSB v3 endpoints, install-package ServiceControl.Plugin.Nsb3.SagaAudit &lt;NameProjectWithSaga&gt;" />
                     </StackPanel>
                 </Border>
             </StackPanel>

@@ -29,7 +29,7 @@ namespace Particular.ServiceInsight.Desktop
         {
             if (timespan.Ticks < 10000)
             {
-                return String.Format("{0} milliseconds", timespan.Ticks / 10000.0);
+                return String.Format("{0:0.##} milliseconds", timespan.Ticks / 10000.0);
             }
 
             return timespan.Humanize();
