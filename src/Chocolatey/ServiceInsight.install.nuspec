@@ -10,7 +10,7 @@
     <iconUrl>http://s3.amazonaws.com/nuget.images/ServiceInsight_128.png</iconUrl>
     <licenseUrl>http://particular.net/LicenseAgreement</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>ServiceInsight for NServiceBus</description>
+    <description>ServiceInsight for NServiceBus. Complete under-the-hood view of the your system's behavior, clearly displayed and visualized, immediately available and up-to-date. Whether in development, testing or production, ServiceInsight provides all the system-critical information you need.</description>
     <summary></summary>
     <tags>nservicebus particular chocolatey ServiceInsight</tags>
     <dependencies>
