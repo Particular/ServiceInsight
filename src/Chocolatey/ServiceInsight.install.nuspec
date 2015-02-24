@@ -3,7 +3,7 @@
   <metadata>
     <id>ServiceInsight.install</id>
     <version>$version$</version>
-    <title>ServiceInsight.install (Install)</title>
+    <title>ServiceInsight.install</title>
     <authors>Particular Software</authors>
     <owners>Particular Software</owners>
     <projectUrl>http://particular.net/ServiceInsight</projectUrl>
