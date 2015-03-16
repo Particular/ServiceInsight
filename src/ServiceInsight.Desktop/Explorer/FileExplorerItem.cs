@@ -1,7 +1,7 @@
 namespace Particular.ServiceInsight.Desktop.Explorer
 {
     using System.Drawing;
-    using Properties;
+    using global::ServiceInsight.Properties;
 
     public class FileExplorerItem : ExplorerItem
     {

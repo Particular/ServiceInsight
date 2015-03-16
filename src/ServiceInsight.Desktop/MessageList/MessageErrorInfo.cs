@@ -3,8 +3,8 @@
     using System;
     using System.Windows.Media.Imaging;
     using ExtensionMethods;
+    using global::ServiceInsight.Properties;
     using Models;
-    using Properties;
 
     public class MessageErrorInfo : IComparable
     {
@@ -39,23 +39,29 @@
 
         BitmapImage GetImage()
         {
-            if(!statusSpecified)
+            if (!statusSpecified)
                 return Resources.BulletWhite.ToBitmapImage();
-            
+
             switch (Status)
             {
                 case MessageStatus.Failed:
                     return Resources.BulletYellow.ToBitmapImage();
+
                 case MessageStatus.ArchivedFailure:
                     return Resources.BulletArchived.ToBitmapImage();
+
                 case MessageStatus.RepeatedFailure:
                     return Resources.BulletRed.ToBitmapImage();
+
                 case MessageStatus.Successful:
                     return Resources.BulletGreen.ToBitmapImage();
+
                 case MessageStatus.ResolvedSuccessfully:
                     return Resources.BulletGreen.ToBitmapImage();
+
                 case MessageStatus.RetryIssued:
                     return Resources.BulletWhite.ToBitmapImage();
+
                 default:
                     throw new ArgumentOutOfRangeException(string.Format("Status {0} is not implemented", Status));
             }
@@ -84,12 +90,16 @@
             {
                 case MessageStatus.Failed:
                     return "Failed";
+
                 case MessageStatus.RepeatedFailure:
                     return "Faulted";
+
                 case MessageStatus.Successful:
                     return "Success";
+
                 case MessageStatus.RetryIssued:
                     return "Retried";
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

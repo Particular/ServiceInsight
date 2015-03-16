@@ -1,12 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
 {
     using System.Drawing;
+    using global::ServiceInsight.Properties;
     using Models;
-    using Properties;
 
     public class ErrorEndpointExplorerItem : EndpointExplorerItem
     {
-        public ErrorEndpointExplorerItem(Endpoint endpoint) : base(endpoint)
+        public ErrorEndpointExplorerItem(Endpoint endpoint)
+            : base(endpoint)
         {
         }
 

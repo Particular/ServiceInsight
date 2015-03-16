@@ -2,8 +2,8 @@
 {
     using System.Drawing;
     using System.Linq;
+    using global::ServiceInsight.Properties;
     using Models;
-    using Properties;
 
     public class ServiceControlExplorerItem : ExplorerItem
     {
