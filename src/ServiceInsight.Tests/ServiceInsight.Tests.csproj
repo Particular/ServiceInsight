@@ -133,9 +133,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ServiceInsight.Desktop\ServiceInsight.Desktop.csproj">
+    <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj">
       <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
-      <Name>ServiceInsight.Desktop</Name>
+      <Name>ServiceInsight</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

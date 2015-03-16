@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Desktop", "ServiceInsight.Desktop\ServiceInsight.Desktop.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.FunctionalTests", "ServiceInsight.FunctionalTests\ServiceInsight.FunctionalTests.csproj", "{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight", "ServiceInsight\ServiceInsight.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61F87540-03E3-4E72-9647-FA2108AD66A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
