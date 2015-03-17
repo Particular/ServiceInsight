@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ServiceInsightInstaller.Managed.UI.Introduction.IntroductionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:introduction="clr-namespace:ServiceInsightInstaller.Managed.UI.Introduction"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance introduction:IntroductionViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Button x:Name="Install"
+                    Content="Install"
+                    Visibility="{Binding InstallVisible,
+                                         Converter={StaticResource boolToVis}}" />
+            <Button x:Name="Uninstall"
+                    Content="Uninstall"
+                    Visibility="{Binding UninstallVisible,
+                                         Converter={StaticResource boolToVis}}" />
+        </StackPanel>
+
+        <StackPanel>
+            <Image HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Source="../../Images/logo.png"
+                   Stretch="None" />
+
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="ServiceInsight Installer" />
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

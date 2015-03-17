@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!--
+  Upgrade code HAS to be the same for all updates.
+  Once you've chosen it don't change it.
+  -->
+  <?define UpgradeCode="1FFFC993-80D7-47CA-8986-EF8D06A58C27" ?>
+
+  <!--This is the installer version, not the product version.-->
+  <?define Version="0.1.0.0" ?>
+</Include>
