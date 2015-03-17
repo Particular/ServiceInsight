@@ -17,4 +17,7 @@
       <dependency id="DotNet4.5" version="4.5.20120822" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="..\..\src\Chocolatey\chocolateyInstall.ps1" />
+  </files>
 </package>
