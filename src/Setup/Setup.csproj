@@ -46,14 +46,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
     <PropertyGroup>
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
     </PropertyGroup>
-    <Exec Command="$(AdvancedInstallerExe) /edit ServiceInsight.aip /SetVersion $(GfvMajorMinorPatch)" />
-    <Exec Command="$(AdvancedInstallerExe) /edit ServiceInsight.aip /SetPackageName ServiceInsight-$(GfvMajorMinorPatch).exe -buildname DefaultBuild" />
-    <Exec Command="$(AdvancedInstallerExe) /rebuild ServiceInsight.aip" />
+    <Copy SourceFiles="ServiceInsight.aip" DestinationFolder="$(IntermediateOutputPath)" />
+    <Copy SourceFiles="res\ServiceInsights.ico" DestinationFolder="$(IntermediateOutputPath)res\" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name SI_PATH -value $(SolutionDir)ServiceInsight\bin\$(Configuration) -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetVersion $(GfvMajorMinorPatch)" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetPackageName ServiceInsight-$(GfvMajorMinorPatch).exe -buildname DefaultBuild" />
+    <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)ServiceInsight.aip" />
+    <Copy SourceFiles="$(IntermediateOutputPath)bin\ServiceInsight-$(GfvMajorMinorPatch).exe" DestinationFolder="$(OutputPath)" />
   </Target>
   <Import Project="..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
