@@ -65,8 +65,8 @@
     <ATTRIBUTE name="CurrentFeature" value="ServiceInsight"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="Particular.ServiceInsight.exe" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.exe|Particular.ServiceInsight.exe" Attributes="0" SourcePath="..\..\binaries\Particular.ServiceInsight.exe" SelfReg="false" NextFile="Particular.ServiceInsight.pdb" DigSign="true"/>
-    <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Partic~1.pdb|Particular.ServiceInsight.pdb" Attributes="0" SourcePath="..\..\binaries\Particular.ServiceInsight.pdb" SelfReg="false"/>
+    <ROW File="Particular.ServiceInsight.exe" Component_="Particular.ServiceInsight.exe" FileName="Servic~1.exe|ServiceInsight.exe" Attributes="0" SourcePath="..\ServiceInsight\bin\Release\ServiceInsight.exe" SelfReg="false" NextFile="Particular.ServiceInsight.pdb" DigSign="true"/>
+    <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Servic~1.pdb|ServiceInsight.pdb" Attributes="0" SourcePath="..\ServiceInsight\bin\Release\ServiceInsight.pdb" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" GeneralOptions="qh" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" EulaPathLocId="*"/>
