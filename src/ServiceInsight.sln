@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight", "ServiceIn
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chocolatey", "Chocolatey", "{4B808DEA-0BC2-46C5-806D-76C9D92872B2}"
 	ProjectSection(SolutionItems) = preProject
-		..\packaging\chocolatey\ServiceInsight.install.nuspec = ..\packaging\chocolatey\ServiceInsight.install.nuspec
+		..\packaging\chocolatey\Setup.install.nuspec = ..\packaging\chocolatey\Setup.install.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{5338FEE7-FEE1-49AC-839B-A6D9988F9841}"
