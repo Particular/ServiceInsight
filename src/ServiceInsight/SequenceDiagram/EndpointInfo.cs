@@ -9,6 +9,10 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     [DebuggerDisplay("{Name}")]
     public class EndpointInfo
     {
+        protected EndpointInfo()
+        {
+        }
+
         public EndpointInfo(Endpoint endpoint, StoredMessage message)
         {
             if (endpoint == null)
@@ -24,10 +28,10 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Host = endpoint.Host ?? "";
         }
 
-        public string Name { get; private set; }
-        public string FullName { get; private set; }
-        public string Version { get; private set; }
-        public string Host { get; private set; }
+        public string Name { get; protected set; }
+        public string FullName { get; protected set; }
+        public string Version { get; protected set; }
+        public string Host { get; protected set; }
 
         public override int GetHashCode()
         {
@@ -44,5 +48,22 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
         }
+    }
+
+    public class MessageEndpointInfo : EndpointInfo
+    {
+        public MessageEndpointInfo(EndpointInfo endpoint)
+        {
+            if (endpoint == null)
+                throw new ArgumentNullException("endpoint", "endpoint is null.");
+
+            Name = endpoint.Name;
+            FullName = endpoint.FullName;
+            Version = endpoint.Version;
+            Host = endpoint.Host;
+        }
+
+        public bool IsMessageLine { get; set; }
+        public bool IsPublished { get; set; }
     }
 }

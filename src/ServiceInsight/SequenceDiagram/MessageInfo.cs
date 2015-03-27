@@ -39,7 +39,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             this.eventAggregator = eventAggregator;
             this.exceptionDetailViewModel = exceptionDetailViewModel;
             Message = message;
-            Endpoints = endpoints;
+            Endpoints = endpoints.Select(e => new MessageEndpointInfo(e)).ToArray();
 
             RetryMessageCommand = viewModel.RetryMessageCommand;
             CopyConversationIDCommand = viewModel.CopyConversationIDCommand;
@@ -67,7 +67,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public StoredMessage Message { get; private set; }
 
-        public IEnumerable<EndpointInfo> Endpoints { get; set; }
+        public MessageEndpointInfo[] Endpoints { get; set; }
 
         public bool Selected { get; set; }
         public bool Hilited { get; set; }

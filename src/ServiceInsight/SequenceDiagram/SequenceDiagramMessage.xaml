@@ -141,7 +141,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -182,7 +181,6 @@
                     <Setter Property="SagaBackground" Value="{StaticResource HiliteDarkBrush}" />
                     <Setter Property="SagaForeground" Value="White" />
                 </MultiDataTrigger>
-
             </Style.Triggers>
         </Style>
     </UserControl.Style>
@@ -328,9 +326,7 @@
                                   Fill="{Binding MessageForeground,
                                                  ElementName=Root}"
                                   Stretch="Fill" />
-
                         </StackPanel>
-
                     </Button>
 
                     <!--  Bottom Line  -->
@@ -371,7 +367,6 @@
                                                             ElementName=Root}"
                                        Style="{StaticResource UnderlineTextBlockStyle}"
                                        Text="{Binding SagaName}" />
-
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -598,12 +593,60 @@
                                        Text="{Binding ExceptionMessage}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
-
                     </Grid>
                 </Border>
             </Popup>
-
         </StackPanel>
+
+        <ItemsControl x:Name="MessageLines"
+                      ItemsSource="{Binding Endpoints}"
+                      Style="{StaticResource HorizontalItemsControlStyle}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="{StaticResource ColumnWidth}">
+                        <Line Margin="0,-38,0,0"
+                              HorizontalAlignment="Center"
+                              Fill="{Binding Line,
+                                             ElementName=Root}"
+                              Stretch="Fill"
+                              Stroke="{Binding Line,
+                                               ElementName=Root}"
+                              StrokeDashArray="{Binding IsPublished,
+                                                        Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                              StrokeEndLineCap="Square"
+                              StrokeThickness="4"
+                              Visibility="{Binding IsMessageLine,
+                                                   Converter={StaticResource BoolToVisibilityConverter}}"
+                              X1="0"
+                              X2="0"
+                              Y1="0"
+                              Y2="1" />
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Width="{StaticResource ColumnWidth}"
+              Margin="{Binding SendingEndpointIndex,
+                               Converter={StaticResource ToEndpointMarginConverter}}"
+              HorizontalAlignment="Left"
+              Visibility="{Binding IsFirst,
+                                   Converter={StaticResource BoolToVisibilityConverterInverted}}">
+            <Line Margin="2,-36,0,0"
+                  HorizontalAlignment="Center"
+                  Fill="{Binding Line,
+                                 ElementName=Root}"
+                  Stroke="{Binding Line,
+                                   ElementName=Root}"
+                  StrokeDashArray="{Binding IsPublished,
+                                            Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                  StrokeEndLineCap="Square"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="36" />
+        </Grid>
 
         <!--  Vertical Hilite Line  -->
         <Grid Width="{StaticResource ColumnWidth}"
@@ -646,6 +689,5 @@
                   Y1="0"
                   Y2="36" />
         </Grid>
-
     </Grid>
 </UserControl>

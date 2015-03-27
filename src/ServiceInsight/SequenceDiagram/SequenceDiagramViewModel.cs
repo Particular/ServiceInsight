@@ -142,13 +142,44 @@
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
         {
-            Messages = messages.OrderBy(m => m.TimeSent).Select(m => new MessageInfo(eventAggregator, windowManager, exceptionDetailViewModel, this, m, Endpoints)).ToList();
+            var orderedMessages = messages.OrderBy(m => m.TimeSent);
+
+            Messages = orderedMessages
+                .Select(m => new MessageInfo(eventAggregator, windowManager, exceptionDetailViewModel, this, m, Endpoints))
+                .ToList();
 
             Messages.First().IsFirst = true;
 
+            var indicies = Endpoints.Select((e, i) => new { e.FullName, i }).ToDictionary(a => a.FullName, a => a.i);
             foreach (var message in Messages)
             {
                 eventAggregator.Subscribe(message);
+
+                if (message.Message.SendingEndpoint == null)
+                    continue;
+
+                var hiliteOn = false;
+                var index = indicies[message.Message.SendingEndpoint.Name];
+
+                if (index < 0)
+                    continue;
+
+                foreach (var tempMessage in Messages)
+                {
+                    if (message.Message.Id == tempMessage.Message.Id)
+                        break;
+
+                    if (hiliteOn)
+                    {
+                        tempMessage.Endpoints[index].IsMessageLine = true;
+                        tempMessage.Endpoints[index].IsPublished = message.IsPublished;
+                    }
+
+                    if (message.Message.RelatedToMessageId == tempMessage.Message.MessageId &&
+                        tempMessage.Message.ReceivingEndpoint != null &&
+                        tempMessage.Message.ReceivingEndpoint.Name == message.Message.SendingEndpoint.Name)
+                        hiliteOn = true;
+                }
             }
         }
     }
