@@ -603,7 +603,7 @@
                       Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Width="{StaticResource ColumnWidth}">
+                    <Border d:DataContext="{d:DesignInstance sequenceDiagram:MessageEndpointInfo}" Width="{StaticResource ColumnWidth}">
                         <Line Margin="0,-38,0,0"
                               HorizontalAlignment="Center"
                               Fill="{Binding Line,
