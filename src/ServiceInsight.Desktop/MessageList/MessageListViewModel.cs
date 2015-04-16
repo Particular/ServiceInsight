@@ -228,7 +228,7 @@
 
         public void Handle(RetryMessage message)
         {
-            var msg = Rows.FirstOrDefault(x => x.MessageId == message.MessageId);
+            var msg = Rows.FirstOrDefault(x => x.Id == message.Id);
             if (msg != null)
             {
                 msg.Status = MessageStatus.RetryIssued;

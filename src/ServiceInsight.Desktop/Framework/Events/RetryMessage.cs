@@ -2,6 +2,6 @@
 {
     public class RetryMessage
     {
-        public string MessageId;
+        public string Id;
     }
 }
