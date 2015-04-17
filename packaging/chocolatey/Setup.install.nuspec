@@ -3,7 +3,7 @@
   <metadata>
     <id>ServiceInsight.install</id>
     <version>$version$</version>
-    <title>ServiceInsight.install</title>
+    <title>ServiceInsight</title>
     <authors>Particular Software</authors>
     <owners>Particular Software</owners>
     <projectUrl>http://particular.net/ServiceInsight</projectUrl>
@@ -12,9 +12,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ServiceInsight for NServiceBus. Complete under-the-hood view of the your system's behavior, clearly displayed and visualized, immediately available and up-to-date. Whether in development, testing or production, ServiceInsight provides all the system-critical information you need.</description>
     <summary></summary>
-    <tags>nservicebus particular chocolatey ServiceInsight</tags>
+    <tags>nservicebus particular chocolatey ServiceInsight admin</tags>
     <dependencies>
       <dependency id="DotNet4.5" version="4.5.20120822" />
+      <dependency id="chocolatey" version="0.9.9" />
     </dependencies>
   </metadata>
   <files>
