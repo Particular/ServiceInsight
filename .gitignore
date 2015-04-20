@@ -1,4 +1,5 @@
 nugets
+chocos/
 deploy
 build32
 binaries
@@ -30,6 +31,9 @@ src/Chocolatey/Build/*
 installer/[F|f]iles
 installer/[C|c]ustom[A|a]ctions
 installer/ServiceControl-cache
+
+Index.dat
+Storage.dat
 
 # Created by https://www.gitignore.io
 
