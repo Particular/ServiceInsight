@@ -21,7 +21,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 Name = endpoint.Name;
             FullName = endpoint.Name;
             Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
-            Host = endpoint.Host;
+            Host = endpoint.Host ?? "";
         }
 
         public string Name { get; private set; }

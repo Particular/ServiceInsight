@@ -3,11 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using RestSharp.Deserializers;
 
     public class Endpoint
     {
         public string Name { get; set; }
 
+        [DeserializeAs(Name = "host_display_name")]
         public string Host { get; set; }
 
         public List<EndpointProperty> EndpointProperties { get; set; }
