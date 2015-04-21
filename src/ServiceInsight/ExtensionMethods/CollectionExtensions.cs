@@ -40,19 +40,19 @@
             }
         }
 
-        public static IEnumerable<T> FullExcept<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        public static IEnumerable<T> FullExcept<T>(this IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer = null)
         {
             if (first == null)
                 throw new ArgumentNullException("first", "first is null.");
             if (second == null)
                 throw new ArgumentNullException("second", "second is null.");
 
-            return InternalFullExcept(first, second);
+            return InternalFullExcept(first, second, comparer ?? EqualityComparer<T>.Default);
         }
 
-        private static IEnumerable<T> InternalFullExcept<T>(IEnumerable<T> first, IEnumerable<T> second)
+        private static IEnumerable<T> InternalFullExcept<T>(IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
         {
-            var set = new HashSet<T>(second);
+            var set = new HashSet<T>(second, comparer);
             foreach (var item in first)
             {
                 if (!set.Remove(item))

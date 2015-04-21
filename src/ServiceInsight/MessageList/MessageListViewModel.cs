@@ -5,6 +5,7 @@
     using System.Reactive.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
+    using Comparers;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
@@ -267,7 +268,11 @@
 
         bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
         {
-            return Rows.Select(m => m.Id).FullExcept(pagedResult.Result.Select(m => m.Id)).Any();
+            var comparer = ComparerExtensions.ThenBy(Compare<Tuple<string, MessageStatus>>.OrderBy(t => t.Item1), t => t.Item2);
+
+            Func<StoredMessage, Tuple<string, MessageStatus>> selector = (StoredMessage m) => Tuple.Create(m.Id, m.Status);
+
+            return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
 
         bool LoadMessageBody()
