@@ -89,6 +89,9 @@
 
         void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
+            if (e.MessageNode == null)
+                return;
+
             var message = e.MessageNode.Message;
 
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
