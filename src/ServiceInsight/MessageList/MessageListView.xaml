@@ -126,6 +126,7 @@
                                    AllowCascadeUpdate="True"
                                    AllowEditing="False"
                                    AllowGrouping="True"
+                                   AllowMoveColumnToDropArea="False"
                                    AllowPerPixelScrolling="True"
                                    AllowSorting="True"
                                    AutoWidth="True"
