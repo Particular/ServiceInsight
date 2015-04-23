@@ -9,5 +9,14 @@
         {
             return key != null && dictionary.ContainsKey(key) ? dictionary[key] : defaultValue;
         }
+
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+        {
+            if (!dictionary.ContainsKey(key))
+            {
+                dictionary.Add(key, value);
+            }
+            return dictionary[key];
+        }
     }
 }

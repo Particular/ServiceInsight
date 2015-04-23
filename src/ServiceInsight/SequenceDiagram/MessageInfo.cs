@@ -7,6 +7,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using Caliburn.Micro;
     using Framework;
     using Models;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Particular.ServiceInsight.Desktop.MessageFlow;
     using ReactiveUI;
@@ -26,6 +27,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         private readonly IEventAggregator eventAggregator;
         private readonly IWindowManagerEx windowManager;
         private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
+        private readonly Dictionary<EndpointInfo, bool> messageLines = new Dictionary<EndpointInfo, bool>();
+        private readonly Dictionary<EndpointInfo, bool> messageLineIsPublished = new Dictionary<EndpointInfo, bool>();
 
         public MessageInfo(
             IEventAggregator eventAggregator,
@@ -39,7 +42,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             this.eventAggregator = eventAggregator;
             this.exceptionDetailViewModel = exceptionDetailViewModel;
             Message = message;
-            Endpoints = endpoints.Select(e => new MessageEndpointInfo(e)).ToArray();
+            Endpoints = endpoints;
 
             RetryMessageCommand = viewModel.RetryMessageCommand;
             CopyConversationIDCommand = viewModel.CopyConversationIDCommand;
@@ -67,7 +70,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public StoredMessage Message { get; private set; }
 
-        public MessageEndpointInfo[] Endpoints { get; set; }
+        public IEnumerable<EndpointInfo> Endpoints { get; set; }
 
         public bool Selected { get; set; }
         public bool Hilited { get; set; }
@@ -226,6 +229,22 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             var model = exceptionDetailViewModel();
             model.Exception = new ExceptionDetails(Message);
             windowManager.ShowDialog(model);
+        }
+
+        public bool EndpointNeedsMessageLine(EndpointInfo endpoint)
+        {
+            return messageLines.GetOrAdd(endpoint, false);
+        }
+
+        public bool EndpointMessageLineIsPublished(EndpointInfo endpoint)
+        {
+            return messageLineIsPublished.GetOrAdd(endpoint, false);
+        }
+
+        public void SetMessageLine(EndpointInfo endpoint, bool isPublished)
+        {
+            messageLines[endpoint] = true;
+            messageLineIsPublished[endpoint] = isPublished;
         }
     }
 }

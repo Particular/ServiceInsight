@@ -150,7 +150,7 @@
 
             Messages.First().IsFirst = true;
 
-            var indicies = Endpoints.Select((e, i) => new { e.FullName, i }).ToDictionary(a => a.FullName, a => a.i);
+            var lookup = Endpoints.ToDictionary(e => e.FullName);
             foreach (var message in Messages)
             {
                 eventAggregator.Subscribe(message);
@@ -159,9 +159,9 @@
                     continue;
 
                 var hiliteOn = false;
-                var index = indicies[message.Message.SendingEndpoint.Name];
+                EndpointInfo sendingEndpoint;
 
-                if (index < 0)
+                if (!lookup.TryGetValue(message.Message.SendingEndpoint.Name, out sendingEndpoint))
                     continue;
 
                 foreach (var tempMessage in Messages)
@@ -171,8 +171,7 @@
 
                     if (hiliteOn)
                     {
-                        tempMessage.Endpoints[index].IsMessageLine = true;
-                        tempMessage.Endpoints[index].IsPublished = message.IsPublished;
+                        tempMessage.SetMessageLine(sendingEndpoint, message.IsPublished);
                     }
 
                     if (message.Message.RelatedToMessageId == tempMessage.Message.MessageId &&

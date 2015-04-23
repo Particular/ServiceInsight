@@ -38,6 +38,9 @@
 
             <valueConverters:BoolToStrokeDashArrayConverter x:Key="BoolToStrokeDashArrayConverter" StrokeDashArray="1.5" />
 
+            <sequenceDiagram:MessageLineConverter x:Key="MessageLineConverter" />
+            <sequenceDiagram:MessageLineIsPublishedConverter x:Key="MessageLineIsPublishedConverter" />
+
             <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
                 <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
                 <Style.Triggers>
@@ -603,24 +606,31 @@
                       Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border d:DataContext="{d:DesignInstance sequenceDiagram:MessageEndpointInfo}" Width="{StaticResource ColumnWidth}">
+                    <Border d:DataContext="{d:DesignInstance sequenceDiagram:EndpointInfo}" Width="{StaticResource ColumnWidth}">
                         <Line Margin="0,-38,0,0"
                               HorizontalAlignment="Center"
-                              Fill="{Binding Line,
-                                             ElementName=Root}"
+                              Fill="Black"
                               Stretch="Fill"
-                              Stroke="{Binding Line,
-                                               ElementName=Root}"
-                              StrokeDashArray="{Binding IsPublished,
-                                                        Converter={StaticResource BoolToStrokeDashArrayConverter}}"
+                              Stroke="Black"
                               StrokeEndLineCap="Square"
                               StrokeThickness="4"
-                              Visibility="{Binding IsMessageLine,
-                                                   Converter={StaticResource BoolToVisibilityConverter}}"
                               X1="0"
                               X2="0"
                               Y1="0"
-                              Y2="1" />
+                              Y2="1">
+                            <Line.Visibility>
+                                <MultiBinding Converter="{StaticResource MessageLineConverter}">
+                                    <Binding Path="." />
+                                    <Binding ElementName="Root" Path="DataContext" />
+                                </MultiBinding>
+                            </Line.Visibility>
+                            <Line.StrokeDashArray>
+                                <MultiBinding Converter="{StaticResource MessageLineIsPublishedConverter}">
+                                    <Binding Path="." />
+                                    <Binding ElementName="Root" Path="DataContext" />
+                                </MultiBinding>
+                            </Line.StrokeDashArray>
+                        </Line>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -249,6 +249,7 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\EndpointInfo.cs" />
     <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
