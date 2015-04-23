@@ -21,10 +21,12 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.ToolTip>
-                    <TextBlock>
-                        <Run Text="Installed On: " />
-                        <Run Text="{Binding Endpoint.Host}" />
-                    </TextBlock>
+                    <ToolTip Visibility="{Binding Endpoint.Host, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                        <TextBlock>
+                            <Run Text="Installed On: " />
+                            <Run Text="{Binding Endpoint.Host}" />
+                        </TextBlock>
+                    </ToolTip>
                 </Grid.ToolTip>
                 <Image Source="{Binding Image, Converter={StaticResource BitmapToGlyphConverter}}" />
                 <TextBlock Grid.Column="1"
