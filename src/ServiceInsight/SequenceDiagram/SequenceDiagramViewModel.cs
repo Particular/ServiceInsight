@@ -171,7 +171,7 @@
 
                     if (hiliteOn)
                     {
-                        tempMessage.SetMessageLine(sendingEndpoint, message.IsPublished);
+                        tempMessage.SetMessageLine(sendingEndpoint, message);
                     }
 
                     if (message.Message.RelatedToMessageId == tempMessage.Message.MessageId &&

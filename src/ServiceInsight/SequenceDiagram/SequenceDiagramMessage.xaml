@@ -158,7 +158,7 @@
             <Setter Property="SagaForeground" Value="White" />
 
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
+                <Trigger Property="MouseOver" Value="True">
                     <Setter Property="Line" Value="{StaticResource HiliteDarkBrush}" />
                     <Setter Property="EndpointBox" Value="{StaticResource HiliteLightBrush}" />
                 </Trigger>
@@ -177,7 +177,7 @@
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
                         <Condition Binding="{Binding Selected}" Value="False" />
-                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                        <Condition Binding="{Binding MouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
                     </MultiDataTrigger.Conditions>
                     <Setter Property="MessageBackground" Value="Transparent" />
                     <Setter Property="MessageForeground" Value="{StaticResource HiliteDarkBrush}" />
@@ -250,8 +250,7 @@
                 Margin="{Binding MessagePopupIndex,
                                  Converter={StaticResource MessageEndpointMarginConverter}}"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Background="Transparent">
+                VerticalAlignment="Top">
 
             <Grid x:Name="PopupBorder"
                   HorizontalAlignment="Center"
@@ -606,10 +605,11 @@
                       Style="{StaticResource HorizontalItemsControlStyle}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border d:DataContext="{d:DesignInstance sequenceDiagram:EndpointInfo}" Width="{StaticResource ColumnWidth}">
+                    <Border Width="{StaticResource ColumnWidth}" d:DataContext="{d:DesignInstance sequenceDiagram:EndpointInfo}">
                         <Line Margin="0,-38,0,0"
                               HorizontalAlignment="Center"
                               Fill="Black"
+                              MouseEnter="Line_MouseEnter"
                               Stretch="Fill"
                               Stroke="Black"
                               StrokeEndLineCap="Square"

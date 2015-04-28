@@ -27,8 +27,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         private readonly IEventAggregator eventAggregator;
         private readonly IWindowManagerEx windowManager;
         private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
-        private readonly Dictionary<EndpointInfo, bool> messageLines = new Dictionary<EndpointInfo, bool>();
-        private readonly Dictionary<EndpointInfo, bool> messageLineIsPublished = new Dictionary<EndpointInfo, bool>();
+        private readonly Dictionary<EndpointInfo, MessageInfo> messageLookup = new Dictionary<EndpointInfo, MessageInfo>();
 
         public MessageInfo(
             IEventAggregator eventAggregator,
@@ -106,6 +105,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
             get { return Message.MessageIntent == MessageIntent.Publish; }
         }
+
         public bool IsTimeout
         {
             get
@@ -233,18 +233,28 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         public bool EndpointNeedsMessageLine(EndpointInfo endpoint)
         {
-            return messageLines.GetOrAdd(endpoint, false);
+            var message = messageLookup.GetOrAdd(endpoint, null);
+            return message != null;
         }
 
         public bool EndpointMessageLineIsPublished(EndpointInfo endpoint)
         {
-            return messageLineIsPublished.GetOrAdd(endpoint, false);
+            var message = messageLookup.GetOrAdd(endpoint, null);
+            return message != null && message.IsPublished;
         }
 
-        public void SetMessageLine(EndpointInfo endpoint, bool isPublished)
+        public void SetMessageLine(EndpointInfo endpoint, MessageInfo message)
         {
-            messageLines[endpoint] = true;
-            messageLineIsPublished[endpoint] = isPublished;
+            messageLookup[endpoint] = message;
+        }
+
+        public void SetMessageLineHilite(EndpointInfo endpoint, bool hilite)
+        {
+            var message = messageLookup.GetOrAdd(endpoint, null);
+            if (message == null)
+                return;
+
+            message.Hilited = hilite;
         }
     }
 }

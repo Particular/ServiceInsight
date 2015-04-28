@@ -158,7 +158,7 @@
                          SelectedItem="{Binding SelectedMessage}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type sequenceDiagram:MessageInfo}">
-                            <sequenceDiagram:SequenceDiagramMessage MouseOver="{Binding Hilited, Mode=OneWayToSource}" />
+                            <sequenceDiagram:SequenceDiagramMessage MouseOver="{Binding Hilited, Mode=TwoWay}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.Template>

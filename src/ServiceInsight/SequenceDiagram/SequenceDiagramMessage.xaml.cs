@@ -69,6 +69,8 @@
             set { SetValue(MouseOverProperty, value); }
         }
 
+        private EndpointInfo mouseOverEndpoint;
+
         public SequenceDiagramMessage()
         {
             InitializeComponent();
@@ -81,12 +83,32 @@
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
+            if (mouseOverEndpoint != null)
+            {
+                var message = DataContext as MessageInfo;
+                message.SetMessageLineHilite(mouseOverEndpoint, true);
+                return;
+            }
+
             MouseOver = true;
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
+            if (mouseOverEndpoint != null)
+            {
+                var message = DataContext as MessageInfo;
+                message.SetMessageLineHilite(mouseOverEndpoint, false);
+                mouseOverEndpoint = null;
+                return;
+            }
+
             MouseOver = false;
+        }
+
+        private void Line_MouseEnter(object sender, MouseEventArgs e)
+        {
+            mouseOverEndpoint = ((FrameworkElement)sender).DataContext as EndpointInfo;
         }
     }
 }
