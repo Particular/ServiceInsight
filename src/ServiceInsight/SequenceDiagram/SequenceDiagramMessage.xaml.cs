@@ -83,9 +83,9 @@
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (mouseOverEndpoint != null)
+            var message = DataContext as MessageInfo;
+            if (mouseOverEndpoint != null && message != null)
             {
-                var message = DataContext as MessageInfo;
                 message.SetMessageLineHilite(mouseOverEndpoint, true);
                 return;
             }
@@ -95,9 +95,9 @@
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (mouseOverEndpoint != null)
+            var message = DataContext as MessageInfo;
+            if (mouseOverEndpoint != null && message != null)
             {
-                var message = DataContext as MessageInfo;
                 message.SetMessageLineHilite(mouseOverEndpoint, false);
                 mouseOverEndpoint = null;
                 return;
