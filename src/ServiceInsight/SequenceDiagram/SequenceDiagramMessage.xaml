@@ -253,7 +253,7 @@
                 VerticalAlignment="Top">
 
             <!-- For hit testing -->
-            <Grid Margin="4,0"  Background="Transparent" />
+            <Grid Margin="2,0"  Background="Transparent" />
 
             <Grid x:Name="PopupBorder"
                   HorizontalAlignment="Center"
