@@ -244,13 +244,16 @@
         </Grid>
 
         <!--  Message Popup  -->
-        <Border x:Name="MessagePopup"
+        <Grid x:Name="MessagePopup"
                 Width="{StaticResource ColumnWidth}"
                 Height="72"
                 Margin="{Binding MessagePopupIndex,
                                  Converter={StaticResource MessageEndpointMarginConverter}}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
+
+            <!-- For hit testing -->
+            <Grid Margin="4,0"  Background="Transparent" />
 
             <Grid x:Name="PopupBorder"
                   HorizontalAlignment="Center"
@@ -373,7 +376,7 @@
                     </Button>
                 </Grid>
             </Grid>
-        </Border>
+        </Grid>
 
         <!--  Vertical arrow for each to endpoint  -->
         <StackPanel Width="{StaticResource ColumnWidth}"
