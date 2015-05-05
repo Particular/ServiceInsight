@@ -19,7 +19,7 @@
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="copyToClipboard"
                                Content="Copy To Clipboard"
-                               ItemClick="CopyToClipboard_OnItemClick" />
+                               ItemClick="CopyToClipboard_OnItemClick" Glyph="/Images/Copy.png" />
         </dxb:BarManager.Items>
         <Grid>
             <dxg:GridControl x:Name="HeadersGrid" ItemsSource="{Binding KeyValues}">
