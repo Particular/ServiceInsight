@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using Caliburn.Micro;
     using Models;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using ServiceControl;
 
@@ -15,13 +18,23 @@
         SagaMessage selectedMessage;
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
+        readonly IClipboard clipboard;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl)
+        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
+            this.clipboard = clipboard;
             ShowSagaNotFoundWarning = false;
+            CopyCommand = this.CreateCommand(arg => CopyNugetCommandToClipboard(arg.ToString()));
         }
+
+        void CopyNugetCommandToClipboard(string text)
+        {
+            clipboard.CopyTo(text);
+        }
+
+        public ICommand CopyCommand { get; private set; }
 
         public void OnShowMessageDataChanged()
         {

@@ -86,6 +86,28 @@
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
+                    <Style x:Key="BlankButtonStyle" TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="1" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    SnapsToDevicePixels="true">
+                                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -158,22 +180,32 @@
                                    FontWeight="Bold"
                                    Foreground="#FF565656"
                                    Text="To visualize your saga, please install the appropriate nuget package in your endpoint" />
-                        <TextBlock Margin="5,2,5,5"
-                                   Padding="2"
-                                   HorizontalAlignment="Center"
+                        <StackPanel Orientation="Horizontal" Margin="5,2,5,5" HorizontalAlignment="Center">
+                            <TextBlock Padding="2"
                                    Background="{x:Null}"
                                    FontFamily="Consolas"
                                    FontSize="16"
                                    Style="{StaticResource CodeStyle}"
-                                   Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit &lt;NameProjectWithSaga&gt;" />
-                        <TextBlock Margin="5,2,5,5"
-                                   Padding="2"
-                                   HorizontalAlignment="Center"
+                                   Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit" />
+                            <Button ToolTip="Copy nuget command to clipboard" Style="{StaticResource BlankButtonStyle}" Margin="5,0,0,0" Command="{Binding CopyCommand}" CommandParameter="install-package ServiceControl.Plugin.Nsb5.SagaAudit">
+                                <Image
+                               VerticalAlignment="Center"
+                               Source="/Images/Copy.png" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5,2,5,5" HorizontalAlignment="Center">
+                            <TextBlock Padding="2"
                                    Background="{x:Null}"
                                    FontFamily="Consolas"
                                    FontSize="16"
                                    Style="{StaticResource CodeStyle}"
-                                   Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit &lt;NameProjectWithSaga&gt;" />
+                                   Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit" />
+                            <Button ToolTip="Copy nuget command to clipboard" Style="{StaticResource BlankButtonStyle}" Margin="5,0,0,0" Command="{Binding CopyCommand}" CommandParameter="install-package ServiceControl.Plugin.Nsb4.SagaAudit">
+                                <Image
+                               VerticalAlignment="Center"
+                               Source="/Images/Copy.png" />
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
             </StackPanel>
