@@ -150,7 +150,6 @@
 
             Messages.First().IsFirst = true;
 
-            var lookup = Endpoints.ToDictionary(e => e.FullName);
             foreach (var message in Messages)
             {
                 eventAggregator.Subscribe(message);
@@ -159,9 +158,12 @@
                     continue;
 
                 var hiliteOn = false;
-                EndpointInfo sendingEndpoint;
 
-                if (!lookup.TryGetValue(message.Message.SendingEndpoint.Name, out sendingEndpoint))
+                var sendingEndpoint = Endpoints.FirstOrDefault(ei =>
+                    ei.FullName == message.Message.SendingEndpoint.Name &&
+                    ei.Host == (message.Message.SendingEndpoint.Host ?? "") &&
+                    ei.Version == message.Message.GetHeaderByKey(MessageHeaderKeys.Version));
+                if (sendingEndpoint == null)
                     continue;
 
                 foreach (var tempMessage in Messages)
