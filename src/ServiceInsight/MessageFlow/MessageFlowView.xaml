@@ -379,6 +379,11 @@
                         <Setter Property="StrokeThickness" Value="3" />
                     </Style>
 
+                    <Style x:Key="TimeoutConnectionPathStyle" TargetType="Path">
+                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="StrokeThickness" Value="1.5" />
+                    </Style>
+
                     <Style x:Key="EventConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
                         <Setter Property="StrokeThickness" Value="3" />
@@ -414,6 +419,14 @@
                         <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
                     </Style>
 
+                    <Style x:Key="TimeoutConnectionStyle" TargetType="ms:DiagramConnectionElement">
+                        <Setter Property="ToolTip" Value="Requested Timeout" />
+                        <Setter Property="PathStyle" Value="{StaticResource TimeoutConnectionPathStyle}" />
+                        <Setter Property="EndArrowTemplate" Value="{StaticResource EndArrowTemplate}" />
+                        <Setter Property="PathBuilder" Value="{StaticResource PathBuilder}" />
+                        <Setter Property="Template" Value="{StaticResource ConnectionStyleTemplate}" />
+                    </Style>
+
                     <Style x:Key="EventConnectionStyle" TargetType="ms:DiagramConnectionElement">
                         <Setter Property="ToolTip" Value="Published Event" />
                         <Setter Property="PathStyle" Value="{StaticResource EventConnectionPathStyle}" />
@@ -425,6 +438,7 @@
                     <ms:DiagramConnectionStyleSelector x:Key="ConnectionStyleSelector">
                         <ms:TypeStyle DataType="local:CommandConnection" Style="{StaticResource CommandConnectionStyle}" />
                         <ms:TypeStyle DataType="local:EventConnection" Style="{StaticResource EventConnectionStyle}" />
+                        <ms:TypeStyle DataType="local:TimeoutConnection" Style="{StaticResource TimeoutConnectionStyle}" />
                     </ms:DiagramConnectionStyleSelector>
 
                     <ms:ShapeNodeStyleSelector x:Key="NodeStyleSelector">

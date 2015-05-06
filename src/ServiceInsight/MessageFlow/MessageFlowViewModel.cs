@@ -255,10 +255,14 @@
             childNode.ConnectionPoints.Add(toPoint);
 
             DiagramConnection connection;
-
+            
             if (childNode.IsPublished)
             {
                 connection = new EventConnection(fromPoint, toPoint);
+            }
+            else if(childNode.IsTimeout)
+            {
+                connection = new TimeoutConnection(fromPoint, toPoint);
             }
             else
             {
