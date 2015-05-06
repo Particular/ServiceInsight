@@ -3,20 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Padding="0">
 
-    <ScrollViewer>
-        <RichTextBox x:Name="document"
-                     FontFamily="{StaticResource MessageBodyFontFamily}"
-                     FontSize="{StaticResource MessageBodyFontSize}"
-                     SnapsToDevicePixels="True"
-                     TextOptions.TextFormattingMode="Display"
-                     UseLayoutRounding="True"
-                     IsReadOnly="True"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-    </ScrollViewer>
-
+    <avalonedit:TextEditor
+				Name="document"
+				FontFamily="{StaticResource MessageBodyFontFamily}"
+                FontSize="{StaticResource MessageBodyFontSize}"
+				SyntaxHighlighting="XML" 
+                IsReadOnly="True"
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True"
+                >
+    </avalonedit:TextEditor>
 </UserControl>
