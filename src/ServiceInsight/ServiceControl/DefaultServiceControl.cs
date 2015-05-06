@@ -151,7 +151,7 @@
 
             var request = new RestRequest(message.BodyUrl, Method.GET);
 
-            message.Body = Execute(client, request, response => response.Content);
+            message.Body = Execute(client, request, response => CleanupBodyString(response.Content));
         }
 
         void AppendSystemMessages(IRestRequest request)
