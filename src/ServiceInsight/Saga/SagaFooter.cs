@@ -16,7 +16,7 @@ namespace Particular.ServiceInsight.Desktop.Saga
 
         public bool IsCompleted
         {
-            get { return data.IsCompleted; }
+            get { return data != null ? data.IsCompleted : true; }
         }
     }
 }
