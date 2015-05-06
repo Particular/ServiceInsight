@@ -86,6 +86,7 @@
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
+
                     <Style x:Key="BlankButtonStyle" TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -95,13 +96,13 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
                                     <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    SnapsToDevicePixels="true">
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            SnapsToDevicePixels="true">
                                         <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  RecognizesAccessKey="True"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          RecognizesAccessKey="True"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -135,21 +136,6 @@
             </StackPanel>
         </Border>
 
-        <Grid x:Name="Surface" Grid.Row="1">
-            <ItemsControl x:Name="Steps"
-                          Style="{StaticResource ItemsControlVirtualisedStyle}"
-                          Visibility="{Binding HasSaga,
-                                               Converter={StaticResource BoolToVisibilityConverter}}">
-                <ItemsControl.ItemsSource>
-                    <MultiBinding Converter="{StaticResource CompositeCollectionConverter}">
-                        <Binding Path="Header" />
-                        <Binding Path="Data.Changes" />
-                        <Binding Path="Footer" />
-                    </MultiBinding>
-                </ItemsControl.ItemsSource>
-            </ItemsControl>
-        </Grid>
-
         <StackPanel Grid.RowSpan="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -180,30 +166,38 @@
                                    FontWeight="Bold"
                                    Foreground="#FF565656"
                                    Text="To visualize your saga, please install the appropriate nuget package in your endpoint" />
-                        <StackPanel Orientation="Horizontal" Margin="5,2,5,5" HorizontalAlignment="Center">
+                        <StackPanel Margin="5,2,5,5"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
                             <TextBlock Padding="2"
-                                   Background="{x:Null}"
-                                   FontFamily="Consolas"
-                                   FontSize="16"
-                                   Style="{StaticResource CodeStyle}"
-                                   Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit" />
-                            <Button ToolTip="Copy nuget command to clipboard" Style="{StaticResource BlankButtonStyle}" Margin="5,0,0,0" Command="{Binding CopyCommand}" CommandParameter="install-package ServiceControl.Plugin.Nsb5.SagaAudit">
-                                <Image
-                               VerticalAlignment="Center"
-                               Source="/Images/Copy.png" />
+                                       Background="{x:Null}"
+                                       FontFamily="Consolas"
+                                       FontSize="16"
+                                       Style="{StaticResource CodeStyle}"
+                                       Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit" />
+                            <Button Margin="5,0,0,0"
+                                    Command="{Binding CopyCommand}"
+                                    CommandParameter="install-package ServiceControl.Plugin.Nsb5.SagaAudit"
+                                    Style="{StaticResource BlankButtonStyle}"
+                                    ToolTip="Copy nuget command to clipboard">
+                                <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
                             </Button>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,2,5,5" HorizontalAlignment="Center">
+                        <StackPanel Margin="5,2,5,5"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
                             <TextBlock Padding="2"
-                                   Background="{x:Null}"
-                                   FontFamily="Consolas"
-                                   FontSize="16"
-                                   Style="{StaticResource CodeStyle}"
-                                   Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit" />
-                            <Button ToolTip="Copy nuget command to clipboard" Style="{StaticResource BlankButtonStyle}" Margin="5,0,0,0" Command="{Binding CopyCommand}" CommandParameter="install-package ServiceControl.Plugin.Nsb4.SagaAudit">
-                                <Image
-                               VerticalAlignment="Center"
-                               Source="/Images/Copy.png" />
+                                       Background="{x:Null}"
+                                       FontFamily="Consolas"
+                                       FontSize="16"
+                                       Style="{StaticResource CodeStyle}"
+                                       Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit" />
+                            <Button Margin="5,0,0,0"
+                                    Command="{Binding CopyCommand}"
+                                    CommandParameter="install-package ServiceControl.Plugin.Nsb4.SagaAudit"
+                                    Style="{StaticResource BlankButtonStyle}"
+                                    ToolTip="Copy nuget command to clipboard">
+                                <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
                             </Button>
                         </StackPanel>
                     </StackPanel>
@@ -211,5 +205,20 @@
             </StackPanel>
 
         </StackPanel>
+        <Grid x:Name="Surface" Grid.Row="1">
+            <ItemsControl x:Name="Steps"
+                          Style="{StaticResource ItemsControlVirtualisedStyle}"
+                          Visibility="{Binding HasSaga,
+                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                <ItemsControl.ItemsSource>
+                    <MultiBinding Converter="{StaticResource CompositeCollectionConverter}">
+                        <Binding Path="Header" />
+                        <Binding Path="Data.Changes" />
+                        <Binding Path="Footer" />
+                    </MultiBinding>
+                </ItemsControl.ItemsSource>
+            </ItemsControl>
+        </Grid>
+
     </Grid>
 </UserControl>

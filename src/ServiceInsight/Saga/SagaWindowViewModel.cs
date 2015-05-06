@@ -18,20 +18,13 @@
         SagaMessage selectedMessage;
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
-        readonly IClipboard clipboard;
 
         public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
-            this.clipboard = clipboard;
             ShowSagaNotFoundWarning = false;
-            CopyCommand = this.CreateCommand(arg => CopyNugetCommandToClipboard(arg.ToString()));
-        }
-
-        void CopyNugetCommandToClipboard(string text)
-        {
-            clipboard.CopyTo(text);
+            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(arg.ToString()));
         }
 
         public ICommand CopyCommand { get; private set; }

@@ -34,7 +34,7 @@
 
         // ReSharper disable UnusedParameter.Global
         public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action<object> executAction) where TViewModel : class
-            // ReSharper restore UnusedParameter.Global
+        // ReSharper restore UnusedParameter.Global
         {
             var command = new ReactiveCommand();
             command.Subscribe(arg => executAction(arg));
