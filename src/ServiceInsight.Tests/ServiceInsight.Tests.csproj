@@ -117,7 +117,6 @@
     <Compile Include="Framework\Attachments.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
-    <Compile Include="JsonParserTests.cs" />
     <Compile Include="JsonViewerTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
@@ -127,7 +126,6 @@
     <Compile Include="StringDecoderTests.cs" />
     <Compile Include="ViewModels\LogWindowViewModelTests.cs" />
     <Compile Include="XmlDecoderTests.cs" />
-    <Compile Include="XmlParserTests.cs" />
     <Compile Include="XmlViewerViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>

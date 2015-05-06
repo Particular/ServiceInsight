@@ -20,7 +20,7 @@
             <ContextMenu>
                 <MenuItem Command="Copy">
                     <MenuItem.Icon>
-                        <Image Source="/Images/Copy.png"/>
+                        <Image Source="/Images/Copy.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>

@@ -277,7 +277,10 @@
 
         bool LoadMessageBody()
         {
-            if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty()) return false;
+            if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty())
+            {
+                return false;
+            }
 
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 

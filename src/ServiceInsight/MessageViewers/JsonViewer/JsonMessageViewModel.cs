@@ -30,7 +30,10 @@
 
             messageView.Clear();
 
-            if (SelectedMessage == null || SelectedMessage.Body == null) return;
+            if (SelectedMessage == null || SelectedMessage.Body == null)
+            {
+                return;
+            }
 
             messageView.Display(SelectedMessage.Body);
         }

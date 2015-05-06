@@ -221,15 +221,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CodeParser\BaseParser.cs" />
-    <Compile Include="CodeParser\CodeBlockPresenter.cs" />
-    <Compile Include="CodeParser\CodeLanguage.cs" />
-    <Compile Include="CodeParser\CodeLexem.cs" />
-    <Compile Include="CodeParser\CodeTextBox.cs" />
-    <Compile Include="CodeParser\JsonParser.cs" />
-    <Compile Include="CodeParser\LexemType.cs" />
-    <Compile Include="CodeParser\SourcePart.cs" />
-    <Compile Include="CodeParser\XmlParser.cs" />
+    <Compile Include="Controls\MvvmTextEditor.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />

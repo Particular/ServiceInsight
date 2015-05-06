@@ -1,14 +1,17 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.Saga.SagaContentViewer"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:codeParser="clr-namespace:Particular.ServiceInsight.Desktop.CodeParser"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:saga="clr-namespace:Particular.ServiceInsight.Desktop.Saga"
-             mc:Ignorable="d"
+             Width="800"
+             Height="400"
+             Background="#FF252526"
              d:DataContext="{d:DesignInstance saga:SagaUpdatedValue}"
-             d:DesignHeight="500" d:DesignWidth="900"
-             Width="800" Height="400" Background="#FF252526">
+             d:DesignHeight="500"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -16,19 +19,23 @@
                 <ResourceDictionary Source="DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--Background-->
-            <GeometryDrawing x:Key="BackgroundBrush" Brush="#FF252526" Geometry="F1 M 1518.92,121.53L 288.999,121.53L 288.999,812.536L 1518.92,812.536L 1518.92,121.53 Z " />
-            <!--End of Background-->
+            <!--  Background  -->
+            <GeometryDrawing x:Key="BackgroundBrush"
+                             Brush="#FF252526"
+                             Geometry="F1 M 1518.92,121.53L 288.999,121.53L 288.999,812.536L 1518.92,812.536L 1518.92,121.53 Z " />
+            <!--  End of Background  -->
 
-            <!--Close-->
-            <GeometryDrawing x:Key="CloseGlyph" Brush="#FFFFFFFF" Geometry="F1 M 1504.61,148.035L 1500.54,143.968L 1504.61,139.9L 1501.34,136.628L 1497.27,140.695L 1493.21,136.628L 1489.93,139.9L 1494,143.968L 1489.93,148.035L 1493.21,151.307L 1497.27,147.24L 1501.34,151.307L 1504.61,148.035 Z " />
-            <!--End of Close-->
+            <!--  Close  -->
+            <GeometryDrawing x:Key="CloseGlyph"
+                             Brush="#FFFFFFFF"
+                             Geometry="F1 M 1504.61,148.035L 1500.54,143.968L 1504.61,139.9L 1501.34,136.628L 1497.27,140.695L 1493.21,136.628L 1489.93,139.9L 1494,143.968L 1489.93,148.035L 1493.21,151.307L 1497.27,147.24L 1501.34,151.307L 1504.61,148.035 Z " />
+            <!--  End of Close  -->
 
             <DrawingBrush x:Key="Icon" Stretch="Uniform">
                 <DrawingBrush.Drawing>
                     <DrawingGroup>
                         <DrawingGroup.Children>
-                            <!--Left Icon-->
+                            <!--  Left Icon  -->
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 317.88,157.683C 318.568,157.683 319.089,157.975 319.464,158.558C 319.819,159.142 320.006,159.934 320.006,160.893C 320.006,161.893 319.819,162.664 319.464,163.248C 319.089,163.832 318.568,164.124 317.88,164.124C 317.192,164.124 316.671,163.832 316.296,163.248C 315.921,162.664 315.754,161.893 315.754,160.893C 315.754,159.934 315.921,159.142 316.296,158.558C 316.671,157.975 317.192,157.683 317.88,157.683 Z M 316.692,162.206L 318.797,158.913C 318.651,158.683 318.506,158.517 318.36,158.433C 318.193,158.35 318.047,158.287 317.88,158.287C 317.443,158.287 317.109,158.537 316.88,159.017C 316.651,159.517 316.546,160.122 316.546,160.851C 316.546,161.039 316.546,161.226 316.567,161.414C 316.567,161.622 316.609,161.872 316.692,162.206 Z M 319.068,159.642L 316.984,162.935C 317.088,163.144 317.213,163.29 317.359,163.373C 317.505,163.477 317.672,163.519 317.859,163.519C 318.339,163.519 318.693,163.248 318.902,162.685C 319.11,162.143 319.214,161.518 319.214,160.83C 319.214,160.413 319.152,160.017 319.068,159.642 Z " />
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 323.513,163.331L 323.513,158.642C 323.283,158.829 323.075,158.975 322.867,159.1C 322.658,159.225 322.366,159.35 322.012,159.475L 322.012,158.808C 322.575,158.579 323.075,158.266 323.513,157.87L 324.221,157.87L 324.221,163.331L 325.68,163.331L 325.68,163.936L 322.012,163.936L 322.012,163.331L 323.513,163.331 Z " />
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 329.479,157.683C 330.166,157.683 330.688,157.975 331.063,158.558C 331.417,159.142 331.605,159.934 331.605,160.893C 331.605,161.893 331.417,162.664 331.063,163.248C 330.688,163.832 330.166,164.124 329.479,164.124C 328.791,164.124 328.27,163.832 327.895,163.248C 327.519,162.664 327.353,161.893 327.353,160.893C 327.353,159.934 327.519,159.142 327.895,158.558C 328.27,157.975 328.791,157.683 329.479,157.683 Z M 328.291,162.206L 330.396,158.913C 330.25,158.683 330.104,158.517 329.958,158.433C 329.791,158.35 329.645,158.287 329.479,158.287C 329.041,158.287 328.707,158.537 328.478,159.017C 328.249,159.517 328.145,160.122 328.145,160.851C 328.145,161.039 328.145,161.226 328.165,161.414C 328.165,161.622 328.207,161.872 328.291,162.206 Z M 330.667,159.642L 328.582,162.935C 328.687,163.144 328.812,163.29 328.958,163.373C 329.103,163.477 329.27,163.519 329.458,163.519C 329.937,163.519 330.292,163.248 330.5,162.685C 330.708,162.143 330.813,161.518 330.813,160.83C 330.813,160.413 330.75,160.017 330.667,159.642 Z " />
@@ -44,7 +51,7 @@
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 329.312,185.6L 329.312,180.911C 329.083,181.098 328.874,181.244 328.666,181.369C 328.457,181.494 328.165,181.619 327.811,181.744L 327.811,181.077C 328.374,180.848 328.874,180.535 329.312,180.139L 330.021,180.139L 330.021,185.6L 331.48,185.6L 331.48,186.205L 327.811,186.205L 327.811,185.6L 329.312,185.6 Z " />
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 335.278,179.952C 335.966,179.952 336.487,180.244 336.862,180.827C 337.216,181.411 337.404,182.203 337.404,183.162C 337.404,184.162 337.216,184.933 336.862,185.517C 336.487,186.101 335.966,186.393 335.278,186.393C 334.59,186.393 334.069,186.101 333.694,185.517C 333.319,184.933 333.152,184.162 333.152,183.162C 333.152,182.203 333.319,181.411 333.694,180.827C 334.069,180.244 334.59,179.952 335.278,179.952 Z M 334.09,184.475L 336.195,181.182C 336.049,180.952 335.903,180.786 335.757,180.702C 335.59,180.619 335.445,180.556 335.278,180.556C 334.84,180.556 334.507,180.806 334.277,181.286C 334.048,181.786 333.944,182.391 333.944,183.12C 333.944,183.308 333.944,183.495 333.965,183.683C 333.965,183.891 334.006,184.141 334.09,184.475 Z M 336.466,181.911L 334.382,185.204C 334.486,185.413 334.611,185.559 334.757,185.642C 334.903,185.746 335.069,185.788 335.257,185.788C 335.736,185.788 336.091,185.517 336.299,184.954C 336.508,184.412 336.612,183.787 336.612,183.099C 336.612,182.682 336.549,182.286 336.466,181.911 Z " />
                             <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M 341.077,179.952C 341.765,179.952 342.286,180.244 342.661,180.827C 343.015,181.411 343.203,182.203 343.203,183.162C 343.203,184.162 343.015,184.933 342.661,185.517C 342.286,186.101 341.765,186.393 341.077,186.393C 340.389,186.393 339.868,186.101 339.493,185.517C 339.118,184.933 338.951,184.162 338.951,183.162C 338.951,182.203 339.118,181.411 339.493,180.827C 339.868,180.244 340.389,179.952 341.077,179.952 Z M 339.889,184.475L 341.994,181.182C 341.848,180.952 341.702,180.786 341.556,180.702C 341.39,180.619 341.244,180.556 341.077,180.556C 340.639,180.556 340.306,180.806 340.077,181.286C 339.847,181.786 339.743,182.391 339.743,183.12C 339.743,183.308 339.743,183.495 339.764,183.683C 339.764,183.891 339.806,184.141 339.889,184.475 Z M 342.265,181.911L 340.181,185.204C 340.285,185.413 340.41,185.559 340.556,185.642C 340.702,185.746 340.869,185.788 341.056,185.788C 341.536,185.788 341.89,185.517 342.098,184.954C 342.307,184.412 342.411,183.787 342.411,183.099C 342.411,182.682 342.348,182.286 342.265,181.911 Z " />
-                            <!--End of Left Icon-->
+                            <!--  End of Left Icon  -->
                         </DrawingGroup.Children>
                     </DrawingGroup>
                 </DrawingBrush.Drawing>
@@ -67,34 +74,48 @@
         <Grid.Background>
             <DrawingBrush Drawing="{StaticResource BackgroundBrush}" />
         </Grid.Background>
-        <Rectangle Height="16" Width="16" Grid.Column="0" Grid.Row="0" Fill="{StaticResource Icon}" />
-        <TextBlock Text="{Binding SagaName}"
+        <Rectangle Grid.Row="0"
+                   Grid.Column="0"
+                   Width="16"
+                   Height="16"
+                   Fill="{StaticResource Icon}" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
                    FontFamily="{StaticResource CaptionFontFamily}"
                    FontSize="{StaticResource CaptionFontSize}"
-                   TextAlignment="Left"
-                   VerticalAlignment="Center"
-                   Grid.Row="0" Grid.Column="1"
-                   Foreground="White" />
-        <Image Grid.Column="2" Grid.Row="0" Width="10" Height="10" MouseDown="OnCloseGlyphClicked">
+                   Foreground="White"
+                   Text="{Binding SagaName}"
+                   TextAlignment="Left" />
+        <Image Grid.Row="0"
+               Grid.Column="2"
+               Width="10"
+               Height="10"
+               MouseDown="OnCloseGlyphClicked">
             <Image.Source>
                 <DrawingImage Drawing="{StaticResource CloseGlyph}" />
             </Image.Source>
         </Image>
-
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <codeParser:CodeTextBox x:Name="document"
-                                    Code="{Binding EffectiveValue}"
-                                    Background="#252526"
-                                    Foreground="#e9e9e9"
-                                    BorderThickness="0"
-                                    FontFamily="{StaticResource MessageBodyFontFamily}"
-                                    FontSize="{StaticResource MessageBodyFontSize}"
-                                    SnapsToDevicePixels="True"
-                                    TextOptions.TextFormattingMode="Display"
-                                    UseLayoutRounding="True"
-                                    IsReadOnly="True"
-                                    VerticalScrollBarVisibility="Auto"
-                                    HorizontalScrollBarVisibility="Auto" />
-        </ScrollViewer>
+        <controls:MvvmTextEditor x:Name="document"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="3"
+                                 FontFamily="{StaticResource MessageBodyFontFamily}"
+                                 FontSize="{StaticResource MessageBodyFontSize}"
+                                 IsReadOnly="True"
+                                 SnapsToDevicePixels="True"
+                                 SyntaxHighlighting="JavaScript"
+                                 Text="{Binding EffectiveValue}"
+                                 UseLayoutRounding="True">
+            <controls:MvvmTextEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="Copy">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MvvmTextEditor.ContextMenu>
+        </controls:MvvmTextEditor>
     </Grid>
 </UserControl>
