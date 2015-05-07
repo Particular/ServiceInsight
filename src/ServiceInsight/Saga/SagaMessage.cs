@@ -2,10 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
+    using System.Windows.Input;
     using Caliburn.Micro;
     using Framework;
     using Models;
+    using Newtonsoft.Json;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using ServiceControl;
 
     public class SagaMessageDataItem
@@ -16,6 +21,16 @@
 
     public class SagaMessage : PropertyChangedBase
     {
+        public SagaMessage()
+        {
+          Viewer = new ContentViewer();
+          ShowEntireContentCommand = this.CreateCommand(()=> { Viewer.Visible = true; });
+        }
+
+        public ICommand ShowEntireContentCommand { get; set; }
+
+        public ContentViewer Viewer { get; private set; }
+
         public Guid MessageId { get; set; }
 
         public bool IsPublished { get; set; }
@@ -84,11 +99,11 @@
 
         public bool ShowData
         {
-            get { return showData && Data != null && Data.Any(); }
+            get { return showData && Data != null && Data.Count > 0; }
             set { showData = value; }
         }
 
-        public IEnumerable<SagaMessageDataItem> Data { get; private set; }
+        public IList<SagaMessageDataItem> Data { get; private set; }
 
         internal void RefreshData(IServiceControl serviceControl)
         {
@@ -97,7 +112,28 @@
                 return;
             }
 
-            Data = serviceControl.GetMessageData(this).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
+            var sb = new StringBuilder();
+            using (var writer = new JsonTextWriter(new StringWriter(sb))
+            {
+                Formatting = Formatting.Indented
+            })
+            {
+                Data = new List<SagaMessageDataItem>();
+
+                var pairs = serviceControl.GetMessageData(MessageId);
+                
+                writer.WriteStartObject();
+                foreach (var kvp in pairs)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    writer.WriteRawValue(kvp.Value);
+                    Data.Add(new SagaMessageDataItem{Key = kvp.Key, Value = kvp.Value});
+                }
+                writer.WriteEnd();
+            }
+
+            Viewer.DisplayTitle = MessageType;
+            Viewer.Data = sb.ToString();
         }
     }
 

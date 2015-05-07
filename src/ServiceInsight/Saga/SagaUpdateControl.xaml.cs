@@ -36,5 +36,11 @@
             var newEventArgs = new RoutedEventArgs(TimeoutClickEvent, e.Source);
             RaiseEvent(newEventArgs);
         }
+
+        void ExpandData_Click(object sender, RoutedEventArgs e)
+        {
+            var newEventArgs = new RoutedEventArgs(TimeoutClickEvent, e.Source);
+            RaiseEvent(newEventArgs);
+        }
     }
 }

@@ -27,14 +27,9 @@
             foldingStrategy.UpdateFoldings(foldingManager, document.Document);
         }
 
-        SagaUpdatedValue Model
-        {
-            get { return (SagaUpdatedValue)DataContext; }
-        }
-
         void OnCloseGlyphClicked(object sender, MouseButtonEventArgs e)
         {
-            Model.MessageContentVisible = false;
+            ((ContentViewer)DataContext).Visible = false;
         }
     }
 }
