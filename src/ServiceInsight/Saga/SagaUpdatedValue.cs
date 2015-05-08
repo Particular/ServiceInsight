@@ -23,9 +23,14 @@
             {
                 DisplayTitle = sagaName,
             };
-            ShowEntireContentCommand = this.CreateCommand(() =>
+            ShowEntireNewContentCommand = this.CreateCommand(() =>
             {
-                Viewer.Data = NewValue ?? OldValue;
+                Viewer.Data = NewValue;
+                Viewer.Visible = true;
+            });
+            ShowEntireOldContentCommand = this.CreateCommand(() =>
+            {
+                Viewer.Data = OldValue;
                 Viewer.Visible = true;
             });
         }
@@ -35,7 +40,8 @@
         public string OldValue { get; private set; }
         public ContentViewer Viewer { get; private set; }
 
-        public ICommand ShowEntireContentCommand { get; set; }
+        public ICommand ShowEntireNewContentCommand { get; set; }
+        public ICommand ShowEntireOldContentCommand { get; set; }
 
         public string Label
         {
