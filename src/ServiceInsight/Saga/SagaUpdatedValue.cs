@@ -6,9 +6,15 @@
 
     public class ContentViewer : PropertyChangedBase
     {
+        public ContentViewer()
+        {
+            SyntaxHighlighting = "JavaScript";
+        }
+
         public bool Visible { get; set; }
         public string DisplayTitle { get; set; }
         public string Data { get; set; }
+        public string SyntaxHighlighting { get; set; }
     }
 
     public class SagaUpdatedValue : PropertyChangedBase

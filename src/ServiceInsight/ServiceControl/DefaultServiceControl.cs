@@ -132,20 +132,11 @@
             return messages ?? new List<Endpoint>();
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
+        public Tuple<string, string> GetMessageData(SagaMessage message)
         {
             var request = new RestRequestWithCache(String.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
-            var body = Execute(request, response => response.Content);
-
-            if (body == null)
-            {
-                return Enumerable.Empty<KeyValuePair<string, string>>();
-            }
-
-            return body.StartsWith("<?xml") ?
-                GetXmlData(body) :
-                JsonPropertiesHelper.ProcessValues(body, CleanupBodyString);
+            return Execute(request, response => Tuple.Create(response.ContentType, CleanupBodyString(response.Content)));
         }
 
         public void LoadBody(StoredMessage message)

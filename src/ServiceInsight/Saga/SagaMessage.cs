@@ -2,16 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Windows.Input;
+    using System.Xml;
     using Caliburn.Micro;
-    using Framework;
-    using Models;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Particular.ServiceInsight.Desktop.ExtensionMethods;
-    using ServiceControl;
+    using Particular.ServiceInsight.Desktop.Framework;
+    using Particular.ServiceInsight.Desktop.Models;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Formatting = Newtonsoft.Json.Formatting;
 
     public class SagaMessageDataItem
     {
@@ -112,28 +113,93 @@
                 return;
             }
 
-            var sb = new StringBuilder();
-            using (var writer = new JsonTextWriter(new StringWriter(sb))
-            {
-                Formatting = Formatting.Indented
-            })
-            {
-                Data = new List<SagaMessageDataItem>();
+            Data = new List<SagaMessageDataItem>();
 
-                var pairs = serviceControl.GetMessageData(MessageId);
-                
-                writer.WriteStartObject();
-                foreach (var kvp in pairs)
-                {
-                    writer.WritePropertyName(kvp.Key);
-                    writer.WriteRawValue(kvp.Value);
-                    Data.Add(new SagaMessageDataItem{Key = kvp.Key, Value = kvp.Value});
-                }
-                writer.WriteEnd();
+            var tuple = serviceControl.GetMessageData(this);
+
+            if (tuple == null)
+            {
+                return;
             }
 
+            var messageData = tuple.Item2;
+            var messageBodyFormatted = String.Empty;
+            var parsable = true;
+            var isJsonFromXml = false;
+            if (tuple.Item1 == "text/xml" || tuple.Item1 == "application/xml")
+            {
+                try
+                {
+                    var doc = new XmlDocument();
+                    doc.LoadXml(tuple.Item2);
+                    messageBodyFormatted = doc.GetFormatted();
+                    messageData = JsonConvert.SerializeXmlNode(doc.DocumentElement, Formatting.Indented);
+                    isJsonFromXml = true;
+                }
+                catch (Exception)
+                {
+                    parsable = false;
+                }
+            }
+            else if (!(tuple.Item1 == "text/json" || tuple.Item1 == "application/json"))
+            {
+                parsable = false;
+            }
+            
+            if (parsable)
+            {
+                JObject jObject = null;
+                try
+                {
+                    jObject = JObject.Parse(messageData);
+                }
+                catch (JsonReaderException)
+                {
+                    //Ignore, we couldn't parse the json, something must be wrong with it
+                }
+
+                if (jObject != null && jObject.HasValues)
+                {
+                    if (isJsonFromXml)
+                    {
+                        var rootElement = (JProperty)jObject.First;
+
+                        if (rootElement.HasValues)
+                        {
+                            jObject = (JObject)rootElement.Value;
+                            PopulateData(jObject, true);
+                        }
+                    }
+                    else
+                    {
+                        messageBodyFormatted = jObject.GetFormatted();
+                        PopulateData(jObject);
+                    }
+                }
+            }
+
+            if (isJsonFromXml)
+            {
+                Viewer.SyntaxHighlighting = "XML";
+            }
             Viewer.DisplayTitle = MessageType;
-            Viewer.Data = sb.ToString();
+            Viewer.Data = messageBodyFormatted;
+        }
+
+        void PopulateData(JObject jObject, bool removeNamespaces = false)
+        {
+            foreach (var prop in jObject.Properties())
+            {
+                if (removeNamespaces && prop.Name.StartsWith("@xmlns"))
+                {
+                    continue;
+                }
+                Data.Add(new SagaMessageDataItem
+                {
+                    Key = prop.Name,
+                    Value = prop.Value.ToString()
+                });
+            }
         }
     }
 

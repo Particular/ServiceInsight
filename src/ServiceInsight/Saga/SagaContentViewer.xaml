@@ -8,7 +8,7 @@
              Width="800"
              Height="400"
              Background="#FF252526"
-             d:DataContext="{d:DesignInstance saga:SagaUpdatedValue}"
+             d:DataContext="{d:DesignInstance saga:ContentViewer}"
              d:DesignHeight="500"
              d:DesignWidth="900"
              mc:Ignorable="d">
@@ -85,7 +85,7 @@
                    FontFamily="{StaticResource CaptionFontFamily}"
                    FontSize="{StaticResource CaptionFontSize}"
                    Foreground="White"
-                   Text="{Binding SagaName}"
+                   Text="{Binding DisplayTitle}"
                    TextAlignment="Left" />
         <Image Grid.Row="0"
                Grid.Column="2"
@@ -104,8 +104,9 @@
                                  FontSize="{StaticResource MessageBodyFontSize}"
                                  IsReadOnly="True"
                                  SnapsToDevicePixels="True"
-                                 SyntaxHighlighting="JavaScript"
-                                 Text="{Binding EffectiveValue}"
+                                 SyntaxHighlighting="{Binding SyntaxHighlighting,
+                                                              Converter={StaticResource TextEditorHighlighterConverter}}"
+                                 Text="{Binding Data}"
                                  UseLayoutRounding="True">
             <controls:MvvmTextEditor.ContextMenu>
                 <ContextMenu>

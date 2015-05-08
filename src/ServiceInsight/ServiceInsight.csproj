@@ -509,6 +509,7 @@
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\TextEditorHighlighterConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
     <Page Include="Framework\ExceptionHandler.xaml">

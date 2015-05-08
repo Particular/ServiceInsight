@@ -174,7 +174,7 @@
                             MaxWidth="250"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <TextBlock MaxWidth="120px"
+                    <TextBlock MaxWidth="120"
                                FontWeight="Bold"
                                Foreground="{StaticResource SagaForeground}"
                                Text="{Binding Key}"
@@ -186,7 +186,7 @@
                     <TextBlock Foreground="{StaticResource SagaForeground}" Text=" = " />
                     <TextBlock Foreground="{StaticResource SagaForeground}"
                                Text="{Binding Value}"
-                               TextTrimming="WordEllipsis">
+                               TextTrimming="CharacterEllipsis">
                         <TextBlock.ToolTip>
                             <TextBlock Text="{Binding Value}" />
                         </TextBlock.ToolTip>
@@ -315,7 +315,7 @@
                 <Grid d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="220" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <SolidColorBrush x:Key="EndpointBackground" Color="White" />
@@ -359,7 +359,8 @@
                                        Text="Empty"
                                        Visibility="Collapsed" />
                             <Popup IsOpen="{Binding Viewer.Visible}"
-                                   Placement="Center"
+                                   Placement="Relative"
+                                   PlacementTarget="{Binding ElementName=ExpandData}"
                                    StaysOpen="True">
                                 <local:SagaContentViewer DataContext="{Binding Viewer}" />
                             </Popup>
