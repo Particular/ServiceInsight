@@ -6,27 +6,19 @@
 
     public static class XmlDocumentExtensions
     {
-         public static string GetFormatted(this XmlDocument document)
-         {
-             if (document.InnerXml.IsEmpty()) return string.Empty;
+        public static string GetFormatted(this XmlDocument document)
+        {
+            var sb = new StringBuilder();
+            using (var sw = new StringWriter(sb))
+            using (var xtw = XmlWriter.Create(sw, new XmlWriterSettings
+            {
+                Indent = true
+            }))
+            {
+                document.WriteTo(xtw);
+            }
 
-             var xd = new XmlDocument();
-             xd.LoadXml(document.InnerXml);
-
-             var sb = new StringBuilder();
-             var sw = new StringWriter(sb);
-             var xtw = new XmlTextWriter(sw) { Formatting = Formatting.Indented };
-
-             try
-             {
-                 xd.WriteTo(xtw);
-             }
-             finally
-             {
-                 xtw.Close();
-             }
-
-             return sb.ToString();
-         }
+            return sb.ToString();
+        }
     }
 }
