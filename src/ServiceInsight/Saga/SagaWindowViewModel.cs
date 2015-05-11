@@ -31,6 +31,11 @@
 
         public void OnShowMessageDataChanged()
         {
+            if (Data == null || Data.Changes == null)
+            {
+                return;
+            }
+
             RefreshShowData();
 
             if (ShowMessageData)
@@ -41,8 +46,6 @@
 
         void RefreshShowData()
         {
-            if (Data == null || Data.Changes == null) return;
-
             var messages = Data.Changes
                                .Select(c => c.InitiatingMessage)
                                .Union(Data.Changes.SelectMany(c => c.OutgoingMessages));
@@ -57,12 +60,7 @@
 
         void RefreshMessageProperties()
         {
-            RefreshMessageProperties(Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)));
-        }
-
-        void RefreshMessageProperties(IEnumerable<SagaMessage> messages)
-        {
-            foreach (var message in messages)
+            foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)))
             {
                 message.RefreshData(serviceControl);
             }
@@ -101,38 +99,48 @@
 
         void RefreshSaga(SagaInfo originatingSaga)
         {
-            eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-            if (Data == null || Data.SagaId != originatingSaga.SagaId)
+            try
             {
-                Data = serviceControl.GetSagaById(originatingSaga.SagaId);
+                eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-                if (Data != null)
+                if (Data == null || Data.SagaId != originatingSaga.SagaId)
                 {
-                    if (Data.SagaId == Guid.Empty)
+                    Data = serviceControl.GetSagaById(originatingSaga.SagaId);
+
+                    if (Data != null)
                     {
-                        ShowSagaNotFoundWarning = true;
-                        Data = null;
-                    }
-                    else if (Data.Changes != null)
-                    {
-                        ProcessDataValues(Data.Changes);
-                    }
-                    else
-                    {
-                        Data = null;
+                        if (Data.SagaId == Guid.Empty)
+                        {
+                            ShowSagaNotFoundWarning = true;
+                            Data = null;
+                        }
+                        else if (Data.Changes != null)
+                        {
+                            ProcessDataValues(Data.Changes);
+                        }
+                        else
+                        {
+                            Data = null;
+                        }
                     }
                 }
-            }
 
-            if (ShowMessageData)
+                if (Data == null || Data.Changes == null)
+                {
+                    return;
+                }
+
+                RefreshShowData();
+
+                if (ShowMessageData)
+                {
+                    RefreshMessageProperties();
+                }
+            }
+            finally
             {
-                RefreshMessageProperties();
+                eventAggregator.Publish(new WorkFinished());
             }
-
-            RefreshShowData();
-
-            eventAggregator.Publish(new WorkFinished());
         }
 
         static void ProcessDataValues(IEnumerable<SagaUpdate> list)
