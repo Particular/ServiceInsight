@@ -7,10 +7,16 @@
 
     public class Endpoint
     {
+        string host;
         public string Name { get; set; }
 
-        [DeserializeAs(Name = "host_display_name")]
-        public string Host { get; set; }
+        public string Host
+        {
+            get { return host ?? HostDisplayName; }
+            set { host = value; }
+        }
+
+        public string HostDisplayName { get; set; }
 
         public List<EndpointProperty> EndpointProperties { get; set; }
 
