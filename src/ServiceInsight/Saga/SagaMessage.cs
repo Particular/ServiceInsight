@@ -92,9 +92,12 @@
 
         internal void RefreshData(IServiceControl serviceControl)
         {
-            if (Data != null) return;
+            if (Data != null)
+            {
+                return;
+            }
 
-            Data = serviceControl.GetMessageData(MessageId).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
+            Data = serviceControl.GetMessageData(this).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
         }
     }
 

@@ -2,22 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Linq;
     using System.Net;
+    using System.Runtime.Caching;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Models;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.Models;
+    using Particular.ServiceInsight.Desktop.Saga;
+    using Particular.ServiceInsight.Desktop.Settings;
     using RestSharp;
     using RestSharp.Contrib;
     using RestSharp.Deserializers;
-    using Saga;
     using Serilog;
-    using Settings;
 
     public class DefaultServiceControl : IServiceControl
     {
@@ -32,6 +34,7 @@
         private const string SagaEndpoint = "sagas/{0}";
 
         ServiceControlConnectionProvider connection;
+        MemoryCache cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", "20" } });
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
 
@@ -52,15 +55,14 @@
 
         public string GetVersion()
         {
-            var request = new RestRequest();
+            var request = new RestRequestWithCache(RestRequestWithCache.CacheStyle.Immutable);
 
-            LogRequest(request);
-
-            var response = CreateClient().Execute(request);
-            var header = ProcessResponse(restResponse => restResponse.Headers.Single(x => x.Name == ServiceControlHeaders.ParticularVersion), response);
+            var header = Execute(request, restResponse => restResponse.Headers.Single(x => x.Name == ServiceControlHeaders.ParticularVersion));
 
             if (header == null)
+            {
                 return null;
+            }
 
             return header.Value.ToString();
         }
@@ -68,8 +70,8 @@
         public void RetryMessage(string messageId)
         {
             var url = string.Format(RetryEndpoint, messageId);
-            var request = new RestRequest(url, Method.POST);
-            Execute(request, HasSucceeded);
+            var request = new RestRequestWithCache(url, Method.POST);
+            Execute(request, _ => true);
         }
 
         public Uri CreateServiceInsightUri(StoredMessage message)
@@ -78,14 +80,9 @@
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public bool HasSagaChanged(Guid sagaId)
-        {
-            return HasChanged(CreateSagaRequest(sagaId));
-        }
-
         public SagaData GetSagaById(Guid sagaId)
         {
-            return GetModel<SagaData>(CreateSagaRequest(sagaId)) ?? new SagaData();
+            return GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
         }
 
         public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
@@ -120,7 +117,7 @@
 
         public IEnumerable<StoredMessage> GetConversationById(string conversationId)
         {
-            var request = new RestRequest(string.Format(ConversationEndpoint, conversationId));
+            var request = new RestRequestWithCache(String.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
             var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             return messages;
@@ -128,30 +125,38 @@
 
         public IEnumerable<Endpoint> GetEndpoints()
         {
-            var request = new RestRequest(EndpointsEndpoint);
+            var request = new RestRequestWithCache(EndpointsEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
             var messages = GetModel<List<Endpoint>>(request);
 
             return messages ?? new List<Endpoint>();
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId)
+        public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
         {
-            var request = new RestRequest(String.Format(MessageBodyEndpoint, messageId));
+            var request = new RestRequestWithCache(String.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
-            return Execute(request, response =>
-                response.Content.StartsWith("<?xml") ?
-                    GetXmlData(response.Content) :
-                    JsonPropertiesHelper.ProcessValues(response.Content, CleanupBodyString))
-                ?? Enumerable.Empty<KeyValuePair<string, string>>();
+            var body = Execute(request, response => response.Content);
+
+            if (body == null)
+            {
+                return Enumerable.Empty<KeyValuePair<string, string>>();
+            }
+
+            return body.StartsWith("<?xml") ?
+                GetXmlData(body) :
+                JsonPropertiesHelper.ProcessValues(body, CleanupBodyString);
         }
 
         public void LoadBody(StoredMessage message)
         {
-            var client = message.BodyUrl.StartsWith("http") ? CreateClient(message.BodyUrl) : CreateClient();
+            var request = new RestRequestWithCache(message.BodyUrl, message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
-            var request = new RestRequest(message.BodyUrl, Method.GET);
-
-            message.Body = Execute(client, request, response => response.Content);
+            var baseUrl = message.BodyUrl;
+            if (!baseUrl.StartsWith("http"))
+            {
+                baseUrl = null; // We use the default
+            }
+            message.Body = Execute(request, response => response.Content, baseUrl);
         }
 
         void AppendSystemMessages(IRestRequest request)
@@ -177,14 +182,9 @@
             request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
         }
 
-        IRestClient CreateClient()
+        IRestClient CreateClient(string baseUrl = null)
         {
-            return CreateClient(connection.Url);
-        }
-
-        IRestClient CreateClient(string url)
-        {
-            var client = new RestClient(url);
+            var client = new RestClient(baseUrl ?? connection.Url);
             var deserializer = new JsonMessageDeserializer();
             var xdeserializer = new XmlDeserializer();
             client.ClearHandlers();
@@ -202,96 +202,191 @@
             return client;
         }
 
-        static RestRequest CreateSagaRequest(Guid sagaId)
+        static RestRequestWithCache CreateMessagesRequest(string endpointName = null)
         {
-            return new RestRequest(string.Format(SagaEndpoint, sagaId));
+            return endpointName != null
+                ? new RestRequestWithCache(String.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
+                : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
         }
 
-        static RestRequest CreateMessagesRequest(string endpointName = null)
+        PagedResult<T> GetPagedResult<T>(RestRequestWithCache request) where T : class, new()
         {
-            return endpointName != null ? new RestRequest(string.Format(EndpointMessagesEndpoint, endpointName)) : new RestRequest(MessagesEndpoint);
-        }
-
-        bool HasChanged(IRestRequest request)
-        {
-            if (System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource))
-            {
-                var method = request.Method;
-                try
-                {
-                    request.Method = Method.HEAD;
-                    var response = CreateClient().Execute(request);
-
-                    var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
-                    if (etag == null) return true;
-                    return !System.Runtime.Caching.MemoryCache.Default.Any(c => c.Key == request.Resource &&
-                        string.Equals(((RestSharp.Parameter)c.Value).Value, etag.Value));
-                }
-                finally
-                {
-                    request.Method = method;
-                }
-            }
-
-            return true;
-        }
-
-        PagedResult<T> GetPagedResult<T>(IRestRequest request) where T : class, new()
-        {
-            LogRequest(request);
-
-            var response = CreateClient().Execute<List<T>>(request);
-
-            if (HasSucceeded(response))
-            {
-                LogResponse(response);
-                return new PagedResult<T>
+            var result = Execute<PagedResult<T>, List<T>>(request, response => new PagedResult<T>
                 {
                     Result = response.Data,
                     TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-                };
-            }
-            else
-            {
-                LogError(response);
-                return new PagedResult<T>();
-            }
+                });
+
+            return result;
         }
 
-        T GetModel<T>(IRestRequest request)
+        T GetModel<T>(RestRequestWithCache request)
             where T : class, new()
         {
-            return Execute<T>(request, response => { CacheResponse(response); return response.Data; });
+            return Execute<T, T>(request, response => response.Data);
         }
 
-        T Execute<T>(IRestRequest request, Func<IRestResponse, T> selector)
+        T Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
         {
-            return Execute(CreateClient(), request, selector);
-        }
+            var cacheStyle = request.CacheSyle;
+            var restClient = CreateClient(baseUrl);
 
-        T Execute<T>(IRestClient client, IRestRequest request, Func<IRestResponse, T> selector)
-        {
-            LogRequest(request);
-
-            var response = client.Execute(request);
-            return ProcessResponse(selector, response);
-        }
-
-        T Execute<T>(IRestRequest request, Func<IRestResponse<T>, T> selector)
-            where T : class, new()
-        {
-            LogRequest(request);
-
-            var response = CreateClient().Execute<T>(request);
-            return ProcessResponse(selector, response);
-        }
-
-        static void CacheResponse(IRestResponse response)
-        {
-            if (response.Request.Resource != null && response.Headers.Any(h => h.Name == "ETag"))
+            switch (cacheStyle)
             {
-                System.Runtime.Caching.MemoryCache.Default.Add(new System.Runtime.Caching.CacheItem(response.Request.Resource, response.Headers.FirstOrDefault(h => h.Name == "ETag")), new System.Runtime.Caching.CacheItemPolicy());
+                case RestRequestWithCache.CacheStyle.None:
+                    break;
+                case RestRequestWithCache.CacheStyle.Immutable:
+                    var item = cache.Get(CacheKey(restClient, request));
+
+                    if (item != null)
+                    {
+                        return (T) item;
+                    }
+
+                    break;
+                case RestRequestWithCache.CacheStyle.IfNotModified:
+                    var obj = cache.Get(CacheKey(restClient, request));
+
+                    if (obj != null)
+                    {
+                        var tuple = (Tuple<string, T>) obj;
+                        request.AddHeader("If-None-Match", tuple.Item1);
+                    }
+
+                    break;
             }
+
+            LogRequest(request);
+
+            var response = restClient.Execute(request);
+
+            var data = default(T);
+
+            switch (cacheStyle)
+            {
+                case RestRequestWithCache.CacheStyle.Immutable:
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        data = ProcessResponse(selector, response);
+                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                    }
+                    break;
+
+                case RestRequestWithCache.CacheStyle.IfNotModified:
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            data = ProcessResponse(selector, response);
+                            var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
+                            if (etag != null)
+                            {
+                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag, data), new CacheItemPolicy());
+                            }
+                            break;
+                        case HttpStatusCode.NotModified:
+                            LogResponse(response);
+
+                            var obj = cache.Get(CacheKey(restClient, request));
+
+                            if (obj != null)
+                            {
+                                var tuple = (Tuple<string, T>) obj;
+                                data = tuple.Item2;
+                            }
+                            break;
+                    }
+                    break;
+                default:
+                    data = ProcessResponse(selector, response);
+                    break;
+            }
+
+            return data;
+        }
+
+        T Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector)
+            where T : class, new()
+            where T2 : class, new()
+        {
+            var cacheStyle = request.CacheSyle;
+            var restClient = CreateClient();
+
+            switch (cacheStyle)
+            {
+                case RestRequestWithCache.CacheStyle.None:
+                    break;
+                case RestRequestWithCache.CacheStyle.Immutable:
+                    var item = cache.Get(CacheKey(restClient, request));
+
+                    if (item != null)
+                    {
+                        return (T)item;
+                    }
+
+                    break;
+                case RestRequestWithCache.CacheStyle.IfNotModified:
+                    var obj = cache.Get(CacheKey(restClient, request));
+
+                    if (obj != null)
+                    {
+                        var tuple = (Tuple<string, T>)obj;
+                        request.AddHeader("If-None-Match", tuple.Item1);
+                    }
+
+                    break;
+            }
+
+            LogRequest(request);
+
+            var response = restClient.Execute<T2>(request);
+
+            var data = default(T);
+
+            switch (cacheStyle)
+            {
+                case RestRequestWithCache.CacheStyle.Immutable:
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        data = ProcessResponse(selector, response);
+                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                    }
+                    break;
+
+                case RestRequestWithCache.CacheStyle.IfNotModified:
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            data = ProcessResponse(selector, response);
+                            var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
+                            if (etag != null)
+                            {
+                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag.Value.ToString(), data), new CacheItemPolicy());
+                            }
+                            break;
+                        case HttpStatusCode.NotModified:
+                            LogResponse(response);
+
+                            var obj = cache.Get(CacheKey(restClient, request));
+
+                            if (obj != null)
+                            {
+                                var tuple = (Tuple<string, T>)obj;
+                                data = tuple.Item2;
+                            }
+                            break;
+                    }
+                    break;
+                default:
+                    data = ProcessResponse(selector, response);
+                    break;
+            }
+
+            return data;
+        }
+
+        static string CacheKey(IRestClient restClient, IRestRequest request)
+        {
+            return restClient.BuildUri(request).AbsoluteUri;
         }
 
         T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)
@@ -301,25 +396,21 @@
                 LogResponse(response);
                 return selector(response);
             }
-            else
-            {
-                LogError(response);
-                return default(T);
-            }
+
+            LogError(response);
+            return default(T);
         }
 
-        T ProcessResponse<T>(Func<IRestResponse<T>, T> selector, IRestResponse<T> response)
+        T ProcessResponse<T, T2>(Func<IRestResponse<T2>, T> selector, IRestResponse<T2> response)
         {
             if (HasSucceeded(response))
             {
                 LogResponse(response);
                 return selector(response);
             }
-            else
-            {
-                LogError(response);
-                return default(T);
-            }
+
+            LogError(response);
+            return default(T);
         }
 
         IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
@@ -351,12 +442,12 @@
             return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
         }
 
-        void LogRequest(IRestRequest request)
+        void LogRequest(RestRequestWithCache request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
             var url = connection.Url != null ? connection.Url.TrimEnd('/') : string.Empty;
 
-            LogTo.Information("HTTP {Method} {url:l}/{resource:l}", request.Method, url, resource);
+            LogTo.Information("HTTP {Method} {url:l}/{resource:l} ({CacheSyle})", request.Method, url, resource, request.CacheSyle);
 
             foreach (var parameter in request.Parameters)
             {
@@ -395,6 +486,6 @@
             return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
-        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted };
+        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified };
     }
 }

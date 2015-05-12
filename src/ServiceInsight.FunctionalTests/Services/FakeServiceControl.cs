@@ -33,11 +33,6 @@
             return new Uri(string.Format("si://{0}/api{1}", Address, message.GetURIQuery()));
         }
 
-        public bool HasSagaChanged(Guid sagaId)
-        {
-            return true;
-        }
-
         public SagaData GetSagaById(Guid sagaId)
         {
             return new SagaData();
@@ -82,7 +77,7 @@
             return Get<List<Endpoint>>("GetEndpoints");
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId)
+        public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId)
         {
             return new List<KeyValuePair<string, string>>();
         }

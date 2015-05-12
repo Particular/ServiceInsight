@@ -15,8 +15,6 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
         Uri CreateServiceInsightUri(StoredMessage message);
 
-        bool HasSagaChanged(Guid sagaId);
-
         SagaData GetSagaById(Guid sagaId);
 
         PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false);
@@ -27,7 +25,7 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
         IEnumerable<Endpoint> GetEndpoints();
 
-        IEnumerable<KeyValuePair<string, string>> GetMessageData(Guid messageId);
+        IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId);
 
         void LoadBody(StoredMessage message);
     }

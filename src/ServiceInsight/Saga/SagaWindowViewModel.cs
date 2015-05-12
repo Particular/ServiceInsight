@@ -73,10 +73,10 @@
         public void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
-            RefreshSaga(message, a => true);
+            RefreshSaga(message);
         }
 
-        void RefreshSaga(StoredMessage message, Func<Guid, bool> HasChanged)
+        void RefreshSaga(StoredMessage message)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -91,10 +91,7 @@
 
                 if (originatingSaga != null)
                 {
-                    if (HasChanged(originatingSaga.SagaId))
-                    {
-                        RefreshSaga(originatingSaga);
-                    }
+                    RefreshSaga(originatingSaga);
                 }
             }
         }
@@ -184,7 +181,7 @@
 
         public void RefreshSaga()
         {
-            RefreshSaga(currentMessage, serviceControl.HasSagaChanged);
+            RefreshSaga(currentMessage);
         }
 
         public SagaMessage SelectedMessage
