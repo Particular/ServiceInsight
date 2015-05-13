@@ -484,7 +484,7 @@
 
                     <Style x:Key="TimeoutConnectionPathStyle" TargetType="Path">
                         <Setter Property="Stroke" Value="Black" />
-                        <Setter Property="StrokeThickness" Value="1.5" />
+                        <Setter Property="StrokeThickness" Value="1" />
                     </Style>
 
                     <Style x:Key="EventConnectionPathStyle" TargetType="Path">
