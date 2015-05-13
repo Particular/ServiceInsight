@@ -8,12 +8,21 @@
     // Properties without a DisplayNameAttribute aren't automatically added to the options dialog.
     public class ProfilerSettings : PropertyChangedBase
     {
-        int autoRefresh;
+        int autoRefresh, cacheSize;
 
         public ProfilerSettings()
         {
             RecentSearchEntries = new ObservableCollection<string>();
             RecentServiceControlEntries = new ObservableCollection<string>();
+        }
+
+        [DefaultValue(20)]
+        [DisplayName("In-Memory Cache Size")]
+        [Description("Sets the maximum size to use for caching data in-memory in MB")]
+        public int CacheSize
+        {
+            get { return Math.Max(5, cacheSize); }
+            set { cacheSize = value; }
         }
 
         [DefaultValue(15)]

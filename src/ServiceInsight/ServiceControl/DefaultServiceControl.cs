@@ -34,7 +34,7 @@
         private const string SagaEndpoint = "sagas/{0}";
 
         ServiceControlConnectionProvider connection;
-        MemoryCache cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", "20" } });
+        MemoryCache cache;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
 
@@ -46,6 +46,7 @@
             this.connection = connection;
             this.eventAggregator = eventAggregator;
             settings = settingsProvider.GetSettings<ProfilerSettings>();
+            cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", settings.CacheSize.ToString() } });
         }
 
         public bool IsAlive()
