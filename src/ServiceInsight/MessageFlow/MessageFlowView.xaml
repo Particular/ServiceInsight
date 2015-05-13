@@ -1,18 +1,20 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageFlow.MessageFlowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
-             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
-             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
-             xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
-             mc:Ignorable="d"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
+             xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
+             IsHitTestVisible="True"
              d:DataContext="{d:DesignInstance local:MessageFlowViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300" IsHitTestVisible="True">
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -39,19 +41,27 @@
                     <Style x:Key="FailedMessageMarker" TargetType="ContentControl">
                         <Setter Property="Margin" Value="10,5,5,5" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.Failed}" d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <DataTrigger Binding="{Binding Message.Status}"
+                                         d:DataContext="{d:DesignInstance local:MessageNode}"
+                                         Value="{x:Static models:MessageStatus.Failed}">
                                 <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
                                 <Setter Property="ToolTip" Value="Failed" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RepeatedFailure}" d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <DataTrigger Binding="{Binding Message.Status}"
+                                         d:DataContext="{d:DesignInstance local:MessageNode}"
+                                         Value="{x:Static models:MessageStatus.RepeatedFailure}">
                                 <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
                                 <Setter Property="ToolTip" Value="Repeated Failures" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.RetryIssued}" d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <DataTrigger Binding="{Binding Message.Status}"
+                                         d:DataContext="{d:DesignInstance local:MessageNode}"
+                                         Value="{x:Static models:MessageStatus.RetryIssued}">
                                 <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
                                 <Setter Property="ToolTip" Value="Retry Requested" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Message.Status}" Value="{x:Static models:MessageStatus.ArchivedFailure}" d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <DataTrigger Binding="{Binding Message.Status}"
+                                         d:DataContext="{d:DesignInstance local:MessageNode}"
+                                         Value="{x:Static models:MessageStatus.ArchivedFailure}">
                                 <Setter Property="Template" Value="{StaticResource msgArchiveIcon}" />
                                 <Setter Property="ToolTip" Value="Archived Failure" />
                             </DataTrigger>
@@ -86,24 +96,27 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                                    <StackPanel VerticalAlignment="Center" Orientation="Vertical" Background="Transparent"
+                                    <StackPanel VerticalAlignment="Center"
+                                                Background="Transparent"
+                                                Orientation="Vertical"
                                                 d:DataContext="{d:DesignInstance local:MessageNode}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Message.FriendlyMessageType}"
-                                                       ToolTip="{Binding Message.FriendlyMessageType}"
-                                                       MaxWidth="122"
+                                            <TextBlock MaxWidth="122"
                                                        FontSize="14px"
                                                        FontWeight="Bold"
-                                                       Style="{StaticResource MessageTypeText}" />
+                                                       Style="{StaticResource MessageTypeText}"
+                                                       Text="{Binding Message.FriendlyMessageType}"
+                                                       ToolTip="{Binding Message.FriendlyMessageType}" />
 
-                                            <Path Width="5" Height="5"
+                                            <Path x:Name="ChevronDown"
+                                                  Width="5"
+                                                  Height="5"
                                                   Margin="4,6,4,4"
-                                                  x:Name="ChevronDown"
-                                                  Stretch="Fill"
+                                                  Data="M 0 0 L 4 4 L 8 0 Z"
                                                   Fill="#FF000000"
-                                                  Data="M 0 0 L 4 4 L 8 0 Z" />
+                                                  Stretch="Fill" />
                                         </StackPanel>
-                                        <TextBlock Text="{Binding TimeSent}" Style="{StaticResource TimeSentText}" />
+                                        <TextBlock Style="{StaticResource TimeSentText}" Text="{Binding TimeSent}" />
                                     </StackPanel>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -121,7 +134,11 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ms:ConnectionRelocatorThumb">
-                                    <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="#800000FF" Stroke="Blue" StrokeThickness="3">
+                                    <Ellipse Width="{TemplateBinding Width}"
+                                             Height="{TemplateBinding Height}"
+                                             Fill="#800000FF"
+                                             Stroke="Blue"
+                                             StrokeThickness="3">
                                         <Ellipse.RenderTransform>
                                             <TranslateTransform X="-9" Y="-9" />
                                         </Ellipse.RenderTransform>
@@ -138,27 +155,65 @@
 
                     <ControlTemplate x:Key="ConnectionStyleTemplate" TargetType="{x:Type ms:DiagramConnectionElement}">
                         <Canvas>
-                            <!-- Path: -->
-                            <Path Name="SelectionHighlight" Data="{TemplateBinding PathGeometry}" Stroke="Gray" StrokeThickness="4" />
-                            <Path Data="{Binding Data, ElementName=SelectionHighlight}" Stroke="#00FFFFFF" StrokeThickness="4" />
-                            <Path Name="MainPath" Style="{TemplateBinding PathStyle}" Data="{Binding Data, ElementName=SelectionHighlight}" />
+                            <Path Name="SelectionHighlight"
+                                  Data="{TemplateBinding PathGeometry}"
+                                  Stroke="Gray"
+                                  StrokeThickness="4" />
+                            <Path Data="{Binding Data,
+                                                 ElementName=SelectionHighlight}"
+                                  Stroke="#00FFFFFF"
+                                  StrokeThickness="4" />
+                            <Path Name="MainPath"
+                                  Data="{Binding Data,
+                                                 ElementName=SelectionHighlight}"
+                                  Style="{TemplateBinding PathStyle}" />
 
-                            <!-- Middle arrow: -->
-                            <ContentControl VerticalAlignment="Top" HorizontalAlignment="Left" ContentTemplate="{TemplateBinding EndArrowTemplate}">
+                            <!--  Middle arrow:  -->
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Path Name="ArrowTip"
+                                      Fill="Black"
+                                      Stroke="Black"
+                                      StrokeThickness="1">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathGeometry.Figures>
+                                                <PathFigure IsClosed="True" IsFilled="True">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="-7,20" />
+                                                        <LineSegment Point="0,20" />
+                                                        <LineSegment Point="7,20" />
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry.Figures>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                </Path>
                                 <ContentControl.RenderTransform>
                                     <TransformGroup>
                                         <RotateTransform Angle="{Binding Connection.Segments, Converter={StaticResource EndArrowRotationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
                                         <TranslateTransform>
                                             <TranslateTransform.X>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="X" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Converter="{StaticResource StartSegmentConverter}"
+                                                             ConverterParameter="X"
+                                                             Path="Connection.Segments"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                                    <Binding Converter="{StaticResource EndSegmentConverter}"
+                                                             ConverterParameter="X"
+                                                             Path="Connection.Segments"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
                                                 </MultiBinding>
                                             </TranslateTransform.X>
                                             <TranslateTransform.Y>
                                                 <MultiBinding Converter="{StaticResource MiddlePointConverter}">
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource StartSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
-                                                    <Binding Path="Connection.Segments" Converter="{StaticResource EndSegmentConverter}" ConverterParameter="Y" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                    <Binding Converter="{StaticResource StartSegmentConverter}"
+                                                             ConverterParameter="Y"
+                                                             Path="Connection.Segments"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                                    <Binding Converter="{StaticResource EndSegmentConverter}"
+                                                             ConverterParameter="Y"
+                                                             Path="Connection.Segments"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
                                                 </MultiBinding>
                                             </TranslateTransform.Y>
                                         </TranslateTransform>
@@ -166,11 +221,22 @@
                                 </ContentControl.RenderTransform>
                             </ContentControl>
 
-                            <!-- Relocator thumbs and connection point thumb: -->
-                            <ms:ConnectionRelocatorThumb Name="toPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Finish" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                                         RenderTransform="{Binding ToConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <ms:ConnectionRelocatorThumb Name="fromPoint" Style="{StaticResource ConnectionPointRelocatorStyle}" MovingEnd="Start" ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                                         RenderTransform="{Binding FromConnectionPoint.Position, Converter={StaticResource PointToTranslationConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <!--  Relocator thumbs and connection point thumb:  -->
+                            <ms:ConnectionRelocatorThumb Name="toPoint"
+                                                         ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         MovingEnd="Finish"
+                                                         RenderTransform="{Binding ToConnectionPoint.Position,
+                                                                                   Converter={StaticResource PointToTranslationConverter},
+                                                                                   RelativeSource={RelativeSource TemplatedParent}}"
+                                                         Style="{StaticResource ConnectionPointRelocatorStyle}" />
+                            <ms:ConnectionRelocatorThumb Name="fromPoint"
+                                                         ConnectionElement="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                         MovingEnd="Start"
+                                                         RenderTransform="{Binding FromConnectionPoint.Position,
+                                                                                   Converter={StaticResource PointToTranslationConverter},
+                                                                                   RelativeSource={RelativeSource TemplatedParent}}"
+                                                         Style="{StaticResource ConnectionPointRelocatorStyle}" />
+                            <!--  Path:  -->
                         </Canvas>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="False">
@@ -189,6 +255,8 @@
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="MainPath" Property="Stroke" Value="#007AC5" />
+                                <Setter TargetName="ArrowTip" Property="Stroke" Value="#007AC5" />
+                                <Setter TargetName="ArrowTip" Property="Fill" Value="#007AC5" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -196,7 +264,9 @@
                     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
                         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsTimeout}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <DataTrigger Binding="{Binding IsTimeout}"
+                                         d:DataContext="{d:DesignInstance local:MessageNode}"
+                                         Value="True">
                                 <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
                                 <Setter Property="ToolTip" Value="Timeout" />
                             </DataTrigger>
@@ -226,10 +296,11 @@
                             <Setter.Value>
                                 <DataTemplate>
                                     <Border x:Name="MessageRectangle"
-                                            d:DataContext="{d:DesignInstance local:MessageNode}"
                                             Background="{StaticResource MessageBackground}"
                                             BorderBrush="Transparent"
-                                            BorderThickness="1" MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown">
+                                            BorderThickness="1"
+                                            MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
+                                            d:DataContext="{d:DesignInstance local:MessageNode}">
                                         <Grid x:Name="RootGrid">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -243,75 +314,103 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel x:Name="OriginatingEndPoint"
-                                                        ToolTip="Sending Endpoint"
-                                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
-                                                        Orientation="Horizontal"
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Grid.ColumnSpan="3"
+                                                        Height="14"
                                                         Background="{StaticResource EndpointBackground}"
-                                                        Height="14">
-                                                <ContentControl Template="{StaticResource SendingEndpoint}"
-                                                                Margin="3,0,3,0" />
+                                                        Orientation="Horizontal"
+                                                        ToolTip="Sending Endpoint"
+                                                        Visibility="{Binding ShowEndpoints,
+                                                                             Converter={StaticResource BoolToVisibilityConverter}}">
+                                                <ContentControl Margin="3,0,3,0" Template="{StaticResource SendingEndpoint}" />
                                                 <TextBlock FontSize="10px"
-                                                           Text="{Binding Message.SendingEndpoint}"
-                                                           Style="{StaticResource MessageEndpointText}" />
+                                                           Style="{StaticResource MessageEndpointText}"
+                                                           Text="{Binding Message.SendingEndpoint}" />
                                             </StackPanel>
 
-                                            <ContentControl Style="{StaticResource FailedMessageMarker}"
+                                            <controls:IconControl x:Name="MessageTypeIcon"
+                                                                  Grid.Row="1"
+                                                                  Grid.Column="0"
+                                                                  Width="24"
+                                                                  Height="24"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
+                                                                  Style="{StaticResource MessageIconStyle}" />
 
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Top"
-                                                            Grid.Row="1" Grid.Column="2">
-                                            </ContentControl>
-
-                                            <controls:IconControl x:Name="MessageTypeIcon" HorizontalAlignment="Center" VerticalAlignment="Center" Width="24" Height="24"
-                                                                  Style="{StaticResource MessageIconStyle}"
-                                                                  Grid.Column="0" Grid.Row="1" />
-
-                                            <StackPanel Grid.Column="1" Grid.Row="1">
-                                                <CheckBox x:Name="MenuContainer"  Style="{StaticResource MessageMenuIndicator}" />
+                                            <StackPanel Grid.Row="1" Grid.Column="1">
+                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
 
                                                 <local:MessagePopupControl x:Name="MenuPopup"
-                                                                           IsOpen="{Binding ElementName=MenuContainer, Path=IsChecked}"
-                                                                           RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter}, RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}}, Path=Zoom}"
-                                                                           DataContext="{Binding ElementName=RootGrid, Path=DataContext}"
-                                                                           PlacementTarget="{Binding ElementName=MenuContainer}"
-                                                                           Placement="Custom"
                                                                            HorizontalAlignment="Stretch"
                                                                            AllowsTransparency="True"
+                                                                           DataContext="{Binding ElementName=RootGrid,
+                                                                                                 Path=DataContext}"
+                                                                           IsOpen="{Binding ElementName=MenuContainer,
+                                                                                            Path=IsChecked}"
+                                                                           Placement="Custom"
+                                                                           PlacementTarget="{Binding ElementName=MenuContainer}"
+                                                                           RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter},
+                                                                                                     RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}},
+                                                                                                     Path=Zoom}"
                                                                            StaysOpen="False">
                                                     <local:MessageActionPopup />
                                                 </local:MessagePopupControl>
 
-                                                <Grid Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0 -5" cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
+                                                <Grid Margin="0 -5"
+                                                      Visibility="{Binding HasSaga,
+                                                                           Converter={StaticResource BoolToVisibilityConverter}}"
+                                                      cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto" />
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
-                                                    <ContentControl x:Name="SagaStatusIcon" Template="{StaticResource SagaInitiatedIcon}"
+                                                    <ContentControl x:Name="SagaStatusIcon"
                                                                     HorizontalAlignment="Center"
-                                                                    VerticalAlignment="Center" />
-                                                    <dxe:TextEdit Grid.Column="1" Background="#333333" Foreground="{StaticResource MessageBackground}" Text="{Binding SagaType}" FontSize="11px" FontWeight="Bold" Margin="2 0 0 0" Padding="3 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" EditMode="InplaceInactive" />
+                                                                    VerticalAlignment="Center"
+                                                                    Template="{StaticResource SagaInitiatedIcon}" />
+                                                    <dxe:TextEdit Grid.Column="1"
+                                                                  Margin="2 0 0 0"
+                                                                  Background="#333333"
+                                                                  EditMode="InplaceInactive"
+                                                                  FontSize="11px"
+                                                                  FontWeight="Bold"
+                                                                  Foreground="{StaticResource MessageBackground}"
+                                                                  Padding="3 0"
+                                                                  Text="{Binding SagaType}"
+                                                                  TextTrimming="CharacterEllipsis"
+                                                                  TextWrapping="NoWrap" />
                                                 </Grid>
                                             </StackPanel>
 
+                                            <ContentControl Grid.Row="1"
+                                                            Grid.Column="2"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Top"
+                                                            Style="{StaticResource FailedMessageMarker}" />
+
                                             <StackPanel x:Name="ReceivingEndPoint"
-                                                        ToolTip="Processing Endpoint"
-                                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
-                                                        Visibility="{Binding ShowEndpoints, Converter={StaticResource BoolToVisibilityConverter}}"
-                                                        Orientation="Horizontal"
+                                                        Grid.Row="2"
+                                                        Grid.Column="0"
+                                                        Grid.ColumnSpan="3"
+                                                        Height="14"
                                                         VerticalAlignment="Center"
                                                         Background="{StaticResource EndpointBackground}"
-                                                        Height="14">
-                                                <ContentControl Template="{StaticResource ReceivingEndpoint}"
-                                                                    Margin="3,0,3,0" />
+                                                        Orientation="Horizontal"
+                                                        ToolTip="Processing Endpoint"
+                                                        Visibility="{Binding ShowEndpoints,
+                                                                             Converter={StaticResource BoolToVisibilityConverter}}">
+                                                <ContentControl Margin="3,0,3,0" Template="{StaticResource ReceivingEndpoint}" />
                                                 <TextBlock FontSize="10px"
-                                                    Text="{Binding Message.ReceivingEndpoint}"
-                                                            Style="{StaticResource MessageEndpointText}" />
+                                                           Style="{StaticResource MessageEndpointText}"
+                                                           Text="{Binding Message.ReceivingEndpoint}" />
                                             </StackPanel>
                                         </Grid>
                                     </Border>
                                     <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding IsSagaInitiated}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <DataTrigger Binding="{Binding IsSagaInitiated}"
+                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
+                                                     Value="True">
                                             <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}" />
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
                                         </DataTrigger>
@@ -332,14 +431,18 @@
                                             <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Completed" />
                                         </MultiDataTrigger>
 
-                                        <DataTrigger Binding="{Binding HasFailed}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <DataTrigger Binding="{Binding HasFailed}"
+                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
+                                                     Value="True">
                                             <DataTrigger.Setters>
-                                                <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource FailedMessageBackground}" />
+                                                <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource FailedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding HasRetried}" Value="True" d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <DataTrigger Binding="{Binding HasRetried}"
+                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
+                                                     Value="True">
                                             <DataTrigger.Setters>
-                                                <Setter Property="Background" TargetName="MessageRectangle" Value="{StaticResource RetriedMessageBackground}" />
+                                                <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource RetriedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
                                         <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
@@ -402,11 +505,15 @@
                     </Style>
 
                     <DataTemplate x:Key="EndArrowTemplate">
-                        <ms:Arrowhead PathStyle="{StaticResource ArrowheadPathStyle}" Length="20" BackWidth="15" />
+                        <ms:Arrowhead BackWidth="15"
+                                      Length="20"
+                                      PathStyle="{StaticResource ArrowheadPathStyle}" />
                     </DataTemplate>
 
                     <DataTemplate x:Key="EventEndArrowTemplate">
-                        <ms:Arrowhead PathStyle="{StaticResource EventArrowheadPathStyle}" Length="20" BackWidth="15" />
+                        <ms:Arrowhead BackWidth="15"
+                                      Length="20"
+                                      PathStyle="{StaticResource EventArrowheadPathStyle}" />
                     </DataTemplate>
 
                     <ms:CorneredPathBuilder x:Key="PathBuilder" />
@@ -446,8 +553,8 @@
                     </ms:ShapeNodeStyleSelector>
 
                     <ms:DiagramFormatter x:Key="Formatter"
-                                         NodeStyleSelector="{StaticResource NodeStyleSelector}"
-                                         ConnectionStyleSelector="{StaticResource ConnectionStyleSelector}" />
+                                         ConnectionStyleSelector="{StaticResource ConnectionStyleSelector}"
+                                         NodeStyleSelector="{StaticResource NodeStyleSelector}" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -461,38 +568,50 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <RepeatButton Margin="2" x:Name="ZoomIn" Interval="10">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <RepeatButton x:Name="ZoomIn"
+                              Margin="2"
+                              Interval="10">
                     <ContentControl Template="{StaticResource ZoomInIcon}" />
                 </RepeatButton>
-                <RepeatButton Margin="2" x:Name="ZoomOut" Interval="10">
+                <RepeatButton x:Name="ZoomOut"
+                              Margin="2"
+                              Interval="10">
                     <ContentControl Template="{StaticResource ZoomOutIcon}" />
                 </RepeatButton>
                 <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/DiagramEndpointIcon.png" Margin="0,0,5,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Show Endpoints" VerticalAlignment="Center" />
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/DiagramEndpointIcon.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Show Endpoints" />
                     </StackPanel>
                 </ToggleButton>
-                <Button Margin="2" x:Name="ToggleTimelineData" Visibility="Collapsed">
+                <Button x:Name="ToggleTimelineData"
+                        Margin="2"
+                        Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/DiagramTimeView.png" Margin="0,0,5,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Toggle Timeline Stretch" VerticalAlignment="Center" />
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/DiagramTimeView.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Toggle Timeline Stretch" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </Border>
 
-        <ms:DiagramSurface x:Name="ds" Background="White"
+        <ms:DiagramSurface x:Name="ds"
                            Grid.Row="1"
-                           Diagram="{Binding Diagram}"
-                           IsReadOnly="True"
-                           ZoomMode="ControlMouseWheel"
+                           Background="White"
                            Cursor="ScrollAll"
+                           Diagram="{Binding Diagram}"
                            DragAction="Pan"
-                           SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
                            Formatter="{StaticResource Formatter}"
                            HorizontalSnapSpecifier="{ms:SnapToInterval 20}"
-                           VerticalSnapSpecifier="{ms:SnapToInterval 20}" />
+                           IsReadOnly="True"
+                           SelectedItem="{Binding SelectedMessage,
+                                                  Mode=TwoWay}"
+                           VerticalSnapSpecifier="{ms:SnapToInterval 20}"
+                           ZoomMode="ControlMouseWheel" />
     </Grid>
 </UserControl>
