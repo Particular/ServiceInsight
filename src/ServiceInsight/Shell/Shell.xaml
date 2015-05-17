@@ -104,7 +104,7 @@
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               CategoryName="View"
                               Content="Auto Refresh"
-                              Glyph="/Images/Refresh.png"
+                              Glyph="/Images/autoRefresh.png"
                               Hint="{Binding AutoRefreshTooltip}"
                               IsChecked="{Binding AutoRefresh,
                                                   Mode=TwoWay}"

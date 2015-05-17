@@ -656,6 +656,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\Clear.png" />
     <Resource Include="ServiceInsight-About.png" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -663,7 +664,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Images\AutoRefresh.png" />
     <Resource Include="Images\ConnectService.png" />
     <Resource Include="Images\TreeAuditFolder.png" />
     <Resource Include="Images\MessageReturn.png" />
@@ -690,7 +690,6 @@
     <Resource Include="Images\Delete-Small.png" />
     <Resource Include="Images\CommandIcon.png" />
     <Resource Include="Images\BlackArrowIcon.png" />
-    <Resource Include="Images\Clear.png" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\DiagramEndpointToIcon.png" />
     <Resource Include="Images\DiagramTimeView.png" />
@@ -713,9 +712,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ServiceInsight.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\About.png" />
@@ -768,6 +764,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SequenceDiagram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\autoRefresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\msgArchived_16x16x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
