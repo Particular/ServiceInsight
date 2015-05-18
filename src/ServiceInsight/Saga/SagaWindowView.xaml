@@ -37,9 +37,9 @@
                                                Foreground="{StaticResource SagaBlue}"
                                                Text="&#x2190; Back to Message View"
                                                cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
-                                    <Border Padding="0 5 0 5"
-                                            BorderBrush="{StaticResource SagaBlue}"
-                                            BorderThickness="0 0 0 2">
+                                    <Border BorderBrush="{StaticResource SagaBlue}"
+                                            BorderThickness="0 0 0 2"
+                                            Padding="0 5 0 5">
                                         <dxe:TextEdit EditMode="InplaceInactive"
                                                       FontSize="24"
                                                       FontWeight="Bold"
@@ -169,10 +169,10 @@
                         <StackPanel Margin="5,2,5,5"
                                     HorizontalAlignment="Center"
                                     Orientation="Horizontal">
-                            <TextBlock Padding="2"
-                                       Background="{x:Null}"
+                            <TextBlock Background="{x:Null}"
                                        FontFamily="Consolas"
                                        FontSize="16"
+                                       Padding="2"
                                        Style="{StaticResource CodeStyle}"
                                        Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit" />
                             <Button Margin="5,0,0,0"
@@ -186,10 +186,10 @@
                         <StackPanel Margin="5,2,5,5"
                                     HorizontalAlignment="Center"
                                     Orientation="Horizontal">
-                            <TextBlock Padding="2"
-                                       Background="{x:Null}"
+                            <TextBlock Background="{x:Null}"
                                        FontFamily="Consolas"
                                        FontSize="16"
+                                       Padding="2"
                                        Style="{StaticResource CodeStyle}"
                                        Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit" />
                             <Button Margin="5,0,0,0"
@@ -210,6 +210,13 @@
                           Style="{StaticResource ItemsControlVirtualisedStyle}"
                           Visibility="{Binding HasSaga,
                                                Converter={StaticResource BoolToVisibilityConverter}}">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" CanContentScroll="False">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
                 <ItemsControl.ItemsSource>
                     <MultiBinding Converter="{StaticResource CompositeCollectionConverter}">
                         <Binding Path="Header" />
