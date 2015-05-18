@@ -22,7 +22,9 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
             Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
             if (string.IsNullOrEmpty(Name))
+            {
                 Name = endpoint.Name;
+            }
             FullName = endpoint.Name;
             Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
             Host = endpoint.Host ?? "";
