@@ -270,7 +270,7 @@
         {
             var comparer = ComparerExtensions.ThenBy(Compare<Tuple<string, MessageStatus>>.OrderBy(t => t.Item1), t => t.Item2);
 
-            Func<StoredMessage, Tuple<string, MessageStatus>> selector = (StoredMessage m) => Tuple.Create(m.Id, m.Status);
+            Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
