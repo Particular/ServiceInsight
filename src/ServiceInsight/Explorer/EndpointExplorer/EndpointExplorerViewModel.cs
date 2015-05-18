@@ -164,21 +164,26 @@
 
         public void RefreshData()
         {
-            if (ServiceControlRoot == null) TryReconnectToServiceControl();
-            if (ServiceControlRoot == null) return; //TODO: DO we need to check twice? Root node should have been added at this stage.
-
-            var endpoints = serviceControl.GetEndpoints();
-            if (endpoints == null) return;
-
-            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
+            if (ServiceControlRoot == null)
             {
-                if (!ServiceControlRoot.EndpointExists(endpoint))
-                {
-                    ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
-                }
+                TryReconnectToServiceControl();
+            }
+            if (ServiceControlRoot == null)
+            {
+                return;
             }
 
-            //TODO: Remove non-existing endpoints efficiently
+            var endpoints = serviceControl.GetEndpoints();
+            if (endpoints == null)
+            {
+                return;
+            }
+
+            ServiceControlRoot.Children.Clear();
+            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
+            {
+                ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+            }
         }
 
         void TryReconnectToServiceControl()
