@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:messageHeaders="clr-namespace:Particular.ServiceInsight.Desktop.MessageHeaders"
              d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersViewModel}"
@@ -11,49 +10,88 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="ColumnHeaderTemplate">
-            <TextBlock FontWeight="Bold" Text="{Binding}" />
-        </DataTemplate>
+        <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="#D6D6D6"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#D6D6D6"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#D6D6D6"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}"/>
+        </Style>
+        <Style TargetType="{x:Type Thumb}" x:Key="ThumbStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Rectangle Width="7" Stroke="Transparent" Cursor="SizeWE"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="BackgroundBorder" BorderThickness="0,0,1,1"
+                                Background="White"
+                                BorderBrush="#D6D6D6"
+                                Grid.ColumnSpan="2" />
+                            <ContentPresenter Grid.Column="0" Margin="6,3,6,3" VerticalAlignment="Center"/>
+                            <Path x:Name="SortArrow" Visibility="Collapsed" Data="M 0,0 L 1,0 0.5,1 z" Stretch="Fill"
+                             Grid.Column="1" Width="8" Height="6" Fill="#666666" Margin="0,0,8,0"
+                              VerticalAlignment="Center" RenderTransformOrigin="0.5, 0.4"/>
+                            <Thumb Grid.Column="0" x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ThumbStyle}"/>
+                            <Thumb x:Name="PART_RightHeaderGripper" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource ThumbStyle}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#F0F0F0"/>
+                            </Trigger>
+                            <Trigger Property="SortDirection" Value="Ascending">
+                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="SortArrow" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="180"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="SortDirection" Value="Descending">
+                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="DisplayIndex" Value="0">
+                                <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="Background" Value="White"/>-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F0F0F0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <dxb:BarManager>
-        <dxb:BarManager.Items>
-            <dxb:BarButtonItem Name="copyToClipboard"
-                               Content="Copy To Clipboard"
-                               ItemClick="CopyToClipboard_OnItemClick" Glyph="/Images/Copy.png" />
-        </dxb:BarManager.Items>
-        <Grid>
-            <dxg:GridControl x:Name="HeadersGrid" ItemsSource="{Binding KeyValues}">
-                <dxb:BarManager.DXContextMenu>
-                    <dxb:PopupMenu>
-                        <dxb:PopupMenu.ItemLinks>
-                            <dxb:BarButtonItemLink BarItemName="copyToClipboard" />
-                        </dxb:PopupMenu.ItemLinks>
-                    </dxb:PopupMenu>
-                </dxb:BarManager.DXContextMenu>
-
-                <dxg:GridControl.Columns>
-                    <dxg:GridColumn x:Name="KeyColumn"
-                                    AllowBestFit="True"
-                                    BestFitMode="AllRows"
-                                    FieldName="Key"
-                                    HeaderTemplate="{StaticResource ColumnHeaderTemplate}"
-                                    SortOrder="Ascending" />
-                    <dxg:GridColumn FieldName="Value" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
-                </dxg:GridControl.Columns>
-                <dxg:GridControl.View>
-                    <dxg:TableView x:Name="gridView"
-                                   AllowCascadeUpdate="True"
-                                   AllowEditing="False"
-                                   AllowPerPixelScrolling="True"
-                                   AutoWidth="True"
-                                   FadeSelectionOnLostFocus="False"
-                                   IsColumnMenuEnabled="False"
-                                   MultiSelectMode="Row"
-                                   NavigationStyle="Row"
-                                   ShowGroupPanel="False"
-                                   ShowIndicator="False" />
-                </dxg:GridControl.View>
-            </dxg:GridControl>
-        </Grid>
-    </dxb:BarManager>
+    <Grid>
+        <DataGrid Name="gridView" VerticalScrollBarVisibility="Visible" HeadersVisibility="Column" ScrollViewer.CanContentScroll="False" EnableRowVirtualization="False" Style="{StaticResource DataGridStyle}" ItemsSource="{Binding KeyValues}" IsReadOnly="True" AutoGenerateColumns="False" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Key"  Binding="{Binding Key}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy to Clipboard" Command="{Binding CopyCommand}" >
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="/Images/Copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+    </Grid>
 </UserControl>
