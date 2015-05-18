@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.ToolTip>
-                    <ToolTip Visibility="{Binding Endpoint.Host, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                    <ToolTip Visibility="{Binding Endpoint.Host, FallbackValue=Collapsed, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                         <TextBlock>
                             <Run Text="Installed On: " />
                             <Run Text="{Binding Endpoint.Host}" />
