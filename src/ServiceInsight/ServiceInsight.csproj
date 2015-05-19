@@ -48,6 +48,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
+    <EmbeddedResource Include="Saga\Resources\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="Saga\Resources\XML-Mode.xshd" />
     <Reference Include="Anotar.Serilog">
       <HintPath>..\packages\Anotar.Serilog.Fody.2.16.0.1\Lib\Anotar.Serilog.dll</HintPath>
       <Private>False</Private>
