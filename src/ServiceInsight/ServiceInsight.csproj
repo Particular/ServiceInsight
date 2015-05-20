@@ -222,6 +222,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\MvvmTextEditor.cs" />
+    <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />

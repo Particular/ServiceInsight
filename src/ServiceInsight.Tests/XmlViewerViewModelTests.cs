@@ -1,13 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Tests
 {
-    using System.Xml;
     using Caliburn.Micro;
     using Desktop.MessageViewers.XmlViewer;
     using Desktop.Models;
     using NSubstitute;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Shouldly;
 
     [TestFixture]
