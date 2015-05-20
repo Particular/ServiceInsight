@@ -5,6 +5,7 @@
     using System.Windows.Media;
     using System.Windows.Shapes;
 
+
     [TemplatePart(Name = "PART_Path", Type = typeof(Path))]
     public class IconControl : Control
     {

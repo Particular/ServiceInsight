@@ -1,28 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
-    using System.Text;
-    using System.Xml;
     using Caliburn.Micro;
-    using ExtensionMethods;
-    using Framework;
-    using Models;
     using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.Models;
 
     public class XmlMessageViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-        readonly IClipboard clipboard;
-        IContentDecoder<XmlDocument> xmlDecoder;
         IXmlMessageView messageView;
-
-        public XmlMessageViewModel(
-            IContentDecoder<XmlDocument> xmlDecoder,
-            IClipboard clipboard)
-        {
-            this.clipboard = clipboard;
-            this.xmlDecoder = xmlDecoder;
-        }
 
         protected override void OnActivate()
         {
@@ -44,21 +29,13 @@
             if (messageView == null) return;
 
             messageView.Clear();
-            ShowMessageBody();
-        }
 
-        public bool CanCopyMessageXml()
-        {
-            return SelectedMessage != null;
-        }
-
-        public void CopyMessageXml()
-        {
-            var content = GetMessageBody();
-            if (!content.IsEmpty())
+            if (SelectedMessage == null || SelectedMessage.Body == null)
             {
-                clipboard.CopyTo(content);
+                return;
             }
+
+            messageView.Display(SelectedMessage.Body);
         }
 
         public void Handle(SelectedMessageChanged @event)
@@ -71,21 +48,6 @@
             {
                 SelectedMessage = @event.Message;
             }
-        }
-
-        void ShowMessageBody()
-        {
-            if (SelectedMessage == null) return;
-            messageView.Display(GetMessageBody());
-        }
-
-        string GetMessageBody()
-        {
-            if (SelectedMessage == null || SelectedMessage.Body == null) return string.Empty;
-
-            var bytes = Encoding.Default.GetBytes(SelectedMessage.Body);
-            var xml = xmlDecoder.Decode(bytes);
-            return xml.IsParsed ? xml.Value.GetFormatted() : string.Empty;
         }
     }
 }

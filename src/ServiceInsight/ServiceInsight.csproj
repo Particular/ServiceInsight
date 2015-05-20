@@ -126,6 +126,10 @@
     <Reference Include="Humanizer">
       <HintPath>..\packages\Humanizer.1.34.0\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mindscape.Raygun4Net">
       <HintPath>..\packages\Mindscape.Raygun4Net.5.0.0\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
@@ -217,7 +221,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CodeParser\CodeTextBox.cs" />
+    <Compile Include="Controls\MvvmTextEditor.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />
@@ -249,6 +253,7 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\EndpointInfo.cs" />
@@ -272,14 +277,6 @@
     <Compile Include="Particular.Licensing\TrialStartDateStore.cs" />
     <Compile Include="Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="Particular.Licensing\UserSidChecker.cs" />
-    <Compile Include="CodeParser\BaseParser.cs" />
-    <Compile Include="CodeParser\CodeBlockPresenter.cs" />
-    <Compile Include="CodeParser\CodeLanguage.cs" />
-    <Compile Include="CodeParser\CodeLexem.cs" />
-    <Compile Include="CodeParser\JsonParser.cs" />
-    <Compile Include="CodeParser\LexemType.cs" />
-    <Compile Include="CodeParser\SourcePart.cs" />
-    <Compile Include="CodeParser\XmlParser.cs" />
     <Compile Include="Framework\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Framework\Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Framework\Events\RetryMessage.cs" />
