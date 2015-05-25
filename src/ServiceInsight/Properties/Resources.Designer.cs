@@ -153,16 +153,6 @@ namespace ServiceInsight.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MessageReturn {
-            get {
-                object obj = ResourceManager.GetObject("MessageReturn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap ParticularBanner {
             get {
                 object obj = ResourceManager.GetObject("ParticularBanner", resourceCulture);

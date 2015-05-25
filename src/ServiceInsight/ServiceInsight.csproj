@@ -665,7 +665,6 @@
     </EmbeddedResource>
     <Resource Include="Images\ConnectService.png" />
     <Resource Include="Images\TreeAuditFolder.png" />
-    <Resource Include="Images\MessageReturn.png" />
     <Resource Include="Images\SearchRefresh.png" />
     <Resource Include="Images\SearchSeparator.png" />
     <Resource Include="Images\Bullet-Green.png" />
@@ -769,6 +768,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\msgArchived_16x16x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\retryMsg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">

@@ -16,7 +16,7 @@
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
                                Content="Retry Message"
-                               Glyph="pack://application:,,,/Images/MessageReturn.png"
+                               Glyph="pack://application:,,,/Images/retryMsg.png"
                                IsVisible="{Binding IsEnabled,
                                                    RelativeSource={RelativeSource Self}}"
                                CommandParameter="{Binding FocusedRow}"
