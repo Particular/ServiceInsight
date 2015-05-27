@@ -1,40 +1,72 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    using System;
-    using System.Windows.Input;
+    using System.Collections.Generic;
+    using System.Windows;
     using System.Windows.Media;
+    using System.Xml;
     using ICSharpCode.AvalonEdit.Folding;
+    using ICSharpCode.AvalonEdit.Highlighting;
     using Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer;
 
     public partial class SagaContentViewer
     {
         FoldingManager foldingManager;
-        BraceFoldingStrategy foldingStrategy;
 
         public SagaContentViewer()
         {
+            RegisterDarkThemeHighlighters();
+
             InitializeComponent();
 
-            foldingManager = FoldingManager.Install(document.TextArea);
-            foldingStrategy = new BraceFoldingStrategy();
             SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display);
+            foldingManager = FoldingManager.Install(document.TextArea);
             document.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
-            document.TextChanged += DocumentOnTextChanged;
+            document.Options.EnableHyperlinks = false;
+            document.Options.EnableEmailHyperlinks = false;
+
+            Loaded += OnLoaded;
         }
 
-        void DocumentOnTextChanged(object sender, EventArgs eventArgs)
+        static void RegisterDarkThemeHighlighters()
         {
-            foldingStrategy.UpdateFoldings(foldingManager, document.Document);
+            var highlighters = new List<string[]> { new[] { "JavaScript-Mode.xshd", "JavaScript", ".js" }, new[] { "XML-Mode.xshd", "XML", "xml" } };
+
+            foreach (var highlighter in highlighters)
+            {
+                using (var stream = typeof(SagaContentViewer).Assembly.GetManifestResourceStream("ServiceInsight.Saga.Resources." + highlighter[0]))
+                {
+                    using (XmlReader reader = new XmlTextReader(stream))
+                    {
+                        var customHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+
+                        HighlightingManager.Instance.RegisterHighlighting(highlighter[1], new[]
+                        {
+                            highlighter[2]
+                        }, customHighlighting);
+                    }
+                }
+            }
         }
 
-        SagaUpdatedValue Model
+        void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            get { return (SagaUpdatedValue)DataContext; }
+            var syntaxHighlighting = ((ContentViewer) DataContext).SyntaxHighlighting;
+
+            if (syntaxHighlighting == "XML")
+            {
+                var foldingStrategy = new XmlFoldingStrategy();
+                foldingStrategy.UpdateFoldings(foldingManager, document.Document);
+            }
+            else
+            {
+                var foldingStrategy = new BraceFoldingStrategy();
+                foldingStrategy.UpdateFoldings(foldingManager, document.Document);
+            }
         }
 
-        void OnCloseGlyphClicked(object sender, MouseButtonEventArgs e)
+        void OnCloseGlyphClicked(object sender, RoutedEventArgs routedEventArgs)
         {
-            Model.MessageContentVisible = false;
+            ((ContentViewer)DataContext).Visible = false;
         }
     }
 }

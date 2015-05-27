@@ -5,23 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:saga="clr-namespace:Particular.ServiceInsight.Desktop.Saga"
+             xmlns:folding="clr-namespace:ICSharpCode.AvalonEdit.Folding;assembly=ICSharpCode.AvalonEdit"
              Width="800"
              Height="400"
              Background="#FF252526"
-             d:DataContext="{d:DesignInstance saga:SagaUpdatedValue}"
+             d:DataContext="{d:DesignInstance saga:ContentViewer}"
              d:DesignHeight="500"
              d:DesignWidth="900"
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+            <SolidColorBrush x:Key="DarkBackground" Color="#FF252526" />
+            <Style TargetType="{x:Type controls:MvvmTextEditor}">
+                <Setter Property="Background" Value="#FF252526" />
+                <Setter Property="Foreground" Value="#C8C8C8" />
+            </Style>
+            <Style TargetType="{x:Type folding:FoldingMargin}">
+                <Setter Property="FoldingMarkerBrush" Value="#A5A5A5" />
+                <Setter Property="FoldingMarkerBackgroundBrush" Value="{StaticResource DarkBackground}" />
+                <Setter Property="SelectedFoldingMarkerBrush" Value="#E6E6E6" />
+                <Setter Property="SelectedFoldingMarkerBackgroundBrush" Value="{StaticResource DarkBackground}" />
+            </Style>
+            
             <!--  Background  -->
             <GeometryDrawing x:Key="BackgroundBrush"
-                             Brush="#FF252526"
+                             Brush="{StaticResource DarkBackground}"
                              Geometry="F1 M 1518.92,121.53L 288.999,121.53L 288.999,812.536L 1518.92,812.536L 1518.92,121.53 Z " />
             <!--  End of Background  -->
 
@@ -85,7 +98,7 @@
                    FontFamily="{StaticResource CaptionFontFamily}"
                    FontSize="{StaticResource CaptionFontSize}"
                    Foreground="White"
-                   Text="{Binding SagaName}"
+                   Text="{Binding DisplayTitle}"
                    TextAlignment="Left" />
         <Image Grid.Row="0"
                Grid.Column="2"
@@ -104,8 +117,9 @@
                                  FontSize="{StaticResource MessageBodyFontSize}"
                                  IsReadOnly="True"
                                  SnapsToDevicePixels="True"
-                                 SyntaxHighlighting="JavaScript"
-                                 Text="{Binding EffectiveValue}"
+                                 SyntaxHighlighting="{Binding SyntaxHighlighting,
+                                                              Converter={StaticResource TextEditorHighlighterConverter}}"
+                                 Text="{Binding Data}"
                                  UseLayoutRounding="True">
             <controls:MvvmTextEditor.ContextMenu>
                 <ContextMenu>

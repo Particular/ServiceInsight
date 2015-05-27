@@ -4,36 +4,50 @@
     using Caliburn.Micro;
     using ExtensionMethods;
 
+    public class ContentViewer : PropertyChangedBase
+    {
+        public ContentViewer()
+        {
+            SyntaxHighlighting = "JavaScript";
+        }
+
+        public bool Visible { get; set; }
+        public string DisplayTitle { get; set; }
+        public string Data { get; set; }
+        public string SyntaxHighlighting { get; set; }
+    }
+
     public class SagaUpdatedValue : PropertyChangedBase
     {
-        public const byte MaxValueLength = 30;
+        const byte MaxValueLength = 30;
 
         public SagaUpdatedValue(string sagaName, string propertyName, string propertyValue)
         {
-            SagaName = sagaName;
             Name = propertyName;
             NewValue = propertyValue;
-            ShowEntireContentCommand = this.CreateCommand(ShowEntireContent);
+            Viewer = new ContentViewer
+            {
+                DisplayTitle = sagaName,
+            };
+            ShowEntireNewContentCommand = this.CreateCommand(() =>
+            {
+                Viewer.Data = NewValue;
+                Viewer.Visible = true;
+            });
+            ShowEntireOldContentCommand = this.CreateCommand(() =>
+            {
+                Viewer.Data = OldValue;
+                Viewer.Visible = true;
+            });
         }
 
-        public string SagaName { get; private set; }
         public string Name { get; private set; }
         public string NewValue { get; private set; }
         public string OldValue { get; private set; }
+        public ContentViewer Viewer { get; private set; }
 
-        public string EffectiveValue
-        {
-            get { return NewValue ?? OldValue; }
-        }
-
-        public ICommand ShowEntireContentCommand { get; set; }
-
-        private void ShowEntireContent()
-        {
-            MessageContentVisible = true;
-        }
-
-        public bool MessageContentVisible { get; set; }
+        public ICommand ShowEntireNewContentCommand { get; set; }
+        public ICommand ShowEntireOldContentCommand { get; set; }
 
         public string Label
         {

@@ -25,7 +25,7 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
         IEnumerable<Endpoint> GetEndpoints();
 
-        IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId);
+        Tuple<string, string> GetMessageData(SagaMessage sagaMessage);
 
         void LoadBody(StoredMessage message);
     }

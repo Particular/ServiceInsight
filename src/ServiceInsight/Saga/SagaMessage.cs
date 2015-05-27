@@ -3,10 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
+    using System.Xml;
     using Caliburn.Micro;
-    using Framework;
-    using Models;
-    using ServiceControl;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.Framework;
+    using Particular.ServiceInsight.Desktop.Models;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Formatting = Newtonsoft.Json.Formatting;
 
     public class SagaMessageDataItem
     {
@@ -16,6 +22,16 @@
 
     public class SagaMessage : PropertyChangedBase
     {
+        public SagaMessage()
+        {
+          Viewer = new ContentViewer();
+          ShowEntireContentCommand = this.CreateCommand(()=> { Viewer.Visible = true; });
+        }
+
+        public ICommand ShowEntireContentCommand { get; set; }
+
+        public ContentViewer Viewer { get; private set; }
+
         public Guid MessageId { get; set; }
 
         public bool IsPublished { get; set; }
@@ -84,11 +100,11 @@
 
         public bool ShowData
         {
-            get { return showData && Data != null && Data.Any(); }
+            get { return showData && Data != null && Data.Count > 0; }
             set { showData = value; }
         }
 
-        public IEnumerable<SagaMessageDataItem> Data { get; private set; }
+        public IList<SagaMessageDataItem> Data { get; private set; }
 
         internal void RefreshData(IServiceControl serviceControl)
         {
@@ -97,7 +113,93 @@
                 return;
             }
 
-            Data = serviceControl.GetMessageData(this).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
+            Data = new List<SagaMessageDataItem>();
+
+            var tuple = serviceControl.GetMessageData(this);
+
+            if (tuple == null)
+            {
+                return;
+            }
+
+            var messageData = tuple.Item2;
+            var messageBodyFormatted = String.Empty;
+            var parsable = true;
+            var isJsonFromXml = false;
+            if (tuple.Item1 == "text/xml" || tuple.Item1 == "application/xml")
+            {
+                try
+                {
+                    var doc = new XmlDocument();
+                    doc.LoadXml(tuple.Item2);
+                    messageBodyFormatted = doc.GetFormatted();
+                    messageData = JsonConvert.SerializeXmlNode(doc.DocumentElement, Formatting.Indented);
+                    isJsonFromXml = true;
+                }
+                catch (Exception)
+                {
+                    parsable = false;
+                }
+            }
+            else if (!(tuple.Item1 == "text/json" || tuple.Item1 == "application/json"))
+            {
+                parsable = false;
+            }
+            
+            if (parsable)
+            {
+                JObject jObject = null;
+                try
+                {
+                    jObject = JObject.Parse(messageData);
+                }
+                catch (JsonReaderException)
+                {
+                    //Ignore, we couldn't parse the json, something must be wrong with it
+                }
+
+                if (jObject != null && jObject.HasValues)
+                {
+                    if (isJsonFromXml)
+                    {
+                        var rootElement = (JProperty)jObject.First;
+
+                        if (rootElement.HasValues)
+                        {
+                            jObject = (JObject)rootElement.Value;
+                            PopulateData(jObject, true);
+                        }
+                    }
+                    else
+                    {
+                        messageBodyFormatted = jObject.GetFormatted();
+                        PopulateData(jObject);
+                    }
+                }
+            }
+
+            if (isJsonFromXml)
+            {
+                Viewer.SyntaxHighlighting = "XML";
+            }
+            Viewer.DisplayTitle = MessageType;
+            Viewer.Data = messageBodyFormatted;
+        }
+
+        void PopulateData(JObject jObject, bool removeNamespaces = false)
+        {
+            foreach (var prop in jObject.Properties())
+            {
+                if (removeNamespaces && prop.Name.StartsWith("@xmlns"))
+                {
+                    continue;
+                }
+                Data.Add(new SagaMessageDataItem
+                {
+                    Key = prop.Name,
+                    Value = prop.Value.ToString()
+                });
+            }
         }
     }
 

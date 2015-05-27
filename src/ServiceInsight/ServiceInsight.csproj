@@ -48,6 +48,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
+    <EmbeddedResource Include="Saga\Resources\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="Saga\Resources\XML-Mode.xshd" />
     <Reference Include="Anotar.Serilog">
       <HintPath>..\packages\Anotar.Serilog.Fody.2.16.0.1\Lib\Anotar.Serilog.dll</HintPath>
       <Private>False</Private>
@@ -509,6 +511,7 @@
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\TextEditorHighlighterConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
     <Page Include="Framework\ExceptionHandler.xaml">

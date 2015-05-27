@@ -51,7 +51,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         protected override object Convert(MessageInfo message, EndpointInfo endpoint)
         {
-            return message.EndpointMessageLineIsPublished(endpoint) ? new DoubleCollection(new [] { 1.5 }) : new DoubleCollection();
+            return message.EndpointMessageLineIsPublished(endpoint) ? new DoubleCollection(new[] { 1.5 }) : new DoubleCollection();
         }
     }
 }

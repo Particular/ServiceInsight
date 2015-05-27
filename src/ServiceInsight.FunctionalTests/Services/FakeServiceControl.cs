@@ -77,9 +77,9 @@
             return Get<List<Endpoint>>("GetEndpoints");
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId)
+        public Tuple<string, string> GetMessageData(SagaMessage message)
         {
-            return new List<KeyValuePair<string, string>>();
+            return null;
         }
 
         public void LoadBody(StoredMessage message)
