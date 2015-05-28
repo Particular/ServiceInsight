@@ -4,13 +4,13 @@ namespace Particular.ServiceInsight.Desktop.ValueConverters
     using System.Windows;
     using System.Windows.Data;
 
-    public class TimeSpanHumanizedConverter : IValueConverter
+    public class ByteToHexConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is TimeSpan)
+            if (value is byte)
             {
-                return ((TimeSpan)value).SubmillisecondHumanize();
+                return string.Format((byte)value < 0x10 ? "0{0:X000} " : "{0:X000} ", value);
             }
             return DependencyProperty.UnsetValue;
         }

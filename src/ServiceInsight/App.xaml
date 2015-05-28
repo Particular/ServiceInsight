@@ -29,9 +29,7 @@
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
-                    <cnv:ByteToHexConverter x:Key="ByteToHexConverter" />
-                    <cnv:ByteToCharConverter x:Key="ByteToCharConverter" />
-
+                    
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
                     <SolidColorBrush x:Key="WarningBrush" Color="#FFE52620" />
