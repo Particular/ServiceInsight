@@ -8,7 +8,7 @@
 
     public class HexContentViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        public List<Tuple<int,byte[]>> Data { get; set; }
+        public List<HexContentLine> Data { get; set; }
 
         protected override void OnActivate()
         {
@@ -27,22 +27,10 @@
 
             var lines = (int)Math.Ceiling(body.Length / 16.0);
 
-            var temp = new List<Tuple<int,byte[]>>(lines);
-            int startIdx = 0;
+            var temp = new List<HexContentLine>(lines);
             for (var i = 0; i < lines; i++)
             {
-                var r = new byte[16];
-                var f = 16;
-                if (startIdx + 16 > body.Length)
-                {
-                    f = body.Length - startIdx;
-                }
-
-                Array.Copy(body, startIdx, r, 0, f);
-
-                startIdx += 16;
-
-                temp.Add(Tuple.Create( i+1,r));
+                temp.Add(new HexContentLine(body, i));
             }
             Data = temp;
         }
