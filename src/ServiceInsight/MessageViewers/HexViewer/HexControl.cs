@@ -110,10 +110,8 @@
             {
                 return ".";
             }
-            else
-            {
-                return c;
-            }
+
+            return c;
         }
 
         static string ToHex(byte b)
