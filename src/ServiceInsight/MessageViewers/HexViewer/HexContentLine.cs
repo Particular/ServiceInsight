@@ -1,6 +1,6 @@
 namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
-    public class HexContentLine
+    public struct HexContentLine
     {
         private readonly byte[] data;
 
