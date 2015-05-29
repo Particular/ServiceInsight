@@ -93,12 +93,23 @@
                             <!--  Endpoint Tooltip  -->
                             <Border.ToolTip>
                                 <ToolTip Style="{StaticResource EndpointTooltipStyle}">
-                                    <UniformGrid Columns="2" Rows="2">
-                                        <Label Content="NSB Version" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Content="{Binding Version}" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Content="Host" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Content="{Binding Host}" Style="{StaticResource TooltipLabelStyle}" />
-                                    </UniformGrid>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Content="Name" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Name}" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="1" Grid.Column="0" Content="NSB Version" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Version}" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="2" Grid.Column="0" Content="Host" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Host}" Style="{StaticResource TooltipLabelStyle}" />
+                                    </Grid>
                                 </ToolTip>
                             </Border.ToolTip>
 
@@ -122,10 +133,11 @@
                                           Fill="{StaticResource Grey40Brush}"
                                           Stretch="Fill" />
 
-                                    <Label Grid.Column="1"
+                                    <TextBlock Grid.Column="1"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Content="{Binding Name}" />
+                                           Text="{Binding Name}" 
+                                           TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>
                         </Border>
