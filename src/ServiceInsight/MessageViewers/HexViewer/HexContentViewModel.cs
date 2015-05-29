@@ -1,12 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
-    using System.Text;
     using Caliburn.Micro;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Models;
 
     public class HexContentViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        public byte[] SelectedMessage { get; set; }
+        public MessageBody SelectedMessage { get; set; }
 
         protected override void OnActivate()
         {
@@ -16,14 +16,7 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            byte[] body = null;
-
-            if (@event.Message != null && @event.Message.Body != null)
-            {
-                body = Encoding.Default.GetBytes(@event.Message.Body);
-            }
-
-            SelectedMessage = body;
+            SelectedMessage = @event.Message;
         }
     }
 }

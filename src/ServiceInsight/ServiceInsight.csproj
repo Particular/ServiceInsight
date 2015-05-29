@@ -254,6 +254,7 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
@@ -501,6 +502,8 @@
     <Compile Include="ValueConverters\BitmapToGlyphConverter.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
+    <Compile Include="ValueConverters\ByteToCharConverter.cs" />
+    <Compile Include="ValueConverters\ByteToHexConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />

@@ -8,35 +8,6 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-
-    <ScrollViewer>
-
-        <local:HexControl Data="{Binding SelectedMessage}">
-            <local:HexControl.HexLineStyle>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="5" />
-                    <Setter Property="FontFamily" Value="{StaticResource MessageBodyFontFamily}" />
-                    <Setter Property="FontSize" Value="{StaticResource MessageBodyFontSize}" />
-                    <Setter Property="Foreground" Value="DarkCyan" />
-                </Style>
-            </local:HexControl.HexLineStyle>
-            <local:HexControl.HexNumberStyle>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="5" />
-                    <Setter Property="FontFamily" Value="{StaticResource MessageBodyFontFamily}" />
-                    <Setter Property="FontSize" Value="{StaticResource MessageBodyFontSize}" />
-                    <Setter Property="Foreground" Value="Black" />
-                </Style>
-            </local:HexControl.HexNumberStyle>
-            <local:HexControl.HexCharStyle>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="5" />
-                    <Setter Property="FontFamily" Value="{StaticResource MessageBodyFontFamily}" />
-                    <Setter Property="FontSize" Value="{StaticResource MessageBodyFontSize}" />
-                    <Setter Property="Foreground" Value="Gray" />
-                </Style>
-            </local:HexControl.HexCharStyle>
-        </local:HexControl>
-
-    </ScrollViewer>
+   
+   <local:HexControl Body="{Binding SelectedMessage.Body}" />
 </UserControl>
