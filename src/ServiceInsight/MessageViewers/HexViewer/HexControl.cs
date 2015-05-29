@@ -16,6 +16,11 @@
         {
             var hexControl = ((HexControl) dependencyObject);
 
+            if (hexControl.items == null)
+            {
+                return;
+            }
+
             if (hexControl.Body == null)
             {
                 hexControl.items.ItemsSource = new List<HexContentLine>(0); 
@@ -37,6 +42,7 @@
         public override void OnApplyTemplate()
         {
             items = GetTemplateChild("PART_LINES") as ItemsControl;
+            DataChanged(this, new DependencyPropertyChangedEventArgs());
         }
 
         public string Body
