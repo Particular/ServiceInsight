@@ -4,9 +4,8 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 
     public class RestRequestWithCache : RestRequest
     {
-        public RestRequestWithCache(CacheStyle cacheStyle)
+        public RestRequestWithCache(CacheStyle cacheStyle) : this(null, cacheStyle)
         {
-            CacheSyle = cacheStyle;
         }
 
         public RestRequestWithCache(string resource, CacheStyle cacheStyle)
@@ -18,6 +17,7 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
             : base(resource, method)
         {
             CacheSyle = cacheStyle;
+            DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
         }
 
         public CacheStyle CacheSyle { get; set; }
