@@ -61,19 +61,6 @@
         public ICommand SearchByMessageIDCommand { get; private set; }
         public ICommand RetryMessageCommand { get; private set; }
 
-        //public void Retry()
-        //{
-        //    Owner.RetryMessage(Message);
-        //    Message.Status = MessageStatus.RetryIssued;
-        //    OnPropertyChanged("HasFailed");
-        //    OnPropertyChanged("HasRetried");
-        //}
-
-        //public bool CanRetry()
-        //{
-        //    return HasFailed;
-        //}
-
         public void ShowBody()
         {
             Owner.ShowMessageBody();
@@ -108,6 +95,21 @@
         public bool IsPublished
         {
             get { return Message.MessageIntent == MessageIntent.Publish; }
+        }
+
+        public bool IsEventMessage
+        {
+            get { return IsPublished && !IsTimeout; }
+        }
+
+        public bool IsCommandMessage
+        {
+            get { return !IsPublished && !IsTimeout; }
+        }
+
+        public bool IsTimeoutMessage
+        {
+            get { return IsTimeout; }
         }
 
         public bool IsSagaInitiated

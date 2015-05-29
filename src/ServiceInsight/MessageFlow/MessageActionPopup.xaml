@@ -287,31 +287,43 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0"
                         Grid.ColumnSpan="2"
-                        Margin="14,10,0,0"
+                        Margin="6,3,0,0"
                         Orientation="Horizontal">
                 <ContentControl HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 Template="{StaticResource CommandIcon}"
                                 ToolTip="Command"
-                                Visibility="{Binding IsPublished,
-                                                     Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                                Width="22"
+                                Visibility="{Binding IsCommandMessage,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                </ContentControl>
                 <ContentControl HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 Template="{StaticResource EventIcon}"
                                 ToolTip="Event"
-                                Visibility="{Binding IsPublished,
+                                Width="22" 
+                                Visibility="{Binding IsEventMessage,
                                                      Converter={StaticResource BoolToVisibilityConverter}}">
-                    <ContentControl.RenderTransform>
-                        <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                    </ContentControl.RenderTransform>
                 </ContentControl>
-
+                <ContentControl HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                Template="{StaticResource TimeoutIcon}"
+                                ToolTip="Timeout"
+                                Width="22"
+                                Visibility="{Binding IsTimeoutMessage,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                </ContentControl>
                 <TextBlock FontSize="13px"
                            FontWeight="Bold"
-                           Foreground="White"
-                           Text="{Binding Message.FriendlyMessageType}" />
+                           Foreground="White" 
+                           Margin="4,0"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Message.FriendlyMessageType}"
+                           Text="{Binding Message.FriendlyMessageType}"/>
             </StackPanel>
             <Grid Grid.Row="1"
                   Grid.Column="0"
