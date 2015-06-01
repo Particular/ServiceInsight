@@ -104,7 +104,7 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Row="0" Grid.Column="0" Content="Name" Style="{StaticResource TooltipLabelStyle}" />
-                                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Name}" Style="{StaticResource TooltipLabelStyle}" />
+                                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding FullName}" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Grid.Row="1" Grid.Column="0" Content="NSB Version" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Grid.Row="1" Grid.Column="1" Content="{Binding Version}" Style="{StaticResource TooltipLabelStyle}" />
                                         <Label Grid.Row="2" Grid.Column="0" Content="Host" Style="{StaticResource TooltipLabelStyle}" />
