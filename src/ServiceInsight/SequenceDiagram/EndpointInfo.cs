@@ -13,20 +13,18 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
         }
 
-        public EndpointInfo(Endpoint endpoint, StoredMessage message)
+        public EndpointInfo(Endpoint endpoint, string version)
         {
             if (endpoint == null)
                 throw new ArgumentNullException("endpoint", "endpoint is null.");
-            if (message == null)
-                throw new ArgumentNullException("message", "message is null.");
-
+            
             Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
             if (string.IsNullOrEmpty(Name))
             {
                 Name = endpoint.Name;
             }
             FullName = endpoint.Name;
-            Version = message.GetHeaderByKey(MessageHeaderKeys.Version);
+            Version = version;
             Host = endpoint.Host ?? "";
         }
 
@@ -47,7 +45,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 return false;
 
             return string.Equals(FullName, other.FullName, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase) && 
                 string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
         }
     }

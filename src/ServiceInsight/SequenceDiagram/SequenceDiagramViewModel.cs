@@ -128,16 +128,15 @@
             }
         }
 
-        private void CreateEndpoints(IEnumerable<StoredMessage> messages)
+        private void CreateEndpoints(IList<StoredMessage> messages)
         {
-            Endpoints = new ReactiveList<EndpointInfo>(messages
+            var endpointInfos = messages
                 .OrderBy(m => m.TimeSent)
-                .SelectMany(m => new[] {
-                    m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m) : null,
-                    m.ReceivingEndpoint != null ? new EndpointInfo(m.ReceivingEndpoint, m) : null
-                })
+                .Select(m => m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
                 .Where(e => e != null) // TODO report these as they shouldn't happen
-                .Distinct());
+                .Distinct();
+
+            Endpoints = new ReactiveList<EndpointInfo>(endpointInfos);
         }
 
         private void CreateMessages(IEnumerable<StoredMessage> messages)
