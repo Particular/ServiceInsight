@@ -108,6 +108,8 @@
             layoutSettings.MainWindowHeight = SystemParameters.VirtualScreenHeight;
 
             settingsProvider.SaveSettings(layoutSettings);
+
+            OnRestoreLayout(settingsProvider);
         }
 
         string GetCurrentLayoutVersion()
@@ -119,9 +121,11 @@
         {
             try
             {
-                var ms = new MemoryStream();
-                control.SaveLayoutToStream(ms);
-                return ms.GetAsString();
+                using (var ms = new MemoryStream())
+                {
+                    control.SaveLayoutToStream(ms);
+                    return ms.GetAsString();
+                }
             }
             catch (Exception ex)
             {
