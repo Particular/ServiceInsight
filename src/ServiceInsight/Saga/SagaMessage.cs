@@ -20,6 +20,18 @@
 
         public bool IsPublished { get; set; }
 
+        public MessageIntent Intent { get; set; }
+
+        public bool IsEventMessage
+        {
+            get { return Intent == MessageIntent.Publish; }
+        }
+
+        public bool IsCommandMessage
+        {
+            get { return !IsEventMessage && !IsTimeout; }
+        }
+
         public virtual bool IsTimeout
         {
             get

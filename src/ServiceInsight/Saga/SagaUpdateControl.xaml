@@ -212,18 +212,26 @@
                                             VerticalAlignment="Top"
                                             Style="{StaticResource FailedMessageMarker}" />
 
-                            <ContentControl x:Name="MessageTypeIcon"
-                                            Grid.Column="0"
+                            <ContentControl Grid.Column="0"
                                             Width="20"
                                             Margin="0,4,0,0"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Template="{StaticResource CommandIcon}"
                                             ToolTip="Command"
-                                            Visibility="{Binding IsTimeout,
-                                                                 Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                            <ContentControl x:Name="TimeoutIcon"
-                                            Grid.Column="0"
+                                            Visibility="{Binding IsCommandMessage,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <ContentControl Grid.Column="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="0,4,0,0"
+                                            Template="{StaticResource EventIcon}"
+                                            ToolTip="Event"
+                                            Width="22" 
+                                            Visibility="{Binding IsEventMessage,
+                                                                Converter={StaticResource BoolToVisibilityConverter}}">
+                            </ContentControl>
+                            <ContentControl Grid.Column="0"
                                             Width="24"
                                             Margin="0,8,0,0"
                                             HorizontalAlignment="Center"
