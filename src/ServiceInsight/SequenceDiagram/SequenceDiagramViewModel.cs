@@ -134,7 +134,18 @@
                 .OrderBy(m => m.TimeSent)
                 .Select(m => m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
                 .Where(e => e != null) // TODO report these as they shouldn't happen
-                .Distinct();
+                .Distinct()
+                .ToList();
+
+            foreach (var message in messages)
+            {
+                if (endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
+                {
+                    continue;
+                }
+
+                endpointInfos.Add(new EndpointInfo(message.ReceivingEndpoint, "Not Available"));
+            }
 
             Endpoints = new ReactiveList<EndpointInfo>(endpointInfos);
         }
