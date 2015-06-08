@@ -8,7 +8,6 @@
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Core.Serialization;
     using DevExpress.Xpf.Docking;
-    using DevExpress.Xpf.Docking.Base;
     using ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Settings;
@@ -154,11 +153,11 @@
             get { return DataContext as ShellViewModel; }
         }
 
-        void OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
+        void MessageBody_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Model != null)
             {
-                Model.BodyTabSelected = e.Item != null && e.Item == MessageBody;
+                Model.BodyTabSelected = (bool)e.NewValue;
             }
         }
     }

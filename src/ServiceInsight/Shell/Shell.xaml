@@ -231,7 +231,7 @@
 
         <!--  Dock Windows  -->
         <Grid>
-            <dxd:DockLayoutManager x:Name="DockManager" AutomationProperties.AutomationId="DockManager">
+            <dxd:DockLayoutManager x:Name="DockManager" AutomationProperties.AutomationId="DockManager" >
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup AutoHideSize="300, 200"
@@ -268,9 +268,7 @@
                                              AllowClose="False"
                                              AllowFloat="False"
                                              GroupBorderStyle="Tabbed"
-                                             ItemWidth="3*"
-                                             SelectedItemChanged="OnSelectedItemChanged">
-
+                                             ItemWidth="3*">
                                 <dxd:LayoutPanel x:Name="MessageFlow"
                                                  AllowClose="False"
                                                  AllowFloat="False"
@@ -313,7 +311,8 @@
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"
                                                  CaptionImage="/Images/Document.png"
-                                                 ShowBorder="False">
+                                                 ShowBorder="False"
+                                                 IsVisibleChanged="MessageBody_OnIsVisibleChanged">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
 
