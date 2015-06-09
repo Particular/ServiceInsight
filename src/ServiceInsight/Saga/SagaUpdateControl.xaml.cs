@@ -1,13 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
+    using System;
     using System.Windows;
     using System.Windows.Input;
 
     public partial class SagaUpdateControl
     {
         public static readonly RoutedEvent TimeoutClickEvent = EventManager.RegisterRoutedEvent("TimeoutClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SagaUpdateControl));
-
-        public static readonly DependencyProperty SelectedMessageProperty = DependencyProperty.Register("SelectedMessage", typeof(SagaMessage), typeof(SagaUpdateControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty SelectedMessageIdProperty = DependencyProperty.Register("SelectedMessageId", typeof(Guid), typeof(SagaUpdateControl), new FrameworkPropertyMetadata(Guid.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public SagaUpdateControl()
         {
@@ -20,15 +20,15 @@
             remove { RemoveHandler(TimeoutClickEvent, value); }
         }
 
-        public SagaMessage SelectedMessage
+        public Guid SelectedMessageId
         {
-            get { return (SagaMessage)GetValue(SelectedMessageProperty); }
-            set { SetValue(SelectedMessageProperty, value); }
+            get { return (Guid)GetValue(SelectedMessageIdProperty); }
+            set { SetValue(SelectedMessageIdProperty, value); }
         }
 
         void RootGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SelectedMessage = ((FrameworkElement)sender).DataContext as SagaMessage;
+            SelectedMessageId = ((SagaMessage)((FrameworkElement)sender).DataContext).MessageId;
         }
 
         void Hyperlink_Click(object sender, RoutedEventArgs e)

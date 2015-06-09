@@ -15,7 +15,7 @@
     {
         SagaData data;
         StoredMessage currentMessage;
-        SagaMessage selectedMessage;
+        Guid selectedMessageId;
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
 
@@ -72,6 +72,8 @@
         {
             var message = @event.Message;
             RefreshSaga(message);
+
+            SelectedMessageId = Guid.Parse(message.MessageId);
         }
 
         void RefreshSaga(StoredMessage message)
@@ -100,8 +102,15 @@
             {
                 eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
+                var previousSagaId = Guid.Empty;
+
                 if (Data == null || Data.SagaId != originatingSaga.SagaId)
                 {
+                    if (Data != null)
+                    {
+                        previousSagaId = Data.SagaId;
+                    }
+
                     Data = serviceControl.GetSagaById(originatingSaga.SagaId);
 
                     if (Data != null)
@@ -123,6 +132,12 @@
                 }
 
                 if (Data == null || Data.Changes == null)
+                {
+                    return;
+                }
+
+                // Skip refreshing if we already displaying the correct saga data
+                if (previousSagaId == Data.SagaId)
                 {
                     return;
                 }
@@ -192,25 +207,22 @@
             RefreshSaga(currentMessage);
         }
 
-        public SagaMessage SelectedMessage
+        public Guid SelectedMessageId
         {
-            get { return selectedMessage; }
+            get { return selectedMessageId; }
             set
             {
-                selectedMessage = value;
-                OnSelectedMessageChanged();
+                selectedMessageId = value;
+                UpdateSelectedMessages();
             }
         }
 
-        void OnSelectedMessageChanged()
+        void UpdateSelectedMessages()
         {
-            if (SelectedMessage == null)
-                return;
-
             foreach (var step in Data.Changes)
             {
-                SetSelected(step.InitiatingMessage, SelectedMessage.MessageId);
-                SetSelected(step.OutgoingMessages, SelectedMessage.MessageId);
+                SetSelected(step.InitiatingMessage, selectedMessageId);
+                SetSelected(step.OutgoingMessages, selectedMessageId);
             }
         }
 

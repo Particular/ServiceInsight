@@ -19,7 +19,7 @@
                 <ResourceDictionary>
                     <DataTemplate DataType="{x:Type l:SagaUpdate}">
                         <l:SagaUpdateControl DataContext="{Binding}"
-                                             SelectedMessage="{Binding DataContext.SelectedMessage,
+                                             SelectedMessageId="{Binding DataContext.SelectedMessageId,
                                                                        ElementName=uc}"
                                              TimeoutClick="Hyperlink_Click" />
                     </DataTemplate>
