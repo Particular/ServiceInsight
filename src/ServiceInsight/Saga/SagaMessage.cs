@@ -67,30 +67,7 @@
             set { status = value; }
         }
 
-        List<KeyValuePair<MessageStatus, string>> statuses = new List<KeyValuePair<MessageStatus, string>> {
-            new KeyValuePair<MessageStatus, string>(MessageStatus.Failed, "Fail" ),
-            new KeyValuePair<MessageStatus, string>(MessageStatus.RepeatedFailure, "RepeatedFail" ),
-            new KeyValuePair<MessageStatus, string>(MessageStatus.RetryIssued, "Retry" ),
-            new KeyValuePair<MessageStatus, string>(MessageStatus.Successful, "Success" ),
-        };
-
         public bool IsSelected { get; set; }
-
-        public bool HasFailed
-        {
-            get { return (Status == MessageStatus.Failed) || (Status == MessageStatus.RepeatedFailure); }
-        }
-
-        public string StatusText
-        {
-            get { return statuses.FirstOrDefault(k => k.Key == Status).Value; }
-            set { Status = statuses.FirstOrDefault(k => k.Value == value).Key; }
-        }
-
-        public bool HasRetried
-        {
-            get { return Status == MessageStatus.RetryIssued; }
-        }
 
         bool showData;
 
