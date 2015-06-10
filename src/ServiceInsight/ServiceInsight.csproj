@@ -361,7 +361,6 @@
     <Compile Include="Explorer\EndpointExplorer\AuditEndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\EndpointExplorerViewModel.cs" />
-    <Compile Include="Explorer\EndpointExplorer\ErrorEndpointExplorerItem.cs" />
     <Compile Include="Explorer\ExplorerItemExtensions.cs" />
     <Compile Include="Explorer\FileExplorerItem.cs" />
     <Compile Include="Explorer\EndpointExplorer\ServiceControlExplorerItem.cs" />

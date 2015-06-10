@@ -49,16 +49,6 @@
             }
         }
 
-        public AuditEndpointExplorerItem AuditRoot
-        {
-            get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<AuditEndpointExplorerItem>().First() : null; }
-        }
-
-        public ErrorEndpointExplorerItem ErrorRoot
-        {
-            get { return ServiceControlRoot != null ? ServiceControlRoot.Children.OfType<ErrorEndpointExplorerItem>().First() : null; }
-        }
-
         public ExplorerItem SelectedNode { get; set; }
 
         public string ServiceUrl { get; private set; }
