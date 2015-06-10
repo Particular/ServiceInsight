@@ -140,50 +140,62 @@
 
         public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
-
-            if (orderBy != null)
+            try
             {
-                lastSortColumn = orderBy;
-                lastSortOrderAscending = ascending;
+
+
+                eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
+
+                if (orderBy != null)
+                {
+                    lastSortColumn = orderBy;
+                    lastSortOrderAscending = ascending;
+                }
+
+                PagedResult<StoredMessage> pagedResult;
+
+                if (endpoint != null)
+                {
+                    pagedResult = serviceControl.GetAuditMessages(endpoint,
+                        pageIndex: pageIndex,
+                        searchQuery: searchQuery,
+                        orderBy: lastSortColumn,
+                        ascending: lastSortOrderAscending);
+                }
+                else if (!searchQuery.IsEmpty())
+                {
+                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
+                        searchQuery: searchQuery,
+                        orderBy: lastSortColumn,
+                        ascending: lastSortOrderAscending);
+                }
+                else
+                {
+                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
+                        searchQuery: null,
+                        orderBy: lastSortColumn,
+                        ascending: lastSortOrderAscending);
+                }
+
+                if (pagedResult == null)
+                {
+                    return;
+                }
+
+                TryRebindMessageList(pagedResult);
+
+                SearchBar.IsVisible = true;
+                SearchBar.SetupPaging(new PagedResult<StoredMessage>
+                {
+                    CurrentPage = pagedResult.CurrentPage,
+                    TotalCount = pagedResult.TotalCount,
+                    Result = pagedResult.Result,
+                });
             }
-
-            PagedResult<StoredMessage> pagedResult;
-
-            if (endpoint != null)
+            finally
             {
-                pagedResult = serviceControl.GetAuditMessages(endpoint,
-                                                                     pageIndex: pageIndex,
-                                                                     searchQuery: searchQuery,
-                                                                     orderBy: lastSortColumn,
-                                                                     ascending: lastSortOrderAscending);
+                eventAggregator.Publish(new WorkFinished());
             }
-            else if (!searchQuery.IsEmpty())
-            {
-                pagedResult = serviceControl.Search(pageIndex: pageIndex,
-                                                           searchQuery: searchQuery,
-                                                           orderBy: lastSortColumn,
-                                                           ascending: lastSortOrderAscending);
-            }
-            else
-            {
-                pagedResult = serviceControl.Search(pageIndex: pageIndex,
-                                                           searchQuery: null,
-                                                           orderBy: lastSortColumn,
-                                                           ascending: lastSortOrderAscending);
-            }
-
-            TryRebindMessageList(pagedResult);
-
-            SearchBar.IsVisible = true;
-            SearchBar.SetupPaging(new PagedResult<StoredMessage>
-            {
-                CurrentPage = pagedResult.CurrentPage,
-                TotalCount = pagedResult.TotalCount,
-                Result = pagedResult.Result,
-            });
-
-            eventAggregator.Publish(new WorkFinished());
         }
 
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)

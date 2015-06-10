@@ -96,8 +96,10 @@
             AppendOrdering(request, orderBy, ascending);
 
             var result = GetPagedResult<StoredMessage>(request);
-            result.CurrentPage = pageIndex;
-
+            if (result != null)
+            {
+                result.CurrentPage = pageIndex;
+            }
             return result;
         }
 
@@ -111,8 +113,10 @@
             AppendOrdering(request, orderBy, ascending);
 
             var result = GetPagedResult<StoredMessage>(request);
-            result.CurrentPage = pageIndex;
-
+            if (result != null)
+            {
+                result.CurrentPage = pageIndex;
+            }
             return result;
         }
 

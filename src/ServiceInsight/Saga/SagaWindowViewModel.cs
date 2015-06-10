@@ -71,6 +71,12 @@
         public void Handle(SelectedMessageChanged @event)
         {
             var message = @event.Message;
+
+            if (message == null)
+            {
+                return;
+            }
+
             RefreshSaga(message);
 
             SelectedMessageId = Guid.Parse(message.MessageId);
