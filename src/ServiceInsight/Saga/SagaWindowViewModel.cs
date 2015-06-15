@@ -225,6 +225,11 @@
 
         void UpdateSelectedMessages()
         {
+            if (Data == null)
+            {
+                return;
+            }
+
             foreach (var step in Data.Changes)
             {
                 SetSelected(step.InitiatingMessage, selectedMessageId);
