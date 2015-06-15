@@ -29,6 +29,8 @@
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
+                    <cnv:SmartWrapConverter x:Key="SmartWrapConverter" />
+                    <cnv:CenterToolTipConverter x:Key="CenterToolTipConverter" />
                     
                     <!-- Colors and Brushes -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />

@@ -20,8 +20,15 @@
                 <ResourceDictionary>
                     <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
                         <Setter Property="OverridesDefaultStyle" Value="true" />
-                        <Setter Property="Placement" Value="Center" />
-                        <Setter Property="VerticalOffset" Value="54" />
+                        <Setter Property="Placement" Value="Bottom" />
+                        <Setter Property="HorizontalOffset">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="PlacementTarget.ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ToolTip">
@@ -136,7 +143,8 @@
                                     <TextBlock Grid.Column="1"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Text="{Binding Name}" 
+                                           Text="{Binding Name, Converter={StaticResource SmartWrapConverter}}"
+                                           TextWrapping="Wrap"
                                            TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>

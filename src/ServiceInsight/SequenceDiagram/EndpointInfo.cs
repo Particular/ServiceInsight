@@ -3,7 +3,6 @@ using System;
 namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
     using System.Diagnostics;
-    using System.Linq;
     using Models;
 
     [DebuggerDisplay("{Name}")]
@@ -16,16 +15,13 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public EndpointInfo(Endpoint endpoint, string version)
         {
             if (endpoint == null)
-                throw new ArgumentNullException("endpoint", "endpoint is null.");
-            
-            Name = string.Join(".", endpoint.Name.Split('.').Skip(1));
-            if (string.IsNullOrEmpty(Name))
             {
-                Name = endpoint.Name;
+                throw new ArgumentNullException("endpoint", "endpoint is null.");
             }
-            FullName = endpoint.Name;
+            
+            FullName = Name = endpoint.Name;
             Version = version;
-            Host = endpoint.Host ?? "";
+            Host = endpoint.Host ?? String.Empty;
         }
 
         public string Name { get; protected set; }
