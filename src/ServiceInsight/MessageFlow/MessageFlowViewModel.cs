@@ -113,11 +113,14 @@
 
         public void ShowSagaWindow()
         {
-            if (messageList.Rows.All(r => r.Id != SelectedMessage.Message.Id))
+            if (SelectedMessage != null)
             {
-                endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
+                if (messageList.Rows.All(r => r.Id != SelectedMessage.Message.Id))
+                {
+                    endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
+                }
+                messageList.Focus(SelectedMessage.Message);
             }
-            messageList.Focus(SelectedMessage.Message);
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
 
