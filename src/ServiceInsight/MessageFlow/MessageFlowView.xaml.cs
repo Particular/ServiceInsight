@@ -1,12 +1,13 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
 {
     using System;
+    using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Mindscape.WpfDiagramming;
-    using Mindscape.WpfDiagramming.FlowDiagrams;
     using Mindscape.WpfDiagramming.Foundation;
 
-    public partial class MessageFlowView : IMessageFlowView
+    public partial class MessageFlowView
     {
         public event EventHandler<SearchMessageEventArgs> ShowMessage;
 
@@ -14,20 +15,22 @@
         {
             ShowMessage = (s, e) => { };
             InitializeComponent();
-        }
 
-        public void SizeToFit()
-        {
-            Surface.SizeToFit();
+            ds.AddHandler(DiagramNodeElement.BoundsChangeRequestedEvent, new EventHandler<BoundsChangeRequestedEventArgs>(OnBoundsChangeRequested));
         }
 
         public void ApplyLayout()
         {
-            Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                Info = new FlowDiagramLayoutAlgorithmInfo(),
-                LayoutDirection = LayoutDirection.TopToBottom,
-            });
+                Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm());
+                Surface.SizeToFit();
+
+                if (ds.Diagram.Nodes.Count <= 5)
+                {
+                    Surface.Zoom = 1;
+                }
+            }), DispatcherPriority.Loaded);
         }
 
         public DiagramSurface Surface
@@ -35,19 +38,9 @@
             get { return ds; }
         }
 
-        public void UpdateNode(IDiagramNode node)
-        {
-            Surface.Formatter.Layout.SetNodeBounds(node, node.Bounds);
-        }
-
-        public void UpdateConnections()
-        {
-            Surface.UpdateLayout();
-        }
-
         void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var node = ((System.Windows.FrameworkElement)sender).DataContext as MessageNode;
+            var node = ((FrameworkElement)sender).DataContext as MessageNode;
             ShowMessage(sender, new SearchMessageEventArgs(node));
         }
 
@@ -72,6 +65,12 @@
                     Surface.SizeToFit();
                 }
             }
+        }
+
+        private void OnBoundsChangeRequested(object sender, BoundsChangeRequestedEventArgs e)
+        {
+            var node = e.DiagramNodeElement.Node;
+            node.Bounds = new Rect(node.Bounds.X, node.Bounds.Y, e.Width, node.Bounds.Height);
         }
     }
 }

@@ -10,6 +10,7 @@
     using Framework;
     using MessageList;
     using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
@@ -29,9 +30,9 @@
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
-        IMessageFlowView view;
-        string originalSelectionId = string.Empty;
-        bool loadingConversation;
+        MessageFlowView view;
+        string currentHighlightedMessageId;
+        string loadedConversationId;
         EndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
@@ -58,11 +59,11 @@
             SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
 
-            Diagram = new MessageFlowDiagram();
+            Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
 
-        public MessageFlowDiagram Diagram
+        public FlowDiagramModel Diagram
         {
             get;
             set;
@@ -83,14 +84,16 @@
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
-            this.view = (IMessageFlowView)view;
+            this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }
 
         void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
             if (e.MessageNode == null)
+            {
                 return;
+            }
 
             var message = e.MessageNode.Message;
 
@@ -143,44 +146,60 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            if (loadingConversation) return;
-
-            loadingConversation = true;
-            originalSelectionId = string.Empty;
-            nodeMap.Clear();
-
-            SelectedMessage = null;
-            Diagram = new MessageFlowDiagram();
-
             var storedMessage = @event.Message;
             if (storedMessage == null)
             {
-                loadingConversation = false;
+                ClearState();
                 return;
             }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
             {
-                loadingConversation = false;
+                ClearState();
                 return;
             }
 
-            try
+            if (loadedConversationId == conversationId)
             {
-                var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
-                var nodes = relatedMessagesTask
-                    .Select(x => new MessageNode(this, x) { ShowEndpoints = ShowEndpoints })
-                    .ToList();
+                RefreshSelection(storedMessage.Id);
+                return;
+            }
 
-                CreateConversationNodes(storedMessage.Id, nodes);
-                LinkConversationNodes(nodes);
-                UpdateLayout();
-            }
-            finally
+            ClearState();
+
+            loadedConversationId = conversationId;
+
+            var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
+            var nodes = relatedMessagesTask
+                .Select(x => new MessageNode(this, x) { ShowEndpoints = ShowEndpoints })
+                .ToList();
+
+            CreateConversationNodes(storedMessage.Id, nodes);
+            LinkConversationNodes(nodes);
+            UpdateLayout();
+        }
+
+        void RefreshSelection(string selectedId)
+        {
+            foreach (MessageNode node in Diagram.Nodes)
             {
-                loadingConversation = false;
+                if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    currentHighlightedMessageId = selectedId;
+                    SelectedMessage = node;
+                    break;
+                }
             }
+        }
+
+        void ClearState()
+        {
+            currentHighlightedMessageId = null;
+            nodeMap.Clear();
+
+            SelectedMessage = null;
+            Diagram = new FlowDiagramModel();
         }
 
         public void ZoomIn()
@@ -195,7 +214,7 @@
 
         public bool IsFocused(MessageInfo message)
         {
-            return message.Id == originalSelectionId;
+            return message.Id == currentHighlightedMessageId;
         }
 
         public void OnShowEndpointsChanged()
@@ -203,13 +222,6 @@
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                if (view != null) view.UpdateNode(node);
-            }
-
-            if (view != null)
-            {
-                view.UpdateConnections();
-                view.ApplyLayout();
             }
 
             UpdateSetting();
@@ -281,7 +293,7 @@
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    originalSelectionId = selectedId;
+                    currentHighlightedMessageId = selectedId;
                     SelectedMessage = node;
                 }
 
@@ -295,7 +307,6 @@
             if (view != null)
             {
                 view.ApplyLayout();
-                view.SizeToFit();
             }
         }
     }

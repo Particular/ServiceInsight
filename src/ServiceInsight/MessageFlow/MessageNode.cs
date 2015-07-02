@@ -25,7 +25,7 @@
             SagaType = ProcessSagaType(message);
 
             heightNoEndpoints += HasSaga ? 10 : 0;
-            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+            Bounds = new Rect(0, 0, 100, heightNoEndpoints);
 
             CopyConversationIDCommand = owner.CopyConversationIDCommand;
             CopyMessageURICommand = owner.CopyMessageURICommand;
@@ -69,10 +69,6 @@
         public void ShowException()
         {
             Owner.ShowException(new ExceptionDetails(Message));
-        }
-
-        public void Refresh()
-        {
         }
 
         public bool ShowEndpoints { get; set; }

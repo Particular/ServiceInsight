@@ -5,7 +5,6 @@
              xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
              xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
@@ -91,7 +90,6 @@
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Margin" Value="0,5,0,5" />
-                        <Setter Property="MaxWidth" Value="175" />
                         <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="Template">
                             <Setter.Value>
@@ -101,8 +99,7 @@
                                                 Orientation="Vertical"
                                                 d:DataContext="{d:DesignInstance local:MessageNode}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock MaxWidth="122"
-                                                       FontSize="14px"
+                                            <TextBlock FontSize="14px"
                                                        FontWeight="Bold"
                                                        Style="{StaticResource MessageTypeText}"
                                                        Text="{Binding Message.FriendlyMessageType}"
@@ -296,13 +293,16 @@
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Border x:Name="MessageRectangle"
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border x:Name="MessageRectangle"
                                             Background="{StaticResource MessageBackground}"
                                             BorderBrush="Transparent"
                                             BorderThickness="1"
-                                            SnapsToDevicePixels="False"
+                                            SnapsToDevicePixels="True"
+                                            HorizontalAlignment="Stretch"
                                             MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
-                                            d:DataContext="{d:DesignInstance local:MessageNode}">
+                                            d:DataContext="{d:DesignInstance local:MessageNode}"
+                                            ms:DiagramNodeElement.RaisesBoundsChangeRequested="True">
                                         <Grid x:Name="RootGrid">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -314,23 +314,17 @@
                                                 <ColumnDefinition Width="*" MinWidth="130" />
                                                 <ColumnDefinition Width="20" />
                                             </Grid.ColumnDefinitions>
-
-                                            <StackPanel x:Name="OriginatingEndPoint"
-                                                        Grid.Row="0"
+                                                <TextBlock Grid.Row="0"
                                                         Grid.Column="0"
                                                         Grid.ColumnSpan="3"
-                                                        Height="14"
+                                                        Padding="3,0,3,0"
                                                         Background="{StaticResource EndpointBackground}"
-                                                        Orientation="Horizontal"
                                                         ToolTip="Sending Endpoint"
                                                         Visibility="{Binding ShowEndpoints,
-                                                                             Converter={StaticResource BoolToVisibilityConverter}}">
-                                                <ContentControl Margin="3,0,3,0" Template="{StaticResource SendingEndpoint}" />
-                                                <TextBlock FontSize="10px"
-                                                           Style="{StaticResource MessageEndpointText}"
-                                                           Text="{Binding Message.SendingEndpoint}" />
-                                            </StackPanel>
-
+                                                                             Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        FontSize="10px"
+                                                        Style="{StaticResource MessageEndpointText}"
+                                                        Text="{Binding Message.SendingEndpoint}" />
                                             <controls:IconControl x:Name="MessageTypeIcon"
                                                                   Grid.Row="1"
                                                                   Grid.Column="0"
@@ -364,17 +358,16 @@
                                                                            Converter={StaticResource BoolToVisibilityConverter}}"
                                                       cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="20" />
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
                                                     <ContentControl x:Name="SagaStatusIcon"
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
                                                                     Template="{StaticResource SagaInitiatedIcon}" />
-                                                    <dxe:TextEdit Grid.Column="1"
+                                                    <TextBlock Grid.Column="1"
                                                                   Margin="2 0 0 0"
                                                                   Background="#333333"
-                                                                  EditMode="InplaceInactive"
                                                                   FontSize="11px"
                                                                   FontWeight="Bold"
                                                                   Foreground="{StaticResource MessageBackground}"
@@ -390,25 +383,19 @@
                                                             HorizontalAlignment="Right"
                                                             VerticalAlignment="Top"
                                                             Style="{StaticResource FailedMessageMarker}" />
-
-                                            <StackPanel x:Name="ReceivingEndPoint"
-                                                        Grid.Row="2"
+                                            <TextBlock Grid.Row="2"
                                                         Grid.Column="0"
-                                                        Grid.ColumnSpan="3"
-                                                        Height="14"
-                                                        VerticalAlignment="Center"
-                                                        Background="{StaticResource EndpointBackground}"
-                                                        Orientation="Horizontal"
+                                                        Grid.ColumnSpan="3" Background="{StaticResource EndpointBackground}"
                                                         ToolTip="Processing Endpoint"
                                                         Visibility="{Binding ShowEndpoints,
-                                                                             Converter={StaticResource BoolToVisibilityConverter}}">
-                                                <ContentControl Margin="3,0,3,0" Template="{StaticResource ReceivingEndpoint}" />
-                                                <TextBlock FontSize="10px"
-                                                           Style="{StaticResource MessageEndpointText}"
-                                                           Text="{Binding Message.ReceivingEndpoint}" />
-                                            </StackPanel>
+                                                                             Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        Padding="3,0,3,0"
+                                                        FontSize="10px"
+                                                        Style="{StaticResource MessageEndpointText}"
+                                                        Text="{Binding Message.ReceivingEndpoint}" />
                                         </Grid>
                                     </Border>
+                                    </StackPanel>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSagaInitiated}"
                                                      d:DataContext="{d:DesignInstance local:MessageNode}"
