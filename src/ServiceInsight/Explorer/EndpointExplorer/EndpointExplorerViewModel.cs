@@ -3,14 +3,14 @@
     using System;
     using System.Linq;
     using Caliburn.Micro;
-    using ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using ServiceControl;
-    using Settings;
-    using Shell;
-    using Startup;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Particular.ServiceInsight.Desktop.Settings;
+    using Particular.ServiceInsight.Desktop.Shell;
+    using Particular.ServiceInsight.Desktop.Startup;
 
     public class EndpointExplorerViewModel : Screen,
         IHandle<RequestSelectingEndpoint>
@@ -170,9 +170,14 @@
             }
 
             ServiceControlRoot.Children.Clear();
-            foreach (var endpoint in endpoints.OrderBy(e => e.Name))
+
+            var endpointInstancesGroupedByName = endpoints.GroupBy(x => x.Name);
+            foreach (var scaledOutEndpoint in endpointInstancesGroupedByName)
             {
-                ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(endpoint));
+                var instances = scaledOutEndpoint.ToList();
+                var hostNames = instances.Select(instance => instance.HostDisplayName).ToList();
+                var tooltip = hostNames.Aggregate("", (s, s1) => s + "," + s1).Substring(1);
+                ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(instances.First(), tooltip));
             }
         }
 
