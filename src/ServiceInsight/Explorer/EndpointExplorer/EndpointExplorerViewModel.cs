@@ -175,8 +175,8 @@
             foreach (var scaledOutEndpoint in endpointInstancesGroupedByName)
             {
                 var instances = scaledOutEndpoint.ToList();
-                var hostNames = instances.Select(instance => instance.HostDisplayName).ToList();
-                var tooltip = hostNames.Aggregate("", (s, s1) => s + "," + s1).Substring(1);
+                var hostNames = instances.Select(instance => instance.HostDisplayName);
+                var tooltip = string.Join(", ", hostNames);
                 ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(instances.First(), tooltip));
             }
         }
