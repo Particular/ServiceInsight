@@ -13,7 +13,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <HierarchicalDataTemplate x:Key="TreeTemplate"
-                                  DataType="vm:EndpointExplorerItem"
+                                  DataType="vm:AuditEndpointExplorerItem"
                                   ItemsSource="{Binding Path=Children}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -21,10 +21,10 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.ToolTip>
-                    <ToolTip Visibility="{Binding Endpoint.Host, FallbackValue=Collapsed, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                    <ToolTip Visibility="{Binding HostNames, FallbackValue=Collapsed, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                         <TextBlock>
                             <Run Text="Installed On: " />
-                            <Run Text="{Binding Endpoint.Host}" />
+                            <Run Text="{Binding HostNames}" />
                         </TextBlock>
                     </ToolTip>
                 </Grid.ToolTip>

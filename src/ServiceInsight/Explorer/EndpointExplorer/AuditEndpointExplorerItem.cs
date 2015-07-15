@@ -2,14 +2,16 @@
 {
     using System.Drawing;
     using global::ServiceInsight.Properties;
-    using Models;
+    using Particular.ServiceInsight.Desktop.Models;
 
     public class AuditEndpointExplorerItem : EndpointExplorerItem
     {
-        public AuditEndpointExplorerItem(Endpoint endpoint)
-            : base(endpoint)
+        public AuditEndpointExplorerItem(Endpoint endpoint, string hostNames = "") : base(endpoint)
         {
+            HostNames = hostNames;
         }
+
+        public string HostNames { get; set; }
 
         public override Bitmap Image
         {
