@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using DevExpress.Utils.Text.Internal;
     using Models;
     using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework;
