@@ -42,7 +42,7 @@
             <dxg:GridControl x:Name="grid"
                              Grid.Row="1"
                              CurrentItem="{Binding FocusedRow,
-                                                   Mode=TwoWay}"
+                                                   Mode=OneWay}"
                              CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
                              CustomUnboundColumnData="OnRequestAdvancedMessageData"
                              IsHitTestVisible="{Binding WorkInProgress,

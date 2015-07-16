@@ -6,9 +6,7 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Explorer.EndpointExplorer;
     using Framework;
-    using MessageList;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
@@ -23,7 +21,6 @@
     public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-        MessageListViewModel messageList;
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
         IEventAggregator eventAggregator;
@@ -31,27 +28,21 @@
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
         MessageFlowView view;
-        string currentHighlightedMessageId;
         string loadedConversationId;
-        EndpointExplorerViewModel endpointExplorer;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
             SearchBarViewModel searchBar,
-            MessageListViewModel messageList,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
-            EndpointExplorerViewModel endpointExplorer,
             IClipboard clipboard)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
-            this.messageList = messageList;
-            this.endpointExplorer = endpointExplorer;
             this.exceptionDetail = exceptionDetail;
 
             CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
@@ -118,11 +109,7 @@
         {
             if (SelectedMessage != null)
             {
-                if (messageList.Rows.All(r => r.Id != SelectedMessage.Message.Id))
-                {
-                    endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
-                }
-                messageList.Focus(SelectedMessage.Message);
+                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
             }
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
@@ -172,7 +159,11 @@
 
             var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
             var nodes = relatedMessagesTask
-                .Select(x => new MessageNode(this, x) { ShowEndpoints = ShowEndpoints })
+                .Select(x => new MessageNode(this, x)
+                {
+                    ShowEndpoints = ShowEndpoints,
+                    IsFocused = x.Id == storedMessage.Id
+                })
                 .ToList();
 
             CreateConversationNodes(storedMessage.Id, nodes);
@@ -182,20 +173,21 @@
 
         void RefreshSelection(string selectedId)
         {
-            foreach (MessageNode node in Diagram.Nodes)
+            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    currentHighlightedMessageId = selectedId;
+                    node.IsFocused = true;
                     SelectedMessage = node;
-                    break;
+                    continue;
                 }
+
+                node.IsFocused = false;
             }
         }
 
         void ClearState()
         {
-            currentHighlightedMessageId = null;
             nodeMap.Clear();
 
             SelectedMessage = null;
@@ -210,11 +202,6 @@
         public void ZoomOut()
         {
             view.Surface.Zoom -= 0.1;
-        }
-
-        public bool IsFocused(MessageInfo message)
-        {
-            return message.Id == currentHighlightedMessageId;
         }
 
         public void OnShowEndpointsChanged()
@@ -293,7 +280,6 @@
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    currentHighlightedMessageId = selectedId;
                     SelectedMessage = node;
                 }
 

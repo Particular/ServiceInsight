@@ -174,12 +174,6 @@
 
         public string ExceptionMessage { get; set; }
 
-        public bool IsFocused
-        {
-            get
-            {
-                return Owner.IsFocused(Message);
-            }
-        }
+        public bool IsFocused { get; set; }
     }
 }

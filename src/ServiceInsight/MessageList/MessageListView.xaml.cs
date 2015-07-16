@@ -7,6 +7,7 @@
     using DevExpress.Data;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
+    using Particular.ServiceInsight.Desktop.Models;
 
     public partial class MessageListView
     {
@@ -18,6 +19,12 @@
         public MessageListView()
         {
             InitializeComponent();
+            grid.CurrentItemChanged += GridOnCurrentItemChanged;
+        }
+
+        void GridOnCurrentItemChanged(object sender, CurrentItemChangedEventArgs currentItemChangedEventArgs)
+        {
+            Model.RaiseSelectedMessageChanged(currentItemChangedEventArgs.NewItem as StoredMessage);
         }
 
         MessageListViewModel Model

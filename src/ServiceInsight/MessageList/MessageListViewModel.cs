@@ -59,10 +59,6 @@
             CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
 
             Rows = new BindableCollection<StoredMessage>();
-
-            this.WhenAnyValue(vm => vm.FocusedRow)
-                .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
-                .Subscribe(_ => DoFocusedRowChanged());
         }
 
         public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
@@ -90,30 +86,10 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public void Focus(StoredMessage msg)
-        {
-            if (msg == null)
-            {
-                FocusedRow = null;
-                return;
-            }
-
-            FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
-        }
-
-        void DoFocusedRowChanged()
-        {
-            LoadMessageBody();
-
-            eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
-
-            NotifyPropertiesChanged();
-        }
-
         public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
-            var serviceControl = SelectedExplorerItem as ServiceControlExplorerItem;
-            if (serviceControl != null)
+            var serviceControlExplorerItem = SelectedExplorerItem as ServiceControlExplorerItem;
+            if (serviceControlExplorerItem != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
                                      endpoint: null,
@@ -142,8 +118,6 @@
         {
             try
             {
-
-
                 eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
                 if (orderBy != null)
@@ -250,7 +224,19 @@
 
         public void Handle(SelectedMessageChanged message)
         {
-            Focus(message.Message);
+            var msg = message.Message;
+            
+            if (msg == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
+            FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
+
+            LoadMessageBody();
+
+            NotifyPropertiesChanged();
         }
 
         public void OnSelectedExplorerItemChanged()
@@ -298,10 +284,6 @@
 
             serviceControl.LoadBody(FocusedRow);
 
-            //var body = serviceControl.GetBody(FocusedRow.BodyUrl);
-
-            //FocusedRow.Body = body;
-
             eventAggregator.Publish(new WorkFinished());
 
             return true;
@@ -311,6 +293,11 @@
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
             SearchBar.NotifyPropertiesChanged();
+        }
+
+        public void RaiseSelectedMessageChanged(StoredMessage currentItem)
+        {
+            eventAggregator.Publish(new SelectedMessageChanged(currentItem));
         }
     }
 }
