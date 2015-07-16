@@ -285,7 +285,7 @@
                             var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
                             if (etag != null)
                             {
-                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag, data), new CacheItemPolicy());
+                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag.Value.ToString(), data), new CacheItemPolicy());
                             }
                             break;
                         case HttpStatusCode.NotModified:
