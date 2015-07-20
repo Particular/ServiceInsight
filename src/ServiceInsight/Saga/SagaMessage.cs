@@ -16,7 +16,7 @@
 
     public class SagaMessage : PropertyChangedBase
     {
-        public Guid MessageId { get; set; }
+        public string MessageId { get; set; }
 
         public bool IsPublished { get; set; }
 
