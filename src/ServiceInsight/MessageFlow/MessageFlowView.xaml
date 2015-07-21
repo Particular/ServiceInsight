@@ -116,7 +116,7 @@
                                                   Fill="#FF000000"
                                                   Stretch="Fill" />
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource TimeSentText}" Text="{Binding TimeSent}" />
+                                        <TextBlock Style="{StaticResource TimeSentText}" Text="{Binding TimeSent, TargetNullValue='TimeSent value unknown'}" />
                                     </StackPanel>
                                 </ControlTemplate>
                             </Setter.Value>

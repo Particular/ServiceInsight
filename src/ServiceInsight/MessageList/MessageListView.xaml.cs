@@ -66,6 +66,10 @@
             {
                 e.DisplayText = ((TimeSpan)e.Value).SubmillisecondHumanize();
             }
+            if (e.Value is DateTime? && (DateTime?)e.Value == DateTime.MinValue)
+            {
+                e.DisplayText = "Unknown";
+            }
         }
 
         void Grid_OnStartSorting(object sender, RoutedEventArgs e)

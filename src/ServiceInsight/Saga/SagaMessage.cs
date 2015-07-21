@@ -53,7 +53,19 @@
             get { return TypeHumanizer.ToName(MessageType); }
         }
 
-        public DateTime TimeSent { get; set; }
+        DateTime? timeSent;
+        public DateTime? TimeSent
+        {
+            get { return timeSent; }
+            set
+            {
+                if (value == DateTime.MinValue)
+                    timeSent = null;
+                else
+                    timeSent = value;
+
+            }
+        }
 
         public string ReceivingEndpoint { get; set; }
 

@@ -272,7 +272,7 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="TextEditGridColumnCellTemplate">
-                        <dxe:TextEdit x:Name="PART_Editor" />
+                        <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown"/>
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">

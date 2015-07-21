@@ -246,7 +246,7 @@
                                 <TextBlock FontSize="14px"
                                            FontWeight="Bold"
                                            Text="{Binding MessageFriendlyTypeName}" />
-                                <TextBlock FontSize="14px" Text="{Binding TimeSent}" />
+                                <TextBlock FontSize="14px" Text="{Binding TimeSent, TargetNullValue='TimeSent value unknown'}" />
                             </StackPanel>
                         </Grid>
                     </Border>
