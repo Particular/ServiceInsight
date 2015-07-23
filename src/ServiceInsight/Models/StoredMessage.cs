@@ -19,9 +19,7 @@
         public MessageIntent MessageIntent { get; set; }
         public Endpoint SendingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
-        public TimeSpan CriticalTime { get; set; }
         public TimeSpan ProcessingTime { get; set; }
-        public TimeSpan DeliveryTime { get; set; }
         public string ConversationId { get; set; }
 
         public MessageStatistics Statistics
@@ -32,7 +30,6 @@
                 {
                     statistics = new MessageStatistics
                     {
-                        CriticalTime = CriticalTime,
                         ProcessingTime = ProcessingTime
                     };
                 }

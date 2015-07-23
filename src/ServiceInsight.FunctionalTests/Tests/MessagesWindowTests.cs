@@ -68,8 +68,6 @@
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.MessageId).ShouldNotBeEmpty();
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.Status).ShouldBe("Success");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.MessageType).ShouldBe("SubmitOrder");
-            MessagesWindow.GetCellValue(0, MessagesWindow.Columns.CriticalTime).ShouldBe("5s");
-            MessagesWindow.GetCellValue(0, MessagesWindow.Columns.DeliveryTime).ShouldBe("4s");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.ProcessingTime).ShouldBe("3s");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.TimeSent).ShouldNotBeEmpty();
         }
@@ -79,8 +77,6 @@
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.MessageId).ShouldNotBeEmpty();
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.Status).ShouldBe("Failed");
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.MessageType).ShouldBe("CancelOrder");
-            MessagesWindow.GetCellValue(1, MessagesWindow.Columns.CriticalTime).ShouldBe("5s");
-            MessagesWindow.GetCellValue(1, MessagesWindow.Columns.DeliveryTime).ShouldBe("4s");
             MessagesWindow.GetCellValue(1, MessagesWindow.Columns.ProcessingTime).ShouldBe("3s");
             MessagesWindow.GetCellValue(0, MessagesWindow.Columns.TimeSent).ShouldNotBeEmpty();
         }

@@ -451,10 +451,6 @@
                                 </Style>
                             </UniformGrid.Resources>
 
-                            <TextBlock FontWeight="Bold" Text="Critical time" />
-                            <TextBlock Text="{Binding CriticalTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                            <TextBlock FontWeight="Bold" Text="Delivery time" />
-                            <TextBlock Text="{Binding DeliveryTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
                             <TextBlock FontWeight="Bold" Text="Processing time" />
                             <TextBlock Text="{Binding ProcessingTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
                         </UniformGrid>

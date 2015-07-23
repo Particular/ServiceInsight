@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:messageFlow="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
-      Height="215"
+      Height="175"
       MinWidth="450"
       d:DataContext="{d:DesignInstance messageFlow:MessageNode}"
       mc:Ignorable="d">
@@ -394,39 +394,21 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
-                           Text="Critical Time" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding Message.CriticalTime,
-                                          Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                <TextBlock Grid.Row="2"
-                           Grid.Column="1"
-                           Style="{StaticResource MessagePropertyKey}"
-                           Text="Delivery Time" />
-                <TextBlock Grid.Row="2"
-                           Grid.Column="2"
-                           Style="{StaticResource MessagePropertyValue}"
-                           Text="{Binding Message.DeliveryTime,
-                                          Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                <TextBlock Grid.Row="3"
-                           Grid.Column="1"
-                           Style="{StaticResource MessagePropertyKey}"
                            Text="Processing Time" />
-                <TextBlock Grid.Row="3"
+                <TextBlock Grid.Row="1"
                            Grid.Column="2"
                            Style="{StaticResource MessagePropertyValue}"
                            Text="{Binding Message.ProcessingTime,
                                           Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                <TextBlock Grid.Row="4"
+                <TextBlock Grid.Row="2"
                            Grid.Column="1"
                            Style="{StaticResource MessagePropertyKey}"
                            Text="NSB Version" />
-                <TextBlock Grid.Row="4"
+                <TextBlock Grid.Row="2"
                            Grid.Column="2"
                            Style="{StaticResource MessagePropertyValue}"
                            Text="{Binding NSBVersion}" />
-                <StackPanel Grid.Row="6"
+                <StackPanel Grid.Row="3"
                             Grid.Column="1"
                             Margin="4"
                             VerticalAlignment="Top"
@@ -439,7 +421,7 @@
                     <TextBlock Style="{StaticResource MessageExceptionKey}" Text="Exception" />
                 </StackPanel>
 
-                <TextBlock Grid.Row="6"
+                <TextBlock Grid.Row="3"
                            Grid.Column="2"
                            MaxWidth="260"
                            Style="{StaticResource MessageExceptionValue}"
