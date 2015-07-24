@@ -8,8 +8,6 @@
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
     {
-        MessageStatistics statistics;
-
         public StoredMessage()
         {
             Headers = new List<StoredMessageHeader>();
@@ -21,25 +19,6 @@
         public Endpoint ReceivingEndpoint { get; set; }
         public TimeSpan ProcessingTime { get; set; }
         public string ConversationId { get; set; }
-
-        public MessageStatistics Statistics
-        {
-            get
-            {
-                if (statistics == null)
-                {
-                    statistics = new MessageStatistics
-                    {
-                        ProcessingTime = ProcessingTime
-                    };
-                }
-                return statistics;
-            }
-            set
-            {
-                statistics = value;
-            }
-        }
 
         public string RelatedToMessageId
         {
