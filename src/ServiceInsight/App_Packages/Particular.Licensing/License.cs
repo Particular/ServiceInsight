@@ -1,10 +1,9 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Particular.Licensing
+﻿namespace Particular.Licensing
 {
     using System;
     using System.Collections.Generic;
 
-    public class License
+    class License
     {
         public static License TrialLicense(DateTime trialStartDate)
         {
@@ -12,8 +11,8 @@ namespace Particular.Licensing
             {
                 LicenseType = "Trial",
                 ExpirationDate = trialStartDate.AddDays(14),
-                IsFromLicenseFile = false,
-                ValidApplications = new List<string> { "All" }
+                IsExtendedTrial = false,
+                ValidApplications = new List<string> { "All"}
             };
         }
 
@@ -29,9 +28,7 @@ namespace Particular.Licensing
             get { return !IsCommercialLicense; }
         }
 
-        public bool IsFromLicenseFile { get; set; }
-
-        public bool IsExtendedTrial { get { return IsTrialLicense && IsFromLicenseFile; } }
+        public bool IsExtendedTrial { get; set; }
 
         public bool IsCommercialLicense
         {
@@ -44,7 +41,7 @@ namespace Particular.Licensing
 
         public DateTime? UpgradeProtectionExpiration { get; internal set; }
 
-        public List<string> ValidApplications { get; internal set; }
+        public List<string> ValidApplications{ get; internal set; }
 
         public bool ValidForApplication(string applicationName)
         {

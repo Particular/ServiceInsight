@@ -30,6 +30,8 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>
+    </LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -221,6 +223,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="App_Packages\Particular.Licensing\License.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseDeserializer.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseExpirationChecker.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\LicenseVerifier.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\RegistryLicenseStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
@@ -271,15 +282,6 @@
     </Compile>
     <Compile Include="SequenceDiagram\SequenceDiagramViewModel.cs" />
     <Compile Include="MessageViewers\HexViewer\HexControl.cs" />
-    <Compile Include="Particular.Licensing\License.cs" />
-    <Compile Include="Particular.Licensing\LicenseDeserializer.cs" />
-    <Compile Include="Particular.Licensing\LicenseExpirationChecker.cs" />
-    <Compile Include="Particular.Licensing\LicenseVerifier.cs" />
-    <Compile Include="Particular.Licensing\RegistryLicenseStore.cs" />
-    <Compile Include="Particular.Licensing\ReleaseDateReader.cs" />
-    <Compile Include="Particular.Licensing\TrialStartDateStore.cs" />
-    <Compile Include="Particular.Licensing\UniversalDateParser.cs" />
-    <Compile Include="Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Framework\MessageDecoders\JsonMessageDeserializer.cs" />
     <Compile Include="Framework\Events\BodyTabSelectionChanged.cs" />
     <Compile Include="Framework\Events\RetryMessage.cs" />

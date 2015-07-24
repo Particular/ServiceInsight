@@ -1,5 +1,4 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Particular.Licensing
+﻿namespace Particular.Licensing
 {
     using System;
     using System.Linq;
