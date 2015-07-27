@@ -12,10 +12,19 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Saga/SagaResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <dxlc:LayoutControl Padding="0"
                             HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch">
+                            VerticalAlignment="Stretch"
+                            Visibility="{Binding Path=NoContentHelpNotVisible, Converter={StaticResource BoolToVisibilityConverter}}">
             <dxlc:LayoutGroup View="Tabs">
                 <dxlc:LayoutGroup.TabsStyle>
                     <Style TargetType="dxc:DXTabControl">
@@ -28,11 +37,42 @@
                 <dxlc:LayoutGroup Header="XML" Visibility="{Binding Path=XmlViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=XmlViewer}" />
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Header="Hex">
+                <dxlc:LayoutGroup Header="Hex" Visibility="{Binding Path=HexViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=HexViewer}" />
                 </dxlc:LayoutGroup>
-
             </dxlc:LayoutGroup>
         </dxlc:LayoutControl>
+
+        <StackPanel Visibility="{Binding Path=NoContentHelpVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock HorizontalAlignment="Center"
+                           FontSize="24px"
+                           FontWeight="Bold"
+                           Foreground="#D3D3D3"
+                           Text="This Message Body was not stored" />
+            <Border Margin="0,20,0,0" Background="#FFE4E4E4">
+
+                <StackPanel>
+                    <TextBlock Background="{x:Null}"
+                                FontFamily="Consolas"
+                                FontSize="16"
+                                Padding="2"
+                                TextWrapping="Wrap"
+                                Style="{StaticResource CodeStyle}">
+                        <Run Text="Messages that have a large message body are not stored. " />
+                        <Run Text="This is to ensure that the majority of our users enjoy the best level of performance. " />
+                        <Run Text="For users with special analysis needs, edit MaxBodySizeToStore in ServiceControl.config to increase the size of storeable messages." />
+                        <LineBreak/>
+                        <Run Text="Review the help documentation for ServiceControl configuration " />
+                        <Hyperlink Click="Hyperlink_Click"
+                                   FontSize="16px"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource SagaBlue}"
+                                   NavigateUri="http://docs.particular.net/servicecontrol/creating-config-file">http://docs.particular.net/servicecontrol/creating-config-file</Hyperlink>
+                    </TextBlock>
+
+                </StackPanel>
+
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

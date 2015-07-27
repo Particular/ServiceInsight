@@ -1,6 +1,7 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Models
 {
     using System;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
     using RestSharp.Deserializers;
 
     [Serializable]
@@ -16,6 +17,6 @@
 
         [DeserializeAs(Name = "Headers")]
         public byte[] HeaderRaw { get; set; }
-        public string Body { get; set; }
+        public PresentationBody Body { get; set; }
     }
 }

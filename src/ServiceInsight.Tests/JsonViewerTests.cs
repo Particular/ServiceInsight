@@ -5,6 +5,7 @@
     using Desktop.Models;
     using NSubstitute;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
 
     [TestFixture]
     public class JsonViewerTests
@@ -27,7 +28,7 @@
 
             ((IViewAware)ViewModel).AttachView(View);
 
-            ViewModel.SelectedMessage = new MessageBody { Body = TestMessage };
+            ViewModel.SelectedMessage = new MessageBody { Body = new PresentationBody { Text = TestMessage } }; 
 
             View.Received(1).Display(Arg.Any<string>());
         }
