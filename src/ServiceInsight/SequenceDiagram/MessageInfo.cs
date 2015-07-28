@@ -55,8 +55,6 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Name = message.FriendlyMessageType;
             if (message.Sagas != null && message.Sagas.Any())
                 SagaName = TypeHumanizer.ToName(message.Sagas.First().SagaType);
-            CriticalTime = message.CriticalTime;
-            DeliveryTime = message.DeliveryTime;
             ProcessingTime = message.ProcessingTime;
 
             ExceptionType = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
@@ -85,8 +83,6 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         public string Name { get; private set; }
         public string SagaName { get; private set; }
 
-        public TimeSpan CriticalTime { get; private set; }
-        public TimeSpan DeliveryTime { get; private set; }
         public TimeSpan ProcessingTime { get; private set; }
 
         public string ExceptionType { get; private set; }

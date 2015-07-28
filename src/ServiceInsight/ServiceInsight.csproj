@@ -303,7 +303,6 @@
     <Compile Include="MessageViewers\MessageContentType.cs" />
     <Compile Include="Models\CommandLineOptions.cs" />
     <Compile Include="Models\ExceptionDetails.cs" />
-    <Compile Include="Models\MessageStatistics.cs" />
     <Compile Include="Framework\Modules\EnvironmentModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>True</AutoGen>

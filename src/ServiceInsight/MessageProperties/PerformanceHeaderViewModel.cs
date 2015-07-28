@@ -29,13 +29,7 @@
 
         [Description("Calculated duration of processing")]
         public string ProcessingTime { get; private set; }
-
-        [Description("Calculated time from the sending of the message by the sending endpoint, until message processing started in the receiving endpoint")]
-        public string DeliveryTime { get; private set; }
-
-        [Description("Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint")]
-        public string CriticalTime { get; private set; }
-
+        
         protected override void OnMessagePropertiesLoaded()
         {
             if (!ProcessingStarted.HasValue ||
@@ -46,8 +40,6 @@
             }
 
             ProcessingTime = (ProcessingEnded.Value - ProcessingStarted.Value).SubmillisecondHumanize();
-            CriticalTime = (ProcessingEnded.Value - TimeSent.Value).SubmillisecondHumanize();
-            DeliveryTime = (ProcessingStarted.Value - TimeSent.Value).SubmillisecondHumanize();
         }
 
         protected override void MapHeaderKeys()
@@ -63,8 +55,6 @@
             ProcessingStarted = null;
             ProcessingEnded = null;
             ProcessingTime = null;
-            DeliveryTime = null;
-            CriticalTime = null;
         }
     }
 }

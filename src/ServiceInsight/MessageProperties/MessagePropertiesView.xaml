@@ -32,8 +32,6 @@
             <dxprg:PropertyDefinition Path="ProcessingStarted" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
             <dxprg:PropertyDefinition Path="ProcessingEnded" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
             <dxprg:PropertyDefinition Path="ProcessingTime" />
-            <dxprg:PropertyDefinition Path="DeliveryTime" />
-            <dxprg:PropertyDefinition Path="CriticalTime" />
         </dxprg:PropertyDefinition>
         <dxprg:PropertyDefinition Path="Errors" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
             <dxprg:PropertyDefinition Path="ExceptionInfo" CellTemplate="{StaticResource PropertyGridLongTextTemplate}" />

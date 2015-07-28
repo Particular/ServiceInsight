@@ -443,7 +443,7 @@
                             </ControlTemplate>
                         </ToolTip.Template>
 
-                        <UniformGrid Columns="2" Rows="3">
+                        <UniformGrid Columns="2" Rows="1">
                             <UniformGrid.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
@@ -451,10 +451,6 @@
                                 </Style>
                             </UniformGrid.Resources>
 
-                            <TextBlock FontWeight="Bold" Text="Critical time" />
-                            <TextBlock Text="{Binding CriticalTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                            <TextBlock FontWeight="Bold" Text="Delivery time" />
-                            <TextBlock Text="{Binding DeliveryTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
                             <TextBlock FontWeight="Bold" Text="Processing time" />
                             <TextBlock Text="{Binding ProcessingTime, Converter={StaticResource TimeSpanHumanizedConverter}}" />
                         </UniformGrid>
