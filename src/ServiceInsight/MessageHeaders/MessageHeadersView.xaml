@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageHeaders.MessageHeadersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:messageHeaders="clr-namespace:Particular.ServiceInsight.Desktop.MessageHeaders"
@@ -10,59 +11,78 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
-            <Setter Property="BorderBrush" Value="#D6D6D6"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#D6D6D6"/>
-            <Setter Property="VerticalGridLinesBrush" Value="#D6D6D6"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}"/>
+            <Setter Property="BorderBrush" Value="#D6D6D6" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#D6D6D6" />
+            <Setter Property="VerticalGridLinesBrush" Value="#D6D6D6" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}" />
         </Style>
-        <Style TargetType="{x:Type Thumb}" x:Key="ThumbStyle">
+        <Style x:Key="ThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Rectangle Width="7" Stroke="Transparent" Cursor="SizeWE"/>
+                        <Rectangle Width="7"
+                                   Cursor="SizeWE"
+                                   Stroke="Transparent" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style x:Key="ColumnHeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Border x:Name="BackgroundBorder" BorderThickness="0,0,1,1"
-                                Background="White"
-                                BorderBrush="#D6D6D6"
-                                Grid.ColumnSpan="2" />
-                            <ContentPresenter Grid.Column="0" Margin="6,3,6,3" VerticalAlignment="Center"/>
-                            <Path x:Name="SortArrow" Visibility="Collapsed" Data="M 0,0 L 1,0 0.5,1 z" Stretch="Fill"
-                             Grid.Column="1" Width="8" Height="6" Fill="#666666" Margin="0,0,8,0"
-                              VerticalAlignment="Center" RenderTransformOrigin="0.5, 0.4"/>
-                            <Thumb Grid.Column="0" x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ThumbStyle}"/>
-                            <Thumb x:Name="PART_RightHeaderGripper" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource ThumbStyle}"/>
+                            <Border x:Name="BackgroundBorder"
+                                    Grid.ColumnSpan="2"
+                                    Background="White"
+                                    BorderBrush="#D6D6D6"
+                                    BorderThickness="0,0,1,1" />
+                            <ContentPresenter Grid.Column="0"
+                                              Margin="6,3,6,3"
+                                              VerticalAlignment="Center" />
+                            <Thumb x:Name="PART_LeftHeaderGripper"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource ThumbStyle}" />
+                            <Path x:Name="SortArrow"
+                                  Grid.Column="1"
+                                  Width="8"
+                                  Height="6"
+                                  Margin="0,0,8,0"
+                                  VerticalAlignment="Center"
+                                  Data="M 0,0 L 1,0 0.5,1 z"
+                                  Fill="#666666"
+                                  RenderTransformOrigin="0.5, 0.4"
+                                  Stretch="Fill"
+                                  Visibility="Collapsed" />
+                            <Thumb x:Name="PART_RightHeaderGripper"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   Style="{StaticResource ThumbStyle}" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#F0F0F0"/>
+                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#F0F0F0" />
                             </Trigger>
                             <Trigger Property="SortDirection" Value="Ascending">
-                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="SortArrow" Property="RenderTransform">
                                     <Setter.Value>
-                                        <RotateTransform Angle="180"/>
+                                        <RotateTransform Angle="180" />
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="SortDirection" Value="Descending">
-                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
                             </Trigger>
                             <Trigger Property="DisplayIndex" Value="0">
-                                <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -71,22 +91,55 @@
             <!--<Setter Property="Background" Value="White"/>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F0F0F0"/>
+                    <Setter Property="Background" Value="#F0F0F0" />
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid Name="gridView" VerticalScrollBarVisibility="Visible" HeadersVisibility="Column" ScrollViewer.CanContentScroll="False" EnableRowVirtualization="False" Style="{StaticResource DataGridStyle}" ItemsSource="{Binding KeyValues}" IsReadOnly="True" AutoGenerateColumns="False" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" >
+        <Grid.Resources>
+            <DataTemplate x:Key="TextTemplate">
+                <TextBlock Text="{Binding Value}" />
+            </DataTemplate>
+            <DataTemplate x:Key="ExceptionTemplate">
+                <controls:MvvmTextEditor FontFamily="Consolas"
+                                         FontSize="10pt"
+                                         IsReadOnly="true"
+                                         SyntaxHighlighting="StackTrace"
+                                         Text="{Binding Value}" />
+            </DataTemplate>
+        </Grid.Resources>
+        <DataGrid Name="gridView"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="True"
+                  CanUserResizeRows="False"
+                  CanUserSortColumns="True"
+                  EnableRowVirtualization="False"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding KeyValues}"
+                  ScrollViewer.CanContentScroll="False"
+                  Style="{StaticResource DataGridStyle}"
+                  VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key"  Binding="{Binding Key}"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                <DataGridTextColumn Binding="{Binding Key}" Header="Key" />
+                <!--<DataGridTextColumn Header="Value"  Binding="{Binding Value}"/>-->
+                <DataGridTemplateColumn ClipboardContentBinding="{Binding Value}" Header="Value">
+                    <DataGridTemplateColumn.CellTemplateSelector>
+                        <messageHeaders:MessageHeaderValueTemplateSelector ExceptionTemplate="{StaticResource ExceptionTemplate}" TextTemplate="{StaticResource TextTemplate}" />
+                    </DataGridTemplateColumn.CellTemplateSelector>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Copy to Clipboard" Command="ApplicationCommands.Copy" >
+                    <MenuItem Command="ApplicationCommands.Copy" Header="Copy to Clipboard">
                         <MenuItem.Icon>
-                            <Image Width="16" Height="16" Source="/Images/Copy.png" />
+                            <Image Width="16"
+                                   Height="16"
+                                   Source="/Images/Copy.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
