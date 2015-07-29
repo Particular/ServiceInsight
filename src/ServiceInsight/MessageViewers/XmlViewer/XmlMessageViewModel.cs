@@ -35,7 +35,7 @@
                 return;
             }
 
-            messageView.Display(SelectedMessage.Body);
+            messageView.Display(SelectedMessage.Body.Text);
         }
 
         public void Handle(SelectedMessageChanged @event)

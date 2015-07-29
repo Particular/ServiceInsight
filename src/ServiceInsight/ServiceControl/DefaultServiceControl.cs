@@ -161,7 +161,25 @@
             {
                 baseUrl = null; // We use the default
             }
-            message.Body = Execute(request, response => CleanupBodyString(response.Content), baseUrl);
+
+            message.Body = Execute(request, response =>
+            {
+                var presentationBody = new PresentationBody();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        presentationBody.Text = CleanupBodyString(response.Content);
+                        break;
+                    case HttpStatusCode.NoContent:
+                        presentationBody.Hint = PresentationHint.NoContent;
+                        presentationBody.Text = "Body was too large and not stored. Edit ServiceControl/MaxBodySizeToStore to be larger in the ServiceControl configuration.";
+                        break;
+                }
+
+                return presentationBody;
+
+            }, baseUrl);
         }
 
         void AppendSystemMessages(IRestRequest request)
@@ -217,10 +235,10 @@
         PagedResult<T> GetPagedResult<T>(RestRequestWithCache request) where T : class, new()
         {
             var result = Execute<PagedResult<T>, List<T>>(request, response => new PagedResult<T>
-                {
-                    Result = response.Data,
-                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-                });
+            {
+                Result = response.Data,
+                TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
+            });
 
             return result;
         }
@@ -245,7 +263,7 @@
 
                     if (item != null)
                     {
-                        return (T) item;
+                        return (T)item;
                     }
 
                     break;
@@ -254,7 +272,7 @@
 
                     if (obj != null)
                     {
-                        var tuple = (Tuple<string, T>) obj;
+                        var tuple = (Tuple<string, T>)obj;
                         request.AddHeader("If-None-Match", tuple.Item1);
                     }
 
@@ -275,6 +293,13 @@
                         data = ProcessResponse(selector, response);
                         cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
                     }
+                    // https://github.com/Particular/FeatureDevelopment/issues/296
+                    else if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        data = ProcessResponse(selector, response);
+                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                    }
+
                     break;
 
                 case RestRequestWithCache.CacheStyle.IfNotModified:
@@ -295,7 +320,7 @@
 
                             if (obj != null)
                             {
-                                var tuple = (Tuple<string, T>) obj;
+                                var tuple = (Tuple<string, T>)obj;
                                 data = tuple.Item2;
                             }
                             break;
@@ -491,6 +516,26 @@
             return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
         }
 
-        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified };
+        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
+    }
+
+    public enum PresentationHint
+    {
+        Standard,
+        NoContent
+    }
+
+    public class PresentationBody
+    {
+        PresentationHint hint = PresentationHint.Standard;
+
+   
+        public string Text { get; set; }
+
+        public PresentationHint Hint
+        {
+            get { return hint; }
+            set { hint = value; }
+        }
     }
 }
