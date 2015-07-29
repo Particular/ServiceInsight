@@ -21,10 +21,11 @@
     </UserControl.Resources>
 
     <Grid>
-        <dxlc:LayoutControl Padding="0"
-                            HorizontalAlignment="Stretch"
+        <dxlc:LayoutControl HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
-                            Visibility="{Binding Path=NoContentHelpNotVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Padding="0"
+                            Visibility="{Binding Path=NoContentHelpNotVisible,
+                                                 Converter={StaticResource BoolToVisibilityConverter}}">
             <dxlc:LayoutGroup View="Tabs">
                 <dxlc:LayoutGroup.TabsStyle>
                     <Style TargetType="dxc:DXTabControl">
@@ -45,29 +46,31 @@
 
         <StackPanel Visibility="{Binding Path=NoContentHelpVisible, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBlock HorizontalAlignment="Center"
-                           FontSize="24px"
-                           FontWeight="Bold"
-                           Foreground="#D3D3D3"
-                           Text="This Message Body was not stored" />
+                       FontSize="24px"
+                       FontWeight="Bold"
+                       Foreground="#D3D3D3"
+                       Text="This Message Body was not stored" />
             <Border Margin="0,20,0,0" Background="#FFE4E4E4">
 
                 <StackPanel>
                     <TextBlock Background="{x:Null}"
-                                FontFamily="Consolas"
-                                FontSize="16"
-                                Padding="2"
-                                TextWrapping="Wrap"
-                                Style="{StaticResource CodeStyle}">
+                               FontFamily="Consolas"
+                               FontSize="16"
+                               Padding="2"
+                               Style="{StaticResource CodeStyle}"
+                               TextWrapping="Wrap">
                         <Run Text="Messages that have a large message body are not stored. " />
                         <Run Text="This is to ensure that the majority of our users enjoy the best level of performance. " />
-                        <Run Text="For users with special analysis needs, edit MaxBodySizeToStore in ServiceControl.config to increase the size of storeable messages." />
-                        <LineBreak/>
+                        <Run Text="For users with special analysis needs, edit MaxBodySizeToStore in ServiceControl.exe.config to increase the size of storeable messages." />
+                        <LineBreak />
                         <Run Text="Review the help documentation for ServiceControl configuration " />
                         <Hyperlink Click="Hyperlink_Click"
                                    FontSize="16px"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource SagaBlue}"
-                                   NavigateUri="http://docs.particular.net/servicecontrol/creating-config-file">http://docs.particular.net/servicecontrol/creating-config-file</Hyperlink>
+                                   NavigateUri="http://docs.particular.net/servicecontrol/creating-config-file">
+                            http://docs.particular.net/servicecontrol/creating-config-file
+                        </Hyperlink>
                     </TextBlock>
 
                 </StackPanel>
