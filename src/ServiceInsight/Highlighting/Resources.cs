@@ -5,6 +5,10 @@
     using System.Xml;
     using ICSharpCode.AvalonEdit.Highlighting;
 
+
+    /// <summary>
+    /// Registers bespoke highlighting for MvvmTextEditor
+    /// </summary>
     static class Resources
     {
         public static void RegisterHighlightings()

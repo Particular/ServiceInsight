@@ -231,7 +231,7 @@
 
         <!--  Dock Windows  -->
         <Grid>
-            <dxd:DockLayoutManager x:Name="DockManager" AutomationProperties.AutomationId="DockManager" >
+            <dxd:DockLayoutManager x:Name="DockManager" AutomationProperties.AutomationId="DockManager">
                 <dxd:DockLayoutManager.AutoHideGroups>
 
                     <dxd:AutoHideGroup AutoHideSize="300, 200"
@@ -250,8 +250,9 @@
                 </dxd:DockLayoutManager.AutoHideGroups>
 
                 <dxd:LayoutGroup AutomationProperties.AutomationId="ContentGroup">
-                    <dxd:LayoutGroup ItemWidth="4*" Orientation="Vertical" 
-                                     AutomationProperties.AutomationId="RightSideContentGroup">
+                    <dxd:LayoutGroup AutomationProperties.AutomationId="RightSideContentGroup"
+                                     ItemWidth="4*"
+                                     Orientation="Vertical">
                         <dxd:LayoutPanel x:Name="Messages"
                                          AllowClose="False"
                                          AllowFloat="False"
@@ -262,8 +263,9 @@
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
 
-                        <dxd:LayoutGroup ItemHeight="2*" Orientation="Horizontal" 
-                                         AutomationProperties.AutomationId="RightBottomContentGroup"> 
+                        <dxd:LayoutGroup AutomationProperties.AutomationId="RightBottomContentGroup"
+                                         ItemHeight="2*"
+                                         Orientation="Horizontal">
                             <dxd:TabbedGroup x:Name="MainTabbedView"
                                              AllowClose="False"
                                              AllowFloat="False"
@@ -311,8 +313,8 @@
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"
                                                  CaptionImage="/Images/Document.png"
-                                                 ShowBorder="False"
-                                                 IsVisibleChanged="MessageBody_OnIsVisibleChanged">
+                                                 IsVisibleChanged="MessageBody_OnIsVisibleChanged"
+                                                 ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
                                 </dxd:LayoutPanel>
 

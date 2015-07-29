@@ -5,8 +5,6 @@
     {
         public MessageHeadersView()
         {
-            Highlighting.Resources.RegisterHighlightings();
-
             InitializeComponent();
         }
     }

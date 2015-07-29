@@ -1,23 +1,24 @@
 ﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageProperties.MessagePropertiesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
 
-    
-    <dxprg:PropertyGridControl SelectedObject="{Binding}" 
-                               AllowInstanceInitializer="False"
-                               ShowProperties="WithPropertyDefinitions"
-                               SortMode="Definitions"
+
+    <dxprg:PropertyGridControl AllowInstanceInitializer="False"
+                               ExpandCategoriesWhenSelectedObjectChanged="True"
+                               SelectedObject="{Binding}"
+                               ShowCategories="False"
                                ShowDescriptionIn="Panel"
-                               ExpandCategoriesWhenSelectedObjectChanged="True" 
-                               ShowCategories="False" 
-                               ShowToolPanel="False">
-        <dxprg:PropertyDefinition Path="General" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
+                               ShowProperties="WithPropertyDefinitions"
+                               ShowToolPanel="False"
+                               SortMode="Definitions">
+        <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}" Path="General">
             <dxprg:PropertyDefinition Path="Version" />
             <dxprg:PropertyDefinition Path="EnclosedMessageTypes" />
             <dxprg:PropertyDefinition Path="MessageId" />
@@ -25,29 +26,29 @@
             <dxprg:PropertyDefinition Path="ContentType" />
             <dxprg:PropertyDefinition Path="IsDeferedMessage" />
             <dxprg:PropertyDefinition Path="ConversationId" />
-            <dxprg:PropertyDefinition Path="HeaderContent" CellTemplate="{StaticResource PropertyGridLongTextTemplate}" />
+            <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridLongTextTemplate}" Path="HeaderContent" />
         </dxprg:PropertyDefinition>
-        <dxprg:PropertyDefinition Path="Performance" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
-            <dxprg:PropertyDefinition Path="TimeSent" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
-            <dxprg:PropertyDefinition Path="ProcessingStarted" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
-            <dxprg:PropertyDefinition Path="ProcessingEnded" CellTemplate="{StaticResource PropertyGridDateTextTemplate}" />
+        <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}" Path="Performance">
+            <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridDateTextTemplate}" Path="TimeSent" />
+            <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridDateTextTemplate}" Path="ProcessingStarted" />
+            <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridDateTextTemplate}" Path="ProcessingEnded" />
             <dxprg:PropertyDefinition Path="ProcessingTime" />
             <dxprg:PropertyDefinition Path="DeliveryTime" />
             <dxprg:PropertyDefinition Path="CriticalTime" />
         </dxprg:PropertyDefinition>
-        <dxprg:PropertyDefinition Path="Errors" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
-            <dxprg:PropertyDefinition Path="ExceptionInfo" CellTemplate="{StaticResource PropertyGridLongTextTemplate}" />
+        <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}" Path="Errors">
+            <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridLongTextTemplate}" Path="ExceptionInfo" />
             <dxprg:PropertyDefinition Path="FailedQueue" />
             <dxprg:PropertyDefinition Path="TimeOfFailure" />
         </dxprg:PropertyDefinition>
-        <dxprg:PropertyDefinition Path="Gateway" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
+        <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}" Path="Gateway">
             <dxprg:PropertyDefinition Path="From" />
             <dxprg:PropertyDefinition Path="To" />
             <dxprg:PropertyDefinition Path="DestinationSites" />
             <dxprg:PropertyDefinition Path="OriginatingSite" />
             <dxprg:PropertyDefinition Path="RouteTo" />
         </dxprg:PropertyDefinition>
-        <dxprg:PropertyDefinition Path="Saga" CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}">
+        <dxprg:PropertyDefinition CellTemplate="{StaticResource PropertyGridEmptyTextTemplate}" Path="Saga">
             <dxprg:PropertyDefinition Path="SagaType" />
             <dxprg:PropertyDefinition Path="SagaDataType" />
             <dxprg:PropertyDefinition Path="OriginatingSagaId" />
