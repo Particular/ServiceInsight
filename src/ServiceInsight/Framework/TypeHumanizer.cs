@@ -7,7 +7,7 @@
         public static string ToName(string type)
         {
             if (string.IsNullOrEmpty(type))
-                return string.Empty;
+                return null;
 
             var clazz = type.Split(',').First();
             var objectName = clazz.Split('.').Last();
