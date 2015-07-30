@@ -258,7 +258,7 @@
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
 
-                    
+
                     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
                         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
                         <Style.Triggers>
@@ -303,17 +303,17 @@
                                             MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
                                             d:DataContext="{d:DesignInstance local:MessageNode}"
                                             ms:DiagramNodeElement.RaisesBoundsChangeRequested="True">
-                                        <Grid x:Name="RootGrid">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="*" MinWidth="130" />
-                                                <ColumnDefinition Width="20" />
-                                            </Grid.ColumnDefinitions>
+                                            <Grid x:Name="RootGrid">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" MinWidth="130" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Row="0"
                                                         Grid.Column="0"
                                                         Grid.ColumnSpan="3"
@@ -325,19 +325,27 @@
                                                         FontSize="10px"
                                                         Style="{StaticResource MessageEndpointText}"
                                                         Text="{Binding Message.SendingEndpoint}" />
-                                            <controls:IconControl x:Name="MessageTypeIcon"
+                                                <controls:IconControl x:Name="MessageTypeIcon"
                                                                   Grid.Row="1"
                                                                   Grid.Column="0"
+                                                                  Margin="10"
                                                                   Width="24"
                                                                   Height="24"
                                                                   HorizontalAlignment="Center"
                                                                   VerticalAlignment="Center"
                                                                   Style="{StaticResource MessageIconStyle}" />
 
-                                            <StackPanel Grid.Row="1" Grid.Column="1">
-                                                <CheckBox x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
+                                                <Grid Grid.Row="1" Grid.Column="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
 
-                                                <local:MessagePopupControl x:Name="MenuPopup"
+                                                    <CheckBox Grid.Row="0" x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
+
+                                                    <local:MessagePopupControl x:Name="MenuPopup"
+                                                                           Grid.Row="1"
                                                                            HorizontalAlignment="Stretch"
                                                                            AllowsTransparency="True"
                                                                            DataContext="{Binding ElementName=RootGrid,
@@ -350,24 +358,26 @@
                                                                                                      RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}},
                                                                                                      Path=Zoom}"
                                                                            StaysOpen="False">
-                                                    <local:MessageActionPopup />
-                                                </local:MessagePopupControl>
+                                                        <local:MessageActionPopup />
+                                                    </local:MessagePopupControl>
 
-                                                <Grid Margin="0 -5"
+                                                    <Grid Margin="0 -5"
+                                                      Grid.Row="2"
                                                       Visibility="{Binding HasSaga,
                                                                            Converter={StaticResource BoolToVisibilityConverter}}"
                                                       cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="20" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ContentControl x:Name="SagaStatusIcon"
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="20" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <ContentControl x:Name="SagaStatusIcon"
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
                                                                     Template="{StaticResource SagaInitiatedIcon}" />
-                                                    <TextBlock Grid.Column="1"
-                                                                  Margin="2 0 0 0"
-                                                                  Background="#333333"
+                                                        <Border Grid.Column="1"
+                                                                   Margin="2 0 0 0"
+                                                                   Background="#333333">
+                                                            <TextBlock VerticalAlignment="Center"
                                                                   FontSize="11px"
                                                                   FontWeight="Bold"
                                                                   Foreground="{StaticResource MessageBackground}"
@@ -375,15 +385,17 @@
                                                                   Text="{Binding SagaType}"
                                                                   TextTrimming="CharacterEllipsis"
                                                                   TextWrapping="NoWrap" />
-                                                </Grid>
-                                            </StackPanel>
+                                                        </Border>
 
-                                            <ContentControl Grid.Row="1"
+                                                    </Grid>
+                                                </Grid>
+
+                                                <ContentControl Grid.Row="1"
                                                             Grid.Column="2"
                                                             HorizontalAlignment="Right"
                                                             VerticalAlignment="Top"
                                                             Style="{StaticResource FailedMessageMarker}" />
-                                            <TextBlock Grid.Row="2"
+                                                <TextBlock Grid.Row="2"
                                                         Grid.Column="0"
                                                         Grid.ColumnSpan="3" Background="{StaticResource EndpointBackground}"
                                                         ToolTip="Processing Endpoint"
@@ -393,8 +405,8 @@
                                                         FontSize="10px"
                                                         Style="{StaticResource MessageEndpointText}"
                                                         Text="{Binding Message.ReceivingEndpoint}" />
-                                        </Grid>
-                                    </Border>
+                                            </Grid>
+                                        </Border>
                                     </StackPanel>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSagaInitiated}"
