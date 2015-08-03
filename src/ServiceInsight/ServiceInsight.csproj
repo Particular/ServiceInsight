@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="Highlighting\StackTrace.xshd" />
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
     <Reference Include="Anotar.Serilog">
@@ -250,6 +251,7 @@
     <Compile Include="Framework\Attachments\Attachment.cs" />
     <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Framework\TypeHumanizer.cs" />
+    <Compile Include="Highlighting\Resources.cs" />
     <Compile Include="LogWindow\LoggingRichTextBoxBehavior.cs" />
     <Compile Include="Framework\DefaultClipboard.cs" />
     <Compile Include="Framework\Behaviors\BindableSelectedItemBehavior.cs" />
@@ -266,6 +268,7 @@
     <Compile Include="Framework\Rx\RxViewAware.cs" />
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
+    <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
