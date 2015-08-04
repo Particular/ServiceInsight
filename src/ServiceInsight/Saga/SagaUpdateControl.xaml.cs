@@ -1,13 +1,12 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Saga
 {
-    using System;
     using System.Windows;
     using System.Windows.Input;
 
     public partial class SagaUpdateControl
     {
         public static readonly RoutedEvent TimeoutClickEvent = EventManager.RegisterRoutedEvent("TimeoutClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SagaUpdateControl));
-        public static readonly DependencyProperty SelectedMessageIdProperty = DependencyProperty.Register("SelectedMessageId", typeof(Guid), typeof(SagaUpdateControl), new FrameworkPropertyMetadata(Guid.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty SelectedMessageIdProperty = DependencyProperty.Register("SelectedMessageId", typeof(string), typeof(SagaUpdateControl), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public SagaUpdateControl()
         {
@@ -20,9 +19,9 @@
             remove { RemoveHandler(TimeoutClickEvent, value); }
         }
 
-        public Guid SelectedMessageId
+        public string SelectedMessageId
         {
-            get { return (Guid)GetValue(SelectedMessageIdProperty); }
+            get { return (string)GetValue(SelectedMessageIdProperty); }
             set { SetValue(SelectedMessageIdProperty, value); }
         }
 

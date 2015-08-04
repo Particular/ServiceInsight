@@ -8,6 +8,6 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-   
-   <local:HexControl Body="{Binding SelectedMessage.Body}" />
+
+    <local:HexControl Body="{Binding SelectedMessage.Body.Text}" />
 </UserControl>

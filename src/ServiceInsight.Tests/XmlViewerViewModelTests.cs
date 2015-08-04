@@ -6,6 +6,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
     using Shouldly;
 
     [TestFixture]
@@ -26,7 +27,7 @@
         [Test]
         public void should_clear_message_body_when_selected_message_is_unselected()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = new PresentationBody { Text = TestMessage } }));
             ViewModel.Handle(new SelectedMessageChanged(null));
 
             ViewModel.SelectedMessage.ShouldBe(null);
@@ -35,7 +36,7 @@
         [Test]
         public void should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = TestMessage }));
+            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = new PresentationBody { Text = TestMessage } }));
 
             View.DidNotReceive().Display(Arg.Any<string>());
         }

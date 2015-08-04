@@ -6,6 +6,7 @@
     using HexViewer;
     using JsonViewer;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
     using XmlViewer;
 
     public class MessageBodyViewModel : Screen,
@@ -33,7 +34,10 @@
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
+
         }
+
+      
 
         public HexContentViewModel HexViewer { get; private set; }
 
@@ -41,16 +45,44 @@
 
         public XmlMessageViewModel XmlViewer { get; private set; }
 
-        public MessageContentType ContentType { get; private set; }
+        MessageContentType ContentType { get; set; }
+
+        PresentationHint PresentationHint { get; set; }
 
         public bool JsonViewerVisible
         {
-            get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json; }
+            get { 
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json) 
+                            && PresentationHint == PresentationHint.Standard; 
+            }
         }
-
+        
         public bool XmlViewerVisible
         {
-            get { return ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml; }
+            get { 
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml) 
+                            && PresentationHint == PresentationHint.Standard; 
+            }
+        }
+        public bool HexViewerVisible
+        {
+            get {
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml) 
+                            && PresentationHint == PresentationHint.Standard; 
+            }
+        }
+
+        public bool NoContentHelpNotVisible
+        {
+            get { return PresentationHint != PresentationHint.NoContent; }
+        }
+
+        public bool NoContentHelpVisible
+        {
+            get
+            {
+                return PresentationHint == PresentationHint.NoContent;
+            }
         }
 
         public void Handle(SelectedMessageChanged @event)
@@ -59,6 +91,12 @@
             if (storedMessage != null)
             {
                 ContentType = ContentTypeMaps.GetValueOrDefault(storedMessage.ContentType, MessageContentType.NotSpecified);
+
+                if (storedMessage.Body != null)
+                {
+                    PresentationHint = storedMessage.Body.Hint;
+                }
+
             }
             else
             {

@@ -1,12 +1,11 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Particular.Licensing
+﻿namespace Particular.Licensing
 {
     using System;
     using System.Security.Cryptography;
     using System.Security.Cryptography.Xml;
     using System.Xml;
 
-    public class LicenseVerifier
+    class LicenseVerifier
     {
         public static bool TryVerify(string licenseText, out Exception failure)
         {
@@ -23,6 +22,7 @@ namespace Particular.Licensing
                 failure = ex;
                 return false;
             }
+
         }
 
         public static void Verify(string licenseText)

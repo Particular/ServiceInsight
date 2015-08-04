@@ -12,9 +12,7 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
             public static GridColumn MessageId;
             public static GridColumn MessageType;
             public static GridColumn TimeSent;
-            public static GridColumn CriticalTime;
             public static GridColumn ProcessingTime;
-            public static GridColumn DeliveryTime;
 
             static Columns()
             {
@@ -22,9 +20,7 @@ namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
                 MessageId = new GridColumn(1, "MessageId");
                 MessageType = new GridColumn(2, "MessageType");
                 TimeSent = new GridColumn(3, "TimeSent");
-                CriticalTime = new GridColumn(4, "CriticalTime");
-                ProcessingTime = new GridColumn(5, "ProcessingTime");
-                DeliveryTime = new GridColumn(6 , "DeliveryTime");
+                ProcessingTime = new GridColumn(4, "ProcessingTime");
             }
         }
 

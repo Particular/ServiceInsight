@@ -43,6 +43,9 @@
             LoggingConfig.SetupLogging();
             if (!Debugger.IsAttached)
                 Framework.ExceptionHandler.Attach();
+
+            Highlighting.Resources.RegisterHighlightings();
+
             InitializeComponent();
         }
 

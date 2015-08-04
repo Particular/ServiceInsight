@@ -15,7 +15,7 @@
     {
         SagaData data;
         StoredMessage currentMessage;
-        Guid selectedMessageId;
+        string selectedMessageId;
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
 
@@ -79,7 +79,7 @@
 
             RefreshSaga(message);
 
-            SelectedMessageId = Guid.Parse(message.MessageId);
+            SelectedMessageId = message.MessageId;
         }
 
         void RefreshSaga(StoredMessage message)
@@ -213,7 +213,7 @@
             RefreshSaga(currentMessage);
         }
 
-        public Guid SelectedMessageId
+        public string SelectedMessageId
         {
             get { return selectedMessageId; }
             set
@@ -237,7 +237,7 @@
             }
         }
 
-        void SetSelected(IEnumerable<SagaMessage> messages, Guid id)
+        void SetSelected(IEnumerable<SagaMessage> messages, string id)
         {
             if (messages == null)
                 return;
@@ -248,7 +248,7 @@
             }
         }
 
-        void SetSelected(SagaMessage message, Guid id)
+        void SetSelected(SagaMessage message, string id)
         {
             message.IsSelected = message.MessageId == id;
         }

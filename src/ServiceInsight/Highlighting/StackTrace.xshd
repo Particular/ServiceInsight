@@ -1,0 +1,35 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="Custom Highlighting" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="LineNumber" foreground="Red" />
+  <Color name="MethodCall" fontWeight="bold" foreground="#008B8B" />
+  <Color name="ClassName" foreground="#2C5CB3" />
+  <Color name="FileName" fontWeight="normal" fontStyle="italic" underline="true" foreground="Blue" />
+	
+	<!-- This is the main ruleset. -->
+	<RuleSet>
+    <Rule color="MethodCall">
+      \b
+      [\d\w_&lt;&gt;]+  # an identifier
+      (?=\s*[\(\[]) # followed by ( or [
+    </Rule>
+    <Rule color="LineNumber">
+      (?!:line\s)
+      \d+
+      $
+    </Rule>
+    <Rule color="ClassName">
+      (?&lt;=at\s)
+      .+
+      (?=
+      \. # dot before mthod call
+      [\d\w_&lt;&gt;]+ # an identifier
+      (?=\s*[\(\[]) # followed by ( or [
+      )
+    </Rule>
+    <Rule color="FileName">
+      (?&lt;=\sin\s)
+      .+
+      (?=:line\s\d+)
+    </Rule>
+	</RuleSet>
+</SyntaxDefinition>

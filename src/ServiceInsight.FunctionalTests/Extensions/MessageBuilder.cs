@@ -9,9 +9,7 @@
     {
         string messageId;
         string conversationId;
-        TimeSpan criticalTime;
         TimeSpan processingTime;
-        TimeSpan deliveryTime;
         Type messageType;
         MessageStatus messageStatus;
         DateTime timeSent;
@@ -22,8 +20,6 @@
         public MessageBuilder()
         {
             messageId = Guid.NewGuid().ToString();
-            criticalTime = TimeSpan.FromSeconds(5);
-            deliveryTime = TimeSpan.FromSeconds(4);
             processingTime = TimeSpan.FromSeconds(3);
             messageType = typeof(SubmitOrder);
             messageStatus = MessageStatus.Successful;
@@ -40,21 +36,9 @@
             return this;
         }
 
-        public MessageBuilder WithCriticalTime(TimeSpan value)
-        {
-            criticalTime = value;
-            return this;
-        }
-
         public MessageBuilder WithProcessingTime(TimeSpan value)
         {
             processingTime = value;
-            return this;
-        }
-
-        public MessageBuilder WithDeliveryTime(TimeSpan value)
-        {
-            deliveryTime = value;
             return this;
         }
 
@@ -106,8 +90,6 @@
             {
                 Id = Guid.NewGuid().ToString(),
                 MessageId = messageId,
-                CriticalTime = criticalTime,
-                DeliveryTime = deliveryTime,
                 ProcessingTime = processingTime,
                 MessageType = messageType.FullName,
                 Status = messageStatus,

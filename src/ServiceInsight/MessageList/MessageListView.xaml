@@ -103,22 +103,10 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
-                                    FieldName="CriticalTime"
-                                    Header="Critical Time"
-                                    HeaderToolTip="Calculated time from the sending of the message by the sending endpoint, until message processing completed in the receiving endpoint"
-                                    Tag="critical_time" />
-                    <dxg:GridColumn AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
-                    <dxg:GridColumn AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
-                                    FieldName="DeliveryTime"
-                                    Header="Delivery Time"
-                                    HeaderToolTip="Calculated duration of delivery"
-                                    Tag="delivery_time" />
                 </dxg:GridControl.Columns>
 
                 <dxg:GridControl.View>
