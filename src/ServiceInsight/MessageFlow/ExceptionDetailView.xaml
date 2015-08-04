@@ -35,10 +35,11 @@
             <ScrollViewer Grid.Row="2">
                 <Border BorderBrush="Black" BorderThickness="1">
 
-                    <controls:MvvmTextEditor DockPanel.Dock="Top"
+                    <controls:MvvmTextEditor 
+                        DockPanel.Dock="Top" Style="{StaticResource MvvmTextEditorScrollFixStyle}"
                                              FontFamily="Consolas"
                                              FontSize="10pt"
-                                             IsReadOnly="true"
+                                             IsReadOnly="True"
                                              ScrollViewer.CanContentScroll="True"
                                              SyntaxHighlighting="StackTrace"
                                              Text="{Binding Path=Exception.StackTrace}" />
