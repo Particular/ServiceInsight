@@ -383,7 +383,7 @@
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#5" Component_="AI_CustomARPName"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
     <ROW Registry="__1" Root="0" Key="si" Value="URL:Service Insight" Component_="_"/>
-    <ROW Registry="__2" Root="0" Key="si\shell\open\command" Value="&quot;[Profiler_Dir]Particular.ServiceInsight.exe&quot; &quot;%1&quot;" Component_="__1"/>
+    <ROW Registry="__2" Root="0" Key="si\shell\open\command" Value="&quot;[Profiler_Dir]ServiceInsight.exe&quot; &quot;%1&quot;" Component_="__1"/>
     <ROW Registry="open" Root="0" Key="si\shell\open" Name="+" Component_="open"/>
     <ROW Registry="shell" Root="0" Key="si\shell" Name="+" Component_="shell"/>
   </COMPONENT>
