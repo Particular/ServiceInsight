@@ -212,6 +212,7 @@
             }
 
             UpdateSetting();
+            UpdateLayout();
         }
 
         void UpdateSetting()
