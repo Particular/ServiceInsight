@@ -190,6 +190,7 @@
         {
             nodeMap.Clear();
 
+            loadedConversationId = null;
             SelectedMessage = null;
             Diagram = new FlowDiagramModel();
         }
