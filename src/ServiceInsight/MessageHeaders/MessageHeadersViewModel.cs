@@ -1,5 +1,6 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
+    using System;
     using System.Linq;
     using Caliburn.Micro;
     using Particular.ServiceInsight.Desktop.Framework.Events;
@@ -21,11 +22,14 @@
             if (storedMessage == null) return;
             var headers = storedMessage.Headers;
 
-            KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
+            using (KeyValues.SuppressChangeNotifications())
             {
-                Key = h.Key,
-                Value = h.Value
-            }));
+                KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
+                {
+                    Key = h.Key,
+                    Value = h.Value
+                }));
+            }
         }
     }
 }
