@@ -75,7 +75,7 @@
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
+            Bounds = new Rect(new Point(), new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
