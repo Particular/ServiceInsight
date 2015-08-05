@@ -37,6 +37,7 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
+        IMessageListView view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -80,6 +81,12 @@
         public ICommand CopyMessageIdCommand { get; private set; }
 
         public ICommand CopyHeadersCommand { get; private set; }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+            this.view = (IMessageListView)view;
+        }
 
         public void CopyHeaders()
         {
@@ -225,14 +232,20 @@
         public void Handle(SelectedMessageChanged message)
         {
             var msg = message.Message;
-            
             if (msg == null)
             {
                 FocusedRow = null;
                 return;
             }
 
-            FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
+            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
+            if (newFocusedRow == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
+            FocusedRow = newFocusedRow;
 
             LoadMessageBody();
 
@@ -249,18 +262,26 @@
         {
             if (ShouldUpdateMessages(pagedResult))
             {
-                var currentItem = FocusedRow;
-
-                Rows.Clear();
-                Rows.AddRange(pagedResult.Result);
-
-                if (currentItem != null)
-                    FocusedRow = Rows.FirstOrDefault(item => item.Id == currentItem.Id);
+                BindResult(pagedResult);
             }
 
             if (FocusedRow == null && Rows.Count > 0)
             {
                 FocusedRow = Rows[0];
+            }
+        }
+
+        void BindResult(PagedResult<StoredMessage> pagedResult)
+        {
+            try
+            {
+                BeginDataUpdate();
+                Rows.Clear();
+                Rows.AddRange(pagedResult.Result);
+            }
+            finally
+            {
+                EndDataUpdate();
             }
         }
 
@@ -293,6 +314,22 @@
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
             SearchBar.NotifyPropertiesChanged();
+        }
+
+        void EndDataUpdate()
+        {
+            if (view != null)
+            {
+                view.EndDataUpdate();
+            }
+        }
+
+        void BeginDataUpdate()
+        {
+            if (view != null)
+            {
+                view.BeginDataUpdate();
+            }
         }
 
         public void RaiseSelectedMessageChanged(StoredMessage currentItem)

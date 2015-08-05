@@ -42,7 +42,7 @@
             <dxg:GridControl x:Name="grid"
                              Grid.Row="1"
                              CurrentItem="{Binding FocusedRow,
-                                                   Mode=OneWay}"
+                                                   Mode=TwoWay}"
                              CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
                              CustomUnboundColumnData="OnRequestAdvancedMessageData"
                              IsHitTestVisible="{Binding WorkInProgress,
@@ -50,6 +50,7 @@
                              ItemsSource="{Binding Rows}"
                              SelectionMode="None"
                              ShowLoadingPanel="{Binding WorkInProgress}"
+                             CurrentItemChanged="GridOnCurrentItemChanged"
                              StartSorting="Grid_OnStartSorting">
                 <dxb:BarManager.DXContextMenu>
                     <dxb:PopupMenu>
