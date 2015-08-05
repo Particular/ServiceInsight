@@ -8,6 +8,7 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:startup="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -324,7 +325,10 @@
                     <DataTemplate x:Key="PropertyGridEmptyTextTemplate" />
 
                     <DataTemplate x:Key="TextEditGridColumnCellTemplate">
-                        <dxe:TextEdit x:Name="PART_Editor" />
+                        <DataTemplate.Resources>
+                            <SolidColorBrush x:Key="{dxet:TextEditThemeKey ResourceKey=NullTextForeground, IsThemeIndependent=True}" Color="#3c3c3c" />
+                        </DataTemplate.Resources>
+                        <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">

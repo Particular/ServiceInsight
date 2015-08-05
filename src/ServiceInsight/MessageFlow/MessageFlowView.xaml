@@ -105,7 +105,7 @@
                                                        FontSize="14px"
                                                        FontWeight="Bold"
                                                        Style="{StaticResource MessageTypeText}"
-                                                       Text="{Binding Message.FriendlyMessageType}"
+                                                       Text="{Binding Message.FriendlyMessageType, TargetNullValue='MessageType value unknown'}"
                                                        ToolTip="{Binding Message.FriendlyMessageType}" />
 
                                             <Path x:Name="ChevronDown"
@@ -116,7 +116,7 @@
                                                   Fill="#FF000000"
                                                   Stretch="Fill" />
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource TimeSentText}" Text="{Binding TimeSent}" />
+                                        <TextBlock Style="{StaticResource TimeSentText}" Text="{Binding TimeSent, TargetNullValue='TimeSent value unknown'}" />
                                     </StackPanel>
                                 </ControlTemplate>
                             </Setter.Value>
