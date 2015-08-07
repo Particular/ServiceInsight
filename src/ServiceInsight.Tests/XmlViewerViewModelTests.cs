@@ -27,8 +27,8 @@
         [Test]
         public void should_clear_message_body_when_selected_message_is_unselected()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = new PresentationBody { Text = TestMessage } }));
-            ViewModel.Handle(new SelectedMessageChanged(null));
+            ViewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
+            ViewModel.Display(null);
 
             ViewModel.SelectedMessage.ShouldBe(null);
         }
@@ -36,7 +36,7 @@
         [Test]
         public void should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.Handle(new SelectedMessageChanged(new StoredMessage { Body = new PresentationBody { Text = TestMessage } }));
+            ViewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
 
             View.DidNotReceive().Display(Arg.Any<string>());
         }
