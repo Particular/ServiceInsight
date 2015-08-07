@@ -27,7 +27,6 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<BodyTabSelectionChanged>,
         IHandle<SelectedMessageChanged>
     {
         readonly IClipboard clipboard;
@@ -71,8 +70,6 @@
         public StoredMessage FocusedRow { get; set; }
 
         public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
-
-        public bool ShouldLoadMessageBody { get; set; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -199,16 +196,6 @@
             }
         }
 
-        public void Handle(BodyTabSelectionChanged @event)
-        {
-            ShouldLoadMessageBody = @event.IsSelected;
-            if (ShouldLoadMessageBody)
-            {
-                var bodyLoaded = LoadMessageBody();
-                if (bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
-            }
-        }
-
         public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
@@ -238,7 +225,9 @@
                 return;
             }
 
-            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
+            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && 
+                                                    row.TimeSent == msg.TimeSent && 
+                                                    row.Id == msg.Id);
             if (newFocusedRow == null)
             {
                 FocusedRow = null;
@@ -246,8 +235,6 @@
             }
 
             FocusedRow = newFocusedRow;
-
-            LoadMessageBody();
 
             NotifyPropertiesChanged();
         }
@@ -292,22 +279,6 @@
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
-        }
-
-        bool LoadMessageBody()
-        {
-            if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty())
-            {
-                return false;
-            }
-
-            eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-            serviceControl.LoadBody(FocusedRow);
-
-            eventAggregator.Publish(new WorkFinished());
-
-            return true;
         }
 
         void NotifyPropertiesChanged()

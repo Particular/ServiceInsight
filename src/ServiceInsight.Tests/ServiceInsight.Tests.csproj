@@ -118,6 +118,7 @@
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
     <Compile Include="JsonViewerTests.cs" />
+    <Compile Include="MessageBodyViewModelTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />

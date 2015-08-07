@@ -1,11 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
 {
     using Caliburn.Micro;
-    using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Models;
 
-    public class JsonMessageViewModel : Screen,
-        IHandle<SelectedMessageChanged>
+    public class JsonMessageViewModel : Screen, IDisplayMessageBody
     {
         IJsonMessageView messageView;
 
@@ -38,9 +36,9 @@
             messageView.Display(SelectedMessage.Body.Text);
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        public void Display(StoredMessage selectedMessage)
         {
-            SelectedMessage = @event.Message;
+            SelectedMessage = selectedMessage;
         }
     }
 }

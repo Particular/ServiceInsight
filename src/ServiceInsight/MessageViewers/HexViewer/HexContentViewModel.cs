@@ -1,10 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
 
-    public class HexContentViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class HexContentViewModel : Screen, IDisplayMessageBody
     {
         public MessageBody SelectedMessage { get; set; }
 
@@ -14,9 +13,9 @@
             DisplayName = "Hex";
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        public void Display(StoredMessage selectedMessage)
         {
-            SelectedMessage = @event.Message;
+            SelectedMessage = selectedMessage;
         }
     }
 }

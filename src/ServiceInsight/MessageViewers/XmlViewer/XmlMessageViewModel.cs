@@ -1,11 +1,9 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
 
-    public class XmlMessageViewModel : Screen,
-        IHandle<SelectedMessageChanged>
+    public class XmlMessageViewModel : Screen, IDisplayMessageBody
     {
         IXmlMessageView messageView;
 
@@ -38,15 +36,15 @@
             messageView.Display(SelectedMessage.Body.Text);
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        public void Display(StoredMessage selectedMessage)
         {
-            if (SelectedMessage == @event.Message) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
+            if (SelectedMessage == selectedMessage) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
             {
                 OnSelectedMessageChanged();
             }
             else
             {
-                SelectedMessage = @event.Message;
+                SelectedMessage = selectedMessage;
             }
         }
     }
