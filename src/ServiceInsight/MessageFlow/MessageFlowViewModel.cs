@@ -6,10 +6,9 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Explorer.EndpointExplorer;
     using Framework;
-    using MessageList;
     using Mindscape.WpfDiagramming;
+    using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
@@ -22,35 +21,28 @@
     public class MessageFlowViewModel : Screen,
         IHandle<SelectedMessageChanged>
     {
-        MessageListViewModel messageList;
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
         IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         ConcurrentDictionary<string, MessageNode> nodeMap;
-        IMessageFlowView view;
-        string originalSelectionId = string.Empty;
-        bool loadingConversation;
-        EndpointExplorerViewModel endpointExplorer;
+        MessageFlowView view;
+        string loadedConversationId;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
             SearchBarViewModel searchBar,
-            MessageListViewModel messageList,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
-            EndpointExplorerViewModel endpointExplorer,
             IClipboard clipboard)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
-            this.messageList = messageList;
-            this.endpointExplorer = endpointExplorer;
             this.exceptionDetail = exceptionDetail;
 
             CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
@@ -58,11 +50,11 @@
             SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
 
-            Diagram = new MessageFlowDiagram();
+            Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
 
-        public MessageFlowDiagram Diagram
+        public FlowDiagramModel Diagram
         {
             get;
             set;
@@ -83,14 +75,16 @@
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
-            this.view = (IMessageFlowView)view;
+            this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }
 
         void OnShowMessage(object sender, SearchMessageEventArgs e)
         {
             if (e.MessageNode == null)
+            {
                 return;
+            }
 
             var message = e.MessageNode.Message;
 
@@ -115,11 +109,7 @@
         {
             if (SelectedMessage != null)
             {
-                if (messageList.Rows.All(r => r.Id != SelectedMessage.Message.Id))
-                {
-                    endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
-                }
-                messageList.Focus(SelectedMessage.Message);
+                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
             }
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
@@ -143,44 +133,66 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            if (loadingConversation) return;
-
-            loadingConversation = true;
-            originalSelectionId = string.Empty;
-            nodeMap.Clear();
-
-            SelectedMessage = null;
-            Diagram = new MessageFlowDiagram();
-
             var storedMessage = @event.Message;
             if (storedMessage == null)
             {
-                loadingConversation = false;
+                ClearState();
                 return;
             }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
             {
-                loadingConversation = false;
+                ClearState();
                 return;
             }
 
-            try
+            if (loadedConversationId == conversationId)
             {
-                var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
-                var nodes = relatedMessagesTask
-                    .Select(x => new MessageNode(this, x) { ShowEndpoints = ShowEndpoints })
-                    .ToList();
+                RefreshSelection(storedMessage.Id);
+                return;
+            }
 
-                CreateConversationNodes(storedMessage.Id, nodes);
-                LinkConversationNodes(nodes);
-                UpdateLayout();
-            }
-            finally
+            ClearState();
+
+            loadedConversationId = conversationId;
+
+            var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
+            var nodes = relatedMessagesTask
+                .Select(x => new MessageNode(this, x)
+                {
+                    ShowEndpoints = ShowEndpoints,
+                    IsFocused = x.Id == storedMessage.Id
+                })
+                .ToList();
+
+            CreateConversationNodes(storedMessage.Id, nodes);
+            LinkConversationNodes(nodes);
+            UpdateLayout();
+        }
+
+        void RefreshSelection(string selectedId)
+        {
+            foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
-                loadingConversation = false;
+                if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    node.IsFocused = true;
+                    SelectedMessage = node;
+                    continue;
+                }
+
+                node.IsFocused = false;
             }
+        }
+
+        void ClearState()
+        {
+            nodeMap.Clear();
+
+            loadedConversationId = null;
+            SelectedMessage = null;
+            Diagram = new FlowDiagramModel();
         }
 
         public void ZoomIn()
@@ -193,26 +205,15 @@
             view.Surface.Zoom -= 0.1;
         }
 
-        public bool IsFocused(MessageInfo message)
-        {
-            return message.Id == originalSelectionId;
-        }
-
         public void OnShowEndpointsChanged()
         {
             foreach (var node in Diagram.Nodes.OfType<MessageNode>())
             {
                 node.ShowEndpoints = ShowEndpoints;
-                if (view != null) view.UpdateNode(node);
-            }
-
-            if (view != null)
-            {
-                view.UpdateConnections();
-                view.ApplyLayout();
             }
 
             UpdateSetting();
+            UpdateLayout();
         }
 
         void UpdateSetting()
@@ -281,7 +282,6 @@
             {
                 if (string.Equals(node.Message.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    originalSelectionId = selectedId;
                     SelectedMessage = node;
                 }
 
@@ -295,7 +295,6 @@
             if (view != null)
             {
                 view.ApplyLayout();
-                view.SizeToFit();
             }
         }
     }

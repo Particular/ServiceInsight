@@ -270,6 +270,7 @@
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
+    <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
@@ -332,7 +333,6 @@
     <Compile Include="Saga\SagaWindowViewModel.cs" />
     <Compile Include="ServiceControl\IServiceControl.cs" />
     <Compile Include="ServiceControl\ServiceControlConnectionProvider.cs" />
-    <Compile Include="MessageFlow\FlowDiagramConnectionBuilder.cs" />
     <Compile Include="MessageFlow\MessageActionPopup.xaml.cs">
       <DependentUpon>MessageActionPopup.xaml</DependentUpon>
     </Compile>
@@ -341,7 +341,6 @@
     </Compile>
     <Compile Include="MessageFlow\MessageFlowViewModel.cs" />
     <Compile Include="MessageFlow\CommandConnection.cs" />
-    <Compile Include="MessageFlow\IMessageFlowView.cs" />
     <Compile Include="Framework\Licensing\AppLicenseManager.cs" />
     <Compile Include="Framework\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Framework\MessageDecoders\HeaderContentDecoder.cs" />
@@ -384,7 +383,6 @@
     </Compile>
     <Compile Include="LogWindow\LogWindowViewModel.cs" />
     <Compile Include="ServiceControl\DefaultServiceControl.cs" />
-    <Compile Include="MessageFlow\MessageFlowDiagram.cs" />
     <Compile Include="MessageFlow\MessageNode.cs" />
     <Compile Include="MessageFlow\MessagePopupControl.cs" />
     <Compile Include="MessageProperties\GatewayHeaderViewModel.cs" />

@@ -27,7 +27,6 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<BodyTabSelectionChanged>,
         IHandle<SelectedMessageChanged>
     {
         readonly IClipboard clipboard;
@@ -37,6 +36,7 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
+        IMessageListView view;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -59,10 +59,6 @@
             CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
 
             Rows = new BindableCollection<StoredMessage>();
-
-            this.WhenAnyValue(vm => vm.FocusedRow)
-                .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
-                .Subscribe(_ => DoFocusedRowChanged());
         }
 
         public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
@@ -75,8 +71,6 @@
 
         public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
 
-        public bool ShouldLoadMessageBody { get; set; }
-
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
         public ICommand RetryMessageCommand { get; private set; }
@@ -85,35 +79,21 @@
 
         public ICommand CopyHeadersCommand { get; private set; }
 
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+            this.view = (IMessageListView)view;
+        }
+
         public void CopyHeaders()
         {
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public void Focus(StoredMessage msg)
-        {
-            if (msg == null)
-            {
-                FocusedRow = null;
-                return;
-            }
-
-            FocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && row.TimeSent == msg.TimeSent && row.Id == msg.Id);
-        }
-
-        void DoFocusedRowChanged()
-        {
-            LoadMessageBody();
-
-            eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
-
-            NotifyPropertiesChanged();
-        }
-
         public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
-            var serviceControl = SelectedExplorerItem as ServiceControlExplorerItem;
-            if (serviceControl != null)
+            var serviceControlExplorerItem = SelectedExplorerItem as ServiceControlExplorerItem;
+            if (serviceControlExplorerItem != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
                                      endpoint: null,
@@ -142,8 +122,6 @@
         {
             try
             {
-
-
                 eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
                 if (orderBy != null)
@@ -218,16 +196,6 @@
             }
         }
 
-        public void Handle(BodyTabSelectionChanged @event)
-        {
-            ShouldLoadMessageBody = @event.IsSelected;
-            if (ShouldLoadMessageBody)
-            {
-                var bodyLoaded = LoadMessageBody();
-                if (bodyLoaded) eventAggregator.Publish(new SelectedMessageChanged(FocusedRow));
-            }
-        }
-
         public void Handle(SelectedExplorerItemChanged @event)
         {
             SelectedExplorerItem = @event.SelectedExplorerItem;
@@ -250,7 +218,25 @@
 
         public void Handle(SelectedMessageChanged message)
         {
-            Focus(message.Message);
+            var msg = message.Message;
+            if (msg == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
+            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && 
+                                                    row.TimeSent == msg.TimeSent && 
+                                                    row.Id == msg.Id);
+            if (newFocusedRow == null)
+            {
+                FocusedRow = null;
+                return;
+            }
+
+            FocusedRow = newFocusedRow;
+
+            NotifyPropertiesChanged();
         }
 
         public void OnSelectedExplorerItemChanged()
@@ -263,18 +249,26 @@
         {
             if (ShouldUpdateMessages(pagedResult))
             {
-                var currentItem = FocusedRow;
-
-                Rows.Clear();
-                Rows.AddRange(pagedResult.Result);
-
-                if (currentItem != null)
-                    FocusedRow = Rows.FirstOrDefault(item => item.Id == currentItem.Id);
+                BindResult(pagedResult);
             }
 
             if (FocusedRow == null && Rows.Count > 0)
             {
                 FocusedRow = Rows[0];
+            }
+        }
+
+        void BindResult(PagedResult<StoredMessage> pagedResult)
+        {
+            try
+            {
+                BeginDataUpdate();
+                Rows.Clear();
+                Rows.AddRange(pagedResult.Result);
+            }
+            finally
+            {
+                EndDataUpdate();
             }
         }
 
@@ -287,30 +281,31 @@
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
 
-        bool LoadMessageBody()
-        {
-            if (FocusedRow == null || !ShouldLoadMessageBody || FocusedRow.BodyUrl.IsEmpty())
-            {
-                return false;
-            }
-
-            eventAggregator.Publish(new WorkStarted("Loading message body..."));
-
-            serviceControl.LoadBody(FocusedRow);
-
-            //var body = serviceControl.GetBody(FocusedRow.BodyUrl);
-
-            //FocusedRow.Body = body;
-
-            eventAggregator.Publish(new WorkFinished());
-
-            return true;
-        }
-
         void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(() => SelectedExplorerItem);
             SearchBar.NotifyPropertiesChanged();
+        }
+
+        void EndDataUpdate()
+        {
+            if (view != null)
+            {
+                view.EndDataUpdate();
+            }
+        }
+
+        void BeginDataUpdate()
+        {
+            if (view != null)
+            {
+                view.BeginDataUpdate();
+            }
+        }
+
+        public void RaiseSelectedMessageChanged(StoredMessage currentItem)
+        {
+            eventAggregator.Publish(new SelectedMessageChanged(currentItem));
         }
     }
 }

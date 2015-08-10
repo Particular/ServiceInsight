@@ -7,8 +7,15 @@
     using DevExpress.Data;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
+    using Particular.ServiceInsight.Desktop.Models;
 
-    public partial class MessageListView
+    public interface IMessageListView
+    {
+        void BeginDataUpdate();
+        void EndDataUpdate();
+    }
+
+    public partial class MessageListView : IMessageListView
     {
         static class UnboundColumns
         {
@@ -18,6 +25,21 @@
         public MessageListView()
         {
             InitializeComponent();
+        }
+
+        public void BeginDataUpdate()
+        {
+            grid.BeginDataUpdate();
+        }
+
+        public void EndDataUpdate()
+        {
+            grid.EndDataUpdate();
+        }
+
+        void GridOnCurrentItemChanged(object sender, CurrentItemChangedEventArgs currentItemChangedEventArgs)
+        {
+            Model.RaiseSelectedMessageChanged(currentItemChangedEventArgs.NewItem as StoredMessage);
         }
 
         MessageListViewModel Model

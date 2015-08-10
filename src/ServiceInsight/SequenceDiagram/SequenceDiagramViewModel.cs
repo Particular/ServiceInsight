@@ -8,12 +8,10 @@
     using Caliburn.Micro;
     using Framework;
     using Models;
-    using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Particular.ServiceInsight.Desktop.MessageFlow;
-    using Particular.ServiceInsight.Desktop.MessageList;
     using ReactiveUI;
     using Search;
     using ServiceControl;
@@ -33,9 +31,7 @@
             IWindowManagerEx windowManager,
             IServiceControl serviceControl,
             Func<ExceptionDetailViewModel> exceptionDetailViewModel,
-            SearchBarViewModel searchBar,
-            EndpointExplorerViewModel endpointExplorer,
-            MessageListViewModel messageList)
+            SearchBarViewModel searchBar)
         {
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
@@ -46,7 +42,7 @@
             CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
             SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
-            ShowSagaCommand = new ShowSagaCommand(eventAggregator, endpointExplorer, messageList);
+            ShowSagaCommand = new ShowSagaCommand(eventAggregator);
         }
 
         public ReactiveList<EndpointInfo> Endpoints { get; set; }

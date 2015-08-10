@@ -50,6 +50,7 @@
                              ItemsSource="{Binding Rows}"
                              SelectionMode="None"
                              ShowLoadingPanel="{Binding WorkInProgress}"
+                             CurrentItemChanged="GridOnCurrentItemChanged"
                              StartSorting="Grid_OnStartSorting">
                 <dxb:BarManager.DXContextMenu>
                     <dxb:PopupMenu>

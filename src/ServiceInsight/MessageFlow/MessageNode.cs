@@ -25,7 +25,7 @@
             SagaType = ProcessSagaType(message);
 
             heightNoEndpoints += HasSaga ? 10 : 0;
-            Bounds = new Rect(0, 0, 203, heightNoEndpoints);
+            Bounds = new Rect(0, 0, 100, heightNoEndpoints);
 
             CopyConversationIDCommand = owner.CopyConversationIDCommand;
             CopyMessageURICommand = owner.CopyMessageURICommand;
@@ -71,15 +71,11 @@
             Owner.ShowException(new ExceptionDetails(Message));
         }
 
-        public void Refresh()
-        {
-        }
-
         public bool ShowEndpoints { get; set; }
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(Bounds.Location, new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
+            Bounds = new Rect(new Point(), new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
         public bool ShowExceptionInfo
@@ -178,12 +174,6 @@
 
         public string ExceptionMessage { get; set; }
 
-        public bool IsFocused
-        {
-            get
-            {
-                return Owner.IsFocused(Message);
-            }
-        }
+        public bool IsFocused { get; set; }
     }
 }

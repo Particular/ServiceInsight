@@ -2,21 +2,15 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
 {
     using System.Linq;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer;
     using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.MessageList;
     using Particular.ServiceInsight.Desktop.Models;
 
     class ShowSagaCommand : BaseCommand
     {
-        private readonly EndpointExplorerViewModel endpointExplorer;
         private readonly IEventAggregator eventAggregator;
-        private readonly MessageListViewModel messageList;
 
-        public ShowSagaCommand(IEventAggregator eventAggregator, EndpointExplorerViewModel endpointExplorer, MessageListViewModel messageList)
+        public ShowSagaCommand(IEventAggregator eventAggregator)
         {
-            this.messageList = messageList;
-            this.endpointExplorer = endpointExplorer;
             this.eventAggregator = eventAggregator;
         }
 
@@ -30,13 +24,11 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
         {
             var message = parameter as StoredMessage;
             if (message == null)
-                return;
-
-            if (messageList.Rows.All(r => r.Id != message.Id))
             {
-                endpointExplorer.SelectedNode = endpointExplorer.ServiceControlRoot;
+                return;
             }
-            messageList.Focus(message);
+
+            eventAggregator.Publish(new SelectedMessageChanged(message));
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
     }

@@ -65,39 +65,5 @@
             messageList.Rows.Count.ShouldBe(2);
             SearchBar.IsVisible.ShouldBe(true);
         }
-
-        [Test]
-        public void Should_load_body_content_when_body_tab_is_already_selected()
-        {
-            new TestScheduler().With(sched =>
-            {
-                const string uri = "http://localhost:3333/api/somemessageid/body";
-
-                var messageList = MessageListFunc();
-
-                messageList.FocusedRow = null;
-                messageList.Handle(new BodyTabSelectionChanged(true));
-
-                messageList.FocusedRow = new StoredMessage { BodyUrl = uri };
-
-                sched.AdvanceByMs(500);
-
-                ServiceControl.Received(1).LoadBody(messageList.FocusedRow);
-            });
-        }
-
-        [Test]
-        public void Should_load_body_content_when_body_tab_is_focused()
-        {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
-
-            var messageList = MessageListFunc();
-
-            messageList.FocusedRow = new StoredMessage { BodyUrl = uri };
-
-            messageList.Handle(new BodyTabSelectionChanged(true));
-
-            ServiceControl.Received(1).LoadBody(messageList.FocusedRow);
-        }
     }
 }
