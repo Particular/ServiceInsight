@@ -5,7 +5,6 @@
     using Desktop.Models;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.ServiceControl;
     using Shouldly;
 
