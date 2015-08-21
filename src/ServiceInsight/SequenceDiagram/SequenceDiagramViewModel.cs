@@ -135,7 +135,7 @@
 
             foreach (var message in messages)
             {
-                if (endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
+                if (message.ReceivingEndpoint == null || endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
                 {
                     continue;
                 }
