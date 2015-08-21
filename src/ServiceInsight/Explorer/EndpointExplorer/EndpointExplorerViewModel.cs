@@ -171,7 +171,7 @@
 
             ServiceControlRoot.Children.Clear();
 
-            var endpointInstancesGroupedByName = endpoints.GroupBy(x => x.Name);
+            var endpointInstancesGroupedByName = endpoints.OrderBy(x => x.Name).GroupBy(x => x.Name);
             foreach (var scaledOutEndpoint in endpointInstancesGroupedByName)
             {
                 var instances = scaledOutEndpoint.ToList();
