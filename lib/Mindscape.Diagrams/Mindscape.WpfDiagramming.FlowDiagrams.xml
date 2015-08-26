@@ -78,7 +78,7 @@
         </member>
         <member name="P:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnection.Pathfinder">
             <summary>
-            Gets the <see cref="T:Mindscape.WpfDiagramming.Foundation.IPathfinder"/> used to route the path of the connection.
+            
             </summary>
         </member>
         <member name="T:Mindscape.WpfDiagramming.FlowDiagrams.FlowDiagramConnectionBuilder">

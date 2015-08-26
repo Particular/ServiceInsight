@@ -8991,7 +8991,7 @@
             Returns the <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/> that the mouse is currently over.
             Returns null if the mouse is not currently over any <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/>.
             </summary>
-            <returns>The <see cref="T:Mindscape.WpfDiagramming.Foundation.DiagramNodeElement"/> at the mouse position, or null.</returns>
+            <returns></returns>
         </member>
         <member name="E:Mindscape.WpfDiagramming.DiagramSurface.MarqueeDragCompleted">
             <summary>
