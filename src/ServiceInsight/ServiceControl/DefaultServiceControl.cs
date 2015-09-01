@@ -58,14 +58,9 @@
         {
             var request = new RestRequestWithCache(RestRequestWithCache.CacheStyle.Immutable);
 
-            var header = Execute(request, restResponse => restResponse.Headers.Single(x => x.Name == ServiceControlHeaders.ParticularVersion));
+            var header = Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion));
 
-            if (header == null)
-            {
-                return null;
-            }
-
-            return header.Value.ToString();
+            return header == null ? null : header.Value.ToString();
         }
 
         public void RetryMessage(string messageId)
