@@ -202,7 +202,10 @@
 
         IRestClient CreateClient(string baseUrl = null)
         {
-            var client = new RestClient(baseUrl ?? connection.Url);
+            var client = new RestClient(baseUrl ?? connection.Url)
+            {
+                Authenticator = new NtlmAuthenticator()
+            };
             var deserializer = new JsonMessageDeserializer { DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" };
             var xdeserializer = new XmlDeserializer();
             client.ClearHandlers();
@@ -286,13 +289,13 @@
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         data = ProcessResponse(selector, response);
-                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                        CacheData(request, restClient, data);
                     }
                     // https://github.com/Particular/FeatureDevelopment/issues/296
                     else if (response.StatusCode == HttpStatusCode.NoContent)
                     {
                         data = ProcessResponse(selector, response);
-                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                        CacheData(request, restClient, data);
                     }
 
                     break;
@@ -305,7 +308,7 @@
                             var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
                             if (etag != null)
                             {
-                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag.Value.ToString(), data), new CacheItemPolicy());
+                                CacheData(request, restClient, Tuple.Create(etag.Value.ToString(), data));
                             }
                             break;
                         case HttpStatusCode.NotModified:
@@ -373,7 +376,7 @@
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         data = ProcessResponse(selector, response);
-                        cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                        CacheData(request, restClient, data);
                     }
                     break;
 
@@ -385,7 +388,7 @@
                             var etag = response.Headers.FirstOrDefault(h => h.Name == "ETag");
                             if (etag != null)
                             {
-                                cache.Set(CacheKey(restClient, request), Tuple.Create(etag.Value.ToString(), data), new CacheItemPolicy());
+                                CacheData(request, restClient, Tuple.Create(etag.Value.ToString(), data));
                             }
                             break;
                         case HttpStatusCode.NotModified:
@@ -407,6 +410,14 @@
             }
 
             return data;
+        }
+
+        void CacheData(RestRequestWithCache request, IRestClient restClient, object data)
+        {
+            if (data != null)
+            {
+                cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+            }
         }
 
         static string CacheKey(IRestClient restClient, IRestRequest request)
