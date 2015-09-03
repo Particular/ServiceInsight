@@ -202,7 +202,10 @@
 
         IRestClient CreateClient(string baseUrl = null)
         {
-            var client = new RestClient(baseUrl ?? connection.Url);
+            var client = new RestClient(baseUrl ?? connection.Url)
+            {
+                Authenticator = new NtlmAuthenticator()
+            };
             var deserializer = new JsonMessageDeserializer { DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" };
             var xdeserializer = new XmlDeserializer();
             client.ClearHandlers();
