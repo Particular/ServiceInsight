@@ -24,7 +24,7 @@
             this.serviceControl = serviceControl;
         }
 
-        //public ReactiveList<EndpointInfo> Endpoints { get; set; }
+        public ReactiveList<EndpointViewModel> Endpoints { get; set; }
 
         public void Handle(SelectedMessageChanged message)
         {
@@ -49,6 +49,28 @@
         }
 
         private void CreateEndpoints(IList<StoredMessage> messages)
+        {
+            var endpointInfos = messages
+                .OrderBy(m => m.TimeSent)
+                .Select(m => m.SendingEndpoint != null ? new EndpointViewModel(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
+                .Where(e => e != null) // TODO report these as they shouldn't happen
+                .Distinct()
+                .ToList();
+
+            foreach (var message in messages)
+            {
+                if (message.ReceivingEndpoint == null || endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
+                {
+                    continue;
+                }
+
+                endpointInfos.Add(new EndpointViewModel(message.ReceivingEndpoint, "Not Available"));
+            }
+
+            Endpoints = new ReactiveList<EndpointViewModel>(endpointInfos);
+        }
+
+        private void CreateCanvas(IList<StoredMessage> messages)
         {
             var endpointInfos = messages
                 .OrderBy(m => m.TimeSent)

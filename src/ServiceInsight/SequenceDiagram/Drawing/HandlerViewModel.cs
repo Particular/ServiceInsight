@@ -8,7 +8,7 @@
 
         public HandlerStateType State { get; set; }
 
-        public bool IsPartOfSage => string.IsNullOrWhiteSpace(PartOfSaga);
+        public bool IsPartOfSaga => string.IsNullOrWhiteSpace(PartOfSaga);
         public string PartOfSaga { get; set; }//(saga name or null)
 
         public EndpointViewModel Endpoint { get; set; }
