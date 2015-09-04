@@ -13,7 +13,7 @@
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         private readonly IServiceControl serviceControl;
-        public IObservableCollection<UmlViewModel> DiagramElements
+        public ReactiveList<UmlViewModel> DiagramElements
         {
             get;
             set;
@@ -24,7 +24,7 @@
             this.serviceControl = serviceControl;
         }
 
-        public ReactiveList<EndpointInfo> Endpoints { get; set; }
+        //public ReactiveList<EndpointInfo> Endpoints { get; set; }
 
         public void Handle(SelectedMessageChanged message)
         {
@@ -52,7 +52,7 @@
         {
             var endpointInfos = messages
                 .OrderBy(m => m.TimeSent)
-                .Select(m => m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
+                .Select(m => m.SendingEndpoint != null ? new EndpointViewModel(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
                 .Where(e => e != null) // TODO report these as they shouldn't happen
                 .Distinct()
                 .ToList();
@@ -64,10 +64,10 @@
                     continue;
                 }
 
-                endpointInfos.Add(new EndpointInfo(message.ReceivingEndpoint, "Not Available"));
+                endpointInfos.Add(new EndpointViewModel(message.ReceivingEndpoint, "Not Available"));
             }
 
-            Endpoints = new ReactiveList<EndpointInfo>(endpointInfos);
+            DiagramElements = new ReactiveList<UmlViewModel>(endpointInfos);
         }
     }
 }

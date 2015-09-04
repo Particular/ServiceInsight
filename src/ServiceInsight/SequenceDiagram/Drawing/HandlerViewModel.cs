@@ -11,12 +11,9 @@
         public bool IsPartOfSage => string.IsNullOrWhiteSpace(PartOfSaga);
         public string PartOfSaga { get; set; }//(saga name or null)
 
-
         public EndpointViewModel Endpoint { get; set; }
         public TimeSpan HandledAt { get; set; }
 
-
-        public string Name { get; set; }
         public string Host { get; set; }
         public string Version { get; set; }
 

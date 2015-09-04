@@ -4,4 +4,8 @@
     {
         Event, Command, Local, Timeout
     }
+    public enum HandlerStateType
+    {
+        Fail, Success
+    }
 }

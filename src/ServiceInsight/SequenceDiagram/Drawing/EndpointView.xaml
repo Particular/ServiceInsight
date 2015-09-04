@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="ServiceInsight.SequenceDiagram.Drawing.EndpointView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ServiceInsight.SequenceDiagram.Drawing"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xaml/Geometry.xaml" />
+                <ResourceDictionary Source="/SequenceDiagram/SequenceDiagramSharedResources.xaml" />
+
+                <ResourceDictionary>
+                    <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="Placement" Value="Bottom" />
+                        <Setter Property="HorizontalOffset">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToolTip">
+                                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="8" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Polygon HorizontalAlignment="Center"
+                                                 Fill="{StaticResource Grey20Brush}"
+                                                 Points="0,8 8,0 16,8" />
+                                        <Border Grid.Row="1" Background="{StaticResource Grey20Brush}">
+                                            <ContentPresenter Margin="8"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch" />
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="TooltipLabelStyle" TargetType="Label">
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+                        <Setter Property="Margin" Value="4" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border Width="260"
+            Background="Transparent"
+            BorderBrush="{StaticResource Grey90Brush}"
+            BorderThickness="0,0,0,6">
+
+        <!--  Endpoint Tooltip  -->
+        <Border.ToolTip>
+            <ToolTip Style="{StaticResource EndpointTooltipStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Content="Name"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Content="{Binding FullName}"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Content="NSB Version"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Content="{Binding Version}"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Content="Host"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                    <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Content="{Binding Host}"
+                           Style="{StaticResource TooltipLabelStyle}" />
+                </Grid>
+            </ToolTip>
+        </Border.ToolTip>
+
+        <!--  Endpoint Title  -->
+        <Border Margin="30,0,30,-6"
+                BorderBrush="{StaticResource Grey60Brush}"
+                BorderThickness="0,0,0,6">
+            <Grid Margin="8"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Path Width="18"
+                      Height="18"
+                      Margin="2 0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="{StaticResource EndpointGeometry}"
+                      Fill="{StaticResource Grey40Brush}"
+                      Stretch="Fill" />
+
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Name,
+                                          Converter={StaticResource SmartWrapConverter}}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>
