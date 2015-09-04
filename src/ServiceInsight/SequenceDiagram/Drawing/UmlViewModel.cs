@@ -2,7 +2,7 @@
 {
     public class UmlViewModel
     {
-        public string Name { get; set; }
+        public string Title { get; set; }
         public virtual int X { get; set; }
         public virtual int Y { get; set; }
     }

@@ -19,7 +19,7 @@
                 throw new ArgumentNullException("endpoint", "endpoint is null.");
             }
 
-            FullName = Name = endpoint.Name;
+            FullName = Title = endpoint.Name;
            Version = version;
             Host = endpoint.Host ?? String.Empty;
         }

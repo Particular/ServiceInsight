@@ -163,7 +163,7 @@
             <ItemsControl x:Name="DiagramElements" ItemsSource="{Binding DiagramElements}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="LightGray" />
+                        <Canvas Background="WhiteSmoke" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>

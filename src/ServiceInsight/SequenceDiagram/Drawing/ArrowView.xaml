@@ -9,12 +9,26 @@
              mc:Ignorable="d">
     <Border Background="IndianRed" BorderBrush="Red">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock>Arrow</TextBlock>
-            <TextBlock x:Name="Title" Grid.Row="1" />
+            <TextBlock Grid.Row="0" Grid.Column="0">Arrow</TextBlock>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding X}" />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="2"
+                       Text="{Binding Y}" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Text="{Binding Title}" />
         </Grid>
     </Border>
 </UserControl>

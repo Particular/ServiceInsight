@@ -13,7 +13,7 @@
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         private readonly IServiceControl serviceControl;
-        public ReactiveList<UmlViewModel> DiagramElements
+        public IObservableCollection<UmlViewModel> DiagramElements
         {
             get;
             set;
@@ -22,6 +22,8 @@
         public SequenceDiagramViewModel(IServiceControl serviceControl)
         {
             this.serviceControl = serviceControl;
+
+            DiagramElements = new BindableCollection<UmlViewModel>();
         }
 
         public ReactiveList<EndpointViewModel> Endpoints { get; set; }
@@ -46,9 +48,10 @@
             }
 
             CreateEndpoints(messages);
+            CreateCanvas(messages);
         }
 
-        private void CreateEndpoints(IList<StoredMessage> messages)
+    private void CreateEndpoints(IList<StoredMessage> messages)
         {
             var endpointInfos = messages
                 .OrderBy(m => m.TimeSent)
@@ -68,28 +71,24 @@
             }
 
             Endpoints = new ReactiveList<EndpointViewModel>(endpointInfos);
+
+
+          
         }
 
         private void CreateCanvas(IList<StoredMessage> messages)
         {
-            var endpointInfos = messages
-                .OrderBy(m => m.TimeSent)
-                .Select(m => m.SendingEndpoint != null ? new EndpointViewModel(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
-                .Where(e => e != null) // TODO report these as they shouldn't happen
-                .Distinct()
-                .ToList();
-
-            foreach (var message in messages)
+            var diagramList = new List<UmlViewModel>
             {
-                if (message.ReceivingEndpoint == null || endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
-                {
-                    continue;
-                }
+                new ArrowViewModel { X=50, Y=90, Title = "Arrow A"},
+                new HandlerViewModel { X=100, Y=20, Title = "Handler A"},
+                new ArrowViewModel { X=70, Y=75,  Title = "Arrow D"},
+                new ArrowViewModel { X=10, Y=15,  Title = "Arrow B" },
+            };
 
-                endpointInfos.Add(new EndpointViewModel(message.ReceivingEndpoint, "Not Available"));
-            }
-
-            DiagramElements = new ReactiveList<UmlViewModel>(endpointInfos);
+        
+            DiagramElements.AddRange(diagramList);
+         //   NotifyOfPropertyChange(() => DiagramElements);
         }
     }
 }
