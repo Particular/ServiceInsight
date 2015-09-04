@@ -45,21 +45,4 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
         }
     }
-
-    public class MessageEndpointInfo : EndpointInfo
-    {
-        public MessageEndpointInfo(EndpointInfo endpoint)
-        {
-            if (endpoint == null)
-                throw new ArgumentNullException("endpoint", "endpoint is null.");
-
-            Name = endpoint.Name;
-            FullName = endpoint.FullName;
-            Version = endpoint.Version;
-            Host = endpoint.Host;
-        }
-
-        public bool IsMessageLine { get; set; }
-        public bool IsPublished { get; set; }
-    }
 }
