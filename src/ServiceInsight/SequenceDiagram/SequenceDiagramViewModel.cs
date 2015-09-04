@@ -78,16 +78,22 @@
 
         private void CreateCanvas(IList<StoredMessage> messages)
         {
+            int y = 0;
+
             var diagramList = new List<UmlViewModel>
             {
-                new ArrowViewModel { X=100, Y=0, Title = "Arrow A"},
-                new HandlerViewModel { X=100, Y=35, Title = "Handler A"},
-                new ArrowViewModel { X=100, Y=70,  Title = "Arrow D"},
-                new ArrowViewModel { X=100, Y=105,  Title = "Arrow B" },
-                new HandlerViewModel { X=100, Y=140, Title = "Handler B"},
-            };
+                new ArrowViewModel { X=100, Y=y, Title = "Arrow A"},
+                new HandlerViewModel { X=300, Y=y, Title = "Handler A"},
+                new HandlerViewModel { X=300, Y=y+=45, Title = "Handler B"},
+                new ArrowViewModel { X=100, Y=y,  Title = "Arrow B"},
+                new ArrowViewModel { X=300, Y=y+=45,  Title = "Arrow C" },
+                new HandlerViewModel { X=100, Y=y, Title = "Handler C"},
+                     new ArrowViewModel { X=300, Y=y+=45,  Title = "Arrow D" },
+                new HandlerViewModel { X=100, Y=y, Title = "Handler D"},
+            
+        };
 
-        
+
             DiagramElements.AddRange(diagramList);
          //   NotifyOfPropertyChange(() => DiagramElements);
         }

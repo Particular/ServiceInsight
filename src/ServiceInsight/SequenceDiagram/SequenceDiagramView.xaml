@@ -14,6 +14,73 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
+            <drawing:UmlViewModelSelector x:Key="myDataTemplateSelector" />
+
+            <DataTemplate x:Key="ArrowViewTemplate" DataType="{x:Type drawing:ArrowViewModel}">
+                <Border Background="IndianRed"
+                        BorderBrush="Red"
+                        BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Arrow</TextBlock>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding X}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="," />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="3"
+                                   Text="{Binding Y}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="4"
+                                   Text="{Binding Title}" />
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <DataTemplate x:Key="HandlerViewTemplate" DataType="{x:Type drawing:HandlerViewModel}">
+                <Border Background="YellowGreen"
+                        BorderBrush="Yellow"
+                        BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Arrow</TextBlock>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding X}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="," />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="3"
+                                   Text="{Binding Y}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="4"
+                                   Text="{Binding Title}" />
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Xaml/Geometry.xaml" />
                 <ResourceDictionary Source="SequenceDiagramSharedResources.xaml" />
@@ -160,7 +227,7 @@
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl x:Name="DiagramElements">
+            <ItemsControl x:Name="DiagramElements" ItemTemplateSelector="{StaticResource myDataTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="WhiteSmoke" />
@@ -172,14 +239,6 @@
                         <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        IsTabStop="False"
-                                        micro:View.Model="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
             </ItemsControl>
 
         </ScrollViewer>

@@ -271,17 +271,8 @@
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\Drawing\Enumerations.cs" />
-    <Compile Include="SequenceDiagram\Drawing\ArrowView.xaml.cs">
-      <DependentUpon>ArrowView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SequenceDiagram\Drawing\ArrowViewModel.cs" />
-    <Compile Include="SequenceDiagram\Drawing\EndpointView.xaml.cs">
-      <DependentUpon>EndpointView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SequenceDiagram\Drawing\EndpointViewModel.cs" />
-    <Compile Include="SequenceDiagram\Drawing\HandlerView.xaml.cs">
-      <DependentUpon>HandlerView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SequenceDiagram\Drawing\HandlerViewModel.cs" />
     <Compile Include="SequenceDiagram\Drawing\UmlViewModel.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
@@ -523,18 +514,6 @@
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
     <Page Include="Framework\ExceptionHandler.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\Drawing\ArrowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\Drawing\EndpointView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\Drawing\HandlerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
