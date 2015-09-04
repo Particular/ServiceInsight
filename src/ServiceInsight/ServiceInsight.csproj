@@ -281,12 +281,6 @@
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\EndpointInfo.cs" />
-    <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
-    <Compile Include="SequenceDiagram\EndpointThicknessConverter.cs" />
-    <Compile Include="SequenceDiagram\MessageInfo.cs" />
-    <Compile Include="SequenceDiagram\SequenceDiagramMessage.xaml.cs">
-      <DependentUpon>SequenceDiagramMessage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
     </Compile>
@@ -560,14 +554,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageProperties\MessagePropertiesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\DarkMenus.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\SequenceDiagramMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
