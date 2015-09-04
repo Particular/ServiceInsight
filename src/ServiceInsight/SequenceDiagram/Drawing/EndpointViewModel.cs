@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.SequenceDiagram;
 
     [DebuggerDisplay("{Name}")]
     public class EndpointViewModel : UmlViewModel
@@ -37,7 +36,7 @@
 
         public override bool Equals(object obj)
         {
-            var other = obj as EndpointInfo;
+            var other = obj as EndpointViewModel;
             if (other == null)
                 return false;
 
