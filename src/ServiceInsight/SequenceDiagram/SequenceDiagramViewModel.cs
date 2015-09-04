@@ -52,7 +52,55 @@
             CreateElements(messages);
         }
 
-        private void CreateElements(IList<StoredMessage> messages)
+        private void CreateElements(List<StoredMessage> messages)
+        {
+            var endpoints = CreateEndpointList(messages);
+            var handlers = CreateHandlersList(messages, endpoints);
+            var arrows = CreateArrows(messages, handlers);
+
+            DiagramElements.AddRange(endpoints);
+            DiagramElements.AddRange(handlers);
+            DiagramElements.AddRange(arrows);
+        }
+
+        List<ArrowViewModel> CreateArrows(List<StoredMessage> messages, List<HandlerViewModel> handlers)
+        {
+            var arrows = new List<ArrowViewModel>();
+
+            foreach (var message in messages)
+            {
+                var to = handlers.Find(h => IsSameEndpoint(h.Endpoint, message.ReceivingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
+                var from = handlers.Find(h => IsSameEndpoint(h.Endpoint, message.SendingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
+                var arrow = CreateArrow(message, from, to);
+
+                arrows.Add(arrow);
+            }
+
+            return arrows;
+        }
+
+
+        List<HandlerViewModel> CreateHandlersList(List<StoredMessage> messages, List<EndpointViewModel> endpoints)
+        {
+            var handlers = new List<HandlerViewModel>();
+
+            foreach (var message in messages)
+            {
+                if (message.ReceivingEndpoint == null)
+                {
+                    continue;
+                }
+
+                var endpointViewModel = endpoints.Find(e => IsSameEndpoint(e, message.ReceivingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
+                var handlerViewModel = CreateHandler(endpointViewModel, message);
+
+                handlers.Add(handlerViewModel);
+            }
+
+            return handlers;
+        }
+
+        List<EndpointViewModel> CreateEndpointList(IList<StoredMessage> messages)
         {
             var endpoints = new List<EndpointViewModel>();
 
@@ -73,35 +121,7 @@
                 }
             }
 
-            var handlers = new List<HandlerViewModel>();
-
-            foreach (var message in messages)
-            {
-                if (message.ReceivingEndpoint == null)
-                {
-                    continue;
-                }
-
-                var endpointViewModel = endpoints.Find(e=> IsSameEndpoint(e, message.ReceivingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
-                var handlerViewModel = CreateHandler(endpointViewModel, message);
-
-                handlers.Add(handlerViewModel);
-            }
-
-            var arrows = new List<UmlViewModel>();
-
-            foreach (var message in messages)
-            {
-                var to = handlers.Find(h => IsSameEndpoint(h.Endpoint, message.ReceivingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
-                var from = handlers.Find(h => IsSameEndpoint(h.Endpoint, message.SendingEndpoint, message.GetHeaderByKey(MessageHeaderKeys.Version, null)));
-                var arrow = CreateArrow(message, from, to);
-
-                arrows.Add(arrow);
-            }
-
-            DiagramElements.AddRange(endpoints);
-            DiagramElements.AddRange(handlers);
-            DiagramElements.AddRange(arrows);
+            return endpoints;
         }
 
         static bool IsSameEndpoint(EndpointViewModel e1, Endpoint e2, string version = null)
