@@ -8,14 +8,14 @@
 
         public HandlerStateType State { get; set; }
 
-        public bool IsPartOfSaga => string.IsNullOrWhiteSpace(PartOfSaga);
+        public bool IsPartOfSaga()
+        {
+            return string.IsNullOrWhiteSpace(PartOfSaga);
+        } 
+
         public string PartOfSaga { get; set; }//(saga name or null)
 
         public EndpointViewModel Endpoint { get; set; }
-        public TimeSpan HandledAt { get; set; }
-
-        public string Host { get; set; }
-        public string Version { get; set; }
-
+        public DateTime? HandledAt { get; set; }
     }
 }
