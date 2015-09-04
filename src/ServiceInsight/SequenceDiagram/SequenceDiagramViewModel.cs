@@ -7,6 +7,7 @@
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Framework;
+    using global::ServiceInsight.SequenceDiagram.Drawing;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
@@ -22,6 +23,11 @@
         private readonly IWindowManagerEx windowManager;
         private readonly IServiceControl serviceControl;
         private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
+        public IObservableCollection<UmlViewModel> DiagramElements
+        {
+            get;
+            set;
+        }
 
         private bool donotReselect;
 

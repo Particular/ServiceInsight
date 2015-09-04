@@ -270,6 +270,13 @@
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
+    <Compile Include="SequenceDiagram\Drawing\ArrowType.cs" />
+    <Compile Include="SequenceDiagram\Drawing\ArrowViewModel.cs" />
+    <Compile Include="SequenceDiagram\Drawing\EndpointViewModel.cs" />
+    <Compile Include="SequenceDiagram\Drawing\HandlerStateType.cs" />
+    <Compile Include="SequenceDiagram\Drawing\HandlerViewModel.cs" />
+    <Compile Include="SequenceDiagram\Drawing\Placement.cs" />
+    <Compile Include="SequenceDiagram\Drawing\UmlViewModel.cs" />
     <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
