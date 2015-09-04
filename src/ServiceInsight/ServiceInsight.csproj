@@ -273,8 +273,6 @@
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\EndpointInfo.cs" />
-    <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
-    <Compile Include="SequenceDiagram\EndpointThicknessConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
     </Compile>
