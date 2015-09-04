@@ -7,11 +7,12 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Border Background="YellowGreen" BorderBrush="Yellow">
+    <Border Background="YellowGreen" BorderBrush="Yellow" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -24,10 +25,13 @@
                        Text="{Binding X}" />
             <TextBlock Grid.Row="0"
                        Grid.Column="2"
+                       Text="," />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="3"
                        Text="{Binding Y}" />
             <TextBlock Grid.Row="1"
                        Grid.Column="0"
-                       Grid.ColumnSpan="3"
+                       Grid.ColumnSpan="4"
                        Text="{Binding Title}" />
 
         </Grid>

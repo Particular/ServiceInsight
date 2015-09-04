@@ -160,7 +160,7 @@
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl x:Name="DiagramElements" ItemsSource="{Binding DiagramElements}">
+            <ItemsControl x:Name="DiagramElements">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="WhiteSmoke" />
@@ -173,7 +173,7 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type drawing:UmlViewModel}">
+                    <DataTemplate>
                         <ContentControl HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         IsTabStop="False"

@@ -80,10 +80,11 @@
         {
             var diagramList = new List<UmlViewModel>
             {
-                new ArrowViewModel { X=50, Y=90, Title = "Arrow A"},
-                new HandlerViewModel { X=100, Y=20, Title = "Handler A"},
-                new ArrowViewModel { X=70, Y=75,  Title = "Arrow D"},
-                new ArrowViewModel { X=10, Y=15,  Title = "Arrow B" },
+                new ArrowViewModel { X=100, Y=0, Title = "Arrow A"},
+                new HandlerViewModel { X=100, Y=35, Title = "Handler A"},
+                new ArrowViewModel { X=100, Y=70,  Title = "Arrow D"},
+                new ArrowViewModel { X=100, Y=105,  Title = "Arrow B" },
+                new HandlerViewModel { X=100, Y=140, Title = "Handler B"},
             };
 
         
