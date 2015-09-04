@@ -13,7 +13,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <drawing:UmlViewModelSelector x:Key="myDataTemplateSelector" />
+            <drawing:UmlViewModelSelector x:Key="umlViewTemplateSelector" />
 
             <DataTemplate x:Key="ArrowViewTemplate" DataType="{x:Type drawing:ArrowViewModel}">
                 <Border Background="IndianRed"
@@ -228,18 +228,12 @@
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
 
-            <ItemsControl x:Name="DiagramElements" ItemTemplateSelector="{StaticResource myDataTemplateSelector}">
+            <ItemsControl x:Name="DiagramElements" ItemTemplateSelector="{StaticResource umlViewTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="WhiteSmoke" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
-                        <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
             </ItemsControl>
 
         </ScrollViewer>

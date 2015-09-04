@@ -12,8 +12,7 @@
 
     public class UmlViewModelSelector : DataTemplateSelector
     {
-        public override DataTemplate
-            SelectTemplate(object item, DependencyObject container)
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             var presenter = container as ContentPresenter;
 
