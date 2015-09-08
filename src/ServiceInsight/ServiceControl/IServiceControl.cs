@@ -2,6 +2,7 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
 {
     using System;
     using System.Collections.Generic;
+    using global::ServiceInsight.SequenceDiagram;
     using Models;
     using Saga;
 
@@ -22,6 +23,7 @@ namespace Particular.ServiceInsight.Desktop.ServiceControl
         PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
 
         IEnumerable<StoredMessage> GetConversationById(string conversationId);
+        IEnumerable<ReceivedMessage> GetConversationByIdNew(string conversationId);
 
         IEnumerable<Endpoint> GetEndpoints();
 

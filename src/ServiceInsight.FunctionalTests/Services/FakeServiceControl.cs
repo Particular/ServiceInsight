@@ -7,6 +7,7 @@
     using Desktop.Models;
     using Desktop.Saga;
     using Desktop.ServiceControl;
+    using global::ServiceInsight.SequenceDiagram;
     using Newtonsoft.Json;
 
     public class FakeServiceControl : IServiceControl
@@ -70,6 +71,11 @@
         {
             var messages = Get<List<StoredMessage>>("Conversation-Messages");
             return new List<StoredMessage>(messages);
+        }
+
+        public IEnumerable<ReceivedMessage> GetConversationByIdNew(string conversationId)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Endpoint> GetEndpoints()

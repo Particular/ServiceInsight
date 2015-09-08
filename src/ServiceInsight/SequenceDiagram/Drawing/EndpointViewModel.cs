@@ -1,45 +1,45 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Drawing
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
-    using Particular.ServiceInsight.Desktop.Models;
 
     [DebuggerDisplay("{Name}")]
-    public class EndpointViewModel : UmlViewModel
+    public class EndpointViewModel : UmlViewModel, IEquatable<EndpointViewModel>
     {
+        readonly DateTime order;
+
         protected EndpointViewModel()
         {
         }
 
-        public EndpointViewModel(Endpoint endpoint, string version = null)
+        public EndpointViewModel(string name, string host, DateTime order, string version = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException("endpoint", "endpoint is null.");
-            }
-
-            FullName = Title = endpoint.Name;
+            this.order = order;
+            FullName = Title = name;
             Version = version;
-            Host = endpoint.Host;
+            Host = host;
+
+            Handlers = new List<HandlerViewModel>();
         }
 
         public string FullName { get; private set; }
         public string Version { get; private set; }
         public string Host { get; private set; }
+        public List<HandlerViewModel> Handlers { get; private set; }
+
+        public DateTime Order
+        {
+            get { return order; }
+        }
 
         public override int GetHashCode()
         {
             return FullName.GetHashCode() ^ (Host ?? String.Empty).GetHashCode() ^ (Version ?? String.Empty).GetHashCode();
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(EndpointViewModel other)
         {
-            var other = obj as EndpointViewModel;
-            if (other == null)
-            {
-                return false;
-            }
-
             var firstPart = string.Equals(FullName, other.FullName, StringComparison.OrdinalIgnoreCase) &&
                      string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase);
 
@@ -49,6 +49,18 @@
             }
 
             return firstPart && string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as EndpointViewModel;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Equals(other);
         }
     }
 }

@@ -1,21 +1,24 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Drawing
 {
     using System;
+    using System.Collections.Generic;
 
     public class HandlerViewModel : UmlViewModel
     {
-        // Name (message received type + "handler" + DateTime)
-
-        public HandlerStateType State { get; set; }
+        public HandlerViewModel()
+        {
+            Out = new List<ArrowViewModel>();
+        }
 
         public bool IsPartOfSaga()
         {
             return string.IsNullOrWhiteSpace(PartOfSaga);
-        } 
+        }
 
-        public string PartOfSaga { get; set; }//(saga name or null)
-
-        public EndpointViewModel Endpoint { get; set; }
+        public HandlerStateType State { get; set; }
+        public string PartOfSaga { get; set; }
+        public ArrowViewModel In { get; set; }
+        public List<ArrowViewModel> Out { get; set; }
         public DateTime? HandledAt { get; set; }
     }
 }
