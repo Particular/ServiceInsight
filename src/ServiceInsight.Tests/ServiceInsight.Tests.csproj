@@ -122,6 +122,7 @@
     <Compile Include="JsonViewerTests.cs" />
     <Compile Include="MessageBodyViewModelTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />

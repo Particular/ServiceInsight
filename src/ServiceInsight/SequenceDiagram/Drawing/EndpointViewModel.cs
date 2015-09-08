@@ -4,18 +4,15 @@
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    [DebuggerDisplay("{Name}")]
+    [DebuggerDisplay("{Title}")]
     public class EndpointViewModel : UmlViewModel, IEquatable<EndpointViewModel>
     {
-        readonly DateTime order;
-
         protected EndpointViewModel()
         {
         }
 
-        public EndpointViewModel(string name, string host, DateTime order, string version = null)
+        public EndpointViewModel(string name, string host, string version = null)
         {
-            this.order = order;
             FullName = Title = name;
             Version = version;
             Host = host;
@@ -27,11 +24,6 @@
         public string Version { get; private set; }
         public string Host { get; private set; }
         public List<HandlerViewModel> Handlers { get; private set; }
-
-        public DateTime Order
-        {
-            get { return order; }
-        }
 
         public override int GetHashCode()
         {

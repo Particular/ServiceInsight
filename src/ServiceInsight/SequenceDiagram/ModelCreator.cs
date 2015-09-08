@@ -8,7 +8,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
 
-    class ModelCreator
+    public class ModelCreator
     {
         readonly List<ReceivedMessage> messages;
 
@@ -30,27 +30,24 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
         List<EndpointViewModel> CreateEndpointList()
         {
-            var endpoints = new List<EndpointViewModel>();
-
-            foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
-                .OrderBy(m => GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null) == null)
-                .ThenBy(m => m.processed_at)
-                .Select(m => new EndpointViewModel(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null) == null ? DateTime.MinValue : m.processed_at, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null)))
-                .Where(endpointViewModel => !endpoints.Contains(endpointViewModel)))
-            {
-                endpoints.Add(endpointViewModel);
-            }
+            var endpoints = new List<OrderData>();
 
             foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
-                .OrderBy(m => GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null) == null)
-                .ThenBy(m => m.processed_at)
-                .Select(m => new EndpointViewModel(m.receiving_endpoint.name, m.receiving_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null) == null ? DateTime.MinValue : m.processed_at))
-                .Where(endpointViewModel => !endpoints.Contains(endpointViewModel)))
+                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointViewModel(m.receiving_endpoint.name, m.receiving_endpoint.host)))
+                .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
+            {
+
+                endpoints.Add(endpointViewModel);
+            }
+
+            foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
+                .Select(m => OrderData.Create("N/A", GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointViewModel(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null))))
+                .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
                 endpoints.Add(endpointViewModel);
             }
 
-            return endpoints.OrderBy(vm => vm.Order).ToList();
+            return Sort(endpoints);
         }
 
         void PopulateHandlersList(List<EndpointViewModel> endpoints)
@@ -75,6 +72,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             foreach (var message in messages)
             {
                 var relatedTo = GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, null);
+
+                if (relatedTo == null)
+                {
+                    continue;
+                }
 
                 HandlerViewModel handler;
                 if (handlerRegistar.TryGetValue(relatedTo, out handler))
@@ -110,6 +112,45 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
 
             return handlerViewModel;
+        }
+
+        static List<EndpointViewModel> Sort(IEnumerable<OrderData> endpoints)
+        {
+            var orderedList = new LinkedList<OrderData>();
+
+            foreach (var endpoint in endpoints)
+            {
+                var relatedTo = endpoint.RelatedTo;
+
+                if (relatedTo == null)
+                {
+                    orderedList.AddFirst(endpoint);
+                    continue;
+                }
+
+                var current = orderedList.First;
+                var inserted = false;
+
+                while (current != null)
+                {
+                    if (relatedTo != current.Value.MessageId)
+                    {
+                        current = current.Next;
+                        continue;
+                    }
+
+                    orderedList.AddAfter(current, endpoint);
+                    inserted = true;
+                    break;
+                }
+
+                if (!inserted)
+                {
+                    orderedList.AddLast(endpoint);
+                }
+            }
+
+            return orderedList.Select(t => t.Model).ToList();
         }
 
         static ArrowViewModel CreateArrow(ReceivedMessage message)
@@ -165,7 +206,24 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 return false;
             }
 
-            return new EndpointViewModel(e2.name, e2.host, DateTime.MinValue, version).Equals(e1);
+            return new EndpointViewModel(e2.name, e2.host, version).Equals(e1);
+        }
+
+        class OrderData
+        {
+            public string RelatedTo { get; set; }
+            public string MessageId { get; set; }
+            public EndpointViewModel Model { get; set; }
+
+            public static OrderData Create(string messageId, string relatedTo, EndpointViewModel model)
+            {
+                return new OrderData
+                {
+                    MessageId = messageId,
+                    RelatedTo = relatedTo,
+                    Model = model
+                };
+            } 
         }
     }
 }
