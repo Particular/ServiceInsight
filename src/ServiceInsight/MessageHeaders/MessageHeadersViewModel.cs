@@ -1,6 +1,5 @@
 ﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
 {
-    using System;
     using System.Linq;
     using Caliburn.Micro;
     using Particular.ServiceInsight.Desktop.Framework.Events;

@@ -1,6 +1,5 @@
 namespace Particular.ServiceInsight.Desktop.Framework.Commands
 {
-    using System.Linq;
     using Caliburn.Micro;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
