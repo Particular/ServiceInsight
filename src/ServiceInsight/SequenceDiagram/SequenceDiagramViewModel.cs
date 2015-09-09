@@ -47,6 +47,7 @@
         private void CreateElements(List<ReceivedMessage> messages)
         {
             var items = new ModelCreator(messages).GetModel();
+            DiagramItems.Clear();
             DiagramItems.AddRange(items);
         }
     }
