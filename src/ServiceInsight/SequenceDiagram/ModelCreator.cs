@@ -33,7 +33,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             var endpoints = new List<OrderData>();
 
             foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
-                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointViewModel(m.receiving_endpoint.name, m.receiving_endpoint.host)))
+                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointViewModel(m.receiving_endpoint.name, m.receiving_endpoint.host, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null)))
                 .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
 
@@ -60,7 +60,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                     continue;
                 }
 
-                var endpointViewModel = endpoints.Find(e => IsSameEndpoint(e, message.receiving_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
+                var endpointViewModel = endpoints.Find(e => IsSameEndpoint(e, message.receiving_endpoint, message.sending_endpoint.Equals(message.receiving_endpoint) ? GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null) : null));
                 var handlerViewModel = CreateHandler(message);
 
                 endpointViewModel.Handlers.Add(handlerViewModel);

@@ -25,11 +25,6 @@
         public string Host { get; private set; }
         public List<HandlerViewModel> Handlers { get; private set; }
 
-        public override int GetHashCode()
-        {
-            return FullName.GetHashCode() ^ (Host ?? String.Empty).GetHashCode() ^ (Version ?? String.Empty).GetHashCode();
-        }
-
         public bool Equals(EndpointViewModel other)
         {
             var firstPart = string.Equals(FullName, other.FullName, StringComparison.OrdinalIgnoreCase) &&
@@ -53,6 +48,17 @@
             }
 
             return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (FullName != null ? FullName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Version != null ? Version.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Host != null ? Host.GetHashCode() : 0);
+                return hashCode;
+            }
         }
     }
 }

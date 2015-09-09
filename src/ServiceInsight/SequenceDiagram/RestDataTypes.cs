@@ -5,11 +5,43 @@
     using System.Diagnostics;
     using Particular.ServiceInsight.Desktop.Models;
 
-    public class EndpointAddress
+    public class EndpointAddress: IEquatable<EndpointAddress>
     {
         public string name { get; set; }
         public string host_id { get; set; }
         public string host { get; set; }
+        public bool Equals(EndpointAddress other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return name == other.name && host == other.host && host_id == other.host_id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as EndpointAddress;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (name != null ? name.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (host_id != null ? host_id.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (host != null ? host.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 
     [DebuggerDisplay("{value}", Name = "{key}")]

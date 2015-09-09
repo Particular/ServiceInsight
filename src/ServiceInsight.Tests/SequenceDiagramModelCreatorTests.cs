@@ -21,6 +21,136 @@
         }
 
         [Test]
+        public void SameSenderAndReceiver()
+        {
+            var messages = new List<ReceivedMessage>
+            {
+                new ReceivedMessage
+                {
+                    message_id = "1",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A",
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.Version,
+                            value = "1"
+                        },
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "10"
+                        }
+                    }
+                }
+            };
+
+            var creator = new ModelCreator(messages);
+            var result = creator.GetModel();
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("A", result[0].Title);
+        }
+
+        [Test]
+        public void SameLogicalEndpointsWithDifferentVersions()
+        {
+            var messages = new List<ReceivedMessage>
+            {
+                new ReceivedMessage
+                {
+                    message_id = "1",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A",
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.Version,
+                            value = "1"
+                        },
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "10"
+                        }
+                    }
+                },
+                new ReceivedMessage
+                {
+                    message_id = "2",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A",
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.Version,
+                            value = "2"
+                        },
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "10"
+                        }
+                    }
+                },
+                new ReceivedMessage
+                {
+                    message_id = "3",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A",
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.Version,
+                            value = "3"
+                        },
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "10"
+                        }
+                    }
+                }
+            };
+
+            var creator = new ModelCreator(messages);
+            var result = creator.GetModel();
+
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual("A", result[0].Title);
+            Assert.AreEqual("A", result[1].Title);
+            Assert.AreEqual("A", result[2].Title);
+        }
+
+        [Test]
         public void SequentialFlowWithDistinctEndpoints()
         {
             var messages = new List<ReceivedMessage>
