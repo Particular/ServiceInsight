@@ -271,6 +271,17 @@
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
     <Compile Include="SequenceDiagram\RestDataTypes.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Arrow.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramControl.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramItem.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramItemCollection.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramSurface.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Endpoint.cs" />
+    <Compile Include="SequenceDiagram\Diagram\EndpointTimeline.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Handler.cs" />
+    <Compile Include="SequenceDiagram\Diagram\IDiagram.cs" />
+    <Compile Include="SequenceDiagram\Diagram\LayoutManager.cs" />
+    <Compile Include="SequenceDiagram\Diagram\VisualTree.cs" />
     <Compile Include="SequenceDiagram\Drawing\Enumerations.cs" />
     <Compile Include="SequenceDiagram\Drawing\ArrowViewModel.cs" />
     <Compile Include="SequenceDiagram\Drawing\EndpointViewModel.cs" />
@@ -768,6 +779,7 @@
   <ItemGroup>
     <Resource Include="Images\retryMsg.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
     <ParameterGroup>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
+    xmlns:diagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram"
     mc:Ignorable="d">
 
     <Style TargetType="{x:Type controls:IconControl}">
@@ -150,4 +151,175 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type Control}" x:Key="EmptyFocusVisualStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate DataType="{x:Type diagram:Handler}">
+        <Thumb IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+            <Thumb.Template>
+                <ControlTemplate TargetType="Thumb">
+                    <Canvas Margin="-10,-10,10,10">
+                        <Rectangle Height="20" Width="20" Stroke="Black" StrokeThickness="1" Fill="DarkGray" x:Name="Ellipse">
+
+                        </Rectangle>
+                        <TextBlock Canvas.Top="-20" Canvas.Left="-40" 
+                                       Width="100" 
+                                       TextAlignment="Center" Text="{Binding Name}" FontWeight="Bold"
+                                       IsHitTestVisible="False"/>
+
+                        <TextBlock Canvas.Left="30" Canvas.Top="10"
+                                       Text="{Binding X, StringFormat='{}X = {0}'}"
+                                       IsHitTestVisible="False"
+                                       Visibility="Collapsed" x:Name="XText"/>
+
+                        <TextBlock Canvas.Left="30" Canvas.Top="25"
+                                       Text="{Binding Y, StringFormat='{}Y = {0}'}"
+                                       IsHitTestVisible="False"
+                                       Visibility="Collapsed" x:Name="YText"/>
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="Red"/>
+                        </DataTrigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="Green"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding ShowGrid, RelativeSource={RelativeSource FindAncestor, AncestorType=diagram:DiagramControl}}" Value="True">
+                            <Setter TargetName="XText" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="YText" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                            <Setter TargetName="Ellipse" Property="StrokeThickness" Value="2"/>
+                            <Setter TargetName="Ellipse" Property="Stroke" Value="Red"/>
+                            <Setter TargetName="Ellipse" Property="Fill" Value="White"/>
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True"/>
+                                <Condition Binding="{Binding ShowCoordinates, RelativeSource={RelativeSource FindAncestor, AncestorType=diagram:DiagramControl}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="XText" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="YText" Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Thumb.Template>
+        </Thumb>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type diagram:Endpoint}">
+        <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    Width="150"
+                    Height="50"
+                    x:Name="Root" 
+                    Margin="10">
+            <TextBlock Text="{Binding Name}" 
+                           TextAlignment="Center"
+                           HorizontalAlignment="Stretch" 
+                           VerticalAlignment="Stretch" />
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                <Setter TargetName="Root" Property="BorderBrush" Value="Black"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type diagram:Arrow}">
+        <Line Stroke="Blue" StrokeThickness="3"
+                            X1="{Binding FromHandler.X}" Y1="{Binding FromHandler.Y}"
+                            X2="{Binding ToHandler.X}" Y2="{Binding ToHandler.Y}" x:Name="Line"/>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding ToHandler}" Value="{x:Null}">
+                <Setter TargetName="Line" Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                <Setter TargetName="Line" Property="Stroke" Value="Red"/>
+                <Setter TargetName="Line" Property="StrokeDashArray" Value="2 3"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type diagram:DiagramControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type diagram:DiagramControl}">
+                    <ListBox x:Name="ItemsHost" ItemsSource="{TemplateBinding Items}">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <Border>
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity=".3">
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="GhostWhite" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <Border>
+                                            <!-- This Border serves as a background and the VisualBrush used to paint its background serves as the "Snapping Grid" -->
+                                            <!-- The "Snapping" Actually occurs in the Node class (see Node.X and Node.Y properties), it has nothing to do with any UI Elements -->
+                                            <Border.Background>
+                                                <VisualBrush TileMode="Tile"
+                                                             Viewport="0,0,50,50" 
+                                                             ViewportUnits="Absolute" 
+                                                             Viewbox="0,0,50,50" 
+                                                             ViewboxUnits="Absolute">
+                                                    <VisualBrush.Visual>
+                                                        <Rectangle Stroke="Gray" StrokeThickness="0.5" Height="50" Width="50" StrokeDashArray="5 3"/>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Border.Background>
+                                            <ItemsPresenter/>
+                                        </Border>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <diagram:DiagramSurface IsItemsHost="True"
+                                                        Background="#01FFFFFF" 
+                                                        Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
+                                                        Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
+                                                        VerticalAlignment="Top" 
+                                                        HorizontalAlignment="Left"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                                <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <ContentPresenter x:Name="Content"/>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Content" Property="Effect">
+                                                        <Setter.Value>
+                                                            <DropShadowEffect Color="Gray" ShadowDepth="4" BlurRadius="10"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>
