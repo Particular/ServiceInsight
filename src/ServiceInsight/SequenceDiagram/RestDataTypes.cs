@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Particular.ServiceInsight.Desktop.Models;
 
     public class EndpointAddress
@@ -11,6 +12,7 @@
         public string host { get; set; }
     }
 
+    [DebuggerDisplay("{value}", Name = "{key}")]
     public class Header
     {
         public string key { get; set; }

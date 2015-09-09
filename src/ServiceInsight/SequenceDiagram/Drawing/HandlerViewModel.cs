@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("Handled '{Title}' and resulted in {State}")]
     public class HandlerViewModel : UmlViewModel
     {
         public HandlerViewModel()

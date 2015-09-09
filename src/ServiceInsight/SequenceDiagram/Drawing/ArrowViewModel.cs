@@ -1,5 +1,8 @@
 namespace ServiceInsight.SequenceDiagram.Drawing
 {
+    using System.Diagnostics;
+
+    [DebuggerDisplay("{Type}->{Title}")]
     public class ArrowViewModel : UmlViewModel
     {
         public int Vector { get; set; }
