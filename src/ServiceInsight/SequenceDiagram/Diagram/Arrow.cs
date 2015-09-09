@@ -1,5 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram
+﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
+    using System.Diagnostics;
+
+    [DebuggerDisplay("{Type}->{Name}")]
     public class Arrow : DiagramItem
     {
         private Handler fromHandler;
@@ -23,5 +26,7 @@
                 OnPropertyChanged("ToHandler");
             }
         }
+
+        public ArrowType Type { get; set; }
     }
 }

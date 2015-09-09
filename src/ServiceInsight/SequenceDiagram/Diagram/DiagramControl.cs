@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram
+﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
     using System.Windows;

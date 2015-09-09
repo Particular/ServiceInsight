@@ -1,7 +1,7 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
-    public class EndpointTimeline : DiagramItem
+    public enum HandlerState
     {
-
+        Fail, Success
     }
 }

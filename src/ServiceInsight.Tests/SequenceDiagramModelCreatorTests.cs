@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using global::ServiceInsight.SequenceDiagram;
+    using global::ServiceInsight.SequenceDiagram.Diagram;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.SequenceDiagram;
@@ -56,7 +58,7 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("A", result[0].Title);
+            Assert.AreEqual("A", result[0].Name);
         }
 
         [Test]
@@ -145,9 +147,9 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(3, result.Count);
-            Assert.AreEqual("A", result[0].Title);
-            Assert.AreEqual("A", result[1].Title);
-            Assert.AreEqual("A", result[2].Title);
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual("A", result[1].Name);
+            Assert.AreEqual("A", result[2].Name);
         }
 
         [Test]
@@ -214,10 +216,10 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(4, result.Count);
-            Assert.AreEqual("A", result[0].Title);
-            Assert.AreEqual("B", result[1].Title);
-            Assert.AreEqual("C", result[2].Title);
-            Assert.AreEqual("D", result[3].Title);
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual("B", result[1].Name);
+            Assert.AreEqual("C", result[2].Name);
+            Assert.AreEqual("D", result[3].Name);
         }
 
         [Test]
@@ -251,8 +253,8 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual("A", result[0].Title);
-            Assert.AreEqual("B", result[1].Title);
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual("B", result[1].Name);
         }
 
         [Test]
@@ -319,10 +321,10 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(4, result.Count);
-            Assert.AreEqual("A", result[0].Title);
-            Assert.AreEqual("B", result[1].Title);
-            Assert.AreEqual("C", result[2].Title);
-            Assert.AreEqual("D", result[3].Title);
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual("B", result[1].Name);
+            Assert.AreEqual("C", result[2].Name);
+            Assert.AreEqual("D", result[3].Name);
         }
 
         [Test]
@@ -389,9 +391,9 @@
             var result = creator.GetModel();
 
             Assert.AreEqual(3, result.Count);
-            Assert.AreEqual("A", result[0].Title);
-            Assert.AreEqual("B", result[1].Title);
-            Assert.AreEqual("C", result[2].Title);
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual("B", result[1].Name);
+            Assert.AreEqual("C", result[2].Name);
         }
 
         [Test]
@@ -517,15 +519,15 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.GetModel().OfType<EndpointItem>().ToList();
 
             Assert.AreEqual(0, result[0].Handlers.Count);
             Assert.AreEqual(2, result[1].Handlers.Count);
             Assert.AreEqual(2, result[2].Handlers.Count);
             Assert.AreEqual(1, result[3].Handlers.Count);
 
-            Assert.AreEqual("Message1", result[1].Handlers[0].Title);
-            Assert.AreEqual("Message5", result[1].Handlers[1].Title);
+            Assert.AreEqual("Message1", result[1].Handlers[0].Name);
+            Assert.AreEqual("Message5", result[1].Handlers[1].Name);
 
         }
 
@@ -635,7 +637,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.GetModel().OfType<EndpointItem>().ToList();
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(4, result[1].Handlers.Count);

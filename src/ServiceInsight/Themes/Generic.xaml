@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:valueConverters="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
-    xmlns:diagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram"
+    xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
     mc:Ignorable="d">
 
     <Style TargetType="{x:Type controls:IconControl}">
@@ -213,7 +213,7 @@
         </Thumb>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type diagram:Endpoint}">
+    <DataTemplate DataType="{x:Type diagram:EndpointItem}">
         <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
                     Width="150"

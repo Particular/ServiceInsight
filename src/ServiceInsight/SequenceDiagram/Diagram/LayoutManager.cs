@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram
+﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System.Linq;
     using System.Windows.Controls;
@@ -12,10 +12,10 @@
 
         private void LayoutEndpoints(IDiagram diagram)
         {
-            var endpoints = diagram.Items.OfType<Endpoint>().ToList();
+            var endpoints = diagram.Items.OfType<EndpointItem>().ToList();
 
             ListBoxItem lastItem = null;
-            Endpoint lastEndpoint = null;
+            EndpointItem lastEndpoint = null;
             var firstItemLocation = 0d;
             var index = 0;
 

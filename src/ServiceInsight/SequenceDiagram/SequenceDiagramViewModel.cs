@@ -5,7 +5,8 @@
     using Anotar.Serilog;
     using Caliburn.Micro;
     using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Drawing;
+    using global::ServiceInsight.SequenceDiagram.Diagram;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using ServiceControl;
 
@@ -16,10 +17,10 @@
         public SequenceDiagramViewModel(IServiceControl serviceControl)
         {
             this.serviceControl = serviceControl;
-            Endpoints = new BindableCollection<EndpointViewModel>();
+            DiagramItems = new DiagramItemCollection();
         }
 
-        public BindableCollection<EndpointViewModel> Endpoints { get; set; }
+        public DiagramItemCollection DiagramItems { get; set; }
 
         public void Handle(SelectedMessageChanged message)
         {
@@ -45,9 +46,8 @@
 
         private void CreateElements(List<ReceivedMessage> messages)
         {
-            var endpoints = new ModelCreator(messages).GetModel();
-
-            Endpoints.AddRange(endpoints);
+            var items = new ModelCreator(messages).GetModel();
+            DiagramItems.AddRange(items);
         }
     }
 }

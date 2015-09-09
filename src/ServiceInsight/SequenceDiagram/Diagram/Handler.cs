@@ -1,54 +1,41 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram.Diagram
+﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("Handled '{Name}' and resulted in {State}")]
     public class Handler : DiagramItem
     {
-        public Endpoint Endpoint
+        public Handler()
         {
-            get { return _endpoint; }
-            set
-            {
-                _endpoint = value;
-                OnPropertyChanged("Endpoint");
-            }
+            Out = new List<Arrow>();
         }
+
+        public EndpointItem Endpoint { get; set; }
 
         public override double X
         {
             get { return Endpoint.X; }
             set
             {
+                //no setter needed
             }
         }
 
-        private double y;
-        public override double Y
+        public bool IsPartOfSaga
         {
-            get { return y; }
-            set
-            {
-                //rounds the value to be multiples of 50.
-                y = (Math.Round(value / 50.0)) * 50;
-                OnPropertyChanged("Y");
-            }
+            get { return string.IsNullOrWhiteSpace(PartOfSaga); }
         }
 
-        private bool _isHighlighted;
-        private Endpoint _endpoint;
+        public bool IsHighlighted { get; set; }
 
-        public bool IsHighlighted
-        {
-            get
-            {
-                return _isHighlighted;
-            }
-            set
-            {
-                _isHighlighted = value;
-                OnPropertyChanged("IsHighlighted");
-            }
-        }
+        public HandlerState State { get; set; }
+        public string PartOfSaga { get; set; }
+        public Arrow In { get; set; }
+        public List<Arrow> Out { get; set; }
+        public DateTime? HandledAt { get; set; }
+
 
     }
 }

@@ -4,7 +4,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     using System.Collections.Generic;
     using System.Linq;
     using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Drawing;
+    using global::ServiceInsight.SequenceDiagram.Diagram;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
 
@@ -12,28 +12,28 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
     {
         readonly List<ReceivedMessage> messages;
 
-        Dictionary<string, HandlerViewModel> handlerRegistar = new Dictionary<string, HandlerViewModel>();
+        Dictionary<string, Handler> handlerRegistar = new Dictionary<string, Handler>();
 
         public ModelCreator(List<ReceivedMessage> messages)
         {
             this.messages = messages;
         }
 
-        public List<EndpointViewModel> GetModel()
+        public List<DiagramItem> GetModel()
         {
             var endpoints = CreateEndpointList();
             PopulateHandlersList(endpoints);
             PopulateHandlerArrows(endpoints);
 
-            return endpoints;
+            return new List<DiagramItem>(endpoints);
         }
 
-        List<EndpointViewModel> CreateEndpointList()
+        List<EndpointItem> CreateEndpointList()
         {
             var endpoints = new List<OrderData>();
 
             foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
-                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointViewModel(m.receiving_endpoint.name, m.receiving_endpoint.host, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null)))
+                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointItem(m.receiving_endpoint.name, m.receiving_endpoint.host, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null)))
                 .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
 
@@ -41,7 +41,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             }
 
             foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
-                .Select(m => OrderData.Create("N/A", null, new EndpointViewModel(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null))))
+                .Select(m => OrderData.Create("N/A", null, new EndpointItem(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null))))
                 .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
                 endpoints.Add(endpointViewModel);
@@ -50,7 +50,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             return Sort(endpoints);
         }
 
-        void PopulateHandlersList(List<EndpointViewModel> endpoints)
+        void PopulateHandlersList(List<EndpointItem> endpoints)
         {
             foreach (var message in messages.OrderByDescending(m => GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null) == null)
                 .ThenBy(m => m.processed_at))
@@ -60,14 +60,14 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                     continue;
                 }
 
-                var endpointViewModel = endpoints.Find(e => IsSameEndpoint(e, message.receiving_endpoint, message.sending_endpoint.Equals(message.receiving_endpoint) ? GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null) : null));
-                var handlerViewModel = CreateHandler(message);
+                var endpointItem = endpoints.Find(e => IsSameEndpoint(e, message.receiving_endpoint, message.sending_endpoint.Equals(message.receiving_endpoint) ? GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null) : null));
+                var handler = CreateHandler(message);
 
-                endpointViewModel.Handlers.Add(handlerViewModel);
+                endpointItem.Handlers.Add(handler);
             }
         }
 
-        void PopulateHandlerArrows(List<EndpointViewModel> endpoints)
+        void PopulateHandlerArrows(List<EndpointItem> endpoints)
         {
             foreach (var message in messages)
             {
@@ -78,7 +78,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                     continue;
                 }
 
-                HandlerViewModel handler;
+                Handler handler;
                 if (handlerRegistar.TryGetValue(relatedTo, out handler))
                 {
                     handler.Out.Add(CreateArrow(message));
@@ -90,17 +90,17 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                         continue;
                     }
 
-                    var endpointViewModel = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
+                    var endpointItems = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
 
-                    if (endpointViewModel.Handlers.Count == 0)
+                    if (endpointItems.Handlers.Count == 0)
                     {
                         handler = CreateHandler(message);
 
-                        endpointViewModel.Handlers.Add(handler);
+                        endpointItems.Handlers.Add(handler);
                     }
                     else
                     {
-                        handler = endpointViewModel.Handlers.Single();
+                        handler = endpointItems.Handlers.Single();
                     }
 
                     handler.Out.Add(CreateArrow(message));
@@ -108,39 +108,39 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             }
         }
 
-        HandlerViewModel CreateHandler(ReceivedMessage message)
+        Handler CreateHandler(ReceivedMessage message)
         {
-            var handlerViewModel = new HandlerViewModel
+            var handler = new Handler
             {
                 HandledAt = message.processed_at,
                 In = CreateArrow(message),
-                Title = message.message_type,
+                Name = message.message_type,
             };
 
             if (!handlerRegistar.ContainsKey(message.message_id))
             {
-                handlerRegistar.Add(message.message_id, handlerViewModel);
+                handlerRegistar.Add(message.message_id, handler);
             }
 
             if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
             {
-                handlerViewModel.PartOfSaga = TypeHumanizer.ToName(message.invoked_sagas[0].saga_type);
+                handler.PartOfSaga = TypeHumanizer.ToName(message.invoked_sagas[0].saga_type);
             }
 
             if (message.status == MessageStatus.ArchivedFailure || message.status == MessageStatus.Failed || message.status == MessageStatus.RepeatedFailure)
             {
-                handlerViewModel.State = HandlerStateType.Fail;
+                handler.State = HandlerState.Fail;
             }
             else
             {
-                handlerViewModel.State = HandlerStateType.Success;
+                handler.State = HandlerState.Success;
             }
 
 
-            return handlerViewModel;
+            return handler;
         }
 
-        List<EndpointViewModel> Sort(IEnumerable<OrderData> endpoints)
+        List<EndpointItem> Sort(IEnumerable<OrderData> endpoints)
         {
             var orderedList = new LinkedList<OrderData>();
 
@@ -179,11 +179,11 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             return orderedList.Select(t => t.Model).ToList();
         }
 
-        static ArrowViewModel CreateArrow(ReceivedMessage message)
+        static Arrow CreateArrow(ReceivedMessage message)
         {
-            var arrow = new ArrowViewModel
+            var arrow = new Arrow
             {
-                Title = TypeHumanizer.ToName(message.message_type)
+                Name = TypeHumanizer.ToName(message.message_type)
             };
 
             if (message.message_intent == MessageIntent.Publish)
@@ -220,7 +220,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             return pair == null ? defaultValue : pair.value;
         }
 
-        static bool IsSameEndpoint(EndpointViewModel e1, EndpointAddress e2, string version = null)
+        static bool IsSameEndpoint(EndpointItem e1, EndpointAddress e2, string version = null)
         {
             if (e1 == null)
             {
@@ -232,16 +232,16 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 return false;
             }
 
-            return new EndpointViewModel(e2.name, e2.host, version).Equals(e1);
+            return new EndpointItem(e2.name, e2.host, version).Equals(e1);
         }
 
         class OrderData
         {
             public string RelatedTo { get; set; }
             public string MessageId { get; set; }
-            public EndpointViewModel Model { get; set; }
+            public EndpointItem Model { get; set; }
 
-            public static OrderData Create(string messageId, string relatedTo, EndpointViewModel model)
+            public static OrderData Create(string messageId, string relatedTo, EndpointItem model)
             {
                 return new OrderData
                 {
