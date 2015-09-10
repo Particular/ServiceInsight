@@ -11,7 +11,7 @@
         {
             Timeline = new EndpointTimeline();
             Handlers = new List<Handler>();
-            Width = 100;
+            Width = 260;
             Height = 50;
         }
 

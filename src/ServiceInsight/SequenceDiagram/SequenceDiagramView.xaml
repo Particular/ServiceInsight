@@ -12,7 +12,8 @@
              d:DesignWidth="900"
              mc:Ignorable="d">
     
+    
     <Grid>
-        <diagram:DiagramControl Items="{Binding DiagramItems}" />
+        <diagram:DiagramControl Items="{Binding DiagramItems}"  />
     </Grid>
 </UserControl>

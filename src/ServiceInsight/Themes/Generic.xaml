@@ -9,6 +9,11 @@
     xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
     mc:Ignorable="d">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SequenceDiagram/SequenceDiagramSharedResources.xaml" />
+        <ResourceDictionary Source="/XAML/Geometry.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type controls:IconControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -214,22 +219,92 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
-        <Border BorderThickness="1" 
-                    BorderBrush="DarkGray"
-                    Width="{Binding Width}"
-                    Height="{Binding Height}"
-                    x:Name="Root" 
-                    Margin="10">
-            <TextBlock Text="{Binding Name}" 
-                           TextAlignment="Center"
-                           HorizontalAlignment="Stretch" 
-                           VerticalAlignment="Stretch" />
+
+        <Border x:Name="Root"
+                Width="{Binding Width}"
+                Background="Transparent"
+                BorderBrush="{StaticResource Grey90Brush}"
+                BorderThickness="0,0,0,6">
+
+            <!--  Endpoint Tooltip  -->
+            <Border.ToolTip>
+                <ToolTip Style="{StaticResource EndpointTooltipStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0"
+                                            Grid.Column="0"
+                                            Content="Name"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                        <Label Grid.Row="0"
+                                            Grid.Column="1"
+                                            Content="{Binding FullName}"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                        <Label Grid.Row="1"
+                                            Grid.Column="0"
+                                            Content="NSB Version"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                        <Label Grid.Row="1"
+                                            Grid.Column="1"
+                                            Content="{Binding Version,
+                                                                TargetNullValue='Not Available'}"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                        <Label Grid.Row="2"
+                                            Grid.Column="0"
+                                            Content="Host"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                        <Label Grid.Row="2"
+                                            Grid.Column="1"
+                                            Content="{Binding Host,
+                                                                TargetNullValue='Not Known'}"
+                                            Style="{StaticResource TooltipLabelStyle}" />
+                    </Grid>
+                </ToolTip>
+            </Border.ToolTip>
+
+            <!--  Endpoint Title  -->
+            <Border Margin="30,0,30,-6"
+                                BorderBrush="{StaticResource Grey60Brush}"
+                                BorderThickness="0,0,0,6">
+                <Grid Margin="8"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Path Width="18"
+                                        Height="18"
+                                        Margin="2 0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{StaticResource EndpointGeometry}"
+                                        Fill="{StaticResource Grey40Brush}"
+                                        Stretch="Fill" />
+
+                    <TextBlock Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Name, 
+                                                           Converter={StaticResource SmartWrapConverter}}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+                </Grid>
+            </Border>
         </Border>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                 <Setter TargetName="Root" Property="BorderBrush" Value="Black"/>
             </DataTrigger>
         </DataTemplate.Triggers>
+
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
@@ -263,9 +338,7 @@
                                     </Border.Background>
 
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                        <Border>
-                                            <!-- This Border serves as a background and the VisualBrush used to paint its background serves as the "Snapping Grid" -->
-                                            <!-- The "Snapping" Actually occurs in the Node class (see Node.X and Node.Y properties), it has nothing to do with any UI Elements -->
+                                        <Border x:Name="ContentBorder">
                                             <Border.Background>
                                                 <VisualBrush TileMode="Tile"
                                                              Viewport="0,0,50,50" 
@@ -281,6 +354,13 @@
                                         </Border>
                                     </ScrollViewer>
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="ShowGrid" Value="False">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="ContentBorder" Property="Background" Value="{x:Null}" />
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </ListBox.Template>
                         <ListBox.ItemsPanel>
