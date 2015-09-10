@@ -106,7 +106,8 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             Handler handler;
             var endpointItems = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
 
-            if (endpointItems.Handlers.Count == 0)
+            var relatedTo = GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, null);
+            if (relatedTo == null || endpointItems.Handlers.Count == 0)
             {
                 handler = handlerFactory(message);
 
@@ -114,7 +115,14 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             }
             else
             {
-                handler = endpointItems.Handlers.Single();
+                if (handlerRegistar.ContainsKey(relatedTo))
+                {
+                    handler = handlerRegistar[relatedTo];
+                }
+                else
+                {
+                    handler = endpointItems.Handlers.Single();
+                }
             }
 
             handler.Out.Add(CreateArrow(message));

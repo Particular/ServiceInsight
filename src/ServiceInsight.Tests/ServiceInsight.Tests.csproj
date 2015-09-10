@@ -120,6 +120,8 @@
   <ItemGroup>
     <Compile Include="AboutViewModelTests.cs" />
     <Compile Include="CommandLineArgParserTests.cs" />
+    <Compile Include="ConversationsData\PayLoad.cs" />
+    <Compile Include="ConversationsData\SequenceDiagramModelCreatorTestsFromJson.cs" />
     <Compile Include="Framework\Attachments.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="ContainerRegistrationTests.cs" />
@@ -127,7 +129,8 @@
     <Compile Include="MessageBodyViewModelTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="SequenceDiagramModelCreatorTests.cs" />
-    <Compile Include="SequenceDiagramModelCreatorTestsFromRawJson.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTestsForJson1.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTestsForJson2.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
@@ -140,6 +143,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ConversationsData\json1.json" />
+    <None Include="ConversationsData\json2.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

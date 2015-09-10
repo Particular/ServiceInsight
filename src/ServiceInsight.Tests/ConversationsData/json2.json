@@ -1,0 +1,392 @@
+﻿[
+  {
+    "id": "dbc318c4-1a40-b610-4862-0c7f80ff201b",
+    "message_id": "b4c09a89-34c3-4ed0-aa36-a50c010148dd",
+    "message_type": "CompleteOrder",
+    "sending_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "receiving_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "time_sent": "2015-09-07T05:36:44.678144Z",
+    "processed_at": "2015-09-07T05:36:44.725163Z",
+    "critical_time": "00:00:00.0470190",
+    "processing_time": "00:00:00.0160100",
+    "delivery_time": "00:00:00.0310090",
+    "is_system_message": false,
+    "conversation_id": "fd634763-4b26-4743-9fc7-a50c0101329d",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "b4c09a89-34c3-4ed0-aa36-a50c010148dd"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "b4c09a89-34c3-4ed0-aa36-a50c010148dd"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.4"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2015-09-07 05:36:44:678144 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "OrderSaga, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "CompleteOrder, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "b4c09a89-34c3-4ed0-aa36-a50c010148dd\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "516167cd-554a-40dd-a9b1-a50c01013657"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fd634763-4b26-4743-9fc7-a50c0101329d"
+      },
+      {
+        "key": "WinIdName",
+        "value": "MACHINEA\\USERA"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "OrderSaga:150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2015-09-07 05:36:44:709153 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2015-09-07 05:36:44:725163 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/b4c09a89-34c3-4ed0-aa36-a50c010148dd/body",
+    "body_size": 20,
+    "invoked_sagas": [
+      {
+        "saga_type": "OrderSaga",
+        "saga_id": "150b18ee-b074-462c-880c-a50c01013656"
+      }
+    ],
+    "originates_from_saga": {
+      "saga_type": "OrderSaga",
+      "saga_id": "150b18ee-b074-462c-880c-a50c01013656"
+    }
+  },
+  {
+    "id": "8435ef16-d171-3a87-5c3f-1d4de3441b8c",
+    "message_id": "516167cd-554a-40dd-a9b1-a50c01013657",
+    "message_type": "CoolingOff",
+    "sending_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "receiving_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "time_sent": "2015-09-07T05:36:44.616772Z",
+    "processed_at": "2015-09-07T05:36:44.679146Z",
+    "critical_time": "00:00:00.0623740",
+    "processing_time": "00:00:00.0020170",
+    "delivery_time": "00:00:00.0603570",
+    "is_system_message": false,
+    "conversation_id": "fd634763-4b26-4743-9fc7-a50c0101329d",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "516167cd-554a-40dd-a9b1-a50c01013657"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "516167cd-554a-40dd-a9b1-a50c01013657"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.4"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2015-09-07 05:36:44:616772 Z"
+      },
+      {
+        "key": "NServiceBus.SagaId",
+        "value": "150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.IsSagaTimeoutMessage",
+        "value": "True"
+      },
+      {
+        "key": "NServiceBus.SagaType",
+        "value": "OrderSaga, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "OrderSaga, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "CoolingOff, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "516167cd-554a-40dd-a9b1-a50c01013657\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "ef125151-c2d3-4d84-ac18-a50c0101329d"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fd634763-4b26-4743-9fc7-a50c0101329d"
+      },
+      {
+        "key": "WinIdName",
+        "value": "MACHINEA\\USERA"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.IsDeferredMessage",
+        "value": "True"
+      },
+      {
+        "key": "NServiceBus.Timeout.RouteExpiredTimeoutTo",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      },
+      {
+        "key": "NServiceBus.Timeout.Expire",
+        "value": "2015-09-07 05:36:43:873248 Z"
+      },
+      {
+        "key": "NServiceBus.RelatedToTimeoutId",
+        "value": "6969f9bb-d1cb-4663-a8c2-acfea2de8b6f"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "OrderSaga:150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2015-09-07 05:36:44:677129 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2015-09-07 05:36:44:679146 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/516167cd-554a-40dd-a9b1-a50c01013657/body",
+    "body_size": 5,
+    "invoked_sagas": [
+      {
+        "saga_type": "OrderSaga",
+        "saga_id": "150b18ee-b074-462c-880c-a50c01013656"
+      }
+    ],
+    "originates_from_saga": {
+      "saga_type": "OrderSaga",
+      "saga_id": "150b18ee-b074-462c-880c-a50c01013656"
+    }
+  },
+  {
+    "id": "99e9ee49-d010-2323-00c9-ad73556dbac4",
+    "message_id": "ef125151-c2d3-4d84-ac18-a50c0101329d",
+    "message_type": "StartOrder",
+    "sending_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "receiving_endpoint": {
+      "name": "Samples.ComplexSagaFindingLogic",
+      "host_id": "b25d5247-c2c6-3c3b-b751-4f2cb8f3a383",
+      "host": "MACHINEA"
+    },
+    "time_sent": "2015-09-07T05:36:25.693318Z",
+    "processed_at": "2015-09-07T05:36:28.87426Z",
+    "critical_time": "00:00:03.1809420",
+    "processing_time": "00:00:00.0070170",
+    "delivery_time": "00:00:03.1739250",
+    "is_system_message": false,
+    "conversation_id": "fd634763-4b26-4743-9fc7-a50c0101329d",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "ef125151-c2d3-4d84-ac18-a50c0101329d"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "ef125151-c2d3-4d84-ac18-a50c0101329d"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.4"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2015-09-07 05:36:25:693318 Z"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "StartOrder, Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "ef125151-c2d3-4d84-ac18-a50c0101329d\\0"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fd634763-4b26-4743-9fc7-a50c0101329d"
+      },
+      {
+        "key": "WinIdName",
+        "value": "MACHINEA\\USERA"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "OrderSaga:150b18ee-b074-462c-880c-a50c01013656"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2015-09-07 05:36:28:867243 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2015-09-07 05:36:28:874260 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "Samples.ComplexSagaFindingLogic"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "Samples.ComplexSagaFindingLogic@MACHINEA"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/ef125151-c2d3-4d84-ac18-a50c0101329d/body",
+    "body_size": 20,
+    "invoked_sagas": [
+      {
+        "saga_type": "OrderSaga",
+        "saga_id": "150b18ee-b074-462c-880c-a50c01013656"
+      }
+    ]
+  }
+]
