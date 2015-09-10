@@ -1,26 +1,39 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
+    using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
 
     public sealed class DiagramItemCollection : ObservableCollection<DiagramItem>
     {
-        public new event NotifyCollectionChangedEventHandler CollectionChanged;
+        bool _suppressNotification;
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            base.OnCollectionChanged(e);
-            if (this.CollectionChanged != null)
+            if (!_suppressNotification)
             {
-                this.CollectionChanged(this, e);
+                base.OnCollectionChanged(e);
             }
         }
 
-        public void AddRange(params DiagramItem[] items)
+        public void AddRange(IEnumerable<DiagramItem> items)
         {
-            foreach (var item in items)
+            if (items == null) throw new ArgumentNullException("items");
+
+            try
             {
-                Add(item);
+                _suppressNotification = true;
+
+                foreach (var item in items)
+                {
+                    Add(item);
+                }
+            }
+            finally
+            {
+                _suppressNotification = false;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
     }

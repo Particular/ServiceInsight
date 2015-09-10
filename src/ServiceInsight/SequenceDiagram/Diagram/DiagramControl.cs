@@ -1,19 +1,20 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
-    using System.Collections.Specialized;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
     using System.Windows.Markup;
 
     [ContentProperty("Items")]
     public class DiagramControl : Control, IDiagram
     {
-        private ListBox itemshost;
+        ListBox itemshost;
+        bool isLoaded;
 
         public static string ItemHostPart = "ItemsHost";
 
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(DiagramItemCollection), typeof(DiagramControl), new PropertyMetadata(OnItemsChanged));
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(DiagramItemCollection), typeof(DiagramControl), new PropertyMetadata());
         public static readonly DependencyProperty LayoutManagerProperty = DependencyProperty.Register("LayoutManager", typeof(ILayoutManager), typeof(DiagramControl), new PropertyMetadata());
         public static readonly DependencyProperty AreaHeightProperty = DependencyProperty.Register("AreaHeight", typeof(double), typeof(DiagramControl), new PropertyMetadata(500d));
         public static readonly DependencyProperty AreaWidthProperty = DependencyProperty.Register("AreaWidth", typeof(double), typeof(DiagramControl), new PropertyMetadata(500d));
@@ -78,20 +79,14 @@
         {
             if (oldValue != null)
             {
-                oldValue.CollectionChanged -= OnCollectionChanged;
+                //oldValue.CollectionChanged -= O
             }
 
-            if (newValue != null)
+            if (itemshost != null)
             {
-                newValue.CollectionChanged += OnCollectionChanged;
+                itemshost.UpdateLayout();
             }
         }
-
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            PerformLayout();
-        }
-
 
         public T GetContainerFromItem<T>(DiagramItem item) where T : UIElement
         {
@@ -104,17 +99,31 @@
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            itemshost = Template.FindName(ItemHostPart, this) as ListBox;
+            var i = GetTemplateChild(ItemHostPart);
+            itemshost = (ListBox)Template.FindName(ItemHostPart, this);
+            itemshost.ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
+        }
+
+        void OnGeneratorStatusChanged(object sender, EventArgs e)
+        {
+            if (itemshost.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            {
+                PerformLayout();
+            }
         }
 
         void OnControlLoaded()
         {
+            isLoaded = true;
             PerformLayout();
         }
 
         void PerformLayout()
         {
-            LayoutManager.PerformLayout(this);
+            if (isLoaded)
+            {
+                LayoutManager.PerformLayout(this);
+            }
         }
     }
 }

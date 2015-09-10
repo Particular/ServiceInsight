@@ -216,8 +216,8 @@
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
         <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
-                    Width="150"
-                    Height="50"
+                    Width="{Binding Width}"
+                    Height="{Binding Height}"
                     x:Name="Root" 
                     Margin="10">
             <TextBlock Text="{Binding Name}" 

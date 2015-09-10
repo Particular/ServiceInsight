@@ -11,6 +11,8 @@
         {
             Timeline = new EndpointTimeline();
             Handlers = new List<Handler>();
+            Width = 100;
+            Height = 50;
         }
 
         public EndpointItem(string name, string host, string version = null) : this()

@@ -1,7 +1,6 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System.Linq;
-    using System.Windows.Controls;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -12,33 +11,64 @@
 
         private void LayoutEndpoints(IDiagram diagram)
         {
+            if (diagram.Items == null || diagram.Items.Count == 0) return;
+            
             var endpoints = diagram.Items.OfType<EndpointItem>().ToList();
-
-            ListBoxItem lastItem = null;
+            
             EndpointItem lastEndpoint = null;
-            var firstItemLocation = 0d;
+            var firstX = 0d;
             var index = 0;
-
+            
             foreach (var endpoint in endpoints)
             {
-                var item = diagram.GetContainerFromItem<ListBoxItem>(endpoint);
-                var root = VisualTree.FindFirstElementInVisualTree<Border>(item);
-
                 if (index == 0)
                 {
-                    firstItemLocation = Canvas.GetLeft(item);
+                    firstX = endpoint.X;
                 }
-
-                if (lastItem != null)
+            
+                if (lastEndpoint != null)
                 {
-                    endpoint.X = firstItemLocation + ((lastItem.ActualWidth + root.Margin.Left) * index);
+                    endpoint.X = firstX + ((lastEndpoint.Width + 10 /*Margin*/) * index);
                     endpoint.Y = lastEndpoint.Y;
                 }
-
-                lastItem = item;
+            
                 lastEndpoint = endpoint;
                 index++;
             }
+
+
+
+            //            if (diagram.Items == null || diagram.Items.Count == 0) return;
+            //
+            //            var endpoints = diagram.Items.OfType<EndpointItem>().ToList();
+            //
+            //            ListBoxItem lastItem = null;
+            //            EndpointItem lastEndpoint = null;
+            //            var firstItemLocation = 0d;
+            //            var index = 0;
+            //
+            //            foreach (var endpoint in endpoints)
+            //            {
+            //
+            //                var root = VisualTree.FindFirstElementInVisualTree<Border>(item);
+            //                if (root == null)
+            //                    continue;
+            //
+            //                if (index == 0)
+            //                {
+            //                    firstItemLocation = Canvas.GetLeft(item);
+            //                }
+            //
+            //                if (lastItem != null)
+            //                {
+            //                    endpoint.X = firstItemLocation + ((lastItem.ActualWidth + root.Margin.Left) * index);
+            //                    endpoint.Y = lastEndpoint.Y;
+            //                }
+            //
+            //                lastItem = item;
+            //                lastEndpoint = endpoint;
+            //                index++;
+            //            }
         }
 
     }
