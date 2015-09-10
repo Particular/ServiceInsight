@@ -25,7 +25,7 @@
 
         public bool IsPartOfSaga
         {
-            get { return string.IsNullOrWhiteSpace(PartOfSaga); }
+            get { return PartOfSaga != null; }
         }
 
         public bool IsHighlighted { get; set; }

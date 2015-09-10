@@ -124,6 +124,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
             if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
             {
+                //TODO: Support multiple sagas!
                 handler.PartOfSaga = TypeHumanizer.ToName(message.invoked_sagas[0].saga_type);
             }
 
