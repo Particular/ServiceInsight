@@ -19,13 +19,13 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
             this.messages = messages;
         }
 
-        public List<DiagramItem> GetModel()
+        public List<EndpointItem> GetModel()
         {
             var endpoints = CreateEndpointList();
             PopulateHandlersList(endpoints);
             PopulateHandlerArrows(endpoints);
 
-            return new List<DiagramItem>(endpoints);
+            return endpoints;
         }
 
         List<EndpointItem> CreateEndpointList()
