@@ -354,13 +354,6 @@
                                         </Border>
                                     </ScrollViewer>
                                 </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="ShowGrid" Value="False">
-                                        <Trigger.Setters>
-                                            <Setter TargetName="ContentBorder" Property="Background" Value="{x:Null}" />
-                                        </Trigger.Setters>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </ListBox.Template>
                         <ListBox.ItemsPanel>
