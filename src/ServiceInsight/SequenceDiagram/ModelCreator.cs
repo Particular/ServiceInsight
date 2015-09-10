@@ -32,18 +32,18 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         {
             var endpoints = new List<OrderData>();
 
-            foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
-                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointItem(m.receiving_endpoint.name, m.receiving_endpoint.host, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null)))
+            foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
+                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), new EndpointItem(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null))))
                 .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
-
                 endpoints.Add(endpointViewModel);
             }
 
-            foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
-                .Select(m => OrderData.Create("N/A", null, new EndpointItem(m.sending_endpoint.name, m.sending_endpoint.host, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null))))
+            foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
+                .Select(m => OrderData.Create("NotKnown", m.message_id, new EndpointItem(m.receiving_endpoint.name, m.receiving_endpoint.host, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null)))
                 .Where(endpointViewModel => !endpoints.Select(t => t.Model).Contains(endpointViewModel.Model)))
             {
+
                 endpoints.Add(endpointViewModel);
             }
 
@@ -75,6 +75,14 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
                 if (relatedTo == null)
                 {
+                    if (message.sending_endpoint != null)
+                    {
+                        CreateHandlerFromSendingEndpoint(endpoints, message, m => new Handler
+                        {
+                            State = HandlerState.Success,
+                            HandledAt = m.time_sent
+                        });
+                    }
                     continue;
                 }
 
@@ -85,27 +93,31 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 }
                 else
                 {
-                    if (message.sending_endpoint == null)
+                    if (message.sending_endpoint != null)
                     {
-                        continue;
+                        CreateHandlerFromSendingEndpoint(endpoints, message, CreateHandler);
                     }
-
-                    var endpointItems = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
-
-                    if (endpointItems.Handlers.Count == 0)
-                    {
-                        handler = CreateHandler(message);
-
-                        endpointItems.Handlers.Add(handler);
-                    }
-                    else
-                    {
-                        handler = endpointItems.Handlers.Single();
-                    }
-
-                    handler.Out.Add(CreateArrow(message));
                 }
             }
+        }
+
+        void CreateHandlerFromSendingEndpoint(List<EndpointItem> endpoints, ReceivedMessage message, Func<ReceivedMessage, Handler> handlerFactory)
+        {
+            Handler handler;
+            var endpointItems = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
+
+            if (endpointItems.Handlers.Count == 0)
+            {
+                handler = handlerFactory(message);
+
+                endpointItems.Handlers.Add(handler);
+            }
+            else
+            {
+                handler = endpointItems.Handlers.Single();
+            }
+
+            handler.Out.Add(CreateArrow(message));
         }
 
         Handler CreateHandler(ReceivedMessage message)

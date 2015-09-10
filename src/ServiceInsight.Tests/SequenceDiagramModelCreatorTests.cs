@@ -9,6 +9,7 @@
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.SequenceDiagram;
 
+
     [TestFixture]
     class SequenceDiagramModelCreatorTests
     {
@@ -521,14 +522,13 @@
             var creator = new ModelCreator(messages);
             var result = creator.GetModel().OfType<EndpointItem>().ToList();
 
-            Assert.AreEqual(0, result[0].Handlers.Count);
+            Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(2, result[1].Handlers.Count);
             Assert.AreEqual(2, result[2].Handlers.Count);
             Assert.AreEqual(1, result[3].Handlers.Count);
 
             Assert.AreEqual("Message1", result[1].Handlers[0].Name);
             Assert.AreEqual("Message5", result[1].Handlers[1].Name);
-
         }
 
         [Test]

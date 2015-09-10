@@ -69,6 +69,10 @@
     <Reference Include="ReactiveUI.Testing">
       <HintPath>..\packages\reactiveui-testing.5.5.1\lib\net45\ReactiveUI.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Serilog.1.4.204\lib\net45\Serilog.dll</HintPath>
@@ -123,6 +127,7 @@
     <Compile Include="MessageBodyViewModelTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="SequenceDiagramModelCreatorTests.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTestsFromRawJson.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
@@ -134,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ConversationsData\json1.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
