@@ -99,7 +99,6 @@
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            var i = GetTemplateChild(ItemHostPart);
             itemshost = (ListBox)Template.FindName(ItemHostPart, this);
             itemshost.ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
         }

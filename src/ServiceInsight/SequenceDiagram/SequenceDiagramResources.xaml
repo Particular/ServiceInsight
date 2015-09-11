@@ -67,9 +67,9 @@
         <Line x:Name="Line"
               Stroke="Black"
               StrokeThickness="3"
-              X1="{Binding X}"
-              X2="{Binding X}"
-              Y1="{Binding Y}"
+              X1="0"
+              X2="0"
+              Y1="0"
               Y2="{Binding Height}">
             <Line.ToolTip>
                 <ToolTip>
