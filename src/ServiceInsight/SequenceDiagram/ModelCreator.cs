@@ -62,7 +62,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 
                 var endpointItem = endpoints.Find(e => IsSameEndpoint(e, message.receiving_endpoint, message.sending_endpoint.Equals(message.receiving_endpoint) ? GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null) : null));
                 var handler = CreateHandler(message);
-
+                handler.Endpoint = endpointItem;
                 endpointItem.Handlers.Add(handler);
             }
         }
@@ -104,14 +104,14 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
         void CreateHandlerFromSendingEndpoint(List<EndpointItem> endpoints, ReceivedMessage message, Func<ReceivedMessage, Handler> handlerFactory)
         {
             Handler handler;
-            var endpointItems = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
+            var endpointItem = endpoints.Find(e => IsSameEndpoint(e, message.sending_endpoint, GetHeaderByKey(message.headers, MessageHeaderKeys.Version, null)));
 
             var relatedTo = GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, null);
-            if (relatedTo == null || endpointItems.Handlers.Count == 0)
+            if (relatedTo == null || endpointItem.Handlers.Count == 0)
             {
                 handler = handlerFactory(message);
-
-                endpointItems.Handlers.Add(handler);
+                handler.Endpoint = endpointItem;
+                endpointItem.Handlers.Add(handler);
             }
             else
             {
@@ -121,7 +121,7 @@ namespace Particular.ServiceInsight.Desktop.SequenceDiagram
                 }
                 else
                 {
-                    handler = endpointItems.Handlers.Single();
+                    handler = endpointItem.Handlers.Single();
                 }
             }
 
