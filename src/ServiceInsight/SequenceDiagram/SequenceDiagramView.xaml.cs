@@ -1,6 +1,11 @@
 ﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
 {
+    using System;
+    using System.IO;
+    using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
 
     public partial class SequenceDiagramView
     {
@@ -15,6 +20,43 @@
         {
             ScrollViewer_Header.Width = e.ViewportWidth;
             ScrollViewer_Header.ScrollToHorizontalOffset(e.HorizontalOffset);
+        }
+
+        void ExportToPng(object sender, RoutedEventArgs e)
+        {
+            var dpi = 96;
+            var rtb = new RenderTargetBitmap(
+                (int)ScrollViewer_Body_Content.ActualWidth,
+                (int)ScrollViewer_Header_Content.ActualHeight + (int)ScrollViewer_Body_Content.ActualHeight,
+                dpi, dpi,
+                PixelFormats.Pbgra32 // pixelformat 
+                );
+
+            var offset = Math.Abs(ScrollViewer_Body_Content.ActualWidth - ScrollViewer_Header_Content.ActualHeight) / 2;
+            VisualBrush sourceBrush = new VisualBrush(ScrollViewer_Header_Content);
+            VisualBrush sourceBrush2 = new VisualBrush(ScrollViewer_Body_Content);
+            DrawingVisual drawingVisual = new DrawingVisual();
+            DrawingContext drawingContext = drawingVisual.RenderOpen();
+
+            using (drawingContext)
+            {
+                drawingContext.DrawRectangle(sourceBrush, null, new Rect(new Point(0, 0), new Size(ScrollViewer_Body_Content.ActualWidth, ScrollViewer_Header_Content.ActualHeight)));
+                drawingContext.DrawRectangle(sourceBrush2, null, new Rect(new Point(0, 69.88), new Size(ScrollViewer_Body_Content.ActualWidth, ScrollViewer_Body_Content.ActualHeight)));
+            }
+            rtb.Render(drawingVisual);
+
+            SaveRTBAsPNG(rtb, "C:\\SequenceDiagram1.png");
+        }
+
+        private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new PngBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(bmp));
+
+            using (var stm = File.Create(filename))
+            {
+                enc.Save(stm);
+            }
         }
     }
 }

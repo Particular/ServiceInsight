@@ -78,15 +78,30 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <Button Click="ExportToPng">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/DiagramEndpointIcon.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Export to png" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
         <ScrollViewer Name="ScrollViewer_Header"
                       HorizontalAlignment="Left"
                       HorizontalScrollBarVisibility="Hidden"
-                      VerticalScrollBarVisibility="Disabled">
-            <ItemsControl ItemsSource="{Binding Endpoints}"
+                      VerticalScrollBarVisibility="Disabled" 
+                      Grid.Row="1">
+            <ItemsControl Name="ScrollViewer_Header_Content" ItemsSource="{Binding Endpoints}"
                           Style="{StaticResource HorizontalItemsControlStyle}"
                           dd:DragDrop.IsDragSource="True"
                           dd:DragDrop.IsDropTarget="True">
@@ -155,10 +170,10 @@
         </ScrollViewer>
 
         <ScrollViewer Name="ScrollViewer_Body"
-                      Grid.Row="1"
+                      Grid.Row="2"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
-            <Grid>
+            <Grid Name="ScrollViewer_Body_Content">
                 <ItemsControl ItemsSource="{Binding Endpoints}" Style="{StaticResource HorizontalItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
