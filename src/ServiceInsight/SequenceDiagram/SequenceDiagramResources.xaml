@@ -64,6 +64,35 @@
         </Setter>
     </Style>
 
+    <Style x:Key="HandlerTooltipStyle" TargetType="ToolTip">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Placement" Value="Right" />
+        <Setter Property="VerticalOffset" Value="-18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Path Width="8"
+                              Height="16"
+                              VerticalAlignment="Center"
+                              Data="{StaticResource LeftArrow}"
+                              Fill="{StaticResource Grey20Brush}"
+                              Stretch="Fill" />
+                        <Border Grid.Column="1" Background="{StaticResource Grey20Brush}">
+                            <ContentPresenter Margin="8"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
               Stroke="{StaticResource Grey80Brush}"
@@ -71,16 +100,7 @@
               X1="0"
               X2="0"
               Y1="0"
-              Y2="{Binding Height}">
-            <Line.ToolTip>
-                <ToolTip>
-                    <StackPanel>
-                        <Label Content="{Binding X, StringFormat='X = {0}'}" />
-                        <Label Content="{Binding Y, StringFormat='Y = {0}'}" />
-                    </StackPanel>
-                </ToolTip>
-            </Line.ToolTip>
-        </Line>
+              Y2="{Binding Height}" />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
@@ -89,45 +109,37 @@
                    HorizontalAlignment="Center"
                    Fill="{StaticResource Grey60Brush}">
             <Rectangle.ToolTip>
-                <ToolTip Width="300"
-                         HorizontalOffset="150"
-                         OverridesDefaultStyle="True"
-                         Placement="Center">
-                    <ToolTip.Template>
-                        <ControlTemplate TargetType="{x:Type ToolTip}">
-                            <Grid Margin="8,0,16,0"
-                                  Background="Transparent"
-                                  SnapsToDevicePixels="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="8" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Path Width="8"
-                                      Height="16"
-                                      VerticalAlignment="Center"
-                                      Data="{StaticResource LeftArrow}"
-                                      Fill="{StaticResource Grey20Brush}"
-                                      Stretch="Fill" />
-                                <Border Grid.Column="1" Background="{StaticResource Grey20Brush}">
-                                    <ContentPresenter Margin="8"
-                                                      HorizontalAlignment="Stretch"
-                                                      VerticalAlignment="Stretch" />
-                                </Border>
-                            </Grid>
-                        </ControlTemplate>
-                    </ToolTip.Template>
-                    <UniformGrid Columns="2" Rows="2">
-                        <UniformGrid.Resources>
+                <ToolTip Style="{StaticResource HandlerTooltipStyle}">
+                    <Grid Width="250">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
                                 <Setter Property="Margin" Value="4" />
                             </Style>
-                        </UniformGrid.Resources>
+                        </Grid.Resources>
                         <TextBlock FontWeight="Bold" Text="Processing time" />
-                        <TextBlock Text="99999.999" />
-                        <TextBlock FontWeight="Bold" Text="Handler name" />
-                        <TextBlock Text="{Binding Name}" />
-                    </UniformGrid>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="99999.999" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontWeight="Bold"
+                                   Text="Handler name" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Name,
+                                                  Converter={StaticResource SmartWrapConverter}}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" />
+                    </Grid>
                 </ToolTip>
             </Rectangle.ToolTip>
         </Rectangle>
