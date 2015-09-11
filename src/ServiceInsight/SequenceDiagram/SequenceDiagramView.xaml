@@ -20,5 +20,5 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <diagram:DiagramControl Items="{Binding DiagramItems}" ShowGrid="False" />
+    <diagram:DiagramControl ItemsSource="{Binding DiagramItems}" ShowGrid="False" />
 </UserControl>

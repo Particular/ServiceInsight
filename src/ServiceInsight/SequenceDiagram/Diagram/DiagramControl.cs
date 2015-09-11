@@ -7,14 +7,12 @@
     using System.Windows.Markup;
 
     [ContentProperty("Items")]
-    public class DiagramControl : Control, IDiagram
+    public class DiagramControl : ListBox, IDiagram
     {
-        ListBox itemshost;
         bool isLoaded;
 
         public static string ItemHostPart = "ItemsHost";
 
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(DiagramItemCollection), typeof(DiagramControl), new PropertyMetadata());
         public static readonly DependencyProperty LayoutManagerProperty = DependencyProperty.Register("LayoutManager", typeof(ILayoutManager), typeof(DiagramControl), new PropertyMetadata());
         public static readonly DependencyProperty AreaHeightProperty = DependencyProperty.Register("AreaHeight", typeof(double), typeof(DiagramControl), new PropertyMetadata(500d));
         public static readonly DependencyProperty AreaWidthProperty = DependencyProperty.Register("AreaWidth", typeof(double), typeof(DiagramControl), new PropertyMetadata(500d));
@@ -29,14 +27,7 @@
         public DiagramControl()
         {
             LayoutManager = new SequenceDiagramLayoutManager();
-            Items = new DiagramItemCollection();
             Loaded += (sender, args) => OnControlLoaded();
-        }
-
-        public DiagramItemCollection Items
-        {
-            get { return (DiagramItemCollection)GetValue(ItemsProperty); }
-            set { SetValue(ItemsProperty, value); }
         }
 
         public ILayoutManager LayoutManager
@@ -69,6 +60,11 @@
             set { SetValue(AreaWidthProperty, value); }
         }
 
+        public DiagramItemCollection DiagramItems
+        {
+            get { return ItemsSource as DiagramItemCollection; }
+        }
+
         static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var diagram = (DiagramControl) d;
@@ -79,33 +75,24 @@
         {
             if (oldValue != null)
             {
-                //oldValue.CollectionChanged -= O
-            }
-
-            if (itemshost != null)
-            {
-                itemshost.UpdateLayout();
             }
         }
 
         public T GetContainerFromItem<T>(DiagramItem item) where T : UIElement
         {
-            if (itemshost == null) throw new Exception("Can not get items from the container.");
-
-            var container = itemshost.ItemContainerGenerator.ContainerFromItem(item);
+            var container = ItemContainerGenerator.ContainerFromItem(item);
             return (T)container;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            itemshost = (ListBox)Template.FindName(ItemHostPart, this);
-            itemshost.ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
+            ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
         }
 
         void OnGeneratorStatusChanged(object sender, EventArgs e)
         {
-            if (itemshost.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
                 PerformLayout();
             }

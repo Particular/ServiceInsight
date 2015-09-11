@@ -11,7 +11,7 @@
 
         private void LayoutEndpoints(IDiagram diagram)
         {
-            if (diagram.Items == null || diagram.Items.Count == 0)
+            if (diagram.DiagramItems == null || diagram.DiagramItems.Count == 0)
             {
                 return;
             }
@@ -19,7 +19,7 @@
             var endpointLayout = new EndpointItemLayout();
             var handlerLayout = new HandlerLayout();
 
-            foreach (var item in diagram.Items)
+            foreach (var item in diagram.DiagramItems)
             {
                 var endpoint = item as EndpointItem;
 
