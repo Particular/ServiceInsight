@@ -48,6 +48,7 @@
             var items = new ModelCreator(messages).GetModel();
             DiagramItems.Clear();
             DiagramItems.AddRange(items);
+            DiagramItems.AddRange(items.Select(e => e.Timeline));
             DiagramItems.AddRange(items.SelectMany(i => i.Handlers));
             DiagramItems.AddRange(items.SelectMany(i => i.Handlers.SelectMany(h => h.Out)));
         }

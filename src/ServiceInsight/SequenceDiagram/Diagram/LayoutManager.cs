@@ -11,7 +11,10 @@
 
         private void LayoutEndpoints(IDiagram diagram)
         {
-            if (diagram.Items == null || diagram.Items.Count == 0) return;
+            if (diagram.Items == null || diagram.Items.Count == 0)
+            {
+                return;
+            }
             
             var endpoints = diagram.Items.OfType<EndpointItem>().ToList();
             
@@ -36,41 +39,13 @@
                 index++;
             }
 
-
-
-            //            if (diagram.Items == null || diagram.Items.Count == 0) return;
-            //
-            //            var endpoints = diagram.Items.OfType<EndpointItem>().ToList();
-            //
-            //            ListBoxItem lastItem = null;
-            //            EndpointItem lastEndpoint = null;
-            //            var firstItemLocation = 0d;
-            //            var index = 0;
-            //
-            //            foreach (var endpoint in endpoints)
-            //            {
-            //
-            //                var root = VisualTree.FindFirstElementInVisualTree<Border>(item);
-            //                if (root == null)
-            //                    continue;
-            //
-            //                if (index == 0)
-            //                {
-            //                    firstItemLocation = Canvas.GetLeft(item);
-            //                }
-            //
-            //                if (lastItem != null)
-            //                {
-            //                    endpoint.X = firstItemLocation + ((lastItem.ActualWidth + root.Margin.Left) * index);
-            //                    endpoint.Y = lastEndpoint.Y;
-            //                }
-            //
-            //                lastItem = item;
-            //                lastEndpoint = endpoint;
-            //                index++;
-            //            }
+            var timelines = diagram.Items.OfType<EndpointTimeline>().ToList();
+            foreach (var timeline in timelines)
+            {
+                timeline.X = timeline.Endpoint.X + timeline.Endpoint.Width/2;
+                timeline.Y = timeline.Endpoint.Y + timeline.Endpoint.Height + 5;
+            }
         }
-
     }
 
     public interface ILayoutManager
