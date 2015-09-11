@@ -24,11 +24,13 @@
 
         void ExportToPng(object sender, RoutedEventArgs e)
         {
+            var scalingRatioX = ScrollViewer_Body_Content.ActualWidth/ScrollViewer_Body.ViewportWidth;
+            var scalingRatioY = ScrollViewer_Body_Content.ActualHeight/ScrollViewer_Body.ViewportHeight;
             var dpi = 96;
             var rtb = new RenderTargetBitmap(
-                (int)ScrollViewer_Body_Content.ActualWidth,
-                (int)ScrollViewer_Header_Content.ActualHeight + (int)ScrollViewer_Body_Content.ActualHeight,
-                dpi, dpi,
+                (int)(ScrollViewer_Body_Content.ActualWidth * scalingRatioX),
+                (int)(ScrollViewer_Header_Content.ActualHeight * scalingRatioY + ScrollViewer_Body_Content.ActualHeight * scalingRatioY),
+                dpi * scalingRatioX, dpi * scalingRatioY,
                 PixelFormats.Pbgra32 // pixelformat 
                 );
 
