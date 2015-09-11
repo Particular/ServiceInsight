@@ -563,7 +563,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SequenceDiagram\SequenceDiagramSharedResources.xaml">
+    <Page Include="SequenceDiagram\SequenceDiagramResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
