@@ -14,15 +14,6 @@
 
         public EndpointItem Endpoint { get; set; }
 
-        public override double X
-        {
-            get { return Endpoint.X; }
-            set
-            {
-                //no setter needed
-            }
-        }
-
         public bool IsPartOfSaga
         {
             get { return PartOfSaga != null; }
@@ -35,7 +26,5 @@
         public Arrow In { get; set; }
         public List<Arrow> Out { get; set; }
         public DateTime? HandledAt { get; set; }
-
-
     }
 }

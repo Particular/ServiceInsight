@@ -2,19 +2,23 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sequenceDiagram="clr-namespace:Particular.ServiceInsight.Desktop.SequenceDiagram"
-             xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
              Background="White"
              SnapsToDevicePixels="True"
              d:DataContext="{d:DesignInstance sequenceDiagram:SequenceDiagramViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
-    
-    
-    <Grid>
-        <diagram:DiagramControl Items="{Binding DiagramItems}" 
-                                ShowGrid="False"  />
-    </Grid>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xaml/Geometry.xaml" />
+                <ResourceDictionary Source="SequenceDiagramResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <diagram:DiagramControl Items="{Binding DiagramItems}" ShowGrid="False" />
 </UserControl>

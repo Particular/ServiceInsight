@@ -84,68 +84,53 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
-        <Thumb IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-            <Thumb.Template>
-                <ControlTemplate TargetType="Thumb">
-                    <Canvas Margin="-10,-10,10,10">
-                        <TextBlock Canvas.Left="-40"
-                                   Canvas.Top="-20"
-                                   Width="100"
-                                   FontWeight="Bold"
-                                   IsHitTestVisible="False"
-                                   Text="{Binding Name}"
-                                   TextAlignment="Center" />
-                        <Rectangle x:Name="Ellipse"
-                                   Width="20"
-                                   Height="20"
-                                   Fill="DarkGray"
-                                   Stroke="Black"
-                                   StrokeThickness="1" />
-
-                        <TextBlock x:Name="XText"
-                                   Canvas.Left="30"
-                                   Canvas.Top="10"
-                                   IsHitTestVisible="False"
-                                   Text="{Binding X,
-                                                  StringFormat='{}X = {0}'}"
-                                   Visibility="Collapsed" />
-
-                        <TextBlock x:Name="YText"
-                                   Canvas.Left="30"
-                                   Canvas.Top="25"
-                                   IsHitTestVisible="False"
-                                   Text="{Binding Y,
-                                                  StringFormat='{}Y = {0}'}"
-                                   Visibility="Collapsed" />
-                    </Canvas>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="Red" />
-                        </DataTrigger>
-                        <Trigger Property="IsDragging" Value="True">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="Green" />
-                        </Trigger>
-                        <DataTrigger Binding="{Binding ShowGrid, RelativeSource={RelativeSource FindAncestor, AncestorType=diagram:DiagramControl}}" Value="True">
-                            <Setter TargetName="XText" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="YText" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
-                            <Setter TargetName="Ellipse" Property="StrokeThickness" Value="2" />
-                            <Setter TargetName="Ellipse" Property="Stroke" Value="Red" />
-                            <Setter TargetName="Ellipse" Property="Fill" Value="White" />
-                        </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True" />
-                                <Condition Binding="{Binding ShowCoordinates, RelativeSource={RelativeSource FindAncestor, AncestorType=diagram:DiagramControl}}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="XText" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="YText" Property="Visibility" Value="Visible" />
-                        </MultiDataTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Thumb.Template>
-        </Thumb>
+        <Rectangle Width="14"
+                   Height="{Binding Height}"
+                   HorizontalAlignment="Center"
+                   Fill="{StaticResource Grey60Brush}">
+            <Rectangle.ToolTip>
+                <ToolTip Width="300"
+                         HorizontalOffset="150"
+                         OverridesDefaultStyle="True"
+                         Placement="Center">
+                    <ToolTip.Template>
+                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                            <Grid Margin="8,0,16,0"
+                                  Background="Transparent"
+                                  SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Path Width="8"
+                                      Height="16"
+                                      VerticalAlignment="Center"
+                                      Data="{StaticResource LeftArrow}"
+                                      Fill="{StaticResource Grey20Brush}"
+                                      Stretch="Fill" />
+                                <Border Grid.Column="1" Background="{StaticResource Grey20Brush}">
+                                    <ContentPresenter Margin="8"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch" />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </ToolTip.Template>
+                    <UniformGrid Columns="2" Rows="2">
+                        <UniformGrid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+                                <Setter Property="Margin" Value="4" />
+                            </Style>
+                        </UniformGrid.Resources>
+                        <TextBlock FontWeight="Bold" Text="Processing time" />
+                        <TextBlock Text="99999.999" />
+                        <TextBlock FontWeight="Bold" Text="Handler name" />
+                        <TextBlock Text="{Binding Name}" />
+                    </UniformGrid>
+                </ToolTip>
+            </Rectangle.ToolTip>
+        </Rectangle>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
