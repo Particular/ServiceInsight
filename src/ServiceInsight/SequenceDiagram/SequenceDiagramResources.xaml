@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
     <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
 
 
@@ -65,8 +66,8 @@
 
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
-              Stroke="Black"
-              StrokeThickness="3"
+              Stroke="{StaticResource Grey80Brush}"
+              StrokeThickness="2"
               X1="0"
               X2="0"
               Y1="0"
