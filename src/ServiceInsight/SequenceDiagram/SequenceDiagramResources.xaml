@@ -251,6 +251,11 @@
                                         </Border>
                                     </ScrollViewer>
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding ShowGrid, RelativeSource={RelativeSource FindAncestor, AncestorType=diagram:DiagramControl}}" Value="False">
+                                        <Setter Property="Background" Value="{x:Null}" TargetName="ContentBorder" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </ListBox.Template>
                         <ListBox.ItemsPanel>
