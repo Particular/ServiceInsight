@@ -2,7 +2,6 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
@@ -21,7 +20,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
             var messages = deserializer.Deserialize<List<ReceivedMessage>>(new PayLoad(content));
 
             var creator = new ModelCreator(messages);
-            result = creator.GetModel().OfType<EndpointItem>().ToList();
+            result = creator.GetModel();
         }
     }
 }

@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Diagram;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Models;
 
@@ -519,7 +517,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel().OfType<EndpointItem>().ToList();
+            var result = creator.GetModel();
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(2, result[1].Handlers.Count);
@@ -636,12 +634,11 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel().OfType<EndpointItem>().ToList();
+            var result = creator.GetModel();
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(4, result[1].Handlers.Count);
             Assert.AreEqual(4, result[0].Handlers[0].Out.Count);
-
         }
     }
 }

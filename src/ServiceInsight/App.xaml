@@ -6,16 +6,16 @@
              xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys"
              xmlns:startup="clr-namespace:Particular.ServiceInsight.Desktop.Startup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                
+
                 <ResourceDictionary Source="SequenceDiagram/SequenceDiagramResources.xaml" />
-                
+
                 <ResourceDictionary>
                     <startup:AppBootstrapper x:Key="Bootstrapper" />
 

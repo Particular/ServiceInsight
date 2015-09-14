@@ -239,19 +239,10 @@
         <Line x:Name="Line"
               Stroke="Blue"
               StrokeThickness="3"
-              X1="{Binding FromHandler.X}"
-              X2="{Binding ToHandler.X}"
-              Y1="{Binding FromHandler.Y}"
-              Y2="{Binding ToHandler.Y}" />
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding ToHandler}" Value="{x:Null}">
-                <Setter TargetName="Line" Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}}" Value="True">
-                <Setter TargetName="Line" Property="Stroke" Value="Red" />
-                <Setter TargetName="Line" Property="StrokeDashArray" Value="2 3" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
+              X1="0"
+              X2="{Binding Width}"
+              Y1="0"
+              Y2="0" />
     </DataTemplate>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">

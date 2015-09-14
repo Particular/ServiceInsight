@@ -12,12 +12,26 @@ namespace Particular.ServiceInsight.Tests
         }
 
         [Test]
-        public void FirstEndpointShouldHave3Handler()
+        public void EndpointShouldHave4Handler()
         {
             Assert.AreEqual(4, result[0].Handlers.Count);
-            Assert.AreEqual("StartOrder", result[0].Handlers[0].Name);
-            Assert.AreEqual("CoolingOff", result[0].Handlers[1].Name);
-            Assert.AreEqual("CompleteOrder", result[0].Handlers[2].Name);
+            Assert.AreEqual(null, result[0].Handlers[0].Name);
+            Assert.AreEqual("StartOrder", result[0].Handlers[1].Name);
+            Assert.AreEqual("CoolingOff", result[0].Handlers[2].Name);
+            Assert.AreEqual("CompleteOrder", result[0].Handlers[3].Name);
+        }
+
+        [Test]
+        public void ArrowsHaveFromAndToPopulated()
+        {
+            Assert.IsNull(result[0].Handlers[0].In);
+            Assert.AreEqual(result[0].Handlers[0], result[0].Handlers[0].Out[0].FromHandler);
+            Assert.AreEqual(result[0].Handlers[1], result[0].Handlers[0].Out[0].ToHandler);
+
+            Assert.AreEqual(result[0].Handlers[0], result[0].Handlers[1].In.FromHandler);
+            Assert.AreEqual(result[0].Handlers[1], result[0].Handlers[1].In.ToHandler);
+            Assert.AreEqual(result[0].Handlers[1], result[0].Handlers[1].Out[0].FromHandler);
+            Assert.AreEqual(result[0].Handlers[2], result[0].Handlers[1].Out[0].ToHandler);
         }
     }
 }

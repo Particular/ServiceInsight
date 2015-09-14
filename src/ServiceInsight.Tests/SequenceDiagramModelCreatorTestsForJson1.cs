@@ -15,9 +15,6 @@ namespace Particular.ServiceInsight.Tests
         public void FirstEndpointShouldHave1Handler()
         {
             Assert.AreEqual(1, result[0].Handlers.Count);
-            Assert.AreEqual("5.2.3", result[0].Version);
-            Assert.AreEqual("5.2.3", result[1].Version);
-            Assert.AreEqual(null, result[2].Version);
         }
 
         [Test]
@@ -27,6 +24,12 @@ namespace Particular.ServiceInsight.Tests
             Assert.AreEqual("5.2.3", result[0].Version);
             Assert.AreEqual("5.2.3", result[1].Version);
             Assert.AreEqual(null, result[2].Version);
+        }
+
+        [Test]
+        public void EndpointsAreDeDup()
+        {
+            Assert.AreEqual(3, result.Count);
         }
     }
 }

@@ -102,12 +102,11 @@
                 <TextBlock Text="{Binding Value}" />
             </DataTemplate>
             <DataTemplate x:Key="ExceptionTemplate">
-                <controls:MvvmTextEditor 
-                    Style="{StaticResource MvvmTextEditorScrollFixStyle}"
-                    FontFamily="Consolas"
+                <controls:MvvmTextEditor FontFamily="Consolas"
                                          FontSize="10pt"
                                          IsReadOnly="true"
                                          ScrollViewer.CanContentScroll="False"
+                                         Style="{StaticResource MvvmTextEditorScrollFixStyle}"
                                          SyntaxHighlighting="StackTrace"
                                          Text="{Binding Value}" />
             </DataTemplate>
