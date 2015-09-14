@@ -227,7 +227,7 @@
             </Border>
         </Border>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}}" Value="True">
                 <Setter TargetName="Root" Property="BorderBrush" Value="Black" />
             </DataTrigger>
         </DataTemplate.Triggers>
@@ -246,7 +246,7 @@
             <DataTrigger Binding="{Binding ToHandler}" Value="{x:Null}">
                 <Setter TargetName="Line" Property="Visibility" Value="Collapsed" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}}" Value="True">
                 <Setter TargetName="Line" Property="Stroke" Value="Red" />
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="2 3" />
             </DataTrigger>
@@ -257,8 +257,9 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <diagram:DiagramSurface Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
-                                            Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
+                    <diagram:DiagramSurface x:Name="DiagramSurfacePart"
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Background="#01FFFFFF"
@@ -269,13 +270,13 @@
 
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
+                <Style TargetType="{x:Type diagram:DiagramVisualItem}">
                     <Setter Property="Canvas.Left" Value="{Binding X}" />
                     <Setter Property="Canvas.Top" Value="{Binding Y}" />
                     <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <ControlTemplate TargetType="{x:Type diagram:DiagramVisualItem}">
                                 <ContentPresenter x:Name="Content" />
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
