@@ -256,12 +256,8 @@
             <Setter.Value>
                 <ItemsPanelTemplate>
                     <diagram:DiagramSurface x:Name="DiagramSurface"
-                                            Width="{Binding ActualWidth,
-                                                            RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
-                                            Height="{Binding ActualHeight,
-                                                             RelativeSource={RelativeSource AncestorType=diagram:DiagramControl}}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
                                             Background="#01FFFFFF"
                                             IsItemsHost="True" />
                 </ItemsPanelTemplate>
