@@ -24,5 +24,7 @@
         {
             get { return messageId; }
         }
+
+        public double Width { get; set; }
     }
 }

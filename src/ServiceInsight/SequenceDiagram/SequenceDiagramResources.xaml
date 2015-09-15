@@ -244,8 +244,7 @@
               Stroke="Blue"
               StrokeThickness="3"
               X1="0"
-              X2="{Binding Width,
-                           RelativeSource={RelativeSource AncestorType=diagram:DiagramVisualItem}}"
+              X2="{Binding Width}"
               Y1="0"
               Y2="0" />
     </DataTemplate>

@@ -62,44 +62,47 @@
 
             public void Position(Arrow arrow)
             {
-                var fromIndex = 0;
+                var fromEndpointIndex = 0;
                 var fromHandler = arrow.FromHandler;
 
                 if (fromHandler != null)
                 {
-                    fromIndex = endpointItemLayout.GetIndexPosition(fromHandler.Endpoint);
+                    fromEndpointIndex = endpointItemLayout.GetIndexPosition(fromHandler.Endpoint);
                 }
                 else
                 {
                     fromHandler = endpointItemLayout.GetFirst().Handlers.First();
                 }
 
-                var toIndex = endpointItemLayout.GetIndexPosition(arrow.ToHandler.Endpoint);
+                var toEndpointIndex = endpointItemLayout.GetIndexPosition(arrow.ToHandler.Endpoint);
 
                 var arrowVisual = diagram.GetItemFromContainer(arrow);
-                var fromHandlerEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
                 var fromHandlerVisual = diagram.GetItemFromContainer(fromHandler);
-                var arrowToHandlerEndpointVisual = diagram.GetItemFromContainer(arrow.ToHandler.Endpoint);
-                arrowVisual.X = fromHandlerEndpointVisual.X;
-                arrowVisual.Y = fromHandlerVisual.Y + 15;
+                var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
+                arrowVisual.X = fromHandlerVisual.X;
+                arrowVisual.Y = fromHandlerVisual.Y + (fromHandlerVisual.ActualHeight / fromHandler.Out.Count);
 
-                if (fromIndex == toIndex)
+                if (fromEndpointIndex == toEndpointIndex)
                 {
                     //Local
                     arrow.Direction = Direction.Right;
-                    arrowVisual.Width = 200;
+                    arrowVisual.X += fromHandlerVisual.ActualWidth;
+
+                    var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
+                    arrow.Width = fromEndpointVisual.ActualWidth/4;
                 }
-                else if (fromIndex < toIndex)
+                else if (fromEndpointIndex < toEndpointIndex)
                 {
                     //From left to right
                     arrow.Direction = Direction.Right;
-                    arrowVisual.Width = arrowToHandlerEndpointVisual.X - fromHandlerEndpointVisual.X;
+                    arrowVisual.X += fromHandlerVisual.ActualWidth;
+                    arrow.Width = toHandlerVisual.X - fromHandlerVisual.X;
                 }
                 else
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrowVisual.Width = arrowToHandlerEndpointVisual.X - fromHandlerEndpointVisual.X;
+                    arrow.Width = toHandlerVisual.X - fromHandlerVisual.X;
                 }
             }
         }
