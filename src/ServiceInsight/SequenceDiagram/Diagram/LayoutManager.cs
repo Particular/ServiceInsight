@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -14,6 +15,7 @@
             var endpointLayout = new EndpointItemLayout(diagram);
             var handlerLayout = new HandlerLayout(diagram);
             var endpointTimelineLayout = new EndpointTimelineLayout(diagram);
+            var arrowLayout = new ArrowLayout(diagram, endpointLayout);
 
             foreach (var item in diagram.DiagramItems)
             {
@@ -36,6 +38,68 @@
                 {
                     handlerLayout.Position(handler);
                     continue;
+                }
+
+                var arrow = item as Arrow;
+                if (arrow != null)
+                {
+                    arrowLayout.Position(arrow);
+                    continue;
+                }
+            }
+        }
+
+        class ArrowLayout
+        {
+            readonly IDiagram diagram;
+            readonly EndpointItemLayout endpointItemLayout;
+
+            public ArrowLayout(IDiagram diagram, EndpointItemLayout endpointItemLayout)
+            {
+                this.diagram = diagram;
+                this.endpointItemLayout = endpointItemLayout;
+            }
+
+            public void Position(Arrow arrow)
+            {
+                var fromIndex = 0;
+                var fromHandler = arrow.FromHandler;
+
+                if (fromHandler != null)
+                {
+                    fromIndex = endpointItemLayout.GetIndexPosition(fromHandler.Endpoint);
+                }
+                else
+                {
+                    fromHandler = endpointItemLayout.GetFirst().Handlers.First();
+                }
+
+                var toIndex = endpointItemLayout.GetIndexPosition(arrow.ToHandler.Endpoint);
+
+                var arrowVisual = diagram.GetItemFromContainer(arrow);
+                var fromHandlerEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
+                var fromHandlerVisual = diagram.GetItemFromContainer(fromHandler);
+                var arrowToHandlerEndpointVisual = diagram.GetItemFromContainer(arrow.ToHandler.Endpoint);
+                arrowVisual.X = fromHandlerEndpointVisual.X;
+                arrowVisual.Y = fromHandlerVisual.Y + 15;
+
+                if (fromIndex == toIndex)
+                {
+                    //Local
+                    arrow.Direction = Direction.Right;
+                    arrowVisual.Width = 200;
+                }
+                else if (fromIndex < toIndex)
+                {
+                    //From left to right
+                    arrow.Direction = Direction.Right;
+                    arrowVisual.Width = arrowToHandlerEndpointVisual.X - fromHandlerEndpointVisual.X;
+                }
+                else
+                {
+                    // from right to left
+                    arrow.Direction = Direction.Left;
+                    arrowVisual.Width = arrowToHandlerEndpointVisual.X - fromHandlerEndpointVisual.X;
                 }
             }
         }
@@ -97,13 +161,14 @@
             DiagramVisualItem lastEndpoint;
             double firstX;
             int index;
+            Dictionary<EndpointItem, int> position = new Dictionary<EndpointItem, int>();
 
             public EndpointItemLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
             }
 
-            public void Position(DiagramItem endpoint)
+            public void Position(EndpointItem endpoint)
             {
                 var endpointVisual = diagram.GetItemFromContainer(endpoint);
 
@@ -119,7 +184,18 @@
                 }
 
                 lastEndpoint = endpointVisual;
+                position[endpoint] = index;
                 index++;
+            }
+
+            public int GetIndexPosition(EndpointItem endpoint)
+            {
+                return position[endpoint];
+            }
+
+            public EndpointItem GetFirst()
+            {
+                return position.Single(kv => kv.Value == 0).Key;
             }
         }
     }

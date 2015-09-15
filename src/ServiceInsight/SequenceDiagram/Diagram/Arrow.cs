@@ -16,6 +16,8 @@
 
         public Handler ToHandler { get; set; }
 
+        public Direction Direction { get; set; }
+
         public ArrowType Type { get; set; }
 
         public string MessageId
