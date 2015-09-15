@@ -149,7 +149,6 @@
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
 
         <Border x:Name="Root"
-                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Width}"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
                 BorderThickness="0,0,0,6">
@@ -274,6 +273,8 @@
                 <Style TargetType="{x:Type diagram:DiagramVisualItem}">
                     <Setter Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" diag:PresentationTraceSources.TraceLevel="High" />
                     <Setter Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" diag:PresentationTraceSources.TraceLevel="High" />
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
                     <Setter Property="Template">
                         <Setter.Value>

@@ -6,11 +6,6 @@
     {
         public void PerformLayout(IDiagram diagram)
         {
-            LayoutEndpoints(diagram);
-        }
-
-        private void LayoutEndpoints(IDiagram diagram)
-        {
             if (diagram.DiagramItems == null || diagram.DiagramItems.Count == 0)
             {
                 return;
@@ -35,8 +30,8 @@
                     var timelineVisual = diagram.GetItemFromContainer(timeline);
                     var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
 
-                    timelineVisual.X = endpointVisual.X + endpointVisual.Width / 2;
-                    timelineVisual.Y = endpointVisual.Y + endpointVisual.Height + 5;
+                    timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
+                    timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight + 5;
 
                     continue;
                 }
