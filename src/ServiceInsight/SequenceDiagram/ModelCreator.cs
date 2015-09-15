@@ -1,10 +1,9 @@
-namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+namespace ServiceInsight.SequenceDiagram
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Diagram;
+    using Diagram;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
 

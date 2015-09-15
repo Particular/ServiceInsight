@@ -7,7 +7,6 @@
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.SequenceDiagram;
 
 
     [TestFixture]

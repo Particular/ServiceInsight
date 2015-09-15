@@ -6,7 +6,6 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
-    using Particular.ServiceInsight.Desktop.SequenceDiagram;
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {

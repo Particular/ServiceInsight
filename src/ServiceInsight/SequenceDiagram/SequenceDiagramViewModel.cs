@@ -1,13 +1,12 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+﻿namespace ServiceInsight.SequenceDiagram
 {
     using System.Collections.Generic;
     using System.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Diagram;
+    using Diagram;
     using Particular.ServiceInsight.Desktop.Framework.Events;
-    using ServiceControl;
+    using Particular.ServiceInsight.Desktop.ServiceControl;
 
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -46,6 +45,7 @@
         private void CreateElements(List<ReceivedMessage> messages)
         {
             var items = new ModelCreator(messages).GetModel();
+
             DiagramItems.Clear();
             DiagramItems.AddRange(items);
             DiagramItems.AddRange(items.Select(e => e.Timeline));

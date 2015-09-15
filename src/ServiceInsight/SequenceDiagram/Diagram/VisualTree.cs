@@ -5,7 +5,7 @@
 
     public static class VisualTree
     {
-        public static T FindFirstElementInVisualTree<T>(DependencyObject parentElement) where T : DependencyObject
+        public static T FindFirstVisualChild<T>(DependencyObject parentElement) where T : DependencyObject
         {
             var count = VisualTreeHelper.GetChildrenCount(parentElement);
             if (count == 0)
@@ -21,7 +21,7 @@
                 }
                 else
                 {
-                    var result = FindFirstElementInVisualTree<T>(child);
+                    var result = FindFirstVisualChild<T>(child);
                     if (result != null)
                         return result;
 

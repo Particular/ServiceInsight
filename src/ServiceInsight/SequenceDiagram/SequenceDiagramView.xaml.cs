@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+﻿namespace ServiceInsight.SequenceDiagram
 {
     public partial class SequenceDiagramView
     {

@@ -11,11 +11,10 @@
         {
             Timeline = new EndpointTimeline
             {
-                Height = 500,
                 Endpoint = this,
             };
             Handlers = new List<Handler>();
-            Width = 260;
+            //Width = 260;
         }
 
         public EndpointItem(string name, string host, string version = null) : this()

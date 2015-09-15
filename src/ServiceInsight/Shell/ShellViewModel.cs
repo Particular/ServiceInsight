@@ -11,6 +11,7 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework.Rx;
+    using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
     using MessageFlow;
     using MessageHeaders;
@@ -23,7 +24,6 @@
     using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
     using Saga;
-    using SequenceDiagram;
     using Settings;
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;

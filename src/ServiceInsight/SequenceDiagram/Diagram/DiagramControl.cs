@@ -3,14 +3,13 @@
     using System;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
     using System.Windows.Markup;
+    using System.Windows.Threading;
 
     [ContentProperty("Items")]
     public class DiagramControl : ListBox, IDiagram
     {
         bool isLoaded;
-        DiagramSurface surface;
 
         public static string ItemHostPart = "ItemsHost";
         public static string DiagramSurfacePart = "DiagramSurface";
@@ -53,6 +52,12 @@
             get { return ItemsSource as DiagramItemCollection; }
         }
 
+        public DiagramVisualItem GetItemFromContainer(DiagramItem item)
+        {
+            if (item == null) return null;
+            return (DiagramVisualItem)ItemContainerGenerator.ContainerFromItem(item);
+        }
+
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is DiagramVisualItem;
@@ -63,38 +68,15 @@
             return new DiagramVisualItem();
         }
 
-        static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var diagram = (DiagramControl) d;
-            diagram.OnItemsChanged(e.OldValue as DiagramItemCollection, e.NewValue as DiagramItemCollection);
-        }
-
-        void OnItemsChanged(DiagramItemCollection oldValue, DiagramItemCollection newValue)
-        {
-            if (oldValue != null)
-            {
-            }
-        }
-
-        public T GetContainerFromItem<T>(DiagramItem item) where T : UIElement
-        {
-            var container = ItemContainerGenerator.ContainerFromItem(item);
-            return (T)container;
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
-            surface = (DiagramSurface) Template.FindName(DiagramSurfacePart, this);
         }
 
         void OnGeneratorStatusChanged(object sender, EventArgs e)
         {
-            if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
-            {
-                PerformLayout();
-            }
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(PerformLayout));
         }
 
         void OnControlLoaded()
@@ -103,13 +85,8 @@
             PerformLayout();
         }
 
-        void PerformLayout()
+        public void PerformLayout()
         {
-            if (surface != null)
-            {
-                surface.InvalidateMeasure();
-            }
-
             if (isLoaded)
             {
                 LayoutManager.PerformLayout(this);

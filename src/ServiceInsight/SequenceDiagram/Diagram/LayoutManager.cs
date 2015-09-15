@@ -16,13 +16,12 @@
                 return;
             }
 
-            var endpointLayout = new EndpointItemLayout();
-            var handlerLayout = new HandlerLayout();
+            var endpointLayout = new EndpointItemLayout(diagram);
+            var handlerLayout = new HandlerLayout(diagram);
 
             foreach (var item in diagram.DiagramItems)
             {
                 var endpoint = item as EndpointItem;
-
                 if (endpoint != null)
                 {
                     endpointLayout.Position(endpoint);
@@ -33,8 +32,11 @@
                 var timeline = item as EndpointTimeline;
                 if (timeline != null)
                 {
-                    timeline.X = timeline.Endpoint.X + timeline.Endpoint.Width / 2;
-                    timeline.Y = timeline.Endpoint.Y + timeline.Endpoint.Height + 5;
+                    var timelineVisual = diagram.GetItemFromContainer(timeline);
+                    var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
+
+                    timelineVisual.X = endpointVisual.X + endpointVisual.Width / 2;
+                    timelineVisual.Y = endpointVisual.Y + endpointVisual.Height + 5;
 
                     continue;
                 }
@@ -52,47 +54,64 @@
 
         class HandlerLayout
         {
+            IDiagram diagram;
             Dictionary<EndpointItem, double> endpointYs = new Dictionary<EndpointItem, double>();
-             
+
+            public HandlerLayout(IDiagram diagram)
+            {
+                this.diagram = diagram;
+            }
+
             public void Position(Handler handler)
             {
-                handler.X = handler.Endpoint.X + handler.Endpoint.Width / 2 - 7;
+                var handlerVisual = diagram.GetItemFromContainer(handler);
+                var endpointVisual = diagram.GetItemFromContainer(handler.Endpoint);
+
+                handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2 - 7;
 
                 var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count)*25;
-                handler.Height = height;
+                handlerVisual.Height = height;
 
                 if (endpointYs.ContainsKey(handler.Endpoint))
                 {
                     endpointYs[handler.Endpoint] += 30 + height;
-                    handler.Y = endpointYs[handler.Endpoint];
+                    handlerVisual.Y = endpointYs[handler.Endpoint];
                 }
                 else
                 {
-                    endpointYs[handler.Endpoint] = handler.Y = 50 + height;
+                    endpointYs[handler.Endpoint] = handlerVisual.Y = 50 + height;
                 }
             }
         }
 
         class EndpointItemLayout
         {
-            EndpointItem lastEndpoint;
+            IDiagram diagram;
+            DiagramVisualItem lastEndpoint;
             double firstX;
             int index;
 
-            public void Position(EndpointItem endpoint)
+            public EndpointItemLayout(IDiagram diagram)
             {
+                this.diagram = diagram;
+            }
+
+            public void Position(DiagramItem endpoint)
+            {
+                var endpointVisual = diagram.GetItemFromContainer(endpoint);
+
                 if (index == 0)
                 {
-                    firstX = endpoint.X;
+                    firstX = endpointVisual.X;
                 }
 
                 if (lastEndpoint != null)
                 {
-                    endpoint.X = firstX + ((lastEndpoint.Width + 10 /*Margin*/) * index);
-                    endpoint.Y = lastEndpoint.Y;
+                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth + lastEndpoint.Margin.Right) * index);
+                    endpointVisual.Y = lastEndpoint.Y;
                 }
 
-                lastEndpoint = endpoint;
+                lastEndpoint = endpointVisual;
                 index++;
             }
         }

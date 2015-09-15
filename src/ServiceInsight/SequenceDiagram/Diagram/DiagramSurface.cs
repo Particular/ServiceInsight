@@ -13,12 +13,20 @@
 
             foreach (UIElement child in Children)
             {
-                desiredSize = new Size(
-                    Math.Max(desiredSize.Width, GetLeft(child) + child.DesiredSize.Width),
-                    Math.Max(desiredSize.Height, GetTop(child) + child.DesiredSize.Height));
+                var width = Math.Max(desiredSize.Width, GetLeft(child) + child.DesiredSize.Width);
+                var height = Math.Max(desiredSize.Height, GetTop(child) + child.DesiredSize.Height);
+
+                desiredSize = new Size(double.IsNaN(width) ? 0 : width,
+                                       double.IsNaN(height) ? 0 : height);
             }
 
             return desiredSize;
+        }
+
+        public void Invalidate()
+        {
+            Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            Arrange(new Rect(0, 0, DesiredSize.Width, DesiredSize.Height));
         }
     }
 }

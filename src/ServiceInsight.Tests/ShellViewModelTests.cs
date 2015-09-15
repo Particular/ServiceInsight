@@ -12,10 +12,10 @@
     using Desktop.MessageViewers;
     using Desktop.Models;
     using Desktop.Saga;
-    using Desktop.SequenceDiagram;
     using Desktop.Settings;
     using Desktop.Shell;
     using Desktop.Startup;
+    using global::ServiceInsight.SequenceDiagram;
     using Licensing;
     using NSubstitute;
     using NUnit.Framework;
