@@ -153,6 +153,7 @@
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
 
         <Border x:Name="Root"
+                Width="260"
                 Margin="15,15,15,0"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
