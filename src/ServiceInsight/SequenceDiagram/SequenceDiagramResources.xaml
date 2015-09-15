@@ -151,7 +151,8 @@
         <Border x:Name="Root"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
-                BorderThickness="0,0,0,6">
+                BorderThickness="0,0,0,6"
+                Margin="15,15,15,0">
 
             <!--  Endpoint Tooltip  -->
             <Border.ToolTip>

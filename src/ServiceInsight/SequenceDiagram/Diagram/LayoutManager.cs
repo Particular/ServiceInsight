@@ -13,6 +13,7 @@
 
             var endpointLayout = new EndpointItemLayout(diagram);
             var handlerLayout = new HandlerLayout(diagram);
+            var endpointTimelineLayout = new EndpointTimelineLayout(diagram);
 
             foreach (var item in diagram.DiagramItems)
             {
@@ -20,30 +21,41 @@
                 if (endpoint != null)
                 {
                     endpointLayout.Position(endpoint);
-
                     continue;
                 }
 
                 var timeline = item as EndpointTimeline;
                 if (timeline != null)
                 {
-                    var timelineVisual = diagram.GetItemFromContainer(timeline);
-                    var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
-
-                    timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
-                    timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight + 5;
-
+                    endpointTimelineLayout.Position(timeline);
                     continue;
                 }
-
 
                 var handler = item as Handler;
                 if (handler != null)
                 {
                     handlerLayout.Position(handler);
-                    
                     continue;
                 }
+            }
+        }
+
+        class EndpointTimelineLayout
+        {
+            IDiagram diagram;
+
+            public EndpointTimelineLayout(IDiagram diagram)
+            {
+                this.diagram = diagram;
+            }
+
+            public void Position(EndpointTimeline timeline)
+            {
+                var timelineVisual = diagram.GetItemFromContainer(timeline);
+                var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
+
+                timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
+                timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight;
             }
         }
 
@@ -102,7 +114,7 @@
 
                 if (lastEndpoint != null)
                 {
-                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth + lastEndpoint.Margin.Right) * index);
+                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth) * index);
                     endpointVisual.Y = lastEndpoint.Y;
                 }
 
