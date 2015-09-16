@@ -10,7 +10,6 @@ namespace ServiceInsight.SequenceDiagram
     public class ModelCreator
     {
         readonly List<ReceivedMessage> messages;
-        Dictionary<Tuple<string, EndpointItem>, Handler> handlersLookup = new Dictionary<Tuple<string, EndpointItem>, Handler>();
 
         public ModelCreator(List<ReceivedMessage> messages)
         {
@@ -19,31 +18,32 @@ namespace ServiceInsight.SequenceDiagram
 
         public List<EndpointItem> GetModel()
         {
-            var messageTrees = CreateMessageTrees(messages).ToArray();
+            var endpoints = new List<EndpointItem>();
+            var endpointRegistry = new EndpointRegistry();
+            var handlerRegistry = new HandlerRegistry();
 
+            var messageTrees = CreateMessageTrees(messages).ToArray();
             var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToArray();
 
-            var registry = new EndpointRegistry();
+            // NOTE: All sending endpoints are created first to ensure version info is retained
             foreach (var message in messagesInOrder)
             {
-                registry.Register(CreateSendingEndpoint(message));
+                endpointRegistry.Register(CreateSendingEndpoint(message));
             }
             foreach (var message in messagesInOrder)
             {
-                registry.Register(CreateProcessingEndpoint(message));
+                endpointRegistry.Register(CreateProcessingEndpoint(message));
             }
-
-            var endpoints = new List<EndpointItem>();
 
             foreach (var message in messagesInOrder)
             {
-                var sendingEndpoint = registry.Get(CreateSendingEndpoint(message));
+                var sendingEndpoint = endpointRegistry.Get(CreateSendingEndpoint(message));
                 if (!endpoints.Contains(sendingEndpoint))
                 {
                     endpoints.Add(sendingEndpoint);
                 }
 
-                var processingEndpoint = registry.Get(CreateProcessingEndpoint(message));
+                var processingEndpoint = endpointRegistry.Get(CreateProcessingEndpoint(message));
                 if (!endpoints.Contains(processingEndpoint))
                 {
                     endpoints.Add(processingEndpoint);
@@ -52,12 +52,12 @@ namespace ServiceInsight.SequenceDiagram
                 Handler sendingHandler; 
                 Handler processingHandler;
 
-                if (TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out sendingHandler))
+                if (handlerRegistry.TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out sendingHandler))
                 {
                     sendingEndpoint.Handlers.Add(sendingHandler);
                 } 
                 
-                if (TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
+                if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
                 {
                     processingEndpoint.Handlers.Add(processingHandler);
                 }
@@ -116,6 +116,27 @@ namespace ServiceInsight.SequenceDiagram
             private Tuple<string, string, string> MakeKey(EndpointItem item)
             {
                 return Tuple.Create(item.FullName, item.Host, item.HostId);
+            }
+        }
+
+        class HandlerRegistry
+        {
+            IDictionary<Tuple<string, EndpointItem>, Handler> handlersLookup = new Dictionary<Tuple<string, EndpointItem>, Handler>();
+
+            public bool TryRegisterHandler(Handler newHandler, out Handler handler)
+            {
+                Handler existingHandler;
+                var key = Tuple.Create(newHandler.ID, newHandler.Endpoint);
+                if (handlersLookup.TryGetValue(key, out existingHandler))
+                {
+                    handler = existingHandler;
+                    return false;
+                }
+
+                handlersLookup.Add(key, newHandler);
+
+                handler = newHandler;
+                return true;
             }
         }
 
@@ -183,22 +204,6 @@ namespace ServiceInsight.SequenceDiagram
             }
 
             return nodes.Except(resolved);
-        }
-
-        bool TryRegisterHandler(Handler newHandler, out Handler handler)
-        {
-            Handler existingHandler;
-            var key = Tuple.Create(newHandler.ID, newHandler.Endpoint);
-            if (handlersLookup.TryGetValue(key, out existingHandler))
-            {
-                handler = existingHandler;
-                return false;
-            }
-
-            handlersLookup.Add(key, newHandler);
-
-            handler = newHandler;
-            return true;
         }
 
         EndpointItem CreateProcessingEndpoint(ReceivedMessage m)
