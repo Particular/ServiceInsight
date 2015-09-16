@@ -159,7 +159,7 @@ namespace ServiceInsight.SequenceDiagram
             public IEnumerable<ReceivedMessage> Walk()
             {
                 yield return Message;
-                foreach (var child in Children.OrderBy(x => x.Message.time_sent).ThenBy(x => x.Message.processed_at))
+                foreach (var child in Children.OrderBy(x => x.Message.processed_at))
                     foreach (var walked in child.Walk())
                         yield return walked;
             }
