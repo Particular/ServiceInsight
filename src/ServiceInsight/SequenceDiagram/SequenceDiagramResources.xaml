@@ -14,9 +14,10 @@
     <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
     <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
 
-
     <cnv:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <cnv:SmartWrapConverter x:Key="SmartWrapConverter" />
+    <cnv:DirectionToVisibilityConverter x:Key="LeftToVisibilityConverter" Direction="Left" />
+    <cnv:DirectionToVisibilityConverter x:Key="RightToVisibilityConverter" Direction="Right" />
 
     <Style x:Key="TooltipLabelStyle" TargetType="Label">
         <Setter Property="FontWeight" Value="Bold" />
@@ -104,6 +105,7 @@
               Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                           AncestorType={x:Type diagram:DiagramVisualItem}},
                            Path=Height}" />
+
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
@@ -242,19 +244,36 @@
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
         <Grid>
-            <TextBlock HorizontalAlignment="Center"
+            <TextBlock Margin="5"
+                       HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Margin="5"
                        Text="{Binding Name}" />
-            
-            <Line x:Name="Line"
-                  Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                  StrokeThickness="3"
-                  ToolTip="{Binding Name}"
-                  X1="0"
-                  X2="{Binding Width}"
-                  Y1="0"
-                  Y2="0" />
+            <StackPanel Orientation="Horizontal">
+                <Path Width="8"
+                      Height="16"
+                      VerticalAlignment="Top"
+                      Data="{StaticResource LeftArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource LeftToVisibilityConverter}}" />
+                <Line x:Name="Line"
+                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                      StrokeThickness="3"
+                      ToolTip="{Binding Name}"
+                      X1="0"
+                      X2="{Binding Width}"
+                      Y1="0"
+                      Y2="0" />
+                <Path Width="8"
+                      Height="16"
+                      VerticalAlignment="Top"
+                      Data="{StaticResource RightArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource RightToVisibilityConverter}}" />
+            </StackPanel>
         </Grid>
     </DataTemplate>
 

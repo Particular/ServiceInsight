@@ -515,6 +515,7 @@
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
     <Compile Include="ValueConverters\CenterToolTipConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
+    <Compile Include="ValueConverters\DirectionToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
