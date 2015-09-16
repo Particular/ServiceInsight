@@ -26,17 +26,17 @@
                     continue;
                 }
 
-                var timeline = item as EndpointTimeline;
-                if (timeline != null)
-                {
-                    endpointTimelineLayout.Position(timeline);
-                    continue;
-                }
-
                 var handler = item as Handler;
                 if (handler != null)
                 {
                     handlerLayout.Position(handler);
+                    continue;
+                }
+
+                var timeline = item as EndpointTimeline;
+                if (timeline != null)
+                {
+                    endpointTimelineLayout.Position(timeline);
                     continue;
                 }
 
@@ -112,10 +112,12 @@
         class EndpointTimelineLayout
         {
             IDiagram diagram;
+            double maxHeight = 0d;
 
             public EndpointTimelineLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
+                maxHeight = GetMaxHeight();
             }
 
             public void Position(EndpointTimeline timeline)
@@ -125,6 +127,16 @@
 
                 timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
                 timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight;
+                timelineVisual.Height = maxHeight;
+            }
+
+            double GetMaxHeight()
+            {
+                var handlers = diagram.DiagramItems.OfType<Handler>().ToList();
+                var height = handlers.Select(handler => diagram.GetItemFromContainer(handler))
+                                        .Max(visual => visual.Y);
+
+                return height + 50; //Continue a bit from the last handler
             }
         }
 

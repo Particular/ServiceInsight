@@ -102,8 +102,8 @@
               X2="0"
               Y1="0"
               Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
-                                                          AncestorType={x:Type diagram:DiagramControl}},
-                           Path=ActualHeight}" />
+                                                          AncestorType={x:Type diagram:DiagramVisualItem}},
+                           Path=Height}" />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
