@@ -6,6 +6,7 @@
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using Microsoft.Win32;
 
     public partial class SequenceDiagramView
     {
@@ -47,7 +48,16 @@
             }
             rtb.Render(drawingVisual);
 
-            SaveRTBAsPNG(rtb, "C:\\SequenceDiagram1.png");
+            var saveFileDialog = new SaveFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = ".png",
+                FileName = "sequencediagram.png"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveRTBAsPNG(rtb, saveFileDialog.FileName);
+            }
         }
 
         private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
