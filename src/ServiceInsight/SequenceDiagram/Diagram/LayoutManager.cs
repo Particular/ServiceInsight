@@ -47,6 +47,7 @@
                     continue;
                 }
             }
+
         }
 
         class ArrowLayout
@@ -159,12 +160,14 @@
             IDiagram diagram;
             DiagramVisualItem lastEndpoint;
             double firstX;
+            double maxHeight;
             int index;
             Dictionary<EndpointItem, int> position = new Dictionary<EndpointItem, int>();
 
             public EndpointItemLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
+                this.maxHeight = GetMaxHeight();
             }
 
             public void Position(EndpointItem endpoint)
@@ -182,6 +185,11 @@
                     endpointVisual.Y = lastEndpoint.Y;
                 }
 
+                if (endpointVisual.ActualHeight < maxHeight)
+                {
+                    endpointVisual.Height = maxHeight;
+                }
+
                 lastEndpoint = endpointVisual;
                 position[endpoint] = index;
                 index++;
@@ -195,6 +203,15 @@
             public EndpointItem GetFirst()
             {
                 return position.Single(kv => kv.Value == 0).Key;
+            }
+
+            private double GetMaxHeight()
+            {
+                var endpoints = diagram.DiagramItems.OfType<EndpointItem>().ToList();
+                var maxHeight = endpoints.Select(endpoint => diagram.GetItemFromContainer(endpoint))
+                                         .Max(endpointVisual => endpointVisual.ActualHeight);
+
+                return maxHeight;
             }
         }
     }
