@@ -52,6 +52,8 @@
 
         class ArrowLayout
         {
+            const double ArrowHeadAndEndWidth = 8;
+
             readonly IDiagram diagram;
             readonly EndpointItemLayout endpointItemLayout;
 
@@ -91,20 +93,21 @@
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
 
                     var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
-                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - 8;
+                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - ArrowHeadAndEndWidth;
                 }
                 else if (fromEndpointIndex < toEndpointIndex)
                 {
                     //From left to right
                     arrow.Direction = Direction.Right;
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
-                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth) - 8;
+                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth) - ArrowHeadAndEndWidth;
                 }
                 else
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrow.Width = (toHandlerVisual.X + toHandlerVisual.Width) - fromHandlerVisual.X - 8;
+                    arrowVisual.X = toHandlerVisual.X + 2;
+                    arrow.Width = fromHandlerVisual.X - (fromHandlerVisual.ActualWidth + toHandlerVisual.X + ArrowHeadAndEndWidth);
                 }
             }
         }
