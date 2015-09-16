@@ -82,7 +82,7 @@
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 arrowVisual.X = fromHandlerVisual.X;
                 var arrowIndex = arrow.FromHandler.Out.IndexOf(arrow) + 1;
-                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.ActualHeight / (fromHandler.Out.Count + 1)) * arrowIndex);
+                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.ActualHeight / (fromHandler.Out.Count + 1)) * arrowIndex) - 20;
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
@@ -91,20 +91,20 @@
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
 
                     var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
-                    arrow.Width = fromEndpointVisual.ActualWidth/4;
+                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - 8;
                 }
                 else if (fromEndpointIndex < toEndpointIndex)
                 {
                     //From left to right
                     arrow.Direction = Direction.Right;
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
-                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth);
+                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth) - 8;
                 }
                 else
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrow.Width = (toHandlerVisual.X + toHandlerVisual.Width) - fromHandlerVisual.X;
+                    arrow.Width = (toHandlerVisual.X + toHandlerVisual.Width) - fromHandlerVisual.X - 8;
                 }
             }
         }
