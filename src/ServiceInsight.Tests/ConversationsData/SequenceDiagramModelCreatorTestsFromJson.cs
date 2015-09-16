@@ -1,6 +1,7 @@
 namespace Particular.ServiceInsight.Tests.ConversationsData
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
@@ -8,7 +9,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {
-        protected List<EndpointItem> result;
+        protected ReadOnlyCollection<EndpointItem> result;
 
         protected SequenceDiagramModelCreatorTestsFromJson(string fileName)
         {
@@ -20,7 +21,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
             var messages = deserializer.Deserialize<List<ReceivedMessage>>(new PayLoad(content));
 
             var creator = new ModelCreator(messages);
-            result = creator.GetModel();
+            result = creator.Endpoints;
         }
     }
 }

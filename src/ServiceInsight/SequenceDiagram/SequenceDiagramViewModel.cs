@@ -44,13 +44,15 @@
 
         private void CreateElements(List<ReceivedMessage> messages)
         {
-            var items = new ModelCreator(messages).GetModel();
+            var modelCreator = new ModelCreator(messages);
+            var endpoints = modelCreator.Endpoints;
+            var handlers = modelCreator.Handlers;
 
             DiagramItems.Clear();
-            DiagramItems.AddRange(items);
-            DiagramItems.AddRange(items.Select(e => e.Timeline));
-            DiagramItems.AddRange(items.SelectMany(i => i.Handlers));
-            DiagramItems.AddRange(items.SelectMany(i => i.Handlers.SelectMany(h => h.Out)));
+            DiagramItems.AddRange(endpoints);
+            DiagramItems.AddRange(endpoints.Select(e => e.Timeline));
+            DiagramItems.AddRange(handlers);
+            DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
         }
     }
 }

@@ -2,23 +2,60 @@ namespace ServiceInsight.SequenceDiagram
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
-    using Diagram;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.SequenceDiagram.Diagram;
+
+    public struct Model
+    {
+        readonly List<EndpointItem> endpoints;
+        readonly List<Handler> handlers;
+
+        public Model(List<EndpointItem> endpoints, List<Handler> handlers)
+        {
+            this.endpoints = endpoints;
+            this.handlers = handlers;
+        }
+
+        public List<EndpointItem> Endpoints
+        {
+            get { return endpoints; }
+        }
+
+        public List<Handler> Handlers
+        {
+            get { return handlers; }
+        }
+    }
 
     public class ModelCreator
     {
         readonly List<ReceivedMessage> messages;
 
+        List<EndpointItem> endpoints = new List<EndpointItem>();
+        List<Handler> handlers = new List<Handler>();
+
         public ModelCreator(List<ReceivedMessage> messages)
         {
             this.messages = messages;
+
+            Initialize();
         }
 
-        public List<EndpointItem> GetModel()
+        public ReadOnlyCollection<EndpointItem> Endpoints
         {
-            var endpoints = new List<EndpointItem>();
+            get { return endpoints.AsReadOnly(); }
+        }
+
+        public ReadOnlyCollection<Handler> Handlers
+        {
+            get { return handlers.AsReadOnly(); }
+        }
+
+        void Initialize()
+        {
             var endpointRegistry = new EndpointRegistry();
             var handlerRegistry = new HandlerRegistry();
 
@@ -49,16 +86,18 @@ namespace ServiceInsight.SequenceDiagram
                     endpoints.Add(processingEndpoint);
                 }
 
-                Handler sendingHandler; 
+                Handler sendingHandler;
                 Handler processingHandler;
 
                 if (handlerRegistry.TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out sendingHandler))
                 {
+                    handlers.Add(sendingHandler);
                     sendingEndpoint.Handlers.Add(sendingHandler);
-                } 
-                
+                }
+
                 if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
                 {
+                    handlers.Add(processingHandler);
                     processingEndpoint.Handlers.Add(processingHandler);
                 }
 
@@ -71,122 +110,9 @@ namespace ServiceInsight.SequenceDiagram
 
                 sendingHandler.Out.Add(arrow);
             }
-
-            return endpoints;
         }
 
-        class EndpointRegistry
-        {
-            private IDictionary<Tuple<string, string, string>, List<EndpointItem>> store = new Dictionary<Tuple<string, string, string>, List<EndpointItem>>();
-
-            public void Register(EndpointItem item)
-            {
-                List<EndpointItem> items;
-                var key = MakeKey(item);
-                if (!store.TryGetValue(key, out items))
-                {
-                    items = new List<EndpointItem>();
-                    store[key] = items;
-                }
-
-                var existing = items.FirstOrDefault(x => x.Version == item.Version);
-                if (existing == null)
-                {
-                    // Only add null if we haven't seen anything else
-                    if (item.Version != null || !items.Any())
-                    {
-                        items.Add(item);
-                    }
-                }
-            }
-
-            public EndpointItem Get(EndpointItem prototype)
-            {
-                var key = MakeKey(prototype);
-
-                var candidate = store[key].Where(x => x.Version != null).FirstOrDefault(x => x.Version == prototype.Version);
-
-                if (candidate != null)
-                    return candidate;
-
-                return store[key].FirstOrDefault(x => x.Version == prototype.Version)
-                       ?? store[key].FirstOrDefault();
-            }
-
-            private Tuple<string, string, string> MakeKey(EndpointItem item)
-            {
-                return Tuple.Create(item.FullName, item.Host, item.HostId);
-            }
-        }
-
-        class HandlerRegistry
-        {
-            IDictionary<Tuple<string, EndpointItem>, Handler> handlersLookup = new Dictionary<Tuple<string, EndpointItem>, Handler>();
-
-            public bool TryRegisterHandler(Handler newHandler, out Handler handler)
-            {
-                Handler existingHandler;
-                var key = Tuple.Create(newHandler.ID, newHandler.Endpoint);
-                if (handlersLookup.TryGetValue(key, out existingHandler))
-                {
-                    handler = existingHandler;
-                    return false;
-                }
-
-                handlersLookup.Add(key, newHandler);
-
-                handler = newHandler;
-                return true;
-            }
-        }
-
-        class MessageTreeNode
-        {
-            ReceivedMessage msg;
-            List<MessageTreeNode> children = new List<MessageTreeNode>();
-            string parent;
-
-            public MessageTreeNode(ReceivedMessage msg)
-            {
-                this.msg = msg;
-                parent = GetHeaderByKey(msg.headers, MessageHeaderKeys.RelatedTo, null);
-            }
-
-            public string Id
-            {
-                get { return msg.message_id; }
-            }
-
-            public string Parent
-            {
-                get { return parent; }
-            }
-
-            public void AddChild(MessageTreeNode childNode)
-            {
-                children.Add(childNode);
-            }
-
-            public ReceivedMessage Message
-            {
-                get { return msg; }
-            }
-
-            public IEnumerable<MessageTreeNode> Children
-            {
-                get { return children; }
-            }
-
-            public IEnumerable<ReceivedMessage> Walk()
-            {
-                yield return Message;
-                foreach (var child in Children.OrderBy(x => x.Message.processed_at))
-                    foreach (var walked in child.Walk())
-                        yield return walked;
-            }
-        }
-
-        private IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<ReceivedMessage> recievedMessages)
+        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<ReceivedMessage> recievedMessages)
         {
             var nodes = recievedMessages.Select(x => new MessageTreeNode(x)).ToList();
             var resolved = new HashSet<MessageTreeNode>();
@@ -292,6 +218,115 @@ namespace ServiceInsight.SequenceDiagram
             var pair = headers.FirstOrDefault(x => x.key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
                                                    x.key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));
             return pair == null ? defaultValue : pair.value;
+        }
+
+        class EndpointRegistry
+        {
+            IDictionary<Tuple<string, string, string>, List<EndpointItem>> store = new Dictionary<Tuple<string, string, string>, List<EndpointItem>>();
+
+            public void Register(EndpointItem item)
+            {
+                List<EndpointItem> items;
+                var key = MakeKey(item);
+                if (!store.TryGetValue(key, out items))
+                {
+                    items = new List<EndpointItem>();
+                    store[key] = items;
+                }
+
+                var existing = items.FirstOrDefault(x => x.Version == item.Version);
+                if (existing == null)
+                {
+                    // Only add null if we haven't seen anything else
+                    if (item.Version != null || !items.Any())
+                    {
+                        items.Add(item);
+                    }
+                }
+            }
+
+            public EndpointItem Get(EndpointItem prototype)
+            {
+                var key = MakeKey(prototype);
+
+                var candidate = store[key].Where(x => x.Version != null).FirstOrDefault(x => x.Version == prototype.Version);
+
+                if (candidate != null)
+                {
+                    return candidate;
+                }
+
+                return store[key].FirstOrDefault(x => x.Version == prototype.Version)
+                       ?? store[key].FirstOrDefault();
+            }
+
+            Tuple<string, string, string> MakeKey(EndpointItem item)
+            {
+                return Tuple.Create(item.FullName, item.Host, item.HostId);
+            }
+        }
+
+        class HandlerRegistry
+        {
+            IDictionary<Tuple<string, EndpointItem>, Handler> handlersLookup = new Dictionary<Tuple<string, EndpointItem>, Handler>();
+
+            public bool TryRegisterHandler(Handler newHandler, out Handler handler)
+            {
+                Handler existingHandler;
+                var key = Tuple.Create(newHandler.ID, newHandler.Endpoint);
+                if (handlersLookup.TryGetValue(key, out existingHandler))
+                {
+                    handler = existingHandler;
+                    return false;
+                }
+
+                handlersLookup.Add(key, newHandler);
+
+                handler = newHandler;
+                return true;
+            }
+        }
+
+        class MessageTreeNode
+        {
+            List<MessageTreeNode> children = new List<MessageTreeNode>();
+
+            public MessageTreeNode(ReceivedMessage msg)
+            {
+                this.Message = msg;
+                Parent = GetHeaderByKey(msg.headers, MessageHeaderKeys.RelatedTo, null);
+            }
+
+            public string Id
+            {
+                get { return Message.message_id; }
+            }
+
+            public string Parent { get; set; }
+
+            public ReceivedMessage Message { get; set; }
+
+            public IEnumerable<MessageTreeNode> Children
+            {
+                get { return children; }
+            }
+
+            public void AddChild(MessageTreeNode childNode)
+            {
+                children.Add(childNode);
+            }
+
+            public IEnumerable<ReceivedMessage> Walk()
+            {
+                yield return Message;
+                foreach (var child in Children.OrderBy(x => x.Message.processed_at))
+                {
+                    foreach (var walked in child.Walk())
+                    {
+                        yield return walked;
+                    }
+                }
+            }
         }
     }
 }

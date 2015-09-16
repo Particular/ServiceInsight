@@ -15,7 +15,7 @@
         {
             var messages = new List<ReceivedMessage>();
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(0, result.Count);
         }
@@ -53,7 +53,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -142,7 +142,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -211,7 +211,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(4, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -248,7 +248,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -319,7 +319,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(4, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -389,7 +389,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual("A", result[0].Name);
@@ -520,7 +520,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(2, result[1].Handlers.Count);
@@ -637,7 +637,7 @@
             };
 
             var creator = new ModelCreator(messages);
-            var result = creator.GetModel();
+            var result = creator.Endpoints;
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(4, result[1].Handlers.Count);
