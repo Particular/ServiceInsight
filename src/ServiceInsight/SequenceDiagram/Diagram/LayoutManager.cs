@@ -80,7 +80,8 @@
                 var fromHandlerVisual = diagram.GetItemFromContainer(fromHandler);
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 arrowVisual.X = fromHandlerVisual.X;
-                arrowVisual.Y = fromHandlerVisual.Y + (fromHandlerVisual.ActualHeight / fromHandler.Out.Count);
+                var arrowIndex = arrow.FromHandler.Out.IndexOf(arrow) + 1;
+                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.ActualHeight / (fromHandler.Out.Count + 1)) * arrowIndex);
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
@@ -96,13 +97,13 @@
                     //From left to right
                     arrow.Direction = Direction.Right;
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
-                    arrow.Width = toHandlerVisual.X - fromHandlerVisual.X;
+                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth);
                 }
                 else
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrow.Width = toHandlerVisual.X - fromHandlerVisual.X;
+                    arrow.Width = (toHandlerVisual.X + toHandlerVisual.Width) - fromHandlerVisual.X;
                 }
             }
         }
@@ -129,11 +130,12 @@
         class HandlerLayout
         {
             IDiagram diagram;
-            Dictionary<EndpointItem, double> endpointYs = new Dictionary<EndpointItem, double>();
+            double nextY;
 
             public HandlerLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
+                nextY = 150d;
             }
 
             public void Position(Handler handler)
@@ -146,15 +148,9 @@
                 var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count)*25;
                 handlerVisual.Height = height;
 
-                if (endpointYs.ContainsKey(handler.Endpoint))
-                {
-                    endpointYs[handler.Endpoint] += 30 + height;
-                    handlerVisual.Y = endpointYs[handler.Endpoint];
-                }
-                else
-                {
-                    endpointYs[handler.Endpoint] = handlerVisual.Y = 50 + height;
-                }
+                handlerVisual.Y = nextY;
+
+                nextY += height + 20;
             }
         }
 

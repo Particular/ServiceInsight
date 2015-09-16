@@ -244,6 +244,7 @@
         <Line x:Name="Line"
               Stroke="Blue"
               StrokeThickness="3"
+              ToolTip="{Binding Name}"
               X1="0"
               X2="{Binding Width}"
               Y1="0"
