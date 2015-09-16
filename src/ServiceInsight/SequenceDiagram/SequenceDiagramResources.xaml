@@ -243,67 +243,67 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0"
-                       Grid.ColumnSpan="5"
-                       HorizontalAlignment="Center"
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding Name}" />
-            <Ellipse Grid.Row="1"
-                     Grid.Column="0"
-                     Width="10"
-                     Height="10"
-                     Fill="{StaticResource Grey60Brush}"
-                     Visibility="{Binding Direction,
-                                          Converter={StaticResource LeftToVisibilityConverter}}" />
-            <Path Grid.Row="1"
-                  Grid.Column="1"
-                  Width="10"
-                  Height="10"
-                  Data="{StaticResource LeftArrow}"
-                  Fill="{StaticResource Grey20Brush}"
-                  Stretch="Fill"
-                  Visibility="{Binding Direction,
-                                       Converter={StaticResource LeftToVisibilityConverter}}" />
-            <Line x:Name="Line"
-                  Grid.Row="1"
-                  Grid.Column="2"
-                  VerticalAlignment="Center"
-                  Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                  StrokeThickness="3"
-                  ToolTip="{Binding Name}"
-                  X1="0"
-                  X2="{Binding Width}"
-                  Y1="0"
-                  Y2="0" />
-            <Path Grid.Row="1"
-                  Grid.Column="3"
-                  Width="10"
-                  Height="10"
-                  Data="{StaticResource RightArrow}"
-                  Fill="{StaticResource Grey20Brush}"
-                  Stretch="Fill"
-                  Visibility="{Binding Direction,
-                                       Converter={StaticResource RightToVisibilityConverter}}" />
-            <Ellipse Grid.Row="1"
-                     Grid.Column="4"
-                     Width="10"
-                     Height="10"
-                     Fill="{StaticResource Grey60Brush}"
-                     Visibility="{Binding Direction,
-                                          Converter={StaticResource RightToVisibilityConverter}}" />
-        </Grid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Ellipse Grid.Row="0"
+                         Grid.Column="0"
+                         Width="10"
+                         Height="10"
+                         Fill="{StaticResource Grey60Brush}"
+                         Visibility="{Binding Direction,
+                                              Converter={StaticResource LeftToVisibilityConverter}}" />
+                <Path Grid.Row="0"
+                      Grid.Column="1"
+                      Width="10"
+                      Height="10"
+                      Data="{StaticResource LeftArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource LeftToVisibilityConverter}}" />
+                <Line x:Name="Line"
+                      Grid.Row="0"
+                      Grid.Column="2"
+                      VerticalAlignment="Center"
+                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                      StrokeThickness="3"
+                      ToolTip="{Binding Name}"
+                      X1="0"
+                      X2="{Binding Width}"
+                      Y1="0"
+                      Y2="0" />
+                <Path Grid.Row="0"
+                      Grid.Column="3"
+                      Width="10"
+                      Height="10"
+                      Data="{StaticResource RightArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource RightToVisibilityConverter}}" />
+                <Ellipse Grid.Row="0"
+                         Grid.Column="4"
+                         Width="10"
+                         Height="10"
+                         Fill="{StaticResource Grey60Brush}"
+                         Visibility="{Binding Direction,
+                                              Converter={StaticResource RightToVisibilityConverter}}" />
+            </Grid>
+        </StackPanel>
     </DataTemplate>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">
