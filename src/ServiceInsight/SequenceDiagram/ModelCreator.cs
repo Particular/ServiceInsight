@@ -2,6 +2,7 @@ namespace ServiceInsight.SequenceDiagram
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Diagram;
     using Particular.ServiceInsight.Desktop.Framework;
@@ -66,17 +67,41 @@ namespace ServiceInsight.SequenceDiagram
         List<EndpointItem> CreateEndpointList()
         {
             foreach (var endpointViewModel in messages.Where(m => m.sending_endpoint != null)
-                .Select(m => OrderData.Create(m.message_id, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), CreateSendingEndpoint(m)))
-                .Where(endpointViewModel => !endpointsLookup.Any(_=> _.Key.Equals(endpointViewModel.Model))))
+                .Select(m => Tuple.Create(m.message_id, m.time_sent, GetHeaderByKey(m.headers, MessageHeaderKeys.RelatedTo, null), CreateSendingEndpoint(m))))
             {
-                endpointsLookup.Add(endpointViewModel.Model, endpointViewModel);
+                var found = false;
+                foreach (var orderData in endpointsLookup)
+                {
+                    if (!orderData.Key.Equals(endpointViewModel.Item4))
+                    {
+                        continue;
+                    }
+
+                    orderData.Value.MessageIds.Add(endpointViewModel.Item1);
+
+                    if (endpointViewModel.Item2.HasValue)
+                    {
+                        if (orderData.Value.ProcessedAt > endpointViewModel.Item2.Value)
+                        {
+                            orderData.Value.ProcessedAt = endpointViewModel.Item2.Value;
+                        }
+                    }
+
+                    found = true;
+                    break;
+                }
+
+                if (!found)
+                {
+                    endpointsLookup.Add(endpointViewModel.Item4, OrderData.Create(endpointViewModel.Item1, endpointViewModel.Item2, endpointViewModel.Item3, endpointViewModel.Item4));
+                }
             }
 
-            foreach (var endpointViewModel in messages.Where(m => m.receiving_endpoint != null)
-                .Select(m => OrderData.Create("NotKnown", m.message_id, CreateProcessingEndpoint(m)))
+            foreach (var model in messages.Where(m => m.receiving_endpoint != null)
+                .Select(m => OrderData.Create("NotKnown", m.processed_at, m.message_id, CreateProcessingEndpoint(m)))
                 .Where(endpointViewModel => !endpointsLookup.Any(_ => _.Key.Equals(endpointViewModel.Model))))
             {
-                endpointsLookup.Add(endpointViewModel.Model, endpointViewModel);
+                endpointsLookup.Add(model.Model, model);
             }
 
             return Sort(endpointsLookup.Values);
@@ -153,6 +178,7 @@ namespace ServiceInsight.SequenceDiagram
         List<EndpointItem> Sort(IEnumerable<OrderData> endpoints)
         {
             var orderedList = new LinkedList<OrderData>();
+
             foreach (var endpoint in endpoints)
             {
                 var relatedTo = endpoint.RelatedTo;
@@ -168,13 +194,24 @@ namespace ServiceInsight.SequenceDiagram
 
                 while (current != null)
                 {
-                    if (relatedTo != current.Value.MessageId)
+                    var isCurrentRelatedToAnExistingItem = current.Value.MessageIds.Contains(relatedTo);
+                    var isExistingItemIdParentOfCurrent = endpoint.MessageIds.Contains(current.Value.RelatedTo);
+
+                    if (!isCurrentRelatedToAnExistingItem && !isExistingItemIdParentOfCurrent)
                     {
                         current = current.Next;
                         continue;
                     }
 
-                    orderedList.AddAfter(current, endpoint);
+                    if (isCurrentRelatedToAnExistingItem)
+                    {
+                        orderedList.AddAfter(current, endpoint);
+                    }
+                    else
+                    {
+                        orderedList.AddBefore(current, endpoint);
+                    }
+
                     inserted = true;
                     break;
                 }
@@ -229,20 +266,30 @@ namespace ServiceInsight.SequenceDiagram
             return pair == null ? defaultValue : pair.value;
         }
 
+        [DebuggerDisplay("{Model.Name}")]
         class OrderData
         {
-            public string RelatedTo { get; set; }
-            public string MessageId { get; set; }
-            public EndpointItem Model { get; set; }
-
-            public static OrderData Create(string messageId, string relatedTo, EndpointItem model)
+            public OrderData()
             {
-                return new OrderData
+                MessageIds = new List<string>();
+            }
+
+            public string RelatedTo { get; set; }
+            public List<string> MessageIds { get; set; }
+            public EndpointItem Model { get; set; }
+            public DateTime ProcessedAt { get; set; }
+
+            public static OrderData Create(string messageId, DateTime? processedAt, string relatedTo, EndpointItem model)
+            {
+                var orderData = new OrderData
                 {
-                    MessageId = messageId,
                     RelatedTo = relatedTo,
-                    Model = model
+                    Model = model,
+                    ProcessedAt = processedAt ?? DateTime.MinValue
                 };
+                orderData.MessageIds.Add(messageId);
+
+                return orderData;
             }
         }
     }

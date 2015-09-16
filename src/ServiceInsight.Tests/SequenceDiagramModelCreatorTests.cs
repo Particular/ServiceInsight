@@ -263,6 +263,7 @@
                 new ReceivedMessage
                 {
                     message_id = "2",
+                    processed_at = DateTime.UtcNow.AddMinutes(1),
                     sending_endpoint = new EndpointAddress
                     {
                         name = "B"
@@ -283,6 +284,7 @@
                 new ReceivedMessage
                 {
                     message_id = "3",
+                    processed_at = DateTime.UtcNow.AddMinutes(2),
                     sending_endpoint = new EndpointAddress
                     {
                         name = "B"
@@ -303,6 +305,7 @@
                 new ReceivedMessage
                 {
                     message_id = "1",
+                    processed_at = DateTime.UtcNow,
                     sending_endpoint = new EndpointAddress
                     {
                         name = "A"
