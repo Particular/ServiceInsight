@@ -241,14 +241,21 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
-        <Line x:Name="Line"
-              Stroke="Blue"
-              StrokeThickness="3"
-              ToolTip="{Binding Name}"
-              X1="0"
-              X2="{Binding Width}"
-              Y1="0"
-              Y2="0" />
+        <Grid>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="5"
+                       Text="{Binding Name}" />
+            
+            <Line x:Name="Line"
+                  Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                  StrokeThickness="3"
+                  ToolTip="{Binding Name}"
+                  X1="0"
+                  X2="{Binding Width}"
+                  Y1="0"
+                  Y2="0" />
+        </Grid>
     </DataTemplate>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">
