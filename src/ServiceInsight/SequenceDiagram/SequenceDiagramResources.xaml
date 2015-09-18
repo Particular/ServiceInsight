@@ -75,8 +75,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TooltipLabelStyle" TargetType="Label">
+    <Style x:Key="TooltipStyleForHeader" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="TextAlignment" Value="Right" />
+    </Style>
+
+    <Style x:Key="TooltipStyleForValue" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
         <Setter Property="Margin" Value="4" />
     </Style>
@@ -122,35 +128,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="HandlerTooltipStyle" TargetType="ToolTip">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="Placement" Value="Right" />
-        <Setter Property="VerticalOffset" Value="-18" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToolTip">
-                    <Grid Background="Transparent" SnapsToDevicePixels="True">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="8" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Path Width="8"
-                              Height="16"
-                              VerticalAlignment="Center"
-                              Data="{StaticResource LeftArrow}"
-                              Fill="{StaticResource Grey20Brush}"
-                              Stretch="Fill" />
-                        <Border Grid.Column="1" Background="{StaticResource Grey20Brush}">
-                            <ContentPresenter Margin="8"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch" />
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
               Stroke="{StaticResource Grey80Brush}"
@@ -172,9 +149,10 @@
                    HorizontalAlignment="Center"
                    Fill="{StaticResource Grey60Brush}">
             <Rectangle.ToolTip>
-                <ToolTip Style="{StaticResource HandlerTooltipStyle}">
+                <ToolTip Background="{StaticResource Grey20Brush}" Placement="Right">
                     <Grid Width="250">
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
@@ -188,20 +166,40 @@
                                 <Setter Property="Margin" Value="4" />
                             </Style>
                         </Grid.Resources>
-                        <TextBlock FontWeight="Bold" Text="Processing time" />
+                        <TextBlock Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Processing Time:"
+                                   Visibility="{Binding ProcessingTime,
+                                                        TargetNullValue=Collapsed}" />
                         <TextBlock Grid.Row="0"
                                    Grid.Column="1"
-                                   Text="99999.999" />
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding ProcessingTime,
+                                                  Converter={StaticResource TimeSpanHumanizedConverter}}"
+                                   Visibility="{Binding ProcessingTime,
+                                                        TargetNullValue=Collapsed}" />
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
-                                   FontWeight="Bold"
-                                   Text="Handler name" />
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Handler For:" />
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
                                    Text="{Binding Name,
                                                   Converter={StaticResource SmartWrapConverter}}"
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="Wrap" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Saga:"
+                                   Visibility="{Binding PartOfSaga,
+                                                        TargetNullValue=Collapsed}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding PartOfSaga}"
+                                   Visibility="{Binding PartOfSaga,
+                                                        TargetNullValue=Collapsed}" />
                     </Grid>
                 </ToolTip>
             </Rectangle.ToolTip>
@@ -230,32 +228,32 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0"
-                               Grid.Column="0"
-                               Content="Name"
-                               Style="{StaticResource TooltipLabelStyle}" />
-                        <Label Grid.Row="0"
-                               Grid.Column="1"
-                               Content="{Binding FullName}"
-                               Style="{StaticResource TooltipLabelStyle}" />
-                        <Label Grid.Row="1"
-                               Grid.Column="0"
-                               Content="NSB Version"
-                               Style="{StaticResource TooltipLabelStyle}" />
-                        <Label Grid.Row="1"
-                               Grid.Column="1"
-                               Content="{Binding Version,
-                                                 TargetNullValue='Not Available'}"
-                               Style="{StaticResource TooltipLabelStyle}" />
-                        <Label Grid.Row="2"
-                               Grid.Column="0"
-                               Content="Host"
-                               Style="{StaticResource TooltipLabelStyle}" />
-                        <Label Grid.Row="2"
-                               Grid.Column="1"
-                               Content="{Binding Host,
-                                                 TargetNullValue='Not Known'}"
-                               Style="{StaticResource TooltipLabelStyle}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Name:" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding FullName}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="NSB Version:" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Version,
+                                                  TargetNullValue='Not Available'}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Host:" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Host,
+                                                  TargetNullValue='Not Known'}" />
                     </Grid>
                 </ToolTip>
             </Border.ToolTip>

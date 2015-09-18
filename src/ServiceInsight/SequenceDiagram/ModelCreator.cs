@@ -156,6 +156,7 @@ namespace ServiceInsight.SequenceDiagram
         {
             var handler = new Handler(message.message_id)
             {
+                ProcessingTime = message.processing_time,
                 HandledAt = message.processed_at,
                 Name = message.message_type,
                 Endpoint = processingEndpoint

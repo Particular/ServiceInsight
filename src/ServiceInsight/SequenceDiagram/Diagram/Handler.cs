@@ -42,6 +42,7 @@
 
         public List<Arrow> Out { get; set; }
         public DateTime? HandledAt { get; set; }
+        public TimeSpan? ProcessingTime { get; set; }
 
         public string ID
         {
