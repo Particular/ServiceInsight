@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:Particular.ServiceInsight.Desktop.Framework.Behaviors"
-                    xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
                     xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
                     xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                     xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:converter="clr-namespace:ServiceInsight.SequenceDiagram.Converter">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/XAML/Geometry.xaml" />
@@ -18,13 +18,14 @@
     <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
     <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
 
-    <cnv:CenterToolTipConverter x:Key="CenterToolTipConverter" />
-    <cnv:SmartWrapConverter x:Key="SmartWrapConverter" />
-    <cnv:DirectionToVisibilityConverter x:Key="LeftToVisibilityConverter" Direction="Left" />
-    <cnv:DirectionToVisibilityConverter x:Key="RightToVisibilityConverter" Direction="Right" />
-    <cnv:ArrowTypeToBoolConverter x:Key="IsTimeoutConverter" Type="Timeout" />
-    <cnv:ArrowTypeToBoolConverter x:Key="IsEventConverter" Type="Event" />
-    <cnv:ArrowTypeToBoolConverter x:Key="IsCommandConverter" Type="Command" />
+    <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
+    <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
+    <converter:DirectionToVisibilityConverter x:Key="LeftToVisibilityConverter" Direction="Left" />
+    <converter:DirectionToVisibilityConverter x:Key="RightToVisibilityConverter" Direction="Right" />
+    <converter:ArrowTypeToBoolConverter x:Key="IsTimeoutConverter" Type="Timeout" />
+    <converter:ArrowTypeToBoolConverter x:Key="IsEventConverter" Type="Event" />
+    <converter:ArrowTypeToBoolConverter x:Key="IsCommandConverter" Type="Command" />
+    <converter:CalculateArrowLineWidth x:Key="CalculateArrowLineWidth" />
 
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
@@ -301,10 +302,129 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
-        <StackPanel>
-            <Button x:Name="TopLine"
+            <Grid>
+                <Grid.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding Type}" />
+                        </StackPanel>
+                    </ToolTip>
+                </Grid.ToolTip>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="LeftButton" Grid.Row="0"
+                         Grid.Column="0"
+                    Visibility="{Binding Direction,
+                                              Converter={StaticResource LeftToVisibilityConverter}}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    Style="{StaticResource BlankButtonStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:DropDownButtonBehavior />
+                    </i:Interaction.Behaviors>
+
+                    <Button.ContextMenu>
+                        <ContextMenu Style="{StaticResource DarkContextMenuStyle}">
+                            <MenuItem Header="Retry message" 
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  CommandParameter="{Binding SelectedMessage}"
+                                  Command="{Binding RetryMessageCommand}"/>
+                            <MenuItem Header="Copy conversation ID"
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  CommandParameter="{Binding SelectedMessage}"
+                                  Command="{Binding CopyConversationIDCommand}"/>
+                            <MenuItem Header="Search by message ID"
+                                  Style="{StaticResource DarkMenuItemStyle}" 
+                                  CommandParameter="{Binding SelectedMessage}"
+                                  Command="{Binding SearchByMessageIDCommand}"/>
+                            <MenuItem Header="Copy message URI"
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  CommandParameter="{Binding SelectedMessage}"
+                                  Command="{Binding CopyMessageURICommand}"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+
+                    <StackPanel Orientation="Horizontal">
+                        <controls:IconControl 
+                                          Width="16"
+                                          Height="16"
+                                          Margin="2 0"
+                                          Foreground="{StaticResource Grey40Brush}"
+                                          Style="{StaticResource MessageIconStyle}" />
+
+                        <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource Grey40Brush}"
+                               Padding="5 0"
+                               Style="{StaticResource UnderlineTextBlockStyle}"
+                               Text="{Binding Name}" />
+
+                        <Path Width="4"
+                          Height="4"
+                          Margin="2,0,2,3"
+                          VerticalAlignment="Bottom"
+                          Data="{StaticResource DownArrow}"
+                          Fill="{StaticResource Grey40Brush}"
+                          Stretch="Fill" />
+                    </StackPanel>
+                </Button>
+                <Ellipse Grid.Row="0"
+                         Grid.Column="1"
+                         Width="10"
+                         Height="10"
+                         Fill="{StaticResource Grey60Brush}"
+                         Visibility="{Binding Direction,
+                                              Converter={StaticResource LeftToVisibilityConverter}}" />
+                <Path Grid.Row="0"
+                      Grid.Column="2"
+                      Width="10"
+                      Height="10"
+                      Data="{StaticResource LeftArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource LeftToVisibilityConverter}}" />
+                <Line x:Name="Line"
+                      Grid.Row="0"
+                      Grid.Column="3"
+                      VerticalAlignment="Center"
+                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                      StrokeThickness="3"
+                      X1="0"
+                      X2="{Binding Width}"/>
+                <Path Grid.Row="0"
+                      Grid.Column="4"
+                      Width="10"
+                      Height="10"
+                      Data="{StaticResource RightArrow}"
+                      Fill="{StaticResource Grey20Brush}"
+                      Stretch="Fill"
+                      Visibility="{Binding Direction,
+                                           Converter={StaticResource RightToVisibilityConverter}}" />
+                <Ellipse Grid.Row="0"
+                         Grid.Column="5"
+                         Width="10"
+                         Height="10"
+                         Fill="{StaticResource Grey60Brush}"
+                         Visibility="{Binding Direction,
+                                              Converter={StaticResource RightToVisibilityConverter}}" />
+            <Button Grid.Row="0"
+                         Grid.Column="6"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding Direction,
+                                              Converter={StaticResource RightToVisibilityConverter}}"
                     Style="{StaticResource BlankButtonStyle}">
                 <i:Interaction.Behaviors>
                     <behaviors:DropDownButtonBehavior />
@@ -332,7 +452,7 @@
                 </Button.ContextMenu>
 
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconControl x:Name="MessageTypeIcon"
+                    <controls:IconControl 
                                           Width="16"
                                           Height="16"
                                           Margin="2 0"
@@ -355,69 +475,7 @@
                           Stretch="Fill" />
                 </StackPanel>
             </Button>
-            <Grid>
-                <Grid.ToolTip>
-                    <ToolTip>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text="{Binding Type}" />
-                        </StackPanel>
-                    </ToolTip>
-                </Grid.ToolTip>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Ellipse Grid.Row="0"
-                         Grid.Column="0"
-                         Width="10"
-                         Height="10"
-                         Fill="{StaticResource Grey60Brush}"
-                         Visibility="{Binding Direction,
-                                              Converter={StaticResource LeftToVisibilityConverter}}" />
-                <Path Grid.Row="0"
-                      Grid.Column="1"
-                      Width="10"
-                      Height="10"
-                      Data="{StaticResource LeftArrow}"
-                      Fill="{StaticResource Grey20Brush}"
-                      Stretch="Fill"
-                      Visibility="{Binding Direction,
-                                           Converter={StaticResource LeftToVisibilityConverter}}" />
-                <Line x:Name="Line"
-                      Grid.Row="0"
-                      Grid.Column="2"
-                      VerticalAlignment="Center"
-                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                      StrokeThickness="3"
-                      X1="0"
-                      X2="{Binding Width}"
-                      Y1="0"
-                      Y2="0" />
-                <Path Grid.Row="0"
-                      Grid.Column="3"
-                      Width="10"
-                      Height="10"
-                      Data="{StaticResource RightArrow}"
-                      Fill="{StaticResource Grey20Brush}"
-                      Stretch="Fill"
-                      Visibility="{Binding Direction,
-                                           Converter={StaticResource RightToVisibilityConverter}}" />
-                <Ellipse Grid.Row="0"
-                         Grid.Column="4"
-                         Width="10"
-                         Height="10"
-                         Fill="{StaticResource Grey60Brush}"
-                         Visibility="{Binding Direction,
-                                              Converter={StaticResource RightToVisibilityConverter}}" />
-            </Grid>
-        </StackPanel>
+        </Grid>
     </DataTemplate>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">

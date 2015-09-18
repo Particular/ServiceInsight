@@ -271,6 +271,11 @@
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
+    <Compile Include="SequenceDiagram\Converter\ArrowTypeToBoolConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\CalculateArrowLineWidth.cs" />
+    <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\DirectionToVisibilityConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
     <Compile Include="SequenceDiagram\Diagram\ArrowType.cs" />
     <Compile Include="SequenceDiagram\Diagram\DiagramVisualItem.cs" />
     <Compile Include="SequenceDiagram\Diagram\Direction.cs" />
@@ -514,14 +519,11 @@
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
     <Compile Include="ValueConverters\ByteToCharConverter.cs" />
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
-    <Compile Include="ValueConverters\CenterToolTipConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
-    <Compile Include="ValueConverters\DirectionToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
-    <Compile Include="ValueConverters\SmartWrapConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
