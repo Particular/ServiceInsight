@@ -67,6 +67,7 @@ namespace ServiceInsight.SequenceDiagram
             {
                 endpointRegistry.Register(CreateSendingEndpoint(message));
             }
+
             foreach (var message in messagesInOrder)
             {
                 endpointRegistry.Register(CreateProcessingEndpoint(message));
@@ -109,6 +110,12 @@ namespace ServiceInsight.SequenceDiagram
                 processingHandler.In = arrow;
 
                 sendingHandler.Out.Add(arrow);
+            }
+
+            //Sort all arrows out per handler
+            foreach (var handler in handlers)
+            {
+                handler.Out.Sort();
             }
         }
 
@@ -184,7 +191,8 @@ namespace ServiceInsight.SequenceDiagram
         {
             var arrow = new Arrow(message.message_id)
             {
-                Name = TypeHumanizer.ToName(message.message_type)
+                Name = TypeHumanizer.ToName(message.message_type),
+                SentTime = message.time_sent
             };
 
             if (message.message_intent == MessageIntent.Publish)

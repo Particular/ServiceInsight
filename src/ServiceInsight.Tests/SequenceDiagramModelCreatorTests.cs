@@ -398,6 +398,101 @@
         }
 
         [Test]
+        public void OrderOfOutArrowsFromHandler()
+        {
+            var currentDateTime = DateTime.UtcNow;
+
+            var messages = new List<ReceivedMessage>
+            {
+                new ReceivedMessage
+                {
+                    message_id = "3",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "D"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "1"
+                        }
+                    },
+                    message_type = "Message3",
+                    processed_at = currentDateTime.AddMinutes(2),
+                    time_sent = currentDateTime.AddSeconds(3),
+                    message_intent = MessageIntent.Send,
+                    status = MessageStatus.Successful,
+                },
+                new ReceivedMessage
+                {
+                    message_id = "2",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "C"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "1"
+                        }
+                    },
+                    message_type = "Message2",
+                    processed_at = currentDateTime.AddMinutes(1),
+                    time_sent = currentDateTime.AddSeconds(2),
+                    message_intent = MessageIntent.Send,
+                    status = MessageStatus.Successful,
+                },
+                new ReceivedMessage
+                {
+                    message_id = "4",
+                    sending_endpoint = new EndpointAddress
+                    {
+                        name = "A"
+                    },
+                    receiving_endpoint = new EndpointAddress
+                    {
+                        name = "B"
+                    },
+                    headers = new List<Header>
+                    {
+                        new Header
+                        {
+                            key = MessageHeaderKeys.RelatedTo,
+                            value = "1"
+                        }
+                    },
+                    message_type = "Message4",
+                    processed_at = currentDateTime.AddMinutes(1),
+                    time_sent = currentDateTime.AddSeconds(4),
+                    message_intent = MessageIntent.Send,
+                    status = MessageStatus.Successful,
+                }
+            };
+
+            var creator = new ModelCreator(messages);
+            var result = creator.Endpoints;
+
+            Assert.AreEqual("A", result[0].Name);
+            Assert.AreEqual(1, result[0].Handlers.Count);
+            Assert.AreEqual(3, result[0].Handlers[0].Out.Count);
+            Assert.AreEqual("2", result[0].Handlers[0].Out[0].MessageId);
+            Assert.AreEqual("3", result[0].Handlers[0].Out[1].MessageId);
+            Assert.AreEqual("4", result[0].Handlers[0].Out[2].MessageId);
+        }
+
+        [Test]
         public void SequentialOrderOfHandlers()
         {
             var currentDateTime = DateTime.UtcNow;
