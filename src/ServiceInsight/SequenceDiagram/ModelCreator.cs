@@ -4,42 +4,23 @@ namespace ServiceInsight.SequenceDiagram
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using Autofac;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
     using ServiceInsight.SequenceDiagram.Diagram;
 
-    public struct Model
-    {
-        readonly List<EndpointItem> endpoints;
-        readonly List<Handler> handlers;
-
-        public Model(List<EndpointItem> endpoints, List<Handler> handlers)
-        {
-            this.endpoints = endpoints;
-            this.handlers = handlers;
-        }
-
-        public List<EndpointItem> Endpoints
-        {
-            get { return endpoints; }
-        }
-
-        public List<Handler> Handlers
-        {
-            get { return handlers; }
-        }
-    }
-
     public class ModelCreator
     {
         readonly List<ReceivedMessage> messages;
+        readonly IContainer container;
 
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
 
-        public ModelCreator(List<ReceivedMessage> messages)
+        public ModelCreator(List<ReceivedMessage> messages, IContainer container = null)
         {
             this.messages = messages;
+            this.container = container;
 
             Initialize();
         }
@@ -103,7 +84,8 @@ namespace ServiceInsight.SequenceDiagram
                 }
 
                 var arrow = CreateArrow(message);
-
+                arrow.receiving = new Endpoint {Name = processingEndpoint.Name, Host = processingEndpoint.Host};
+                arrow.sending = new Endpoint {Name = sendingEndpoint.Name, Host = sendingEndpoint.Host};
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
@@ -187,9 +169,9 @@ namespace ServiceInsight.SequenceDiagram
             return handler;
         }
 
-        static Arrow CreateArrow(ReceivedMessage message)
+        Arrow CreateArrow(ReceivedMessage message)
         {
-            var arrow = new Arrow(message.message_id)
+            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, container)
             {
                 Name = TypeHumanizer.ToName(message.message_type),
                 SentTime = message.time_sent

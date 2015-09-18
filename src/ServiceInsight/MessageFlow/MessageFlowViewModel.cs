@@ -5,8 +5,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
+    using Autofac;
     using Caliburn.Micro;
-    using Framework;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
@@ -14,7 +14,6 @@
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
-    using Search;
     using ServiceControl;
     using Settings;
 
@@ -34,10 +33,9 @@
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            SearchBarViewModel searchBar,
+            IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
-            ISettingsProvider settingsProvider,
-            IClipboard clipboard)
+            ISettingsProvider settingsProvider)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
@@ -45,11 +43,11 @@
             this.settingsProvider = settingsProvider;
             this.exceptionDetail = exceptionDetail;
 
-            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
-            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
-            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
-
+            CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
+            CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
+            RetryMessageCommand = container.Resolve<RetryMessageCommand>();
+            SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
+            
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }

@@ -2,42 +2,28 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows.Input;
     using Anotar.Serilog;
+    using Autofac;
     using Caliburn.Micro;
     using Diagram;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.Search;
     using Particular.ServiceInsight.Desktop.ServiceControl;
 
     public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         private readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
+        readonly IContainer container;
 
-        public SequenceDiagramViewModel(IServiceControl serviceControl, IClipboard clipboard,
-            IEventAggregator eventAggregator,
-            SearchBarViewModel searchBar)
+        public SequenceDiagramViewModel(IServiceControl serviceControl, IEventAggregator eventAggregator, IContainer container)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
+            this.container = container;
+
             DiagramItems = new DiagramItemCollection();
-
-            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
-            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
-            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
-            ShowSagaCommand = new ShowSagaCommand(eventAggregator);
         }
-
-        public ICommand RetryMessageCommand { get; private set; }
-        public ICommand CopyConversationIDCommand { get; private set; }
-        public ICommand CopyMessageURICommand { get; private set; }
-        public ICommand SearchByMessageIDCommand { get; private set; }
-        public ICommand ShowSagaCommand { get; private set; }
 
         public DiagramItemCollection DiagramItems { get; set; }
 
@@ -82,7 +68,7 @@
 
         private void CreateElements(List<ReceivedMessage> messages)
         {
-            var modelCreator = new ModelCreator(messages);
+            var modelCreator = new ModelCreator(messages, container);
             var endpoints = modelCreator.Endpoints;
             var handlers = modelCreator.Handlers;
 
