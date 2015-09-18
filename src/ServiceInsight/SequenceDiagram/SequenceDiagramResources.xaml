@@ -149,7 +149,11 @@
                    HorizontalAlignment="Center"
                    Fill="{StaticResource Grey60Brush}">
             <Rectangle.ToolTip>
-                <ToolTip Background="{StaticResource Grey20Brush}" Placement="Right">
+                <ToolTip Background="{StaticResource Grey20Brush}"
+                         HorizontalOffset="5"
+                         Placement="Right"
+                         Visibility="{Binding Name,
+                                              TargetNullValue=Collapsed}">
                     <Grid Width="250">
                         <Grid.RowDefinitions>
                             <RowDefinition />
