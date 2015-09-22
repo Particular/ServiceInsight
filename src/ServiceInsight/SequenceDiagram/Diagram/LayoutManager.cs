@@ -17,7 +17,7 @@
             }
 
             var endpointLayout = new EndpointItemLayout(diagram);
-            var handlerLayout = new HandlerLayout(diagram);
+            var handlerLayout = new HandlerLayout(diagram, endpointLayout);
             var endpointTimelineLayout = new EndpointTimelineLayout(diagram);
             var arrowLayout = new ArrowLayout(diagram, endpointLayout);
 
@@ -166,10 +166,10 @@
             IDiagram diagram;
             double nextY;
 
-            public HandlerLayout(IDiagram diagram)
+            public HandlerLayout(IDiagram diagram, EndpointItemLayout endpointItemLayout)
             {
                 this.diagram = diagram;
-                nextY = 110d;
+                nextY = endpointItemLayout.MaxHeight + 25;
             }
 
             public void Position(Handler handler)
@@ -200,7 +200,12 @@
             public EndpointItemLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
-                maxHeight = GetMaxHeight();
+                SetMaxHeight();
+            }
+
+            public double MaxHeight
+            {
+                get { return maxHeight; }
             }
 
             public void Position(EndpointItem endpoint)
@@ -218,9 +223,9 @@
                     endpointVisual.Y = lastEndpoint.Y;
                 }
 
-                if (endpointVisual.ActualHeight < maxHeight)
+                if (endpointVisual.ActualHeight < MaxHeight)
                 {
-                    endpointVisual.Height = maxHeight;
+                    endpointVisual.Height = MaxHeight;
                 }
 
                 lastEndpoint = endpointVisual;
@@ -238,13 +243,11 @@
                 return position.Single(kv => kv.Value == 0).Key;
             }
 
-            double GetMaxHeight()
+            void SetMaxHeight()
             {
                 var endpoints = diagram.DiagramItems.OfType<EndpointItem>().ToList();
-                var maxHeight = endpoints.Select(endpoint => diagram.GetItemFromContainer(endpoint))
+                maxHeight = endpoints.Select(endpoint => diagram.GetItemFromContainer(endpoint))
                     .Max(endpointVisual => endpointVisual.ActualHeight);
-
-                return maxHeight;
             }
         }
     }
