@@ -14,6 +14,7 @@
         <ResourceDictionary Source="DarkMenus.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <SolidColorBrush x:Key="FailedHandler">Red</SolidColorBrush>
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
@@ -150,6 +151,16 @@
                                     Path=Height}"
                    HorizontalAlignment="Center"
                    Fill="{StaticResource Grey60Brush}">
+            <Rectangle.Style>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding State}" Value="Fail">
+                            <Setter Property="Stroke" Value="{StaticResource FailedHandler}"/>
+                            <Setter Property="StrokeThickness" Value="2"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
             <Rectangle.ToolTip>
                 <ToolTip Background="{StaticResource Grey20Brush}"
                          HorizontalOffset="5"
