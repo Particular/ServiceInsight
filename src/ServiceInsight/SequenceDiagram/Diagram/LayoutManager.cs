@@ -169,7 +169,7 @@
             public HandlerLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
-                nextY = 150d;
+                nextY = 110d;
             }
 
             public void Position(Handler handler)
