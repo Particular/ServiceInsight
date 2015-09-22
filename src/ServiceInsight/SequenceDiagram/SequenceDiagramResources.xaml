@@ -303,16 +303,7 @@
     </DataTemplate>
 
     <Style x:Key="ArrowStyle" TargetType="{x:Type Grid}">
-        <Setter Property="ToolTip">
-            <Setter.Value>
-                <ToolTip d:DataContext="{d:DesignInstance diagram:Arrow}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" />
-                        <TextBlock Text="{Binding Type}" />
-                    </StackPanel>
-                </ToolTip>
-            </Setter.Value>
-        </Setter>
+        
     </Style>
     
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
