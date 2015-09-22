@@ -23,7 +23,7 @@
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
-    <converter:ArrowTypeToVisibilityConverter x:Key="IsLocalSendConverter" Type="Local" />
+    <converter:ArrowTypeToVisibilityConverter x:Key="IsLocalSendOrTimeoutConverter" />
     
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
@@ -342,7 +342,7 @@
                          Height="10"
                          Fill="{StaticResource Grey60Brush}"
                      Visibility="{Binding Type,
-                                              Converter={StaticResource IsLocalSendConverter}}"/>
+                                              Converter={StaticResource IsLocalSendOrTimeoutConverter}}"/>
             <Button Grid.Row="0"
                          Grid.Column="3"
                     HorizontalAlignment="Center"
@@ -472,7 +472,7 @@
                          Width="10"
                          Height="10"
                          Fill="{StaticResource Grey60Brush}" Visibility="{Binding Type,
-                                              Converter={StaticResource IsLocalSendConverter}}" />
+                                              Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
             <Path Grid.Row="0"
                       Grid.Column="2"
                       Width="10"
