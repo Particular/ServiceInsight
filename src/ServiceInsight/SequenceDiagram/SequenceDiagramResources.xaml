@@ -22,7 +22,8 @@
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
-
+    <converter:ArrowTypeToVisibilityConverter x:Key="IsLocalSendConverter" Type="Local" />
+    
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
         <Setter Property="ToolTip" Value="Command" />
@@ -344,7 +345,9 @@
                          Grid.Column="2"
                          Width="10"
                          Height="10"
-                         Fill="{StaticResource Grey60Brush}"/>
+                         Fill="{StaticResource Grey60Brush}"
+                     Visibility="{Binding Type,
+                                              Converter={StaticResource IsLocalSendConverter}}"/>
             <Button Grid.Row="0"
                          Grid.Column="3"
                     HorizontalAlignment="Center"
@@ -473,7 +476,8 @@
                          Grid.Column="1"
                          Width="10"
                          Height="10"
-                         Fill="{StaticResource Grey60Brush}" />
+                         Fill="{StaticResource Grey60Brush}" Visibility="{Binding Type,
+                                              Converter={StaticResource IsLocalSendConverter}}" />
             <Path Grid.Row="0"
                       Grid.Column="2"
                       Width="10"
