@@ -214,8 +214,7 @@
 
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
 
-        <Border x:Name="Root"
-                Width="260"
+        <Border Width="260"
                 Margin="15,15,15,0"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
@@ -294,12 +293,6 @@
                 </Grid>
             </Border>
         </Border>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}}" Value="True">
-                <Setter TargetName="Root" Property="BorderBrush" Value="Black" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-
     </DataTemplate>
 
     <Style x:Key="ArrowStyle" TargetType="{x:Type Grid}">
@@ -531,17 +524,6 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type diagram:DiagramVisualItem}">
                                 <ContentPresenter x:Name="Content" />
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Content" Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect BlurRadius="10"
-                                                                  ShadowDepth="4"
-                                                                  Color="Gray" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>

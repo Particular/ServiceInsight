@@ -10,13 +10,11 @@
              d:DataContext="{d:DesignInstance vm:SequenceDiagramViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="900"
-             mc:Ignorable="d"
-             x:Name="Root">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Xaml/Geometry.xaml" />
                 <ResourceDictionary Source="SequenceDiagramResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
