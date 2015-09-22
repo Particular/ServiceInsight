@@ -22,27 +22,27 @@
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
     <converter:DirectionToVisibilityConverter x:Key="LeftToVisibilityConverter" Direction="Left" />
     <converter:DirectionToVisibilityConverter x:Key="RightToVisibilityConverter" Direction="Right" />
-    <converter:ArrowTypeToBoolConverter x:Key="IsTimeoutConverter" Type="Timeout" />
-    <converter:ArrowTypeToBoolConverter x:Key="IsEventConverter" Type="Event" />
-    <converter:ArrowTypeToBoolConverter x:Key="IsCommandConverter" Type="Command" />
-    <converter:CalculateArrowLineWidth x:Key="CalculateArrowLineWidth" />
 
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
         <Setter Property="ToolTip" Value="Command" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource PreviousData}, Converter={StaticResource IsTimeoutConverter}}" Value="True">
+            <Trigger Property="Type" Value="Timeout">
                 <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
                 <Setter Property="ToolTip" Value="Timeout" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource PreviousData}, Converter={StaticResource IsEventConverter}}" Value="True">
+            </Trigger>
+            <Trigger Property="Type" Value="Event">
                 <Setter Property="Data" Value="{StaticResource EventGeometry}" />
                 <Setter Property="ToolTip" Value="Event" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource PreviousData}, Converter={StaticResource IsCommandConverter}}" Value="True">
+            </Trigger>
+            <Trigger Property="Type" Value="Command">
                 <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
                 <Setter Property="ToolTip" Value="Command" />
-            </DataTrigger>
+            </Trigger>
+            <Trigger Property="Type" Value="Local">
+                <Setter Property="Data" Value="{StaticResource LoopBackGeometry}" />
+                <Setter Property="ToolTip" Value="Local Send" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -360,6 +360,7 @@
                                           Width="16"
                                           Height="16"
                                           Margin="2 0"
+                                          Type="{Binding Type}"
                                           Foreground="{StaticResource Grey40Brush}"
                                           Style="{StaticResource MessageIconStyle}" />
 
@@ -456,6 +457,7 @@
                                           Width="16"
                                           Height="16"
                                           Margin="2 0"
+                                          Type="{Binding Type}"
                                           Foreground="{StaticResource Grey40Brush}"
                                           Style="{StaticResource MessageIconStyle}" />
 
