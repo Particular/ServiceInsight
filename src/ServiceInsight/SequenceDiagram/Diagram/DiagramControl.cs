@@ -82,7 +82,7 @@
         void OnControlLoaded()
         {
             isLoaded = true;
-            PerformLayout();
+            //PerformLayout();
         }
 
         public void PerformLayout()
