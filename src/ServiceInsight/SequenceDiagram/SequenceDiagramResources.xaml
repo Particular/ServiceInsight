@@ -2,18 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:Particular.ServiceInsight.Desktop.Framework.Behaviors"
                     xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
+                    xmlns:converter="clr-namespace:ServiceInsight.SequenceDiagram.Converter"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                     xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:converter="clr-namespace:ServiceInsight.SequenceDiagram.Converter"
-                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/XAML/Geometry.xaml" />
         <ResourceDictionary Source="DarkMenus.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--  Colors and Brushes  -->
     <SolidColorBrush x:Key="FailedHandler">Red</SolidColorBrush>
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
@@ -24,7 +26,7 @@
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
     <converter:ArrowTypeToVisibilityConverter x:Key="IsLocalSendOrTimeoutConverter" />
-    
+
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
         <Setter Property="ToolTip" Value="Command" />
@@ -131,6 +133,7 @@
         </Setter>
     </Style>
 
+
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
               SnapsToDevicePixels="True"
@@ -146,24 +149,23 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
-        <Rectangle SnapsToDevicePixels="True"
-                   Width="14"
-                   Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                   AncestorType={x:Type diagram:DiagramVisualItem}},
-                                    Path=Height}"
-                   HorizontalAlignment="Center"
-                   Fill="{StaticResource Grey60Brush}">
-            <Rectangle.Style>
-                <Style TargetType="{x:Type Rectangle}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding State}" Value="Fail">
-                            <Setter Property="Stroke" Value="{StaticResource FailedHandler}"/>
-                            <Setter Property="StrokeThickness" Value="2"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Rectangle.Style>
-            <Rectangle.ToolTip>
+        <Border x:Name="RootBorder"
+                Width="14"
+                Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                AncestorType={x:Type diagram:DiagramVisualItem}},
+                                 Path=Height}"
+                HorizontalAlignment="Center"
+                Background="{StaticResource Grey60Brush}"
+                SnapsToDevicePixels="True">
+
+            <controls:IconControl x:Name="ErrorIcon"
+                                  Width="12"
+                                  Height="12"
+                                  Data="{StaticResource ErrorIcon}"
+                                  Foreground="White"
+                                  Visibility="Hidden" />
+
+            <Border.ToolTip>
                 <ToolTip Background="{StaticResource Grey20Brush}"
                          HorizontalOffset="5"
                          Placement="Right"
@@ -221,18 +223,24 @@
                                                         TargetNullValue=Collapsed}" />
                     </Grid>
                 </ToolTip>
-            </Rectangle.ToolTip>
-        </Rectangle>
+            </Border.ToolTip>
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding State}" Value="Fail">
+                <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource FailedHandler}" />
+                <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:EndpointItem}">
 
         <Border Width="260"
                 Margin="15,15,15,0"
-                SnapsToDevicePixels="True"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
-                BorderThickness="0,0,0,6">
+                BorderThickness="0,0,0,6"
+                SnapsToDevicePixels="True">
 
             <!--  Endpoint Tooltip  -->
             <Border.ToolTip>
@@ -309,10 +317,6 @@
         </Border>
     </DataTemplate>
 
-    <Style x:Key="ArrowStyle" TargetType="{x:Type Grid}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-    </Style>
-    
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
         <Grid Style="{StaticResource ArrowStyle}">
             <Grid.RowDefinitions>
@@ -325,30 +329,30 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Line x:Name="Line"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  VerticalAlignment="Center"
                   SnapsToDevicePixels="True"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                    StrokeThickness="2"
-                    X1="0"
-                    X2="{Binding Width}"/>
+                  Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                  StrokeThickness="2"
+                  X1="0"
+                  X2="{Binding Width}" />
             <Path Grid.Row="0"
-                      Grid.Column="1"
-                      Width="10"
-                      Height="10"
-                      Data="{StaticResource RightArrow}"
-                      Fill="{StaticResource Grey20Brush}"
-                      Stretch="Fill"/>
+                  Grid.Column="1"
+                  Width="10"
+                  Height="10"
+                  Data="{StaticResource RightArrow}"
+                  Fill="{StaticResource Grey20Brush}"
+                  Stretch="Fill" />
             <Ellipse Grid.Row="0"
-                         Grid.Column="2"
-                         Width="10"
-                         Height="10"
-                         Fill="{StaticResource Grey60Brush}"
+                     Grid.Column="2"
+                     Width="10"
+                     Height="10"
+                     Fill="{StaticResource Grey60Brush}"
                      Visibility="{Binding Type,
-                                              Converter={StaticResource IsLocalSendOrTimeoutConverter}}"/>
+                                          Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
             <Button Grid.Row="0"
-                         Grid.Column="3"
+                    Grid.Column="3"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource BlankButtonStyle}">
@@ -358,33 +362,32 @@
 
                 <Button.ContextMenu>
                     <ContextMenu Style="{StaticResource DarkContextMenuStyle}">
-                        <MenuItem Header="Retry message" 
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                        <MenuItem Command="{Binding RetryMessageCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding RetryMessageCommand}"/>
-                        <MenuItem Header="Copy conversation ID"
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  Header="Retry message"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding CopyConversationIDCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding CopyConversationIDCommand}"/>
-                        <MenuItem Header="Search by message ID"
-                                  Style="{StaticResource DarkMenuItemStyle}" 
+                                  Header="Copy conversation ID"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding SearchByMessageIDCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding SearchByMessageIDCommand}"/>
-                        <MenuItem Header="Copy message URI"
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  Header="Search by message ID"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding CopyMessageURICommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding CopyMessageURICommand}"/>
+                                  Header="Copy message URI"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
                     </ContextMenu>
                 </Button.ContextMenu>
 
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconControl 
-                                          Width="16"
+                    <controls:IconControl Width="16"
                                           Height="16"
                                           Margin="2 0"
-                                          Type="{Binding Type}"
                                           Foreground="{StaticResource Grey40Brush}"
-                                          Style="{StaticResource MessageIconStyle}" />
+                                          Style="{StaticResource MessageIconStyle}"
+                                          Type="{Binding Type}" />
 
                     <TextBlock HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -416,8 +419,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="LeftButton" Grid.Row="0"
-                         Grid.Column="0"
+            <Button x:Name="LeftButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource BlankButtonStyle}">
@@ -427,33 +431,32 @@
 
                 <Button.ContextMenu>
                     <ContextMenu Style="{StaticResource DarkContextMenuStyle}">
-                        <MenuItem Header="Retry message" 
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                        <MenuItem Command="{Binding RetryMessageCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding RetryMessageCommand}"/>
-                        <MenuItem Header="Copy conversation ID"
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  Header="Retry message"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding CopyConversationIDCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding CopyConversationIDCommand}"/>
-                        <MenuItem Header="Search by message ID"
-                                  Style="{StaticResource DarkMenuItemStyle}" 
+                                  Header="Copy conversation ID"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding SearchByMessageIDCommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding SearchByMessageIDCommand}"/>
-                        <MenuItem Header="Copy message URI"
-                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  Header="Search by message ID"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
+                        <MenuItem Command="{Binding CopyMessageURICommand}"
                                   CommandParameter="{Binding SelectedMessage}"
-                                  Command="{Binding CopyMessageURICommand}"/>
+                                  Header="Copy message URI"
+                                  Style="{StaticResource DarkMenuItemStyle}" />
                     </ContextMenu>
                 </Button.ContextMenu>
 
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconControl 
-                                          Width="16"
+                    <controls:IconControl Width="16"
                                           Height="16"
                                           Margin="2 0"
-                                          Type="{Binding Type}"
                                           Foreground="{StaticResource Grey40Brush}"
-                                          Style="{StaticResource MessageIconStyle}" />
+                                          Style="{StaticResource MessageIconStyle}"
+                                          Type="{Binding Type}" />
 
                     <TextBlock HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -472,39 +475,40 @@
                 </StackPanel>
             </Button>
             <Ellipse Grid.Row="0"
-                         Grid.Column="1"
-                         Width="10"
-                         Height="10"
-                         Fill="{StaticResource Grey60Brush}" Visibility="{Binding Type,
-                                              Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
+                     Grid.Column="1"
+                     Width="10"
+                     Height="10"
+                     Fill="{StaticResource Grey60Brush}"
+                     Visibility="{Binding Type,
+                                          Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
             <Path Grid.Row="0"
-                      Grid.Column="2"
-                      Width="10"
-                      Height="10"
-                      Data="{StaticResource LeftArrow}"
-                      Fill="{StaticResource Grey20Brush}"
-                      Stretch="Fill" />
+                  Grid.Column="2"
+                  Width="10"
+                  Height="10"
+                  Data="{StaticResource LeftArrow}"
+                  Fill="{StaticResource Grey20Brush}"
+                  Stretch="Fill" />
             <Line x:Name="Line"
+                  Grid.Row="0"
+                  Grid.Column="3"
+                  VerticalAlignment="Center"
                   SnapsToDevicePixels="True"
-                      Grid.Row="0"
-                      Grid.Column="3"
-                      VerticalAlignment="Center"
-                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                      StrokeThickness="3"
-                      X1="0"
-                      X2="{Binding Width}"/>
+                  Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                  StrokeThickness="3"
+                  X1="0"
+                  X2="{Binding Width}" />
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate DataType="{x:Type diagram:Arrow}">
         <ContentControl Content="{Binding }">
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">
 
-                    <!-- Default Template -->
+                    <!--  Default Template  -->
                     <Setter Property="ContentTemplate" Value="{StaticResource LeftToRightArrow}" />
 
-                    <!-- Triggers to change Template -->
+                    <!--  Triggers to change Template  -->
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Direction}" Value="Left">
                             <Setter Property="ContentTemplate" Value="{StaticResource RightToLeftArrow}" />
@@ -514,6 +518,10 @@
             </ContentControl.Style>
         </ContentControl>
     </DataTemplate>
+
+    <Style x:Key="ArrowStyle" TargetType="{x:Type Grid}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">
         <Setter Property="ItemsPanel">
