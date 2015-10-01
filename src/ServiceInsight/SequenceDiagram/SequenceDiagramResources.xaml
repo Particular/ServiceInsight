@@ -133,6 +133,7 @@
 
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
+              SnapsToDevicePixels="True"
               Stroke="{StaticResource Grey80Brush}"
               StrokeThickness="2"
               X1="0"
@@ -145,7 +146,8 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
-        <Rectangle Width="14"
+        <Rectangle SnapsToDevicePixels="True"
+                   Width="14"
                    Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                                    AncestorType={x:Type diagram:DiagramVisualItem}},
                                     Path=Height}"
@@ -227,6 +229,7 @@
 
         <Border Width="260"
                 Margin="15,15,15,0"
+                SnapsToDevicePixels="True"
                 Background="Transparent"
                 BorderBrush="{StaticResource Grey90Brush}"
                 BorderThickness="0,0,0,6">
@@ -307,7 +310,7 @@
     </DataTemplate>
 
     <Style x:Key="ArrowStyle" TargetType="{x:Type Grid}">
-        
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
@@ -322,13 +325,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Line x:Name="Line"
-                      Grid.Row="0"
-                      Grid.Column="0"
-                      VerticalAlignment="Center"
-                      Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                      StrokeThickness="3"
-                      X1="0"
-                      X2="{Binding Width}"/>
+                  SnapsToDevicePixels="True"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Stroke="{StaticResource DiagramEdgeForegroundBrush}"
+                    StrokeThickness="2"
+                    X1="0"
+                    X2="{Binding Width}"/>
             <Path Grid.Row="0"
                       Grid.Column="1"
                       Width="10"
@@ -402,7 +406,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid  Style="{StaticResource ArrowStyle}">
+        <Grid Style="{StaticResource ArrowStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -481,6 +485,7 @@
                       Fill="{StaticResource Grey20Brush}"
                       Stretch="Fill" />
             <Line x:Name="Line"
+                  SnapsToDevicePixels="True"
                       Grid.Row="0"
                       Grid.Column="3"
                       VerticalAlignment="Center"
