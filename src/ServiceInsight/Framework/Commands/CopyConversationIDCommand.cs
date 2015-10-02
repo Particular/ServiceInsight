@@ -15,7 +15,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
         public override bool CanExecute(object parameter)
         {
             var message = parameter as StoredMessage;
-            return message != null;
+            return parameter == null || message != null;
         }
 
         public override void Execute(object parameter)

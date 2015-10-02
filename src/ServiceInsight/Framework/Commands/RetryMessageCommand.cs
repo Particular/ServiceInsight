@@ -19,12 +19,11 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
         public override bool CanExecute(object parameter)
         {
             var message = parameter as StoredMessage;
-            if (message == null)
-                return false;
 
-            return message.Status == MessageStatus.Failed ||
+            return parameter == null ||
+                   (message != null && (message.Status == MessageStatus.Failed ||
                    message.Status == MessageStatus.RepeatedFailure ||
-                   message.Status == MessageStatus.ArchivedFailure;
+                   message.Status == MessageStatus.ArchivedFailure));
         }
 
         public override void Execute(object parameter)
