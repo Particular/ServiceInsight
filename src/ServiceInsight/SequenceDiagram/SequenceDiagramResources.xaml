@@ -363,21 +363,21 @@
                 <Button.ContextMenu>
                     <ContextMenu Style="{StaticResource DarkContextMenuStyle}">
                         <MenuItem Command="{Binding RetryMessageCommand}"
-                                  CommandParameter="{Binding SelectedMessage}"
                                   Header="Retry message"
-                                  Style="{StaticResource DarkMenuItemStyle}" />
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  behaviors:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                         <MenuItem Command="{Binding CopyConversationIDCommand}"
-                                  CommandParameter="{Binding SelectedMessage}"
                                   Header="Copy conversation ID"
-                                  Style="{StaticResource DarkMenuItemStyle}" />
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  behaviors:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                         <MenuItem Command="{Binding SearchByMessageIDCommand}"
-                                  CommandParameter="{Binding SelectedMessage}"
                                   Header="Search by message ID"
-                                  Style="{StaticResource DarkMenuItemStyle}" />
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  behaviors:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                         <MenuItem Command="{Binding CopyMessageURICommand}"
-                                  CommandParameter="{Binding SelectedMessage}"
                                   Header="Copy message URI"
-                                  Style="{StaticResource DarkMenuItemStyle}" />
+                                  Style="{StaticResource DarkMenuItemStyle}"
+                                  behaviors:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                     </ContextMenu>
                 </Button.ContextMenu>
 
