@@ -54,7 +54,6 @@
             }
         }
 
-
         public Handler FromHandler { get; set; }
 
         public Handler ToHandler { get; set; }
@@ -68,6 +67,11 @@
         public string MessageId
         {
             get { return messageId; }
+        }
+
+        public MessageStatus Status
+        {
+            get { return status; }
         }
 
         public double Width { get; set; }

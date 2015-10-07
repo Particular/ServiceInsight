@@ -234,6 +234,7 @@
     <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\CommandsModule.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
@@ -519,6 +520,7 @@
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
+    <Compile Include="ValueConverters\EnumToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />

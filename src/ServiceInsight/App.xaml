@@ -35,6 +35,8 @@
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />
                     <cnv:CompositeCollectionConverter x:Key="CompositeCollectionConverter" />
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
+                    <cnv:EnumToVisibilityConverter x:Key="EnumToInvertedVisibilityConverter" Inverted="True" />
+                    <cnv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
 
                     <!--  Colors and Brushes  -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
