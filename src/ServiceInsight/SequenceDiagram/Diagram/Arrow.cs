@@ -7,7 +7,11 @@
     using System.Windows.Input;
     using Autofac;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.MessageFlow;
     using Particular.ServiceInsight.Desktop.Models;
+    using ReactiveUI;
 
     [DebuggerDisplay("{Type}->{Name}")]
     public class Arrow : DiagramItem, IComparable<Arrow>
@@ -19,6 +23,7 @@
 
         StoredMessage storedMessage;
         List<Header> headers;
+        IContainer container;
 
         public Arrow(string messageId, string conversationId, MessageStatus status, string id, List<Header> headers, IContainer container)
         {
@@ -27,17 +32,33 @@
             this.status = status;
             this.id = id;
             this.headers = headers;
+            this.container = container;
 
             CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
             RetryMessageCommand = container.Resolve<RetryMessageCommand>();
             SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
+
+            var cmd = new ReactiveCommand();
+            cmd.Subscribe(_ => ShowException());
+            DisplayExceptionDetailsCommand = cmd;
+        }
+
+        void ShowException()
+        {
+            var windowManager = container.Resolve<IWindowManagerEx>();
+            var settingsProvider = container.Resolve<ISettingsProvider>();
+            var model = new ExceptionDetailViewModel(settingsProvider, new ExceptionDetails(SelectedMessage));
+
+            windowManager.ShowDialog(model);
         }
 
         public ICommand RetryMessageCommand { get; private set; }
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
+
+        public ICommand DisplayExceptionDetailsCommand { get; private set; }
 
         public Endpoint receiving { get; set; }
         public Endpoint sending { get; set; }

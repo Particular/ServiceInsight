@@ -13,14 +13,10 @@
 
         public ExceptionDetails Exception { get; set; }
 
-        public ExceptionDetailViewModel(ISettingsProvider settingsProvider)
+        public ExceptionDetailViewModel(ISettingsProvider settingsProvider, ExceptionDetails exception = null)
         {
             this.settingsProvider = settingsProvider;
             DisplayName = "Exception Details";
-        }
-
-        public ExceptionDetailViewModel(ExceptionDetails exception)
-        {
             Exception = exception;
         }
 

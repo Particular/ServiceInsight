@@ -445,8 +445,8 @@
                                           Stretch="Fill" />
                                 </Grid>
 
-                                <Button Name="DisplayExceptionDetailsCommand"
-                                        Margin="6,0"
+                                <Button Margin="6,0"
+                                        Command="{Binding DisplayExceptionDetailsCommand}"
                                         Style="{StaticResource BlankButtonStyle}">
                                     <TextBlock FontWeight="Bold"
                                                Foreground="Red"
