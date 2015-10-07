@@ -57,7 +57,6 @@
         public ICommand CopyConversationIDCommand { get; private set; }
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
-
         public ICommand DisplayExceptionDetailsCommand { get; private set; }
 
         public Endpoint receiving { get; set; }
