@@ -340,7 +340,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid SnapsToDevicePixels="True">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -352,13 +352,8 @@
             </Grid.ColumnDefinitions>
 
             <Popup x:Name="FailedMessagePopup"
-                   HorizontalOffset="10"
-                   IsOpen="{Binding IsChecked,
-                                    ElementName=DropDownButton}"
-                   Placement="RelativePoint"
                    PlacementTarget="{Binding ElementName=DropDownButton}"
-                   StaysOpen="False"
-                   VerticalOffset="20">
+                   StaysOpen="False">
                 <Border MaxWidth="455" Background="Black">
                     <Grid Margin="0,6,6,6">
                         <Grid.RowDefinitions>
@@ -419,7 +414,7 @@
                                 <EventTrigger RoutedEvent="MenuItem.Click">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="DropDownButton" Storyboard.TargetProperty="IsChecked">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
                                                 <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
                                             </BooleanAnimationUsingKeyFrames>
                                         </Storyboard>
@@ -493,14 +488,12 @@
                      Visibility="{Binding Type,
                                           Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
 
-            <ToggleButton x:Name="DropDownButton"
-                          Grid.Row="0"
-                          Grid.Column="3"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          ClickMode="Press"
-                          Style="{StaticResource BlankToggleButtonStyle}">
-
+            <Button x:Name="DropDownButton"
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BlankButtonStyle}">
 
                 <StackPanel Orientation="Horizontal">
                     <controls:IconControl Width="16"
@@ -525,8 +518,19 @@
                           Fill="{StaticResource Grey40Brush}"
                           Stretch="Fill" />
                 </StackPanel>
-            </ToggleButton>
+            </Button>
         </Grid>
+        <DataTemplate.Triggers>
+            <EventTrigger RoutedEvent="Button.Click" SourceName="DropDownButton">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
+                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                        </BooleanAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
