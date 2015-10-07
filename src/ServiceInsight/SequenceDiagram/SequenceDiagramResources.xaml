@@ -456,13 +456,13 @@
                                     <TextBlock FontWeight="Bold"
                                                Foreground="Red"
                                                Style="{StaticResource UnderlineTextBlockStyle}"
-                                               Text="{Binding ExceptionType}" />
+                                               Text="{Binding SelectedMessage.ExceptionType}" />
                                 </Button>
                             </StackPanel>
 
                             <TextBlock Margin="0,6,0,0"
                                        Foreground="{StaticResource Grey60Brush}"
-                                       Text="{Binding ExceptionMessage}"
+                                       Text="{Binding SelectedMessage.ExceptionMessage}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>

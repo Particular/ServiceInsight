@@ -171,10 +171,10 @@ namespace ServiceInsight.SequenceDiagram
 
         Arrow CreateArrow(ReceivedMessage message)
         {
-            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, container)
+            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, message.headers, container)
             {
                 Name = TypeHumanizer.ToName(message.message_type),
-                SentTime = message.time_sent
+                SentTime = message.time_sent,
             };
 
             if (message.message_intent == MessageIntent.Publish)

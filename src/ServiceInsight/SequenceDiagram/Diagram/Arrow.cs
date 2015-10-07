@@ -1,7 +1,9 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Windows.Input;
     using Autofac;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
@@ -16,13 +18,15 @@
         readonly MessageStatus status;
 
         StoredMessage storedMessage;
+        List<Header> headers;
 
-        public Arrow(string messageId, string conversationId, MessageStatus status, string id, IContainer container)
+        public Arrow(string messageId, string conversationId, MessageStatus status, string id, List<Header> headers, IContainer container)
         {
             this.messageId = messageId;
             this.conversationId = conversationId;
             this.status = status;
             this.id = id;
+            this.headers = headers;
 
             CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
@@ -49,7 +53,8 @@
                     MessageId = messageId,
                     Id = id,
                     Status = status,
-                    SendingEndpoint = sending
+                    SendingEndpoint = sending,
+                    Headers = headers.Select(h => new StoredMessageHeader { Key = h.key, Value = h.value }).ToList()
                 };
             }
         }

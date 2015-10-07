@@ -30,6 +30,17 @@
             get { return GetHeaderByKey(MessageHeaderKeys.ContentType); }
         }
 
+        public string ExceptionMessage
+        {
+            get {  return GetHeaderByKey(MessageHeaderKeys.ExceptionMessage); }
+        }
+
+        public string ExceptionType
+        {
+            get { return GetHeaderByKey(MessageHeaderKeys.ExceptionType); }
+        }
+
+
         public string MessageId { get; set; }
 
         public List<StoredMessageHeader> Headers
