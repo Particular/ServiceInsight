@@ -6,7 +6,6 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                     xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d">
 
@@ -16,7 +15,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Colors and Brushes  -->
-    <SolidColorBrush x:Key="FailedHandler">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="FailedHandlerBrush">Red</SolidColorBrush>
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
@@ -249,7 +248,7 @@
         </Border>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding State}" Value="Fail">
-                <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource FailedHandler}" />
+                <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource FailedHandlerBrush}" />
                 <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
             </DataTrigger>
         </DataTemplate.Triggers>
@@ -441,7 +440,7 @@
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource FailedGeometry}"
-                                          Fill="Red"
+                                          Fill="{StaticResource FailedHandlerBrush}"
                                           Stretch="Fill" />
                                 </Grid>
 
@@ -449,7 +448,7 @@
                                         Command="{Binding DisplayExceptionDetailsCommand}"
                                         Style="{StaticResource BlankButtonStyle}">
                                     <TextBlock FontWeight="Bold"
-                                               Foreground="Red"
+                                               Foreground="{StaticResource FailedHandlerBrush}"
                                                Style="{StaticResource UnderlineTextBlockStyle}"
                                                Text="{Binding SelectedMessage.ExceptionType}" />
                                 </Button>
@@ -635,7 +634,7 @@
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource FailedGeometry}"
-                                          Fill="Red"
+                                          Fill="{StaticResource FailedHandlerBrush}"
                                           Stretch="Fill" />
                                 </Grid>
 
@@ -643,7 +642,7 @@
                                         Command="{Binding DisplayExceptionDetailsCommand}"
                                         Style="{StaticResource BlankButtonStyle}">
                                     <TextBlock FontWeight="Bold"
-                                               Foreground="Red"
+                                               Foreground="{StaticResource FailedHandlerBrush}"
                                                Style="{StaticResource UnderlineTextBlockStyle}"
                                                Text="{Binding SelectedMessage.ExceptionType}" />
                                 </Button>
