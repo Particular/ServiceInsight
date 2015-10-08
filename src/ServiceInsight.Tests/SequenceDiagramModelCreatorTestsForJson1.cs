@@ -8,7 +8,6 @@ namespace Particular.ServiceInsight.Tests
     {
         public SequenceDiagramModelCreatorTestsForJson1():base("json1.json")
         {
-            
         }
 
         [Test]

@@ -17,7 +17,7 @@ namespace ServiceInsight.SequenceDiagram
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
 
-        public ModelCreator(List<ReceivedMessage> messages, IContainer container = null)
+        public ModelCreator(List<ReceivedMessage> messages, IContainer container)
         {
             this.messages = messages;
             this.container = container;

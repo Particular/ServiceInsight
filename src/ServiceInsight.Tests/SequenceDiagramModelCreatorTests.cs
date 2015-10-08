@@ -2,19 +2,42 @@
 {
     using System;
     using System.Collections.Generic;
+    using Autofac;
     using global::ServiceInsight.SequenceDiagram;
     using NUnit.Framework;
+    using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Models;
 
 
     [TestFixture]
     class SequenceDiagramModelCreatorTests
     {
+        IContainer container;
+
+        [SetUp]
+        public void Setup()
+        {
+            var builder = new ContainerBuilder();
+
+            //TODO: Yuck! Too much couple. Why do we need an IContainer for Arrow?
+            builder.RegisterType<CopyConversationIDCommand>();
+            builder.RegisterType<CopyMessageURICommand>();
+            builder.RegisterType<RetryMessageCommand>();
+            builder.RegisterType<SearchByMessageIDCommand>();
+
+            container = builder.Build();
+        }
+
+        ModelCreator GetModelCreator(List<ReceivedMessage> messages)
+        {
+            return new ModelCreator(messages, container);
+        }
+
         [Test]
         public void NoMessages()
         {
             var messages = new List<ReceivedMessage>();
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(0, result.Count);
@@ -52,7 +75,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(1, result.Count);
@@ -141,7 +164,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(3, result.Count);
@@ -210,7 +233,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(4, result.Count);
@@ -247,7 +270,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(2, result.Count);
@@ -318,7 +341,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(4, result.Count);
@@ -388,7 +411,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(3, result.Count);
@@ -481,7 +504,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual("A", result[0].Name);
@@ -614,7 +637,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(1, result[0].Handlers.Count);
@@ -731,7 +754,7 @@
                 }
             };
 
-            var creator = new ModelCreator(messages);
+            var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
             Assert.AreEqual(1, result[0].Handlers.Count);
