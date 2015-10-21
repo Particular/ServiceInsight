@@ -54,7 +54,7 @@
 
         class ArrowLayout
         {
-            const double ArrowHeadAndEndWidth = 8;
+            const double ArrowHeadWidth = 3;
             const double ButtonPadding = 30;
 
             readonly IDiagram diagram;
@@ -98,21 +98,21 @@
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
 
                     var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
-                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - ArrowHeadAndEndWidth;
+                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - ArrowHeadWidth;
                 }
                 else if (fromEndpointIndex < toEndpointIndex)
                 {
                     //From left to right
                     arrow.Direction = Direction.Right;
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
-                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth) - ArrowHeadAndEndWidth;
+                    arrow.Width = toHandlerVisual.X - (fromHandlerVisual.X + fromHandlerVisual.ActualWidth) - ArrowHeadWidth;
                 }
                 else
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrowVisual.X = toHandlerVisual.X - MeasureString(arrow.Name).Width - ButtonPadding - ArrowHeadAndEndWidth;
-                    arrow.Width = fromHandlerVisual.X - (toHandlerVisual.X + toHandlerVisual.ActualWidth) - ArrowHeadAndEndWidth;
+                    arrowVisual.X = toHandlerVisual.X - MeasureString(arrow.Name).Width - ButtonPadding - ArrowHeadWidth;
+                    arrow.Width = fromHandlerVisual.X - (toHandlerVisual.X + toHandlerVisual.ActualWidth) - ArrowHeadWidth;
                 }
             }
 

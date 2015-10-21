@@ -24,7 +24,6 @@
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
-    <converter:ArrowTypeToVisibilityConverter x:Key="IsLocalSendOrTimeoutConverter" />
 
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
@@ -483,14 +482,6 @@
                   Data="{StaticResource RightArrow}"
                   Fill="{StaticResource Grey20Brush}"
                   Stretch="Fill" />
-            <Ellipse Grid.Row="0"
-                     Grid.Column="2"
-                     Width="10"
-                     Height="10"
-                     Fill="{StaticResource Grey60Brush}"
-                     Visibility="{Binding Type,
-                                          Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
-
             <Button x:Name="DropDownButton"
                     Grid.Row="0"
                     Grid.Column="3"
@@ -696,14 +687,6 @@
                           Stretch="Fill" />
                 </StackPanel>
             </Button>
-
-            <Ellipse Grid.Row="0"
-                     Grid.Column="1"
-                     Width="10"
-                     Height="10"
-                     Fill="{StaticResource Grey60Brush}"
-                     Visibility="{Binding Type,
-                                          Converter={StaticResource IsLocalSendOrTimeoutConverter}}" />
             <Path Grid.Row="0"
                   Grid.Column="2"
                   Width="10"

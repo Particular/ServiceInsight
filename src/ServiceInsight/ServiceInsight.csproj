@@ -272,7 +272,6 @@
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
-    <Compile Include="SequenceDiagram\Converter\ArrowTypeToBoolConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
     <Compile Include="SequenceDiagram\Diagram\ArrowType.cs" />
