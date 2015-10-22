@@ -7,7 +7,6 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using Caliburn.Micro;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -64,7 +63,7 @@
         class ProcessRouteLayout
         {
             readonly IDiagram diagram;
-            const double ArrowBoundary = 5;
+            const double ArrowBoundary = 8;
 
             public ProcessRouteLayout(IDiagram diagram)
             {
