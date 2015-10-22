@@ -26,7 +26,6 @@
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
-    <converter:HeightToLinePoinConverter x:Key="HeightToLinePoinConverter" />
 
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
@@ -192,20 +191,17 @@
 
 
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
-        <Path x:Name="Line"
+        <Line x:Name="Line"
               SnapsToDevicePixels="True"
               Stroke="{StaticResource Grey80Brush}"
-              StrokeThickness="2">
-            <Path.Data>
-                <PathGeometry>
-                    <PathFigure StartPoint="0, 0">
-                        <PathFigure.Segments>
-                            <LineSegment Point="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Height, Converter={StaticResource HeightToLinePoinConverter}}" />
-                        </PathFigure.Segments>
-                    </PathFigure>
-                </PathGeometry>
-            </Path.Data>
-        </Path>
+              StrokeThickness="2"
+              X1="0"
+              X2="0"
+              Y1="0"
+              Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                          AncestorType={x:Type diagram:DiagramVisualItem}},
+                           Path=Height}" />
+
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
@@ -378,8 +374,9 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid x:Name="Root" SnapsToDevicePixels="True"
-              Panel.ZIndex="100">
+        <Grid x:Name="Root"
+              Panel.ZIndex="100"
+              SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
