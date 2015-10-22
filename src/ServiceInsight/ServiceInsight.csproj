@@ -278,6 +278,7 @@
     <Compile Include="SequenceDiagram\Diagram\ArrowType.cs" />
     <Compile Include="SequenceDiagram\Diagram\DiagramVisualItem.cs" />
     <Compile Include="SequenceDiagram\Diagram\Direction.cs" />
+    <Compile Include="SequenceDiagram\Diagram\MessageProcessingRoute.cs" />
     <Compile Include="SequenceDiagram\RestDataTypes.cs" />
     <Compile Include="SequenceDiagram\Diagram\Arrow.cs" />
     <Compile Include="SequenceDiagram\Diagram\DiagramControl.cs" />

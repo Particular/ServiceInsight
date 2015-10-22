@@ -31,7 +31,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
         {
             var builder = new ContainerBuilder();
 
-            //TODO: Yuck! Too much couple. Why do we need an IContainer for Arrow?
+            //TODO: Yuck! Too much coupling. Why do we need an IContainer for Arrow? Can we use a Func<T> instead?
             builder.RegisterType<CopyConversationIDCommand>();
             builder.RegisterType<CopyMessageURICommand>();
             builder.RegisterType<RetryMessageCommand>();

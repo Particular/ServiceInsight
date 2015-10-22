@@ -21,7 +21,7 @@
             Handlers = new List<Handler>();
         }
 
-        public EndpointTimeline Timeline { get; set; }
+        public EndpointTimeline Timeline { get; private set; }
 
         public string FullName { get; private set; }
         public string Version { get; private set; }

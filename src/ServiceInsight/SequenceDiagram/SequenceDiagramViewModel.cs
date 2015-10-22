@@ -71,12 +71,14 @@
             var modelCreator = new ModelCreator(messages, container);
             var endpoints = modelCreator.Endpoints;
             var handlers = modelCreator.Handlers;
+            var routes = modelCreator.Routes;
 
             DiagramItems.Clear();
             DiagramItems.AddRange(endpoints);
             DiagramItems.AddRange(endpoints.Select(e => e.Timeline));
             DiagramItems.AddRange(handlers);
             DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
+            DiagramItems.AddRange(routes);
         }
     }
 }

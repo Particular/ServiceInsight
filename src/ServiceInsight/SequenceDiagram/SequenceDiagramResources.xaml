@@ -15,12 +15,14 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Colors and Brushes  -->
-    <SolidColorBrush x:Key="FailedHandlerBrush">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="RedBrush">Red</SolidColorBrush>
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey30Brush">#444444</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
     <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
     <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
+
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
@@ -155,9 +157,43 @@
         </Setter>
     </Style>
 
+    <DataTemplate DataType="{x:Type diagram:MessageProcessingRoute}">
+        <Grid Width="12"
+              Panel.ZIndex="99"
+              SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <Line Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="0"
+                  HorizontalAlignment="Center"
+                  Stroke="{StaticResource Grey30Brush}"
+                  StrokeThickness="2"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                              AncestorType={x:Type diagram:DiagramVisualItem}},
+                               Path=Height}" />
+            <Path Grid.Row="1"
+                  Grid.Column="0"
+                  Width="11"
+                  Height="11"
+                  Margin="0"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Data="{StaticResource DownArrow}"
+                  Fill="{StaticResource Grey30Brush}"
+                  Stretch="UniformToFill" />
+        </Grid>
+    </DataTemplate>
+
 
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
-        <Path SnapsToDevicePixels="True"
+        <Path x:Name="Line"
+              SnapsToDevicePixels="True"
               Stroke="{StaticResource Grey80Brush}"
               StrokeThickness="2">
             <Path.Data>
@@ -251,7 +287,7 @@
         </Border>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding State}" Value="Fail">
-                <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource FailedHandlerBrush}" />
+                <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource RedBrush}" />
                 <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
             </DataTrigger>
         </DataTemplate.Triggers>
@@ -342,7 +378,8 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid x:Name="Root" SnapsToDevicePixels="True">
+        <Grid x:Name="Root" SnapsToDevicePixels="True"
+              Panel.ZIndex="100">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -446,7 +483,7 @@
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource FailedGeometry}"
-                                          Fill="{StaticResource FailedHandlerBrush}"
+                                          Fill="{StaticResource RedBrush}"
                                           Stretch="Fill" />
                                 </Grid>
 
@@ -454,7 +491,7 @@
                                         Command="{Binding DisplayExceptionDetailsCommand}"
                                         Style="{StaticResource BlankButtonStyle}">
                                     <TextBlock FontWeight="Bold"
-                                               Foreground="{StaticResource FailedHandlerBrush}"
+                                               Foreground="{StaticResource RedBrush}"
                                                Style="{StaticResource UnderlineTextBlockStyle}"
                                                Text="{Binding SelectedMessage.ExceptionType}" />
                                 </Button>
@@ -635,7 +672,7 @@
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource FailedGeometry}"
-                                          Fill="{StaticResource FailedHandlerBrush}"
+                                          Fill="{StaticResource RedBrush}"
                                           Stretch="Fill" />
                                 </Grid>
 
@@ -643,7 +680,7 @@
                                         Command="{Binding DisplayExceptionDetailsCommand}"
                                         Style="{StaticResource BlankButtonStyle}">
                                     <TextBlock FontWeight="Bold"
-                                               Foreground="{StaticResource FailedHandlerBrush}"
+                                               Foreground="{StaticResource RedBrush}"
                                                Style="{StaticResource UnderlineTextBlockStyle}"
                                                Text="{Binding SelectedMessage.ExceptionType}" />
                                 </Button>

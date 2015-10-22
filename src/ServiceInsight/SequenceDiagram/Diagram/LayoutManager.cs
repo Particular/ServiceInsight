@@ -1,11 +1,13 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using Caliburn.Micro;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -20,6 +22,7 @@
             var handlerLayout = new HandlerLayout(diagram, endpointLayout);
             var endpointTimelineLayout = new EndpointTimelineLayout(diagram);
             var arrowLayout = new ArrowLayout(diagram, endpointLayout);
+            var processRouteLayout = new ProcessRouteLayout(diagram);
 
             foreach (var item in diagram.DiagramItems)
             {
@@ -49,6 +52,35 @@
                 {
                     arrowLayout.Position(arrow);
                 }
+
+                var route = item as MessageProcessingRoute;
+                if (route != null)
+                {
+                    processRouteLayout.Position(route);
+                }
+            }
+        }
+
+        class ProcessRouteLayout
+        {
+            readonly IDiagram diagram;
+            const double ArrowBoundary = 5;
+
+            public ProcessRouteLayout(IDiagram diagram)
+            {
+                this.diagram = diagram;
+            }
+
+            public void Position(MessageProcessingRoute route)
+            {
+                var handler = diagram.GetItemFromContainer(route.ProcessingHandler);
+                var arrow = diagram.GetItemFromContainer(route.FromArrow);
+                var routeVisual = diagram.GetItemFromContainer(route);
+                var height = Math.Abs(arrow.Y - handler.Y);
+
+                routeVisual.X = handler.X + ((handler.ActualWidth - routeVisual.ActualWidth) / 2);
+                routeVisual.Y = arrow.Y + ArrowBoundary;
+                routeVisual.Height = height - ArrowBoundary;
             }
         }
 

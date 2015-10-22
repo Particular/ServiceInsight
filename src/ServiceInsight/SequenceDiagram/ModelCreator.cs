@@ -16,6 +16,7 @@ namespace ServiceInsight.SequenceDiagram
 
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
+        List<MessageProcessingRoute> processingRoutes = new List<MessageProcessingRoute>();
 
         public ModelCreator(List<ReceivedMessage> messages, IContainer container)
         {
@@ -33,6 +34,11 @@ namespace ServiceInsight.SequenceDiagram
         public ReadOnlyCollection<Handler> Handlers
         {
             get { return handlers.AsReadOnly(); }
+        }
+
+        public ReadOnlyCollection<MessageProcessingRoute> Routes
+        {
+            get { return processingRoutes.AsReadOnly(); }
         }
 
         void Initialize()
@@ -89,6 +95,8 @@ namespace ServiceInsight.SequenceDiagram
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
+                processingRoutes.Add(CreateRoute(arrow, processingHandler));
+
                 processingHandler.In = arrow;
 
                 sendingHandler.Out.Add(arrow);
@@ -99,6 +107,11 @@ namespace ServiceInsight.SequenceDiagram
             {
                 handler.Out.Sort();
             }
+        }
+
+        MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler)
+        {
+            return new MessageProcessingRoute(arrow, processingHandler);
         }
 
         IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<ReceivedMessage> recievedMessages)
