@@ -22,6 +22,9 @@
     <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
     <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
     <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey95Brush">#B3B3B3</SolidColorBrush>
+
+    <SolidColorBrush x:Key="HighlightBrush">#0B6EEF</SolidColorBrush>
 
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
@@ -157,18 +160,20 @@
     </Style>
 
     <DataTemplate DataType="{x:Type diagram:MessageProcessingRoute}">
-        <Grid Width="12"
+        <Grid x:Name="Root"
+              Width="12"
               Panel.ZIndex="99"
               SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10" />
             </Grid.RowDefinitions>
-            <Line Grid.Row="0"
+            <Line x:Name="Line"
+                  Grid.Row="0"
                   Grid.Column="0"
                   Margin="0"
                   HorizontalAlignment="Center"
-                  Stroke="{StaticResource Grey30Brush}"
+                  Stroke="{StaticResource Grey95Brush}"
                   StrokeThickness="2"
                   X1="0"
                   X2="0"
@@ -176,17 +181,37 @@
                   Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                               AncestorType={x:Type diagram:DiagramVisualItem}},
                                Path=Height}" />
-            <Path Grid.Row="1"
+            <Path x:Name="ArrowHead"
+                  Grid.Row="1"
                   Grid.Column="0"
-                  Width="11"
-                  Height="11"
+                  Width="6"
+                  Height="6"
                   Margin="0"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Data="{StaticResource DownArrow}"
-                  Fill="{StaticResource Grey30Brush}"
-                  Stretch="UniformToFill" />
+                  Fill="{StaticResource Grey95Brush}"
+                  Stretch="UniformToFill">
+                <Path.ToolTip>
+                    <ToolTip Background="{StaticResource Grey20Brush}"
+                             HorizontalOffset="5"
+                             Placement="Right"
+                             Visibility="{Binding Name,
+                                                  TargetNullValue=Collapsed}">
+                        <TextBlock Margin="4"
+                                   Foreground="{StaticResource Grey60Brush}"
+                                   Text="{Binding Name}" />
+                    </ToolTip>
+
+                </Path.ToolTip>
+            </Path>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=IsMouseOver}" Value="True">
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
 

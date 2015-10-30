@@ -95,7 +95,8 @@ namespace ServiceInsight.SequenceDiagram
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
-                processingRoutes.Add(CreateRoute(arrow, processingHandler));
+                processingHandler.Route = CreateRoute(arrow, processingHandler);
+                processingRoutes.Add(processingHandler.Route);
 
                 processingHandler.In = arrow;
 

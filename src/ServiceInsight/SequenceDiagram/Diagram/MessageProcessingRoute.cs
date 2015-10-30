@@ -6,6 +6,7 @@
         {
             FromArrow = arrow;
             ProcessingHandler = processingHandler;
+            Name = ProcessingHandler.Name + string.Format("({0})", FromArrow.MessageId);
         }
 
         public Arrow FromArrow { get; private set; }

@@ -63,7 +63,7 @@
         class ProcessRouteLayout
         {
             readonly IDiagram diagram;
-            const double ArrowBoundary = 8;
+            const double ArrowBoundary = 4;
 
             public ProcessRouteLayout(IDiagram diagram)
             {
