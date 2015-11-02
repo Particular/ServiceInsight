@@ -162,6 +162,7 @@
     <DataTemplate DataType="{x:Type diagram:MessageProcessingRoute}">
         <Grid x:Name="Root"
               Width="12"
+              Background="Transparent"
               Panel.ZIndex="99"
               SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
@@ -173,7 +174,7 @@
                   Grid.Column="0"
                   Margin="0"
                   HorizontalAlignment="Center"
-                  Stroke="{StaticResource Grey95Brush}"
+                  Stroke="Transparent"
                   StrokeThickness="2"
                   X1="0"
                   X2="0"
@@ -190,7 +191,7 @@
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Data="{StaticResource DownArrow}"
-                  Fill="{StaticResource Grey95Brush}"
+                  Fill="Transparent"
                   Stretch="UniformToFill">
                 <Path.ToolTip>
                     <ToolTip Background="{StaticResource Grey20Brush}"
@@ -208,8 +209,8 @@
         </Grid>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=IsMouseOver}" Value="True">
-                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
-                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource Grey95Brush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource Grey95Brush}" />
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
