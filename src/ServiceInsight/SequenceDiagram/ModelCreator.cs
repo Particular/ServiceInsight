@@ -159,14 +159,13 @@ namespace ServiceInsight.SequenceDiagram
             {
                 ProcessingTime = message.processing_time,
                 HandledAt = message.processed_at,
-                Name = message.message_type,
+                Name = TypeHumanizer.ToName(message.message_type),
                 Endpoint = processingEndpoint
             };
 
             if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
             {
-                //TODO: Support multiple sagas!
-                handler.PartOfSaga = TypeHumanizer.ToName(message.invoked_sagas[0].saga_type);
+                handler.PartOfSaga = String.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
             }
 
             if (message.status == MessageStatus.ArchivedFailure || message.status == MessageStatus.Failed || message.status == MessageStatus.RepeatedFailure)

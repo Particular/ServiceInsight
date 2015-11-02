@@ -209,8 +209,8 @@
         </Grid>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=IsMouseOver}" Value="True">
-                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource Grey95Brush}" />
-                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource Grey95Brush}" />
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
@@ -283,7 +283,7 @@
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
                                    Style="{StaticResource TooltipStyleForHeader}"
-                                   Text="Handler For:" />
+                                   Text="Processing Of:" />
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
                                    Style="{StaticResource TooltipStyleForValue}"
@@ -294,13 +294,14 @@
                         <TextBlock Grid.Row="2"
                                    Grid.Column="0"
                                    Style="{StaticResource TooltipStyleForHeader}"
-                                   Text="Saga:"
+                                   Text="Sagas Invoked:"
                                    Visibility="{Binding PartOfSaga,
                                                         TargetNullValue=Collapsed}" />
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    Style="{StaticResource TooltipStyleForValue}"
                                    Text="{Binding PartOfSaga}"
+                                   TextWrapping="Wrap"
                                    Visibility="{Binding PartOfSaga,
                                                         TargetNullValue=Collapsed}" />
                     </Grid>
