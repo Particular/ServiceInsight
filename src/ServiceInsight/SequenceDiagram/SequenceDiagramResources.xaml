@@ -166,7 +166,7 @@
               SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="10" />
+                <RowDefinition Height="6" />
             </Grid.RowDefinitions>
             <Line x:Name="Line"
                   Grid.Row="0"
@@ -186,7 +186,7 @@
                   Grid.Column="0"
                   Width="6"
                   Height="6"
-                  Margin="0"
+                  Margin="-1,0,0,0"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Data="{StaticResource DownArrow}"

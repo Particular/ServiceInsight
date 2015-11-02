@@ -63,7 +63,8 @@
         class ProcessRouteLayout
         {
             readonly IDiagram diagram;
-            const double ArrowBoundary = 4;
+            const double ArrowBoundary = 9;
+            const double ArrowHeadHeight = 8;
 
             public ProcessRouteLayout(IDiagram diagram)
             {
@@ -77,9 +78,9 @@
                 var routeVisual = diagram.GetItemFromContainer(route);
                 var height = Math.Abs(arrow.Y - handler.Y);
 
-                routeVisual.X = handler.X + ((handler.ActualWidth - routeVisual.ActualWidth) / 2);
+                routeVisual.X = handler.X + ((handler.ActualWidth - routeVisual.ActualWidth) / 2) + 1;
                 routeVisual.Y = arrow.Y + ArrowBoundary;
-                routeVisual.Height = height - ArrowBoundary;
+                routeVisual.Height = height - ArrowHeadHeight;
             }
         }
 
