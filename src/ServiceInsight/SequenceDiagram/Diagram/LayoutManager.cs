@@ -86,8 +86,8 @@
 
         class ArrowLayout
         {
-            const double ArrowHeadWidth = 3;
-            const double ButtonPadding = 30;
+            const double ArrowHeadWidth = 4;
+            const double ButtonPadding = 50;
 
             readonly IDiagram diagram;
             readonly EndpointItemLayout endpointItemLayout;

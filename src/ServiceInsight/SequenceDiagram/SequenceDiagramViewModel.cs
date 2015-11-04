@@ -15,6 +15,7 @@
         private readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
         readonly IContainer container;
+        SequenceDiagramView view;
 
         public SequenceDiagramViewModel(IServiceControl serviceControl, IEventAggregator eventAggregator, IContainer container)
         {
@@ -23,6 +24,12 @@
             this.container = container;
 
             DiagramItems = new DiagramItemCollection();
+        }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+            this.view = view as SequenceDiagramView;
         }
 
         public DiagramItemCollection DiagramItems { get; set; }
@@ -66,7 +73,7 @@
             SelectedMessage = storedMessage;
         }
 
-        private void CreateElements(List<ReceivedMessage> messages)
+        void CreateElements(List<ReceivedMessage> messages)
         {
             var modelCreator = new ModelCreator(messages, container);
             var endpoints = modelCreator.Endpoints;

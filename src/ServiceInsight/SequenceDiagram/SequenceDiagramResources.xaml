@@ -162,8 +162,8 @@
     <DataTemplate DataType="{x:Type diagram:MessageProcessingRoute}">
         <Grid x:Name="Root"
               Width="12"
-              Background="Transparent"
               Panel.ZIndex="99"
+              Background="Transparent"
               SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -402,7 +402,6 @@
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
         <Grid x:Name="Root"
-              Panel.ZIndex="100"
               SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -411,124 +410,41 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Popup x:Name="FailedMessagePopup"
-                   PlacementTarget="{Binding ElementName=DropDownButton}"
-                   StaysOpen="False">
-                <Border MaxWidth="455" Background="Black">
-                    <Grid Margin="0,6,6,6">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="3*" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.ColumnSpan="2"
-                                    Margin="6,0,6,6"
-                                    Orientation="Horizontal"
-                                    Visibility="{Binding Path=Status,
-                                                         Converter={StaticResource EnumToVisibilityConverter},
-                                                         ConverterParameter='Failed, RepeatedFailure'}">
-                            <controls:IconControl x:Name="FailedMessageTypeIcon"
-                                                  Width="16"
-                                                  Height="16"
-                                                  Margin="2 0"
-                                                  Foreground="{StaticResource Grey60Brush}"
-                                                  Style="{StaticResource MessageIconStyle}" />
-
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Foreground="{StaticResource Grey60Brush}"
-                                       Padding="5 0"
-                                       Text="{Binding Name}" />
-                        </StackPanel>
-
-                        <Border Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                Background="{StaticResource Grey20Brush}"
-                                Visibility="{Binding Path=Status,
-                                                     Converter={StaticResource EnumToVisibilityConverter},
-                                                     ConverterParameter='Failed, RepeatedFailure'}" />
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="0,1,0,0">
-                            <MenuItem Command="{Binding RetryMessageCommand}"
-                                      Header="Retry message"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding CopyConversationIDCommand}"
-                                      Header="Copy conversation ID"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding CopyMessageURICommand}"
-                                      Header="Copy message URL"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding SearchByMessageIDCommand}"
-                                      Header="Search by message ID"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <StackPanel.Triggers>
-                                <EventTrigger RoutedEvent="MenuItem.Click">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
-                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </StackPanel.Triggers>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="6"
-                                    Visibility="{Binding Path=Status,
-                                                         Converter={StaticResource EnumToVisibilityConverter},
-                                                         ConverterParameter='Failed, RepeatedFailure'}">
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Rectangle Width="4"
-                                               Height="12"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Fill="White" />
-                                    <Path Width="16"
+            <controls:SplitButton Grid.Column="2"
+                                  Height="22"
+                                  Margin="5,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Header="{Binding Name}"
+                                  Padding="0"
+                                  SnapsToDevicePixels="True">
+                <controls:SplitButton.Icon>
+                    <controls:IconControl Width="16"
                                           Height="16"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Data="{StaticResource FailedGeometry}"
-                                          Fill="{StaticResource RedBrush}"
-                                          Stretch="Fill" />
-                                </Grid>
-
-                                <Button Margin="6,0"
-                                        Command="{Binding DisplayExceptionDetailsCommand}"
-                                        Style="{StaticResource BlankButtonStyle}">
-                                    <TextBlock FontWeight="Bold"
-                                               Foreground="{StaticResource RedBrush}"
-                                               Style="{StaticResource UnderlineTextBlockStyle}"
-                                               Text="{Binding SelectedMessage.ExceptionType}" />
-                                </Button>
-                            </StackPanel>
-
-                            <TextBlock Margin="0,6,0,0"
-                                       Foreground="{StaticResource Grey60Brush}"
-                                       Text="{Binding SelectedMessage.ExceptionMessage}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Popup>
+                                          Margin="2 0"
+                                          Foreground="{StaticResource Grey40Brush}"
+                                          Style="{StaticResource MessageIconStyle}"
+                                          Type="{Binding Type}" />
+                </controls:SplitButton.Icon>
+                <MenuItem Command="{Binding RetryMessageCommand}"
+                          Header="Retry message"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding CopyConversationIDCommand}"
+                          Header="Copy conversation ID"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding CopyMessageURICommand}"
+                          Header="Copy message URL"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding SearchByMessageIDCommand}"
+                          Header="Search by message ID"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+            </controls:SplitButton>
 
             <Line x:Name="Line"
                   Grid.Row="0"
@@ -546,49 +462,7 @@
                   Data="{StaticResource RightArrow}"
                   Fill="{StaticResource Grey20Brush}"
                   Stretch="Fill" />
-            <Button x:Name="DropDownButton"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BlankButtonStyle}">
-
-                <StackPanel Orientation="Horizontal">
-                    <controls:IconControl Width="16"
-                                          Height="16"
-                                          Margin="2 0"
-                                          Foreground="{StaticResource Grey40Brush}"
-                                          Style="{StaticResource MessageIconStyle}"
-                                          Type="{Binding Type}" />
-
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="{StaticResource Grey40Brush}"
-                               Padding="5 0"
-                               Style="{StaticResource UnderlineTextBlockStyle}"
-                               Text="{Binding Name}" />
-
-                    <Path Width="4"
-                          Height="4"
-                          Margin="2,0,2,3"
-                          VerticalAlignment="Bottom"
-                          Data="{StaticResource DownArrow}"
-                          Fill="{StaticResource Grey40Brush}"
-                          Stretch="Fill" />
-                </StackPanel>
-            </Button>
         </Grid>
-        <DataTemplate.Triggers>
-            <EventTrigger RoutedEvent="Button.Click" SourceName="DropDownButton">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
-                        </BooleanAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
@@ -600,159 +474,43 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Popup x:Name="FailedMessagePopup"
-                   PlacementTarget="{Binding ElementName=DropDownButton}"
-                   StaysOpen="False">
-                <Border MaxWidth="455" Background="Black">
-                    <Grid Margin="0,6,6,6">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="3*" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.ColumnSpan="2"
-                                    Margin="6,0,6,6"
-                                    Orientation="Horizontal"
-                                    Visibility="{Binding Path=Status,
-                                                         Converter={StaticResource EnumToVisibilityConverter},
-                                                         ConverterParameter='Failed, RepeatedFailure'}">
-                            <controls:IconControl x:Name="FailedMessageTypeIcon"
-                                                  Width="16"
-                                                  Height="16"
-                                                  Margin="2 0"
-                                                  Foreground="{StaticResource Grey60Brush}"
-                                                  Style="{StaticResource MessageIconStyle}" />
-
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Foreground="{StaticResource Grey60Brush}"
-                                       Padding="5 0"
-                                       Text="{Binding Name}" />
-                        </StackPanel>
-
-                        <Border Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                Background="{StaticResource Grey20Brush}"
-                                Visibility="{Binding Path=Status,
-                                                     Converter={StaticResource EnumToVisibilityConverter},
-                                                     ConverterParameter='Failed, RepeatedFailure'}" />
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="0,1,0,0">
-                            <MenuItem Command="{Binding RetryMessageCommand}"
-                                      Header="Retry message"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding CopyConversationIDCommand}"
-                                      Header="Copy conversation ID"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding CopyMessageURICommand}"
-                                      Header="Copy message URL"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <MenuItem Command="{Binding SearchByMessageIDCommand}"
-                                      Header="Search by message ID"
-                                      Style="{StaticResource DarkMenuItemStyle}"
-                                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                            <StackPanel.Triggers>
-                                <EventTrigger RoutedEvent="MenuItem.Click">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
-                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </StackPanel.Triggers>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="6"
-                                    Visibility="{Binding Path=Status,
-                                                         Converter={StaticResource EnumToVisibilityConverter},
-                                                         ConverterParameter='Failed, RepeatedFailure'}">
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Rectangle Width="4"
-                                               Height="12"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Fill="White" />
-                                    <Path Width="16"
-                                          Height="16"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Data="{StaticResource FailedGeometry}"
-                                          Fill="{StaticResource RedBrush}"
-                                          Stretch="Fill" />
-                                </Grid>
-
-                                <Button Margin="6,0"
-                                        Command="{Binding DisplayExceptionDetailsCommand}"
-                                        Style="{StaticResource BlankButtonStyle}">
-                                    <TextBlock FontWeight="Bold"
-                                               Foreground="{StaticResource RedBrush}"
-                                               Style="{StaticResource UnderlineTextBlockStyle}"
-                                               Text="{Binding SelectedMessage.ExceptionType}" />
-                                </Button>
-                            </StackPanel>
-
-                            <TextBlock Margin="0,6,0,0"
-                                       Foreground="{StaticResource Grey60Brush}"
-                                       Text="{Binding SelectedMessage.ExceptionMessage}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Popup>
-
-            <Button x:Name="DropDownButton"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BlankButtonStyle}">
-
-
-                <StackPanel Orientation="Horizontal">
+            <controls:SplitButton Height="22"
+                                  Margin="5,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Header="{Binding Name}"
+                                  Padding="0"
+                                  SnapsToDevicePixels="True">
+                <controls:SplitButton.Icon>
                     <controls:IconControl Width="16"
                                           Height="16"
                                           Margin="2 0"
                                           Foreground="{StaticResource Grey40Brush}"
                                           Style="{StaticResource MessageIconStyle}"
                                           Type="{Binding Type}" />
+                </controls:SplitButton.Icon>
+                <MenuItem Command="{Binding RetryMessageCommand}"
+                          Header="Retry message"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding CopyConversationIDCommand}"
+                          Header="Copy conversation ID"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding CopyMessageURICommand}"
+                          Header="Copy message URL"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding SearchByMessageIDCommand}"
+                          Header="Search by message ID"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+            </controls:SplitButton>
 
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="{StaticResource Grey40Brush}"
-                               Padding="5 0"
-                               Style="{StaticResource UnderlineTextBlockStyle}"
-                               Text="{Binding Name}" />
-
-                    <Path Width="4"
-                          Height="4"
-                          Margin="2,0,2,3"
-                          VerticalAlignment="Bottom"
-                          Data="{StaticResource DownArrow}"
-                          Fill="{StaticResource Grey40Brush}"
-                          Stretch="Fill" />
-                </StackPanel>
-            </Button>
             <Path Grid.Row="0"
-                  Grid.Column="2"
+                  Grid.Column="1"
                   Width="10"
                   Height="10"
                   Data="{StaticResource LeftArrow}"
@@ -761,7 +519,7 @@
 
             <Line x:Name="Line"
                   Grid.Row="0"
-                  Grid.Column="3"
+                  Grid.Column="2"
                   VerticalAlignment="Center"
                   SnapsToDevicePixels="True"
                   Stroke="{StaticResource DiagramEdgeForegroundBrush}"
@@ -769,17 +527,6 @@
                   X1="0"
                   X2="{Binding Width}" />
         </Grid>
-        <DataTemplate.Triggers>
-            <EventTrigger RoutedEvent="Button.Click" SourceName="DropDownButton">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
-                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
-                        </BooleanAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
