@@ -182,7 +182,7 @@ namespace ServiceInsight.SequenceDiagram
 
         Arrow CreateArrow(ReceivedMessage message)
         {
-            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, message.headers, container)
+            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, message.time_sent, message.headers, container)
             {
                 Name = TypeHumanizer.ToName(message.message_type),
                 SentTime = message.time_sent,

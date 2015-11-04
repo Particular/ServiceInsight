@@ -401,8 +401,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid x:Name="Root"
-              SnapsToDevicePixels="True">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -417,9 +416,11 @@
                                   Margin="5,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
+                                  ButtonClick="{Binding ChangeCurrentMessage}"
                                   Header="{Binding Name}"
                                   Padding="0"
-                                  SnapsToDevicePixels="True">
+                                  SnapsToDevicePixels="True"
+                                  beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
                     <controls:IconControl Width="16"
                                           Height="16"
@@ -480,9 +481,11 @@
                                   Margin="5,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
+                                  ButtonClick="{Binding ChangeCurrentMessage}"
                                   Header="{Binding Name}"
                                   Padding="0"
-                                  SnapsToDevicePixels="True">
+                                  SnapsToDevicePixels="True"
+                                  beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
                     <controls:IconControl Width="16"
                                           Height="16"

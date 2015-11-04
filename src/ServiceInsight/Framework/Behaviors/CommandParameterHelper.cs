@@ -2,6 +2,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Behaviors
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
 
     public class CommandParameterHelper
     {
@@ -13,23 +14,35 @@ namespace Particular.ServiceInsight.Desktop.Framework.Behaviors
 
         static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = d as MenuItem;
-            if (target == null)
-                return;
+            var menu = d as MenuItem;
+            if (menu != null)
+            {
+                SwapCommand(menu, e.NewValue);
+            }
 
-            target.CommandParameter = e.NewValue;
-            var temp = target.Command;
-            // Have to set it to null first or CanExecute won't be called.
-            target.Command = null;
-            target.Command = temp;
+            var btn = d as ButtonBase;
+            if (btn != null)
+            {
+                SwapCommand(btn, e.NewValue);
+            }
         }
 
-        public static object GetCommandParameter(MenuItem target)
+        static void SwapCommand(dynamic commandHolder, object parameter)
+        {
+            commandHolder.CommandParameter = parameter;
+            var temp = commandHolder.Command;
+            // Have to set it to null first or CanExecute won't be called.
+            commandHolder.Command = null;
+            commandHolder.Command = temp;
+
+        }
+
+        public static object GetCommandParameter(UIElement target)
         {
             return target.GetValue(CommandParameterProperty);
         }
 
-        public static void SetCommandParameter(MenuItem target, object value)
+        public static void SetCommandParameter(UIElement target, object value)
         {
             target.SetValue(CommandParameterProperty, value);
         }

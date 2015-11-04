@@ -24,13 +24,15 @@
         StoredMessage storedMessage;
         List<Header> headers;
         IContainer container;
+        DateTime? timesent;
 
-        public Arrow(string messageId, string conversationId, MessageStatus status, string id, List<Header> headers, IContainer container)
+        public Arrow(string messageId, string conversationId, MessageStatus status, string id, DateTime? timesent, List<Header> headers, IContainer container)
         {
             this.messageId = messageId;
             this.conversationId = conversationId;
             this.status = status;
             this.id = id;
+            this.timesent = timesent;
             this.headers = headers;
             this.container = container;
 
@@ -38,6 +40,7 @@
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
             RetryMessageCommand = container.Resolve<RetryMessageCommand>();
             SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
+            ChangeCurrentMessage = container.Resolve<ChangeSelectedMessageCommand>();
 
             var cmd = new ReactiveCommand();
             cmd.Subscribe(_ => ShowException());
@@ -58,6 +61,7 @@
         public ICommand CopyMessageURICommand { get; private set; }
         public ICommand SearchByMessageIDCommand { get; private set; }
         public ICommand DisplayExceptionDetailsCommand { get; private set; }
+        public ICommand ChangeCurrentMessage { get; private set; }
 
         public Endpoint receiving { get; set; }
         public Endpoint sending { get; set; }
@@ -71,6 +75,7 @@
                     ConversationId = conversationId,
                     ReceivingEndpoint = receiving,
                     MessageId = messageId,
+                    TimeSent = timesent,
                     Id = id,
                     Status = status,
                     SendingEndpoint = sending,

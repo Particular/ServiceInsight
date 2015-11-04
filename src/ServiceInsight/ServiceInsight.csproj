@@ -237,6 +237,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
+    <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
     <Compile Include="Framework\Commands\CommandsModule.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />

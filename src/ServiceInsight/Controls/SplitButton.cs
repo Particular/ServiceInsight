@@ -2,11 +2,12 @@
 namespace Particular.ServiceInsight.Desktop.Controls
 {
 	using System.Windows.Controls;
-	using System;
 	using System.Windows;
 	using System.Windows.Input;
 	using System.Windows.Controls.Primitives;
-	/// <summary>
+	using Particular.ServiceInsight.Desktop.Framework.Behaviors;
+
+    /// <summary>
 	/// Represents a combination of a standard button on the left and a drop-down button on the right.
 	/// </summary>
 	[TemplatePartAttribute(Name = "PART_Popup", Type = typeof(Popup))]
@@ -20,7 +21,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
 		/// </summary>
 		public static readonly DependencyProperty CornerRadiusProperty;
 
-		private static readonly RoutedEvent ButtonClickEvent;
+		public static DependencyProperty ButtonClickProperty = DependencyProperty.Register("ButtonClick", typeof(ICommand), typeof(SplitButton));
 
 		static SplitButton()
 		{
@@ -34,7 +35,6 @@ namespace Particular.ServiceInsight.Desktop.Controls
 					OnIsSubmenuOpenChanged,
 					CoerceIsSubmenuOpen));
 
-			ButtonClickEvent = EventManager.RegisterRoutedEvent("ButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SplitButton));
 			KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(KeyboardNavigationMode.Local));
 			KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(KeyboardNavigationMode.None));
 			KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(KeyboardNavigationMode.None));
@@ -49,30 +49,21 @@ namespace Particular.ServiceInsight.Desktop.Controls
 			set { SetValue(CornerRadiusProperty, value); }
 		}
 
-		public event RoutedEventHandler ButtonClick
+		public ICommand ButtonClick
 		{
-			add { AddHandler(ButtonClickEvent, value); }
-			remove { RemoveHandler(ButtonClickEvent, value); }
+			get { return (ICommand) GetValue(ButtonClickProperty); }
+			set { SetValue(ButtonClickProperty, value); }
 		}
 
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			splitButtonHeaderSite = this.GetTemplateChild("PART_Button") as Button;
+			splitButtonHeaderSite = GetTemplateChild("PART_Button") as Button;
 			if (splitButtonHeaderSite != null)
 			{
-				splitButtonHeaderSite.Click += OnHeaderButtonClick;
+				splitButtonHeaderSite.Command = ButtonClick;
+			    splitButtonHeaderSite.CommandParameter = CommandParameterHelper.GetCommandParameter(this);
 			}
-		}
-
-		private void OnHeaderButtonClick(object sender, RoutedEventArgs e)
-		{
-			OnButtonClick();
-		}
-
-		protected virtual void OnButtonClick()
-		{
-			RaiseEvent(new RoutedEventArgs(ButtonClickEvent, this));
 		}
 
 		private static void OnIsSubmenuOpenChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -109,10 +100,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
 			{
 				if (!splitButton.IsLoaded)
 				{
-					splitButton.Loaded += delegate (object sender, RoutedEventArgs e)
-					{
-						splitButton.CoerceValue(IsSubmenuOpenProperty);
-					};
+					splitButton.Loaded += (sender, e) => splitButton.CoerceValue(IsSubmenuOpenProperty);
 
 					return BooleanBoxes.FalseBox;
 				}
@@ -121,9 +109,9 @@ namespace Particular.ServiceInsight.Desktop.Controls
 			return (bool)value && splitButton.HasItems;
 		}
 
-		private static void OnMenuItemClick(Object sender, RoutedEventArgs e)
+		private static void OnMenuItemClick(object sender, RoutedEventArgs e)
 		{
-			SplitButton splitButton = sender as SplitButton;
+			//SplitButton splitButton = sender as SplitButton;
 			MenuItem menuItem = e.OriginalSource as MenuItem;
 
 			// To make the ButtonClickEvent get fired as we expected, you should mark the ClickEvent 
@@ -134,7 +122,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
 			}
 		}
 
-		private static void OnMouseButtonDown(Object sender, MouseButtonEventArgs e)
+		private static void OnMouseButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			SplitButton splitButton = sender as SplitButton;
 			if (!splitButton.IsKeyboardFocusWithin)
@@ -151,13 +139,13 @@ namespace Particular.ServiceInsight.Desktop.Controls
 
 			if (e.Source is MenuItem)
 			{
-				MenuItem menuItem = e.Source as MenuItem;
+				var menuItem = (MenuItem)e.Source;
 				if (menuItem != null)
 				{
 					if (!menuItem.HasItems)
 					{
 						splitButton.CloseSubmenu();
-						menuItem.RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent, menuItem));
+						menuItem.RaiseEvent(new RoutedEventArgs(ClickEvent, menuItem));
 					}
 				}
 			}
@@ -165,12 +153,12 @@ namespace Particular.ServiceInsight.Desktop.Controls
 
 		private void CloseSubmenu()
 		{
-			if (this.IsSubmenuOpen)
+			if (IsSubmenuOpen)
 			{
-				ClearValue(SplitButton.IsSubmenuOpenProperty);
-				if (this.IsSubmenuOpen)
+				ClearValue(IsSubmenuOpenProperty);
+				if (IsSubmenuOpen)
 				{
-					this.IsSubmenuOpen = false;
+					IsSubmenuOpen = false;
 				}
 			}
 		}

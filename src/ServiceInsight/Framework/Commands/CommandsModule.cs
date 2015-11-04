@@ -11,6 +11,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
             builder.RegisterType<RetryMessageCommand>().SingleInstance();
             builder.RegisterType<SearchByMessageIDCommand>().SingleInstance();
             builder.RegisterType<ShowSagaCommand>().SingleInstance();
+            builder.RegisterType<ChangeSelectedMessageCommand>().SingleInstance();
         }
     }
 }
