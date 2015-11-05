@@ -411,8 +411,9 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <controls:SplitButton Grid.Column="2"
-                                  Height="22"
+            <controls:SplitButton x:Name="Button"
+                                  Grid.Column="2"
+                                  Height="30"
                                   Margin="5,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
@@ -422,7 +423,8 @@
                                   SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
-                    <controls:IconControl Width="16"
+                    <controls:IconControl x:Name="Icon"
+                                          Width="16"
                                           Height="16"
                                           Margin="2 0"
                                           Foreground="{StaticResource Grey40Brush}"
@@ -464,6 +466,11 @@
                   Fill="{StaticResource Grey20Brush}"
                   Stretch="Fill" />
         </Grid>
+        <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+            </Trigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
@@ -477,7 +484,8 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <controls:SplitButton Height="22"
+            <controls:SplitButton x:Name="Button"
+                                  Height="30"
                                   Margin="5,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
@@ -487,7 +495,8 @@
                                   SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
-                    <controls:IconControl Width="16"
+                    <controls:IconControl x:Name="Icon"
+                                          Width="16"
                                           Height="16"
                                           Margin="2 0"
                                           Foreground="{StaticResource Grey40Brush}"
@@ -530,6 +539,11 @@
                   X1="0"
                   X2="{Binding Width}" />
         </Grid>
+        <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+            </Trigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">

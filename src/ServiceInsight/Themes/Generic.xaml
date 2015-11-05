@@ -7,6 +7,10 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type controls:IconControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -297,8 +301,8 @@
 
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="SplitButtonBackground">Transparent</SolidColorBrush>
-    <SolidColorBrush x:Key="SplitButtonHoverBackground">#9ACAE7</SolidColorBrush>
-    <SolidColorBrush x:Key="IconHoverBackground">#0A66C9</SolidColorBrush>
+    <SolidColorBrush x:Key="SplitButtonHoverBackground">#C5DEE9</SolidColorBrush>
+    <SolidColorBrush x:Key="HoverColor">#0A66C9</SolidColorBrush>
 
     <Style x:Key="DummyToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
@@ -313,17 +317,23 @@
     </Style>
 
     <Style x:Key="ExpanderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="IsChecked" Value="False" />
-        <Setter Property="ClickMode" Value="Press" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Path Width="16" Height="16"
-                              Data="M256 0c-141.385 0-256 115.398-256 257.75s114.615 257.75 256 257.75 256-115.398 256-257.75-114.615-257.75-256-257.75zM144 336c-44.183 0-80-35.817-80-80s35.817-80 80-80 80 35.817 80 80c0 44.183-35.817 80-80 80zM368 336c-44.184 0-80-35.817-80-80s35.816-80 80-80 80 35.817 80 80c0 44.183-35.816 80-80 80z"
-                              Stretch="Uniform"
-                              Stroke="{StaticResource IconHoverBackground}"
-                              StrokeThickness="1" />
+                    <Image x:Name="img"
+                           Width="16"
+                           Height="16">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="{StaticResource EllipsisMenuNormal}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Source" Value="{StaticResource EllipsisMenuHover}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -346,9 +356,9 @@
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition MinWidth="{TemplateBinding Property=BorderThickness, Converter={StaticResource SeparatorConverter}}" MaxWidth="{TemplateBinding Property=BorderThickness, Converter={StaticResource SeparatorConverter}}" />
-                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Button Name="PART_Button"
                                         Grid.Column="0"
@@ -367,8 +377,9 @@
                                 </Button>
                                 <ToggleButton Name="PART_DropDownButton"
                                               Grid.Column="2"
+                                              Margin="5,0,5,0"
                                               Style="{StaticResource ExpanderStyle}"
-                                              Visibility="Collapsed" />
+                                              Visibility="Hidden" />
                                 <ToggleButton Name="PART_DropDownButton_2"
                                               Grid.Column="2"
                                               Focusable="False"
@@ -402,8 +413,9 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_DropDownButton_2" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_Button_Text" Property="TextDecorations" Value="Underline" />
                             <Setter Property="Background" Value="{StaticResource SplitButtonHoverBackground}" />
+                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource HoverColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -211,7 +211,7 @@
 
                 handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth/2 - 7;
 
-                var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count)*25;
+                var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count)*40;
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;

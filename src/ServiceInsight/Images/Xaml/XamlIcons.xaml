@@ -3,16 +3,16 @@
         <Viewbox Stretch="Uniform">
             <Canvas Width="2.986" Height="13">
                 <Rectangle Canvas.Left="-0.014"
-                           Canvas.Top="10"
+                           Canvas.Top="0"
                            Width="3"
-                           Height="3"
+                           Height="8"
                            Fill="#FF1A1A1A"
                            RadiusX="0"
                            RadiusY="0" />
                 <Rectangle Canvas.Left="-0.014"
-                           Canvas.Top="0"
+                           Canvas.Top="10"
                            Width="3"
-                           Height="8"
+                           Height="3"
                            Fill="#FF1A1A1A"
                            RadiusX="0"
                            RadiusY="0" />
@@ -34,20 +34,13 @@
         <Viewbox Stretch="Uniform">
             <Canvas Width="7.986" Height="13">
                 <Rectangle Canvas.Left="-0.014"
-                           Canvas.Top="10"
+                           Canvas.Top="0"
                            Width="3"
-                           Height="3"
+                           Height="8"
                            Fill="#FF1A1A1A"
                            RadiusX="0"
                            RadiusY="0" />
                 <Rectangle Canvas.Left="-0.014"
-                           Canvas.Top="0"
-                           Width="3"
-                           Height="8"
-                           Fill="#FF1A1A1A"
-                           RadiusX="0"
-                           RadiusY="0" />
-                <Rectangle Canvas.Left="4.986"
                            Canvas.Top="10"
                            Width="3"
                            Height="3"
@@ -58,6 +51,13 @@
                            Canvas.Top="0"
                            Width="3"
                            Height="8"
+                           Fill="#FF1A1A1A"
+                           RadiusX="0"
+                           RadiusY="0" />
+                <Rectangle Canvas.Left="4.986"
+                           Canvas.Top="10"
+                           Width="3"
+                           Height="3"
                            Fill="#FF1A1A1A"
                            RadiusX="0"
                            RadiusY="0" />
@@ -83,17 +83,17 @@
                     Height="12"
                     Background="Transparent"
                     ClipToBounds="True">
+                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
+                    <Path.Data>
+                        <PathGeometry Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" FillRule="Nonzero" />
+                    </Path.Data>
+                </Path>
                 <Ellipse Canvas.Left="0"
                          Canvas.Top="0.655"
                          Width="10.894"
                          Height="10.69"
                          Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl},
                                         Path=Foreground}" />
-                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
-                    <Path.Data>
-                        <PathGeometry Figures="M28.15,6L19.997,1 19.997,3 12.186,3C12.424,4 12.558,5.24 12.558,6.016 12.558,6.78 12.429,8 12.198,9L19.998,9 19.998,11 28.15,6z" FillRule="Nonzero" />
-                    </Path.Data>
-                </Path>
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -103,12 +103,6 @@
                     Height="32"
                     Background="Transparent"
                     ClipToBounds="True">
-                <Ellipse Canvas.Left="0"
-                         Canvas.Top="10.655"
-                         Width="10.894"
-                         Height="10.69"
-                         Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl},
-                                        Path=Foreground}" />
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
                         <PathGeometry Figures="M11.749,2.569L13.696,4.48 8.413,9.664C9.849,10.313,11.027,11.413,11.754,12.785L16.957,7.68 18.904,9.59 21.521,0 11.749,2.569z" FillRule="Nonzero" />
@@ -124,6 +118,12 @@
                         <PathGeometry Figures="M21.521,32L18.903,22.41 16.956,24.32 11.753,19.215C11.025,20.586,9.848,21.687,8.412,22.336L13.695,27.52 11.748,29.431 21.521,32z" FillRule="Nonzero" />
                     </Path.Data>
                 </Path>
+                <Ellipse Canvas.Left="0"
+                         Canvas.Top="10.655"
+                         Width="10.894"
+                         Height="10.69"
+                         Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl},
+                                        Path=Foreground}" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -131,7 +131,7 @@
         <Viewbox Stretch="Uniform">
             <Canvas Width="32"
                     Height="32"
-                    Background="Transparent" 
+                    Background="Transparent"
                     ClipToBounds="True">
                 <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}">
                     <Path.Data>
@@ -233,10 +233,6 @@
     <ControlTemplate x:Key="SagaTriggerIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
                 <Line Stroke="#FFE6E6E6"
                       StrokeMiterLimit="10"
                       StrokeThickness="2"
@@ -247,34 +243,38 @@
                 <Polygon Fill="#FFE6E6E6"
                          FillRule="NonZero"
                          Points="10.493,8.571 11.986,3 6.415,4.492      " />
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaInitiatedIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
+                <Polygon Fill="#FFCCCCCC"
+                         FillRule="NonZero"
+                         Points="4.986,4 11.048,7.5 4.986,11    " />
                 <Rectangle Canvas.Left="0"
                            Width="15"
                            Height="15"
                            Fill="#FF333333" />
-                <Polygon Fill="#FFCCCCCC"
-                         FillRule="NonZero"
-                         Points="4.986,4 11.048,7.5 4.986,11    " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaUpdatedIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M3.612 5.274l2.74 0.885V3H8.62v3.159l2.74-0.885l0.616 1.953L9.183 8.086l1.822 2.609l-1.678 1.193     L7.51 9.423l-1.879 2.464l-1.678-1.193l1.835-2.609L2.996 7.228L3.612 5.274z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -296,15 +296,15 @@
     <ControlTemplate x:Key="SagaTimeoutIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M10.986 8h-4V4h1v3h3V8z M7.486 3.201c-2.376 0-4.299 1.923-4.299 4.299    c0 2.376 1.923 4.299 4.299 4.299c2.376 0 4.299-1.923 4.299-4.299C11.784 5.124 9.861 3.201 7.486 3.201 M7.486 2    c3.038 0 5.5 2.462 5.5 5.5s-2.462 5.5-5.5 5.5s-5.5-2.462-5.5-5.5S4.448 2 7.486 2z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -360,4 +360,143 @@
             </Canvas>
         </Viewbox>
     </ControlTemplate>
+
+    <DrawingImage x:Key="EllipsisMenuNormal">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,17,17" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="8.5,8.5"
+                                                 RadiusX="8.5"
+                                                 RadiusY="8.5" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="4.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="8.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="12.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="EllipsisMenuHover">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup x:Name="DrawingLayer">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,17,17" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup Transform="1,0,0,-1,-0.0499999999999998,11.0312">
+                        <GeometryDrawing Brush="#FFFFFFFF">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M0.2,0.5C0.2,-1.1 -1.1,-2.5 -2.8,-2.5 -4.5,-2.5 -5.8,-1.1 -5.8,0.5 -5.8,2.1 -4.5,3.5 -2.8,3.5 -1.1,3.5 0.2,2.2 0.2,0.5z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFFFFFFF">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M9.2,0.5L9.2,0.5 5.2,3.5 5.2,1.5 1.2,1.5 1.2,-0.5 5.2,-0.5 5.2,-2.5z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M8.5,0.9C12.7,0.9 16.1,4.3 16.1,8.5 16.1,12.7 12.7,16.1 8.5,16.1 4.3,16.1 0.900000000000002,12.7 0.900000000000002,8.5 0.900000000000002,4.3 4.3,0.9 8.5,0.9 M8.5,0C3.8,0 0,3.8 0,8.5 0,13.2 3.8,17 8.5,17 13.2,17 17,13.2 17,8.5 17,3.8 13.2,0 8.5,0L8.5,0z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="4.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="8.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="12.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="EllipsisMenuPressed">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,17,17" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#FF99CAE8">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M8.5,16.5C4.1,16.5 0.5,12.9 0.5,8.5 0.5,4.1 4.1,0.5 8.5,0.5 12.9,0.5 16.5,4.1 16.5,8.5 16.5,12.9 12.9,16.5 8.5,16.5z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M8.5,1C12.6,1 16,4.4 16,8.5 16,12.6 12.6,16 8.5,16 4.4,16 1,12.6 1,8.5 1,4.4 4.4,1 8.5,1 M8.5,0C3.8,0 0,3.8 0,8.5 0,13.2 3.8,17 8.5,17 13.2,17 17,13.2 17,8.5 17,3.8 13.2,0 8.5,0L8.5,0z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="4.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="8.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="12.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>
