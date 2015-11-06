@@ -40,7 +40,9 @@
         BitmapImage GetImage()
         {
             if (!statusSpecified)
+            {
                 return Resources.BulletWhite.ToBitmapImage();
+            }
 
             switch (Status)
             {
@@ -84,7 +86,9 @@
         public override string ToString()
         {
             if (!statusSpecified)
+            {
                 return "Not Specified";
+            }
 
             switch (Status)
             {
@@ -95,10 +99,14 @@
                     return "Faulted";
 
                 case MessageStatus.Successful:
+                case MessageStatus.ResolvedSuccessfully:
                     return "Success";
 
                 case MessageStatus.RetryIssued:
                     return "Retried";
+
+                case MessageStatus.ArchivedFailure:
+                    return "Archived";
 
                 default:
                     throw new ArgumentOutOfRangeException();
