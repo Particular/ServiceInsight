@@ -105,6 +105,7 @@
         }
 
         public double Width { get; set; }
+        public bool IsFocused { get; set; }
 
         public int CompareTo(Arrow other)
         {

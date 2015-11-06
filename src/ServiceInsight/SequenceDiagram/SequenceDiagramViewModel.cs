@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.SequenceDiagram
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Anotar.Serilog;
@@ -15,7 +16,7 @@
         private readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
         readonly IContainer container;
-        SequenceDiagramView view;
+        string loadedConversationId;
 
         public SequenceDiagramViewModel(IServiceControl serviceControl, IEventAggregator eventAggregator, IContainer container)
         {
@@ -26,40 +27,41 @@
             DiagramItems = new DiagramItemCollection();
         }
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            base.OnViewAttached(view, context);
-            this.view = view as SequenceDiagramView;
-        }
-
         public DiagramItemCollection DiagramItems { get; set; }
 
         public StoredMessage SelectedMessage { get; set; }
 
         private void OnSelectedMessageChanged()
         {
-            if (!donotReselect && SelectedMessage != null)
+            if (SelectedMessage != null)
             {
                 eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage));
             }
-
-            donotReselect = false;
         }
-
-        private bool donotReselect;
 
         public void Handle(SelectedMessageChanged message)
         {
             var storedMessage = message.Message;
             if (storedMessage == null)
+            {
+                ClearState();
                 return;
+            }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
+            {
+                ClearState();
                 return;
+            }
+
+            if (loadedConversationId == conversationId)
+            {
+                RefreshSelection(storedMessage.Id);
+                return;
+            }
 
             var messages = serviceControl.GetConversationByIdNew(conversationId).ToList();
-
             if (messages.Count == 0)
             {
                 // SC is being silly
@@ -68,9 +70,23 @@
             }
 
             CreateElements(messages);
-
-            donotReselect = true;
+            loadedConversationId = conversationId;
             SelectedMessage = storedMessage;
+        }
+
+        void RefreshSelection(string selectedId)
+        {
+            foreach (var item in DiagramItems.OfType<Arrow>())
+            {
+                if (string.Equals(item.MessageId, selectedId, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    item.IsFocused = true;
+                    SelectedMessage = item.SelectedMessage;
+                    continue;
+                }
+
+                item.IsFocused = false;
+            }
         }
 
         void CreateElements(List<ReceivedMessage> messages)
@@ -80,12 +96,18 @@
             var handlers = modelCreator.Handlers;
             var routes = modelCreator.Routes;
 
-            DiagramItems.Clear();
+            ClearState();
+
             DiagramItems.AddRange(endpoints);
             DiagramItems.AddRange(endpoints.Select(e => e.Timeline));
             DiagramItems.AddRange(handlers);
             DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
             DiagramItems.AddRange(routes);
+        }
+
+        void ClearState()
+        {
+            DiagramItems.Clear();
         }
     }
 }
