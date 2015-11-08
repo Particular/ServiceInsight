@@ -715,9 +715,6 @@
     <Resource Include="Images\Exclamation.png" />
     <Resource Include="Images\saga.png" />
     <Resource Include="Images\Headers.png" />
-    <Content Include="License.lic">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
