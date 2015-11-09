@@ -121,7 +121,7 @@
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 arrowVisual.X = fromHandlerVisual.X;
                 var arrowIndex = arrow.FromHandler.Out.IndexOf(arrow) + 1;
-                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height/(fromHandler.Out.Count + 1))*arrowIndex) - 8;
+                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height/(fromHandler.Out.Count + 1))*arrowIndex) - 15;
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
