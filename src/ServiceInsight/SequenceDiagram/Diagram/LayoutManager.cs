@@ -2,11 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -87,12 +83,9 @@
         class ArrowLayout
         {
             const double ArrowHeadWidth = 4;
-            const double ButtonPadding = 60;
 
             readonly IDiagram diagram;
             readonly EndpointItemLayout endpointItemLayout;
-
-            TextBlock textBlock = new TextBlock();
 
             public ArrowLayout(IDiagram diagram, EndpointItemLayout endpointItemLayout)
             {
@@ -143,22 +136,9 @@
                 {
                     // from right to left
                     arrow.Direction = Direction.Left;
-                    arrowVisual.X = toHandlerVisual.X - MeasureString(arrow.Name).Width - ButtonPadding - ArrowHeadWidth;
                     arrow.Width = fromHandlerVisual.X - (toHandlerVisual.X + toHandlerVisual.ActualWidth) - ArrowHeadWidth;
+                    arrowVisual.X = fromHandlerVisual.X - arrowVisual.ActualWidth;
                 }
-            }
-
-            Size MeasureString(string text)
-            {
-                var formattedText = new FormattedText(
-                    text,
-                    CultureInfo.CurrentUICulture,
-                    FlowDirection.LeftToRight,
-                    new Typeface(textBlock.FontFamily, textBlock.FontStyle, textBlock.FontWeight, textBlock.FontStretch),
-                    textBlock.FontSize,
-                    Brushes.Black);
-
-                return new Size(formattedText.Width, formattedText.Height);
             }
         }
 
@@ -246,7 +226,8 @@
 
                 if (index == 0)
                 {
-                    firstX = endpointVisual.X;
+                    firstX = endpointVisual.X + 20;
+                    endpointVisual.X = firstX;
                 }
 
                 if (lastEndpoint != null)
