@@ -535,7 +535,7 @@
                   VerticalAlignment="Center"
                   SnapsToDevicePixels="True"
                   Stroke="{StaticResource DiagramEdgeForegroundBrush}"
-                  StrokeThickness="3"
+                  StrokeThickness="2"
                   X1="0"
                   X2="{Binding Width}" />
         </Grid>
