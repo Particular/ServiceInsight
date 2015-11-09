@@ -258,6 +258,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -303,6 +304,8 @@
     <SolidColorBrush x:Key="SplitButtonBackground">Transparent</SolidColorBrush>
     <SolidColorBrush x:Key="SplitButtonHoverBackground">#C5DEE9</SolidColorBrush>
     <SolidColorBrush x:Key="HoverColor">#0A66C9</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
 
     <Style x:Key="DummyToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
@@ -316,24 +319,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="ChromelessButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Image x:Name="img"
-                           Width="16"
-                           Height="16">
-                        <Image.Style>
-                            <Style TargetType="{x:Type Image}">
-                                <Setter Property="Source" Value="{StaticResource EllipsisMenuNormal}" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Source" Value="{StaticResource EllipsisMenuHover}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </Image>
+                <ControlTemplate TargetType="ToggleButton">
+                    <ContentPresenter />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -373,14 +363,19 @@
                                         Style="{StaticResource HeaderButtonStyle}">
                                     <TextBlock Name="PART_Button_Text"
                                                FontWeight="Bold"
-                                               Foreground="{StaticResource Grey40Brush}"
+                                               Foreground="{TemplateBinding Foreground}"
                                                Text="{TemplateBinding Header}" />
                                 </Button>
                                 <ToggleButton Name="PART_DropDownButton"
                                               Grid.Column="2"
                                               Margin="5,0,5,0"
-                                              Style="{StaticResource ExpanderStyle}"
-                                              Visibility="Hidden" />
+                                              Style="{StaticResource ChromelessButton}"
+                                              Visibility="Hidden">
+                                    <Image x:Name="PART_DropDownButtonImage"
+                                           Width="16"
+                                           Height="16"
+                                           Source="{StaticResource EllipsisMenuPressed}" />
+                                </ToggleButton>
                                 <ToggleButton Name="PART_DropDownButton_2"
                                               Grid.Column="2"
                                               Focusable="False"
@@ -415,9 +410,21 @@
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_DropDownButton_2" Property="Visibility" Value="Visible" />
                             <Setter Property="Background" Value="{StaticResource SplitButtonHoverBackground}" />
-                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource HoverColor}" />
+                            <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuHover}" />
                         </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                            <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuSelected}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuSelectedHover}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -25,6 +25,8 @@
     <SolidColorBrush x:Key="Grey95Brush">#B3B3B3</SolidColorBrush>
 
     <SolidColorBrush x:Key="HighlightBrush">#0B6EEF</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
 
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
@@ -419,6 +421,7 @@
                                   VerticalAlignment="Center"
                                   ButtonClick="{Binding ChangeCurrentMessage}"
                                   Header="{Binding Name}"
+                                  IsSelected="{Binding IsFocused}"
                                   Padding="0"
                                   SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
@@ -467,9 +470,9 @@
                   Stretch="Fill" />
         </Grid>
         <DataTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </Trigger>
+            <DataTrigger Binding="{Binding IsFocused}" Value="True">
+                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
@@ -491,6 +494,7 @@
                                   VerticalAlignment="Center"
                                   ButtonClick="{Binding ChangeCurrentMessage}"
                                   Header="{Binding Name}"
+                                  IsSelected="{Binding IsFocused}"
                                   Padding="0"
                                   SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
@@ -540,9 +544,9 @@
                   X2="{Binding Width}" />
         </Grid>
         <DataTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </Trigger>
+            <DataTrigger Binding="{Binding IsFocused}" Value="True">
+                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 

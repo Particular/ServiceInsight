@@ -78,7 +78,7 @@
         {
             foreach (var item in DiagramItems.OfType<Arrow>())
             {
-                if (string.Equals(item.MessageId, selectedId, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(item.SelectedMessage.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     item.IsFocused = true;
                     SelectedMessage = item.SelectedMessage;
