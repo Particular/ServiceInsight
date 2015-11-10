@@ -1,11 +1,11 @@
 namespace Particular.ServiceInsight.Desktop.Framework.Commands
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.Search;
+    using Events;
+    using Models;
+    using Search;
 
-    class SearchByMessageIDCommand : BaseCommand
+    public class SearchByMessageIDCommand : BaseCommand
     {
         private readonly IEventAggregator eventAggregator;
         private readonly SearchBarViewModel searchBar;

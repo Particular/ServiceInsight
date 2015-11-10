@@ -1,10 +1,10 @@
 ﻿namespace Particular.ServiceInsight.Desktop.Framework.Commands
 {
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Framework;
+    using Models;
+    using ServiceControl;
 
-    class CopyMessageURICommand : BaseCommand
+    public class CopyMessageURICommand : BaseCommand
     {
         private readonly IClipboard clipboard;
         private readonly IServiceControl serviceControl;

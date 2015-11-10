@@ -443,7 +443,7 @@
                                                Mode=OneWay,
                                                Converter={StaticResource BoolToVisibilityConverter}}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                <MenuItem Command="{Binding DisplayExceptionDetailsCommand}"
+                <MenuItem Command="{Binding ShowExceptionCommand}"
                           Header="Show Stacktrace"
                           Style="{StaticResource DarkMenuItemStyle}"
                           Visibility="{Binding Path=Visibility,
@@ -527,7 +527,7 @@
                                                Mode=OneWay,
                                                Converter={StaticResource BoolToVisibilityConverter}}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
-                <MenuItem Command="{Binding DisplayExceptionDetailsCommand}"
+                <MenuItem Command="{Binding ShowExceptionCommand}"
                           Header="Show Stacktrace"
                           Style="{StaticResource DarkMenuItemStyle}"
                           Visibility="{Binding Path=Visibility,

@@ -12,6 +12,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
             builder.RegisterType<SearchByMessageIDCommand>().SingleInstance();
             builder.RegisterType<ShowSagaCommand>().SingleInstance();
             builder.RegisterType<ChangeSelectedMessageCommand>().SingleInstance();
+            builder.RegisterType<ShowExceptionCommand>().SingleInstance();
         }
     }
 }

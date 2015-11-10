@@ -3,29 +3,56 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using Anotar.Serilog;
-    using Autofac;
     using Caliburn.Micro;
     using Diagram;
+    using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;
 
-    public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class SequenceDiagramViewModel : Screen, 
+        IHandle<SelectedMessageChanged>,
+        IMessageCommandContainer
     {
         private readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
-        readonly IContainer container;
         string loadedConversationId;
 
-        public SequenceDiagramViewModel(IServiceControl serviceControl, IEventAggregator eventAggregator, IContainer container)
+        public SequenceDiagramViewModel(
+            IServiceControl serviceControl, 
+            IEventAggregator eventAggregator,
+            CopyConversationIDCommand copyConversationIDCommand,
+            CopyMessageURICommand copyMessageURICommand,
+            RetryMessageCommand retryMessageCommand,
+            SearchByMessageIDCommand searchByMessageIDCommand,
+            ChangeSelectedMessageCommand changeSelectedMessageCommand,
+            ShowExceptionCommand showExceptionCommand)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
-            this.container = container;
+            this.CopyConversationIDCommand = copyConversationIDCommand;
+            this.CopyMessageURICommand = copyMessageURICommand;
+            this.RetryMessageCommand = retryMessageCommand;
+            this.SearchByMessageIDCommand = searchByMessageIDCommand;
+            this.ChangeSelectedMessageCommand = changeSelectedMessageCommand;
+            this.ShowExceptionCommand = showExceptionCommand;
 
             DiagramItems = new DiagramItemCollection();
         }
+
+        public ICommand CopyConversationIDCommand { get; private set; }
+
+        public ICommand CopyMessageURICommand { get; private set; }
+
+        public ICommand RetryMessageCommand { get; private set; }
+
+        public ICommand SearchByMessageIDCommand { get; private set; }
+
+        public ICommand ChangeSelectedMessageCommand { get; private set; }
+
+        public ICommand ShowExceptionCommand { get; private set; }
 
         public DiagramItemCollection DiagramItems { get; set; }
 
@@ -91,7 +118,7 @@
 
         void CreateElements(List<ReceivedMessage> messages)
         {
-            var modelCreator = new ModelCreator(messages, container);
+            var modelCreator = new ModelCreator(messages, this);
             var endpoints = modelCreator.Endpoints;
             var handlers = modelCreator.Handlers;
             var routes = modelCreator.Routes;
@@ -109,5 +136,15 @@
         {
             DiagramItems.Clear();
         }
+    }
+
+    public interface IMessageCommandContainer
+    {
+        ICommand CopyConversationIDCommand { get; }
+        ICommand CopyMessageURICommand { get; }
+        ICommand RetryMessageCommand { get; }
+        ICommand SearchByMessageIDCommand { get; }
+        ICommand ChangeSelectedMessageCommand { get; }
+        ICommand ShowExceptionCommand { get; }
     }
 }

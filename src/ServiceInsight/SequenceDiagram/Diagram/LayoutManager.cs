@@ -226,8 +226,7 @@
 
                 if (index == 0)
                 {
-                    firstX = endpointVisual.X + 20;
-                    endpointVisual.X = firstX;
+                    firstX = endpointVisual.X;
                 }
 
                 if (lastEndpoint != null)

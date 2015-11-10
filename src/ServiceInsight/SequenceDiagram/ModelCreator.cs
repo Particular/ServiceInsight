@@ -4,7 +4,6 @@ namespace ServiceInsight.SequenceDiagram
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using Autofac;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Models;
     using ServiceInsight.SequenceDiagram.Diagram;
@@ -12,13 +11,13 @@ namespace ServiceInsight.SequenceDiagram
     public class ModelCreator
     {
         readonly List<ReceivedMessage> messages;
-        readonly IContainer container;
 
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
         List<MessageProcessingRoute> processingRoutes = new List<MessageProcessingRoute>();
+        IMessageCommandContainer container;
 
-        public ModelCreator(List<ReceivedMessage> messages, IContainer container)
+        public ModelCreator(List<ReceivedMessage> messages, IMessageCommandContainer container)
         {
             this.messages = messages;
             this.container = container;
@@ -90,8 +89,8 @@ namespace ServiceInsight.SequenceDiagram
                 }
 
                 var arrow = CreateArrow(message);
-                arrow.receiving = new Endpoint {Name = processingEndpoint.Name, Host = processingEndpoint.Host};
-                arrow.sending = new Endpoint {Name = sendingEndpoint.Name, Host = sendingEndpoint.Host};
+                arrow.Receiving = new Endpoint {Name = processingEndpoint.Name, Host = processingEndpoint.Host};
+                arrow.Sending = new Endpoint {Name = sendingEndpoint.Name, Host = sendingEndpoint.Host};
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
@@ -165,7 +164,7 @@ namespace ServiceInsight.SequenceDiagram
 
             if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
             {
-                handler.PartOfSaga = String.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
+                handler.PartOfSaga = string.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
             }
 
             if (message.status == MessageStatus.ArchivedFailure || message.status == MessageStatus.Failed || message.status == MessageStatus.RepeatedFailure)

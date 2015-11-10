@@ -243,6 +243,7 @@
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />
     <Compile Include="Framework\Commands\RetryMessageCommand.cs" />
     <Compile Include="Framework\Commands\SearchByMessageIDCommand.cs" />
+    <Compile Include="Framework\Commands\ShowExceptionCommand.cs" />
     <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
