@@ -132,7 +132,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
         private static void OnMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
             var splitButton = (SplitButton)sender;
-            if (e.OriginalSource == splitButton)
+            if (e.OriginalSource == splitButton || e.Source == splitButton)
             {
                 splitButton.CloseSubmenu();
                 return;
