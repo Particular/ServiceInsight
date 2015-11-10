@@ -434,9 +434,20 @@
                                           Style="{StaticResource MessageIconStyle}"
                                           Type="{Binding Type}" />
                 </controls:SplitButton.Icon>
-                <MenuItem Command="{Binding RetryMessageCommand}"
+                <MenuItem x:Name="RetryMessageMenuItem"
+                          Command="{Binding RetryMessageCommand}"
                           Header="Retry message"
                           Style="{StaticResource DarkMenuItemStyle}"
+                          Visibility="{Binding Path=IsEnabled,
+                                               RelativeSource={RelativeSource Self},
+                                               Mode=OneWay,
+                                               Converter={StaticResource BoolToVisibilityConverter}}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding DisplayExceptionDetailsCommand}"
+                          Header="Show Stacktrace"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          Visibility="{Binding Path=Visibility,
+                                               ElementName=RetryMessageMenuItem}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                 <MenuItem Command="{Binding CopyConversationIDCommand}"
                           Header="Copy conversation ID"
@@ -507,9 +518,20 @@
                                           Style="{StaticResource MessageIconStyle}"
                                           Type="{Binding Type}" />
                 </controls:SplitButton.Icon>
-                <MenuItem Command="{Binding RetryMessageCommand}"
+                <MenuItem x:Name="RetryMessageMenuItem"
+                          Command="{Binding RetryMessageCommand}"
                           Header="Retry message"
                           Style="{StaticResource DarkMenuItemStyle}"
+                          Visibility="{Binding Path=IsEnabled,
+                                               RelativeSource={RelativeSource Self},
+                                               Mode=OneWay,
+                                               Converter={StaticResource BoolToVisibilityConverter}}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                <MenuItem Command="{Binding DisplayExceptionDetailsCommand}"
+                          Header="Show Stacktrace"
+                          Style="{StaticResource DarkMenuItemStyle}"
+                          Visibility="{Binding Path=Visibility,
+                                               ElementName=RetryMessageMenuItem}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                 <MenuItem Command="{Binding CopyConversationIDCommand}"
                           Header="Copy conversation ID"

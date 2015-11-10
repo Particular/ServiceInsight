@@ -390,6 +390,7 @@
                                Width="200"
                                AllowsTransparency="True"
                                Focusable="False"
+                               StaysOpen="False"
                                IsOpen="{Binding Path=IsSubmenuOpen,
                                                 RelativeSource={RelativeSource TemplatedParent},
                                                 Mode=TwoWay}"
