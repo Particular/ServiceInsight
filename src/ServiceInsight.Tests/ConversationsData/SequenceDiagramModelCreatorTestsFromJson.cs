@@ -3,11 +3,10 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
-    using Autofac;
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using NSubstitute;
+    using Desktop.Framework.MessageDecoders;
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {
@@ -27,17 +26,9 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
             result = creator.Endpoints;
         }
 
-        private IContainer GetContainer()
+        private IMessageCommandContainer GetContainer()
         {
-            var builder = new ContainerBuilder();
-
-            //TODO: Yuck! Too much coupling. Why do we need an IContainer for Arrow? Can we use a Func<T> instead?
-            builder.RegisterType<CopyConversationIDCommand>();
-            builder.RegisterType<CopyMessageURICommand>();
-            builder.RegisterType<RetryMessageCommand>();
-            builder.RegisterType<SearchByMessageIDCommand>();
-
-            return builder.Build();
+            return Substitute.For<IMessageCommandContainer>();
         }
     }
 }

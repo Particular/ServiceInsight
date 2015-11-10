@@ -2,30 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using Autofac;
-    using global::ServiceInsight.SequenceDiagram;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Models;
+    using Desktop.Models;
+    using global::ServiceInsight.SequenceDiagram;
+    using NSubstitute;
 
 
     [TestFixture]
     class SequenceDiagramModelCreatorTests
     {
-        IContainer container;
+        IMessageCommandContainer container;
 
         [SetUp]
         public void Setup()
         {
-            var builder = new ContainerBuilder();
-
-            //TODO: Yuck! Too much couple. Why do we need an IContainer for Arrow?
-            builder.RegisterType<CopyConversationIDCommand>();
-            builder.RegisterType<CopyMessageURICommand>();
-            builder.RegisterType<RetryMessageCommand>();
-            builder.RegisterType<SearchByMessageIDCommand>();
-
-            container = builder.Build();
+            container = Substitute.For<IMessageCommandContainer>();
         }
 
         ModelCreator GetModelCreator(List<ReceivedMessage> messages)
