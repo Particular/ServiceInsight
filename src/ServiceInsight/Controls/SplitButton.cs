@@ -97,6 +97,12 @@ namespace Particular.ServiceInsight.Desktop.Controls
             }
         }
 
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            CloseSubmenu();
+            base.OnPreviewMouseWheel(e);
+        }
+
         /// <summary>
         /// Set the IsSubmenuOpen property value at the right time.
         /// </summary>
