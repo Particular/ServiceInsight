@@ -82,7 +82,7 @@
                 return;
             }
 
-            if (loadedConversationId == conversationId)
+            if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
             {
                 RefreshSelection(storedMessage.Id);
                 return;
