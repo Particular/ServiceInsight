@@ -374,7 +374,7 @@
                                     <Image x:Name="PART_DropDownButtonImage"
                                            Width="16"
                                            Height="16"
-                                           Source="{StaticResource EllipsisMenuPressed}" />
+                                           Source="{StaticResource EllipsisMenuNormal}" />
                                 </ToggleButton>
                                 <ToggleButton Name="PART_DropDownButton_2"
                                               Grid.Column="2"
@@ -390,12 +390,14 @@
                                Width="200"
                                AllowsTransparency="True"
                                Focusable="False"
-                               StaysOpen="False"
                                IsOpen="{Binding Path=IsSubmenuOpen,
                                                 RelativeSource={RelativeSource TemplatedParent},
                                                 Mode=TwoWay}"
-                               Placement="Right"
-                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                               PlacementTarget="{Binding ElementName=PART_DropDownButton}"
+                               HorizontalOffset="-80"
+                               VerticalOffset="3"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                               StaysOpen="False">
                             <Border Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
@@ -425,6 +427,14 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuSelectedHover}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSubmenuOpen" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                            <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuPressed}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
