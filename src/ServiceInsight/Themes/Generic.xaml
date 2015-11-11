@@ -254,6 +254,14 @@
         </Setter>
     </Style>
 
+    <Style x:Key="UnderlineTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="HeaderButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -415,6 +423,7 @@
                             <Setter Property="Background" Value="{StaticResource SplitButtonHoverBackground}" />
                             <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource HoverColor}" />
                             <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuHover}" />
+                            <Setter TargetName="PART_Button_Text" Property="Style" Value="{StaticResource UnderlineTextBlockStyle}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
