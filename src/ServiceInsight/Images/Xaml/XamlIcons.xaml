@@ -365,6 +365,43 @@
         <DrawingImage.Drawing>
             <DrawingGroup>
                 <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M8.5,0.9C12.7,0.9 16.1,4.3 16.1,8.5 16.1,12.7 12.7,16.1 8.5,16.1 4.3,16.1 0.900000000000002,12.7 0.900000000000002,8.5 0.900000000000002,4.3 4.3,0.9 8.5,0.9 M8.5,0C3.8,0 0,3.8 0,8.5 0,13.2 3.8,17 8.5,17 13.2,17 17,13.2 17,8.5 17,3.8 13.2,0 8.5,0L8.5,0z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="4.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="8.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF0066CC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="12.5,8.5"
+                                             RadiusX="1.5"
+                                             RadiusY="1.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="EllipsisMenuActive">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup x:Name="DrawingLayer">
                     <DrawingGroup.ClipGeometry>
                         <RectangleGeometry Rect="0,0,17,17" />
                     </DrawingGroup.ClipGeometry>
@@ -404,46 +441,6 @@
     </DrawingImage>
 
     <DrawingImage x:Key="EllipsisMenuHover">
-        <DrawingImage.Drawing>
-            <DrawingGroup>
-                <DrawingGroup x:Name="DrawingLayer">
-                    <DrawingGroup.ClipGeometry>
-                        <RectangleGeometry Rect="0,0,17,17" />
-                    </DrawingGroup.ClipGeometry>
-                    <DrawingGroup>
-                        <GeometryDrawing Brush="#FF0066CC">
-                            <GeometryDrawing.Geometry>
-                                <PathGeometry Figures="M8.5,0.9C12.7,0.9 16.1,4.3 16.1,8.5 16.1,12.7 12.7,16.1 8.5,16.1 4.3,16.1 0.900000000000002,12.7 0.900000000000002,8.5 0.900000000000002,4.3 4.3,0.9 8.5,0.9 M8.5,0C3.8,0 0,3.8 0,8.5 0,13.2 3.8,17 8.5,17 13.2,17 17,13.2 17,8.5 17,3.8 13.2,0 8.5,0L8.5,0z" FillRule="Nonzero" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                    </DrawingGroup>
-                    <GeometryDrawing Brush="#FF0066CC">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry Center="4.5,8.5"
-                                             RadiusX="1.5"
-                                             RadiusY="1.5" />
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                    <GeometryDrawing Brush="#FF0066CC">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry Center="8.5,8.5"
-                                             RadiusX="1.5"
-                                             RadiusY="1.5" />
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                    <GeometryDrawing Brush="#FF0066CC">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry Center="12.5,8.5"
-                                             RadiusX="1.5"
-                                             RadiusY="1.5" />
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup>
-            </DrawingGroup>
-        </DrawingImage.Drawing>
-    </DrawingImage>
-
-    <DrawingImage x:Key="EllipsisMenuPressed">
         <DrawingImage.Drawing>
             <DrawingGroup>
                 <DrawingGroup>
@@ -488,7 +485,6 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-
     <DrawingImage x:Key="EllipsisMenuSelected">
         <DrawingImage.Drawing>
             <DrawingGroup>
@@ -524,6 +520,50 @@
                             </GeometryDrawing.Geometry>
                         </GeometryDrawing>
                         <GeometryDrawing Brush="#FFFFFFFF">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="12.5,8.5"
+                                                 RadiusX="1.5"
+                                                 RadiusY="1.5" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="EllipsisMenuSelectedActive">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,17,17" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFFFFFFF">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry Center="8.5,8.5"
+                                                     RadiusX="8.5"
+                                                     RadiusY="8.5" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="4.5,8.5"
+                                                 RadiusX="1.5"
+                                                 RadiusY="1.5" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF0066CC">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry Center="8.5,8.5"
+                                                 RadiusX="1.5"
+                                                 RadiusY="1.5" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF0066CC">
                             <GeometryDrawing.Geometry>
                                 <EllipseGeometry Center="12.5,8.5"
                                                  RadiusX="1.5"
@@ -582,5 +622,6 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+
 
 </ResourceDictionary>

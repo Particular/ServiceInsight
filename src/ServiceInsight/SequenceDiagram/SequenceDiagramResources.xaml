@@ -422,7 +422,8 @@
                                           Width="16"
                                           Height="16"
                                           Margin="2 0"
-                                          Foreground="{StaticResource Grey40Brush}"
+                                          Foreground="{Binding Path=Foreground,
+                                                               RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                                           Style="{StaticResource MessageIconStyle}"
                                           Type="{Binding Type}" />
                 </controls:SplitButton.Icon>
@@ -472,11 +473,6 @@
                   Fill="{StaticResource Grey20Brush}"
                   Stretch="Fill" />
         </Grid>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsFocused}" Value="True">
-                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
@@ -557,11 +553,6 @@
                   X1="0"
                   X2="{Binding Width}" />
         </Grid>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsFocused}" Value="True">
-                <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
