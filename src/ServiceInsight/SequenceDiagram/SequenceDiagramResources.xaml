@@ -31,6 +31,7 @@
 
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
+    <converter:ElementHeightConverter x:Key="ElementHeightConverter" />
 
     <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
@@ -175,7 +176,7 @@
                   Y1="0"
                   Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                               AncestorType={x:Type diagram:DiagramVisualItem}},
-                               Path=Height}" />
+                               Path=Height, Converter={StaticResource ElementHeightConverter}}" />
             <Path x:Name="ArrowHead"
                   Grid.Row="1"
                   Grid.Column="0"
@@ -220,7 +221,7 @@
               Y1="0"
               Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                           AncestorType={x:Type diagram:DiagramVisualItem}},
-                           Path=Height}" />
+                           Path=Height, Converter={StaticResource ElementHeightConverter}}" />
 
     </DataTemplate>
 
