@@ -3,16 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Windows.Input;
+    using Particular.ServiceInsight.Desktop.Models;
 
     [DebuggerDisplay("Handled '{Name}' and resulted in {State}")]
     public class Handler : DiagramItem, IComparable<Handler>
     {
         readonly string id;
         Arrow arrowIn;
+        bool isFocused;
 
-        public Handler(string id)
+        public Handler(string id, IMessageCommandContainer container)
         {
             this.id = id;
+            this.ChangeCurrentMessage = container.ChangeSelectedMessageCommand;
             Out = new List<Arrow>();
         }
 
@@ -48,6 +52,33 @@
         {
             get { return id; }
         }
+
+        public bool IsFocused
+        {
+            get { return isFocused; }
+            set
+            {
+                if (isFocused == value)
+                    return;
+
+                isFocused = value;
+                Route.IsFocused = value;
+                NotifyOfPropertyChange(() => IsFocused);
+            }
+        }
+
+        public StoredMessage SelectedMessage
+        {
+            get
+            {
+                if(Route != null) return Route.FromArrow.SelectedMessage;
+                return null;
+            }
+        }
+
+        public MessageProcessingRoute Route { get; set; }
+
+        public ICommand ChangeCurrentMessage { get; set; }
 
         public int CompareTo(Handler other)
         {

@@ -18,6 +18,7 @@
         StoredMessage storedMessage;
         List<Header> headers;
         DateTime? timesent;
+        bool isFocused;
 
         public Arrow(string messageId, string conversationId, MessageStatus status, string id, DateTime? timesent, List<Header> headers, IMessageCommandContainer container)
         {
@@ -92,7 +93,21 @@
 
         public double Width { get; set; }
 
-        public bool IsFocused { get; set; }
+        public bool IsFocused
+        {
+            get { return isFocused; }
+            set
+            {
+                if(isFocused == value)
+                    return;
+                
+                isFocused = value;
+                Route.IsFocused = value;
+                NotifyOfPropertyChange(() => IsFocused);
+            }
+        }
+
+        public MessageProcessingRoute Route { get; set; }
 
         public int CompareTo(Arrow other)
         {

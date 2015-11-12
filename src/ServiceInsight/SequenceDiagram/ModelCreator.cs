@@ -144,7 +144,7 @@ namespace ServiceInsight.SequenceDiagram
 
         Handler CreateSendingHandler(ReceivedMessage message, EndpointItem sendingEndpoint)
         {
-            return new Handler(GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, "First"))
+            return new Handler(GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, "First"), container)
             {
                 HandledAt = message.time_sent,
                 State = HandlerState.Success,
@@ -154,7 +154,7 @@ namespace ServiceInsight.SequenceDiagram
 
         Handler CreateProcessingHandler(ReceivedMessage message, EndpointItem processingEndpoint)
         {
-            var handler = new Handler(message.message_id)
+            var handler = new Handler(message.message_id, container)
             {
                 ProcessingTime = message.processing_time,
                 HandledAt = message.processed_at,

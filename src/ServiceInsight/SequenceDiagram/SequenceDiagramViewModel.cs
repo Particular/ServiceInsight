@@ -103,6 +103,11 @@
 
         void RefreshSelection(string selectedId)
         {
+            foreach (var item in DiagramItems.OfType<Handler>())
+            {
+                item.IsFocused = false;
+            }
+
             foreach (var item in DiagramItems.OfType<Arrow>())
             {
                 if (string.Equals(item.SelectedMessage.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
