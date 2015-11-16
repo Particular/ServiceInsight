@@ -15,7 +15,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Colors and Brushes  -->
-    <SolidColorBrush x:Key="RedBrush">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="ErrorBrush">Red</SolidColorBrush>
     <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
     <SolidColorBrush x:Key="Grey30Brush">#444444</SolidColorBrush>
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
@@ -25,8 +25,10 @@
     <SolidColorBrush x:Key="Grey95Brush">#B3B3B3</SolidColorBrush>
 
     <Color x:Key="HighlightColor">#0B6EEF</Color>
+    <Color x:Key="HoverColor">#C5DEE9</Color>
 
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
     <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
     <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
 
@@ -224,8 +226,8 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
-        <ToggleButton Command="{Binding ChangeCurrentMessage}"
-                      Panel.ZIndex="100"
+        <ToggleButton Panel.ZIndex="100"
+                      Command="{Binding ChangeCurrentMessage}"
                       IsChecked="{Binding Path=IsFocused,
                                           Mode=TwoWay}"
                       beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
@@ -312,19 +314,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding State}" Value="Fail">
-                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource RedBrush}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBrush}" />
                             <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="BorderThickness" Value="4" />
-                            <Setter Property="BorderBrush" Value="Black" />
-                            <Setter TargetName="RootBorder" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10"
-                                                      ShadowDepth="0"
-                                                      Color="{StaticResource HighlightColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
