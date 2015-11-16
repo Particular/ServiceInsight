@@ -232,94 +232,111 @@
                       beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
             <ToggleButton.Template>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border x:Name="RootBorder"
-                            Width="14"
-                            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                            AncestorType={x:Type diagram:DiagramVisualItem}},
-                                             Path=Height}"
-                            HorizontalAlignment="Center"
-                            Background="{StaticResource Grey60Brush}"
-                            BorderBrush="Black"
-                            BorderThickness="0"
-                            SnapsToDevicePixels="True">
+                    <Canvas Width="14">
+                        <Border x:Name="RootBorder"
+                                Width="14"
+                                Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                AncestorType={x:Type diagram:DiagramVisualItem}},
+                                                 Path=Height}"
+                                HorizontalAlignment="Center"
+                                Background="{StaticResource Grey60Brush}"
+                                BorderBrush="Black"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True">
 
-                        <controls:IconControl x:Name="ErrorIcon"
-                                              Width="12"
-                                              Height="12"
-                                              Data="{StaticResource ErrorIcon}"
-                                              Foreground="White"
-                                              Visibility="Hidden" />
+                            <controls:IconControl x:Name="ErrorIcon"
+                                                  Width="12"
+                                                  Height="12"
+                                                  Data="{StaticResource ErrorIcon}"
+                                                  Foreground="White"
+                                                  Visibility="Hidden" />
 
-                        <Border.ToolTip>
-                            <ToolTip Background="{StaticResource Grey20Brush}"
-                                     HorizontalOffset="5"
-                                     Placement="Right"
-                                     Visibility="{Binding Name,
-                                                          Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
-                                <Grid Width="250">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.Resources>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
-                                            <Setter Property="Margin" Value="4" />
-                                        </Style>
-                                    </Grid.Resources>
-                                    <TextBlock Style="{StaticResource TooltipStyleForHeader}"
-                                               Text="Processing Time:"
-                                               Visibility="{Binding ProcessingTime,
-                                                                    Converter={StaticResource NullToVisibilityConverter}}" />
-                                    <TextBlock Grid.Row="0"
-                                               Grid.Column="1"
-                                               Style="{StaticResource TooltipStyleForValue}"
-                                               Text="{Binding ProcessingTime,
-                                                              Converter={StaticResource TimeSpanHumanizedConverter}}" />
-                                    <TextBlock Grid.Row="1"
-                                               Grid.Column="0"
-                                               Style="{StaticResource TooltipStyleForHeader}"
-                                               Text="Processing Of:"
-                                               Visibility="{Binding Name,
-                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
-                                    <TextBlock Grid.Row="1"
-                                               Grid.Column="1"
-                                               Style="{StaticResource TooltipStyleForValue}"
-                                               Text="{Binding Name,
-                                                              Converter={StaticResource SmartWrapConverter}}"
-                                               TextTrimming="CharacterEllipsis"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Grid.Row="2"
-                                               Grid.Column="0"
-                                               Style="{StaticResource TooltipStyleForHeader}"
-                                               Text="Sagas Invoked:"
-                                               Visibility="{Binding PartOfSaga,
-                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
-                                    <TextBlock x:Name="PartOfSagaValue"
-                                               Grid.Row="2"
-                                               Grid.Column="1"
-                                               Style="{StaticResource TooltipStyleForValue}"
-                                               Text="{Binding PartOfSaga}"
-                                               TextWrapping="Wrap"
-                                               Visibility="{Binding PartOfSaga,
-                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
-                                </Grid>
-                            </ToolTip>
-                        </Border.ToolTip>
-                    </Border>
+                            <Border.ToolTip>
+                                <ToolTip Background="{StaticResource Grey20Brush}"
+                                         HorizontalOffset="5"
+                                         Placement="Right"
+                                         Visibility="{Binding Name,
+                                                              Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                                    <Grid Width="250">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+                                                <Setter Property="Margin" Value="4" />
+                                            </Style>
+                                        </Grid.Resources>
+                                        <TextBlock Style="{StaticResource TooltipStyleForHeader}"
+                                                   Text="Processing Time:"
+                                                   Visibility="{Binding ProcessingTime,
+                                                                        Converter={StaticResource NullToVisibilityConverter}}" />
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   Style="{StaticResource TooltipStyleForValue}"
+                                                   Text="{Binding ProcessingTime,
+                                                                  Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                                        <TextBlock Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   Style="{StaticResource TooltipStyleForHeader}"
+                                                   Text="Processing Of:"
+                                                   Visibility="{Binding Name,
+                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                        <TextBlock Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   Style="{StaticResource TooltipStyleForValue}"
+                                                   Text="{Binding Name,
+                                                                  Converter={StaticResource SmartWrapConverter}}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Grid.Row="2"
+                                                   Grid.Column="0"
+                                                   Style="{StaticResource TooltipStyleForHeader}"
+                                                   Text="Sagas Invoked:"
+                                                   Visibility="{Binding PartOfSaga,
+                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                        <TextBlock x:Name="PartOfSagaValue"
+                                                   Grid.Row="2"
+                                                   Grid.Column="1"
+                                                   Style="{StaticResource TooltipStyleForValue}"
+                                                   Text="{Binding PartOfSaga}"
+                                                   TextWrapping="Wrap"
+                                                   Visibility="{Binding PartOfSaga,
+                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                    </Grid>
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                        <Border x:Name="MessageTypeName"
+                                Canvas.Left="15"
+                                Height="12"
+                                Background="Red">
+                            <TextBlock FontSize="10"
+                                       Foreground="Black"
+                                       Text="ThisIsTheMessageType" />
+                        </Border>
+                    </Canvas>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding State}" Value="Fail">
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBrush}" />
                             <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
                         </DataTrigger>
-                        <Trigger Property="IsChecked" Value="True">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition SourceName="ErrorIcon" Property="Visibility" Value="Hidden" />
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBrush}" />
-                        </Trigger>
+                        </MultiTrigger>
+                        <DataTrigger Binding="{Binding Route.FromArrow.Direction}" Value="Left">
+                            <Setter TargetName="MessageTypeName" Property="Canvas.Left" Value="-100" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </ToggleButton.Template>
