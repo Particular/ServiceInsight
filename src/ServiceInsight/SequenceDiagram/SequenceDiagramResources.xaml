@@ -226,8 +226,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
-        <ToggleButton Panel.ZIndex="100"
-                      Command="{Binding ChangeCurrentMessage}"
+        <ToggleButton Command="{Binding ChangeCurrentMessage}"
                       IsChecked="{Binding Path=IsFocused,
                                           Mode=TwoWay}"
                       beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
@@ -256,7 +255,7 @@
                                      HorizontalOffset="5"
                                      Placement="Right"
                                      Visibility="{Binding Name,
-                                                          TargetNullValue=Collapsed}">
+                                                          Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                                 <Grid Width="250">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
@@ -276,18 +275,18 @@
                                     <TextBlock Style="{StaticResource TooltipStyleForHeader}"
                                                Text="Processing Time:"
                                                Visibility="{Binding ProcessingTime,
-                                                                    TargetNullValue=Collapsed}" />
+                                                                    Converter={StaticResource NullToVisibilityConverter}}" />
                                     <TextBlock Grid.Row="0"
                                                Grid.Column="1"
                                                Style="{StaticResource TooltipStyleForValue}"
                                                Text="{Binding ProcessingTime,
-                                                              Converter={StaticResource TimeSpanHumanizedConverter}}"
-                                               Visibility="{Binding ProcessingTime,
-                                                                    TargetNullValue=Collapsed}" />
+                                                              Converter={StaticResource TimeSpanHumanizedConverter}}" />
                                     <TextBlock Grid.Row="1"
                                                Grid.Column="0"
                                                Style="{StaticResource TooltipStyleForHeader}"
-                                               Text="Processing Of:" />
+                                               Text="Processing Of:"
+                                               Visibility="{Binding Name,
+                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                                     <TextBlock Grid.Row="1"
                                                Grid.Column="1"
                                                Style="{StaticResource TooltipStyleForValue}"
@@ -300,14 +299,15 @@
                                                Style="{StaticResource TooltipStyleForHeader}"
                                                Text="Sagas Invoked:"
                                                Visibility="{Binding PartOfSaga,
-                                                                    TargetNullValue=Collapsed}" />
-                                    <TextBlock Grid.Row="2"
+                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                    <TextBlock x:Name="PartOfSagaValue"
+                                               Grid.Row="2"
                                                Grid.Column="1"
                                                Style="{StaticResource TooltipStyleForValue}"
                                                Text="{Binding PartOfSaga}"
                                                TextWrapping="Wrap"
                                                Visibility="{Binding PartOfSaga,
-                                                                    TargetNullValue=Collapsed}" />
+                                                                    Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                                 </Grid>
                             </ToolTip>
                         </Border.ToolTip>

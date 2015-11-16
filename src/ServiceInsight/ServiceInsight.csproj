@@ -527,6 +527,7 @@
     <Compile Include="ValueConverters\EnumToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
+    <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
     <Compile Include="ValueConverters\ScaledValueConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />

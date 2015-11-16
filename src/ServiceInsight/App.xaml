@@ -29,6 +29,7 @@
                     <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityHiddenConverter" IsHidden="True" />
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
                     <cnv:StringEmptyOrNullToVisibilityConverter x:Key="StringEmptyOrNullToVisibilityConverter" />
+                    <cnv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
