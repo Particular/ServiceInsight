@@ -30,7 +30,6 @@
     <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
     <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
 
-
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
     <converter:ElementHeightConverter x:Key="ElementHeightConverter" />
@@ -199,7 +198,6 @@
                                    Foreground="{StaticResource Grey60Brush}"
                                    Text="{Binding Name}" />
                     </ToolTip>
-
                 </Path.ToolTip>
             </Path>
         </Grid>
@@ -210,7 +208,6 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
-
 
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
@@ -224,7 +221,6 @@
                                                           AncestorType={x:Type diagram:DiagramVisualItem}},
                            Path=Height,
                            Converter={StaticResource ElementHeightConverter}}" />
-
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Handler}">
@@ -602,6 +598,16 @@
             </ContentControl.Style>
         </ContentControl>
     </DataTemplate>
+
+    <Style TargetType="{x:Type diagram:DiagramHeader}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">
         <Setter Property="ItemsPanel">

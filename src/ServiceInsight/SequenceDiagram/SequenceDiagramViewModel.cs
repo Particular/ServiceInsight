@@ -12,7 +12,7 @@
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;
 
-    public class SequenceDiagramViewModel : Screen, 
+    public class SequenceDiagramViewModel : Screen,
         IHandle<SelectedMessageChanged>,
         IMessageCommandContainer
     {
@@ -21,7 +21,7 @@
         string loadedConversationId;
 
         public SequenceDiagramViewModel(
-            IServiceControl serviceControl, 
+            IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             CopyConversationIDCommand copyConversationIDCommand,
             CopyMessageURICommand copyMessageURICommand,
@@ -55,6 +55,8 @@
         public ICommand ShowExceptionCommand { get; private set; }
 
         public DiagramItemCollection DiagramItems { get; set; }
+
+        public IEnumerable<object> HeaderItems { get; set; }
 
         public StoredMessage SelectedMessage { get; set; }
 
@@ -135,6 +137,8 @@
             DiagramItems.AddRange(handlers);
             DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
             DiagramItems.AddRange(routes);
+
+            HeaderItems = endpoints.ToList();
         }
 
         void ClearState()

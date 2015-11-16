@@ -280,6 +280,7 @@
     <Compile Include="SequenceDiagram\Converter\ElementHeightConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
     <Compile Include="SequenceDiagram\Diagram\ArrowType.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramHeader.cs" />
     <Compile Include="SequenceDiagram\Diagram\DiagramVisualItem.cs" />
     <Compile Include="SequenceDiagram\Diagram\Direction.cs" />
     <Compile Include="SequenceDiagram\Diagram\MessageProcessingRoute.cs" />

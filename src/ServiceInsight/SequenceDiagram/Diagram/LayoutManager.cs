@@ -14,7 +14,7 @@
             }
 
             var endpointLayout = new EndpointItemLayout(diagram);
-            var handlerLayout = new HandlerLayout(diagram, endpointLayout);
+            var handlerLayout = new HandlerLayout(diagram);
             var endpointTimelineLayout = new EndpointTimelineLayout(diagram);
             var arrowLayout = new ArrowLayout(diagram, endpointLayout);
             var processRouteLayout = new ProcessRouteLayout(diagram);
@@ -114,7 +114,7 @@
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 arrowVisual.X = fromHandlerVisual.X;
                 var arrowIndex = arrow.FromHandler.Out.IndexOf(arrow) + 1;
-                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height/(fromHandler.Out.Count + 1))*arrowIndex) - 15;
+                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height / (fromHandler.Out.Count + 1)) * arrowIndex) - 15;
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
@@ -123,7 +123,7 @@
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
 
                     var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
-                    arrow.Width = (fromEndpointVisual.ActualWidth/4) - ArrowHeadWidth;
+                    arrow.Width = (fromEndpointVisual.ActualWidth / 4) - ArrowHeadWidth;
                 }
                 else if (fromEndpointIndex < toEndpointIndex)
                 {
@@ -158,7 +158,7 @@
                 var timelineVisual = diagram.GetItemFromContainer(timeline);
                 var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
 
-                timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth/2;
+                timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
                 timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight;
                 timelineVisual.Height = maxHeight;
             }
@@ -178,10 +178,10 @@
             IDiagram diagram;
             double nextY;
 
-            public HandlerLayout(IDiagram diagram, EndpointItemLayout endpointItemLayout)
+            public HandlerLayout(IDiagram diagram)
             {
                 this.diagram = diagram;
-                nextY = endpointItemLayout.MaxHeight + 25;
+                nextY = 25;
             }
 
             public void Position(Handler handler)
@@ -189,9 +189,9 @@
                 var handlerVisual = diagram.GetItemFromContainer(handler);
                 var endpointVisual = diagram.GetItemFromContainer(handler.Endpoint);
 
-                handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth/2 - 7;
+                handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2 - 7;
 
-                var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count)*40;
+                var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count) * 40;
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;
@@ -231,14 +231,15 @@
 
                 if (lastEndpoint != null)
                 {
-                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth)*index);
-                    endpointVisual.Y = lastEndpoint.Y;
+                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth) * index);
                 }
 
                 if (endpointVisual.ActualHeight < MaxHeight)
                 {
                     endpointVisual.Height = MaxHeight;
                 }
+
+                endpointVisual.Y = -MaxHeight;
 
                 lastEndpoint = endpointVisual;
                 position[endpoint] = index;
