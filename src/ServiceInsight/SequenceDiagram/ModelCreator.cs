@@ -149,6 +149,7 @@ namespace ServiceInsight.SequenceDiagram
                 HandledAt = message.time_sent,
                 State = HandlerState.Success,
                 Endpoint = sendingEndpoint
+
             };
         }
 

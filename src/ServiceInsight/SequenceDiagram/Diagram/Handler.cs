@@ -85,8 +85,7 @@
         {
             get
             {
-                if(Route != null) return Route.FromArrow.SelectedMessage;
-                return null;
+                return Route?.FromArrow.SelectedMessage;
             }
         }
 

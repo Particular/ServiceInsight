@@ -339,7 +339,7 @@
     <Style TargetType="{x:Type controls:SplitButton}">
         <Setter Property="Focusable" Value="True" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}" />
-        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MessageFontSizeKey}}" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MessageFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MessageFontWeightKey}}" />
         <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.MenuButtonHeightKey}}" />
