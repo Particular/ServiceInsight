@@ -623,5 +623,69 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
+    <DrawingImage x:Key="Loader">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,500,500" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M250,0C264,0,274,10,274,24L274,118C274,132 264,143 250,143 236,143 225,132 225,118L225,24C225,10,236,0,250,0z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M137,53L192,129C204,145 192,168 172,168 164,168 158,165 153,158L98,82C90,71 92,56 103,48 114,40 129,42 137,53z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M28,204C15,200 8,186 12,173 16,160 30,153 43,157L132,186C145,190 152,204 148,217 145,227 134,234 124,234 121,234 120,233 117,232L28,204z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M148,283C152,296,145,310,132,314L43,343C40,344 38,344 35,344 25,344 15,337 12,327 8,314 15,300 28,296L117,267C130,263,144,270,148,283z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M187,337C198,345,200,360,192,371L137,447C132,454 125,457 117,457 97,457 86,434 98,418L153,342C161,331,176,329,187,337z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M250,357C264,357,274,368,274,382L274,475C274,489 264,500 250,500 236,500 225,489 225,475L225,382C225,368,236,357,250,357z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M347,342L402,418C414,434 402,457 382,457 374,457 368,454 363,447L308,371C300,360 302,345 313,337 324,329 339,331 347,342z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M472,296C485,300 492,314 488,327 485,337 474,344 464,344 461,344 460,344 457,343L368,314C355,310 348,296 352,283 356,270 370,263 383,267L472,296z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M352,217C348,204,355,190,368,186L457,157C470,153 484,160 488,173 492,186 485,200 472,204L383,232C380,233 378,234 375,234 365,234 355,227 352,217z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF010002">
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M327,168C307,168,296,145,308,129L363,53C371,42 386,40 397,48 408,56 410,71 402,82L347,158C342,165,335,168,327,168z" FillRule="Nonzero" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
 
 </ResourceDictionary>

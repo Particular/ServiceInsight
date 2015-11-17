@@ -48,6 +48,20 @@
         public DateTime? HandledAt { get; set; }
         public TimeSpan? ProcessingTime { get; set; }
 
+        public Direction EffectiveArrowDirection
+        {
+            get
+            {
+                if (Out.Count > 1)
+                {
+                    if(Out[0].Direction == Direction.Left) return Direction.Right;
+                    return Direction.Left;
+                }
+
+                return Direction.Left;
+            }
+        }
+
         public string ID
         {
             get { return id; }

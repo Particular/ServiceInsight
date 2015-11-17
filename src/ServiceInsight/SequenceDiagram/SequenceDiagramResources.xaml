@@ -11,6 +11,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/XAML/Geometry.xaml" />
+        <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
         <ResourceDictionary Source="DarkMenus.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -314,12 +315,23 @@
                             </Border.ToolTip>
                         </Border>
                         <Border x:Name="MessageTypeName"
-                                Canvas.Left="15"
-                                Height="12"
-                                Background="Red">
-                            <TextBlock FontSize="10"
-                                       Foreground="Black"
-                                       Text="ThisIsTheMessageType" />
+                                Canvas.Left="{Binding ElementName=MessageType,
+                                                      Path=ActualWidth,
+                                                      Converter={StaticResource MathConverter},
+                                                      ConverterParameter=(x*-1) - 1}"
+                                Height="14">
+                            <StackPanel x:Name="MessageType" Orientation="Horizontal">
+                                <Image Width="10"
+                                       Height="10"
+                                       VerticalAlignment="Center"
+                                       Source="{StaticResource Loader}"
+                                       Visibility="{Binding Name,
+                                                            Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                <TextBlock Margin="2,0"
+                                           FontSize="11"
+                                           Foreground="Black"
+                                           Text="{Binding Name}" />
+                            </StackPanel>
                         </Border>
                     </Canvas>
                     <ControlTemplate.Triggers>
@@ -334,8 +346,8 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBrush}" />
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding Route.FromArrow.Direction}" Value="Left">
-                            <Setter TargetName="MessageTypeName" Property="Canvas.Left" Value="-100" />
+                        <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
+                            <Setter TargetName="MessageTypeName" Property="Canvas.Left" Value="15" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -614,7 +626,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" IsItemsHost="True" />
+                    <StackPanel IsItemsHost="True" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
