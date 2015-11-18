@@ -173,8 +173,6 @@
                   Grid.Column="0"
                   Margin="0"
                   HorizontalAlignment="Center"
-                  Stroke="Transparent"
-                  StrokeThickness="2"
                   X1="0"
                   X2="0"
                   Y1="0"
@@ -566,7 +564,7 @@
 
             <controls:SplitButton x:Name="Button"
                                   Height="30"
-                                  Margin="5,0"
+                                  Margin="20,0,5,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   ButtonClick="{Binding ChangeCurrentMessage}"
@@ -615,7 +613,8 @@
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
             </controls:SplitButton>
 
-            <Path Grid.Row="0"
+            <Path x:Name="ArrowHead"
+                  Grid.Row="0"
                   Grid.Column="1"
                   Width="10"
                   Height="15"
@@ -633,6 +632,11 @@
                   X1="0"
                   X2="{Binding Width}" />
         </Grid>
+        <DataTemplate.Triggers>
+            <Trigger SourceName="Button" Property="IsMouseOver" Value="True">
+                <Setter TargetName="Line" Property="X2" Value="{Binding Width, Converter={StaticResource MathConverter}, ConverterParameter=x-26}" />
+            </Trigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type diagram:Arrow}">
