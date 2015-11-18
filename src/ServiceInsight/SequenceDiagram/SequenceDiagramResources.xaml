@@ -35,6 +35,8 @@
     <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
     <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
 
+    <DoubleCollection x:Key="EventStroke">3 2</DoubleCollection>
+
     <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
     <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
     <converter:ElementHeightConverter x:Key="ElementHeightConverter" />
@@ -491,7 +493,6 @@
                                   IsSelected="{Binding IsFocused,
                                                        Mode=TwoWay}"
                                   Padding="0"
-                                  SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
                     <controls:IconControl x:Name="Icon"
@@ -536,23 +537,30 @@
                   Grid.Row="0"
                   Grid.Column="0"
                   VerticalAlignment="Center"
-                  SnapsToDevicePixels="True"
                   Stroke="{StaticResource BlackBrush}"
                   StrokeThickness="4"
                   X1="0"
                   X2="{Binding Width}" />
-            <Path Grid.Row="0"
+            <Path x:Name="ArrowHead"
+                  Grid.Row="0"
                   Grid.Column="1"
                   Width="10"
                   Height="15"
+                  VerticalAlignment="Center"
                   Data="{StaticResource RightArrow}"
                   Fill="{StaticResource BlackBrush}"
                   Stretch="Fill" />
         </Grid>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static diagram:ArrowType.Event}">
+                <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
-        <Grid SnapsToDevicePixels="True">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -572,7 +580,6 @@
                                   IsSelected="{Binding IsFocused,
                                                        Mode=TwoWay}"
                                   Padding="0"
-                                  SnapsToDevicePixels="True"
                                   beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
                 <controls:SplitButton.Icon>
                     <controls:IconControl x:Name="Icon"
@@ -618,6 +625,7 @@
                   Grid.Column="1"
                   Width="10"
                   Height="15"
+                  VerticalAlignment="Center"
                   Data="{StaticResource LeftArrow}"
                   Fill="{StaticResource BlackBrush}"
                   Stretch="Fill" />
@@ -626,7 +634,6 @@
                   Grid.Row="0"
                   Grid.Column="2"
                   VerticalAlignment="Center"
-                  SnapsToDevicePixels="True"
                   Stroke="{StaticResource BlackBrush}"
                   StrokeThickness="4"
                   X1="0"
@@ -636,6 +643,9 @@
             <Trigger SourceName="Button" Property="IsMouseOver" Value="True">
                 <Setter TargetName="Line" Property="X2" Value="{Binding Width, Converter={StaticResource MathConverter}, ConverterParameter=x-26}" />
             </Trigger>
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static diagram:ArrowType.Event}">
+                <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
