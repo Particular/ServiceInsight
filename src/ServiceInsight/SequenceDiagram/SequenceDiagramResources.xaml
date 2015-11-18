@@ -515,7 +515,7 @@
                                                Converter={StaticResource BoolToVisibilityConverter}}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                 <MenuItem Command="{Binding ShowExceptionCommand}"
-                          Header="Show Stacktrace"
+                          Header="Show Exception Details"
                           Style="{StaticResource DarkMenuItemStyle}"
                           Visibility="{Binding Path=Visibility,
                                                ElementName=RetryMessageMenuItem}"
@@ -596,7 +596,7 @@
                                                Converter={StaticResource BoolToVisibilityConverter}}"
                           beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
                 <MenuItem Command="{Binding ShowExceptionCommand}"
-                          Header="Show Stacktrace"
+                          Header="Show Exception Details"
                           Style="{StaticResource DarkMenuItemStyle}"
                           Visibility="{Binding Path=Visibility,
                                                ElementName=RetryMessageMenuItem}"
