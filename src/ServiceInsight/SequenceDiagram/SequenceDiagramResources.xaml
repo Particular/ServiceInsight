@@ -236,7 +236,9 @@
             <ToggleButton.Template>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Canvas Width="14">
-                        <Grid x:Name="ConversationStart" Visibility="Collapsed" Margin="-5,6,0,0">
+                        <Grid x:Name="ConversationStart"
+                              Margin="-5,6,0,0"
+                              Visibility="Collapsed">
                             <Rectangle Width="25"
                                        Height="25"
                                        HorizontalAlignment="Center"
@@ -389,9 +391,8 @@
 
         <Border Width="260"
                 Margin="15,15,15,0"
-                Background="Transparent"
-                BorderBrush="{StaticResource Grey90Brush}"
-                BorderThickness="0,0,0,6"
+                Background="{StaticResource Grey80Brush}"
+                BorderThickness="0"
                 SnapsToDevicePixels="True">
 
             <!--  Endpoint Tooltip  -->
@@ -438,9 +439,7 @@
             </Border.ToolTip>
 
             <!--  Endpoint Title  -->
-            <Border Margin="30,0,30,-6"
-                    BorderBrush="{StaticResource Grey60Brush}"
-                    BorderThickness="0,0,0,6">
+            <Border Margin="0">
                 <Grid Margin="8"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
@@ -460,6 +459,8 @@
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
+                               FontWeight="DemiBold"
+                               Foreground="{StaticResource Grey40Brush}"
                                Text="{Binding Name,
                                               Converter={StaticResource SmartWrapConverter}}"
                                TextTrimming="CharacterEllipsis"
