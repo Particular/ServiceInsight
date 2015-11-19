@@ -21,6 +21,8 @@
 
         public void ApplyLayout()
         {
+            if (!IsVisible) return;
+
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm());
@@ -71,6 +73,16 @@
         {
             var node = e.DiagramNodeElement.Node;
             node.Bounds = new Rect(node.Bounds.X, node.Bounds.Y, e.Width, node.Bounds.Height);
+        }
+
+        void OnDiagramVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ApplyLayout();
+        }
+
+        void OnDiagramSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ApplyLayout();
         }
     }
 }

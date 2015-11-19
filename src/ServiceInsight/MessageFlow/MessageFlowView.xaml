@@ -587,6 +587,8 @@
                            SelectedItem="{Binding SelectedMessage,
                                                   Mode=TwoWay}"
                            VerticalSnapSpecifier="{ms:SnapToInterval 20}"
-                           ZoomMode="ControlMouseWheel" />
+                           ZoomMode="ControlMouseWheel"
+                           IsVisibleChanged="OnDiagramVisibleChanged"
+                           SizeChanged="OnDiagramSizeChanged"/>
     </Grid>
 </UserControl>
