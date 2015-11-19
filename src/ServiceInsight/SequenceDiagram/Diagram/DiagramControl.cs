@@ -27,6 +27,8 @@
         {
             LayoutManager = new SequenceDiagramLayoutManager();
             Loaded += (sender, args) => OnControlLoaded();
+            IsVisibleChanged += (sender, args) => PerformLayout();
+            SizeChanged += (s, a) => PerformLayout();
         }
 
         public ILayoutManager LayoutManager
@@ -82,12 +84,11 @@
         void OnControlLoaded()
         {
             isLoaded = true;
-            //PerformLayout();
         }
 
-        public void PerformLayout()
+        void PerformLayout()
         {
-            if (isLoaded)
+            if (isLoaded && IsVisible)
             {
                 LayoutManager.PerformLayout(this);
             }
