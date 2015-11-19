@@ -406,7 +406,7 @@
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                StaysOpen="False"
                                VerticalOffset="3">
-                            <Border Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
+                            <Border Background="Black"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding CornerRadius}">
