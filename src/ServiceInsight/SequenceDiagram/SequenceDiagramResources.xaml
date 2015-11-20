@@ -643,6 +643,9 @@
             <Trigger SourceName="Button" Property="IsMouseOver" Value="True">
                 <Setter TargetName="Line" Property="X2" Value="{Binding Width, Converter={StaticResource MathConverter}, ConverterParameter=x-26}" />
             </Trigger>
+            <Trigger SourceName="Button" Property="IsSelected" Value="True">
+                <Setter TargetName="Line" Property="X2" Value="{Binding Width, Converter={StaticResource MathConverter}, ConverterParameter=x-26}" />
+            </Trigger>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static diagram:ArrowType.Event}">
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
             </DataTrigger>
