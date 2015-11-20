@@ -94,8 +94,8 @@
             var messages = serviceControl.GetConversationByIdNew(conversationId).ToList();
             if (messages.Count == 0)
             {
-                // SC is being silly
                 LogTo.Warning("No messages found for conversation id {0}", conversationId);
+                ClearState();
                 return;
             }
 
