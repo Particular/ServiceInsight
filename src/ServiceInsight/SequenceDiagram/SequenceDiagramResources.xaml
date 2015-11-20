@@ -371,7 +371,7 @@
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
                             <Setter TargetName="MessageTypeName" Property="Canvas.Left" Value="15" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding In}" Value="{x:Null}">
+                        <DataTrigger Binding="{Binding ID}" Value="First">
                             <Setter TargetName="RootBorder" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="ConversationStart" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ConversationStart" Property="Canvas.ZIndex" Value="100" />
@@ -381,7 +381,7 @@
             </ToggleButton.Template>
         </ToggleButton>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding In}" Value="{x:Null}">
+            <DataTrigger Binding="{Binding ID}" Value="First">
                 <Setter Property="ToolTip" Value="Start of Conversation" />
             </DataTrigger>
         </DataTemplate.Triggers>
