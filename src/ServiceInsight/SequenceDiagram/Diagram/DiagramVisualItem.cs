@@ -7,6 +7,7 @@
     {
         public static DependencyProperty XProperty = DependencyProperty.Register("X", typeof(double), typeof(DiagramVisualItem), new PropertyMetadata());
         public static DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(DiagramVisualItem), new PropertyMetadata());
+        public static DependencyProperty ZIndexProperty = DependencyProperty.Register("ZIndex", typeof(int), typeof(DiagramVisualItem), new PropertyMetadata());
 
         public double X
         {
@@ -18,6 +19,12 @@
         {
             get { return (double)GetValue(YProperty); }
             set { SetValue(YProperty, value); }
+        }
+
+        public int ZIndex
+        {
+            get { return (int) GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
         }
     }
 }

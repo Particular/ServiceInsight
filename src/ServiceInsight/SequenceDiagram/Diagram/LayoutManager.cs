@@ -60,7 +60,7 @@
         {
             readonly IDiagram diagram;
             const double ArrowBoundary = 8;
-            const double ArrowHeadHeight = 6;
+            const double ArrowHeadHeight = 5;
 
             public ProcessRouteLayout(IDiagram diagram)
             {
@@ -76,7 +76,7 @@
 
                 routeVisual.X = handler.X + ((handler.ActualWidth - routeVisual.ActualWidth) / 2);
                 routeVisual.Y = arrow.Y + ArrowBoundary + ArrowHeadHeight;
-                routeVisual.Height = height - (2 * ArrowHeadHeight);
+                routeVisual.Height = height - (3 * ArrowHeadHeight) + 1;
             }
         }
 
@@ -195,6 +195,7 @@
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;
+                handlerVisual.ZIndex = 1; //Put on top of everything else
 
                 nextY += height + 20;
             }

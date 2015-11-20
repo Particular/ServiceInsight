@@ -696,6 +696,7 @@
                 <Style TargetType="{x:Type diagram:DiagramVisualItem}">
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" />
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" />
+                    <Setter Property="Panel.ZIndex" Value="{Binding ZIndex, RelativeSource={RelativeSource Self}}" />
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
