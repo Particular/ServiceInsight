@@ -52,7 +52,7 @@
         {
             get
             {
-                if (Out.Count > 1)
+                if (Out.Count > 0)
                 {
                     if(Out[0].Direction == Direction.Left) return Direction.Right;
                     return Direction.Left;
