@@ -40,6 +40,7 @@
             this.ShowExceptionCommand = showExceptionCommand;
 
             DiagramItems = new DiagramItemCollection();
+            HeaderItems = new DiagramItemCollection();
         }
 
         public ICommand CopyConversationIDCommand { get; private set; }
@@ -56,7 +57,7 @@
 
         public DiagramItemCollection DiagramItems { get; set; }
 
-        public IEnumerable<object> HeaderItems { get; set; }
+        public DiagramItemCollection HeaderItems { get; set; }
 
         public StoredMessage SelectedMessage { get; set; }
 
@@ -138,12 +139,13 @@
             DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
             DiagramItems.AddRange(routes);
 
-            HeaderItems = endpoints.ToList();
+            HeaderItems.AddRange(endpoints);
         }
 
         void ClearState()
         {
             DiagramItems.Clear();
+            HeaderItems.Clear();
         }
     }
 
