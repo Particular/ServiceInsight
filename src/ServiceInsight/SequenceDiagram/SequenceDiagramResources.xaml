@@ -540,7 +540,9 @@
                   Stroke="{StaticResource BlackBrush}"
                   StrokeThickness="4"
                   X1="0"
-                  X2="{Binding Width}" />
+                  X2="{Binding Width}"
+                  Y1="2"
+                  Y2="2" />
             <Path x:Name="ArrowHead"
                   Grid.Row="0"
                   Grid.Column="1"
@@ -637,7 +639,9 @@
                   Stroke="{StaticResource BlackBrush}"
                   StrokeThickness="4"
                   X1="0"
-                  X2="{Binding Width}" />
+                  X2="{Binding Width}"
+                  Y1="2"
+                  Y2="2" />
         </Grid>
         <DataTemplate.Triggers>
             <Trigger SourceName="Button" Property="IsMouseOver" Value="True">
