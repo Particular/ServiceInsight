@@ -237,22 +237,6 @@
             <ToggleButton.Template>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Canvas Width="14">
-                        <Grid x:Name="ConversationStart"
-                              Margin="-5,6,0,0"
-                              Visibility="Collapsed">
-                            <Rectangle Width="25"
-                                       Height="25"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Fill="Black" />
-                            <Path Width="10"
-                                  Height="10"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="M0,0L1,0.5 0,1z"
-                                  Fill="White"
-                                  Stretch="Fill" />
-                        </Grid>
                         <Border x:Name="RootBorder"
                                 Width="14"
                                 Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
@@ -264,13 +248,21 @@
                                 BorderThickness="0"
                                 SnapsToDevicePixels="True">
 
-                            <controls:IconControl x:Name="ErrorIcon"
-                                                  Width="12"
-                                                  Height="12"
-                                                  Data="{StaticResource ErrorIcon}"
-                                                  Foreground="White"
-                                                  Visibility="Hidden" />
+                            <Grid>
+                                <controls:IconControl x:Name="ErrorIcon"
+                                                      Width="12"
+                                                      Height="12"
+                                                      Data="{StaticResource ErrorIcon}"
+                                                      Foreground="White"
+                                                      Visibility="Hidden" />
 
+                                <controls:IconControl x:Name="StartIcon"
+                                                      Width="8"
+                                                      Height="8"
+                                                      Data="M0,0L1,0.5 0,1z"
+                                                      Foreground="White"
+                                                      Visibility="Hidden" />
+                            </Grid>
                             <Border.ToolTip>
                                 <ToolTip Background="{StaticResource Grey20Brush}"
                                          HorizontalOffset="5"
@@ -371,9 +363,8 @@
                             <Setter TargetName="MessageType" Property="Canvas.Right" Value="15" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ID}" Value="First">
-                            <Setter TargetName="RootBorder" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="ConversationStart" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="ConversationStart" Property="Canvas.ZIndex" Value="100" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource BlackBrush}" />
+                            <Setter TargetName="StartIcon" Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
