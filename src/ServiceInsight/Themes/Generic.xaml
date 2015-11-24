@@ -422,6 +422,7 @@
                             <Setter TargetName="PART_DropDownButton_2" Property="Visibility" Value="Visible" />
                             <Setter Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                             <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource HoverColor}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{StaticResource HoverColor}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
