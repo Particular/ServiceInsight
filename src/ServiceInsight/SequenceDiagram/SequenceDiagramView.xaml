@@ -20,29 +20,49 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="Root">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Name="ScrollViewer_Header"
-                      HorizontalAlignment="Left"
-                      HorizontalScrollBarVisibility="Hidden"
-                      VerticalScrollBarVisibility="Disabled">
-            <diagram:DiagramHeader x:Name="header"
-                                   MinWidth="{Binding ElementName=diagram,
-                                                      Path=ActualWidth}"
-                                   ItemsSource="{Binding HeaderItems}" />
-        </ScrollViewer>
+        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <Button Click="ExportToPng">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,5,0"
+                               VerticalAlignment="Center"
+                               Source="/Images/DiagramEndpointIcon.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Export to png" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <ScrollViewer Name="ScrollViewer_Body"
-                      Grid.Row="1"
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto">
-            <diagram:DiagramControl x:Name="diagram"
-                                    ItemsSource="{Binding DiagramItems}"
-                                    ShowGrid="False" />
-        </ScrollViewer>
+            <ScrollViewer Name="ScrollViewer_Header"
+                          HorizontalAlignment="Left"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Disabled">
+                <diagram:DiagramHeader x:Name="header"
+                                       MinWidth="{Binding ElementName=diagram,
+                                                          Path=ActualWidth}"
+                                       ItemsSource="{Binding HeaderItems}" />
+            </ScrollViewer>
+
+            <ScrollViewer Name="ScrollViewer_Body"
+                          Grid.Row="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <diagram:DiagramControl x:Name="diagram"
+                                        ItemsSource="{Binding DiagramItems}"
+                                        ShowGrid="False" />
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>
