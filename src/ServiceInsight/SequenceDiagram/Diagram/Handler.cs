@@ -44,23 +44,11 @@
             }
         }
 
-        public List<Arrow> Out { get; set; }
+        public IEnumerable<Arrow> Out { get; set; }
         public DateTime? HandledAt { get; set; }
         public TimeSpan? ProcessingTime { get; set; }
 
-        public Direction EffectiveArrowDirection
-        {
-            get
-            {
-                if (Out.Count > 0)
-                {
-                    if(Out[0].Direction == Direction.Left) return Direction.Right;
-                    return Direction.Left;
-                }
-
-                return Direction.Left;
-            }
-        }
+        public Direction EffectiveArrowDirection { get; set; }
 
         public string ID
         {

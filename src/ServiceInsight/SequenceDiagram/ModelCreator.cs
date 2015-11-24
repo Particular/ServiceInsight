@@ -89,21 +89,17 @@ namespace ServiceInsight.SequenceDiagram
                 }
 
                 var arrow = CreateArrow(message);
-                arrow.Receiving = new Endpoint {Name = processingEndpoint.Name, Host = processingEndpoint.Host};
-                arrow.Sending = new Endpoint {Name = sendingEndpoint.Name, Host = sendingEndpoint.Host};
+                arrow.Receiving = new Endpoint { Name = processingEndpoint.Name, Host = processingEndpoint.Host };
+                arrow.Sending = new Endpoint { Name = sendingEndpoint.Name, Host = sendingEndpoint.Host };
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
                 processingRoutes.Add(CreateRoute(arrow, processingHandler));
                 processingHandler.In = arrow;
 
-                sendingHandler.Out.Add(arrow);
-            }
+                sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
 
-            //Sort all arrows out per handler
-            foreach (var handler in handlers)
-            {
-                handler.Out.Sort();
+                sendingHandler.EffectiveArrowDirection = sendingHandler.Out.First().Direction == Direction.Left ? Direction.Left : Direction.Right;
             }
         }
 
@@ -149,7 +145,6 @@ namespace ServiceInsight.SequenceDiagram
                 HandledAt = message.time_sent,
                 State = HandlerState.Success,
                 Endpoint = sendingEndpoint
-
             };
         }
 

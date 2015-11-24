@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using NUnit.Framework;
+    using System.Linq;
     using Desktop.Models;
     using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
-
+    using NUnit.Framework;
 
     [TestFixture]
     class SequenceDiagramModelCreatorTests
@@ -496,14 +496,15 @@
             };
 
             var creator = GetModelCreator(messages);
-            var result = creator.Endpoints;
+            var result = creator.Endpoints.ToList();
+            var outArrows = result[0].Handlers[0].Out.ToList();
 
             Assert.AreEqual("A", result[0].Name);
             Assert.AreEqual(1, result[0].Handlers.Count);
-            Assert.AreEqual(3, result[0].Handlers[0].Out.Count);
-            Assert.AreEqual("2", result[0].Handlers[0].Out[0].MessageId);
-            Assert.AreEqual("3", result[0].Handlers[0].Out[1].MessageId);
-            Assert.AreEqual("4", result[0].Handlers[0].Out[2].MessageId);
+            Assert.AreEqual(3, outArrows.Count);
+            Assert.AreEqual("2", outArrows[0].MessageId);
+            Assert.AreEqual("3", outArrows[1].MessageId);
+            Assert.AreEqual("4", outArrows[2].MessageId);
         }
 
         [Test]
@@ -750,7 +751,7 @@
 
             Assert.AreEqual(1, result[0].Handlers.Count);
             Assert.AreEqual(4, result[1].Handlers.Count);
-            Assert.AreEqual(4, result[0].Handlers[0].Out.Count);
+            Assert.AreEqual(4, result[0].Handlers[0].Out.Count());
         }
     }
 }

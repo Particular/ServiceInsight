@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {
@@ -120,13 +121,13 @@
 
                 var fromHandlerVisual = diagram.GetItemFromContainer(fromHandler);
                 if (fromHandlerVisual == null) return;
-                
+
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 if (toHandlerVisual == null) return;
 
                 arrowVisual.X = fromHandlerVisual.X;
-                var arrowIndex = arrow.FromHandler.Out.IndexOf(arrow) + 1;
-                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height / (fromHandler.Out.Count + 1)) * arrowIndex) - 15;
+                var arrowIndex = fromHandler.Out.IndexOf(arrow) + 1;
+                arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height / (fromHandler.Out.Count() + 1)) * arrowIndex) - 15;
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
@@ -214,7 +215,8 @@
 
                 handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2 - 7;
 
-                var height = (handler.Out.Count == 0 ? 1 : handler.Out.Count) * 40;
+                var count = handler.Out.Count();
+                var height = (count == 0 ? 1 : count) * 40;
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;
