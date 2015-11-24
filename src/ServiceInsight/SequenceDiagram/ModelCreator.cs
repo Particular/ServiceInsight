@@ -87,6 +87,10 @@ namespace ServiceInsight.SequenceDiagram
                     handlers.Add(processingHandler);
                     processingEndpoint.Handlers.Add(processingHandler);
                 }
+                else
+                {
+                    UpdateProcessingHandler(processingHandler, message, processingEndpoint);
+                }
 
                 var arrow = CreateArrow(message);
                 arrow.Receiving = new Endpoint { Name = processingEndpoint.Name, Host = processingEndpoint.Host };
@@ -152,27 +156,33 @@ namespace ServiceInsight.SequenceDiagram
         {
             var handler = new Handler(message.message_id, container)
             {
-                ProcessingTime = message.processing_time,
                 HandledAt = message.processed_at,
-                Name = TypeHumanizer.ToName(message.message_type),
                 Endpoint = processingEndpoint
             };
 
+            UpdateProcessingHandler(handler, message, processingEndpoint);
+
+            return handler;
+        }
+
+        void UpdateProcessingHandler(Handler processingHandler, ReceivedMessage message, EndpointItem processingEndpoint)
+        {
+            processingHandler.ProcessingTime = message.processing_time;
+            processingHandler.Name = TypeHumanizer.ToName(message.message_type);
+
             if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
             {
-                handler.PartOfSaga = string.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
+                processingHandler.PartOfSaga = string.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
             }
 
             if (message.status == MessageStatus.ArchivedFailure || message.status == MessageStatus.Failed || message.status == MessageStatus.RepeatedFailure)
             {
-                handler.State = HandlerState.Fail;
+                processingHandler.State = HandlerState.Fail;
             }
             else
             {
-                handler.State = HandlerState.Success;
+                processingHandler.State = HandlerState.Success;
             }
-
-            return handler;
         }
 
         Arrow CreateArrow(ReceivedMessage message)
