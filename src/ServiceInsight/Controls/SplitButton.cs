@@ -24,7 +24,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
         public static DependencyProperty ButtonClickProperty = DependencyProperty.Register("ButtonClick", typeof(ICommand), typeof(SplitButton));
         public static DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(SplitButton));
 
-        static SplitButton()
+	    static SplitButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
 
@@ -62,7 +62,7 @@ namespace Particular.ServiceInsight.Desktop.Controls
             set { SetValue(IsSelectedProperty, value); }
         }
 
-        public override void OnApplyTemplate()
+	    public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             splitButtonHeaderSite = GetTemplateChild("PART_Button") as Button;
@@ -137,34 +137,62 @@ namespace Particular.ServiceInsight.Desktop.Controls
 
         private static void OnMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var splitButton = (SplitButton)sender;
-            if (e.OriginalSource == splitButton || e.Source == splitButton)
-            {
-                splitButton.CloseSubmenu();
-                return;
-            }
+	        if (e.LeftButton == MouseButtonState.Pressed)
+	        {
+		        OnMouseLeftButtonClicked(sender, e);
+	        }
 
-            if (!splitButton.IsKeyboardFocusWithin)
-            {
-                splitButton.Focus();
-                return;
-            }
-
-            if (e.Source is MenuItem)
-            {
-                var menuItem = (MenuItem)e.Source;
-                if (menuItem != null)
-                {
-                    if (!menuItem.HasItems)
-                    {
-                        splitButton.CloseSubmenu();
-                        menuItem.Command.Execute(menuItem.CommandParameter);
-                    }
-                }
-            }
+	        if (e.RightButton == MouseButtonState.Pressed)
+	        {
+		        OnMouseRightButtonClicked(sender, e);
+	        }
+            
         }
 
-        private void CloseSubmenu()
+	    static void OnMouseRightButtonClicked(object sender, MouseButtonEventArgs e)
+	    {
+			var splitButton = (SplitButton)sender;
+			splitButton.OpenSubmenu();
+		}
+
+	    static void OnMouseLeftButtonClicked(object sender, MouseButtonEventArgs e)
+	    {
+			var splitButton = (SplitButton)sender;
+			if (e.OriginalSource == splitButton || e.Source == splitButton)
+			{
+				splitButton.CloseSubmenu();
+				return;
+			}
+
+			if (!splitButton.IsKeyboardFocusWithin)
+			{
+				splitButton.Focus();
+				return;
+			}
+
+			if (e.Source is MenuItem)
+			{
+				var menuItem = (MenuItem)e.Source;
+				if (menuItem != null)
+				{
+					if (!menuItem.HasItems)
+					{
+						splitButton.CloseSubmenu();
+						menuItem.Command.Execute(menuItem.CommandParameter);
+					}
+				}
+			}
+		}
+
+	    void OpenSubmenu()
+		{
+			if (!IsSubmenuOpen)
+			{
+				IsSubmenuOpen = true;
+			}
+		}
+
+		void CloseSubmenu()
         {
             if (IsSubmenuOpen)
             {

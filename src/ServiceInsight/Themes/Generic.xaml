@@ -306,6 +306,7 @@
 
     <cnv:ScaledValueConverter x:Key="ScaledValueConverter" />
     <cnv:ThicknessToWidthConverter x:Key="SeparatorConverter" />
+    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
     <SolidColorBrush x:Key="SplitButtonBackground">Transparent</SolidColorBrush>
@@ -398,14 +399,11 @@
                                Width="200"
                                AllowsTransparency="True"
                                Focusable="False"
-                               HorizontalOffset="-80"
                                IsOpen="{Binding Path=IsSubmenuOpen,
                                                 RelativeSource={RelativeSource TemplatedParent},
                                                 Mode=TwoWay}"
-                               PlacementTarget="{Binding ElementName=PART_DropDownButton}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                               StaysOpen="False"
-                               VerticalOffset="3">
+                               StaysOpen="False">
                             <Border Background="Black"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
@@ -417,21 +415,23 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_DropDownButton_2" Property="Visibility" Value="Visible" />
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                             <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource HoverColor}" />
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{StaticResource HoverColor}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_DropDownButton_2" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
                             <Setter TargetName="PART_Button_Text" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
                             <Setter TargetName="PART_DropDownButtonImage" Property="Source" Value="{StaticResource EllipsisMenuSelected}" />
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
-                        </Trigger>
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
