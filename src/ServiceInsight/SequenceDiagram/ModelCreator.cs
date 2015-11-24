@@ -99,6 +99,8 @@ namespace ServiceInsight.SequenceDiagram
 
                 sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
             }
+
+            handlers.Sort((x, y) => DateTime.Compare(x.HandledAt.GetValueOrDefault(), y.HandledAt.GetValueOrDefault()));
         }
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler)
