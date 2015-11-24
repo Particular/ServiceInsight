@@ -252,10 +252,13 @@
                 BindResult(pagedResult);
             }
 
-            if (FocusedRow == null && Rows.Count > 0)
+            if (Rows.Count == 0)
             {
-                FocusedRow = Rows[0];
+                FocusedRow = null;
+                return;
             }
+
+            FocusedRow = Rows[0];
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
