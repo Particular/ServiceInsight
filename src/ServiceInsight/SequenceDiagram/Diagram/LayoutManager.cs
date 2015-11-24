@@ -152,6 +152,9 @@
                     arrow.Width = fromHandlerVisual.X - (toHandlerVisual.X + toHandlerVisual.ActualWidth) - ArrowHeadWidth;
                     arrowVisual.X = fromHandlerVisual.X - arrowVisual.ActualWidth;
                 }
+
+                // The handler needs to refresh based on the direction of the arrow.
+                fromHandler.Refresh();
             }
         }
 

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Windows.Input;
     using Particular.ServiceInsight.Desktop.Models;
 
@@ -48,7 +49,7 @@
         public DateTime? HandledAt { get; set; }
         public TimeSpan? ProcessingTime { get; set; }
 
-        public Direction EffectiveArrowDirection { get; set; }
+        public Direction EffectiveArrowDirection => Out?.FirstOrDefault()?.Direction == Direction.Left ? Direction.Right : Direction.Left;
 
         public string ID
         {

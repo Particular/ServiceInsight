@@ -98,8 +98,6 @@ namespace ServiceInsight.SequenceDiagram
                 processingHandler.In = arrow;
 
                 sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
-
-                sendingHandler.EffectiveArrowDirection = sendingHandler.Out.First().Direction == Direction.Left ? Direction.Left : Direction.Right;
             }
         }
 
