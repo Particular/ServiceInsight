@@ -217,7 +217,7 @@
     <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
         <Line x:Name="Line"
               SnapsToDevicePixels="True"
-              Stroke="{StaticResource Grey80Brush}"
+              Stroke="{StaticResource Grey90Brush}"
               StrokeThickness="2"
               X1="0"
               X2="0"
@@ -236,10 +236,10 @@
                       beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
             <ToggleButton.ToolTip>
                 <ToolTip Background="{StaticResource Grey20Brush}"
-                                         HorizontalOffset="5"
-                                         Placement="Right"
-                                         Visibility="{Binding Name,
-                                                              Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                         HorizontalOffset="5"
+                         Placement="Right"
+                         Visibility="{Binding Name,
+                                              Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                     <Grid Width="250">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -257,41 +257,41 @@
                             </Style>
                         </Grid.Resources>
                         <TextBlock Style="{StaticResource TooltipStyleForHeader}"
-                                                   Text="Processing Time:"
-                                                   Visibility="{Binding ProcessingTime,
-                                                                        Converter={StaticResource NullToVisibilityConverter}}" />
+                                   Text="Processing Time:"
+                                   Visibility="{Binding ProcessingTime,
+                                                        Converter={StaticResource NullToVisibilityConverter}}" />
                         <TextBlock Grid.Row="0"
-                                                   Grid.Column="1"
-                                                   Style="{StaticResource TooltipStyleForValue}"
-                                                   Text="{Binding ProcessingTime,
-                                                                  Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding ProcessingTime,
+                                                  Converter={StaticResource TimeSpanHumanizedConverter}}" />
                         <TextBlock Grid.Row="1"
-                                                   Grid.Column="0"
-                                                   Style="{StaticResource TooltipStyleForHeader}"
-                                                   Text="Processing Of:"
-                                                   Visibility="{Binding Name,
-                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Processing Of:"
+                                   Visibility="{Binding Name,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                         <TextBlock Grid.Row="1"
-                                                   Grid.Column="1"
-                                                   Style="{StaticResource TooltipStyleForValue}"
-                                                   Text="{Binding Name,
-                                                                  Converter={StaticResource SmartWrapConverter}}"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   TextWrapping="Wrap" />
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Name,
+                                                  Converter={StaticResource SmartWrapConverter}}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" />
                         <TextBlock Grid.Row="2"
-                                                   Grid.Column="0"
-                                                   Style="{StaticResource TooltipStyleForHeader}"
-                                                   Text="Sagas Invoked:"
-                                                   Visibility="{Binding PartOfSaga,
-                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Sagas Invoked:"
+                                   Visibility="{Binding PartOfSaga,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                         <TextBlock x:Name="PartOfSagaValue"
-                                                   Grid.Row="2"
-                                                   Grid.Column="1"
-                                                   Style="{StaticResource TooltipStyleForValue}"
-                                                   Text="{Binding PartOfSaga}"
-                                                   TextWrapping="Wrap"
-                                                   Visibility="{Binding PartOfSaga,
-                                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding PartOfSaga}"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding PartOfSaga,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                     </Grid>
                 </ToolTip>
             </ToggleButton.ToolTip>
@@ -382,7 +382,7 @@
 
         <Border Width="260"
                 Margin="15,15,15,0"
-                Background="{StaticResource Grey80Brush}"
+                Background="{StaticResource Grey90Brush}"
                 BorderThickness="0"
                 SnapsToDevicePixels="True">
 
