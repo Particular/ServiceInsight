@@ -232,7 +232,6 @@
     <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
-    <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
