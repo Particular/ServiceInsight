@@ -18,10 +18,10 @@
         StoredMessage storedMessage;
         List<Header> headers;
         DateTime? timesent;
-        bool isFocused;
 
         public Arrow(string messageId, string conversationId, MessageStatus status, string id, DateTime? timesent, List<Header> headers, IMessageCommandContainer container)
         {
+            this.ShouldBringIntoView = true;
             this.messageId = messageId;
             this.conversationId = conversationId;
             this.status = status;
@@ -36,13 +36,6 @@
             ChangeCurrentMessage = container.ChangeSelectedMessageCommand;
             ShowExceptionCommand = container.ShowExceptionCommand;
         }
-
-        public void OnIsFocusedChanged()
-        {
-            IsFocusedChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        public event EventHandler IsFocusedChanged;
 
         public ICommand RetryMessageCommand { get; set; }
 
@@ -100,18 +93,10 @@
 
         public double Width { get; set; }
 
-        public bool IsFocused
+        public override void OnIsFocusedChanged()
         {
-            get { return isFocused; }
-            set
-            {
-                if(isFocused == value)
-                    return;
-                
-                isFocused = value;
-                Route.IsFocused = value;
-                NotifyOfPropertyChange(() => IsFocused);
-            }
+            base.OnIsFocusedChanged();
+            Route.IsFocused = IsFocused;
         }
 
         public MessageProcessingRoute Route { get; set; }

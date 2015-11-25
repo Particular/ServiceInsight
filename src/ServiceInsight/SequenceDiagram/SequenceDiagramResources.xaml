@@ -871,6 +871,7 @@
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" />
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" />
                     <Setter Property="Panel.ZIndex" Value="{Binding ZIndex, RelativeSource={RelativeSource Self}}" />
+                    <Setter Property="IsSelected" Value="{Binding IsFocused}" />
                     <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
                     <Setter Property="Template">
                         <Setter.Value>

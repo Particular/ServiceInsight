@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Markup;
@@ -21,10 +22,12 @@
         static DiagramControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DiagramControl), new FrameworkPropertyMetadata(typeof(DiagramControl)));
+            
         }
 
         public DiagramControl()
         {
+            SelectionChanged += OnSelectionChanged;
             LayoutManager = new SequenceDiagramLayoutManager();
             Loaded += (sender, args) => OnControlLoaded();
             IsVisibleChanged += (sender, args) => PerformLayout();
@@ -58,6 +61,19 @@
         {
             if (item == null) return null;
             return (DiagramVisualItem)ItemContainerGenerator.ContainerFromItem(item);
+        }
+
+        void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var diagramItem = (DiagramItem)e.AddedItems[0];
+                if (diagramItem.ShouldBringIntoView)
+                {
+                    var visualItem = GetItemFromContainer(diagramItem);
+                    visualItem?.BringIntoView();
+                }
+            }
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)

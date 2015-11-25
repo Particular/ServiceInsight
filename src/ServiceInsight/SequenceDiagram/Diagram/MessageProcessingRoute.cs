@@ -2,8 +2,6 @@
 {
     public class MessageProcessingRoute : DiagramItem
     {
-        bool isFocused;
-
         public MessageProcessingRoute(Arrow arrow, Handler processingHandler)
         {
             FromArrow = arrow;
@@ -13,22 +11,14 @@
             ProcessingHandler.Route = this;
         }
 
-        public Arrow FromArrow { get; private set; }
+        public Arrow FromArrow { get; }
 
-        public Handler ProcessingHandler { get; private set; }
+        public Handler ProcessingHandler { get; }
 
-        public bool IsFocused
+        public override void OnIsFocusedChanged()
         {
-            get { return isFocused; }
-            set
-            {
-                if (isFocused == value)
-                    return;
-
-                isFocused = value;
-                FromArrow.IsFocused = value;
-                ProcessingHandler.IsFocused = value;
-            }
+            FromArrow.IsFocused = IsFocused;
+            ProcessingHandler.IsFocused = IsFocused;
         }
     }
 

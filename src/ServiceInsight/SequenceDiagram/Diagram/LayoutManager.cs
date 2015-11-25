@@ -105,10 +105,10 @@
                 var arrowVisual = diagram.GetItemFromContainer(arrow);
                 if (arrowVisual == null) return;
 
-                arrow.IsFocusedChanged += (sender, args) =>
-                {
-                    arrowVisual.BringIntoView();
-                };
+//                arrow.IsFocusedChanged += (sender, args) =>
+//                {
+//                    arrowVisual.BringIntoView();
+//                };
 
                 var fromEndpointIndex = 0;
                 var fromHandler = arrow.FromHandler;
@@ -228,7 +228,7 @@
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;
-                handlerVisual.ZIndex = 1; //Put on top of everything else
+                handlerVisual.ZIndex = 10; //Put on top of everything else
 
                 nextY += height + 20;
             }

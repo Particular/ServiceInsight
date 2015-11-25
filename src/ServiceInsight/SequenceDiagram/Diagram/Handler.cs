@@ -12,7 +12,6 @@
     {
         readonly string id;
         Arrow arrowIn;
-        bool isFocused;
 
         public Handler(string id, IMessageCommandContainer container)
         {
@@ -56,18 +55,9 @@
             get { return id; }
         }
 
-        public bool IsFocused
+        public override void OnIsFocusedChanged()
         {
-            get { return isFocused; }
-            set
-            {
-                if (isFocused == value)
-                    return;
-
-                isFocused = value;
-                Route.IsFocused = value;
-                NotifyOfPropertyChange(() => IsFocused);
-            }
+            Route.IsFocused = IsFocused;
         }
 
         public StoredMessage SelectedMessage
