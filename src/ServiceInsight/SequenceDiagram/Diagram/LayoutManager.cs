@@ -72,7 +72,7 @@
             {
                 var handler = diagram.GetItemFromContainer(route.ProcessingHandler);
                 if (handler == null) return;
-
+                
                 var arrow = diagram.GetItemFromContainer(route.FromArrow);
                 if (arrow == null) return;
 
@@ -104,6 +104,11 @@
             {
                 var arrowVisual = diagram.GetItemFromContainer(arrow);
                 if (arrowVisual == null) return;
+
+                arrow.IsFocusedChanged += (sender, args) =>
+                {
+                    arrowVisual.BringIntoView();
+                };
 
                 var fromEndpointIndex = 0;
                 var fromHandler = arrow.FromHandler;

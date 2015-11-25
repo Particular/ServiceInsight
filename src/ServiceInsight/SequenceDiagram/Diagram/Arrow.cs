@@ -37,6 +37,13 @@
             ShowExceptionCommand = container.ShowExceptionCommand;
         }
 
+        public void OnIsFocusedChanged()
+        {
+            IsFocusedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler IsFocusedChanged;
+
         public ICommand RetryMessageCommand { get; set; }
 
         public ICommand CopyConversationIDCommand { get; set; }
