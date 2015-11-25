@@ -360,9 +360,11 @@
                         </MultiTrigger>
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
                             <Setter TargetName="MessageType" Property="Canvas.Left" Value="15" />
+                            <Setter TargetName="MessageType" Property="Margin" Value="4,0,0,0" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Left">
                             <Setter TargetName="MessageType" Property="Canvas.Right" Value="15" />
+                            <Setter TargetName="MessageType" Property="Margin" Value="0,0,4,0" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ID}" Value="First">
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource BlackBrush}" />
