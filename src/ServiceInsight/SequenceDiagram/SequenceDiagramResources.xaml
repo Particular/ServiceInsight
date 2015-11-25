@@ -327,7 +327,7 @@
                                                       Visibility="Hidden" />
                             </Grid>
                         </Border>
-                        <Border x:Name="MessageType" Height="16">
+                        <Border x:Name="MessageType" Height="16" Background="White">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="14"
                                        Height="14"
