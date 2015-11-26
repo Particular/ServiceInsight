@@ -82,6 +82,8 @@ namespace ServiceInsight.SequenceDiagram
                     sendingEndpoint.Handlers.Add(sendingHandler);
                 }
 
+                sendingHandler.UpdateProcessedAtGuess(message.time_sent);
+
                 if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
                 {
                     handlers.Add(processingHandler);
@@ -144,19 +146,19 @@ namespace ServiceInsight.SequenceDiagram
 
         Handler CreateSendingHandler(ReceivedMessage message, EndpointItem sendingEndpoint)
         {
-            return new Handler(GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, "First"), container)
+            var handler = new Handler(GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, "First"), container)
             {
-                HandledAt = message.time_sent,
                 State = HandlerState.Success,
                 Endpoint = sendingEndpoint
             };
+
+            return handler;
         }
 
         Handler CreateProcessingHandler(ReceivedMessage message, EndpointItem processingEndpoint)
         {
             var handler = new Handler(message.message_id, container)
             {
-                HandledAt = message.processed_at,
                 Endpoint = processingEndpoint
             };
 
@@ -167,6 +169,7 @@ namespace ServiceInsight.SequenceDiagram
 
         void UpdateProcessingHandler(Handler processingHandler, ReceivedMessage message, EndpointItem processingEndpoint)
         {
+            processingHandler.ProcessedAt = message.processed_at;
             processingHandler.ProcessingTime = message.processing_time;
             processingHandler.Name = TypeHumanizer.ToName(message.message_type);
 

@@ -7,7 +7,7 @@
     using System.Windows.Input;
     using Particular.ServiceInsight.Desktop.Models;
 
-    [DebuggerDisplay("Handled '{Name}' and resulted in {State}")]
+    [DebuggerDisplay("Handled '{Name}' and resulted in {State} at {HandledAt}")]
     public class Handler : DiagramItem, IComparable<Handler>
     {
         readonly string id;
@@ -45,7 +45,27 @@
         }
 
         public IEnumerable<Arrow> Out { get; set; }
-        public DateTime? HandledAt { get; set; }
+
+        public DateTime? ProcessedAt { get; set; }
+
+        DateTime? processedAtGuess;
+
+        public void UpdateProcessedAtGuess(DateTime? timeSent)
+        {
+            if (!timeSent.HasValue)
+                return;
+
+            if (!processedAtGuess.HasValue || processedAtGuess.Value > timeSent.Value)
+            {
+                processedAtGuess = timeSent;
+            }
+        }
+
+        public DateTime? HandledAt
+        {
+            get { return ProcessedAt ?? processedAtGuess; }
+        }
+
         public TimeSpan? ProcessingTime { get; set; }
 
         public Direction EffectiveArrowDirection => Out?.FirstOrDefault()?.Direction == Direction.Left ? Direction.Right : Direction.Left;
