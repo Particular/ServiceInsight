@@ -38,21 +38,17 @@
             var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
             var actualWidth = bodyElement.RenderSize.Width;
 
-            var renderHeight = actualHeight;
-            var renderWidth = actualWidth;
-
-            var renderTarget = new RenderTargetBitmap((int) renderWidth, (int) renderHeight, 96, 96, PixelFormats.Pbgra32);
+            var renderTarget = new RenderTargetBitmap((int)actualWidth, (int)actualHeight, 96, 96, PixelFormats.Default);
             var bodySourceBrush = new VisualBrush(bodyElement);
 
             var drawingVisual = new DrawingVisual();
             using (var drawingContext = drawingVisual.RenderOpen())
             {
-                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, 0), new Point(renderWidth, renderHeight)));
-                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, headerElement.RenderSize.Height), new Point(actualWidth, bodyElement.RenderSize.Height)));
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
             }
 
             renderTarget.Render(drawingVisual);
-            renderTarget.Render(headerElement);
 
             var saveFileDialog = new SaveFileDialog
             {
