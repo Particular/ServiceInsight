@@ -77,7 +77,10 @@
 
         public override void OnIsFocusedChanged()
         {
-            Route.IsFocused = IsFocused;
+            if (Route != null)
+            {
+                Route.IsFocused = IsFocused;
+            }
         }
 
         public override DiagramItem GetFocusableItem()
