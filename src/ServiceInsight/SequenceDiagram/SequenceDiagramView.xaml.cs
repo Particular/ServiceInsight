@@ -32,63 +32,39 @@
 
         void ExportToPng(object sender, RoutedEventArgs e)
         {
-            int zoom = 1;
-            UIElement body = (UIElement) ScrollViewer_Body.Content;
-            UIElement header = (UIElement) ScrollViewer_Header.Content;
+            var bodyElement = (UIElement) ScrollViewer_Body.Content;
+            var headerElement = (UIElement) ScrollViewer_Header.Content;
 
-            double actualHeight = body.RenderSize.Height + header.RenderSize.Height;
-            double actualWidth = body.RenderSize.Width;
+            var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
+            var actualWidth = bodyElement.RenderSize.Width;
 
-            double renderHeight = actualHeight*zoom;
-            double renderWidth = actualWidth*zoom;
+            var renderHeight = actualHeight;
+            var renderWidth = actualWidth;
 
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int) renderWidth, (int) renderHeight, 96, 96, PixelFormats.Pbgra32);
-            VisualBrush headerSourceBrush = new VisualBrush(header);
-            VisualBrush bodySourceBrush = new VisualBrush(body);
+            var renderTarget = new RenderTargetBitmap((int) renderWidth, (int) renderHeight, 96, 96, PixelFormats.Pbgra32);
+            var bodySourceBrush = new VisualBrush(bodyElement);
 
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-
-            using (drawingContext)
+            var drawingVisual = new DrawingVisual();
+            using (var drawingContext = drawingVisual.RenderOpen())
             {
-                drawingContext.PushTransform(new ScaleTransform(zoom, zoom));
-                drawingContext.DrawRectangle(headerSourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, header.RenderSize.Height)));
-                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, header.RenderSize.Height), new Point(actualWidth, body.RenderSize.Height)));
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, 0), new Point(renderWidth, renderHeight)));
+                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, headerElement.RenderSize.Height), new Point(actualWidth, bodyElement.RenderSize.Height)));
             }
+
             renderTarget.Render(drawingVisual);
+            renderTarget.Render(headerElement);
 
             var saveFileDialog = new SaveFileDialog
             {
                 AddExtension = true,
                 DefaultExt = ".png",
-                FileName = "sequencediagram.png"
+                FileName = "sequencediagram.png",
+                Filter = "Portable Network Graphics (.png)|*.png"
             };
             if (saveFileDialog.ShowDialog() == true)
             {
                 SaveRTBAsPNG(renderTarget, saveFileDialog.FileName);
             }
-        }
-
-        public static void SnapShotPNG(UIElement source, int zoom)
-        {
-            double actualHeight = source.RenderSize.Height;
-            double actualWidth = source.RenderSize.Width;
-
-            double renderHeight = actualHeight*zoom;
-            double renderWidth = actualWidth*zoom;
-
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int) renderWidth, (int) renderHeight, 96, 96, PixelFormats.Pbgra32);
-            VisualBrush sourceBrush = new VisualBrush(source);
-
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-
-            using (drawingContext)
-            {
-                drawingContext.PushTransform(new ScaleTransform(zoom, zoom));
-                drawingContext.DrawRectangle(sourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
-            }
-            renderTarget.Render(drawingVisual);
         }
 
         private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
