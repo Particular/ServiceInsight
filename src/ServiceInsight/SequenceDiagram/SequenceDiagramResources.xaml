@@ -339,11 +339,11 @@
                                        Source="{StaticResource Loader}"
                                        Visibility="{Binding Name,
                                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
-                                <TextBlock VerticalAlignment="Center"
+                                <TextBlock Padding="2"
+                                           VerticalAlignment="Center"
                                            FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
                                            FontSize="14"
                                            Foreground="{StaticResource Grey40Brush}"
-                                           Padding="2"
                                            Text="{Binding Name}" />
                             </StackPanel>
                         </Border>
@@ -507,12 +507,12 @@
                                                   Foreground="{StaticResource Grey60Brush}"
                                                   Style="{StaticResource MessageIconStyle}" />
 
-                            <TextBlock HorizontalAlignment="Center"
+                            <TextBlock Padding="5 0"
+                                       HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="14"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource Grey60Brush}"
-                                       Padding="5 0"
                                        Text="{Binding Name}" />
                         </StackPanel>
 
@@ -582,8 +582,8 @@
             <ToggleButton x:Name="DropDownButton"
                           Grid.Row="0"
                           Grid.Column="3"
-                          Margin="3,0,0,0"
                           Height="25"
+                          Margin="3,0,0,0"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           Command="{Binding ChangeCurrentMessage}"
@@ -601,18 +601,16 @@
                                           Type="{Binding Type}" />
 
                     <TextBlock x:Name="MessageType"
+                               Margin="0,0,0,2"
+                               Padding="0,0,4,0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="{StaticResource Grey40Brush}"
-                               Margin="0,0,0,2"
-                               Padding="0,0,4,0"
                                Text="{Binding Name}" />
-
                 </StackPanel>
             </ToggleButton>
-
         </Grid>
 
         <DataTemplate.Triggers>
@@ -690,11 +688,11 @@
                                                   Foreground="{StaticResource Grey60Brush}"
                                                   Style="{StaticResource MessageIconStyle}" />
 
-                            <TextBlock HorizontalAlignment="Center"
+                            <TextBlock Padding="5 0"
+                                       HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource Grey60Brush}"
-                                       Padding="5 0"
                                        Text="{Binding Name}" />
                         </StackPanel>
 
@@ -763,15 +761,14 @@
                                           Type="{Binding Type}" />
 
                     <TextBlock x:Name="MessageType"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontWeight="DemiBold"
-                               FontSize="14"
-                               Foreground="{StaticResource Grey40Brush}"
                                Margin="0,0,0,2"
                                Padding="0,0,4,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="{StaticResource Grey40Brush}"
                                Text="{Binding Name}" />
-
                 </StackPanel>
             </ToggleButton>
 
@@ -862,6 +859,8 @@
     </Style>
 
     <Style TargetType="{x:Type diagram:DiagramControl}">
+        <Setter Property="Padding" Value="0" />
+
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -902,31 +901,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type diagram:DiagramControl}">
-                    <Border Background="White">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <Border x:Name="ContentBorder">
-                                <Border.Background>
-                                    <VisualBrush TileMode="Tile"
-                                                 Viewbox="0,0,50,50"
-                                                 ViewboxUnits="Absolute"
-                                                 Viewport="0,0,50,50"
-                                                 ViewportUnits="Absolute">
-                                        <VisualBrush.Visual>
-                                            <Rectangle Width="50"
-                                                       Height="50"
-                                                       Stroke="Gray"
-                                                       StrokeDashArray="5 3"
-                                                       StrokeThickness="0.5" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Border.Background>
-                                <ItemsPresenter x:Name="ItemsPresenter" />
-                            </Border>
-                        </ScrollViewer>
+                    <Border x:Name="ContentBorder" Margin="{TemplateBinding Padding}">
+                        <Border.Background>
+                            <VisualBrush TileMode="Tile"
+                                         Viewbox="0,0,50,50"
+                                         ViewboxUnits="Absolute"
+                                         Viewport="0,0,50,50"
+                                         ViewportUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Rectangle Width="50"
+                                               Height="50"
+                                               Stroke="Gray"
+                                               StrokeDashArray="5 3"
+                                               StrokeThickness="0.5" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.Background>
+                        <ItemsPresenter x:Name="ItemsPresenter" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ShowGrid" Value="False">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="{x:Null}" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="White" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

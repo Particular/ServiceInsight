@@ -52,6 +52,8 @@
                 <diagram:DiagramHeader x:Name="header"
                                        MinWidth="{Binding ElementName=diagram,
                                                           Path=ActualWidth}"
+                                       Padding="{Binding ElementName=diagram,
+                                                         Path=Padding}"
                                        ItemsSource="{Binding HeaderItems}" />
             </ScrollViewer>
 

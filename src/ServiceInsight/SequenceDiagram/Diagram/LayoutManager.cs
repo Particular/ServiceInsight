@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows;
     using Particular.ServiceInsight.Desktop.ExtensionMethods;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
@@ -72,7 +73,7 @@
             {
                 var handler = diagram.GetItemFromContainer(route.ProcessingHandler);
                 if (handler == null) return;
-                
+
                 var arrow = diagram.GetItemFromContainer(route.FromArrow);
                 if (arrow == null) return;
 
@@ -104,11 +105,6 @@
             {
                 var arrowVisual = diagram.GetItemFromContainer(arrow);
                 if (arrowVisual == null) return;
-
-//                arrow.IsFocusedChanged += (sender, args) =>
-//                {
-//                    arrowVisual.BringIntoView();
-//                };
 
                 var fromEndpointIndex = 0;
                 var fromHandler = arrow.FromHandler;
@@ -156,6 +152,11 @@
                     arrow.Direction = Direction.Left;
                     arrow.Width = fromHandlerVisual.X - (toHandlerVisual.X + toHandlerVisual.ActualWidth) - ArrowHeadWidth;
                     arrowVisual.X = fromHandlerVisual.X - arrowVisual.ActualWidth;
+
+                    if (arrowVisual.X < 0)
+                    {
+                        diagram.Padding = new Thickness(Math.Max(diagram.Padding.Left, Math.Abs(Math.Floor(arrowVisual.X))), 0, 0, 0);
+                    }
                 }
 
                 // The handler needs to refresh based on the direction of the arrow.
