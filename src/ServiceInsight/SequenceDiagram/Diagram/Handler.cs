@@ -80,6 +80,11 @@
             Route.IsFocused = IsFocused;
         }
 
+        public override DiagramItem GetFocusableItem()
+        {
+            return Route?.FromArrow;
+        }
+
         public StoredMessage SelectedMessage
         {
             get

@@ -68,9 +68,10 @@
             if (e.AddedItems.Count > 0)
             {
                 var diagramItem = (DiagramItem)e.AddedItems[0];
-                if (diagramItem.ShouldBringIntoView)
+                var itemToBringIntoView = diagramItem.GetFocusableItem();
+                if (itemToBringIntoView != null)
                 {
-                    var visualItem = GetItemFromContainer(diagramItem);
+                    var visualItem = GetItemFromContainer(itemToBringIntoView);
                     visualItem?.BringIntoView();
                 }
             }

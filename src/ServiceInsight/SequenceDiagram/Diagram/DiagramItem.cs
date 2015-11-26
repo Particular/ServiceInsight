@@ -6,10 +6,13 @@
 
         public bool IsFocused { get; set; }
 
-        public bool ShouldBringIntoView { get; set; }
-
         public virtual void OnIsFocusedChanged()
         {
+        }
+
+        public virtual DiagramItem GetFocusableItem()
+        {
+            return null;
         }
     }
 }

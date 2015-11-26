@@ -21,7 +21,6 @@
 
         public Arrow(string messageId, string conversationId, MessageStatus status, string id, DateTime? timesent, List<Header> headers, IMessageCommandContainer container)
         {
-            this.ShouldBringIntoView = true;
             this.messageId = messageId;
             this.conversationId = conversationId;
             this.status = status;
@@ -92,6 +91,11 @@
         }
 
         public double Width { get; set; }
+
+        public override DiagramItem GetFocusableItem()
+        {
+            return this;
+        }
 
         public override void OnIsFocusedChanged()
         {
