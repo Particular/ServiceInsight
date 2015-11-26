@@ -753,5 +753,60 @@
             Assert.AreEqual(4, result[1].Handlers.Count);
             Assert.AreEqual(4, result[0].Handlers[0].Out.Count());
         }
+
+        [Test]
+        public void HandlersAreInTheCorrectOrder_WhenStartOfConversationIsMissing()
+        {
+            // Based on customer data
+            var start = DateTime.UtcNow;
+
+            var messages = new List<ReceivedMessage>
+            {
+                // Msg 1 and 2 are not present
+                Msg("3", "1", "ProductPurchaseTakingTooLong", start.AddSeconds(19).AddMilliseconds(305698), "Provisioning.CRM.Orchestrator", start.AddSeconds(19).AddMilliseconds(352572), "Provisioning.Communication.Orchestrator"),
+                Msg("4", "2", "GpOrderSagaTimeout", start.AddSeconds(63).AddMilliseconds(647730), "Provisioning.GP.Orchestrator", start.AddMinutes(9).AddSeconds(24).AddMilliseconds(352189), "Provisioning.GP.Orchestrator"),
+                Msg("5", "1", "CrmOrderSagaTimeout", start.AddMinutes(5).AddSeconds(19).AddMilliseconds(233001), "Provisioning.CRM.Orchestrator", start.AddMinutes(5).AddSeconds(19).AddMilliseconds(795543), "Provisioning.CRM.Orchestrator"),
+
+            };
+
+            var creator = GetModelCreator(messages);
+
+            var result = creator.Handlers;
+
+            Assert.AreEqual(5, result.Count, "There should by 5 handlers");
+            Assert.AreEqual("1", result[0].ID, "Earliest handler should be for message 1 (even though we don't know what that was)");
+            Assert.AreEqual("ProductPurchaseTakingTooLong", result[1].Name, "Second handler should be for ProductPurchaseTakingTooLong");
+            Assert.AreEqual("2", result[2].ID, "Third handler is for message 2 (even though we don't know what that was)");
+            Assert.AreEqual("GpOrderSagaTimeout", result[3].Name, "Fourth handler should be for the GpOrderSagaTimeout");
+            Assert.AreEqual("CrmOrderSagaTimeout", result[4].Name, "Latest handler should be for CrmOrderSagaTimeout");
+
+        }
+        private static ReceivedMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to)
+        {
+            return new ReceivedMessage
+            {
+                message_id = id,
+                message_type = messageType,
+                processed_at = processed,
+                time_sent = sent,
+                sending_endpoint = new EndpointAddress
+                {
+                    name = from
+                },
+                receiving_endpoint = new EndpointAddress
+                {
+                    name = to
+                },
+                headers = new List<Header>
+                {
+                    new Header
+                    {
+                        key = MessageHeaderKeys.RelatedTo,
+                        value = relatedTo
+                    }
+                }
+            };
+        }
+
     }
 }
