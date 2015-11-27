@@ -7,6 +7,8 @@
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Diagram;
+    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
@@ -16,9 +18,11 @@
         IHandle<SelectedMessageChanged>,
         IMessageCommandContainer
     {
-        private readonly IServiceControl serviceControl;
+        readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
         string loadedConversationId;
+
+        private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net";
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
@@ -38,10 +42,13 @@
             this.SearchByMessageIDCommand = searchByMessageIDCommand;
             this.ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             this.ShowExceptionCommand = showExceptionCommand;
+            this.OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
 
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
         }
+
+        public ICommand OpenLink { get; set; }
 
         public ICommand CopyConversationIDCommand { get; private set; }
 
@@ -56,6 +63,11 @@
         public ICommand ShowExceptionCommand { get; private set; }
 
         public DiagramItemCollection DiagramItems { get; set; }
+
+        public bool HasItems
+        {
+            get { return DiagramItems.Count > 0; }
+        }
 
         public DiagramItemCollection HeaderItems { get; set; }
 
@@ -140,12 +152,15 @@
             DiagramItems.AddRange(routes);
 
             HeaderItems.AddRange(endpoints);
+
+            NotifyOfPropertyChange(nameof(HasItems));
         }
 
         void ClearState()
         {
             DiagramItems.Clear();
             HeaderItems.Clear();
+            NotifyOfPropertyChange(nameof(HasItems));
         }
     }
 

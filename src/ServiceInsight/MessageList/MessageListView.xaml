@@ -15,20 +15,20 @@
     <dxb:BarManager>
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
+                               Command="{Binding RetryMessageCommand}"
+                               CommandParameter="{Binding FocusedRow}"
                                Content="Retry Message"
                                Glyph="pack://application:,,,/Images/retryMsg.png"
                                IsVisible="{Binding IsEnabled,
-                                                   RelativeSource={RelativeSource Self}}"
-                               CommandParameter="{Binding FocusedRow}"
-                               Command="{Binding RetryMessageCommand}" />
+                                                   RelativeSource={RelativeSource Self}}" />
             <dxb:BarButtonItem Name="copyHeaders"
-                               Content="Copy Headers"
+                               Command="{Binding CopyHeadersCommand}"
                                CommandParameter="{Binding FocusedRow}"
-                               Command="{Binding CopyHeadersCommand}" />
+                               Content="Copy Headers" />
             <dxb:BarButtonItem Name="copyMessageId"
-                               Content="Copy Message URI"
+                               Command="{Binding CopyMessageIdCommand}"
                                CommandParameter="{Binding FocusedRow}"
-                               Command="{Binding CopyMessageIdCommand}" />
+                               Content="Copy Message URI" />
         </dxb:BarManager.Items>
 
         <Grid>
@@ -43,6 +43,7 @@
                              Grid.Row="1"
                              CurrentItem="{Binding FocusedRow,
                                                    Mode=TwoWay}"
+                             CurrentItemChanged="GridOnCurrentItemChanged"
                              CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
                              CustomUnboundColumnData="OnRequestAdvancedMessageData"
                              IsHitTestVisible="{Binding WorkInProgress,
@@ -50,7 +51,6 @@
                              ItemsSource="{Binding Rows}"
                              SelectionMode="None"
                              ShowLoadingPanel="{Binding WorkInProgress}"
-                             CurrentItemChanged="GridOnCurrentItemChanged"
                              StartSorting="Grid_OnStartSorting">
                 <dxb:BarManager.DXContextMenu>
                     <dxb:PopupMenu>

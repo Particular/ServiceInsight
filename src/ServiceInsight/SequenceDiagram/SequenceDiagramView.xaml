@@ -45,10 +45,46 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <StackPanel Grid.RowSpan="2"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding HasItems,
+                                             Converter={StaticResource BoolToVisibilityConverterInverted}}">
+                <ContentControl x:Name="NoConversation"
+                                Width="128"
+                                Height="128"
+                                Panel.ZIndex="100"
+                                Template="{StaticResource NoSaga}" />
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="24px"
+                           FontWeight="Bold"
+                           Foreground="#D3D3D3"
+                           Text="Data not available" />
+                <StackPanel>
+                    <Border Margin="0,20,0,0" Background="#FFE4E4E4">
+                        <StackPanel Margin="40,20">
+                            <TextBlock Margin="5,5,5,2"
+                                       HorizontalAlignment="Center"
+                                       FontSize="16"
+                                       Foreground="#FF565656">
+                                <Run Text="Data could not be found. To find out why this could happen please check out"/>
+                                <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">this</Hyperlink>
+                                <Run Text="documentation page." />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+
             <ScrollViewer Name="ScrollViewer_Header"
+                          Grid.Row="0"
                           HorizontalAlignment="Left"
                           HorizontalScrollBarVisibility="Hidden"
-                          VerticalScrollBarVisibility="Disabled">
+                          VerticalScrollBarVisibility="Disabled"
+                          Visibility="{Binding Path=HasItems,
+                                               Converter={StaticResource BoolToVisibilityConverter}}">
                 <diagram:DiagramHeader x:Name="header"
                                        MinWidth="{Binding ElementName=diagram,
                                                           Path=ActualWidth}"
@@ -60,10 +96,10 @@
             <ScrollViewer Name="ScrollViewer_Body"
                           Grid.Row="1"
                           HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <diagram:DiagramControl x:Name="diagram"
-                                        ItemsSource="{Binding DiagramItems}"
-                                        ShowGrid="False" />
+                          VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding Path=HasItems,
+                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                <diagram:DiagramControl x:Name="diagram" ItemsSource="{Binding DiagramItems}" />
             </ScrollViewer>
         </Grid>
     </Grid>

@@ -16,8 +16,6 @@
         public static string DiagramSurfacePart = "DiagramSurface";
 
         public static readonly DependencyProperty LayoutManagerProperty = DependencyProperty.Register("LayoutManager", typeof(ILayoutManager), typeof(DiagramControl), new PropertyMetadata());
-        public static readonly DependencyProperty ShowCoordinatesProperty = DependencyProperty.Register("ShowCoordinates", typeof(bool), typeof(DiagramControl), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowGridProperty = DependencyProperty.Register("ShowGrid", typeof(bool), typeof(DiagramControl), new PropertyMetadata(true));
 
         static DiagramControl()
         {
@@ -38,18 +36,6 @@
         {
             get { return (ILayoutManager)GetValue(LayoutManagerProperty); }
             set { SetValue(LayoutManagerProperty, value); }
-        }
-
-        public bool ShowGrid
-        {
-            get { return (bool)GetValue(ShowGridProperty); }
-            set { SetValue(ShowGridProperty, value); }
-        }
-
-        public bool ShowCoordinates
-        {
-            get { return (bool)GetValue(ShowCoordinatesProperty); }
-            set { SetValue(ShowCoordinatesProperty, value); }
         }
 
         public DiagramItemCollection DiagramItems
