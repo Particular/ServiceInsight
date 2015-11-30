@@ -135,9 +135,7 @@
                     //Local
                     arrow.Direction = Direction.Right;
                     arrowVisual.X += fromHandlerVisual.ActualWidth;
-
-                    var fromEndpointVisual = diagram.GetItemFromContainer(fromHandler.Endpoint);
-                    arrow.Width = (fromEndpointVisual.ActualWidth / 4) - ArrowHeadWidth;
+                    arrow.Width = 15 + ArrowHeadWidth; //fixed, small size for local sends and timeouts
                 }
                 else if (fromEndpointIndex < toEndpointIndex)
                 {
