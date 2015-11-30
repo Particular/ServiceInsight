@@ -15,6 +15,8 @@
                 return;
             }
 
+            diagram.Padding = new Thickness();
+
             var endpointLayout = new EndpointItemLayout(diagram);
             var handlerLayout = new HandlerLayout(diagram);
             var endpointTimelineLayout = new EndpointTimelineLayout(diagram);

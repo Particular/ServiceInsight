@@ -606,12 +606,12 @@
                                           Type="{Binding Type}" />
 
                     <TextBlock x:Name="MessageType"
+                               Padding="0,0,4,0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="{StaticResource Grey40Brush}"
-                               Padding="0,0,4,0"
                                Text="{Binding Name}" />
                 </StackPanel>
             </ToggleButton>
@@ -766,12 +766,12 @@
 
                     <TextBlock x:Name="MessageType"
                                Margin="0,0,0,2"
+                               Padding="0,0,4,0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="{StaticResource Grey40Brush}"
-                               Padding="0,0,4,0"
                                Text="{Binding Name}" />
                 </StackPanel>
             </ToggleButton>
@@ -905,10 +905,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type diagram:DiagramControl}">
-                    <Border Background="White">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ItemsPresenter x:Name="ItemsPresenter" />
-                        </ScrollViewer>
+                    <Border Margin="{TemplateBinding Padding}" Background="White">
+                        <ItemsPresenter x:Name="ItemsPresenter" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
