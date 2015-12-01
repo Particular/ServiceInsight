@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
-            <DockPanel Margin="5,5,2,5">
+            <StackPanel Margin="5" Orientation="Horizontal">
                 <Button Click="ExportToPng">
                     <StackPanel Orientation="Horizontal">
                         <!--<Image Margin="0,0,5,0"
@@ -38,7 +38,7 @@
                         <TextBlock VerticalAlignment="Center" Text="Export to png" />
                     </StackPanel>
                 </Button>
-            </DockPanel>
+            </StackPanel>
         </Border>
         <Grid Grid.Row="1">
 
