@@ -721,47 +721,6 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-
-    <DrawingImage x:Key="Loopback">
-        <DrawingImage.Drawing>
-            <DrawingGroup>
-                <DrawingGroup>
-                    <DrawingGroup.ClipGeometry>
-                        <RectangleGeometry Rect="-951,533,16,16" />
-                    </DrawingGroup.ClipGeometry>
-                    <DrawingGroup>
-                        <DrawingGroup>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="#FF000000"
-                                         EndLineCap="Flat"
-                                         LineJoin="Miter"
-                                         StartLineCap="Flat"
-                                         Thickness="2" />
-                                </GeometryDrawing.Pen>
-                                <GeometryDrawing.Geometry>
-                                    <PathGeometry Figures="M-943,536L-943,536 -937,536 -937,545 -945.5,545" FillRule="Nonzero" />
-                                </GeometryDrawing.Geometry>
-                            </GeometryDrawing>
-                            <DrawingGroup>
-                                <GeometryDrawing Brush="#FF000000">
-                                    <GeometryDrawing.Geometry>
-                                        <PathGeometry Figures="M-944,541.8L-944,541.8 -950,545 -944,548.2z" FillRule="Nonzero" />
-                                    </GeometryDrawing.Geometry>
-                                </GeometryDrawing>
-                            </DrawingGroup>
-                        </DrawingGroup>
-                    </DrawingGroup>
-                    <GeometryDrawing Brush="#FF000000">
-                        <GeometryDrawing.Geometry>
-                            <PathGeometry Figures="M-944,536.1C-944,537.7 -945.3,539 -947,539 -948.7,539 -950,537.7 -950,536.1 -950,534.5 -948.7,533 -947,533 -945.3,533 -944,534.4 -944,536.1z" FillRule="Nonzero" />
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup>
-            </DrawingGroup>
-        </DrawingImage.Drawing>
-    </DrawingImage>
-
     <Geometry x:Key="ChevronRight">
         M409.133,109.203c-19.608-33.592-46.205-60.189-79.798-79.796C295.736,9.801,259.058,0,219.273,0
         c-39.781,0-76.47,9.801-110.063,29.407c-33.595,19.604-60.192,46.201-79.8,79.796C9.801,142.8,0,179.489,0,219.267
