@@ -6,9 +6,21 @@
         {
             FromArrow = arrow;
             ProcessingHandler = processingHandler;
-            Name = ProcessingHandler.Name + string.Format("({0})", FromArrow.MessageId);
-            FromArrow.Route = this;
-            ProcessingHandler.Route = this;
+
+            if (FromArrow != null && ProcessingHandler != null)
+            {
+                Name = ProcessingHandler.Name + string.Format("({0})", FromArrow.MessageId);
+            }
+
+            if (FromArrow != null)
+            {
+                FromArrow.Route = this;
+            }
+
+            if (ProcessingHandler != null)
+            {
+                ProcessingHandler.Route = this;
+            }
         }
 
         public Arrow FromArrow { get; }

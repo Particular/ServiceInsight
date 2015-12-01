@@ -14,17 +14,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="SequenceDiagram/SequenceDiagramResources.xaml" />
-
                 <ResourceDictionary>
-                    <startup:AppBootstrapper x:Key="Bootstrapper" />
-
-                    <!--  Fonts  -->
-                    <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
-                    <sys:Double x:Key="MessageBodyFontSize">12</sys:Double>
-
                     <!--  Converters  -->
-                    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+                    <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" IsHidden="False" />
                     <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverterInverted" Invert="True" />
                     <cnv:BoolToVisibilityConverter x:Key="BoolToVisibilityHiddenConverter" IsHidden="True" />
                     <dx:BoolInverseConverter x:Key="BooleanInverseConverter" />
@@ -39,6 +31,10 @@
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToInvertedVisibilityConverter" Inverted="True" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+
+                    <!--  Fonts  -->
+                    <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
+                    <sys:Double x:Key="MessageBodyFontSize">12</sys:Double>
 
                     <!--  Colors and Brushes  -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
@@ -165,6 +161,12 @@
                                       Opacity="1"
                                       ShadowDepth="0"
                                       Color="{StaticResource DiagramSelectedShadowColor}" />
+                </ResourceDictionary>
+
+                <ResourceDictionary Source="SequenceDiagram/SequenceDiagramResources.xaml" />
+
+                <ResourceDictionary>
+                    <startup:AppBootstrapper x:Key="Bootstrapper" />
 
                     <!--  TextBlock Styles  -->
                     <Style x:Key="Informational" TargetType="{x:Type TextBlock}">

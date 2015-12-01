@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="ServiceInsight.SequenceDiagram.SequenceDiagramView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -28,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
-            <StackPanel Margin="5" Orientation="Horizontal">
+            <DockPanel Margin="5,5,2,5">
                 <Button Click="ExportToPng">
                     <StackPanel Orientation="Horizontal">
                         <!--<Image Margin="0,0,5,0"
@@ -37,18 +38,24 @@
                         <TextBlock VerticalAlignment="Center" Text="Export to png" />
                     </StackPanel>
                 </Button>
-            </StackPanel>
+            </DockPanel>
         </Border>
         <Grid Grid.Row="1">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
             <StackPanel Grid.RowSpan="2"
-                        Orientation="Vertical"
-                        VerticalAlignment="Center"
+                        Grid.Column="0"
                         HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical"
                         Visibility="{Binding HasItems,
                                              Converter={StaticResource BoolToVisibilityConverterInverted}}">
                 <ContentControl x:Name="NoConversation"
@@ -68,7 +75,7 @@
                                        HorizontalAlignment="Center"
                                        FontSize="16"
                                        Foreground="#FF565656">
-                                <Run Text="Data could not be found. To find out why this could happen please check out"/>
+                                <Run Text="Data could not be found. To find out why this could happen please check out" />
                                 <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">this</Hyperlink>
                                 <Run Text="documentation page." />
                             </TextBlock>
@@ -82,25 +89,97 @@
                           Grid.Row="0"
                           HorizontalAlignment="Left"
                           HorizontalScrollBarVisibility="Hidden"
-                          VerticalScrollBarVisibility="Disabled"
                           Visibility="{Binding Path=HasItems,
                                                Converter={StaticResource BoolToVisibilityConverter}}">
+                <ScrollViewer.Template>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <Grid Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <ScrollContentPresenter x:Name="ScrollContentPresenter"
+                                                        Margin="{TemplateBinding Padding}"
+                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                        Cursor="{TemplateBinding Cursor}" />
+
+                                <ToggleButton x:Name="ShowLegend"
+                                              Grid.Row="0"
+                                              Grid.Column="1"
+                                              Width="18"
+                                              Height="18"
+                                              Margin="0,0,-18,-18"
+                                              IsChecked="{Binding ShowLegend,
+                                                                  Mode=TwoWay}"
+                                              Style="{StaticResource BlankToggleButtonStyle}">
+                                    <Path x:Name="ArrowHead"
+                                          VerticalAlignment="Center"
+                                          Data="{StaticResource ChevronLeft}"
+                                          Fill="{StaticResource BlackBrush}"
+                                          Stretch="Fill" />
+
+                                </ToggleButton>
+
+                                <ScrollBar x:Name="HorizontalScrollBar"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Height="18"
+                                           Margin="-1,0,-1,-1"
+                                           IsTabStop="False"
+                                           Maximum="{TemplateBinding ScrollableWidth}"
+                                           Minimum="0"
+                                           Orientation="Horizontal"
+                                           ViewportSize="{TemplateBinding ViewportWidth}"
+                                           Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                           Value="{TemplateBinding HorizontalOffset}" />
+
+                                <Rectangle Grid.Row="1"
+                                           Grid.Column="1"
+                                           Fill="#FFE9EEF4" />
+
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="ShowLegend" Property="IsChecked" Value="True">
+                                <Setter TargetName="ArrowHead" Property="Data" Value="{StaticResource ChevronRight}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ScrollViewer.Template>
+
                 <diagram:DiagramHeader x:Name="header"
                                        MinWidth="{Binding ElementName=diagram,
                                                           Path=ActualWidth}"
+                                       ItemsSource="{Binding HeaderItems}"
                                        Padding="{Binding ElementName=diagram,
-                                                         Path=Padding}"
-                                       ItemsSource="{Binding HeaderItems}" />
+                                                         Path=Padding}" />
             </ScrollViewer>
+
+            <ContentControl Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Width="300"
+                            Visibility="{Binding Path=ShowLegend,
+                                                 Converter={StaticResource BoolToVisibilityConverter}}"
+                            cal:View.Model="{Binding DiagramLegend}" />
 
             <ScrollViewer Name="ScrollViewer_Body"
                           Grid.Row="1"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Visibility="{Binding Path=HasItems,
-                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                                               Converter={StaticResource BoolToVisibilityHiddenConverter}}">
                 <diagram:DiagramControl x:Name="diagram" ItemsSource="{Binding DiagramItems}" />
             </ScrollViewer>
+
         </Grid>
     </Grid>
 </UserControl>

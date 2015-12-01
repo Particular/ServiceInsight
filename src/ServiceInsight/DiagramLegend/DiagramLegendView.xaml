@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="ServiceInsight.DiagramLegend.DiagramLegendView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:diagramLegend="clr-namespace:ServiceInsight.DiagramLegend"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Margin="10,4,4,4"
+             d:DataContext="{d:DesignInstance diagramLegend:DiagramLegendViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+
+    <ItemsControl ItemsSource="{Binding DiagramItemsDescription}">
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="diagramLegend:DiagramItemDescription">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ContentControl HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center"
+                                    Grid.Column="0"
+                                    Margin="3"
+                                    Content="{Binding Path=Item}"
+                                    IsHitTestVisible="False" />
+
+                    <TextBlock Grid.Column="1"
+                               Margin="0,3,3,3"
+                               VerticalAlignment="Center"
+                               Text="{Binding Path=Description}"
+                               TextWrapping="WrapWithOverflow" />
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+    </ItemsControl>
+</UserControl>

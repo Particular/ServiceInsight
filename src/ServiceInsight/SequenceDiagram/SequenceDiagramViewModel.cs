@@ -13,6 +13,7 @@
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.DiagramLegend;
 
     public class SequenceDiagramViewModel : Screen,
         IHandle<SelectedMessageChanged>,
@@ -27,6 +28,7 @@
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
+            DiagramLegendViewModel diagramLegend,
             CopyConversationIDCommand copyConversationIDCommand,
             CopyMessageURICommand copyMessageURICommand,
             RetryMessageCommand retryMessageCommand,
@@ -44,6 +46,7 @@
             this.ShowExceptionCommand = showExceptionCommand;
             this.OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
 
+            DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
         }
@@ -62,7 +65,11 @@
 
         public ICommand ShowExceptionCommand { get; private set; }
 
+        public DiagramLegendViewModel DiagramLegend { get; }
+
         public DiagramItemCollection DiagramItems { get; set; }
+
+        public bool ShowLegend { get; set; }
 
         public bool HasItems
         {

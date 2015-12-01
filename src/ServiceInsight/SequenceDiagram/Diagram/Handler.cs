@@ -16,7 +16,7 @@
         public Handler(string id, IMessageCommandContainer container)
         {
             this.id = id;
-            this.ChangeCurrentMessage = container.ChangeSelectedMessageCommand;
+            this.ChangeCurrentMessage = container?.ChangeSelectedMessageCommand;
             Out = new List<Arrow>();
         }
 

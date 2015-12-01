@@ -334,7 +334,8 @@
                         </Border>
                         <Border x:Name="MessageType"
                                 Height="22"
-                                Background="White">
+                                Background="White"
+                                Visibility="{Binding Name, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="14"
                                        Height="14"

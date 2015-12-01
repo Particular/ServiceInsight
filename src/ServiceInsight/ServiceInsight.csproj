@@ -232,6 +232,10 @@
     <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
+    <Compile Include="DiagramLegend\DiagramLegendView.xaml.cs">
+      <DependentUpon>DiagramLegendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
@@ -536,6 +540,10 @@
     <Compile Include="ValueConverters\ThicknessToWidthConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
+    <Page Include="DiagramLegend\DiagramLegendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Framework\ExceptionHandler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

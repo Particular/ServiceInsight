@@ -28,12 +28,12 @@
             this.timesent = timesent;
             this.headers = headers;
 
-            CopyConversationIDCommand = container.CopyConversationIDCommand;
-            CopyMessageURICommand = container.CopyMessageURICommand;
-            RetryMessageCommand = container.RetryMessageCommand;
-            SearchByMessageIDCommand = container.SearchByMessageIDCommand;
-            ChangeCurrentMessage = container.ChangeSelectedMessageCommand;
-            ShowExceptionCommand = container.ShowExceptionCommand;
+            CopyConversationIDCommand = container?.CopyConversationIDCommand;
+            CopyMessageURICommand = container?.CopyMessageURICommand;
+            RetryMessageCommand = container?.RetryMessageCommand;
+            SearchByMessageIDCommand = container?.SearchByMessageIDCommand;
+            ChangeCurrentMessage = container?.ChangeSelectedMessageCommand;
+            ShowExceptionCommand = container?.ShowExceptionCommand;
         }
 
         public ICommand RetryMessageCommand { get; set; }
@@ -65,7 +65,7 @@
                     Id = id,
                     Status = status,
                     SendingEndpoint = Sending,
-                    Headers = headers.Select(h => new StoredMessageHeader { Key = h.key, Value = h.value }).ToList()
+                    Headers = headers?.Select(h => new StoredMessageHeader { Key = h.key, Value = h.value }).ToList()
                 };
             }
         }
@@ -100,7 +100,10 @@
         public override void OnIsFocusedChanged()
         {
             base.OnIsFocusedChanged();
-            Route.IsFocused = IsFocused;
+            if (Route != null)
+            {
+                Route.IsFocused = IsFocused;
+            }
         }
 
         public MessageProcessingRoute Route { get; set; }
