@@ -62,7 +62,7 @@
                                 Width="128"
                                 Height="128"
                                 Panel.ZIndex="100"
-                                Template="{StaticResource NoSaga}" />
+                                Template="{StaticResource NoConversation}" />
                 <TextBlock HorizontalAlignment="Center"
                            FontSize="24px"
                            FontWeight="Bold"

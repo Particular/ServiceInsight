@@ -361,36 +361,55 @@
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="NoConversation">
-        <Viewbox Stretch="UniformToFill">
-            <Canvas Width="128" Height="128">
-                <Polygon Fill="#000000"
-                         FillRule="NonZero"
-                         Points="14,9 14,4 13,4 12,4 6,4 6,1 4,1 4,4 4,5 4,6 12,6 12,9 11,9 13,13 15,9 " />
-                <Rectangle Name="rect13"
-                           Canvas.Left="3"
-                           Canvas.Top="-3"
-                           Width="4"
-                           Height="5"
-                           Fill="#000000" />
-                <Rectangle Name="rect7"
-                           Canvas.Left="17"
-                           Canvas.Top="-3"
-                           Width="2"
-                           Height="4"
-                           Fill="#000000" />
-                <Rectangle Name="rect9"
-                           Canvas.Left="17"
-                           Canvas.Top="3"
-                           Width="2"
-                           Height="4"
-                           Fill="#000000" />
-                <Rectangle Name="rect11"
-                           Canvas.Left="17"
-                           Canvas.Top="9"
-                           Width="2"
-                           Height="4"
-                           Fill="#000000" />
-            </Canvas>
+        <Viewbox Stretch="Uniform">
+            <Image>
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <DrawingGroup>
+                                <DrawingGroup x:Name="DrawingLayer">
+                                    <DrawingGroup.ClipGeometry>
+                                        <RectangleGeometry Rect="3,-3,16,16" />
+                                    </DrawingGroup.ClipGeometry>
+                                    <GeometryDrawing Brush="#FFD3D3D3">
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry Figures="M14,9L14,9 14,4 13,4 12,4 6,4 6,1 4,1 4,4 4,5 4,6 12,6 12,9 11,9 13,13 15,9z" FillRule="Nonzero" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFD3D3D3">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0"
+                                                               RadiusY="0"
+                                                               Rect="17,-3,2,4" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFD3D3D3">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0"
+                                                               RadiusY="0"
+                                                               Rect="17,3,2,4" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFD3D3D3">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0"
+                                                               RadiusY="0"
+                                                               Rect="17,9,2,4" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFE4E4E4">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0"
+                                                               RadiusY="0"
+                                                               Rect="3,-3,4,5" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+            </Image>
         </Viewbox>
     </ControlTemplate>
 
