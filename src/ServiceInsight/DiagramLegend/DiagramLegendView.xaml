@@ -10,31 +10,34 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
 
-    <ItemsControl ItemsSource="{Binding DiagramItemsDescription}">
+    <StackPanel>
+        <TextBlock Padding="3" TextAlignment="Center" FontSize="22">Legend</TextBlock>
+        <Border BorderBrush="#A6A6A8" BorderThickness="1">
+            <ItemsControl ItemsSource="{Binding DiagramItemsDescription}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="diagramLegend:DiagramItemDescription">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-        <ItemsControl.ItemTemplate>
-            <DataTemplate DataType="diagramLegend:DiagramItemDescription">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                            <ContentControl HorizontalContentAlignment="Left"
+                                            VerticalContentAlignment="Center"
+                                            Grid.Column="0"
+                                            Margin="3"
+                                            Content="{Binding Path=Item}"
+                                            IsHitTestVisible="False" />
 
-                    <ContentControl HorizontalContentAlignment="Left"
-                                    VerticalContentAlignment="Center"
-                                    Grid.Column="0"
-                                    Margin="3"
-                                    Content="{Binding Path=Item}"
-                                    IsHitTestVisible="False" />
-
-                    <TextBlock Grid.Column="1"
-                               Margin="0,3,3,3"
-                               VerticalAlignment="Center"
-                               Text="{Binding Path=Description}"
-                               TextWrapping="WrapWithOverflow" />
-                </Grid>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-
-    </ItemsControl>
+                            <TextBlock Grid.Column="1"
+                                       Margin="0,3,3,3"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Path=Description}"
+                                       TextWrapping="WrapWithOverflow" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </StackPanel>
 </UserControl>

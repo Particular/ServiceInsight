@@ -116,16 +116,15 @@
                                               Grid.Column="1"
                                               Width="18"
                                               Height="18"
-                                              Margin="0,0,-18,-18"
                                               IsChecked="{Binding ShowLegend,
                                                                   Mode=TwoWay}"
-                                              Style="{StaticResource BlankToggleButtonStyle}">
+                                              Style="{StaticResource BlankToggleButtonStyle}"
+                                              ToolTip="Show Legend">
                                     <Path x:Name="ArrowHead"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource ChevronLeft}"
                                           Fill="{StaticResource BlackBrush}"
                                           Stretch="Fill" />
-
                                 </ToggleButton>
 
                                 <ScrollBar x:Name="HorizontalScrollBar"
@@ -150,6 +149,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger SourceName="ShowLegend" Property="IsChecked" Value="True">
                                 <Setter TargetName="ArrowHead" Property="Data" Value="{StaticResource ChevronRight}" />
+                                <Setter TargetName="ShowLegend" Property="ToolTip" Value="Hide Legend" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

@@ -300,6 +300,7 @@
     <Compile Include="SequenceDiagram\Diagram\HandlerState.cs" />
     <Compile Include="SequenceDiagram\ModelCreator.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
+    <Compile Include="Settings\SequenceDiagramSettings.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>

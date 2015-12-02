@@ -11,8 +11,10 @@
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Particular.ServiceInsight.Desktop.Settings;
     using ServiceInsight.DiagramLegend;
 
     public class SequenceDiagramViewModel : Screen,
@@ -21,13 +23,16 @@
     {
         readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
+        private readonly ISettingsProvider settingsProvider;
         string loadedConversationId;
+        private SequenceDiagramSettings settings;
 
         private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net";
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
+            ISettingsProvider settingsProvider,
             DiagramLegendViewModel diagramLegend,
             CopyConversationIDCommand copyConversationIDCommand,
             CopyMessageURICommand copyMessageURICommand,
@@ -38,6 +43,7 @@
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
+            this.settingsProvider = settingsProvider;
             this.CopyConversationIDCommand = copyConversationIDCommand;
             this.CopyMessageURICommand = copyMessageURICommand;
             this.RetryMessageCommand = retryMessageCommand;
@@ -49,6 +55,10 @@
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
+
+            settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
+
+            ShowLegend = settings.ShowLegend;
         }
 
         public ICommand OpenLink { get; set; }
@@ -70,6 +80,12 @@
         public DiagramItemCollection DiagramItems { get; set; }
 
         public bool ShowLegend { get; set; }
+
+        private void OnShowLegendChanged()
+        {
+            settings.ShowLegend = ShowLegend;
+            settingsProvider.SaveSettings(settings);
+        }
 
         public bool HasItems
         {

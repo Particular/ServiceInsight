@@ -7,10 +7,10 @@
 
     public class DiagramLegendViewModel : Screen
     {
-        private const int ArrowWidth = 100;
+        private const int ArrowWidth = 50;
         private const int LocalArrowWidth = 30;
         private const int HandlerWidth = 20;
-        private const int HandlerHeight = 50;
+        private const int HandlerHeight = 25;
         
         public DiagramLegendViewModel()
         {
@@ -22,27 +22,13 @@
 
         void GenerateLegendData()
         {
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateConversationStartMessage(), "Start of a Conversation"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateHandler(), "Handling and processing of a Message"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateErrorHandler(), "Handling of a Message failed"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateEventMessage(), "Publishing an Event"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateCommandMessage(), "Sending a Command"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateLocalSendCommandMessage(), "Sending a Local Message"));
-            DiagramItemsDescription.Add(new DiagramItemDescription(CreateTimeoutMessage(), "Raising a Timeout"));
-            //DiagramItemsDescription.Add(new DiagramItemDescription(CreateMessageRoute(), "Connects Message and Handler"));
-        }
-
-        private DiagramVisualItem CreateMessageRoute()
-        {
-            var route = new MessageProcessingRoute(null, null);
-            var diagramItem = new DiagramVisualItem
-            {
-                Content = route,
-                Height = 100,
-                Width = 20
-            };
-
-            return diagramItem;
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateConversationStartMessage(), "Start Conversation"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateHandler(), "Process Message"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateErrorHandler(), "Process Message Failed"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateEventMessage(), "Publish Event"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateCommandMessage(), "Send Message"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateLocalSendCommandMessage(), "Send Local Message"));
+            DiagramItemsDescription.Add(new DiagramItemDescription(CreateTimeoutMessage(), "Request Timeout"));
         }
 
         DiagramVisualItem CreateErrorHandler()
@@ -108,7 +94,7 @@
         {
             var arrow = new Arrow("Event", null, MessageStatus.Successful, "Event", null, null, null)
             {
-                Width = 100,
+                Width = ArrowWidth,
                 Type = ArrowType.Event
             };
 
