@@ -27,7 +27,7 @@
         string loadedConversationId;
         private SequenceDiagramSettings settings;
 
-        private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net";
+        private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
