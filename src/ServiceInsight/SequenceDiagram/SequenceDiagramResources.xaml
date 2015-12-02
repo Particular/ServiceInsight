@@ -218,6 +218,10 @@
                 <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
@@ -335,7 +339,8 @@
                         <Border x:Name="MessageType"
                                 Height="22"
                                 Background="White"
-                                Visibility="{Binding Name, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                                Visibility="{Binding Name,
+                                                     Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="14"
                                        Height="14"
@@ -345,7 +350,8 @@
                                        Source="{StaticResource Loader}"
                                        Visibility="{Binding Name,
                                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
-                                <TextBlock Padding="2"
+                                <TextBlock x:Name="MessageTypeText"
+                                           Padding="2"
                                            VerticalAlignment="Center"
                                            FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
                                            FontSize="14"
@@ -359,13 +365,19 @@
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBrush}" />
                             <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                        </DataTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsChecked" Value="True" />
                                 <Condition SourceName="ErrorIcon" Property="Visibility" Value="Hidden" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBrush}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}" />
                         </MultiTrigger>
+
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
                             <Setter TargetName="MessageType" Property="Canvas.Left" Value="15" />
                             <Setter TargetName="MessageType" Property="Margin" Value="4,0,0,0" />
@@ -623,24 +635,19 @@
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
             </DataTrigger>
 
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True" />
-                </MultiTrigger.Conditions>
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
-                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightColor}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </MultiTrigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition SourceName="DropDownButton" Property="IsChecked" Value="True" />
-                </MultiTrigger.Conditions>
+            </Trigger>
+
+            <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
                 <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
-            </MultiTrigger>
+            </Trigger>
 
             <EventTrigger RoutedEvent="Button.MouseRightButtonUp" SourceName="DropDownButton">
                 <BeginStoryboard>
@@ -803,24 +810,18 @@
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
             </DataTrigger>
 
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True" />
-                </MultiTrigger.Conditions>
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
-                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightColor}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </MultiTrigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition SourceName="DropDownButton" Property="IsChecked" Value="True" />
-                </MultiTrigger.Conditions>
+            </Trigger>
+            <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
                 <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
-            </MultiTrigger>
+            </Trigger>
 
             <EventTrigger RoutedEvent="Button.MouseRightButtonUp" SourceName="DropDownButton">
                 <BeginStoryboard>
@@ -895,6 +896,9 @@
                                     <DataTrigger Binding="{Binding IsFocused}" Value="True">
                                         <Setter Property="ZIndex" Value="10" />
                                     </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Hilight" Value="True" />
+                                    </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>

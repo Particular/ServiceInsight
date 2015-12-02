@@ -8,10 +8,13 @@
         public static DependencyProperty XProperty = DependencyProperty.Register("X", typeof(double), typeof(DiagramVisualItem), new PropertyMetadata());
         public static DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(DiagramVisualItem), new PropertyMetadata());
         public static DependencyProperty ZIndexProperty = DependencyProperty.Register("ZIndex", typeof(int), typeof(DiagramVisualItem), new PropertyMetadata());
+        public static DependencyProperty HilightProperty = DependencyProperty.Register("Hilight", typeof(bool), typeof(DiagramVisualItem), new PropertyMetadata(HilightChanged));
+
+        public event DependencyPropertyChangedEventHandler HilightChangedEvent;
 
         public double X
         {
-            get { return (double) GetValue(XProperty); }
+            get { return (double)GetValue(XProperty); }
             set { SetValue(XProperty, value); }
         }
 
@@ -23,8 +26,24 @@
 
         public int ZIndex
         {
-            get { return (int) GetValue(ZIndexProperty); }
+            get { return (int)GetValue(ZIndexProperty); }
             set { SetValue(ZIndexProperty, value); }
+        }
+
+        public bool Hilight
+        {
+            get { return (bool)GetValue(HilightProperty); }
+            set { SetValue(HilightProperty, value); }
+        }
+
+        static void HilightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((DiagramVisualItem)d).OnHilightChanged(e);
+        }
+
+        protected virtual void OnHilightChanged(DependencyPropertyChangedEventArgs e)
+        {
+            HilightChangedEvent?.Invoke(this, new DependencyPropertyChangedEventArgs(HilightProperty, e.OldValue, e.NewValue));
         }
     }
 }

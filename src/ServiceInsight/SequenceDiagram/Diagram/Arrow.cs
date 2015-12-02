@@ -74,6 +74,8 @@
 
         public Handler ToHandler { get; set; }
 
+        public MessageProcessingRoute MessageProcessingRoute { get; set; }
+
         public Direction Direction { get; set; }
 
         public ArrowType Type { get; set; }

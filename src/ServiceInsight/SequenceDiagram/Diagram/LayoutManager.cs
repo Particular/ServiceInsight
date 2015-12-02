@@ -128,6 +128,15 @@
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
                 if (toHandlerVisual == null) return;
 
+                var messageProcessingRouteVisual = diagram.GetItemFromContainer(arrow.MessageProcessingRoute);
+                if (messageProcessingRouteVisual == null) return;
+
+                arrowVisual.HilightChangedEvent += (sender, e) =>
+                {
+                    toHandlerVisual.Hilight = (bool)e.NewValue;
+                    messageProcessingRouteVisual.Hilight = (bool)e.NewValue;
+                };
+
                 arrowVisual.X = fromHandlerVisual.X;
                 var arrowIndex = fromHandler.Out.IndexOf(arrow) + 1;
                 arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height / (fromHandler.Out.Count() + 1)) * arrowIndex) - 15;
