@@ -2,11 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Diagram;
+    using Microsoft.Win32;
     using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Commands;
@@ -39,7 +44,8 @@
             RetryMessageCommand retryMessageCommand,
             SearchByMessageIDCommand searchByMessageIDCommand,
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
-            ShowExceptionCommand showExceptionCommand)
+            ShowExceptionCommand showExceptionCommand,
+            SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
@@ -51,6 +57,7 @@
             this.ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             this.ShowExceptionCommand = showExceptionCommand;
             this.OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            this.ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
 
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
@@ -61,7 +68,53 @@
             ShowLegend = settings.ShowLegend;
         }
 
-        public ICommand OpenLink { get; set; }
+        void ExportToPng(SequenceDiagramView view)
+        {
+            var bodyElement = (UIElement)view.ScrollViewer_Body.Content;
+            var headerElement = (UIElement)view.ScrollViewer_Header.Content;
+
+            var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
+            var actualWidth = bodyElement.RenderSize.Width;
+
+            var renderTarget = new RenderTargetBitmap((int)actualWidth, (int)actualHeight, 96, 96, PixelFormats.Default);
+            var bodySourceBrush = new VisualBrush(bodyElement);
+
+            var drawingVisual = new DrawingVisual();
+            using (var drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+            }
+
+            renderTarget.Render(drawingVisual);
+
+            var saveFileDialog = new SaveFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = ".png",
+                FileName = "sequencediagram.png",
+                Filter = "Portable Network Graphics (.png)|*.png"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveRTBAsPNG(renderTarget, saveFileDialog.FileName);
+            }
+        }
+
+        private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new PngBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(bmp));
+
+            using (var stm = File.Create(filename))
+            {
+                enc.Save(stm);
+            }
+        }
+
+        public ICommand ExportDiagramCommand { get; private set; }
+
+        public ICommand OpenLink { get; private set; }
 
         public ICommand CopyConversationIDCommand { get; private set; }
 
@@ -87,10 +140,7 @@
             settingsProvider.SaveSettings(settings);
         }
 
-        public bool HasItems
-        {
-            get { return DiagramItems.Count > 0; }
-        }
+        public bool HasItems => DiagramItems != null && DiagramItems.Count > 0;
 
         public DiagramItemCollection HeaderItems { get; set; }
 
