@@ -72,9 +72,9 @@
                                        HorizontalAlignment="Center"
                                        FontSize="16"
                                        Foreground="#FF565656">
-                                <Run Text="Data could not be found. To find out why this could happen please check out" />
-                                <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">this</Hyperlink>
-                                <Run Text="documentation page." />
+                                <Run Text="Data could not be found. " />
+                                <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">Learn more</Hyperlink>
+                                <Run Text=" about the possible reasons for this to happen." />
                             </TextBlock>
 
                         </StackPanel>
