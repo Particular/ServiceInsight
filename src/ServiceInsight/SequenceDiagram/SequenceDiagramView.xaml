@@ -32,7 +32,10 @@
             <StackPanel Margin="5" Orientation="Horizontal">
                 <Button Command="{Binding ExportDiagramCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="Export to png" />
+                        <ContentControl Width="12"
+                                        Margin="0, 0, 2, 0"
+                                        Template="{StaticResource ExportToPNG}" />
+                        <TextBlock VerticalAlignment="Center" Text="Export to PNG" />
                     </StackPanel>
                 </Button>
             </StackPanel>
