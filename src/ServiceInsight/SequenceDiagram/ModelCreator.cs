@@ -10,14 +10,14 @@ namespace ServiceInsight.SequenceDiagram
 
     public class ModelCreator
     {
-        readonly List<ReceivedMessage> messages;
+        readonly List<StoredMessage> messages;
 
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
         List<MessageProcessingRoute> processingRoutes = new List<MessageProcessingRoute>();
         IMessageCommandContainer container;
 
-        public ModelCreator(List<ReceivedMessage> messages, IMessageCommandContainer container)
+        public ModelCreator(List<StoredMessage> messages, IMessageCommandContainer container)
         {
             this.messages = messages;
             this.container = container;
@@ -82,7 +82,7 @@ namespace ServiceInsight.SequenceDiagram
                     sendingEndpoint.Handlers.Add(sendingHandler);
                 }
 
-                sendingHandler.UpdateProcessedAtGuess(message.time_sent);
+                sendingHandler.UpdateProcessedAtGuess(message.TimeSent);
 
                 if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
                 {
@@ -95,8 +95,6 @@ namespace ServiceInsight.SequenceDiagram
                 }
 
                 var arrow = CreateArrow(message);
-                arrow.Receiving = new Endpoint { Name = processingEndpoint.Name, Host = processingEndpoint.Host };
-                arrow.Sending = new Endpoint { Name = sendingEndpoint.Name, Host = sendingEndpoint.Host };
                 arrow.ToHandler = processingHandler;
                 arrow.FromHandler = sendingHandler;
 
@@ -116,11 +114,10 @@ namespace ServiceInsight.SequenceDiagram
             return new MessageProcessingRoute(arrow, processingHandler);
         }
 
-        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<ReceivedMessage> recievedMessages)
+        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messages)
         {
-            var nodes = recievedMessages.Select(x => new MessageTreeNode(x)).ToList();
+            var nodes = messages.Select(x => new MessageTreeNode(x)).ToList();
             var resolved = new HashSet<MessageTreeNode>();
-
             var index = nodes.ToLookup(x => x.Id);
 
             foreach (var node in nodes)
@@ -136,19 +133,19 @@ namespace ServiceInsight.SequenceDiagram
             return nodes.Except(resolved);
         }
 
-        EndpointItem CreateProcessingEndpoint(ReceivedMessage m)
+        private static EndpointItem CreateProcessingEndpoint(StoredMessage m)
         {
-            return new EndpointItem(m.receiving_endpoint.name, m.receiving_endpoint.host, m.receiving_endpoint.host_id, m.sending_endpoint.Equals(m.receiving_endpoint) ? GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null) : null);
+            return new EndpointItem(m.ReceivingEndpoint.Name, m.ReceivingEndpoint.Host, m.ReceivingEndpoint.HostId, m.SendingEndpoint.Equals(m.ReceivingEndpoint) ? m.GetHeaderByKey(MessageHeaderKeys.Version, null) : null);
         }
 
-        EndpointItem CreateSendingEndpoint(ReceivedMessage m)
+        private static EndpointItem CreateSendingEndpoint(StoredMessage m)
         {
-            return new EndpointItem(m.sending_endpoint.name, m.sending_endpoint.host, m.sending_endpoint.host_id, GetHeaderByKey(m.headers, MessageHeaderKeys.Version, null));
+            return new EndpointItem(m.SendingEndpoint.Name, m.SendingEndpoint.Host, m.SendingEndpoint.HostId, m.GetHeaderByKey(MessageHeaderKeys.Version, null));
         }
 
-        Handler CreateSendingHandler(ReceivedMessage message, EndpointItem sendingEndpoint)
+        Handler CreateSendingHandler(StoredMessage message, EndpointItem sendingEndpoint)
         {
-            var handler = new Handler(GetHeaderByKey(message.headers, MessageHeaderKeys.RelatedTo, "First"), container)
+            var handler = new Handler(message.GetHeaderByKey(MessageHeaderKeys.RelatedTo, "First"), container)
             {
                 State = HandlerState.Success,
                 Endpoint = sendingEndpoint
@@ -157,9 +154,9 @@ namespace ServiceInsight.SequenceDiagram
             return handler;
         }
 
-        Handler CreateProcessingHandler(ReceivedMessage message, EndpointItem processingEndpoint)
+        Handler CreateProcessingHandler(StoredMessage message, EndpointItem processingEndpoint)
         {
-            var handler = new Handler(message.message_id, container)
+            var handler = new Handler(message.MessageId, container)
             {
                 Endpoint = processingEndpoint
             };
@@ -169,18 +166,18 @@ namespace ServiceInsight.SequenceDiagram
             return handler;
         }
 
-        void UpdateProcessingHandler(Handler processingHandler, ReceivedMessage message, EndpointItem processingEndpoint)
+        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message, EndpointItem processingEndpoint)
         {
-            processingHandler.ProcessedAt = message.processed_at;
-            processingHandler.ProcessingTime = message.processing_time;
-            processingHandler.Name = TypeHumanizer.ToName(message.message_type);
+            processingHandler.ProcessedAt = message.ProcessedAt;
+            processingHandler.ProcessingTime = message.ProcessingTime;
+            processingHandler.Name = TypeHumanizer.ToName(message.MessageType);
 
-            if (message.invoked_sagas != null && message.invoked_sagas.Count > 0)
+            if (message.InvokedSagas != null && message.InvokedSagas.Count > 0)
             {
-                processingHandler.PartOfSaga = string.Join(", ", Array.ConvertAll(message.invoked_sagas.ToArray(), x => TypeHumanizer.ToName(x.saga_type)));
+                processingHandler.PartOfSaga = string.Join(", ", Array.ConvertAll(message.InvokedSagas.ToArray(), x => TypeHumanizer.ToName(x.SagaType)));
             }
 
-            if (message.status == MessageStatus.ArchivedFailure || message.status == MessageStatus.Failed || message.status == MessageStatus.RepeatedFailure)
+            if (message.Status == MessageStatus.ArchivedFailure || message.Status == MessageStatus.Failed || message.Status == MessageStatus.RepeatedFailure)
             {
                 processingHandler.State = HandlerState.Fail;
             }
@@ -190,27 +187,26 @@ namespace ServiceInsight.SequenceDiagram
             }
         }
 
-        Arrow CreateArrow(ReceivedMessage message)
+        Arrow CreateArrow(StoredMessage message)
         {
-            var arrow = new Arrow(message.message_id, message.conversation_id, message.status, message.id, message.time_sent, message.headers, container)
+            var arrow = new Arrow(message, container)
             {
-                Name = TypeHumanizer.ToName(message.message_type),
-                SentTime = message.time_sent,
+                Name = TypeHumanizer.ToName(message.MessageType)
             };
 
-            if (message.message_intent == MessageIntent.Publish)
+            if (message.MessageIntent == MessageIntent.Publish)
             {
                 arrow.Type = ArrowType.Event;
             }
             else
             {
-                var isTimeoutString = GetHeaderByKey(message.headers, MessageHeaderKeys.IsSagaTimeout);
+                var isTimeoutString = message.GetHeaderByKey(MessageHeaderKeys.IsSagaTimeout);
                 var isTimeout = !string.IsNullOrEmpty(isTimeoutString) && bool.Parse(isTimeoutString);
                 if (isTimeout)
                 {
                     arrow.Type = ArrowType.Timeout;
                 }
-                else if (Equals(message.receiving_endpoint, message.sending_endpoint))
+                else if (Equals(message.ReceivingEndpoint, message.SendingEndpoint))
                 {
                     arrow.Type = ArrowType.Local;
                 }
@@ -303,20 +299,20 @@ namespace ServiceInsight.SequenceDiagram
         {
             List<MessageTreeNode> children = new List<MessageTreeNode>();
 
-            public MessageTreeNode(ReceivedMessage msg)
+            public MessageTreeNode(StoredMessage msg)
             {
-                this.Message = msg;
-                Parent = GetHeaderByKey(msg.headers, MessageHeaderKeys.RelatedTo, null);
+                Message = msg;
+                Parent = msg.GetHeaderByKey(MessageHeaderKeys.RelatedTo, null);
             }
 
             public string Id
             {
-                get { return Message.message_id; }
+                get { return Message.MessageId; }
             }
 
             public string Parent { get; set; }
 
-            public ReceivedMessage Message { get; set; }
+            public StoredMessage Message { get; set; }
 
             public IEnumerable<MessageTreeNode> Children
             {
@@ -328,10 +324,10 @@ namespace ServiceInsight.SequenceDiagram
                 children.Add(childNode);
             }
 
-            public IEnumerable<ReceivedMessage> Walk()
+            public IEnumerable<StoredMessage> Walk()
             {
                 yield return Message;
-                foreach (var child in Children.OrderBy(x => x.Message.processed_at))
+                foreach (var child in Children.OrderBy(x => x.Message.ProcessedAt))
                 {
                     foreach (var walked in child.Walk())
                     {

@@ -19,7 +19,7 @@
             container = Substitute.For<IMessageCommandContainer>();
         }
 
-        ModelCreator GetModelCreator(List<ReceivedMessage> messages)
+        ModelCreator GetModelCreator(List<StoredMessage> messages)
         {
             return new ModelCreator(messages, container);
         }
@@ -27,7 +27,7 @@
         [Test]
         public void NoMessages()
         {
-            var messages = new List<ReceivedMessage>();
+            var messages = new List<StoredMessage>();
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
@@ -37,30 +37,30 @@
         [Test]
         public void SameSenderAndReceiver()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A",
+                        Name = "A",
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.Version,
-                            value = "1"
+                            Key =  MessageHeaderKeys.Version,
+                            Value = "1"
                         },
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "10"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "10"
                         }
                     }
                 }
@@ -76,80 +76,80 @@
         [Test]
         public void SameLogicalEndpointsWithDifferentVersions()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    SendingEndpoint = new Endpoint()
                     {
-                        name = "A",
+                        Name = "A",
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.Version,
-                            value = "1"
+                            Key =  MessageHeaderKeys.Version,
+                            Value = "1"
                         },
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "10"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "10"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A",
+                        Name = "A",
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.Version,
-                            value = "2"
+                            Key =  MessageHeaderKeys.Version,
+                            Value = "2"
                         },
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "10"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "10"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A",
+                        Name = "A",
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.Version,
-                            value = "3"
+                            Key =  MessageHeaderKeys.Version,
+                            Value = "3"
                         },
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "10"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "10"
                         }
                     }
                 }
@@ -167,58 +167,58 @@
         [Test]
         public void SequentialFlowWithDistinctEndpoints()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "D"
+                        Name = "D"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "2"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "2"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>()
+                    Headers = new List<StoredMessageHeader>()
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 }
@@ -237,25 +237,25 @@
         [Test]
         public void SequentialFlowWithMissingRelatedTo()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 }
@@ -272,63 +272,63 @@
         [Test]
         public void SequentialFlowWithSharedSourceEndpoints()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    processed_at = DateTime.UtcNow.AddMinutes(1),
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    ProcessedAt = DateTime.UtcNow.AddMinutes(1),
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    processed_at = DateTime.UtcNow.AddMinutes(2),
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    ProcessedAt = DateTime.UtcNow.AddMinutes(2),
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "D"
+                        Name = "D"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    processed_at = DateTime.UtcNow,
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    ProcessedAt = DateTime.UtcNow,
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>()
+                    Headers = new List<StoredMessageHeader>()
                 }
             };
 
@@ -345,60 +345,60 @@
         [Test]
         public void SequentialFlowWithSharedDestinationEndpoints()
         {
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     }
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>()
+                    Headers = new List<StoredMessageHeader>()
                 }
             };
 
@@ -416,82 +416,82 @@
         {
             var currentDateTime = DateTime.UtcNow;
 
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "D"
+                        Name = "D"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message3",
-                    processed_at = currentDateTime.AddMinutes(2),
-                    time_sent = currentDateTime.AddSeconds(3),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message3",
+                    ProcessedAt = currentDateTime.AddMinutes(2),
+                    TimeSent = currentDateTime.AddSeconds(3),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message2",
-                    processed_at = currentDateTime.AddMinutes(1),
-                    time_sent = currentDateTime.AddSeconds(2),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message2",
+                    ProcessedAt = currentDateTime.AddMinutes(1),
+                    TimeSent = currentDateTime.AddSeconds(2),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "4",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "4",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message4",
-                    processed_at = currentDateTime.AddMinutes(1),
-                    time_sent = currentDateTime.AddSeconds(4),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message4",
+                    ProcessedAt = currentDateTime.AddMinutes(1),
+                    TimeSent = currentDateTime.AddSeconds(4),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 }
             };
 
@@ -512,120 +512,120 @@
         {
             var currentDateTime = DateTime.UtcNow;
 
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "D"
+                        Name = "D"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "2"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "2"
                         }
                     },
-                    message_type = "Message3",
-                    processed_at = currentDateTime.AddMinutes(2),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message3",
+                    ProcessedAt = currentDateTime.AddMinutes(2),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "1",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "1",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>(),
-                    message_type = "Message1",
-                    processed_at = currentDateTime,
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    Headers = new List<StoredMessageHeader>(),
+                    MessageType = "Message1",
+                    ProcessedAt = currentDateTime,
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message2",
-                    processed_at = currentDateTime.AddMinutes(1),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message2",
+                    ProcessedAt = currentDateTime.AddMinutes(1),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "4",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "4",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message4",
-                    processed_at = currentDateTime.AddMinutes(1),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message4",
+                    ProcessedAt = currentDateTime.AddMinutes(1),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "5",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "5",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "C"
+                        Name = "C"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "4"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "4"
                         }
                     },
-                    message_type = "Message5",
-                    processed_at = currentDateTime.AddMinutes(2),
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message5",
+                    ProcessedAt = currentDateTime.AddMinutes(2),
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 }
             };
 
@@ -646,103 +646,103 @@
         {
             var currentDateTime = DateTime.UtcNow;
 
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "2",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "2",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message2",
-                    processed_at = currentDateTime,
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message2",
+                    ProcessedAt = currentDateTime,
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "3",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "3",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message3",
-                    processed_at = currentDateTime,
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message3",
+                    ProcessedAt = currentDateTime,
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "4",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "4",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message4",
-                    processed_at = currentDateTime,
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message4",
+                    ProcessedAt = currentDateTime,
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 },
-                new ReceivedMessage
+                new StoredMessage
                 {
-                    message_id = "5",
-                    sending_endpoint = new EndpointAddress
+                    MessageId = "5",
+                    SendingEndpoint = new Endpoint
                     {
-                        name = "A"
+                        Name = "A"
                     },
-                    receiving_endpoint = new EndpointAddress
+                    ReceivingEndpoint = new Endpoint
                     {
-                        name = "B"
+                        Name = "B"
                     },
-                    headers = new List<Header>
+                    Headers = new List<StoredMessageHeader>
                     {
-                        new Header
+                        new StoredMessageHeader
                         {
-                            key = MessageHeaderKeys.RelatedTo,
-                            value = "1"
+                            Key =  MessageHeaderKeys.RelatedTo,
+                            Value = "1"
                         }
                     },
-                    message_type = "Message5",
-                    processed_at = currentDateTime,
-                    message_intent = MessageIntent.Send,
-                    status = MessageStatus.Successful,
+                    MessageType = "Message5",
+                    ProcessedAt = currentDateTime,
+                    MessageIntent = MessageIntent.Send,
+                    Status = MessageStatus.Successful,
                 }
             };
 
@@ -760,7 +760,7 @@
             // Based on customer data
             var start = DateTime.UtcNow;
 
-            var messages = new List<ReceivedMessage>
+            var messages = new List<StoredMessage>
             {
                 // Msg 1 and 2 are not present
                 Msg("3", "1", "ProductPurchaseTakingTooLong", start.AddSeconds(19).AddMilliseconds(305698), "Provisioning.CRM.Orchestrator", start.AddSeconds(19).AddMilliseconds(352572), "Provisioning.Communication.Orchestrator"),
@@ -781,28 +781,28 @@
             Assert.AreEqual("CrmOrderSagaTimeout", result[4].Name, "Latest handler should be for CrmOrderSagaTimeout");
 
         }
-        private static ReceivedMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to)
+        private static StoredMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to)
         {
-            return new ReceivedMessage
+            return new StoredMessage
             {
-                message_id = id,
-                message_type = messageType,
-                processed_at = processed,
-                time_sent = sent,
-                sending_endpoint = new EndpointAddress
+                MessageId = id,
+                MessageType = messageType,
+                ProcessedAt = processed,
+                TimeSent = sent,
+                SendingEndpoint = new Endpoint
                 {
-                    name = from
+                    Name = from
                 },
-                receiving_endpoint = new EndpointAddress
+                ReceivingEndpoint = new Endpoint
                 {
-                    name = to
+                    Name = to
                 },
-                headers = new List<Header>
+                Headers = new List<StoredMessageHeader>
                 {
-                    new Header
+                    new StoredMessageHeader
                     {
-                        key = MessageHeaderKeys.RelatedTo,
-                        value = relatedTo
+                        Key =  MessageHeaderKeys.RelatedTo,
+                        Value = relatedTo
                     }
                 }
             };

@@ -10,9 +10,9 @@
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/XAML/Geometry.xaml" />
-        <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
-        <ResourceDictionary Source="DarkMenus.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/XAML/Geometry.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/Images/Xaml/XamlIcons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/SequenceDiagram/DarkMenus.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Colors and Brushes  -->
@@ -353,11 +353,11 @@
                                        Visibility="{Binding Name,
                                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                                 <TextBlock x:Name="MessageTypeText"
-                                           Padding="2"
                                            VerticalAlignment="Center"
                                            FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
                                            FontSize="14"
                                            Foreground="{StaticResource Grey40Brush}"
+                                           Padding="2"
                                            Text="{Binding Name}" />
                             </StackPanel>
                         </Border>
@@ -528,12 +528,12 @@
                                                   Foreground="{StaticResource Grey60Brush}"
                                                   Style="{StaticResource MessageIconStyle}" />
 
-                            <TextBlock Padding="5 0"
-                                       HorizontalAlignment="Center"
+                            <TextBlock HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="14"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource Grey60Brush}"
+                                       Padding="5 0"
                                        Text="{Binding Name}" />
                         </StackPanel>
 
@@ -622,12 +622,12 @@
                                           Type="{Binding Type}" />
 
                     <TextBlock x:Name="MessageType"
-                               Padding="0,0,4,0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="{StaticResource Grey40Brush}"
+                               Padding="0,0,4,0"
                                Text="{Binding Name}" />
                 </StackPanel>
             </ToggleButton>
@@ -703,11 +703,11 @@
                                                   Foreground="{StaticResource Grey60Brush}"
                                                   Style="{StaticResource MessageIconStyle}" />
 
-                            <TextBlock Padding="5 0"
-                                       HorizontalAlignment="Center"
+                            <TextBlock HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource Grey60Brush}"
+                                       Padding="5 0"
                                        Text="{Binding Name}" />
                         </StackPanel>
 
@@ -777,12 +777,12 @@
 
                     <TextBlock x:Name="MessageType"
                                Margin="0,0,0,2"
-                               Padding="0,0,4,0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="{StaticResource Grey40Brush}"
+                               Padding="0,0,4,0"
                                Text="{Binding Name}" />
                 </StackPanel>
             </ToggleButton>

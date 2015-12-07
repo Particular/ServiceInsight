@@ -35,6 +35,7 @@
                                                    ServiceControl,
                                                    SearchBar,
                                                    Substitute.For<GeneralHeaderViewModel>(),
+                                                   Substitute.For<MessageSelectionContext>(),
                                                    Clipboard);
         }
 

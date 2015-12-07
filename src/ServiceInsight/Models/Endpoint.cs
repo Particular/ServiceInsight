@@ -15,6 +15,8 @@
             set { host = value; }
         }
 
+        public string HostId { get; set; }
+
         public string HostDisplayName { get; set; }
 
         public List<EndpointProperty> EndpointProperties { get; set; }

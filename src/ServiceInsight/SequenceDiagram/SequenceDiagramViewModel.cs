@@ -17,6 +17,7 @@
     using Particular.ServiceInsight.Desktop.Framework.Commands;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using Particular.ServiceInsight.Desktop.Models;
     using Particular.ServiceInsight.Desktop.ServiceControl;
     using Particular.ServiceInsight.Desktop.Settings;
@@ -27,7 +28,6 @@
         IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
-        readonly IEventAggregator eventAggregator;
         private readonly ISettingsProvider settingsProvider;
         string loadedConversationId;
         private SequenceDiagramSettings settings;
@@ -36,8 +36,8 @@
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
-            IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider,
+            MessageSelectionContext selectionContext,
             DiagramLegendViewModel diagramLegend,
             CopyConversationIDCommand copyConversationIDCommand,
             CopyMessageURICommand copyMessageURICommand,
@@ -48,17 +48,17 @@
             SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
-            this.eventAggregator = eventAggregator;
             this.settingsProvider = settingsProvider;
-            this.CopyConversationIDCommand = copyConversationIDCommand;
-            this.CopyMessageURICommand = copyMessageURICommand;
-            this.RetryMessageCommand = retryMessageCommand;
-            this.SearchByMessageIDCommand = searchByMessageIDCommand;
-            this.ChangeSelectedMessageCommand = changeSelectedMessageCommand;
-            this.ShowExceptionCommand = showExceptionCommand;
-            this.OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
-            this.ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
 
+            Selection = selectionContext;
+            CopyConversationIDCommand = copyConversationIDCommand;
+            CopyMessageURICommand = copyMessageURICommand;
+            RetryMessageCommand = retryMessageCommand;
+            SearchByMessageIDCommand = searchByMessageIDCommand;
+            ChangeSelectedMessageCommand = changeSelectedMessageCommand;
+            ShowExceptionCommand = showExceptionCommand;
+            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
@@ -95,13 +95,14 @@
                 FileName = "sequencediagram.png",
                 Filter = "Portable Network Graphics (.png)|*.png"
             };
+
             if (saveFileDialog.ShowDialog() == true)
             {
-                SaveRTBAsPNG(renderTarget, saveFileDialog.FileName);
+                SaveAsPNG(renderTarget, saveFileDialog.FileName);
             }
         }
 
-        private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
+        private static void SaveAsPNG(RenderTargetBitmap bmp, string filename)
         {
             var enc = new PngBitmapEncoder();
             enc.Frames.Add(BitmapFrame.Create(bmp));
@@ -112,21 +113,21 @@
             }
         }
 
-        public ICommand ExportDiagramCommand { get; private set; }
+        public ICommand ExportDiagramCommand { get; }
 
-        public ICommand OpenLink { get; private set; }
+        public ICommand OpenLink { get; }
 
-        public ICommand CopyConversationIDCommand { get; private set; }
+        public ICommand CopyConversationIDCommand { get; }
 
-        public ICommand CopyMessageURICommand { get; private set; }
+        public ICommand CopyMessageURICommand { get; }
 
-        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand RetryMessageCommand { get; }
 
-        public ICommand SearchByMessageIDCommand { get; private set; }
+        public ICommand SearchByMessageIDCommand { get; }
 
-        public ICommand ChangeSelectedMessageCommand { get; private set; }
+        public ICommand ChangeSelectedMessageCommand { get; }
 
-        public ICommand ShowExceptionCommand { get; private set; }
+        public ICommand ShowExceptionCommand { get; }
 
         public DiagramLegendViewModel DiagramLegend { get; }
 
@@ -144,14 +145,19 @@
 
         public DiagramItemCollection HeaderItems { get; set; }
 
-        public StoredMessage SelectedMessage { get; set; }
+        public MessageSelectionContext Selection { get; }
 
-        private void OnSelectedMessageChanged()
+
+        protected override void OnActivate()
         {
-            if (SelectedMessage != null)
-            {
-                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage));
-            }
+            base.OnActivate();
+            DiagramLegend.ActivateWith(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            DiagramLegend.DeactivateWith(this);
         }
 
         public void Handle(SelectedMessageChanged message)
@@ -176,7 +182,7 @@
                 return;
             }
 
-            var messages = serviceControl.GetConversationByIdNew(conversationId).ToList();
+            var messages = serviceControl.GetConversationById(conversationId).ToList();
             if (messages.Count == 0)
             {
                 LogTo.Warning("No messages found for conversation id {0}", conversationId);
@@ -186,7 +192,7 @@
 
             CreateElements(messages);
             loadedConversationId = conversationId;
-            SelectedMessage = storedMessage;
+            Selection.SelectedMessage = storedMessage;
         }
 
         void RefreshSelection(string selectedId)
@@ -201,7 +207,7 @@
                 if (string.Equals(item.SelectedMessage.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     item.IsFocused = true;
-                    SelectedMessage = item.SelectedMessage;
+                    Selection.SelectedMessage = item.SelectedMessage;
                     continue;
                 }
 
@@ -209,7 +215,7 @@
             }
         }
 
-        void CreateElements(List<ReceivedMessage> messages)
+        void CreateElements(List<StoredMessage> messages)
         {
             var modelCreator = new ModelCreator(messages, this);
             var endpoints = modelCreator.Endpoints;

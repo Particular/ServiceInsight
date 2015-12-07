@@ -18,6 +18,7 @@
         public Endpoint SendingEndpoint { get; set; }
         public Endpoint ReceivingEndpoint { get; set; }
         public TimeSpan ProcessingTime { get; set; }
+        public DateTime ProcessedAt { get; set; }
         public string ConversationId { get; set; }
 
         public string RelatedToMessageId

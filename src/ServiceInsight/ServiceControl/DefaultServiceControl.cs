@@ -10,7 +10,6 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using global::ServiceInsight.SequenceDiagram;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
@@ -123,15 +122,6 @@
 
             return messages;
         }
-
-        public IEnumerable<ReceivedMessage> GetConversationByIdNew(string conversationId)
-        {
-            var request = new RestRequestWithCache(String.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = GetModel<List<ReceivedMessage>>(request) ?? new List<ReceivedMessage>();
-
-            return messages;
-        }
-
 
         public IEnumerable<Endpoint> GetEndpoints()
         {

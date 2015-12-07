@@ -6,13 +6,15 @@
     using Caliburn.Micro;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.MessageList;
 
     public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public GatewayHeaderViewModel(
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder)
-            : base(eventAggregator, decoder)
+            IContentDecoder<IList<HeaderInfo>> decoder,
+            MessageSelectionContext selectionContext)
+            : base(eventAggregator, decoder, selectionContext)
         {
             DisplayName = "Gateway";
         }

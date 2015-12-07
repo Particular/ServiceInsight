@@ -8,6 +8,7 @@
     using ExtensionMethods;
     using MessageFlow;
     using Options;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using Search;
     using Shell;
 
@@ -34,6 +35,7 @@
             builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
             builder.RegisterType<ShellViewModel>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<MessageSelectionContext>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
@@ -49,6 +51,7 @@
             {
                 yield return typeof(LicenseRegistrationView);
                 yield return typeof(ServiceControlConnectionView);
+                yield return typeof(MessageSelectionContext);
                 yield return typeof(OptionsView);
                 yield return typeof(ShellView);
                 yield return typeof(AboutView);

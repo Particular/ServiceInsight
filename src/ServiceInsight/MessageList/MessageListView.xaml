@@ -16,18 +16,18 @@
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
                                Command="{Binding RetryMessageCommand}"
-                               CommandParameter="{Binding FocusedRow}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
                                Content="Retry Message"
                                Glyph="pack://application:,,,/Images/retryMsg.png"
                                IsVisible="{Binding IsEnabled,
                                                    RelativeSource={RelativeSource Self}}" />
             <dxb:BarButtonItem Name="copyHeaders"
                                Command="{Binding CopyHeadersCommand}"
-                               CommandParameter="{Binding FocusedRow}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
                                Content="Copy Headers" />
             <dxb:BarButtonItem Name="copyMessageId"
                                Command="{Binding CopyMessageIdCommand}"
-                               CommandParameter="{Binding FocusedRow}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
                                Content="Copy Message URI" />
         </dxb:BarManager.Items>
 
@@ -41,7 +41,7 @@
 
             <dxg:GridControl x:Name="grid"
                              Grid.Row="1"
-                             CurrentItem="{Binding FocusedRow,
+                             CurrentItem="{Binding Selection.SelectedMessage,
                                                    Mode=TwoWay}"
                              CurrentItemChanged="GridOnCurrentItemChanged"
                              CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
@@ -122,7 +122,6 @@
                                    BeforeLayoutRefresh="OnBeforeLayoutRefresh"
                                    FadeSelectionOnLostFocus="False"
                                    IsColumnMenuEnabled="False"
-                                   MultiSelectMode="None"
                                    NavigationStyle="Row"
                                    ShowGroupPanel="False"
                                    ShowIndicator="False" />

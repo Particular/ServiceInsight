@@ -8,7 +8,7 @@
     using ReactiveUI.Testing;
     using Shouldly;
 
-    [TestFixture]
+    [TestFixture, RequiresSTA]
     public class ContainerRegistrationTests
     {
         TestableAppBootstrapper Bootstrapper;
@@ -24,10 +24,10 @@
         [TearDown]
         public void TestCleanup()
         {
-            Container.Dispose();
+            Container?.Dispose();
         }
 
-        [Test, Ignore("It fails, no idea how to fix it, and no idea what this test is actually validating! Hadi please enlight me?")]
+        [Test]
         public void should_resolve_the_shell()
         {
             new TestScheduler().With(sched =>

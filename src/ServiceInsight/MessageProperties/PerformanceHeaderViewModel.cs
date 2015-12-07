@@ -7,13 +7,15 @@
     using ExtensionMethods;
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.MessageList;
 
     public class PerformanceHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public PerformanceHeaderViewModel(
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder)
-            : base(eventAggregator, decoder)
+            IContentDecoder<IList<HeaderInfo>> decoder,
+            MessageSelectionContext selectionContext)
+            : base(eventAggregator, decoder, selectionContext)
         {
             DisplayName = "Performance";
         }

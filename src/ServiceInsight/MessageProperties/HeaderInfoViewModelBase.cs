@@ -7,6 +7,7 @@
     using Models;
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.MessageList;
 
     public abstract class HeaderInfoViewModelBase : RxScreen, IHeaderInfoViewModel
     {
@@ -14,34 +15,36 @@
 
         protected HeaderInfoViewModelBase(
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder)
+            IContentDecoder<IList<HeaderInfo>> decoder,
+            MessageSelectionContext selectionContext)
         {
             this.decoder = decoder;
             EventAggregator = eventAggregator;
+            Selection = selectionContext;
             ConditionsMap = new Dictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>>();
             MapHeaderKeys();
         }
 
         protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; private set; }
 
-        protected IEventAggregator EventAggregator { get; private set; }
+        protected IEventAggregator EventAggregator { get; }
 
         protected IList<HeaderInfo> Headers { get; private set; }
 
-        protected MessageBody SelectedMessage { get; private set; }
+        protected MessageSelectionContext Selection { get; }
 
         public void Handle(SelectedMessageChanged @event)
         {
-            SelectedMessage = @event.Message;
+            Selection.SelectedMessage = @event.Message;
             ClearHeaderValues();
 
-            if (SelectedMessage == null)
+            if (Selection.SelectedMessage == null)
             {
                 Headers = null;
             }
             else
             {
-                Headers = DecodeHeader(SelectedMessage);
+                Headers = DecodeHeader(Selection.SelectedMessage);
                 OnItemsLoaded();
             }
         }

@@ -1,32 +1,18 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using System.Windows.Input;
     using Particular.ServiceInsight.Desktop.Models;
 
     [DebuggerDisplay("{Type}->{Name}")]
     public class Arrow : DiagramItem, IComparable<Arrow>
     {
-        readonly string conversationId;
-        readonly string id;
-        readonly string messageId;
-        readonly MessageStatus status;
-
         StoredMessage storedMessage;
-        List<Header> headers;
-        DateTime? timesent;
 
-        public Arrow(string messageId, string conversationId, MessageStatus status, string id, DateTime? timesent, List<Header> headers, IMessageCommandContainer container)
+        public Arrow(StoredMessage message, IMessageCommandContainer container)
         {
-            this.messageId = messageId;
-            this.conversationId = conversationId;
-            this.status = status;
-            this.id = id;
-            this.timesent = timesent;
-            this.headers = headers;
+            this.storedMessage = message;
 
             CopyConversationIDCommand = container?.CopyConversationIDCommand;
             CopyMessageURICommand = container?.CopyMessageURICommand;
@@ -48,27 +34,7 @@
 
         public ICommand ChangeCurrentMessage { get; set; }
 
-        public Endpoint Receiving { get; set; }
-
-        public Endpoint Sending { get; set; }
-
-        public StoredMessage SelectedMessage
-        {
-            get
-            {
-                return storedMessage = storedMessage ?? new StoredMessage
-                {
-                    ConversationId = conversationId,
-                    ReceivingEndpoint = Receiving,
-                    MessageId = messageId,
-                    TimeSent = timesent,
-                    Id = id,
-                    Status = status,
-                    SendingEndpoint = Sending,
-                    Headers = headers?.Select(h => new StoredMessageHeader { Key = h.key, Value = h.value }).ToList()
-                };
-            }
-        }
+        public StoredMessage SelectedMessage => storedMessage;
 
         public Handler FromHandler { get; set; }
 
@@ -80,17 +46,15 @@
 
         public ArrowType Type { get; set; }
 
-        public DateTime? SentTime { get; set; }
+        public Endpoint Receiving => storedMessage.ReceivingEndpoint;
 
-        public string MessageId
-        {
-            get { return messageId; }
-        }
+        public Endpoint Sending => storedMessage.SendingEndpoint;
+        
+        public DateTime? SentTime => storedMessage.TimeSent;
 
-        public MessageStatus Status
-        {
-            get { return status; }
-        }
+        public string MessageId => storedMessage.MessageId;
+
+        public MessageStatus Status => storedMessage.Status;
 
         public double Width { get; set; }
 

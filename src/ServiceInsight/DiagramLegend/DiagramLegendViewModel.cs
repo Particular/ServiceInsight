@@ -15,10 +15,15 @@
         public DiagramLegendViewModel()
         {
             DiagramItemsDescription = new BindableCollection<DiagramItemDescription>();
-            GenerateLegendData();
         }
 
         public ObservableCollection<DiagramItemDescription> DiagramItemsDescription { get; }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            GenerateLegendData();
+        }
 
         void GenerateLegendData()
         {
@@ -59,7 +64,7 @@
 
         DiagramVisualItem CreateTimeoutMessage()
         {
-            var arrow = new Arrow("Timeout", null, MessageStatus.Successful, "Timeout", null, null, null)
+            var arrow = new Arrow(new StoredMessage { MessageType = "Timeout", Status = MessageStatus.Successful }, null)
             {
                 Width = LocalArrowWidth,
                 Type = ArrowType.Timeout
@@ -70,7 +75,7 @@
 
         DiagramVisualItem CreateLocalSendCommandMessage()
         {
-            var arrow = new Arrow("LocalSend", null, MessageStatus.Successful, "LocalSend", null, null, null)
+            var arrow = new Arrow(new StoredMessage { MessageType = "LocalSend", Status = MessageStatus.Successful }, null)
             {
                 Width = LocalArrowWidth,
                 Type = ArrowType.Local
@@ -81,7 +86,7 @@
 
         DiagramVisualItem CreateCommandMessage()
         {
-            var arrow = new Arrow("Command", null, MessageStatus.Successful, "Command", null, null, null)
+            var arrow = new Arrow(new StoredMessage { MessageType = "Command", Status = MessageStatus.Successful }, null)
             {
                 Width = ArrowWidth,
                 Type = ArrowType.Command
@@ -92,7 +97,7 @@
 
         DiagramVisualItem CreateEventMessage()
         {
-            var arrow = new Arrow("Event", null, MessageStatus.Successful, "Event", null, null, null)
+            var arrow = new Arrow(new StoredMessage { MessageType = "Event", Status = MessageStatus.Successful }, null)
             {
                 Width = ArrowWidth,
                 Type = ArrowType.Event

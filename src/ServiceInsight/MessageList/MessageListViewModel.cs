@@ -43,41 +43,42 @@
             IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
+            MessageSelectionContext selectionContext,
             IClipboard clipboard)
         {
+            this.SearchBar = searchBarViewModel;
+            this.Selection = selectionContext;
+
             this.clipboard = clipboard;
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
-
-            SearchBar = searchBarViewModel;
+            
             Items.Add(SearchBar);
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
-
             CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
-
             Rows = new BindableCollection<StoredMessage>();
         }
 
         public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
 
-        public SearchBarViewModel SearchBar { get; private set; }
+        public SearchBarViewModel SearchBar { get; }
 
-        public IObservableCollection<StoredMessage> Rows { get; private set; }
+        public IObservableCollection<StoredMessage> Rows { get; }
 
-        public StoredMessage FocusedRow { get; set; }
+        public MessageSelectionContext Selection { get; }
 
         public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand RetryMessageCommand { get; }
 
-        public ICommand CopyMessageIdCommand { get; private set; }
+        public ICommand CopyMessageIdCommand { get; }
 
-        public ICommand CopyHeadersCommand { get; private set; }
+        public ICommand CopyHeadersCommand { get; }
 
         protected override void OnViewAttached(object view, object context)
         {
@@ -99,13 +100,6 @@
                                      endpoint: null,
                                      orderBy: orderBy,
                                      ascending: ascending);
-
-                // The DX Grid doesn't update properly
-                // So this refreshes the focused value
-                // when selecting the SC node.
-                var temp = FocusedRow;
-                FocusedRow = null;
-                FocusedRow = temp;
             }
 
             var endpointNode = SelectedExplorerItem as AuditEndpointExplorerItem;
@@ -221,7 +215,7 @@
             var msg = message.Message;
             if (msg == null)
             {
-                FocusedRow = null;
+                Selection.SelectedMessage = null;
                 return;
             }
 
@@ -230,11 +224,11 @@
                                                     row.Id == msg.Id);
             if (newFocusedRow == null)
             {
-                FocusedRow = null;
+                Selection.SelectedMessage = null;
                 return;
             }
 
-            FocusedRow = newFocusedRow;
+            Selection.SelectedMessage = newFocusedRow;
 
             NotifyPropertiesChanged();
         }
@@ -254,11 +248,11 @@
 
             if (Rows.Count == 0)
             {
-                FocusedRow = null;
+                Selection.SelectedMessage = null;
                 return;
             }
 
-            FocusedRow = Rows[0];
+            Selection.SelectedMessage = Rows[0];
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
@@ -292,18 +286,12 @@
 
         void EndDataUpdate()
         {
-            if (view != null)
-            {
-                view.EndDataUpdate();
-            }
+            view?.EndDataUpdate();
         }
 
         void BeginDataUpdate()
         {
-            if (view != null)
-            {
-                view.BeginDataUpdate();
-            }
+            view?.BeginDataUpdate();
         }
 
         public void RaiseSelectedMessageChanged(StoredMessage currentItem)

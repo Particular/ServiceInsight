@@ -7,6 +7,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using NSubstitute;
     using Desktop.Framework.MessageDecoders;
+    using Particular.ServiceInsight.Desktop.Models;
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {
@@ -20,7 +21,7 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
                 DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK"
             };
 
-            var messages = deserializer.Deserialize<List<ReceivedMessage>>(new PayLoad(content));
+            var messages = deserializer.Deserialize<List<StoredMessage>>(new PayLoad(content));
             var creator = new ModelCreator(messages, GetContainer());
 
             result = creator.Endpoints;
