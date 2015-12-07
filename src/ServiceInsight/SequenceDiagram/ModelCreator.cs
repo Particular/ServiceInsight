@@ -218,16 +218,7 @@ namespace ServiceInsight.SequenceDiagram
 
             return arrow;
         }
-
-        static string GetHeaderByKey(IEnumerable<Header> headers, string key, string defaultValue = "")
-        {
-            //NOTE: Some keys start with NServiceBus, some don't
-            var keyWithPrefix = "NServiceBus." + key;
-            var pair = headers.FirstOrDefault(x => x.key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
-                                                   x.key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));
-            return pair == null ? defaultValue : pair.value;
-        }
-
+        
         class EndpointRegistry
         {
             IDictionary<Tuple<string, string, string>, List<EndpointItem>> store = new Dictionary<Tuple<string, string, string>, List<EndpointItem>>();
