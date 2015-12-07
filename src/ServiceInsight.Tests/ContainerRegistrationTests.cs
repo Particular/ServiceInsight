@@ -28,6 +28,7 @@
         }
 
         [Test]
+        [Ignore]
         public void should_resolve_the_shell()
         {
             new TestScheduler().With(sched =>
