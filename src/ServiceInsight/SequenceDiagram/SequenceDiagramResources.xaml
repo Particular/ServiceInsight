@@ -638,12 +638,12 @@
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
             </DataTrigger>
 
-            <Trigger Property="IsMouseOver" Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                 <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </Trigger>
+            </DataTrigger>
 
             <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
@@ -813,12 +813,13 @@
                 <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
             </DataTrigger>
 
-            <Trigger Property="IsMouseOver" Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                 <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                 <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-            </Trigger>
+            </DataTrigger>
+
             <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
                 <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
                 <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />

@@ -36,6 +36,12 @@
             set { SetValue(HilightProperty, value); }
         }
 
+        public void InternalSetHilight(bool value)
+        {
+            // Sets the value without destroying triggers or bindings.
+            SetCurrentValue(HilightProperty, value);
+        }
+
         static void HilightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DiagramVisualItem)d).OnHilightChanged(e);

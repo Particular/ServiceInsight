@@ -133,8 +133,13 @@
 
                 arrowVisual.HilightChangedEvent += (sender, e) =>
                 {
-                    toHandlerVisual.Hilight = (bool)e.NewValue;
-                    messageProcessingRouteVisual.Hilight = (bool)e.NewValue;
+                    toHandlerVisual.InternalSetHilight((bool)e.NewValue);
+                    messageProcessingRouteVisual.InternalSetHilight((bool)e.NewValue);
+                };
+
+                toHandlerVisual.HilightChangedEvent += (sender, e) =>
+                {
+                    arrowVisual.InternalSetHilight((bool)e.NewValue);
                 };
 
                 arrowVisual.X = fromHandlerVisual.X;
