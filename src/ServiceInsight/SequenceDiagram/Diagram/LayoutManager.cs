@@ -135,6 +135,7 @@
                 {
                     toHandlerVisual.InternalSetHilight((bool)e.NewValue);
                     messageProcessingRouteVisual.InternalSetHilight((bool)e.NewValue);
+                    messageProcessingRouteVisual.ZIndex = messageProcessingRouteVisual.Hilight ? 10 : 0;
                 };
 
                 toHandlerVisual.HilightChangedEvent += (sender, e) =>
@@ -243,7 +244,6 @@
                 handlerVisual.Height = height;
 
                 handlerVisual.Y = nextY;
-                handlerVisual.ZIndex = 10; //Put on top of everything else
 
                 nextY += height + 20;
             }
