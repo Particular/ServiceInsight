@@ -908,6 +908,7 @@
                                     </DataTrigger>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Hilight" Value="True" />
+                                        <Setter Property="ZIndex" Value="10" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
