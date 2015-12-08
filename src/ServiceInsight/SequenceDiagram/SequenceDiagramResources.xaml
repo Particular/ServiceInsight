@@ -368,10 +368,16 @@
                             <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
-                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                             <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource HighlightBrush}" />
                             <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource LoaderHilighted}" />
                         </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True" />
+                                <Condition Binding="{Binding ElementName=ErrorIcon, Path=Visibility}" Value="Hidden" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                        </MultiDataTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsChecked" Value="True" />
