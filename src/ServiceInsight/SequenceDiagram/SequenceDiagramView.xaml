@@ -28,7 +28,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
+        <!--  Export will be hidden for now. WIP.  -->
+        <Border BorderBrush="#EFEFF2"
+                BorderThickness="0 0 0 2"
+                Visibility="Collapsed">
             <StackPanel Margin="5" Orientation="Horizontal">
                 <Button Command="{Binding ExportDiagramCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -111,6 +114,7 @@
                                                         ContentTemplate="{TemplateBinding ContentTemplate}"
                                                         Cursor="{TemplateBinding Cursor}" />
 
+                                <!--  Hide Legend for now. WIP.  -->
                                 <ToggleButton x:Name="ShowLegend"
                                               Grid.Row="0"
                                               Grid.Column="1"
@@ -119,7 +123,8 @@
                                               IsChecked="{Binding ShowLegend,
                                                                   Mode=TwoWay}"
                                               Style="{StaticResource BlankToggleButtonStyle}"
-                                              ToolTip="Show Legend">
+                                              ToolTip="Show Legend"
+                                              Visibility="Collapsed">
                                     <Path x:Name="ArrowHead"
                                           VerticalAlignment="Center"
                                           Data="{StaticResource ChevronLeft}"
