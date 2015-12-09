@@ -385,7 +385,7 @@
                                        Margin="2,0"
                                        VerticalAlignment="Center"
                                        Opacity="0.5"
-                                       Source="{StaticResource Loader}"
+                                       Source="{StaticResource HandlerIcon}"
                                        Visibility="{Binding Name,
                                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
                                 <TextBlock x:Name="MessageTypeText"
@@ -405,7 +405,7 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
                             <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource HighlightBrush}" />
-                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource LoaderHilighted}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconHighlighted}" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -413,6 +413,7 @@
                                 <Condition Binding="{Binding ElementName=ErrorIcon, Path=Visibility}" Value="Hidden" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconHighlighted}" />
                         </MultiDataTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -421,6 +422,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
                             <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconSelected}" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
