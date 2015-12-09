@@ -136,7 +136,7 @@
     </Style>
 
     <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Placement" Value="Bottom" />
         <Setter Property="HorizontalOffset">
             <Setter.Value>
@@ -163,6 +163,41 @@
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch" />
                         </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ArrowTooltipStyle" TargetType="ToolTip">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Placement" Value="Top" />
+        <Setter Property="HorizontalOffset">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
+                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8" />
+                        </Grid.RowDefinitions>
+                        <Border Background="{StaticResource Grey20Brush}">
+                            <ContentPresenter Margin="8"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch" />
+                        </Border>
+                        <Polygon Grid.Row="1"
+                                 HorizontalAlignment="Center"
+                                 Fill="{StaticResource Grey20Brush}"
+                                 Points="0,0 16,0 8,8" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -496,6 +531,8 @@
         </Border>
     </DataTemplate>
 
+
+
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
         <Grid x:Name="Root" SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
@@ -767,8 +804,60 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
+    <ToolTip x:Key="ArrowTooltip"
+             Style="{StaticResource ArrowTooltipStyle}"
+             d:DataContext="{d:DesignInstance Type=diagram:Arrow}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Foreground="White"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="{Binding Type}"
+                       TextAlignment="Left" />
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Message Type:" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding SelectedMessage.FriendlyMessageType}" />
+
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Sent From:" />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding Sending}" />
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Sent To:" />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding Receiving}" />
+
+        </Grid>
+    </ToolTip>
+
     <DataTemplate DataType="{x:Type diagram:Arrow}">
-        <ContentControl Content="{Binding}">
+        <ContentControl Content="{Binding}" ToolTip="{StaticResource ArrowTooltip}">
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">
 
