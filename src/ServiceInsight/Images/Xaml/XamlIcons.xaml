@@ -703,7 +703,7 @@
                 <DrawingGroup.ClipGeometry>
                     <RectangleGeometry Rect="0,0,9,15" />
                 </DrawingGroup.ClipGeometry>
-                <GeometryDrawing Brush="#999999">
+                <GeometryDrawing Brush="#666666">
                     <GeometryDrawing.Geometry>
                         <PathGeometry Figures="M9,3L9,3 9,0 0,0 0,3 4,3 4,6 0,6 0,9 4,9 4,12 0,12 0,15 9,15 9,12 5,12 5,9 9,9 9,6 5,6 5,3z" FillRule="Nonzero" />
                     </GeometryDrawing.Geometry>
@@ -718,7 +718,7 @@
                 <DrawingGroup.ClipGeometry>
                     <RectangleGeometry Rect="0,0,9,15" />
                 </DrawingGroup.ClipGeometry>
-                <GeometryDrawing Brush="#0072C6">
+                <GeometryDrawing Brush="#0B6EEF">
                     <GeometryDrawing.Geometry>
                         <PathGeometry Figures="M9,3L9,3 9,0 0,0 0,3 4,3 4,6 0,6 0,9 4,9 4,12 0,12 0,15 9,15 9,12 5,12 5,9 9,9 9,6 5,6 5,3z" FillRule="Nonzero" />
                     </GeometryDrawing.Geometry>

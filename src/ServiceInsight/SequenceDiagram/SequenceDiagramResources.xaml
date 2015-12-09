@@ -384,7 +384,6 @@
                                        Height="14"
                                        Margin="2,0"
                                        VerticalAlignment="Center"
-                                       Opacity="0.5"
                                        Source="{StaticResource HandlerIcon}"
                                        Visibility="{Binding Name,
                                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
@@ -415,14 +414,16 @@
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
                             <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconHighlighted}" />
                         </MultiDataTrigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconSelected}" />
+                        </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsChecked" Value="True" />
                                 <Condition SourceName="ErrorIcon" Property="Visibility" Value="Hidden" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
-                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}" />
-                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconSelected}" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
@@ -532,8 +533,6 @@
             </Border>
         </Border>
     </DataTemplate>
-
-
 
     <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
         <Grid x:Name="Root" SnapsToDevicePixels="True">
@@ -854,7 +853,6 @@
                        Grid.Column="1"
                        Style="{StaticResource TooltipStyleForValue}"
                        Text="{Binding Receiving}" />
-
         </Grid>
     </ToolTip>
 
