@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
 
     public class DiagramVisualItem : ListBoxItem
     {
@@ -45,6 +46,11 @@
         static void HilightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DiagramVisualItem)d).OnHilightChanged(e);
+        }
+
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            //NOTE: To prevent selection on right click
         }
 
         protected virtual void OnHilightChanged(DependencyPropertyChangedEventArgs e)
