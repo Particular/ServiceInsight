@@ -248,6 +248,7 @@
     <Compile Include="Framework\Commands\ShowExceptionCommand.cs" />
     <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
+    <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>

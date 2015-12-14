@@ -345,11 +345,13 @@
                             </Style>
                         </Grid.Resources>
 
-                        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
+                        <TextBlock Grid.Row="0"
+                                   Grid.ColumnSpan="2"
                                    Style="{StaticResource TooltipStyleForTitle}"
-                                   Text="Processing Handler" />
+                                   Text="Processing of Message" />
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" 
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
                                    Style="{StaticResource TooltipStyleForHeader}"
                                    Text="Processing Time:"
                                    Visibility="{Binding ProcessingTime,
