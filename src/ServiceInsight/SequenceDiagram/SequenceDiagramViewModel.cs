@@ -25,12 +25,14 @@
 
     public class SequenceDiagramViewModel : Screen,
         IHandle<SelectedMessageChanged>,
+        IHandle<ScrollDiagramItemIntoView>,
         IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
         readonly ISettingsProvider settingsProvider;
         string loadedConversationId;
         SequenceDiagramSettings settings;
+        SequenceDiagramView view;
 
         private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
@@ -66,6 +68,12 @@
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
 
             ShowLegend = settings.ShowLegend;
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            this.view = (SequenceDiagramView) view;
         }
 
         void ExportToPng(SequenceDiagramView view)
@@ -238,6 +246,17 @@
             DiagramItems.Clear();
             HeaderItems.Clear();
             NotifyOfPropertyChange(nameof(HasItems));
+        }
+
+        public void Handle(ScrollDiagramItemIntoView @event)
+        {
+            var diagramItem = DiagramItems.OfType<Arrow>()
+                .FirstOrDefault(a => a.SelectedMessage.Id == @event.Message.Id);
+
+            if (diagramItem != null)
+            {
+                view?.diagram.BringIntoView(diagramItem);
+            }
         }
     }
 

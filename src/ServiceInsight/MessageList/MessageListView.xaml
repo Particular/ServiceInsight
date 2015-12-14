@@ -44,6 +44,7 @@
                              CurrentItem="{Binding Selection.SelectedMessage,
                                                    Mode=TwoWay}"
                              CurrentItemChanged="GridOnCurrentItemChanged"
+                             MouseLeftButtonUp="OnGridClicked"
                              CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
                              CustomUnboundColumnData="OnRequestAdvancedMessageData"
                              IsHitTestVisible="{Binding WorkInProgress,

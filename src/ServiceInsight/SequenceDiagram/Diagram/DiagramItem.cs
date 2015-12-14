@@ -6,13 +6,8 @@
 
         public bool IsFocused { get; set; }
 
-        public virtual void OnIsFocusedChanged()
+        protected virtual void OnIsFocusedChanged()
         {
-        }
-
-        public virtual DiagramItem GetFocusableItem()
-        {
-            return null;
         }
     }
 }

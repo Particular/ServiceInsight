@@ -75,17 +75,12 @@
             get { return id; }
         }
 
-        public override void OnIsFocusedChanged()
+        protected override void OnIsFocusedChanged()
         {
             if (Route != null)
             {
                 Route.IsFocused = IsFocused;
             }
-        }
-
-        public override DiagramItem GetFocusableItem()
-        {
-            return Route?.FromArrow;
         }
 
         public StoredMessage SelectedMessage

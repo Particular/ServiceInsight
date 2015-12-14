@@ -239,18 +239,10 @@
                 BindResult(pagedResult);
             }
 
-            if (Selection.SelectedMessage == null && Rows.Any())
+            if (Selection.SelectedMessage == null && Rows.Count > 0)
             {
                 Selection.SelectedMessage = Rows[0];
             }
-//
-//            if (Rows.Count == 0)
-//            {
-//                Selection.SelectedMessage = null;
-//                return;
-//            }
-//
-//            Selection.SelectedMessage = Rows[0];
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
@@ -295,6 +287,11 @@
         public void RaiseSelectedMessageChanged(StoredMessage currentItem)
         {
             Selection.SelectedMessage = currentItem;
+        }
+
+        public void BringIntoView(StoredMessage msg)
+        {
+            eventAggregator.Publish(new ScrollDiagramItemIntoView(msg));
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Input;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
     using Particular.ServiceInsight.Desktop.Models;
@@ -39,7 +40,8 @@
 
         void GridOnCurrentItemChanged(object sender, CurrentItemChangedEventArgs currentItemChangedEventArgs)
         {
-            Model.RaiseSelectedMessageChanged(currentItemChangedEventArgs.NewItem as StoredMessage);
+            var msg = currentItemChangedEventArgs.NewItem as StoredMessage;
+            Model.RaiseSelectedMessageChanged(msg);
         }
 
         MessageListViewModel Model
@@ -94,6 +96,15 @@
             SortData(column, sortInfo.SortOrder);
 
             e.Handled = true;
+        }
+
+        private void OnGridClicked(object sender, MouseButtonEventArgs e)
+        {
+            var info = ((TableView)grid.View).CalcHitInfo(e.OriginalSource as DependencyObject);
+            if (info.HitTest == TableViewHitTest.RowCell)
+            {
+                Model.BringIntoView(Model.Selection.SelectedMessage);
+            }
         }
     }
 }

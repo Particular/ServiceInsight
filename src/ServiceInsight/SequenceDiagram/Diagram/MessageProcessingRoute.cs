@@ -27,11 +27,10 @@
 
         public Handler ProcessingHandler { get; }
 
-        public override void OnIsFocusedChanged()
+        protected override void OnIsFocusedChanged()
         {
             FromArrow.IsFocused = IsFocused;
             ProcessingHandler.IsFocused = IsFocused;
         }
     }
-
 }

@@ -58,12 +58,7 @@
 
         public double Width { get; set; }
 
-        public override DiagramItem GetFocusableItem()
-        {
-            return this;
-        }
-
-        public override void OnIsFocusedChanged()
+        protected override void OnIsFocusedChanged()
         {
             base.OnIsFocusedChanged();
             if (Route != null)
