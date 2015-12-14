@@ -212,25 +212,18 @@
 
         public void Handle(SelectedMessageChanged message)
         {
-            var msg = message.Message;
-            if (msg == null)
+            var msg = Selection.SelectedMessage;
+            if (msg == null) return;
+
+            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId &&
+                                                           row.TimeSent == msg.TimeSent &&
+                                                           row.Id == msg.Id);
+
+            if (newFocusedRow != null)
             {
-                Selection.SelectedMessage = null;
-                return;
+                Selection.SelectedMessage = newFocusedRow;
+                NotifyPropertiesChanged();
             }
-
-            var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId && 
-                                                    row.TimeSent == msg.TimeSent && 
-                                                    row.Id == msg.Id);
-            if (newFocusedRow == null)
-            {
-                Selection.SelectedMessage = null;
-                return;
-            }
-
-            Selection.SelectedMessage = newFocusedRow;
-
-            NotifyPropertiesChanged();
         }
 
         public void OnSelectedExplorerItemChanged()
@@ -246,13 +239,18 @@
                 BindResult(pagedResult);
             }
 
-            if (Rows.Count == 0)
+            if (Selection.SelectedMessage == null && Rows.Any())
             {
-                Selection.SelectedMessage = null;
-                return;
+                Selection.SelectedMessage = Rows[0];
             }
-
-            Selection.SelectedMessage = Rows[0];
+//
+//            if (Rows.Count == 0)
+//            {
+//                Selection.SelectedMessage = null;
+//                return;
+//            }
+//
+//            Selection.SelectedMessage = Rows[0];
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
@@ -296,7 +294,7 @@
 
         public void RaiseSelectedMessageChanged(StoredMessage currentItem)
         {
-            eventAggregator.Publish(new SelectedMessageChanged(currentItem));
+            Selection.SelectedMessage = currentItem;
         }
     }
 }

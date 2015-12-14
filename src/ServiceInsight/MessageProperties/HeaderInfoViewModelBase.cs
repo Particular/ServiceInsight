@@ -35,7 +35,6 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            Selection.SelectedMessage = @event.Message;
             ClearHeaderValues();
 
             if (Selection.SelectedMessage == null)

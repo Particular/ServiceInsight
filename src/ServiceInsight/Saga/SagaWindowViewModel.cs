@@ -9,6 +9,7 @@
     using Particular.ServiceInsight.Desktop.ExtensionMethods;
     using Particular.ServiceInsight.Desktop.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using ServiceControl;
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
@@ -18,11 +19,13 @@
         string selectedMessageId;
         IEventAggregator eventAggregator;
         IServiceControl serviceControl;
+        readonly MessageSelectionContext selection;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard)
+        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
+            this.selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(arg.ToString()));
         }
@@ -70,12 +73,8 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            var message = @event.Message;
-
-            if (message == null)
-            {
-                return;
-            }
+            var message = selection.SelectedMessage;
+            if (message == null) return;
 
             RefreshSaga(message);
 

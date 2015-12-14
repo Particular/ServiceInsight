@@ -4,23 +4,33 @@
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Models;
 
-    public class MessageSelectionContext
+    public class MessageSelectionContext : PropertyChangedBase
     {
         private IEventAggregator eventAggregator;
+        private StoredMessage selectedMessage;
 
         public MessageSelectionContext(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
         }
-        
-        public StoredMessage SelectedMessage { get; set; }
+
+        public StoredMessage SelectedMessage
+        {
+            get { return selectedMessage; }
+            set
+            {
+                if (selectedMessage != value)
+                {
+                    selectedMessage = value;
+                    NotifyOfPropertyChange(nameof(SelectedMessage));
+                    OnSelectedMessageChanged();
+                }
+            }
+        }
 
         private void OnSelectedMessageChanged()
         {
-            if (SelectedMessage != null)
-            {
-                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage));
-            }
+            eventAggregator.Publish(new SelectedMessageChanged());
         }
     }
 }

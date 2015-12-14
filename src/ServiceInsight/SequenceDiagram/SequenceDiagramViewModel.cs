@@ -28,9 +28,9 @@
         IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
-        private readonly ISettingsProvider settingsProvider;
+        readonly ISettingsProvider settingsProvider;
         string loadedConversationId;
-        private SequenceDiagramSettings settings;
+        SequenceDiagramSettings settings;
 
         private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
@@ -147,7 +147,6 @@
 
         public MessageSelectionContext Selection { get; }
 
-
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -162,7 +161,7 @@
 
         public void Handle(SelectedMessageChanged message)
         {
-            var storedMessage = message.Message;
+            var storedMessage = Selection.SelectedMessage;
             if (storedMessage == null)
             {
                 ClearState();
@@ -178,7 +177,7 @@
 
             if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
             {
-                RefreshSelection(storedMessage.Id);
+                RefreshSelection();
                 return;
             }
 
@@ -192,10 +191,10 @@
 
             CreateElements(messages);
             loadedConversationId = conversationId;
-            Selection.SelectedMessage = storedMessage;
+            RefreshSelection();
         }
 
-        void RefreshSelection(string selectedId)
+        void RefreshSelection()
         {
             foreach (var item in DiagramItems.OfType<Handler>())
             {
@@ -204,10 +203,9 @@
 
             foreach (var item in DiagramItems.OfType<Arrow>())
             {
-                if (string.Equals(item.SelectedMessage.Id, selectedId, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(item.SelectedMessage.Id, Selection.SelectedMessage.Id, StringComparison.InvariantCultureIgnoreCase))
                 {
                     item.IsFocused = true;
-                    Selection.SelectedMessage = item.SelectedMessage;
                     continue;
                 }
 

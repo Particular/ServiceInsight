@@ -6,6 +6,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using Particular.ServiceInsight.Desktop.MessageViewers;
     using Particular.ServiceInsight.Desktop.MessageViewers.HexViewer;
     using Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer;
@@ -23,6 +24,7 @@
         JsonMessageViewModel JsonContent;
         XmlMessageViewModel XmlContent;
         Func<MessageBodyViewModel> MessageBodyFunc;
+        MessageSelectionContext Selection;
 
         [SetUp]
         public void TestInitialize()
@@ -32,7 +34,9 @@
             HexContent = Substitute.For<HexContentViewModel>();
             JsonContent = Substitute.For<JsonMessageViewModel>();
             XmlContent = Substitute.For<XmlMessageViewModel>();
-            MessageBodyFunc = () => new MessageBodyViewModel(HexContent, JsonContent, XmlContent, ServiceControl, EventAggregator);
+            Selection = new MessageSelectionContext(EventAggregator);
+
+            MessageBodyFunc = () => new MessageBodyViewModel(HexContent, JsonContent, XmlContent, ServiceControl, EventAggregator, Selection);
         }
 
         [Test]
@@ -46,11 +50,13 @@
 
                 messageBody.Handle(new BodyTabSelectionChanged(true));
 
-                messageBody.Handle(new SelectedMessageChanged(new StoredMessage { BodyUrl = uri }));
+                Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+
+                messageBody.Handle(new SelectedMessageChanged());
 
                 sched.AdvanceByMs(500);
 
-                ServiceControl.Received(1).LoadBody(messageBody.SelectedMessage);
+                ServiceControl.Received(1).LoadBody(Selection.SelectedMessage);
             });
         }
 
@@ -59,13 +65,15 @@
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            var messageList = MessageBodyFunc();
+            var messageBody = MessageBodyFunc();
 
-            messageList.Handle(new SelectedMessageChanged(new StoredMessage { BodyUrl = uri }));
+            Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+            messageBody.Handle(new SelectedMessageChanged());
 
-            messageList.Handle(new BodyTabSelectionChanged(true));
+            messageBody.Handle(new BodyTabSelectionChanged(true));
 
-            ServiceControl.Received(1).LoadBody(messageList.SelectedMessage);
+
+            ServiceControl.Received(1).LoadBody(Selection.SelectedMessage);
         }
 
         [Test]
@@ -73,25 +81,29 @@
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            var messageList = MessageBodyFunc();
+            var messageBody = MessageBodyFunc();
 
-            messageList.Handle(new BodyTabSelectionChanged(false));
+            messageBody.Handle(new BodyTabSelectionChanged(false));
 
-            messageList.Handle(new SelectedMessageChanged(new StoredMessage { BodyUrl = uri }));
+            Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
-            ServiceControl.Received(0).LoadBody(messageList.SelectedMessage);
+            messageBody.Handle(new SelectedMessageChanged());
+
+            ServiceControl.Received(0).LoadBody(Selection.SelectedMessage);
         }
 
         [Test]
         public void Should_not_load_body_content_when_selected_message_has_no_body_url()
         {
-            var messageList = MessageBodyFunc();
+            var messageBody = MessageBodyFunc();
 
-            messageList.Handle(new BodyTabSelectionChanged(true));
+            messageBody.Handle(new BodyTabSelectionChanged(true));
 
-            messageList.Handle(new SelectedMessageChanged(new StoredMessage { BodyUrl = null }));
+            Selection.SelectedMessage = new StoredMessage { BodyUrl = null };
 
-            ServiceControl.Received(0).LoadBody(messageList.SelectedMessage);
+            messageBody.Handle(new SelectedMessageChanged());
+
+            ServiceControl.Received(0).LoadBody(Selection.SelectedMessage);
         }
     }
 }

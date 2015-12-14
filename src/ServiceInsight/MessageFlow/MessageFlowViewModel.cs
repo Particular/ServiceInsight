@@ -14,6 +14,7 @@
     using Particular.ServiceInsight.Desktop.Framework.Events;
     using Particular.ServiceInsight.Desktop.Framework.Settings;
     using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using ServiceControl;
     using Settings;
 
@@ -25,6 +26,7 @@
         IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
+        MessageSelectionContext selection;
         ConcurrentDictionary<string, MessageNode> nodeMap;
         MessageFlowView view;
         string loadedConversationId;
@@ -35,12 +37,14 @@
             IWindowManagerEx windowManager,
             IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
-            ISettingsProvider settingsProvider)
+            ISettingsProvider settingsProvider,
+            MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
+            this.selection = selectionContext;
             this.exceptionDetail = exceptionDetail;
 
             CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
@@ -87,7 +91,7 @@
             var message = e.MessageNode.Message;
 
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
-            eventAggregator.Publish(new SelectedMessageChanged(message));
+            selection.SelectedMessage = message;
         }
 
         protected override void OnActivate()
@@ -107,7 +111,7 @@
         {
             if (SelectedMessage != null)
             {
-                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
+                selection.SelectedMessage = SelectedMessage.Message;
             }
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
@@ -131,7 +135,7 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            var storedMessage = @event.Message;
+            var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)
             {
                 ClearState();

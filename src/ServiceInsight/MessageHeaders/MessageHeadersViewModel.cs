@@ -3,21 +3,25 @@
     using System.Linq;
     using Caliburn.Micro;
     using Particular.ServiceInsight.Desktop.Framework.Events;
+    using Particular.ServiceInsight.Desktop.MessageList;
     using ReactiveUI;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
-        public MessageHeadersViewModel()
+        readonly MessageSelectionContext selection;
+
+        public MessageHeadersViewModel(MessageSelectionContext selectionContext)
         {
+            selection = selectionContext;
             KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
         }
 
-        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; private set; }
+        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; }
 
         public void Handle(SelectedMessageChanged @event)
         {
             KeyValues.Clear();
-            var storedMessage = @event.Message;
+            var storedMessage = selection.SelectedMessage;
             if (storedMessage == null) return;
             var headers = storedMessage.Headers;
 

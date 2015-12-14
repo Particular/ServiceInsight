@@ -3,14 +3,17 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
     using Caliburn.Micro;
     using Events;
     using Models;
+    using Particular.ServiceInsight.Desktop.MessageList;
 
     class ShowSagaCommand : BaseCommand
     {
         private readonly IEventAggregator eventAggregator;
+        private readonly MessageSelectionContext selection;
 
-        public ShowSagaCommand(IEventAggregator eventAggregator)
+        public ShowSagaCommand(IEventAggregator eventAggregator, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
+            this.selection = selectionContext;
         }
 
         public override bool CanExecute(object parameter)
@@ -27,7 +30,7 @@ namespace Particular.ServiceInsight.Desktop.Framework.Commands
                 return;
             }
 
-            eventAggregator.Publish(new SelectedMessageChanged(message));
+            selection.SelectedMessage = message;
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
     }
