@@ -1,193 +1,272 @@
-﻿namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+﻿namespace ServiceInsight.SequenceDiagram
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Framework;
-    using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
-    using Particular.ServiceInsight.Desktop.MessageFlow;
-    using ReactiveUI;
-    using Search;
-    using ServiceControl;
+    using Diagram;
+    using Microsoft.Win32;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.DiagramLegend;
 
-    public class SequenceDiagramViewModel : Screen, IHandle<SelectedMessageChanged>, IHandle<MessageInfo.HiliteEvent>
+    public class SequenceDiagramViewModel : Screen,
+        IHandle<SelectedMessageChanged>,
+        IHandle<ScrollDiagramItemIntoView>,
+        IMessageCommandContainer
     {
-        private readonly IEventAggregator eventAggregator;
-        private readonly IWindowManagerEx windowManager;
-        private readonly IServiceControl serviceControl;
-        private readonly Func<ExceptionDetailViewModel> exceptionDetailViewModel;
+        readonly IServiceControl serviceControl;
+        readonly ISettingsProvider settingsProvider;
+        string loadedConversationId;
+        SequenceDiagramSettings settings;
+        SequenceDiagramView view;
 
-        private bool donotReselect;
+        private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
-            IClipboard clipboard,
-            IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager,
             IServiceControl serviceControl,
-            Func<ExceptionDetailViewModel> exceptionDetailViewModel,
-            SearchBarViewModel searchBar)
+            ISettingsProvider settingsProvider,
+            MessageSelectionContext selectionContext,
+            DiagramLegendViewModel diagramLegend,
+            CopyConversationIDCommand copyConversationIDCommand,
+            CopyMessageURICommand copyMessageURICommand,
+            RetryMessageCommand retryMessageCommand,
+            SearchByMessageIDCommand searchByMessageIDCommand,
+            ChangeSelectedMessageCommand changeSelectedMessageCommand,
+            ShowExceptionCommand showExceptionCommand,
+            SequenceDiagramView view)
         {
-            this.windowManager = windowManager;
-            this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
-            this.exceptionDetailViewModel = exceptionDetailViewModel;
+            this.settingsProvider = settingsProvider;
 
-            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
-            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
-            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
-            ShowSagaCommand = new ShowSagaCommand(eventAggregator);
+            Selection = selectionContext;
+            CopyConversationIDCommand = copyConversationIDCommand;
+            CopyMessageURICommand = copyMessageURICommand;
+            RetryMessageCommand = retryMessageCommand;
+            SearchByMessageIDCommand = searchByMessageIDCommand;
+            ChangeSelectedMessageCommand = changeSelectedMessageCommand;
+            ShowExceptionCommand = showExceptionCommand;
+            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
+            DiagramLegend = diagramLegend;
+            DiagramItems = new DiagramItemCollection();
+            HeaderItems = new DiagramItemCollection();
+
+            settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
+
+            ShowLegend = settings.ShowLegend;
         }
 
-        public ReactiveList<EndpointInfo> Endpoints { get; set; }
-
-        public IEnumerable<MessageInfo> Messages { get; set; }
-        public MessageInfo SelectedMessage { get; set; }
-
-        public ICommand RetryMessageCommand { get; private set; }
-        public ICommand CopyConversationIDCommand { get; private set; }
-        public ICommand CopyMessageURICommand { get; private set; }
-        public ICommand SearchByMessageIDCommand { get; private set; }
-        public ICommand ShowSagaCommand { get; private set; }
-
-        private void OnSelectedMessageChanged()
+        protected override void OnViewLoaded(object view)
         {
-            if (!donotReselect && SelectedMessage != null)
-                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
+            base.OnViewLoaded(view);
+            this.view = (SequenceDiagramView) view;
+        }
 
-            donotReselect = false;
+        void ExportToPng(SequenceDiagramView view)
+        {
+            var bodyElement = (UIElement)view.ScrollViewer_Body.Content;
+            var headerElement = (UIElement)view.ScrollViewer_Header.Content;
+
+            var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
+            var actualWidth = bodyElement.RenderSize.Width;
+
+            var renderTarget = new RenderTargetBitmap((int)actualWidth, (int)actualHeight, 96, 96, PixelFormats.Default);
+            var bodySourceBrush = new VisualBrush(bodyElement);
+
+            var drawingVisual = new DrawingVisual();
+            using (var drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+                drawingContext.DrawRectangle(bodySourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+            }
+
+            renderTarget.Render(drawingVisual);
+
+            var saveFileDialog = new SaveFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = ".png",
+                FileName = "sequencediagram.png",
+                Filter = "Portable Network Graphics (.png)|*.png"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveAsPNG(renderTarget, saveFileDialog.FileName);
+            }
+        }
+
+        private static void SaveAsPNG(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new PngBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(bmp));
+
+            using (var stm = File.Create(filename))
+            {
+                enc.Save(stm);
+            }
+        }
+
+        public ICommand ExportDiagramCommand { get; }
+
+        public ICommand OpenLink { get; }
+
+        public ICommand CopyConversationIDCommand { get; }
+
+        public ICommand CopyMessageURICommand { get; }
+
+        public ICommand RetryMessageCommand { get; }
+
+        public ICommand SearchByMessageIDCommand { get; }
+
+        public ICommand ChangeSelectedMessageCommand { get; }
+
+        public ICommand ShowExceptionCommand { get; }
+
+        public DiagramLegendViewModel DiagramLegend { get; }
+
+        public DiagramItemCollection DiagramItems { get; set; }
+
+        public bool ShowLegend { get; set; }
+
+        private void OnShowLegendChanged()
+        {
+            settings.ShowLegend = ShowLegend;
+            settingsProvider.SaveSettings(settings);
+        }
+
+        public bool HasItems => DiagramItems != null && DiagramItems.Count > 0;
+
+        public DiagramItemCollection HeaderItems { get; set; }
+
+        public MessageSelectionContext Selection { get; }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            DiagramLegend.ActivateWith(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            DiagramLegend.DeactivateWith(this);
         }
 
         public void Handle(SelectedMessageChanged message)
         {
-            var storedMessage = message.Message;
+            var storedMessage = Selection.SelectedMessage;
             if (storedMessage == null)
+            {
+                ClearState();
                 return;
+            }
 
             var conversationId = storedMessage.ConversationId;
             if (conversationId == null)
+            {
+                ClearState();
                 return;
+            }
+
+            if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
+            {
+                RefreshSelection();
+                return;
+            }
 
             var messages = serviceControl.GetConversationById(conversationId).ToList();
-
             if (messages.Count == 0)
             {
-                // SC is being silly
                 LogTo.Warning("No messages found for conversation id {0}", conversationId);
+                ClearState();
                 return;
             }
 
-            CreateEndpoints(messages);
-
-            CreateMessages(messages);
-
-            donotReselect = true;
-
-            SelectedMessage = Messages.FirstOrDefault(m =>
-                m.Message.MessageId == message.Message.MessageId &&
-                m.Message.TimeSent == message.Message.TimeSent &&
-                m.Message.Id == message.Message.Id);
+            CreateElements(messages);
+            loadedConversationId = conversationId;
+            RefreshSelection();
         }
 
-        public void Handle(MessageInfo.HiliteEvent hiliteEvent)
+        void RefreshSelection()
         {
-            var hiliteOn = false;
-
-            foreach (var messageInfo in Messages)
+            foreach (var item in DiagramItems.OfType<Handler>())
             {
-                if (!hiliteEvent.Hilite)
+                item.IsFocused = false;
+            }
+
+            foreach (var item in DiagramItems.OfType<Arrow>())
+            {
+                if (string.Equals(item.SelectedMessage.Id, Selection.SelectedMessage.Id, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    messageInfo.VerticalHilite = false;
+                    item.IsFocused = true;
                     continue;
                 }
 
-                if (messageInfo.Message.Id == hiliteEvent.TriggerMessageId)
-                    hiliteOn = false;
-
-                if (hiliteOn)
-                {
-                    messageInfo.VerticalHilite = true;
-                    messageInfo.VerticalHiliteIndex = hiliteEvent.VerticalHiliteIndex;
-                    messageInfo.VerticalHiliteIsPublished = hiliteEvent.IsPublished;
-                }
-
-                if (hiliteEvent.RelatedToMessageId == messageInfo.Message.MessageId &&
-                    messageInfo.Message.ReceivingEndpoint != null &&
-                    messageInfo.Message.ReceivingEndpoint.Name == hiliteEvent.SendingEndpointName)
-                    hiliteOn = true;
+                item.IsFocused = false;
             }
         }
 
-        private void CreateEndpoints(IList<StoredMessage> messages)
+        void CreateElements(List<StoredMessage> messages)
         {
-            var endpointInfos = messages
-                .OrderBy(m => m.TimeSent)
-                .Select(m => m.SendingEndpoint != null ? new EndpointInfo(m.SendingEndpoint, m.GetHeaderByKey(MessageHeaderKeys.Version)) : null)
-                .Where(e => e != null) // TODO report these as they shouldn't happen
-                .Distinct()
-                .ToList();
+            var modelCreator = new ModelCreator(messages, this);
+            var endpoints = modelCreator.Endpoints;
+            var handlers = modelCreator.Handlers;
+            var routes = modelCreator.Routes;
 
-            foreach (var message in messages)
-            {
-                if (message.ReceivingEndpoint == null || endpointInfos.Exists(e => e.FullName == message.ReceivingEndpoint.Name && e.Host == message.ReceivingEndpoint.Host))
-                {
-                    continue;
-                }
+            ClearState();
 
-                endpointInfos.Add(new EndpointInfo(message.ReceivingEndpoint, "Not Available"));
-            }
+            DiagramItems.AddRange(endpoints);
+            DiagramItems.AddRange(endpoints.Select(e => e.Timeline));
+            DiagramItems.AddRange(handlers);
+            DiagramItems.AddRange(handlers.SelectMany(h => h.Out));
+            DiagramItems.AddRange(routes);
 
-            Endpoints = new ReactiveList<EndpointInfo>(endpointInfos);
+            HeaderItems.AddRange(endpoints);
+
+            NotifyOfPropertyChange(nameof(HasItems));
         }
 
-        private void CreateMessages(IEnumerable<StoredMessage> messages)
+        void ClearState()
         {
-            var orderedMessages = messages.OrderBy(m => m.TimeSent);
+            DiagramItems.Clear();
+            HeaderItems.Clear();
+            NotifyOfPropertyChange(nameof(HasItems));
+        }
 
-            Messages = orderedMessages
-                .Select(m => new MessageInfo(eventAggregator, windowManager, exceptionDetailViewModel, this, m, Endpoints))
-                .ToList();
+        public void Handle(ScrollDiagramItemIntoView @event)
+        {
+            var diagramItem = DiagramItems.OfType<Arrow>()
+                .FirstOrDefault(a => a.SelectedMessage.Id == @event.Message.Id);
 
-            Messages.First().IsFirst = true;
-
-            foreach (var message in Messages)
+            if (diagramItem != null)
             {
-                eventAggregator.Subscribe(message);
-
-                if (message.Message.SendingEndpoint == null)
-                    continue;
-
-                var hiliteOn = false;
-
-                var sendingEndpoint = Endpoints.FirstOrDefault(ei =>
-                    ei.FullName == message.Message.SendingEndpoint.Name &&
-                    ei.Host == (message.Message.SendingEndpoint.Host ?? "") &&
-                    ei.Version == message.Message.GetHeaderByKey(MessageHeaderKeys.Version));
-                if (sendingEndpoint == null)
-                    continue;
-
-                foreach (var tempMessage in Messages)
-                {
-                    if (message.Message.Id == tempMessage.Message.Id)
-                        break;
-
-                    if (hiliteOn)
-                    {
-                        tempMessage.SetMessageLine(sendingEndpoint, message);
-                    }
-
-                    if (message.Message.RelatedToMessageId == tempMessage.Message.MessageId &&
-                        tempMessage.Message.ReceivingEndpoint != null &&
-                        tempMessage.Message.ReceivingEndpoint.Name == message.Message.SendingEndpoint.Name)
-                        hiliteOn = true;
-                }
+                view?.diagram.BringIntoView(diagramItem);
             }
         }
+    }
+
+    public interface IMessageCommandContainer
+    {
+        ICommand CopyConversationIDCommand { get; }
+        ICommand CopyMessageURICommand { get; }
+        ICommand RetryMessageCommand { get; }
+        ICommand SearchByMessageIDCommand { get; }
+        ICommand ChangeSelectedMessageCommand { get; }
+        ICommand ShowExceptionCommand { get; }
     }
 }

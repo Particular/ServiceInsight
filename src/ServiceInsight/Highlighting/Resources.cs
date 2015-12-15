@@ -1,10 +1,9 @@
-﻿namespace Particular.ServiceInsight.Highlighting
+﻿namespace ServiceInsight.Highlighting
 {
     using System;
     using System.Linq;
     using System.Xml;
     using ICSharpCode.AvalonEdit.Highlighting;
-
 
     /// <summary>
     /// Registers bespoke highlighting for MvvmTextEditor
@@ -35,7 +34,6 @@
             {
                 ".trace"
             }, stackTraceHighlighting);
-
         }
     }
 }

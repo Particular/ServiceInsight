@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
+namespace ServiceInsight.MessageViewers.HexViewer
 {
     public struct HexContentLine
     {

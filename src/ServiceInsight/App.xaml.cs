@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop
+﻿namespace ServiceInsight
 {
     using System;
     using System.Diagnostics;

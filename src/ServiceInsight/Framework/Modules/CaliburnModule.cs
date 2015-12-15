@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
     using Autofac;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using ServiceInsight.Framework.UI.ScreenManager;
 
     public class CaliburnModule : Module
     {

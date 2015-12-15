@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests
+﻿namespace ServiceInsight.FunctionalTests
 {
     using System;
     using System.IO;

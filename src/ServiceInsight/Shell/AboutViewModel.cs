@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Shell
+namespace ServiceInsight.Shell
 {
     using System;
     using System.ComponentModel;
@@ -7,7 +7,7 @@ namespace Particular.ServiceInsight.Desktop.Shell
     using System.Windows.Input;
     using Caliburn.Micro;
     using ExtensionMethods;
-    using Particular.ServiceInsight.Desktop.Framework;
+    using ServiceInsight.Framework;
     using ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using System;
     using System.Diagnostics;
@@ -11,6 +11,7 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework.Rx;
+    using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
     using MessageFlow;
     using MessageHeaders;
@@ -18,12 +19,11 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Licensing;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
     using Saga;
-    using SequenceDiagram;
     using Settings;
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;

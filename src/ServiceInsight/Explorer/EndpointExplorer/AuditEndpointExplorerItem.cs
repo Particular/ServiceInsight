@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
+﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System.Drawing;
     using global::ServiceInsight.Properties;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class AuditEndpointExplorerItem : EndpointExplorerItem
     {

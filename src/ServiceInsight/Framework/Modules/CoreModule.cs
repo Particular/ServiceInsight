@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
     using System.Collections.Generic;
     using System.Xml;
     using Autofac;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Licensing;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.MessageDecoders;
     using ServiceControl;
     using Startup;
 

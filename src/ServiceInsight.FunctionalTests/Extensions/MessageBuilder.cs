@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Extensions
+﻿namespace ServiceInsight.FunctionalTests.Extensions
 {
     using System;
     using System.Collections.Generic;
-    using Desktop.Models;
+    using ServiceInsight.Models;
     using TestData;
 
     public class MessageBuilder

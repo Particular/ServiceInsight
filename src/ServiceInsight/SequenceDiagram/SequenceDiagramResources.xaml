@@ -1,0 +1,989 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:beh="clr-namespace:ServiceInsight.Framework.Behaviors"
+                    xmlns:controls="clr-namespace:ServiceInsight.Controls"
+                    xmlns:converter="clr-namespace:ServiceInsight.SequenceDiagram.Converter"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+                    xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/XAML/Geometry.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/Images/Xaml/XamlIcons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/SequenceDiagram/DarkMenus.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--  Colors and Brushes  -->
+    <SolidColorBrush x:Key="ErrorBrush">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey20Brush">#333333</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey30Brush">#444444</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey40Brush">#666666</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey60Brush">#999999</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey80Brush">#CCCCCC</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey90Brush">#E6E6E6</SolidColorBrush>
+    <SolidColorBrush x:Key="Grey95Brush">#B3B3B3</SolidColorBrush>
+
+    <Color x:Key="HighlightColor">#0B6EEF</Color>
+    <Color x:Key="HoverColor">#C5DEE9</Color>
+    <Color x:Key="BlackColor">#000000</Color>
+
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush">#0066CC</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedForegroundBrush">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="SplitButtonBackground">Transparent</SolidColorBrush>
+    <SolidColorBrush x:Key="HoverBackgroundBrush">#C5DEE9</SolidColorBrush>
+
+    <DoubleCollection x:Key="EventStroke">3 2</DoubleCollection>
+
+    <converter:CenterToolTipConverter x:Key="CenterToolTipConverter" />
+    <converter:SmartWrapConverter x:Key="SmartWrapConverter" />
+    <converter:ElementHeightConverter x:Key="ElementHeightConverter" />
+
+    <Style x:Key="MessageIconStyle" TargetType="{x:Type controls:IconControl}">
+        <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+        <Setter Property="ToolTip" Value="Command" />
+        <Style.Triggers>
+            <Trigger Property="Type" Value="Timeout">
+                <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
+                <Setter Property="ToolTip" Value="Timeout" />
+            </Trigger>
+            <Trigger Property="Type" Value="Event">
+                <Setter Property="Data" Value="{StaticResource EventGeometry}" />
+                <Setter Property="ToolTip" Value="Event" />
+            </Trigger>
+            <Trigger Property="Type" Value="Command">
+                <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
+                <Setter Property="ToolTip" Value="Command" />
+            </Trigger>
+            <Trigger Property="Type" Value="Local">
+                <Setter Property="Data" Value="{StaticResource LoopBackGeometry}" />
+                <Setter Property="ToolTip" Value="Local Send" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CodeStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Background" Value="#F8F8F8" />
+        <Setter Property="Foreground" Value="#777777" />
+    </Style>
+
+    <Style x:Key="BlankToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MessageButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TooltipStyleForTitle" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="ExtraBold" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="TextAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="TooltipStyleForHeader" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Grey95Brush}" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="TextAlignment" Value="Right" />
+    </Style>
+
+    <Style x:Key="TooltipStyleForValue" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
+
+    <Style x:Key="EmptyFocusVisualStyle" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EndpointTooltipStyle" TargetType="ToolTip">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Placement" Value="Bottom" />
+        <Setter Property="HorizontalOffset">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
+                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Polygon HorizontalAlignment="Center"
+                                 Fill="{StaticResource Grey20Brush}"
+                                 Points="0,8 8,0 16,8" />
+                        <Border Grid.Row="1" Background="{StaticResource Grey20Brush}">
+                            <ContentPresenter Margin="8"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HandlerTooltipStyle" TargetType="ToolTip">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Placement" Value="Bottom" />
+        <Setter Property="Background" Value="{StaticResource Grey20Brush}" />
+        <Setter Property="VerticalOffset" Value="8" />
+        <Setter Property="HorizontalOffset">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
+                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Polygon HorizontalAlignment="Center"
+                                 Fill="{StaticResource Grey20Brush}"
+                                 Points="0,8 8,0 16,8" />
+                        <Border Grid.Row="1" Background="{StaticResource Grey20Brush}">
+                            <ContentPresenter Margin="8"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ArrowTooltipStyle" TargetType="ToolTip">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Placement" Value="Top" />
+        <Setter Property="HorizontalOffset">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
+                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8" />
+                        </Grid.RowDefinitions>
+                        <Border Background="{StaticResource Grey20Brush}">
+                            <ContentPresenter Margin="8"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch" />
+                        </Border>
+                        <Polygon Grid.Row="1"
+                                 HorizontalAlignment="Center"
+                                 Fill="{StaticResource Grey20Brush}"
+                                 Points="0,0 16,0 8,8" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate DataType="{x:Type diagram:MessageProcessingRoute}">
+        <Grid x:Name="Root"
+              Width="12"
+              IsHitTestVisible="False"
+              SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="6" />
+            </Grid.RowDefinitions>
+            <Line x:Name="Line"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="0"
+                  HorizontalAlignment="Center"
+                  StrokeThickness="2"
+                  X1="0"
+                  X2="0"
+                  Y1="0"
+                  Y2="{Binding Height,
+                               Converter={StaticResource ElementHeightConverter},
+                               RelativeSource={RelativeSource AncestorType={x:Type diagram:DiagramVisualItem},
+                                                              Mode=FindAncestor}}" />
+            <Path x:Name="ArrowHead"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Width="6"
+                  Height="6"
+                  Margin="-1,0,0,0"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Data="{StaticResource DownArrow}"
+                  Fill="Transparent"
+                  Stretch="UniformToFill">
+                <Path.ToolTip>
+                    <ToolTip Background="{StaticResource Grey20Brush}"
+                             HorizontalOffset="5"
+                             Placement="Right"
+                             Visibility="{Binding Name,
+                                                  TargetNullValue=Collapsed}">
+                        <TextBlock Margin="4"
+                                   Foreground="{StaticResource Grey60Brush}"
+                                   Text="{Binding Name}" />
+                    </ToolTip>
+                </Path.ToolTip>
+            </Path>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsFocused}" Value="True">
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                <Setter TargetName="ArrowHead" Property="Fill" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="Line" Property="Stroke" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type diagram:EndpointTimeline}">
+        <Line x:Name="Line"
+              SnapsToDevicePixels="True"
+              Stroke="{StaticResource Grey90Brush}"
+              StrokeThickness="2"
+              X1="0"
+              X2="0"
+              Y1="0"
+              Y2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                          AncestorType={x:Type diagram:DiagramVisualItem}},
+                           Path=Height,
+                           Converter={StaticResource ElementHeightConverter}}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type diagram:Handler}">
+        <ToggleButton x:Name="Root"
+                      Command="{Binding ChangeCurrentMessage}"
+                      IsChecked="{Binding Path=IsFocused,
+                                          Mode=TwoWay}"
+                      beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
+            <ToggleButton.ToolTip>
+                <ToolTip Style="{StaticResource HandlerTooltipStyle}" Visibility="{Binding Name, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                    <Grid Width="250">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{StaticResource Grey60Brush}" />
+                                <Setter Property="Margin" Value="4" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.ColumnSpan="2"
+                                   Style="{StaticResource TooltipStyleForTitle}"
+                                   Text="Processing of Message" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Processing Time:"
+                                   Visibility="{Binding ProcessingTime,
+                                                        Converter={StaticResource NullToVisibilityConverter}}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding ProcessingTime,
+                                                  Converter={StaticResource TimeSpanHumanizedConverter}}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Processing Of:"
+                                   Visibility="{Binding Name,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Name,
+                                                  Converter={StaticResource SmartWrapConverter}}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Sagas Invoked:"
+                                   Visibility="{Binding PartOfSaga,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                        <TextBlock x:Name="PartOfSagaValue"
+                                   Grid.Row="3"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding PartOfSaga}"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding PartOfSaga,
+                                                        Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                    </Grid>
+                </ToolTip>
+            </ToggleButton.ToolTip>
+            <ToggleButton.Template>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Canvas Width="14">
+                        <Border x:Name="RootBorder"
+                                Width="14"
+                                Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                AncestorType={x:Type diagram:DiagramVisualItem}},
+                                                 Path=Height}"
+                                HorizontalAlignment="Center"
+                                Background="{StaticResource Grey60Brush}"
+                                BorderBrush="Black"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True">
+
+                            <Grid>
+                                <controls:IconControl x:Name="ErrorIcon"
+                                                      Width="12"
+                                                      Height="12"
+                                                      Data="{StaticResource ErrorIcon}"
+                                                      Foreground="White"
+                                                      Visibility="Hidden" />
+
+                                <controls:IconControl x:Name="StartIcon"
+                                                      Width="8"
+                                                      Height="8"
+                                                      Data="M0,0L1,0.5 0,1z"
+                                                      Foreground="White"
+                                                      Visibility="Hidden" />
+                            </Grid>
+                        </Border>
+                        <Border x:Name="MessageType"
+                                Height="22"
+                                Background="White"
+                                Visibility="{Binding Name,
+                                                     Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image x:Name="MessageTypeIcon"
+                                       Width="14"
+                                       Height="14"
+                                       Margin="2,0"
+                                       VerticalAlignment="Center"
+                                       Source="{StaticResource HandlerIcon}"
+                                       Visibility="{Binding Name,
+                                                            Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}" />
+                                <TextBlock x:Name="MessageTypeText"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                                           FontSize="14"
+                                           Foreground="{StaticResource Grey40Brush}"
+                                           Padding="2"
+                                           Text="{Binding Name}" />
+                            </StackPanel>
+                        </Border>
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding State}" Value="Fail">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBrush}" />
+                            <Setter TargetName="ErrorIcon" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconHighlighted}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True" />
+                                <Condition Binding="{Binding ElementName=ErrorIcon, Path=Visibility}" Value="Hidden" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconHighlighted}" />
+                        </MultiDataTrigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MessageTypeText" Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}" />
+                            <Setter TargetName="MessageTypeIcon" Property="Source" Value="{StaticResource HandlerIconSelected}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition SourceName="ErrorIcon" Property="Visibility" Value="Hidden" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                        </MultiTrigger>
+
+                        <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Right">
+                            <Setter TargetName="MessageType" Property="Canvas.Left" Value="15" />
+                            <Setter TargetName="MessageType" Property="Margin" Value="4,0,0,0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding EffectiveArrowDirection}" Value="Left">
+                            <Setter TargetName="MessageType" Property="Canvas.Right" Value="15" />
+                            <Setter TargetName="MessageType" Property="Margin" Value="0,0,4,0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ID}" Value="First">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource BlackBrush}" />
+                            <Setter TargetName="StartIcon" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </ToggleButton.Template>
+        </ToggleButton>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding ID}" Value="First">
+                <Setter Property="ToolTip" Value="Start of Conversation" />
+                <Setter Property="Panel.ZIndex" Value="100" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type diagram:EndpointItem}">
+
+        <Border Width="260"
+                Margin="15,15,15,0"
+                Background="{StaticResource Grey90Brush}"
+                BorderThickness="0"
+                SnapsToDevicePixels="True">
+
+            <!--  Endpoint Tooltip  -->
+            <Border.ToolTip>
+                <ToolTip Style="{StaticResource EndpointTooltipStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Name:" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding FullName}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="NSB Version:" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Version,
+                                                  TargetNullValue='Not Available'}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TooltipStyleForHeader}"
+                                   Text="Host:" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{StaticResource TooltipStyleForValue}"
+                                   Text="{Binding Host,
+                                                  TargetNullValue='Not Known'}" />
+                    </Grid>
+                </ToolTip>
+            </Border.ToolTip>
+
+            <!--  Endpoint Title  -->
+            <Border Margin="0">
+                <Grid Margin="8"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Path Width="18"
+                          Height="18"
+                          Margin="4 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource EndpointGeometry}"
+                          Fill="{StaticResource Grey40Brush}"
+                          Stretch="Fill" />
+
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="{StaticResource Grey40Brush}"
+                               Text="{Binding Name,
+                                              Converter={StaticResource SmartWrapConverter}}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="Wrap" />
+                </Grid>
+            </Border>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LeftToRightArrow" DataType="{x:Type diagram:Arrow}">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Popup x:Name="FailedMessagePopup"
+                   Placement="MousePoint"
+                   StaysOpen="False">
+                <StackPanel MaxWidth="455"
+                            Margin="0,6,6,6"
+                            Background="Black">
+                    <MenuItem Command="{Binding RetryMessageCommand}"
+                              Header="Retry message"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              Visibility="{Binding Path=Status,
+                                                   Converter={StaticResource EnumToVisibilityConverter},
+                                                   ConverterParameter='Failed, RepeatedFailure'}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding CopyConversationIDCommand}"
+                              Header="Copy conversation ID"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding CopyMessageURICommand}"
+                              Header="Copy message URL"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding SearchByMessageIDCommand}"
+                              Header="Search by message ID"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <StackPanel.Triggers>
+                        <EventTrigger RoutedEvent="MenuItem.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </StackPanel.Triggers>
+                </StackPanel>
+            </Popup>
+
+            <Line x:Name="Line"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  VerticalAlignment="Center"
+                  Stroke="{StaticResource BlackBrush}"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="{Binding Width}"
+                  Y1="2"
+                  Y2="2" />
+            <Path x:Name="ArrowHead"
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Width="10"
+                  Height="15"
+                  VerticalAlignment="Center"
+                  Data="{StaticResource RightArrow}"
+                  Fill="{StaticResource BlackBrush}"
+                  Stretch="Fill" />
+
+            <ToggleButton x:Name="DropDownButton"
+                          Grid.Row="0"
+                          Grid.Column="3"
+                          Height="25"
+                          Margin="3,0,0,0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Command="{Binding ChangeCurrentMessage}"
+                          IsChecked="{Binding IsFocused,
+                                              Mode=TwoWay}"
+                          Style="{StaticResource MessageButtonStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
+                <StackPanel Orientation="Horizontal">
+                    <controls:IconControl x:Name="MessageIcon"
+                                          Width="15"
+                                          Height="15"
+                                          Margin="4,0,4,0"
+                                          Foreground="Black"
+                                          Style="{StaticResource MessageIconStyle}"
+                                          Type="{Binding Type}" />
+
+                    <TextBlock x:Name="MessageType"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="Black"
+                               Padding="0,0,4,0"
+                               Text="{Binding Name}" />
+                </StackPanel>
+            </ToggleButton>
+        </Grid>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static diagram:ArrowType.Event}">
+                <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
+
+            <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
+                <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+            </Trigger>
+
+            <EventTrigger RoutedEvent="Button.MouseRightButtonUp" SourceName="DropDownButton">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
+                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                        </BooleanAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RightToLeftArrow" DataType="{x:Type diagram:Arrow}">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Popup x:Name="FailedMessagePopup"
+                   Placement="MousePoint"
+                   StaysOpen="False">
+                <StackPanel MaxWidth="455"
+                            Margin="0,6,6,6"
+                            Background="Black">
+                    <MenuItem Command="{Binding RetryMessageCommand}"
+                              Header="Retry message"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              Visibility="{Binding Path=Status,
+                                                   Converter={StaticResource EnumToVisibilityConverter},
+                                                   ConverterParameter='Failed, RepeatedFailure'}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding CopyConversationIDCommand}"
+                              Header="Copy conversation ID"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding CopyMessageURICommand}"
+                              Header="Copy message URL"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <MenuItem Command="{Binding SearchByMessageIDCommand}"
+                              Header="Search by message ID"
+                              Style="{StaticResource DarkMenuItemStyle}"
+                              beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}" />
+                    <StackPanel.Triggers>
+                        <EventTrigger RoutedEvent="MenuItem.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </StackPanel.Triggers>
+                </StackPanel>
+            </Popup>
+
+            <ToggleButton x:Name="DropDownButton"
+                          Grid.Row="0"
+                          Grid.Column="0"
+                          Height="25"
+                          Margin="0,0,3,2"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Command="{Binding ChangeCurrentMessage}"
+                          IsChecked="{Binding IsFocused,
+                                              Mode=TwoWay}"
+                          Style="{StaticResource MessageButtonStyle}"
+                          beh:CommandParameterHelper.CommandParameter="{Binding SelectedMessage}">
+                <StackPanel Orientation="Horizontal">
+                    <controls:IconControl x:Name="MessageIcon"
+                                          Width="15"
+                                          Height="15"
+                                          Margin="4,0,4,0"
+                                          Foreground="Black"
+                                          Style="{StaticResource MessageIconStyle}"
+                                          Type="{Binding Type}" />
+
+                    <TextBlock x:Name="MessageType"
+                               Margin="0,0,0,2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="Black"
+                               Padding="0,0,4,0"
+                               Text="{Binding Name}" />
+                </StackPanel>
+            </ToggleButton>
+
+            <Path x:Name="ArrowHead"
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Width="10"
+                  Height="15"
+                  VerticalAlignment="Center"
+                  Data="{StaticResource LeftArrow}"
+                  Fill="{StaticResource BlackBrush}"
+                  Stretch="Fill" />
+
+            <Line x:Name="Line"
+                  Grid.Row="0"
+                  Grid.Column="2"
+                  VerticalAlignment="Center"
+                  Stroke="{StaticResource BlackBrush}"
+                  StrokeThickness="4"
+                  X1="0"
+                  X2="{Binding Width}"
+                  Y1="2"
+                  Y2="2" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static diagram:ArrowType.Event}">
+                <Setter TargetName="Line" Property="StrokeDashArray" Value="{StaticResource EventStroke}" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type diagram:DiagramVisualItem}}, Path=Hilight}" Value="True">
+                <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+                <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource HighlightBrush}" />
+            </DataTrigger>
+
+            <Trigger SourceName="DropDownButton" Property="IsChecked" Value="True">
+                <Setter TargetName="DropDownButton" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                <Setter TargetName="DropDownButton" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                <Setter TargetName="MessageIcon" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+                <Setter TargetName="MessageType" Property="Foreground" Value="{StaticResource SelectedForegroundBrush}" />
+            </Trigger>
+
+            <EventTrigger RoutedEvent="Button.MouseRightButtonUp" SourceName="DropDownButton">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="FailedMessagePopup" Storyboard.TargetProperty="IsOpen">
+                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                        </BooleanAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <ToolTip x:Key="ArrowTooltip"
+             Style="{StaticResource ArrowTooltipStyle}"
+             d:DataContext="{d:DesignInstance Type=diagram:Arrow}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Style="{StaticResource TooltipStyleForTitle}"
+                       Text="{Binding Type}" />
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Message Type:" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding SelectedMessage.FriendlyMessageType}" />
+
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Sent From:" />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding Sending}" />
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Sent To:" />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding Receiving}" />
+        </Grid>
+    </ToolTip>
+
+    <DataTemplate DataType="{x:Type diagram:Arrow}">
+        <ContentControl Content="{Binding}" ToolTip="{StaticResource ArrowTooltip}">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+
+                    <!--  Default Template  -->
+                    <Setter Property="ContentTemplate" Value="{StaticResource LeftToRightArrow}" />
+
+                    <!--  Triggers to change Template  -->
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Direction}" Value="Left">
+                            <Setter Property="ContentTemplate" Value="{StaticResource RightToLeftArrow}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type diagram:DiagramHeader}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type diagram:DiagramControl}">
+        <Setter Property="Padding" Value="0" />
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <diagram:DiagramSurface x:Name="DiagramSurface"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Background="#FFFFFF"
+                                            IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type diagram:DiagramVisualItem}">
+                    <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" />
+                    <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" />
+                    <Setter Property="Panel.ZIndex" Value="{Binding ZIndex, RelativeSource={RelativeSource Self}}" />
+                    <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
+                    <Setter Property="IsSelected" Value="{Binding IsFocused}" />
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type diagram:DiagramVisualItem}">
+                                <ContentPresenter x:Name="Content" />
+
+                                <ControlTemplate.Triggers>
+                                    <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
+                                    <DataTrigger Binding="{Binding IsFocused}" Value="True">
+                                        <Setter Property="ZIndex" Value="10" />
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Hilight" Value="True" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type diagram:DiagramControl}">
+                    <Border Margin="{TemplateBinding Padding}" Background="White">
+                        <ItemsPresenter x:Name="ItemsPresenter" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

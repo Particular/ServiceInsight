@@ -1,9 +1,9 @@
-namespace Particular.ServiceInsight.Desktop.Framework.Commands
+namespace ServiceInsight.Framework.Commands
 {
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Models;
+    using Framework;
+    using Models;
 
-    class CopyConversationIDCommand : BaseCommand
+    public class CopyConversationIDCommand : BaseCommand
     {
         private readonly IClipboard clipboard;
 

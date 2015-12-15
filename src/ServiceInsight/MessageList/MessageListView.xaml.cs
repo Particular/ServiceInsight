@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.ComponentModel;
     using System.Linq;
     using System.Windows;
-    using DevExpress.Data;
+    using System.Windows.Input;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public interface IMessageListView
     {
@@ -25,6 +25,7 @@
         public MessageListView()
         {
             InitializeComponent();
+            
         }
 
         public void BeginDataUpdate()
@@ -39,7 +40,8 @@
 
         void GridOnCurrentItemChanged(object sender, CurrentItemChangedEventArgs currentItemChangedEventArgs)
         {
-            Model.RaiseSelectedMessageChanged(currentItemChangedEventArgs.NewItem as StoredMessage);
+            var msg = currentItemChangedEventArgs.NewItem as StoredMessage;
+            Model.RaiseSelectedMessageChanged(msg);
         }
 
         MessageListViewModel Model
@@ -65,21 +67,6 @@
         void SortData(ColumnBase column, ListSortDirection order)
         {
             Model.RefreshMessages(column.Tag as string, order == ListSortDirection.Ascending);
-        }
-
-        DataController Controller
-        {
-            get { return grid.DataController; }
-        }
-
-        public void BeginSelection()
-        {
-            Controller.Selection.BeginSelection();
-        }
-
-        public void EndSelection()
-        {
-            Controller.Selection.EndSelection();
         }
 
         void Grid_OnCustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
@@ -109,6 +96,15 @@
             SortData(column, sortInfo.SortOrder);
 
             e.Handled = true;
+        }
+
+        private void OnGridClicked(object sender, MouseButtonEventArgs e)
+        {
+            var info = ((TableView)grid.View).CalcHitInfo(e.OriginalSource as DependencyObject);
+            if (info.HitTest == TableViewHitTest.RowCell)
+            {
+                Model.BringIntoView(Model.Selection.SelectedMessage);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.Windows.Media.Imaging;

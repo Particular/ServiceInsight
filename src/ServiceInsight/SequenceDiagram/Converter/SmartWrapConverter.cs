@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.ValueConverters
+namespace ServiceInsight.SequenceDiagram.Converter
 {
     using System;
     using System.Text.RegularExpressions;

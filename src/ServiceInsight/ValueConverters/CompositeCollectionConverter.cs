@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.ValueConverters
+﻿namespace ServiceInsight.ValueConverters
 {
     using System;
     using System.Collections;

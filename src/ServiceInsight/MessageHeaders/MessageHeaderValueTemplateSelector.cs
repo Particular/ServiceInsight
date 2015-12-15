@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
+﻿namespace ServiceInsight.MessageHeaders
 {
     using System.Windows;
     using System.Windows.Controls;

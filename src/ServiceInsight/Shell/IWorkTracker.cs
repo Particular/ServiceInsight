@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Shell
+namespace ServiceInsight.Shell
 {
     public interface IWorkTracker
     {

@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using ServiceInsight.Framework.Events;
 
     public class StatusBarManager : PropertyChangedBase,
         IHandle<WorkStarted>,

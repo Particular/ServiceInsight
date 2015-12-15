@@ -1,11 +1,11 @@
-namespace Particular.ServiceInsight.Desktop.Framework.Commands
+namespace ServiceInsight.Framework.Commands
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using Events;
+    using Models;
+    using ServiceControl;
 
-    class RetryMessageCommand : BaseCommand
+    public class RetryMessageCommand : BaseCommand
     {
         private readonly IEventAggregator eventAggregator;
         private readonly IServiceControl serviceControl;

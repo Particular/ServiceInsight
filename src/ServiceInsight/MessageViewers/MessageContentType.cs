@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
+﻿namespace ServiceInsight.MessageViewers
 {
     public enum MessageContentType
     {

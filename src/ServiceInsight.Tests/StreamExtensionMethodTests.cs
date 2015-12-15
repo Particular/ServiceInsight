@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System.IO;
     using System.Text;
-    using Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
     using NUnit.Framework;
     using Shouldly;
 

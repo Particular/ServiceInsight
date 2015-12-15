@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Tests.Framework
+﻿namespace ServiceInsight.Tests.Framework
 {
     using System;
-    using Desktop.Framework.Attachments;
+    using ServiceInsight.Framework.Attachments;
     using NUnit.Framework;
 
     [TestFixture]

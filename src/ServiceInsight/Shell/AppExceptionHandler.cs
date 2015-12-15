@@ -1,10 +1,10 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using System;
     using System.Windows;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.UI.ScreenManager;
 
     public class AppExceptionHandler
     {

@@ -1,7 +1,7 @@
-namespace Particular.ServiceInsight.Desktop.MessageProperties
+namespace ServiceInsight.MessageProperties
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using ServiceInsight.Framework.Events;
 
     public interface IHeaderInfoViewModel :
         IScreen,

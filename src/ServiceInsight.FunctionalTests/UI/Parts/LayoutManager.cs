@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
+﻿namespace ServiceInsight.FunctionalTests.UI.Parts
 {
     using System.Collections.Generic;
     using System.Threading;

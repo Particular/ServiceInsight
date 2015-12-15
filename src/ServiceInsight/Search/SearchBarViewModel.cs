@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Search
+﻿namespace ServiceInsight.Search
 {
     using System;
     using System.Collections.Generic;
@@ -9,9 +9,9 @@
     using ExtensionMethods;
     using MessageList;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Rx;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Rx;
+    using ServiceInsight.Framework.Settings;
     using Settings;
     using Shell;
     using Startup;

@@ -1,0 +1,225 @@
+﻿[
+  {
+    "id": "83905123-09a3-8330-292e-086e2dfd3a2d",
+    "message_id": "baca0697-b5c9-4acd-9d55-a4f90166af14",
+    "message_type": "Particular.Common.DataConsumer.Events.LoanApplicationCreated",
+    "sending_endpoint": {
+      "name": "Particular.ApplicationProcessor.LoanProcessingSagaHandler",
+      "host_id": "15b9df5b-3688-5688-9e6c-f68f24150ea0",
+      "host": "MACHINEA"
+    },
+    "receiving_endpoint": {
+      "name": "Particular.AnalyticsDatabase.AnalyticsDataHandler",
+      "host_id": "5e42a32c-37cb-51be-9f6b-0d26e4b05b88",
+      "host": "MACHINEA"
+    },
+    "time_sent": "2015-08-20T02:45:55.687605Z",
+    "processed_at": "2015-08-20T02:45:56.654811Z",
+    "critical_time": "00:00:00.9672060",
+    "processing_time": "00:00:00.0936000",
+    "delivery_time": "00:00:00.8736060",
+    "is_system_message": false,
+    "conversation_id": "a9c8c178-83be-4779-b275-a4f90166aea1",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "baca0697-b5c9-4acd-9d55-a4f90166af14"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "d9f7b5a5-0700-434d-a0fa-a4f90166af14"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Publish"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.3"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2015-08-20 02:45:55:687605 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "b61116b2-0560-4abe-b244-a4f90166aed7"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler.LoanProcessingSaga, Particular.ApplicationProcessor.LoanProcessingSagaHandler, Version=2.14.9.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "text/xml"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "Particular.Common.DataConsumer.Events.LoanApplicationCreated, Particular.Common.DataConsumer.Events, Version=2.14.9.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "WinIdName",
+        "value": "UserA"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "68e28576-0249-40ca-9fa6-a4f90166aea1"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "a9c8c178-83be-4779-b275-a4f90166aea1"
+      },
+      {
+        "key": "NServiceBus.SqlServer.CallbackQueue",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler.MACHINEA"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2015-08-20 02:45:56:561211 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2015-08-20 02:45:56:654811 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "Particular.AnalyticsDatabase.AnalyticsDataHandler"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "publish",
+    "body_url": "/messages/baca0697-b5c9-4acd-9d55-a4f90166af14/body",
+    "body_size": 1496,
+    "originates_from_saga": {
+      "saga_type": "Particular.ApplicationProcessor.LoanProcessingSagaHandler.LoanProcessingSaga",
+      "saga_id": "b61116b2-0560-4abe-b244-a4f90166aed7"
+    }
+  },
+  {
+    "id": "cb238ccb-eb42-42c2-c7e7-ebb716d3a5a0",
+    "message_id": "68e28576-0249-40ca-9fa6-a4f90166aea1",
+    "message_type": "Particular.Common.ApplicationProcessor.Commands.CreateLoanApplication",
+    "sending_endpoint": {
+      "name": "System.Web",
+      "host_id": "167f8c15-2297-2d36-f15e-1eed106995bb",
+      "host": "MACHINEB"
+    },
+    "receiving_endpoint": {
+      "name": "Particular.ApplicationProcessor.LoanProcessingSagaHandler",
+      "host_id": "15b9df5b-3688-5688-9e6c-f68f24150ea0",
+      "host": "MACHINEA"
+    },
+    "time_sent": "2015-08-20T02:45:55.302732Z",
+    "processed_at": "2015-08-20T02:45:55.703205Z",
+    "critical_time": "00:00:00.4004730",
+    "processing_time": "00:00:00.3588020",
+    "delivery_time": "00:00:00.0416710",
+    "is_system_message": false,
+    "conversation_id": "a9c8c178-83be-4779-b275-a4f90166aea1",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "68e28576-0249-40ca-9fa6-a4f90166aea1"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "68e28576-0249-40ca-9fa6-a4f90166aea1"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.3"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2015-08-20 02:45:55:302732 Z"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "text/xml"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "Particular.Common.ApplicationProcessor.Commands.CreateLoanApplication, Particular.Common.ApplicationProcessor.Commands, Version=2.14.9.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "WinIdName",
+        "value": "UserB"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "a9c8c178-83be-4779-b275-a4f90166aea1"
+      },
+      {
+        "key": "NServiceBus.SqlServer.CallbackQueue",
+        "value": "System.Web.MACHINEB"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MACHINEB"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "System.Web"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler.LoanProcessingSaga:b61116b2-0560-4abe-b244-a4f90166aed7"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "b61116b2-0560-4abe-b244-a4f90166aed7:New"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2015-08-20 02:45:55:344403 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2015-08-20 02:45:55:703205 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MACHINEA"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "Particular.ApplicationProcessor.LoanProcessingSagaHandler"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/68e28576-0249-40ca-9fa6-a4f90166aea1/body",
+    "body_size": 2522,
+    "invoked_sagas": [
+      {
+        "change_status": "New",
+        "saga_type": "Particular.ApplicationProcessor.LoanProcessingSagaHandler.LoanProcessingSaga",
+        "saga_id": "b61116b2-0560-4abe-b244-a4f90166aed7"
+      }
+    ]
+  }
+]

@@ -1,12 +1,12 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Services
+﻿namespace ServiceInsight.FunctionalTests.Services
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Desktop.Models;
-    using Desktop.Saga;
-    using Desktop.ServiceControl;
+    using ServiceInsight.Models;
+    using ServiceInsight.Saga;
+    using ServiceInsight.ServiceControl;
     using Newtonsoft.Json;
 
     public class FakeServiceControl : IServiceControl

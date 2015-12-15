@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.FunctionalTests.Framework
+namespace ServiceInsight.FunctionalTests.Framework
 {
     public class GridColumn
     {

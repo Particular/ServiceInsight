@@ -1,20 +1,20 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
+    using Autofac;
     using Caliburn.Micro;
-    using Framework;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
-    using Search;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.MessageList;
     using ServiceControl;
     using Settings;
 
@@ -26,6 +26,7 @@
         IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
+        MessageSelectionContext selection;
         ConcurrentDictionary<string, MessageNode> nodeMap;
         MessageFlowView view;
         string loadedConversationId;
@@ -34,22 +35,23 @@
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            SearchBarViewModel searchBar,
+            IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
-            IClipboard clipboard)
+            MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
+            this.selection = selectionContext;
             this.exceptionDetail = exceptionDetail;
 
-            CopyConversationIDCommand = new CopyConversationIDCommand(clipboard);
-            CopyMessageURICommand = new CopyMessageURICommand(clipboard, serviceControl);
-            SearchByMessageIDCommand = new SearchByMessageIDCommand(eventAggregator, searchBar);
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
-
+            CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
+            CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
+            RetryMessageCommand = container.Resolve<RetryMessageCommand>();
+            SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
+            
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
@@ -89,7 +91,7 @@
             var message = e.MessageNode.Message;
 
             eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
-            eventAggregator.Publish(new SelectedMessageChanged(message));
+            selection.SelectedMessage = message;
         }
 
         protected override void OnActivate()
@@ -109,7 +111,7 @@
         {
             if (SelectedMessage != null)
             {
-                eventAggregator.Publish(new SelectedMessageChanged(SelectedMessage.Message));
+                selection.SelectedMessage = SelectedMessage.Message;
             }
             eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
@@ -133,7 +135,7 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            var storedMessage = @event.Message;
+            var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)
             {
                 ClearState();

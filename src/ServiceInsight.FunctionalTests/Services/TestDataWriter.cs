@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Services
+﻿namespace ServiceInsight.FunctionalTests.Services
 {
     using System;
     using System.IO;
-    using Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
     using Newtonsoft.Json;
 
     public class TestDataWriter

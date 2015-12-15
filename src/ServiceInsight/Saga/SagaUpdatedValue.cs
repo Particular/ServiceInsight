@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Saga
+﻿namespace ServiceInsight.Saga
 {
     using System.Windows.Input;
     using Caliburn.Micro;

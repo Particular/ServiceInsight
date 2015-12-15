@@ -1,5 +1,5 @@
 ﻿// ReSharper disable once CheckNamespace
-namespace Particular.ServiceInsight.Desktop
+namespace ServiceInsight
 {
     using System;
     using System.Data.Entity.Design.PluralizationServices;

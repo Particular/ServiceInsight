@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
+﻿namespace ServiceInsight.MessageHeaders
 {
 
     public partial class MessageHeadersView

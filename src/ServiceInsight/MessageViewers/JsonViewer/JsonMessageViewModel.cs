@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
+﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class JsonMessageViewModel : Screen, IDisplayMessageBody
     {

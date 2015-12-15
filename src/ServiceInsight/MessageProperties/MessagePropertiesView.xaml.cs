@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
+﻿namespace ServiceInsight.MessageProperties
 {
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.PropertyGrid;

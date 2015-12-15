@@ -17,7 +17,8 @@
     <WarningLevel>4</WarningLevel>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NuGetPackageImportStamp>71d27fdb</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,8 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>
-    </LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -155,8 +154,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+    <Reference Include="PropertyChanged, Version=1.50.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ReactiveUI, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -233,14 +232,23 @@
     <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
     <Compile Include="App_Packages\Particular.Licensing\UserSidChecker.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
+    <Compile Include="DiagramLegend\DiagramLegendView.xaml.cs">
+      <DependentUpon>DiagramLegendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
+    <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
+    <Compile Include="Framework\Commands\CommandsModule.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />
     <Compile Include="Framework\Commands\RetryMessageCommand.cs" />
     <Compile Include="Framework\Commands\SearchByMessageIDCommand.cs" />
+    <Compile Include="Framework\Commands\ShowExceptionCommand.cs" />
     <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
+    <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
@@ -267,19 +275,34 @@
     <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
+    <Compile Include="MessageList\MessageSelectionContext.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
-    <Compile Include="SequenceDiagram\MessageLineConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\ElementHeightConverter.cs" />
+    <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
+    <Compile Include="SequenceDiagram\Diagram\ArrowType.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramHeader.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramVisualItem.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Direction.cs" />
+    <Compile Include="SequenceDiagram\Diagram\MessageProcessingRoute.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Arrow.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramControl.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramItem.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramItemCollection.cs" />
+    <Compile Include="SequenceDiagram\Diagram\DiagramSurface.cs" />
+    <Compile Include="SequenceDiagram\Diagram\EndpointItem.cs" />
+    <Compile Include="SequenceDiagram\Diagram\EndpointTimeline.cs" />
+    <Compile Include="SequenceDiagram\Diagram\Handler.cs" />
+    <Compile Include="SequenceDiagram\Diagram\IDiagram.cs" />
+    <Compile Include="SequenceDiagram\Diagram\LayoutManager.cs" />
+    <Compile Include="SequenceDiagram\Diagram\VisualTree.cs" />
+    <Compile Include="SequenceDiagram\Diagram\HandlerState.cs" />
+    <Compile Include="SequenceDiagram\ModelCreator.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
+    <Compile Include="Settings\SequenceDiagramSettings.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
-    <Compile Include="SequenceDiagram\EndpointInfo.cs" />
-    <Compile Include="SequenceDiagram\EndpointPositionConverter.cs" />
-    <Compile Include="SequenceDiagram\EndpointThicknessConverter.cs" />
-    <Compile Include="SequenceDiagram\MessageInfo.cs" />
-    <Compile Include="SequenceDiagram\SequenceDiagramMessage.xaml.cs">
-      <DependentUpon>SequenceDiagramMessage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
     </Compile>
@@ -504,21 +527,32 @@
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
     <Compile Include="ValueConverters\ByteToCharConverter.cs" />
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
-    <Compile Include="ValueConverters\CenterToolTipConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
+    <Compile Include="ValueConverters\EnumToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\MathConverter.cs" />
     <Compile Include="ValueConverters\MessageDateTimeFormatProvider.cs" />
     <Compile Include="ValueConverters\MiddlePointValueConverter.cs" />
+    <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
-    <Compile Include="ValueConverters\SmartWrapConverter.cs" />
+    <Compile Include="ValueConverters\ScaledValueConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\ThicknessToWidthConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
+    <Page Include="DiagramLegend\DiagramLegendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Framework\ExceptionHandler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SequenceDiagram\DarkMenus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="XAML\Geometry.xaml">
       <SubType>Designer</SubType>
@@ -556,15 +590,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SequenceDiagram\DarkMenus.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\SequenceDiagramMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SequenceDiagram\SequenceDiagramSharedResources.xaml">
+    <Page Include="SequenceDiagram\SequenceDiagramResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -762,9 +788,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <DesignData Include="SampleData\MessageInfoSampleData.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\SequenceDiagram.png" />
   </ItemGroup>
   <ItemGroup>
@@ -776,6 +799,7 @@
   <ItemGroup>
     <Resource Include="Images\retryMsg.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="CosturaCleanup" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
     <ParameterGroup>
@@ -813,13 +837,15 @@ foreach (var item in filesToCleanup)
   <Target Name="CleanReferenceCopyLocalPaths" AfterTargets="AfterBuild;NonWinFodyTarget">
     <CosturaCleanup Config="FodyWeavers.xml" Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
   </Target>
-  <Import Project="..\packages\Fody.1.28.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.28.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.0\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.3\build\dotnet\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets'))" />
   </Target>
   <Import Project="..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets')" />
+  <Import Project="..\packages\Fody.1.29.3\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" />
+  <Import Project="..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets" Condition="Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" />
 </Project>

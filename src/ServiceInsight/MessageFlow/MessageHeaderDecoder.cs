@@ -1,9 +1,9 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
     using System.Collections.Generic;
     using System.Text;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using ServiceInsight.Framework.MessageDecoders;
 
     public class MessageHeaderDecoder
     {

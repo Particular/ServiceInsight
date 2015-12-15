@@ -1,28 +1,27 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using Caliburn.Micro;
-    using Desktop;
-    using Desktop.Explorer.EndpointExplorer;
-    using Desktop.LogWindow;
-    using Desktop.MessageFlow;
-    using Desktop.MessageHeaders;
-    using Desktop.MessageList;
-    using Desktop.MessageProperties;
-    using Desktop.MessageViewers;
-    using Desktop.Models;
-    using Desktop.Saga;
-    using Desktop.SequenceDiagram;
-    using Desktop.Settings;
-    using Desktop.Shell;
-    using Desktop.Startup;
-    using Licensing;
+    using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Licensing;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using Particular.Licensing;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.LogWindow;
+    using ServiceInsight.MessageFlow;
+    using ServiceInsight.MessageHeaders;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.MessageProperties;
+    using ServiceInsight.MessageViewers;
+    using ServiceInsight.Models;
+    using ServiceInsight.Saga;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
     using Shouldly;
 
     public interface IShellViewStub : IShellView

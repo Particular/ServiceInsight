@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Settings
+﻿namespace ServiceInsight.Settings
 {
     using System;
     using System.Collections.ObjectModel;

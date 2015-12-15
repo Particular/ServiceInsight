@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Models
+﻿namespace ServiceInsight.Models
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +14,8 @@
             get { return host ?? HostDisplayName; }
             set { host = value; }
         }
+
+        public string HostId { get; set; }
 
         public string HostDisplayName { get; set; }
 

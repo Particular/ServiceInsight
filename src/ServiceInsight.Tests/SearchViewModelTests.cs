@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
-    using Desktop.Explorer.EndpointExplorer;
-    using Desktop.Models;
-    using Desktop.Search;
-    using Desktop.Startup;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Models;
+    using ServiceInsight.Search;
+    using ServiceInsight.Startup;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
     using Shouldly;
 
     [TestFixture]

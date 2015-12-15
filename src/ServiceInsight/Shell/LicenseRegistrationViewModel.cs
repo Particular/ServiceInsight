@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using System.IO;
     using Caliburn.Micro;
-    using Licensing;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Licensing;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
+    using Particular.Licensing;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.UI.ScreenManager;
 
     public class LicenseRegistrationViewModel : Screen
     {

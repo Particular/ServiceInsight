@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Startup
+﻿namespace ServiceInsight.Startup
 {
     using System;
     using System.Collections.Generic;

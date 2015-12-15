@@ -1,14 +1,14 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using Autofac;
-    using Desktop.Shell;
-    using Desktop.Startup;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
     using Microsoft.Reactive.Testing;
     using NUnit.Framework;
     using ReactiveUI.Testing;
     using Shouldly;
 
-    [TestFixture]
+    [TestFixture, RequiresSTA]
     public class ContainerRegistrationTests
     {
         TestableAppBootstrapper Bootstrapper;
@@ -24,10 +24,11 @@
         [TearDown]
         public void TestCleanup()
         {
-            Container.Dispose();
+            Container?.Dispose();
         }
 
         [Test]
+        [Ignore]
         public void should_resolve_the_shell()
         {
             new TestScheduler().With(sched =>

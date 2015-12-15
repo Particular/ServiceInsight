@@ -1,10 +1,10 @@
-﻿namespace Particular.ServiceInsight.Desktop.Saga
+﻿namespace ServiceInsight.Saga
 {
     using System;
     using System.Windows.Input;
     using System.Windows.Media;
     using ICSharpCode.AvalonEdit.Folding;
-    using Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer;
+    using ServiceInsight.MessageViewers.JsonViewer;
 
     public partial class SagaContentViewer
     {

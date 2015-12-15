@@ -1,23 +1,15 @@
-namespace Particular.ServiceInsight.Desktop.SequenceDiagram
+﻿namespace ServiceInsight.ValueConverters
 {
     using System;
     using System.Globalization;
     using System.Windows;
     using System.Windows.Data;
 
-    public class EndpointThicknessConverter : IValueConverter
+    public class NullToVisibilityConverter : IValueConverter
     {
-        public double ColumnWidth { get; set; }
-
-        public bool Middle { get; set; }
-
-        public double Top { get; set; }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var column = (int)value;
-
-            return new Thickness(column * ColumnWidth + (Middle ? (ColumnWidth / 2) : 0), Top, 0, 0);
+            return value == null ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Rx
+﻿namespace ServiceInsight.Framework.Rx
 {
     using System;
     using System.Linq.Expressions;

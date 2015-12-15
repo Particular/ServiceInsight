@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
+﻿namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
     using Caliburn.Micro;
     using ExtensionMethods;
     using HexViewer;
     using JsonViewer;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.ServiceControl;
     using XmlViewer;
 
     public class MessageBodyViewModel : Screen,
@@ -16,6 +16,7 @@
     {
         readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
+        readonly MessageSelectionContext selection;
         static Dictionary<string, MessageContentType> ContentTypeMaps;
 
         static MessageBodyViewModel()
@@ -35,22 +36,23 @@
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
             IServiceControl serviceControl,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
+            this.selection = selectionContext;
+
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
         }
 
-        public HexContentViewModel HexViewer { get; private set; }
+        public HexContentViewModel HexViewer { get; }
 
-        public JsonMessageViewModel JsonViewer { get; private set; }
+        public JsonMessageViewModel JsonViewer { get; }
 
-        public XmlMessageViewModel XmlViewer { get; private set; }
-
-        public StoredMessage SelectedMessage { get; private set; }
+        public XmlMessageViewModel XmlViewer { get; }
 
         bool ShouldLoadMessageBody { get; set; }
 
@@ -110,17 +112,15 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
-            SelectedMessage = @event.Message;
-
             LoadMessageBody();
 
-            if (SelectedMessage != null)
+            if (selection.SelectedMessage != null)
             {
-                ContentType = ContentTypeMaps.GetValueOrDefault(SelectedMessage.ContentType, MessageContentType.NotSpecified);
+                ContentType = ContentTypeMaps.GetValueOrDefault(selection.SelectedMessage.ContentType, MessageContentType.NotSpecified);
 
-                if (SelectedMessage.Body != null)
+                if (selection.SelectedMessage.Body != null)
                 {
-                    PresentationHint = SelectedMessage.Body.Hint;
+                    PresentationHint = selection.SelectedMessage.Body.Hint;
                 }
             }
             else
@@ -133,7 +133,7 @@
         {
             foreach (var messageDisplay in MessageDisplays)
             {
-                messageDisplay.Display(SelectedMessage);
+                messageDisplay.Display(selection.SelectedMessage);
             }
         }
 
@@ -148,14 +148,14 @@
 
         void LoadMessageBody()
         {
-            if (SelectedMessage == null || !ShouldLoadMessageBody || SelectedMessage.BodyUrl.IsEmpty())
+            if (selection.SelectedMessage == null || !ShouldLoadMessageBody || selection.SelectedMessage.BodyUrl.IsEmpty())
             {
                 return;
             }
 
             eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
-            serviceControl.LoadBody(SelectedMessage);
+            serviceControl.LoadBody(selection.SelectedMessage);
 
             RefreshChildren();
 

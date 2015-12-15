@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
-    using Desktop.Models;
-    using Desktop.Startup;
+    using ServiceInsight.Models;
+    using ServiceInsight.Startup;
     using NSubstitute;
     using NUnit.Framework;
     using Shouldly;

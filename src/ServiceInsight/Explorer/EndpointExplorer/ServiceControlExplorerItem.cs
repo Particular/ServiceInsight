@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
+﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System.Drawing;
     using System.Linq;

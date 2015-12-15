@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageHeaders.MessageHeadersView"
+﻿<UserControl x:Class="ServiceInsight.MessageHeaders.MessageHeadersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
+             xmlns:controls="clr-namespace:ServiceInsight.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:messageHeaders="clr-namespace:Particular.ServiceInsight.Desktop.MessageHeaders"
+             xmlns:messageHeaders="clr-namespace:ServiceInsight.MessageHeaders"
              d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -88,7 +88,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <!--<Setter Property="Background" Value="White"/>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#F0F0F0" />
@@ -102,12 +101,11 @@
                 <TextBlock Text="{Binding Value}" />
             </DataTemplate>
             <DataTemplate x:Key="ExceptionTemplate">
-                <controls:MvvmTextEditor 
-                    Style="{StaticResource MvvmTextEditorScrollFixStyle}"
-                    FontFamily="Consolas"
+                <controls:MvvmTextEditor FontFamily="Consolas"
                                          FontSize="10pt"
                                          IsReadOnly="true"
                                          ScrollViewer.CanContentScroll="False"
+                                         Style="{StaticResource MvvmTextEditorScrollFixStyle}"
                                          SyntaxHighlighting="StackTrace"
                                          Text="{Binding Value}" />
             </DataTemplate>

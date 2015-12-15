@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.TestData
+﻿namespace ServiceInsight.FunctionalTests.TestData
 {
     public class OrderAccepted
     {

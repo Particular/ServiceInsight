@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="Particular.ServiceInsight.Desktop.MessageFlow.MessageFlowView"
+﻿<UserControl x:Class="ServiceInsight.MessageFlow.MessageFlowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:cnv="clr-namespace:Particular.ServiceInsight.Desktop.ValueConverters"
-             xmlns:controls="clr-namespace:Particular.ServiceInsight.Desktop.Controls"
+             xmlns:cnv="clr-namespace:ServiceInsight.ValueConverters"
+             xmlns:controls="clr-namespace:ServiceInsight.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Particular.ServiceInsight.Desktop.MessageFlow"
+             xmlns:local="clr-namespace:ServiceInsight.MessageFlow"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:Particular.ServiceInsight.Desktop.Models"
+             xmlns:models="clr-namespace:ServiceInsight.Models"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              IsHitTestVisible="True"
              d:DataContext="{d:DesignInstance local:MessageFlowViewModel}"
@@ -102,7 +102,8 @@
                                             <TextBlock FontSize="14px"
                                                        FontWeight="Bold"
                                                        Style="{StaticResource MessageTypeText}"
-                                                       Text="{Binding Message.FriendlyMessageType, TargetNullValue='MessageType value unknown'}"
+                                                       Text="{Binding Message.FriendlyMessageType,
+                                                                      TargetNullValue='MessageType value unknown'}"
                                                        ToolTip="{Binding Message.FriendlyMessageType}" />
 
                                             <Path x:Name="ChevronDown"
@@ -295,14 +296,14 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Border x:Name="MessageRectangle"
-                                            Background="{StaticResource MessageBackground}"
-                                            BorderBrush="Transparent"
-                                            BorderThickness="5"
-                                            SnapsToDevicePixels="True"
-                                            HorizontalAlignment="Stretch"
-                                            MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
-                                            d:DataContext="{d:DesignInstance local:MessageNode}"
-                                            ms:DiagramNodeElement.RaisesBoundsChangeRequested="True">
+                                                HorizontalAlignment="Stretch"
+                                                Background="{StaticResource MessageBackground}"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="5"
+                                                MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
+                                                SnapsToDevicePixels="True"
+                                                d:DataContext="{d:DesignInstance local:MessageNode}"
+                                                ms:DiagramNodeElement.RaisesBoundsChangeRequested="True">
                                             <Grid x:Name="RootGrid">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -315,25 +316,25 @@
                                                     <ColumnDefinition Width="20" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Row="0"
-                                                        Grid.Column="0"
-                                                        Grid.ColumnSpan="3"
-                                                        Padding="3,0,3,0"
-                                                        Background="{StaticResource EndpointBackground}"
-                                                        ToolTip="Sending Endpoint"
-                                                        Visibility="{Binding ShowEndpoints,
-                                                                             Converter={StaticResource BoolToVisibilityConverter}}"
-                                                        FontSize="10px"
-                                                        Style="{StaticResource MessageEndpointText}"
-                                                        Text="{Binding Message.SendingEndpoint}" />
+                                                           Grid.Column="0"
+                                                           Grid.ColumnSpan="3"
+                                                           Background="{StaticResource EndpointBackground}"
+                                                           FontSize="10px"
+                                                           Padding="3,0,3,0"
+                                                           Style="{StaticResource MessageEndpointText}"
+                                                           Text="{Binding Message.SendingEndpoint}"
+                                                           ToolTip="Sending Endpoint"
+                                                           Visibility="{Binding ShowEndpoints,
+                                                                                Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 <controls:IconControl x:Name="MessageTypeIcon"
-                                                                  Grid.Row="1"
-                                                                  Grid.Column="0"
-                                                                  Margin="10"
-                                                                  Width="24"
-                                                                  Height="24"
-                                                                  HorizontalAlignment="Center"
-                                                                  VerticalAlignment="Center"
-                                                                  Style="{StaticResource MessageIconStyle}" />
+                                                                      Grid.Row="1"
+                                                                      Grid.Column="0"
+                                                                      Width="24"
+                                                                      Height="24"
+                                                                      Margin="10"
+                                                                      HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"
+                                                                      Style="{StaticResource MessageIconStyle}" />
 
                                                 <Grid Grid.Row="1" Grid.Column="1">
                                                     <Grid.RowDefinitions>
@@ -342,27 +343,29 @@
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
 
-                                                    <CheckBox Grid.Row="0" x:Name="MenuContainer" Style="{StaticResource MessageMenuIndicator}" />
+                                                    <CheckBox x:Name="MenuContainer"
+                                                              Grid.Row="0"
+                                                              Style="{StaticResource MessageMenuIndicator}" />
 
                                                     <local:MessagePopupControl x:Name="MenuPopup"
-                                                                           Grid.Row="1"
-                                                                           HorizontalAlignment="Stretch"
-                                                                           AllowsTransparency="True"
-                                                                           DataContext="{Binding ElementName=RootGrid,
-                                                                                                 Path=DataContext}"
-                                                                           IsOpen="{Binding ElementName=MenuContainer,
-                                                                                            Path=IsChecked}"
-                                                                           Placement="Custom"
-                                                                           PlacementTarget="{Binding ElementName=MenuContainer}"
-                                                                           RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter},
-                                                                                                     RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}},
-                                                                                                     Path=Zoom}"
-                                                                           StaysOpen="False">
+                                                                               Grid.Row="1"
+                                                                               HorizontalAlignment="Stretch"
+                                                                               AllowsTransparency="True"
+                                                                               DataContext="{Binding ElementName=RootGrid,
+                                                                                                     Path=DataContext}"
+                                                                               IsOpen="{Binding ElementName=MenuContainer,
+                                                                                                Path=IsChecked}"
+                                                                               Placement="Custom"
+                                                                               PlacementTarget="{Binding ElementName=MenuContainer}"
+                                                                               RenderTransform="{Binding Converter={StaticResource ZoomToCancelScaleConverter},
+                                                                                                         RelativeSource={RelativeSource AncestorType={x:Type ms:DiagramSurface}},
+                                                                                                         Path=Zoom}"
+                                                                               StaysOpen="False">
                                                         <local:MessageActionPopup />
                                                     </local:MessagePopupControl>
 
-                                                    <Grid Margin="0 -5"
-                                                          Grid.Row="2"
+                                                    <Grid Grid.Row="2"
+                                                          Margin="0 -5"
                                                           Visibility="{Binding HasSaga,
                                                                                Converter={StaticResource BoolToVisibilityConverter}}"
                                                           cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
@@ -371,9 +374,9 @@
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
                                                         <ContentControl x:Name="SagaStatusIcon"
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalAlignment="Center"
-                                                                    Template="{StaticResource SagaInitiatedIcon}" />
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Template="{StaticResource SagaInitiatedIcon}" />
                                                         <Border Grid.Column="1"
                                                                 Margin="2 0 0 0"
                                                                 Background="#333333">
@@ -390,20 +393,21 @@
                                                 </Grid>
 
                                                 <ContentControl Grid.Row="1"
-                                                            Grid.Column="2"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Top"
-                                                            Style="{StaticResource FailedMessageMarker}" />
+                                                                Grid.Column="2"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Top"
+                                                                Style="{StaticResource FailedMessageMarker}" />
                                                 <TextBlock Grid.Row="2"
-                                                        Grid.Column="0"
-                                                        Grid.ColumnSpan="3" Background="{StaticResource EndpointBackground}"
-                                                        ToolTip="Processing Endpoint"
-                                                        Visibility="{Binding ShowEndpoints,
-                                                                             Converter={StaticResource BoolToVisibilityConverter}}"
-                                                        Padding="3,0,3,0"
-                                                        FontSize="10px"
-                                                        Style="{StaticResource MessageEndpointText}"
-                                                        Text="{Binding Message.ReceivingEndpoint}" />
+                                                           Grid.Column="0"
+                                                           Grid.ColumnSpan="3"
+                                                           Background="{StaticResource EndpointBackground}"
+                                                           FontSize="10px"
+                                                           Padding="3,0,3,0"
+                                                           Style="{StaticResource MessageEndpointText}"
+                                                           Text="{Binding Message.ReceivingEndpoint}"
+                                                           ToolTip="Processing Endpoint"
+                                                           Visibility="{Binding ShowEndpoints,
+                                                                                Converter={StaticResource BoolToVisibilityConverter}}" />
                                             </Grid>
                                         </Border>
                                     </StackPanel>
@@ -540,26 +544,27 @@
 
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
             <StackPanel Margin="5" Orientation="Horizontal">
-                <RepeatButton x:Name="ZoomIn"
-                              Margin="2"
-                              Interval="10">
-                    <ContentControl Template="{StaticResource ZoomInIcon}" />
+                <RepeatButton x:Name="ZoomIn" Interval="10">
+                    <ContentControl Width="12" Template="{StaticResource ZoomInIcon}" />
                 </RepeatButton>
                 <RepeatButton x:Name="ZoomOut"
-                              Margin="2"
+                              Margin="2,0"
                               Interval="10">
-                    <ContentControl Template="{StaticResource ZoomOutIcon}" />
+                    <ContentControl Width="12" Template="{StaticResource ZoomOutIcon}" />
                 </RepeatButton>
-                <ToggleButton Margin="2" IsChecked="{Binding ShowEndpoints}">
+                <ToggleButton Margin="2,0" IsChecked="{Binding ShowEndpoints}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="0,0,5,0"
-                               VerticalAlignment="Center"
-                               Source="/Images/DiagramEndpointIcon.png" />
+                        <Path Width="12"
+                              Margin="0, 0, 2, 0"
+                              HorizontalAlignment="Center"
+                              Data="{StaticResource EndpointGeometry}"
+                              Fill="#FF007BC6"
+                              Stretch="Uniform" />
                         <TextBlock VerticalAlignment="Center" Text="Show Endpoints" />
                     </StackPanel>
                 </ToggleButton>
                 <Button x:Name="ToggleTimelineData"
-                        Margin="2"
+                        Margin="2,0"
                         Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="0,0,5,0"
@@ -580,8 +585,10 @@
                            Formatter="{StaticResource Formatter}"
                            HorizontalSnapSpecifier="{ms:SnapToInterval 20}"
                            IsReadOnly="True"
+                           IsVisibleChanged="OnDiagramVisibleChanged"
                            SelectedItem="{Binding SelectedMessage,
                                                   Mode=TwoWay}"
+                           SizeChanged="OnDiagramSizeChanged"
                            VerticalSnapSpecifier="{ms:SnapToInterval 20}"
                            ZoomMode="ControlMouseWheel" />
     </Grid>

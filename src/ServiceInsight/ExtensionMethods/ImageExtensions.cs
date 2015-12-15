@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.ExtensionMethods
+﻿namespace ServiceInsight.ExtensionMethods
 {
     using System.Drawing;
     using System.IO;

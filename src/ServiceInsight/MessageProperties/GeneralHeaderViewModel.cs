@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
+﻿namespace ServiceInsight.MessageProperties
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,8 @@
     using Caliburn.Micro;
     using MessageFlow;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using ServiceInsight.Framework.MessageDecoders;
+    using ServiceInsight.MessageList;
 
     public class GeneralHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
@@ -14,8 +15,9 @@
 
         public GeneralHeaderViewModel(
             IEventAggregator eventAggregator,
-            IContentDecoder<IList<HeaderInfo>> decoder)
-            : base(eventAggregator, decoder)
+            IContentDecoder<IList<HeaderInfo>> decoder,
+            MessageSelectionContext selectionContext)
+            : base(eventAggregator, decoder, selectionContext)
         {
             this.decoder = decoder;
             DisplayName = "General";

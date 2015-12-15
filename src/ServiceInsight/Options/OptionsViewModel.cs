@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.Options
+﻿namespace ServiceInsight.Options
 {
     using System.ComponentModel;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
     using Settings;
 
     public class OptionsViewModel : Screen

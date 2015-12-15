@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.LogWindow
+namespace ServiceInsight.LogWindow
 {
     using System;
     using System.Collections.Specialized;

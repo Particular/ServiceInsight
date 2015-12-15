@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Framework.Settings
+namespace ServiceInsight.Framework.Settings
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;

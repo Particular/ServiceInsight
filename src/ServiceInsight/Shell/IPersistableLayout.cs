@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
 
     public interface IPersistableLayout
     {

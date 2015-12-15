@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
+﻿namespace ServiceInsight.ServiceControl
 {
     using System;
     using System.Collections.Generic;
@@ -10,12 +10,12 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.Saga;
-    using Particular.ServiceInsight.Desktop.Settings;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.MessageDecoders;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Models;
+    using ServiceInsight.Saga;
+    using ServiceInsight.Settings;
     using RestSharp;
     using RestSharp.Contrib;
     using RestSharp.Deserializers;
@@ -257,7 +257,7 @@
                 case RestRequestWithCache.CacheStyle.None:
                     break;
                 case RestRequestWithCache.CacheStyle.Immutable:
-                    var item = cache.Get(CacheKey(restClient, request));
+                    var item = cache.Get(CacheKey<T>(restClient, request));
 
                     if (item != null)
                     {
@@ -266,7 +266,7 @@
 
                     break;
                 case RestRequestWithCache.CacheStyle.IfNotModified:
-                    var obj = cache.Get(CacheKey(restClient, request));
+                    var obj = cache.Get(CacheKey<T>(restClient, request));
 
                     if (obj != null)
                     {
@@ -314,7 +314,7 @@
                         case HttpStatusCode.NotModified:
                             LogResponse(response);
 
-                            var obj = cache.Get(CacheKey(restClient, request));
+                            var obj = cache.Get(CacheKey<T>(restClient, request));
 
                             if (obj != null)
                             {
@@ -344,7 +344,7 @@
                 case RestRequestWithCache.CacheStyle.None:
                     break;
                 case RestRequestWithCache.CacheStyle.Immutable:
-                    var item = cache.Get(CacheKey(restClient, request));
+                    var item = cache.Get(CacheKey<T>(restClient, request));
 
                     if (item != null)
                     {
@@ -353,7 +353,7 @@
 
                     break;
                 case RestRequestWithCache.CacheStyle.IfNotModified:
-                    var obj = cache.Get(CacheKey(restClient, request));
+                    var obj = cache.Get(CacheKey<T>(restClient, request));
 
                     if (obj != null)
                     {
@@ -394,7 +394,7 @@
                         case HttpStatusCode.NotModified:
                             LogResponse(response);
 
-                            var obj = cache.Get(CacheKey(restClient, request));
+                            var obj = cache.Get(CacheKey<T>(restClient, request));
 
                             if (obj != null)
                             {
@@ -416,13 +416,18 @@
         {
             if (data != null)
             {
-                cache.Set(CacheKey(restClient, request), data, new CacheItemPolicy());
+                cache.Set(CacheKey(restClient, request, data.GetType()), data, new CacheItemPolicy());
             }
         }
 
-        static string CacheKey(IRestClient restClient, IRestRequest request)
+        static string CacheKey<T>(IRestClient restClient, IRestRequest request)
         {
-            return restClient.BuildUri(request).AbsoluteUri;
+            return CacheKey(restClient, request, typeof(T));
+        }
+
+        static string CacheKey(IRestClient restClient, IRestRequest request, Type t)
+        {
+            return restClient.BuildUri(request).AbsoluteUri + "-" + t;
         }
 
         T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)

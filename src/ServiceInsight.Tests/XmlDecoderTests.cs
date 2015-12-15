@@ -1,9 +1,9 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System.Text;
     using System.Xml;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
+    using ServiceInsight.Framework.MessageDecoders;
     using Shouldly;
 
     [TestFixture]

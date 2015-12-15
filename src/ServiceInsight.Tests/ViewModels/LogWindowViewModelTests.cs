@@ -1,10 +1,10 @@
-﻿namespace Particular.ServiceInsight.Tests.ViewModels
+﻿namespace ServiceInsight.Tests.ViewModels
 {
     using System;
     using System.Text;
     using System.Windows.Media;
-    using Desktop.Framework;
-    using Desktop.LogWindow;
+    using ServiceInsight.Framework;
+    using ServiceInsight.LogWindow;
     using NSubstitute;
     using NUnit.Framework;
     using Serilog.Events;
