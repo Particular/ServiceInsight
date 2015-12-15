@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Tests.ConversationsData
+namespace ServiceInsight.Tests.ConversationsData
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.MessageDecoders
+﻿namespace ServiceInsight.Framework.MessageDecoders
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Xml.Serialization;
     using Anotar.Serilog;
     using Newtonsoft.Json;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class HeaderContentDecoder : IContentDecoder<IList<HeaderInfo>>
     {

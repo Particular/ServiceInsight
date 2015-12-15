@@ -4,8 +4,8 @@ namespace ServiceInsight.SequenceDiagram
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Models;
     using ServiceInsight.SequenceDiagram.Diagram;
 
     public class ModelCreator

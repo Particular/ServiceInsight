@@ -1,8 +1,8 @@
-namespace Particular.ServiceInsight.FunctionalTests.DataBuilders
+namespace ServiceInsight.FunctionalTests.DataBuilders
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Desktop.Models;
+    using ServiceInsight.Models;
     using Services;
 
     public class EndpointListBuilder

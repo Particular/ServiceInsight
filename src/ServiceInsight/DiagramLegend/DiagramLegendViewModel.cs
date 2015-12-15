@@ -3,7 +3,7 @@
     using System.Collections.ObjectModel;
     using Caliburn.Micro;
     using SequenceDiagram.Diagram;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class DiagramLegendViewModel : Screen
     {

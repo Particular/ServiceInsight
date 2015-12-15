@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
+﻿namespace ServiceInsight.MessageViewers
 {
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public interface IDisplayMessageBody
     {

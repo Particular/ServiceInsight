@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework
+﻿namespace ServiceInsight.Framework
 {
     using System.Runtime.InteropServices;
     using System.Windows;

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using System;
     using System.IO;
@@ -9,7 +9,7 @@
     using DevExpress.Xpf.Core.Serialization;
     using DevExpress.Xpf.Docking;
     using ExtensionMethods;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
     using Settings;
 
     public partial class ShellView : IShellView

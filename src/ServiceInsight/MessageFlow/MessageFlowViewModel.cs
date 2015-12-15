@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
     using System;
     using System.Collections.Concurrent;
@@ -10,11 +10,11 @@
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.MessageList;
     using ServiceControl;
     using Settings;
 

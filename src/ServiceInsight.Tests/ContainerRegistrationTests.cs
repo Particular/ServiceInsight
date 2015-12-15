@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using Autofac;
-    using Desktop.Shell;
-    using Desktop.Startup;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
     using Microsoft.Reactive.Testing;
     using NUnit.Framework;
     using ReactiveUI.Testing;

@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@
     using ExtensionMethods;
     using MessageFlow;
     using Options;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.MessageList;
     using Search;
     using Shell;
 

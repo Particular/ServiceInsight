@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Licensing
+﻿namespace ServiceInsight.Framework.Licensing
 {
     using System;
     using Anotar.Serilog;

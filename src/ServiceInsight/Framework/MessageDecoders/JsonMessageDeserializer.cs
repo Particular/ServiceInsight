@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.MessageDecoders
+﻿namespace ServiceInsight.Framework.MessageDecoders
 {
     using System;
     using System.Collections;

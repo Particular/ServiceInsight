@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.ServiceControl
+﻿namespace ServiceInsight.ServiceControl
 {
     using System;
     using System.Collections.Generic;
@@ -10,12 +10,12 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.Saga;
-    using Particular.ServiceInsight.Desktop.Settings;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.MessageDecoders;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Models;
+    using ServiceInsight.Saga;
+    using ServiceInsight.Settings;
     using RestSharp;
     using RestSharp.Contrib;
     using RestSharp.Deserializers;

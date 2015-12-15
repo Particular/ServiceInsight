@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
+﻿namespace ServiceInsight.Framework.Events
 {
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class RequestSelectingEndpoint
     {

@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Explorer
+namespace ServiceInsight.Explorer
 {
     using System.Drawing;
     using global::ServiceInsight.Properties;

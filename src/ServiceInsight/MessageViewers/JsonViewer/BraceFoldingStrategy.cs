@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 
-namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
+namespace ServiceInsight.MessageViewers.JsonViewer
 {
 	/// <summary>
 	/// Allows producing foldings from a document based on braces.

@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
+﻿namespace ServiceInsight.MessageProperties
 {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
     using Framework.Rx;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.MessageDecoders;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.MessageDecoders;
+    using ServiceInsight.MessageList;
 
     public abstract class HeaderInfoViewModelBase : RxScreen, IHeaderInfoViewModel
     {

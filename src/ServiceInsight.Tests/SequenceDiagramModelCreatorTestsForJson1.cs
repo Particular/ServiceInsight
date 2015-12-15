@@ -1,7 +1,7 @@
-namespace Particular.ServiceInsight.Tests
+namespace ServiceInsight.Tests
 {
     using NUnit.Framework;
-    using Particular.ServiceInsight.Tests.ConversationsData;
+    using ServiceInsight.Tests.ConversationsData;
 
     [TestFixture]
     class SequenceDiagramModelCreatorTestsForJson1 : SequenceDiagramModelCreatorTestsFromJson

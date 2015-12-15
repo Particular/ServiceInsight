@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Windows.Input;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     [DebuggerDisplay("{Type}->{Name}")]
     public class Arrow : DiagramItem, IComparable<Arrow>

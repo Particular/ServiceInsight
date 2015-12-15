@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Tests.ConversationsData
+namespace ServiceInsight.Tests.ConversationsData
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -6,8 +6,8 @@ namespace Particular.ServiceInsight.Tests.ConversationsData
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using NSubstitute;
-    using Desktop.Framework.MessageDecoders;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Framework.MessageDecoders;
+    using ServiceInsight.Models;
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {

@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using Autofac;
     using Caliburn.Micro;
-    using Desktop.ServiceControl;
-    using Desktop.Settings;
-    using Desktop.Shell;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
     using Shouldly;
 
     [TestFixture]

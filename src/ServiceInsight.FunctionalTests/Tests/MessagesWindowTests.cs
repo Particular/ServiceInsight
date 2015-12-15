@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
+﻿namespace ServiceInsight.FunctionalTests.Tests
 {
-    using Desktop.Models;
+    using ServiceInsight.Models;
     using NUnit.Framework;
     using Services;
     using Shouldly;

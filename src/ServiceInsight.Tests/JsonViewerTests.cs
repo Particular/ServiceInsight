@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using Desktop.MessageViewers.JsonViewer;
-    using Desktop.Models;
+    using ServiceInsight.MessageViewers.JsonViewer;
+    using ServiceInsight.Models;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.ServiceControl;
 
     [TestFixture]
     public class JsonViewerTests

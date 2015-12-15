@@ -1,9 +1,9 @@
-namespace Particular.ServiceInsight.Desktop.Framework.Commands
+namespace ServiceInsight.Framework.Commands
 {
     using Caliburn.Micro;
     using Events;
     using Models;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.MessageList;
 
     class ShowSagaCommand : BaseCommand
     {

@@ -1,18 +1,18 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using Desktop.Explorer.EndpointExplorer;
-    using Desktop.Framework;
-    using Desktop.MessageList;
-    using Desktop.MessageProperties;
-    using Desktop.Models;
-    using Desktop.Search;
-    using Desktop.ServiceControl;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Framework;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.MessageProperties;
+    using ServiceInsight.Models;
+    using ServiceInsight.Search;
+    using ServiceInsight.ServiceControl;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using ServiceInsight.Framework.Events;
     using Shouldly;
 
     [TestFixture]

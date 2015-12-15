@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using Autofac;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
 
     public class SettingsModule : Module
     {

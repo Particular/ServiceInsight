@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Tests.Helpers
+﻿namespace ServiceInsight.Tests.Helpers
 {
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;

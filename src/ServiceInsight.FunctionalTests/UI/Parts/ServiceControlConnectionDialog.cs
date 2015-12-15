@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.UI.Parts
+﻿namespace ServiceInsight.FunctionalTests.UI.Parts
 {
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;

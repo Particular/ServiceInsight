@@ -1,16 +1,16 @@
-﻿namespace Particular.ServiceInsight.Desktop.Explorer.EndpointExplorer
+﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System;
     using System.Linq;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
-    using Particular.ServiceInsight.Desktop.Settings;
-    using Particular.ServiceInsight.Desktop.Shell;
-    using Particular.ServiceInsight.Desktop.Startup;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
 
     public class EndpointExplorerViewModel : Screen,
         IHandle<RequestSelectingEndpoint>

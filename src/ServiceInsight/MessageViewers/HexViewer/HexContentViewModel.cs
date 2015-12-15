@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.HexViewer
+﻿namespace ServiceInsight.MessageViewers.HexViewer
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class HexContentViewModel : Screen, IDisplayMessageBody
     {

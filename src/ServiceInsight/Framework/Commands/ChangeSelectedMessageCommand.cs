@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Commands
+﻿namespace ServiceInsight.Framework.Commands
 {
     using Models;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.MessageList;
 
     public class ChangeSelectedMessageCommand : BaseCommand
     {

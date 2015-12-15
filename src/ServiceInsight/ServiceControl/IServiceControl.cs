@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.ServiceControl
+namespace ServiceInsight.ServiceControl
 {
     using System;
     using System.Collections.Generic;

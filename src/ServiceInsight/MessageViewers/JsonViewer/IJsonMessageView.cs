@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
+﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
     public interface IJsonMessageView
     {

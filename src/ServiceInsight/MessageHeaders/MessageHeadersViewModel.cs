@@ -1,9 +1,9 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageHeaders
+﻿namespace ServiceInsight.MessageHeaders
 {
     using System.Linq;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
     using ReactiveUI;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>

@@ -1,10 +1,10 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
+﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
     using System;
     using System.Windows.Media;
     using System.Xml;
     using ICSharpCode.AvalonEdit.Folding;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
 
     public partial class XmlMessageView : IXmlMessageView
     {

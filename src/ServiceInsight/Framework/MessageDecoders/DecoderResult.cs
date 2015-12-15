@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.MessageDecoders
+﻿namespace ServiceInsight.Framework.MessageDecoders
 {
     public abstract class DecoderResult
     {

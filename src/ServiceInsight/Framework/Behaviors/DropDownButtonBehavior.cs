@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Behaviors
+﻿namespace ServiceInsight.Framework.Behaviors
 {
     using System.Windows;
     using System.Windows.Controls.Primitives;

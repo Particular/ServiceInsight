@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer
+﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
     using System;
     using System.Windows.Media;
@@ -6,7 +6,7 @@
     using ICSharpCode.AvalonEdit.Indentation;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
 
     public partial class JsonMessageView : IJsonMessageView
     {

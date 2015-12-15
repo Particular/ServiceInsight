@@ -8,8 +8,8 @@
     <ProjectGuid>{61F87540-03E3-4E72-9647-FA2108AD66A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Particular.ServiceInsight.Tests</RootNamespace>
-    <AssemblyName>Particular.ServiceInsight.Tests</AssemblyName>
+    <RootNamespace>ServiceInsight.Tests</RootNamespace>
+    <AssemblyName>ServiceInsight.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

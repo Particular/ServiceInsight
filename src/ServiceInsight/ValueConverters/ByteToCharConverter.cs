@@ -1,10 +1,10 @@
-namespace Particular.ServiceInsight.Desktop.ValueConverters
+namespace ServiceInsight.ValueConverters
 {
     using System;
     using System.Text;
     using System.Windows;
     using System.Windows.Data;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
 
     public class ByteToCharConverter : IValueConverter
     {

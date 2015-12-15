@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Tests
+﻿namespace ServiceInsight.FunctionalTests.Tests
 {
     using Services;
     using UI.Parts;

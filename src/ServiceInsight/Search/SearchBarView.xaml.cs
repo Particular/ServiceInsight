@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Search
+﻿namespace ServiceInsight.Search
 {
     using System.Windows.Input;
 

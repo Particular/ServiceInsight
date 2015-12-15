@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Saga
+﻿namespace ServiceInsight.Saga
 {
     using System;
     using System.Collections.Generic;

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
 
     public class SequenceDiagramLayoutManager : ILayoutManager
     {

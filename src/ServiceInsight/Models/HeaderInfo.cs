@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Models
+﻿namespace ServiceInsight.Models
 {
     public class HeaderInfo
     {

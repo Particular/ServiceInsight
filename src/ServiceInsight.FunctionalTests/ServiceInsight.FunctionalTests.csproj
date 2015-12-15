@@ -7,8 +7,8 @@
     <ProjectGuid>{D55B9DD2-EA36-4A3B-B6C6-61933AD66933}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Particular.ServiceInsight.FunctionalTests</RootNamespace>
-    <AssemblyName>Particular.ServiceInsight.FunctionalTests</AssemblyName>
+    <RootNamespace>ServiceInsight.FunctionalTests</RootNamespace>
+    <AssemblyName>ServiceInsight.FunctionalTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

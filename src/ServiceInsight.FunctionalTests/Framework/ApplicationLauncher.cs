@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Framework
+﻿namespace ServiceInsight.FunctionalTests.Framework
 {
     using System.Diagnostics;
     using TestStack.White;

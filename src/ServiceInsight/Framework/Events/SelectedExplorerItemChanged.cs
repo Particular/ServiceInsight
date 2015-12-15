@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
+﻿namespace ServiceInsight.Framework.Events
 {
-    using Particular.ServiceInsight.Desktop.Explorer;
+    using ServiceInsight.Explorer;
 
     public class SelectedExplorerItemChanged
     {

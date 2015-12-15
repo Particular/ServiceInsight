@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageProperties
+﻿namespace ServiceInsight.MessageProperties
 {
     using System.ComponentModel;
     using Caliburn.Micro;

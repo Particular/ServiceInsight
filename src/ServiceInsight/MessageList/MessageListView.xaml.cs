@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.ComponentModel;
@@ -7,7 +7,7 @@
     using System.Windows.Input;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public interface IMessageListView
     {

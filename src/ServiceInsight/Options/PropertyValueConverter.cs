@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Options
+﻿namespace ServiceInsight.Options
 {
     using System;
     using System.ComponentModel;

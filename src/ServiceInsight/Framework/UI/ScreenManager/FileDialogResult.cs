@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.UI.ScreenManager
+﻿namespace ServiceInsight.Framework.UI.ScreenManager
 {
     using System.Collections.Generic;
     using System.Linq;

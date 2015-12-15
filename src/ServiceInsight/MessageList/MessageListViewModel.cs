@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.Linq;
@@ -13,8 +13,8 @@
     using Framework.Rx;
     using MessageProperties;
     using Models;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
     using ReactiveUI;
     using Search;
     using ServiceControl;

@@ -1,18 +1,18 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using Caliburn.Micro;
     using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.MessageList;
-    using Particular.ServiceInsight.Desktop.MessageViewers;
-    using Particular.ServiceInsight.Desktop.MessageViewers.HexViewer;
-    using Particular.ServiceInsight.Desktop.MessageViewers.JsonViewer;
-    using Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.MessageViewers;
+    using ServiceInsight.MessageViewers.HexViewer;
+    using ServiceInsight.MessageViewers.JsonViewer;
+    using ServiceInsight.MessageViewers.XmlViewer;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
     using ReactiveUI.Testing;
 
     [TestFixture]

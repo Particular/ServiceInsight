@@ -5,7 +5,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Windows.Input;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     [DebuggerDisplay("Handled '{Name}' and resulted in {State} at {HandledAt}")]
     public class Handler : DiagramItem, IComparable<Handler>

@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Models;
 
     public class MessageSelectionContext : PropertyChangedBase
     {

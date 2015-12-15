@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Controls
+namespace ServiceInsight.Controls
 {
     using System;
     using System.ComponentModel;

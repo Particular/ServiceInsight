@@ -1,4 +1,4 @@
-namespace Particular.ServiceInsight.Desktop.Framework.Commands
+namespace ServiceInsight.Framework.Commands
 {
     using System;
     using System.Windows.Input;

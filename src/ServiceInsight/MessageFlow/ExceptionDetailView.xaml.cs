@@ -1,8 +1,8 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
     using System.ComponentModel;
     using System.Windows;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
     using Shell;
 
     public partial class ExceptionDetailView : IPersistableLayout

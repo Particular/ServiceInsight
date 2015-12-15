@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Saga
+﻿namespace ServiceInsight.Saga
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@
     using System.Windows.Input;
     using Caliburn.Micro;
     using Models;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.MessageList;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
     using ServiceControl;
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>

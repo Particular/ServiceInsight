@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
     using Autofac;
     using Autofac.Core;

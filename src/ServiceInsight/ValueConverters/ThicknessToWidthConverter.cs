@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Particular.ServiceInsight.Desktop.ValueConverters
+namespace ServiceInsight.ValueConverters
 {
 	using System;
 	using System.Windows.Data;

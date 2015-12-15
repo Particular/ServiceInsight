@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.Models
+﻿namespace ServiceInsight.Models
 {
     using System;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.ServiceControl;
     using RestSharp.Deserializers;
 
     [Serializable]

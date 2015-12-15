@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
+﻿namespace ServiceInsight.Framework.Events
 {
     public class SwitchToMessageBody
     {

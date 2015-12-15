@@ -1,9 +1,9 @@
-﻿namespace Particular.ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Desktop.Models;
+    using ServiceInsight.Models;
     using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;

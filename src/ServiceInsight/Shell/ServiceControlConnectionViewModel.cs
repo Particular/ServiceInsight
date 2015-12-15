@@ -1,11 +1,11 @@
-﻿namespace Particular.ServiceInsight.Desktop.Shell
+﻿namespace ServiceInsight.Shell
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Autofac;
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
+    using ServiceInsight.Framework.Settings;
     using ServiceControl;
     using Settings;
 

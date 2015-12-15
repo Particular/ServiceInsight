@@ -1,6 +1,6 @@
-﻿namespace Particular.ServiceInsight.Desktop.Framework.Events
+﻿namespace ServiceInsight.Framework.Events
 {
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
+    using ServiceInsight.ExtensionMethods;
 
     public class AsyncOperationFailed
     {

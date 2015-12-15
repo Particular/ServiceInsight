@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
     using Mindscape.WpfDiagramming;
 

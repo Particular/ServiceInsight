@@ -1,4 +1,4 @@
-﻿namespace Particular.ServiceInsight.FunctionalTests.Extensions
+﻿namespace ServiceInsight.FunctionalTests.Extensions
 {
     using System.Windows.Automation;
     using TestStack.White.UIItems.TreeItems;

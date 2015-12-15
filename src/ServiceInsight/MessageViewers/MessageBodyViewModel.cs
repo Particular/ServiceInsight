@@ -1,13 +1,13 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers
+﻿namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
     using Caliburn.Micro;
     using ExtensionMethods;
     using HexViewer;
     using JsonViewer;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.MessageList;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.ServiceControl;
     using XmlViewer;
 
     public class MessageBodyViewModel : Screen,

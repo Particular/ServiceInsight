@@ -1,7 +1,7 @@
-﻿namespace Particular.ServiceInsight.Desktop.MessageViewers.XmlViewer
+﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
     using Caliburn.Micro;
-    using Particular.ServiceInsight.Desktop.Models;
+    using ServiceInsight.Models;
 
     public class XmlMessageViewModel : Screen, IDisplayMessageBody
     {

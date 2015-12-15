@@ -12,15 +12,15 @@
     using Caliburn.Micro;
     using Diagram;
     using Microsoft.Win32;
-    using Particular.ServiceInsight.Desktop.ExtensionMethods;
-    using Particular.ServiceInsight.Desktop.Framework;
-    using Particular.ServiceInsight.Desktop.Framework.Commands;
-    using Particular.ServiceInsight.Desktop.Framework.Events;
-    using Particular.ServiceInsight.Desktop.Framework.Settings;
-    using Particular.ServiceInsight.Desktop.MessageList;
-    using Particular.ServiceInsight.Desktop.Models;
-    using Particular.ServiceInsight.Desktop.ServiceControl;
-    using Particular.ServiceInsight.Desktop.Settings;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
     using ServiceInsight.DiagramLegend;
 
     public class SequenceDiagramViewModel : Screen,
