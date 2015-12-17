@@ -2,6 +2,7 @@
 {
     using System;
     using Anotar.Serilog;
+    using Microsoft.Win32;
     using Particular.Licensing;
 
     public class AppLicenseManager
@@ -26,12 +27,19 @@
         {
             string existingLicense;
 
-            if (licenseStore.TryReadLicense(out existingLicense))
+            //look in HKCU
+            if (UserSidChecker.IsNotSystemSid() && new RegistryLicenseStore(Registry.CurrentUser).TryReadLicense(out existingLicense))
             {
                 return existingLicense;
             }
 
-            return "";
+            //look in HKLM
+            if (new RegistryLicenseStore(Registry.LocalMachine).TryReadLicense(out existingLicense))
+            {
+                return existingLicense;
+            }
+
+            return string.Empty;
         }
 
         public bool TryInstallLicense(string licenseText)
@@ -47,7 +55,7 @@
 
                 CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
 
-                licenseStore.StoreLicense(licenseText);
+                new RegistryLicenseStore().StoreLicense(licenseText);
 
                 return true;
             }
@@ -85,7 +93,5 @@
         {
             return LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
         }
-
-        RegistryLicenseStore licenseStore = new RegistryLicenseStore();
     }
 }
