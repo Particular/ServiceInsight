@@ -3,16 +3,16 @@
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
+    using NSubstitute;
+    using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
     using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageProperties;
     using ServiceInsight.Models;
     using ServiceInsight.Search;
     using ServiceInsight.ServiceControl;
-    using NSubstitute;
-    using NUnit.Framework;
-    using ServiceInsight.Framework.Events;
     using Shouldly;
 
     [TestFixture]
@@ -59,8 +59,8 @@
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            EventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
-            EventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
+            EventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
+            EventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
             messageList.Rows.Count.ShouldBe(2);
             SearchBar.IsVisible.ShouldBe(true);
         }

@@ -30,7 +30,7 @@
 
         private void OnSelectedMessageChanged()
         {
-            eventAggregator.Publish(new SelectedMessageChanged());
+            eventAggregator.PublishOnUIThread(new SelectedMessageChanged());
         }
     }
 }

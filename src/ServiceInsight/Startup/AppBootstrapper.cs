@@ -16,9 +16,14 @@
     using Shell;
     using IContainer = Autofac.IContainer;
 
-    public class AppBootstrapper : Bootstrapper<ShellViewModel>
+    public class AppBootstrapper : BootstrapperBase
     {
         protected IContainer container;
+
+        public AppBootstrapper()
+        {
+            Initialize();
+        }
 
         protected override void Configure()
         {
@@ -99,6 +104,11 @@
         protected override void BuildUp(object instance)
         {
             container.InjectProperties(instance);
+        }
+
+        protected override void OnStartup(object sender, StartupEventArgs e)
+        {
+            DisplayRootViewFor<ShellViewModel>();
         }
     }
 }

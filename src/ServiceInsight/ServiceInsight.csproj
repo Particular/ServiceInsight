@@ -60,8 +60,13 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.Micro">
-      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Comparers">
       <HintPath>..\packages\Comparers.4.0.0\lib\net40-client\Comparers.dll</HintPath>
@@ -209,9 +214,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -249,6 +252,8 @@
     <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
+    <Compile Include="Framework\Rx\RxPropertyChangedBase.cs" />
+    <Compile Include="Framework\Rx\WeakValueDictionary.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>

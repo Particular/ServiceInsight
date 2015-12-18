@@ -13,11 +13,11 @@
     using Framework.Rx;
     using MessageProperties;
     using Models;
-    using ServiceInsight.Framework.Commands;
-    using ServiceInsight.Framework.Events;
     using ReactiveUI;
     using Search;
     using ServiceControl;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
     using Shell;
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
@@ -53,7 +53,7 @@
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
-            
+
             Items.Add(SearchBar);
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
@@ -116,7 +116,7 @@
         {
             try
             {
-                eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
+                eventAggregator.PublishOnUIThread(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
                 if (orderBy != null)
                 {
@@ -166,7 +166,7 @@
             }
             finally
             {
-                eventAggregator.Publish(new WorkFinished());
+                eventAggregator.PublishOnUIThread(new WorkFinished());
             }
         }
 
@@ -291,7 +291,7 @@
 
         public void BringIntoView(StoredMessage msg)
         {
-            eventAggregator.Publish(new ScrollDiagramItemIntoView(msg));
+            eventAggregator.PublishOnUIThread(new ScrollDiagramItemIntoView(msg));
         }
     }
 }

@@ -19,11 +19,11 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
+    using Saga;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
-    using Saga;
     using Settings;
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;
@@ -205,7 +205,7 @@
             if (result.GetValueOrDefault(false))
             {
                 EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                eventAggregator.PublishOnUIThread(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
@@ -265,7 +265,7 @@
 
         public void OnBodyTabSelectedChanged()
         {
-            eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
+            eventAggregator.PublishOnUIThread(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip

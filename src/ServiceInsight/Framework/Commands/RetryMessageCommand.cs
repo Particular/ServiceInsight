@@ -33,10 +33,10 @@ namespace ServiceInsight.Framework.Commands
             if (message == null)
                 return;
 
-            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
+            eventAggregator.PublishOnUIThread(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             serviceControl.RetryMessage(message.Id);
-            eventAggregator.Publish(new RetryMessage { Id = message.Id });
-            eventAggregator.Publish(new WorkFinished());
+            eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
+            eventAggregator.PublishOnUIThread(new WorkFinished());
 
             message.Status = MessageStatus.RetryIssued;
 
