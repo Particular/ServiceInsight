@@ -6,11 +6,11 @@
     using System.Windows.Input;
     using Caliburn.Micro;
     using Models;
+    using ServiceControl;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
-    using ServiceControl;
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -105,7 +105,7 @@
         {
             try
             {
-                eventAggregator.Publish(new WorkStarted("Loading message body..."));
+                eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
 
                 var previousSagaId = Guid.Empty;
 
@@ -156,7 +156,7 @@
             }
             finally
             {
-                eventAggregator.Publish(new WorkFinished());
+                eventAggregator.PublishOnUIThread(new WorkFinished());
             }
         }
 
@@ -204,7 +204,7 @@
 
         public void ShowFlow()
         {
-            eventAggregator.Publish(SwitchToFlowWindow.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToFlowWindow.Instance);
         }
 
         public void RefreshSaga()

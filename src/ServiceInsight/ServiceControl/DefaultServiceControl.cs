@@ -10,16 +10,16 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
+    using RestSharp;
+    using RestSharp.Contrib;
+    using RestSharp.Deserializers;
+    using Serilog;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Models;
     using ServiceInsight.Saga;
     using ServiceInsight.Settings;
-    using RestSharp;
-    using RestSharp.Contrib;
-    using RestSharp.Deserializers;
-    using Serilog;
 
     public class DefaultServiceControl : IServiceControl
     {
@@ -173,7 +173,6 @@
                 }
 
                 return presentationBody;
-
             }, baseUrl);
         }
 
@@ -518,7 +517,7 @@
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
-            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
+            eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
         }
 
@@ -540,7 +539,6 @@
     {
         PresentationHint hint = PresentationHint.Standard;
 
-   
         public string Text { get; set; }
 
         public PresentationHint Hint

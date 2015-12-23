@@ -10,12 +10,12 @@
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
+    using ServiceControl;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.MessageList;
-    using ServiceControl;
     using Settings;
 
     public class MessageFlowViewModel : Screen,
@@ -51,7 +51,7 @@
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
             RetryMessageCommand = container.Resolve<RetryMessageCommand>();
             SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
-            
+
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
@@ -90,7 +90,7 @@
 
             var message = e.MessageNode.Message;
 
-            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
             selection.SelectedMessage = message;
         }
 
@@ -104,7 +104,7 @@
 
         public void ShowMessageBody()
         {
-            eventAggregator.Publish(SwitchToMessageBody.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToMessageBody.Instance);
         }
 
         public void ShowSagaWindow()
@@ -113,7 +113,7 @@
             {
                 selection.SelectedMessage = SelectedMessage.Message;
             }
-            eventAggregator.Publish(SwitchToSagaWindow.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
         }
 
         public void ShowException(ExceptionDetails exception)
@@ -261,12 +261,12 @@
             childNode.ConnectionPoints.Add(toPoint);
 
             DiagramConnection connection;
-            
+
             if (childNode.IsPublished)
             {
                 connection = new EventConnection(fromPoint, toPoint);
             }
-            else if(childNode.IsTimeout)
+            else if (childNode.IsTimeout)
             {
                 connection = new TimeoutConnection(fromPoint, toPoint);
             }

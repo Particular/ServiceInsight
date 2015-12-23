@@ -73,18 +73,18 @@
         public bool JsonViewerVisible
         {
             get
-            { 
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json) 
-                            && PresentationHint == PresentationHint.Standard; 
+            {
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json)
+                            && PresentationHint == PresentationHint.Standard;
             }
         }
-        
+
         public bool XmlViewerVisible
         {
             get
-            { 
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml) 
-                            && PresentationHint == PresentationHint.Standard; 
+            {
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml)
+                            && PresentationHint == PresentationHint.Standard;
             }
         }
 
@@ -92,8 +92,8 @@
         {
             get
             {
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml) 
-                            && PresentationHint == PresentationHint.Standard; 
+                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
+                            && PresentationHint == PresentationHint.Standard;
             }
         }
 
@@ -153,14 +153,13 @@
                 return;
             }
 
-            eventAggregator.Publish(new WorkStarted("Loading message body..."));
+            eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
 
             serviceControl.LoadBody(selection.SelectedMessage);
 
             RefreshChildren();
 
-            eventAggregator.Publish(new WorkFinished());
+            eventAggregator.PublishOnUIThread(new WorkFinished());
         }
-
     }
 }

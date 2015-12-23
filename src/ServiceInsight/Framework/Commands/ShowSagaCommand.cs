@@ -31,7 +31,7 @@ namespace ServiceInsight.Framework.Commands
             }
 
             selection.SelectedMessage = message;
-            eventAggregator.Publish(SwitchToSagaWindow.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
         }
     }
 }

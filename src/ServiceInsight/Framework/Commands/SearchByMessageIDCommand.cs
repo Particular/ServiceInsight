@@ -29,7 +29,7 @@ namespace ServiceInsight.Framework.Commands
                 return;
 
             searchBar.Search(performSearch: true, searchQuery: message.MessageId);
-            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
     }
 }

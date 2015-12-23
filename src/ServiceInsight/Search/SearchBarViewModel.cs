@@ -204,16 +204,16 @@
 
         public void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => PageCount);
-            NotifyOfPropertyChange(() => CanGoToFirstPage);
-            NotifyOfPropertyChange(() => CanGoToLastPage);
-            NotifyOfPropertyChange(() => CanGoToNextPage);
-            NotifyOfPropertyChange(() => CanGoToPreviousPage);
-            NotifyOfPropertyChange(() => CanRefreshResult);
-            NotifyOfPropertyChange(() => SearchEnabled);
-            NotifyOfPropertyChange(() => CanCancelSearch);
-            NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => SearchResultMessage);
+            NotifyOfPropertyChange(nameof(PageCount));
+            NotifyOfPropertyChange(nameof(CanGoToFirstPage));
+            NotifyOfPropertyChange(nameof(CanGoToLastPage));
+            NotifyOfPropertyChange(nameof(CanGoToNextPage));
+            NotifyOfPropertyChange(nameof(CanGoToPreviousPage));
+            NotifyOfPropertyChange(nameof(CanRefreshResult));
+            NotifyOfPropertyChange(nameof(SearchEnabled));
+            NotifyOfPropertyChange(nameof(CanCancelSearch));
+            NotifyOfPropertyChange(nameof(WorkInProgress));
+            NotifyOfPropertyChange(nameof(SearchResultMessage));
         }
 
         public void OnSelectedEndpointChanged()

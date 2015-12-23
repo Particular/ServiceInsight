@@ -42,7 +42,7 @@
         {
             if (shell.WorkInProgress)
             {
-                eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
+                eventAggregator.PublishOnUIThread(new AsyncOperationFailed(rootError.Message));
             }
         }
 

@@ -45,8 +45,6 @@
                 Framework.ExceptionHandler.Attach();
 
             Highlighting.Resources.RegisterHighlightings();
-
-            InitializeComponent();
         }
 
         protected override void OnStartup(StartupEventArgs e)

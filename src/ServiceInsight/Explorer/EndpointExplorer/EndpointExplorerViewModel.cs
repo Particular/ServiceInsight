@@ -74,13 +74,13 @@
             var available = ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
-            eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
+            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
 
             ConnectToService(connectTo);
 
             SelectDefaultEndpoint();
 
-            eventAggregator.Publish(new WorkFinished());
+            eventAggregator.PublishOnUIThread(new WorkFinished());
         }
 
         string GetConfiguredAddress()
@@ -115,7 +115,7 @@
 
         public void OnSelectedNodeChanged()
         {
-            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+            eventAggregator.PublishOnUIThread(new SelectedExplorerItemChanged(SelectedNode));
         }
 
         void SelectDefaultEndpoint()
