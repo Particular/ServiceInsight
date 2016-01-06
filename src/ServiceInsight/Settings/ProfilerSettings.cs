@@ -1,11 +1,14 @@
 ﻿namespace ServiceInsight.Settings
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
 
     // Properties without a DisplayNameAttribute aren't automatically added to the options dialog.
     public class ProfilerSettings : INotifyPropertyChanged
     {
+        int autoRefresh, cacheSize;
+
         public ProfilerSettings()
         {
             RecentSearchEntries = new ObservableCollection<string>();
@@ -15,12 +18,20 @@
         [DefaultValue(20)]
         [DisplayName("In-Memory Cache Size")]
         [Description("Sets the maximum size to use for caching data in-memory in MB")]
-        public int CacheSize { get; set; }
+        public int CacheSize
+        {
+            get { return Math.Max(5, cacheSize); }
+            set { cacheSize = value; }
+        }
 
         [DefaultValue(15)]
         [DisplayName("AutoRefresh Timer")]
         [Description("Auto refresh time in seconds")]
-        public int AutoRefreshTimer { get; set; }
+        public int AutoRefreshTimer
+        {
+            get { return Math.Max(1, autoRefresh); }
+            set { autoRefresh = value; }
+        }
 
         [DefaultValue(false)]
         [DisplayName("Display System Messages")]
