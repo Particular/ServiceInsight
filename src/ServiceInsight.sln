@@ -9,14 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.FunctionalTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight", "ServiceInsight\ServiceInsight.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chocolatey", "Chocolatey", "{4B808DEA-0BC2-46C5-806D-76C9D92872B2}"
-	ProjectSection(SolutionItems) = preProject
-		Setup\Chocolatey\chocolateyInstall.ps1 = Setup\Chocolatey\chocolateyInstall.ps1
-		Setup\Chocolatey\chocolateyUninstall.ps1 = Setup\Chocolatey\chocolateyUninstall.ps1
-		Setup\Chocolatey\elevatedUninstall.ps1 = Setup\Chocolatey\elevatedUninstall.ps1
-		..\packaging\chocolatey\Setup.install.nuspec = ..\packaging\chocolatey\Setup.install.nuspec
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{5338FEE7-FEE1-49AC-839B-A6D9988F9841}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setup", "Setup\Setup.csproj", "{AA3D4052-9083-4A3F-B151-C2E1E909D00F}"
