@@ -3,10 +3,9 @@
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using Caliburn.Micro;
 
     // Properties without a DisplayNameAttribute aren't automatically added to the options dialog.
-    public class ProfilerSettings : PropertyChangedBase
+    public class ProfilerSettings : INotifyPropertyChanged
     {
         int autoRefresh, cacheSize;
 
@@ -66,5 +65,12 @@
         [DisplayName("Usage Data Collection Approved")]
         [DefaultValue(false)]
         public bool DataCollectionApproved { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
