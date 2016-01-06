@@ -1,87 +1,65 @@
-﻿namespace ServiceInsight.Framework.Rx
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using Caliburn.Micro;
+using ObservablePropertyChanged;
+
+namespace ServiceInsight.Framework.Rx
 {
-    using System;
-    using System.Collections.Generic;
-    using Caliburn.Micro;
-
-    public partial class RxConductor<T> : RxConductorBaseWithActiveItem<T> where T : class
+    public class RxConductor<T> : Conductor<T>, IObservablePropertyChanged where T : class
     {
-        /// <summary>
-        /// Activates the specified item.
-        /// </summary>
-        /// <param name="item">The item to activate.</param>
-        public override void ActivateItem(T item)
+        ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
+
+        public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+
+        public void Dispose()
         {
-            if (item != null && item.Equals(ActiveItem))
+            Interlocked.Exchange(ref helper, null)?.Dispose();
+        }
+
+        public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+        {
+            base.NotifyOfPropertyChange(propertyName);
+            helper.PropertyChanged(this, propertyName);
+        }
+
+        public class RxCollection
+        {
+            public class AllActive : Collection.AllActive, IObservablePropertyChanged
             {
-                if (IsActive)
+                ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
+
+                public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+
+                public void Dispose()
                 {
-                    ScreenExtensions.TryActivate(item);
-                    OnActivationProcessed(item, true);
+                    Interlocked.Exchange(ref helper, null)?.Dispose();
                 }
-                return;
+
+                public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+                {
+                    base.NotifyOfPropertyChange(propertyName);
+                    helper.PropertyChanged(this, propertyName);
+                }
             }
 
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) =>
+            public class OneActive : Collection.OneActive, IObservablePropertyChanged
             {
-                if (canClose)
-                    ChangeActiveItem(item, true);
-                else OnActivationProcessed(item, false);
-            });
-        }
+                ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
 
-        /// <summary>
-        /// Deactivates the specified item.
-        /// </summary>
-        /// <param name="item">The item to close.</param>
-        /// <param name="close">Indicates whether or not to close the item after deactivating it.</param>
-        public override void DeactivateItem(T item, bool close)
-        {
-            if (item == null || !item.Equals(ActiveItem))
-            {
-                return;
+                public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+
+                public void Dispose()
+                {
+                    Interlocked.Exchange(ref helper, null)?.Dispose();
+                }
+
+                public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+                {
+                    base.NotifyOfPropertyChange(propertyName);
+                    helper.PropertyChanged(this, propertyName);
+                }
             }
-
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) =>
-            {
-                if (canClose)
-                    ChangeActiveItem(default(T), close);
-            });
-        }
-
-        /// <summary>
-        /// Called to check whether or not this instance can close.
-        /// </summary>
-        /// <param name="callback">The implementor calls this action with the result of the close check.</param>
-        public override void CanClose(Action<bool> callback)
-        {
-            CloseStrategy.Execute(new[] { ActiveItem }, (canClose, items) => callback(canClose));
-        }
-
-        /// <summary>
-        /// Called when activating.
-        /// </summary>
-        protected override void OnActivate()
-        {
-            ScreenExtensions.TryActivate(ActiveItem);
-        }
-
-        /// <summary>
-        /// Called when deactivating.
-        /// </summary>
-        /// <param name="close">Inidicates whether this instance will be closed.</param>
-        protected override void OnDeactivate(bool close)
-        {
-            ScreenExtensions.TryDeactivate(ActiveItem, close);
-        }
-
-        /// <summary>
-        /// Gets the children.
-        /// </summary>
-        /// <returns>The collection of children.</returns>
-        public override IEnumerable<T> GetChildren()
-        {
-            return new[] { ActiveItem };
         }
     }
 }
