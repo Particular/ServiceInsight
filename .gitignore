@@ -80,3 +80,4 @@ _ReSharper*/
 *.DotSettings.user
 
 src/scaffolding.config
+src/Setup/ServiceInsight-cache/
