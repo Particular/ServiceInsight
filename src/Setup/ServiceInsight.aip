@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="9.9" version="10.6" Modules="enterprise" RootPath="." Language="en" Id="{8F3C6593-A5DC-4149-97A2-01DF551AA69A}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="9.9" version="12.6.1" Modules="enterprise" RootPath="." Language="en" Id="{8F3C6593-A5DC-4149-97A2-01DF551AA69A}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiValidationComponent">
     <ROW Table="File" Column="Sequence" MinValue="1" MaxValue="2147483647" Description="Sequence with respect to the media images; order must track cabinet order." Options="0" ColumnType="3" ColumnIndex="7" ColumnSize="4" MsiKey="File#Sequence"/>
     <ROW Table="Media" Column="LastSequence" MinValue="0" MaxValue="2147483647" Description="File sequence number for the last file for this media." Options="0" ColumnType="3" ColumnIndex="1" ColumnSize="4" MsiKey="Media#LastSequence"/>
@@ -8,8 +8,10 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_EXTERNALUIUNINSTALLERNAME" MultiBuildValue="DefaultBuild:aiui"/>
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
-    <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:4.5" ValueLocId="-"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_DOTNET_VERSION"/>
     <ROW Property="AI_PRODUCTNAME_ARP" Value="Particular Software ServiceInsight"/>
+    <ROW Property="AI_REQUIRED_DOTNET_DISPLAY" MultiBuildValue="DefaultBuild:4.5" ValueLocId="-"/>
+    <ROW Property="AI_REQUIRED_DOTNET_VERSION" MultiBuildValue="DefaultBuild:4.5" ValueLocId="-"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="Particular Software ServiceInsight version [|ProductVersion] for NServiceBus" ValueLocId="*"/>
@@ -34,6 +36,8 @@
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
@@ -41,16 +45,144 @@
     <ROW Directory="Profiler_Dir" Directory_Parent="APPDIR" DefaultDir="Servic~1|ServiceInsight"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="af_Dir" Directory_Parent="Profiler_Dir" DefaultDir="af"/>
+    <ROW Directory="ar_Dir" Directory_Parent="Profiler_Dir" DefaultDir="ar"/>
+    <ROW Directory="bg_Dir" Directory_Parent="Profiler_Dir" DefaultDir="bg"/>
+    <ROW Directory="bnBD_Dir" Directory_Parent="Profiler_Dir" DefaultDir="bn-BD"/>
+    <ROW Directory="cs_Dir" Directory_Parent="Profiler_Dir" DefaultDir="cs"/>
+    <ROW Directory="da_Dir" Directory_Parent="Profiler_Dir" DefaultDir="da"/>
+    <ROW Directory="de_Dir" Directory_Parent="Profiler_Dir" DefaultDir="de"/>
+    <ROW Directory="el_Dir" Directory_Parent="Profiler_Dir" DefaultDir="el"/>
+    <ROW Directory="en_Dir" Directory_Parent="Profiler_Dir" DefaultDir="en"/>
+    <ROW Directory="es_Dir" Directory_Parent="Profiler_Dir" DefaultDir="es"/>
+    <ROW Directory="fa_Dir" Directory_Parent="Profiler_Dir" DefaultDir="fa"/>
+    <ROW Directory="fiFI_Dir" Directory_Parent="Profiler_Dir" DefaultDir="fi-FI"/>
+    <ROW Directory="frBE_Dir" Directory_Parent="Profiler_Dir" DefaultDir="fr-BE"/>
+    <ROW Directory="fr_Dir" Directory_Parent="Profiler_Dir" DefaultDir="fr"/>
+    <ROW Directory="he_Dir" Directory_Parent="Profiler_Dir" DefaultDir="he"/>
+    <ROW Directory="hu_Dir" Directory_Parent="Profiler_Dir" DefaultDir="hu"/>
+    <ROW Directory="id_Dir" Directory_Parent="Profiler_Dir" DefaultDir="id"/>
+    <ROW Directory="it_Dir" Directory_Parent="Profiler_Dir" DefaultDir="it"/>
+    <ROW Directory="ja_Dir" Directory_Parent="Profiler_Dir" DefaultDir="ja"/>
+    <ROW Directory="ko_Dir" Directory_Parent="Profiler_Dir" DefaultDir="ko"/>
+    <ROW Directory="nbNO_Dir" Directory_Parent="Profiler_Dir" DefaultDir="nb-NO"/>
+    <ROW Directory="nb_Dir" Directory_Parent="Profiler_Dir" DefaultDir="nb"/>
+    <ROW Directory="nl_Dir" Directory_Parent="Profiler_Dir" DefaultDir="nl"/>
+    <ROW Directory="pl_Dir" Directory_Parent="Profiler_Dir" DefaultDir="pl"/>
+    <ROW Directory="ptBR_Dir" Directory_Parent="Profiler_Dir" DefaultDir="pt-BR"/>
+    <ROW Directory="ro_Dir" Directory_Parent="Profiler_Dir" DefaultDir="ro"/>
+    <ROW Directory="ru_Dir" Directory_Parent="Profiler_Dir" DefaultDir="ru"/>
+    <ROW Directory="sk_Dir" Directory_Parent="Profiler_Dir" DefaultDir="sk"/>
+    <ROW Directory="sl_Dir" Directory_Parent="Profiler_Dir" DefaultDir="sl"/>
+    <ROW Directory="srLatn_Dir" Directory_Parent="Profiler_Dir" DefaultDir="sr-Latn"/>
+    <ROW Directory="sr_Dir" Directory_Parent="Profiler_Dir" DefaultDir="sr"/>
+    <ROW Directory="sv_Dir" Directory_Parent="Profiler_Dir" DefaultDir="sv"/>
+    <ROW Directory="tr_Dir" Directory_Parent="Profiler_Dir" DefaultDir="tr"/>
+    <ROW Directory="uzCyrlUZ_Dir" Directory_Parent="Profiler_Dir" DefaultDir="UZ-CYR~1|uz-Cyrl-UZ"/>
+    <ROW Directory="uzLatnUZ_Dir" Directory_Parent="Profiler_Dir" DefaultDir="UZ-LAT~1|uz-Latn-UZ"/>
+    <ROW Directory="vi_Dir" Directory_Parent="Profiler_Dir" DefaultDir="vi"/>
+    <ROW Directory="zhCN_Dir" Directory_Parent="Profiler_Dir" DefaultDir="zh-CN"/>
+    <ROW Directory="zhHans_Dir" Directory_Parent="Profiler_Dir" DefaultDir="zh-Hans"/>
+    <ROW Directory="zhHant_Dir" Directory_Parent="Profiler_Dir" DefaultDir="zh-Hant"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_CustomARPName" ComponentId="{ED484AE3-C508-4860-948D-0088E30435C0}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_DisableModify" ComponentId="{38A8B5E3-3D4F-4478-A39A-CC2FBF7E9B34}" Directory_="APPDIR" Attributes="4" KeyPath="NoModify" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{3D290727-E7AA-440A-8E47-A840D3F9EE77}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="Autofac.Configuration.dll" ComponentId="{52000793-0C39-46D7-93CA-314C490E8635}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Autofac.Configuration.dll"/>
+    <ROW Component="Autofac.Configuration.xml" ComponentId="{40E233AC-984D-476F-AFBA-31DA2729AC16}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Autofac.Configuration.xml" Type="0"/>
+    <ROW Component="Autofac.dll" ComponentId="{03BF2940-99FE-473E-97A3-395429C48916}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Autofac.dll"/>
+    <ROW Component="Caliburn.Micro.Platform.dll" ComponentId="{58185AC3-B4B6-4128-82D6-D999EDAB820F}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Caliburn.Micro.Platform.dll"/>
+    <ROW Component="Caliburn.Micro.dll" ComponentId="{CE9AB3E2-77C0-4744-9805-EC97BD8D2AC6}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Caliburn.Micro.dll"/>
+    <ROW Component="Comparers.dll" ComponentId="{2459D57F-FDE1-4BDA-B9F4-88FCB2F5F0D4}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Comparers.dll"/>
     <ROW Component="DefaultIcon" ComponentId="{742B3A22-B480-42F5-BB98-9403F64B4270}" Directory_="APPDIR" Attributes="4" KeyPath="DefaultIcon"/>
+    <ROW Component="DevExpress.Data.v14.1.dll" ComponentId="{D699C4F9-CF76-4211-A9B8-13B36EAC4552}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Data.v14.1.dll"/>
+    <ROW Component="DevExpress.Mvvm.v14.1.dll" ComponentId="{2518AD14-4694-407E-895F-EF76595E24D3}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Mvvm.v14.1.dll"/>
+    <ROW Component="DevExpress.Printing.v14.1.Core.dll" ComponentId="{012C639C-92BA-413C-A1B9-3625EA7EA050}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Printing.v14.1.Core.dll"/>
+    <ROW Component="DevExpress.Utils.v14.1.dll" ComponentId="{4D2D5C23-74AE-41EF-A832-3CD5CB8BF0A3}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Utils.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Controls.v14.1.dll" ComponentId="{96455513-CD9A-49B0-A5FA-C36ED396EB40}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Controls.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Core.v14.1.dll" ComponentId="{22BFCC5C-7205-4787-A080-DD31F8D0075C}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Core.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Docking.v14.1.dll" ComponentId="{8D10A8F3-0B5B-45C7-8653-62717CF49E45}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Docking.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Grid.v14.1.Core.dll" ComponentId="{4C491C97-422E-4D2E-86FC-3A356F8B59C8}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Grid.v14.1.Core.dll"/>
+    <ROW Component="DevExpress.Xpf.Grid.v14.1.dll" ComponentId="{A5007834-E69A-4E41-8DBD-756539A5E090}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Grid.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Layout.v14.1.Core.dll" ComponentId="{31339E03-A3A4-4EF9-A9B1-53A479C461FC}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Layout.v14.1.Core.dll"/>
+    <ROW Component="DevExpress.Xpf.LayoutControl.v14.1.dll" ComponentId="{E1912D84-4019-4009-9F2B-8596E89CC10A}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.LayoutControl.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.NavBar.v14.1.dll" ComponentId="{D0431E14-569C-4D2B-ABFA-97B3BBB7A23E}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.NavBar.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Printing.v14.1.dll" ComponentId="{58AB807D-9E58-4815-A7D3-BB30FB5A25FE}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Printing.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.PropertyGrid.v14.1.dll" ComponentId="{C0BDE3D0-84FE-4D94-A3BA-29A757A2E73F}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.PropertyGrid.v14.1.dll"/>
+    <ROW Component="DevExpress.Xpf.Themes.Office2013.v14.1.d" ComponentId="{D31DCC77-872E-4D33-A8C5-4B9AADB89BDE}" Directory_="Profiler_Dir" Attributes="0" KeyPath="DevExpress.Xpf.Themes.Office2013.v14.1.dll"/>
+    <ROW Component="GongSolutions.Wpf.DragDrop.dll" ComponentId="{D4F58D23-1E08-46E9-8C74-9B5969554FB5}" Directory_="Profiler_Dir" Attributes="0" KeyPath="GongSolutions.Wpf.DragDrop.dll"/>
+    <ROW Component="Humanizer.dll" ComponentId="{AABC2CB0-2FB4-4BDF-A333-0DCF21A1090B}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Humanizer.dll"/>
+    <ROW Component="Humanizer.resources.dll" ComponentId="{45358E3B-9923-4BF0-A179-0827B9F82609}" Directory_="af_Dir" Attributes="0" KeyPath="Humanizer.resources.dll"/>
+    <ROW Component="Humanizer.resources.dll_1" ComponentId="{E0C8EF91-723C-4E09-B9D0-7F166A2C0A13}" Directory_="ar_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_1"/>
+    <ROW Component="Humanizer.resources.dll_10" ComponentId="{7CC06BFD-4D09-4E03-9840-DE443EA46DC8}" Directory_="fiFI_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_10"/>
+    <ROW Component="Humanizer.resources.dll_11" ComponentId="{57403082-C09C-4396-9157-1A8702B1C7CF}" Directory_="fr_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_11"/>
+    <ROW Component="Humanizer.resources.dll_12" ComponentId="{5B77E4E3-025D-433E-9894-25B8FFF3D8DB}" Directory_="frBE_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_12"/>
+    <ROW Component="Humanizer.resources.dll_13" ComponentId="{D82F9F17-1358-42A4-B70F-DDD1E427FEA8}" Directory_="he_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_13"/>
+    <ROW Component="Humanizer.resources.dll_14" ComponentId="{22AA80EB-7049-4CB1-A4D6-6CB3A9A076AE}" Directory_="hu_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_14"/>
+    <ROW Component="Humanizer.resources.dll_15" ComponentId="{85D94764-8FF0-410E-ADE1-479FDD276E41}" Directory_="id_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_15"/>
+    <ROW Component="Humanizer.resources.dll_16" ComponentId="{E537C5BC-5B47-446E-8BEF-E98B6413F301}" Directory_="it_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_16"/>
+    <ROW Component="Humanizer.resources.dll_17" ComponentId="{A7531457-CFC5-4441-BF7D-3FD5BAB63611}" Directory_="ja_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_17"/>
+    <ROW Component="Humanizer.resources.dll_18" ComponentId="{B06A19A6-D4DD-4E49-BDFB-09B5C9831242}" Directory_="nb_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_18"/>
+    <ROW Component="Humanizer.resources.dll_19" ComponentId="{99AAEFDA-91E5-4C70-8E9E-D177410B43B2}" Directory_="nbNO_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_19"/>
+    <ROW Component="Humanizer.resources.dll_2" ComponentId="{0ECC3E14-BE08-4010-8B89-67D9CE670EA5}" Directory_="bg_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_2"/>
+    <ROW Component="Humanizer.resources.dll_20" ComponentId="{44D1C7F3-6591-42BF-8415-FC2657C2579C}" Directory_="nl_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_20"/>
+    <ROW Component="Humanizer.resources.dll_21" ComponentId="{E23FAF1F-E3E1-43B3-8A17-8EB5EC0FE239}" Directory_="pl_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_21"/>
+    <ROW Component="Humanizer.resources.dll_22" ComponentId="{AAF6E5AD-4E99-4BF0-924C-E99C25E7A867}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_22"/>
+    <ROW Component="Humanizer.resources.dll_23" ComponentId="{296C1C2E-9016-40CA-AA28-88173E4AD45C}" Directory_="ro_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_23"/>
+    <ROW Component="Humanizer.resources.dll_24" ComponentId="{1A7A15D9-EC31-4981-B64D-56829EB11398}" Directory_="ru_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_24"/>
+    <ROW Component="Humanizer.resources.dll_25" ComponentId="{717BF529-97D4-4788-A462-D0CB382BDC75}" Directory_="sk_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_25"/>
+    <ROW Component="Humanizer.resources.dll_26" ComponentId="{EE7D2A59-E926-4B19-8004-9C10A446068C}" Directory_="sl_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_26"/>
+    <ROW Component="Humanizer.resources.dll_27" ComponentId="{D591296F-1566-409F-A076-963EE33AA1A9}" Directory_="sr_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_27"/>
+    <ROW Component="Humanizer.resources.dll_28" ComponentId="{1143D0D4-6C8C-4E5E-8F23-3F967C9CE859}" Directory_="srLatn_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_28"/>
+    <ROW Component="Humanizer.resources.dll_29" ComponentId="{7C43A17F-B6F1-4F78-ABD6-7B0E9DBB6685}" Directory_="sv_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_29"/>
+    <ROW Component="Humanizer.resources.dll_3" ComponentId="{2B137346-4A5E-4CB0-A041-9A5E1B282C2A}" Directory_="bnBD_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_3"/>
+    <ROW Component="Humanizer.resources.dll_30" ComponentId="{C670BF2A-166D-4C4D-91C5-B59B53D57147}" Directory_="tr_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_30"/>
+    <ROW Component="Humanizer.resources.dll_31" ComponentId="{BBE9E233-39E7-4E1A-B149-7B95D661B436}" Directory_="uzCyrlUZ_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_31"/>
+    <ROW Component="Humanizer.resources.dll_32" ComponentId="{06C8BA06-3A5F-466A-9071-C82AFC76F8F5}" Directory_="uzLatnUZ_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_32"/>
+    <ROW Component="Humanizer.resources.dll_33" ComponentId="{6DE82834-E14C-4F68-BB63-FE977D027C70}" Directory_="vi_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_33"/>
+    <ROW Component="Humanizer.resources.dll_34" ComponentId="{634AB133-AC16-4BE6-817A-42840A0F8AAA}" Directory_="zhCN_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_34"/>
+    <ROW Component="Humanizer.resources.dll_35" ComponentId="{A6EF9029-C5BB-457F-95DA-09D20233FAB2}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_35"/>
+    <ROW Component="Humanizer.resources.dll_36" ComponentId="{5F418DC3-8000-43CD-9FCF-BCA592A314C4}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_36"/>
+    <ROW Component="Humanizer.resources.dll_4" ComponentId="{145CAFD6-59FD-4342-AD46-541EF2E8108B}" Directory_="cs_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_4"/>
+    <ROW Component="Humanizer.resources.dll_5" ComponentId="{2AB6A11F-73F1-491C-A6EE-4F72E00AD9D8}" Directory_="da_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_5"/>
+    <ROW Component="Humanizer.resources.dll_6" ComponentId="{6EDF9B0D-1F2B-4AA0-9BAA-9A20E59F320C}" Directory_="de_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_6"/>
+    <ROW Component="Humanizer.resources.dll_7" ComponentId="{4D29AD69-0D72-4DC9-9853-D1B147E8FE64}" Directory_="el_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_7"/>
+    <ROW Component="Humanizer.resources.dll_8" ComponentId="{613B1B78-BC53-4D17-AB1B-18D23EF46B7B}" Directory_="es_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_8"/>
+    <ROW Component="Humanizer.resources.dll_9" ComponentId="{5012DFBD-BFD0-4B47-82BF-DF1A0C420F59}" Directory_="fa_Dir" Attributes="0" KeyPath="Humanizer.resources.dll_9"/>
+    <ROW Component="ICSharpCode.AvalonEdit.dll" ComponentId="{97F2C9B4-AC91-4707-AF5F-083242AE1AA7}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ICSharpCode.AvalonEdit.dll"/>
+    <ROW Component="Mindscape.Raygun4Net.dll" ComponentId="{D7F02A17-1F58-4831-B999-02A9030D6C69}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Mindscape.Raygun4Net.dll"/>
+    <ROW Component="Mindscape.Raygun4Net4.dll" ComponentId="{AB4B151D-0E65-4AB1-96BD-32002CD7680A}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Mindscape.Raygun4Net4.dll"/>
+    <ROW Component="Mindscape.WpfDiagramming.FlowDiagrams.dl" ComponentId="{BD3CF53B-39EA-48C6-A3FF-1B72D9955CF2}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Mindscape.WpfDiagramming.FlowDiagrams.dll"/>
+    <ROW Component="Mindscape.WpfDiagramming.Foundation.dll" ComponentId="{565EE66D-457C-4AC6-AA7D-E415FFB330C6}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Mindscape.WpfDiagramming.Foundation.dll"/>
+    <ROW Component="Newtonsoft.Json.dll" ComponentId="{462BAF35-EBFE-45AB-B7C2-39D13F28DE63}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
+    <ROW Component="ObservablePropertyChanged.dll" ComponentId="{B687EDCA-C5FA-459F-A137-12D652FAA433}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ObservablePropertyChanged.dll"/>
     <ROW Component="Particular.ServiceInsight.exe" ComponentId="{7E06D977-205F-4771-934A-D83EA04E273D}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Particular.ServiceInsight.exe"/>
     <ROW Component="Path" ComponentId="{AD0D258A-2196-4EE4-A030-632F9495900C}" Directory_="APPDIR" Attributes="4" Condition="DESK_SH" KeyPath="Path"/>
     <ROW Component="ProductInformation" ComponentId="{EDE6C5EB-DE0A-4FC2-9A69-9F35F16EBADE}" Directory_="APPDIR" Attributes="4" Condition="ALL_PROGRAMS_SH" KeyPath="Version"/>
+    <ROW Component="ReactiveUI.Blend.dll" ComponentId="{89B8FEEC-E268-49E6-A4D8-B0D9AC84F01E}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ReactiveUI.Blend.dll"/>
+    <ROW Component="ReactiveUI.Xaml.dll" ComponentId="{D01555F6-21DF-4416-950B-9D2DE2257ADC}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ReactiveUI.Xaml.dll"/>
+    <ROW Component="ReactiveUI.dll" ComponentId="{EDDA65B2-E97F-412E-B291-634BDF51EE8C}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ReactiveUI.dll"/>
+    <ROW Component="RestSharp.dll" ComponentId="{DFCD26AB-C297-42A2-9B50-3BCA1DC17CBD}" Directory_="Profiler_Dir" Attributes="0" KeyPath="RestSharp.dll"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{EA7996F1-7FA9-4A26-A0CD-53C695E5EDBE}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="Serilog.FullNetFx.dll" ComponentId="{A4251FCA-9B51-469E-A25F-70B8595F464F}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Serilog.FullNetFx.dll"/>
+    <ROW Component="Serilog.dll" ComponentId="{FBEFECE3-7E70-45F1-A16B-D4783AAE88AC}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Serilog.dll"/>
+    <ROW Component="System.Reactive.Core.dll" ComponentId="{C941325D-6CA0-4151-84DA-EAC13136673D}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.Core.dll"/>
+    <ROW Component="System.Reactive.Interfaces.dll" ComponentId="{CAE5601E-1576-4D25-8379-7F848E3B92FE}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.Interfaces.dll"/>
+    <ROW Component="System.Reactive.Linq.dll" ComponentId="{9D0FB439-C049-41F8-A1BA-886153BC9C88}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.Linq.dll"/>
+    <ROW Component="System.Reactive.PlatformServices.dll" ComponentId="{1921480E-1983-4B73-9AEF-D767583E42E5}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.PlatformServices.dll"/>
+    <ROW Component="System.Reactive.Windows.Threading.dll" ComponentId="{A4B30DF4-C052-437B-8C58-8D484D1A9A6C}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.Windows.Threading.dll"/>
+    <ROW Component="System.Windows.Interactivity.dll" ComponentId="{A54699E1-DF2E-468B-A19A-528280740DB5}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.dll"/>
+    <ROW Component="System.Windows.Interactivity.resources.d" ComponentId="{00570194-95D8-4C40-93C0-9CD31CE5D124}" Directory_="de_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll"/>
+    <ROW Component="System.Windows.Interactivity.resources_1" ComponentId="{03C42850-7C4F-4630-A316-934EDABBDD68}" Directory_="en_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_1"/>
+    <ROW Component="System.Windows.Interactivity.resources_2" ComponentId="{28CEAEF8-9884-4347-A867-53B8B644BE61}" Directory_="es_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_2"/>
+    <ROW Component="System.Windows.Interactivity.resources_3" ComponentId="{FB40749D-92FD-4C7F-9456-41712FF8B652}" Directory_="fr_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_3"/>
+    <ROW Component="System.Windows.Interactivity.resources_4" ComponentId="{A97113C4-9E97-4555-9E1D-EA5C8596099D}" Directory_="it_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_4"/>
+    <ROW Component="System.Windows.Interactivity.resources_5" ComponentId="{8782C5A7-C8D7-4D1B-BF1E-8FAFFE7ED768}" Directory_="ja_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_5"/>
+    <ROW Component="System.Windows.Interactivity.resources_6" ComponentId="{7B48B50D-D2DD-427D-85F3-4D6FD3C9DDD8}" Directory_="ko_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_6"/>
+    <ROW Component="System.Windows.Interactivity.resources_7" ComponentId="{66533044-AC1B-4056-B7D8-C3777AA559EB}" Directory_="ru_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_7"/>
+    <ROW Component="System.Windows.Interactivity.resources_8" ComponentId="{F5383700-09D8-48EA-AC74-E6362EF334A6}" Directory_="zhHans_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_8"/>
+    <ROW Component="System.Windows.Interactivity.resources_9" ComponentId="{C8982931-2BE4-4822-9125-8277FFD4CCA6}" Directory_="zhHant_Dir" Attributes="0" KeyPath="System.Windows.Interactivity.resources.dll_9"/>
     <ROW Component="TrialStart" ComponentId="{B3C3A924-2FB0-4B65-BEB8-01C0390A6F83}" Directory_="APPDIR" Attributes="260" Condition="NOT TRIAL_DATE_SEARCH" KeyPath="TrialStart"/>
     <ROW Component="URLProtocol" ComponentId="{C7552438-FB58-42CC-AF38-1A3D895F0878}" Directory_="APPDIR" Attributes="4" KeyPath="URLProtocol"/>
     <ROW Component="_" ComponentId="{D5E97EE9-48A7-411E-8676-0E6FB1CC7842}" Directory_="APPDIR" Attributes="4" KeyPath="__1"/>
@@ -59,14 +191,146 @@
     <ROW Component="shell" ComponentId="{772052C1-ED32-4951-A4A3-1320D720E214}" Directory_="APPDIR" Attributes="4" KeyPath="shell"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="DTC" Title="DTC" Description="Install the Microsoft Distributed Transaction Coordinator (required for MSMQ)" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="MSMQ" Feature_Parent="DTC" Title="MSMQ" Description="Install Microsoft Message Queuing (requires DTC)" Display="3" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_DisableModify AI_ExePath DefaultIcon Particular.ServiceInsight.exe Path ProductInformation SHORTCUTDIR TrialStart URLProtocol _ __1 open shell"/>
+    <ROW Feature="DTC" Title="DTC" Description="Install the Microsoft Distributed Transaction Coordinator (required for MSMQ)" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_DisableModify AI_ExePath"/>
+    <ROW Feature="MSMQ" Feature_Parent="DTC" Title="MSMQ" Description="Install Microsoft Message Queuing (requires DTC)" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_DisableModify AI_ExePath"/>
+    <ROW Feature="ServiceInsight" Title="ServiceInsight" Description="Install ServiceInsight for NServiceBus by Particular Software" Display="2" Level="1" Directory_="APPDIR" Attributes="16" Components="AI_CustomARPName AI_DisableModify AI_ExePath Autofac.Configuration.dll Autofac.Configuration.xml Autofac.dll Caliburn.Micro.Platform.dll Caliburn.Micro.dll Comparers.dll DefaultIcon DevExpress.Data.v14.1.dll DevExpress.Mvvm.v14.1.dll DevExpress.Printing.v14.1.Core.dll DevExpress.Utils.v14.1.dll DevExpress.Xpf.Controls.v14.1.dll DevExpress.Xpf.Core.v14.1.dll DevExpress.Xpf.Docking.v14.1.dll DevExpress.Xpf.Grid.v14.1.Core.dll DevExpress.Xpf.Grid.v14.1.dll DevExpress.Xpf.Layout.v14.1.Core.dll DevExpress.Xpf.LayoutControl.v14.1.dll DevExpress.Xpf.NavBar.v14.1.dll DevExpress.Xpf.Printing.v14.1.dll DevExpress.Xpf.PropertyGrid.v14.1.dll DevExpress.Xpf.Themes.Office2013.v14.1.d GongSolutions.Wpf.DragDrop.dll Humanizer.dll Humanizer.resources.dll Humanizer.resources.dll_1 Humanizer.resources.dll_10 Humanizer.resources.dll_11 Humanizer.resources.dll_12 Humanizer.resources.dll_13 Humanizer.resources.dll_14 Humanizer.resources.dll_15 Humanizer.resources.dll_16 Humanizer.resources.dll_17 Humanizer.resources.dll_18 Humanizer.resources.dll_19 Humanizer.resources.dll_2 Humanizer.resources.dll_20 Humanizer.resources.dll_21 Humanizer.resources.dll_22 Humanizer.resources.dll_23 Humanizer.resources.dll_24 Humanizer.resources.dll_25 Humanizer.resources.dll_26 Humanizer.resources.dll_27 Humanizer.resources.dll_28 Humanizer.resources.dll_29 Humanizer.resources.dll_3 Humanizer.resources.dll_30 Humanizer.resources.dll_31 Humanizer.resources.dll_32 Humanizer.resources.dll_33 Humanizer.resources.dll_34 Humanizer.resources.dll_35 Humanizer.resources.dll_36 Humanizer.resources.dll_4 Humanizer.resources.dll_5 Humanizer.resources.dll_6 Humanizer.resources.dll_7 Humanizer.resources.dll_8 Humanizer.resources.dll_9 ICSharpCode.AvalonEdit.dll Mindscape.Raygun4Net.dll Mindscape.Raygun4Net4.dll Mindscape.WpfDiagramming.FlowDiagrams.dl Mindscape.WpfDiagramming.Foundation.dll Newtonsoft.Json.dll ObservablePropertyChanged.dll Particular.ServiceInsight.exe Path ProductInformation ReactiveUI.Blend.dll ReactiveUI.Xaml.dll ReactiveUI.dll RestSharp.dll SHORTCUTDIR Serilog.FullNetFx.dll Serilog.dll System.Reactive.Core.dll System.Reactive.Interfaces.dll System.Reactive.Linq.dll System.Reactive.PlatformServices.dll System.Reactive.Windows.Threading.dll System.Windows.Interactivity.dll System.Windows.Interactivity.resources.d System.Windows.Interactivity.resources_1 System.Windows.Interactivity.resources_2 System.Windows.Interactivity.resources_3 System.Windows.Interactivity.resources_4 System.Windows.Interactivity.resources_5 System.Windows.Interactivity.resources_6 System.Windows.Interactivity.resources_7 System.Windows.Interactivity.resources_8 System.Windows.Interactivity.resources_9 TrialStart URLProtocol _ __1 open shell"/>
     <ATTRIBUTE name="CurrentFeature" value="ServiceInsight"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Autofac.Configuration.dll" Component_="Autofac.Configuration.dll" FileName="AUTOFA~1.DLL|Autofac.Configuration.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Autofac.Configuration.dll" SelfReg="false" NextFile="Autofac.Configuration.xml"/>
+    <ROW File="Autofac.Configuration.xml" Component_="Autofac.Configuration.xml" FileName="AUTOFA~1.XML|Autofac.Configuration.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Autofac.Configuration.xml" SelfReg="false" NextFile="Autofac.dll"/>
+    <ROW File="Autofac.dll" Component_="Autofac.dll" FileName="Autofac.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Autofac.dll" SelfReg="false" NextFile="Autofac.xml"/>
+    <ROW File="Autofac.xml" Component_="Autofac.Configuration.xml" FileName="Autofac.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Autofac.xml" SelfReg="false" NextFile="Humanizer.resources.dll_2"/>
+    <ROW File="Caliburn.Micro.Platform.dll" Component_="Caliburn.Micro.Platform.dll" FileName="CALIBU~2.DLL|Caliburn.Micro.Platform.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Caliburn.Micro.Platform.dll" SelfReg="false" NextFile="Caliburn.Micro.Platform.xml"/>
+    <ROW File="Caliburn.Micro.Platform.xml" Component_="Autofac.Configuration.xml" FileName="CALIBU~1.XML|Caliburn.Micro.Platform.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Caliburn.Micro.Platform.xml" SelfReg="false" NextFile="Caliburn.Micro.xml"/>
+    <ROW File="Caliburn.Micro.dll" Component_="Caliburn.Micro.dll" FileName="CALIBU~1.DLL|Caliburn.Micro.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Caliburn.Micro.dll" SelfReg="false" NextFile="Caliburn.Micro.Platform.dll"/>
+    <ROW File="Caliburn.Micro.xml" Component_="Autofac.Configuration.xml" FileName="CALIBU~2.XML|Caliburn.Micro.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Caliburn.Micro.xml" SelfReg="false" NextFile="Comparers.dll"/>
+    <ROW File="Comparers.dll" Component_="Comparers.dll" FileName="COMPAR~1.DLL|Comparers.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Comparers.dll" SelfReg="false" NextFile="Comparers.xml"/>
+    <ROW File="Comparers.xml" Component_="Autofac.Configuration.xml" FileName="COMPAR~1.XML|Comparers.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Comparers.xml" SelfReg="false" NextFile="Humanizer.resources.dll_4"/>
+    <ROW File="DevExpress.Data.v14.1.dll" Component_="DevExpress.Data.v14.1.dll" FileName="DEVEXP~1.DLL|DevExpress.Data.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Data.v14.1.dll" SelfReg="false" NextFile="DevExpress.Data.v14.1.xml"/>
+    <ROW File="DevExpress.Data.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~1.XML|DevExpress.Data.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Data.v14.1.xml" SelfReg="false" NextFile="DevExpress.Mvvm.v14.1.dll"/>
+    <ROW File="DevExpress.Mvvm.v14.1.dll" Component_="DevExpress.Mvvm.v14.1.dll" FileName="DEVEXP~2.DLL|DevExpress.Mvvm.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Mvvm.v14.1.dll" SelfReg="false" NextFile="DevExpress.Mvvm.v14.1.xml"/>
+    <ROW File="DevExpress.Mvvm.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~2.XML|DevExpress.Mvvm.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Mvvm.v14.1.xml" SelfReg="false" NextFile="DevExpress.Printing.v14.1.Core.dll"/>
+    <ROW File="DevExpress.Printing.v14.1.Core.dll" Component_="DevExpress.Printing.v14.1.Core.dll" FileName="DEVEXP~3.DLL|DevExpress.Printing.v14.1.Core.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Printing.v14.1.Core.dll" SelfReg="false" NextFile="DevExpress.Printing.v14.1.Core.xml"/>
+    <ROW File="DevExpress.Printing.v14.1.Core.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~3.XML|DevExpress.Printing.v14.1.Core.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Printing.v14.1.Core.xml" SelfReg="false" NextFile="DevExpress.Utils.v14.1.dll"/>
+    <ROW File="DevExpress.Utils.v14.1.dll" Component_="DevExpress.Utils.v14.1.dll" FileName="DEVEXP~4.DLL|DevExpress.Utils.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Utils.v14.1.dll" SelfReg="false" NextFile="DevExpress.Utils.v14.1.xml"/>
+    <ROW File="DevExpress.Utils.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~4.XML|DevExpress.Utils.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Utils.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Controls.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Controls.v14.1.dll" Component_="DevExpress.Xpf.Controls.v14.1.dll" FileName="DEVEXP~5.DLL|DevExpress.Xpf.Controls.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Controls.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.Controls.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.Controls.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~5.XML|DevExpress.Xpf.Controls.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Controls.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Core.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Core.v14.1.dll" Component_="DevExpress.Xpf.Core.v14.1.dll" FileName="DEVEXP~6.DLL|DevExpress.Xpf.Core.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Core.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.Core.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.Core.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~6.XML|DevExpress.Xpf.Core.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Core.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Docking.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Docking.v14.1.dll" Component_="DevExpress.Xpf.Docking.v14.1.dll" FileName="DEVEXP~7.DLL|DevExpress.Xpf.Docking.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Docking.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.Docking.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.Docking.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~7.XML|DevExpress.Xpf.Docking.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Docking.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Grid.v14.1.Core.dll"/>
+    <ROW File="DevExpress.Xpf.Grid.v14.1.Core.dll" Component_="DevExpress.Xpf.Grid.v14.1.Core.dll" FileName="DEVEXP~8.DLL|DevExpress.Xpf.Grid.v14.1.Core.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Grid.v14.1.Core.dll" SelfReg="false" NextFile="DevExpress.Xpf.Grid.v14.1.Core.xml"/>
+    <ROW File="DevExpress.Xpf.Grid.v14.1.Core.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~8.XML|DevExpress.Xpf.Grid.v14.1.Core.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Grid.v14.1.Core.xml" SelfReg="false" NextFile="DevExpress.Xpf.Grid.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Grid.v14.1.dll" Component_="DevExpress.Xpf.Grid.v14.1.dll" FileName="DEVEXP~9.DLL|DevExpress.Xpf.Grid.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Grid.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.Grid.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.Grid.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEXP~9.XML|DevExpress.Xpf.Grid.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Grid.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Layout.v14.1.Core.dll"/>
+    <ROW File="DevExpress.Xpf.Layout.v14.1.Core.dll" Component_="DevExpress.Xpf.Layout.v14.1.Core.dll" FileName="DEVEX~10.DLL|DevExpress.Xpf.Layout.v14.1.Core.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Layout.v14.1.Core.dll" SelfReg="false" NextFile="DevExpress.Xpf.Layout.v14.1.Core.xml"/>
+    <ROW File="DevExpress.Xpf.Layout.v14.1.Core.xml" Component_="Autofac.Configuration.xml" FileName="DEVEX~10.XML|DevExpress.Xpf.Layout.v14.1.Core.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Layout.v14.1.Core.xml" SelfReg="false" NextFile="DevExpress.Xpf.LayoutControl.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.LayoutControl.v14.1.dll" Component_="DevExpress.Xpf.LayoutControl.v14.1.dll" FileName="DEVEX~11.DLL|DevExpress.Xpf.LayoutControl.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.LayoutControl.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.LayoutControl.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.LayoutControl.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEX~11.XML|DevExpress.Xpf.LayoutControl.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.LayoutControl.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.NavBar.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.NavBar.v14.1.dll" Component_="DevExpress.Xpf.NavBar.v14.1.dll" FileName="DEVEX~12.DLL|DevExpress.Xpf.NavBar.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.NavBar.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.NavBar.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.NavBar.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEX~12.XML|DevExpress.Xpf.NavBar.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.NavBar.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Printing.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Printing.v14.1.dll" Component_="DevExpress.Xpf.Printing.v14.1.dll" FileName="DEVEX~13.DLL|DevExpress.Xpf.Printing.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Printing.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.Printing.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.Printing.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEX~13.XML|DevExpress.Xpf.Printing.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Printing.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.PropertyGrid.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.PropertyGrid.v14.1.dll" Component_="DevExpress.Xpf.PropertyGrid.v14.1.dll" FileName="DEVEX~14.DLL|DevExpress.Xpf.PropertyGrid.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.PropertyGrid.v14.1.dll" SelfReg="false" NextFile="DevExpress.Xpf.PropertyGrid.v14.1.xml"/>
+    <ROW File="DevExpress.Xpf.PropertyGrid.v14.1.xml" Component_="Autofac.Configuration.xml" FileName="DEVEX~14.XML|DevExpress.Xpf.PropertyGrid.v14.1.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.PropertyGrid.v14.1.xml" SelfReg="false" NextFile="DevExpress.Xpf.Themes.Office2013.v14.1.dll"/>
+    <ROW File="DevExpress.Xpf.Themes.Office2013.v14.1.dll" Component_="DevExpress.Xpf.Themes.Office2013.v14.1.d" FileName="DEVEX~15.DLL|DevExpress.Xpf.Themes.Office2013.v14.1.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;DevExpress.Xpf.Themes.Office2013.v14.1.dll" SelfReg="false" NextFile="Humanizer.resources.dll_7"/>
+    <ROW File="GongSolutions.Wpf.DragDrop.dll" Component_="GongSolutions.Wpf.DragDrop.dll" FileName="GONGSO~1.DLL|GongSolutions.Wpf.DragDrop.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;GongSolutions.Wpf.DragDrop.dll" SelfReg="false" NextFile="GongSolutions.Wpf.DragDrop.pdb"/>
+    <ROW File="GongSolutions.Wpf.DragDrop.pdb" Component_="GongSolutions.Wpf.DragDrop.dll" FileName="GONGSO~1.PDB|GongSolutions.Wpf.DragDrop.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;GongSolutions.Wpf.DragDrop.pdb" SelfReg="false" NextFile="GongSolutions.Wpf.DragDrop.xml"/>
+    <ROW File="GongSolutions.Wpf.DragDrop.xml" Component_="Autofac.Configuration.xml" FileName="GONGSO~1.XML|GongSolutions.Wpf.DragDrop.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;GongSolutions.Wpf.DragDrop.xml" SelfReg="false" NextFile="Humanizer.resources.dll_13"/>
+    <ROW File="Humanizer.dll" Component_="Humanizer.dll" FileName="HUMANI~1.DLL|Humanizer.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Humanizer.dll" SelfReg="false" NextFile="Humanizer.pdb"/>
+    <ROW File="Humanizer.pdb" Component_="Humanizer.dll" FileName="HUMANI~1.PDB|Humanizer.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;Humanizer.pdb" SelfReg="false" NextFile="Humanizer.xml"/>
+    <ROW File="Humanizer.resources.dll" Component_="Humanizer.resources.dll" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;af\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_1"/>
+    <ROW File="Humanizer.resources.dll_1" Component_="Humanizer.resources.dll_1" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ar\Humanizer.resources.dll" SelfReg="false" NextFile="Autofac.Configuration.dll"/>
+    <ROW File="Humanizer.resources.dll_10" Component_="Humanizer.resources.dll_10" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;fi-FI\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_11"/>
+    <ROW File="Humanizer.resources.dll_11" Component_="Humanizer.resources.dll_11" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;fr\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_3"/>
+    <ROW File="Humanizer.resources.dll_12" Component_="Humanizer.resources.dll_12" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;fr-BE\Humanizer.resources.dll" SelfReg="false" NextFile="GongSolutions.Wpf.DragDrop.dll"/>
+    <ROW File="Humanizer.resources.dll_13" Component_="Humanizer.resources.dll_13" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;he\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_14"/>
+    <ROW File="Humanizer.resources.dll_14" Component_="Humanizer.resources.dll_14" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;hu\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.dll"/>
+    <ROW File="Humanizer.resources.dll_15" Component_="Humanizer.resources.dll_15" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;id\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_16"/>
+    <ROW File="Humanizer.resources.dll_16" Component_="Humanizer.resources.dll_16" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;it\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_4"/>
+    <ROW File="Humanizer.resources.dll_17" Component_="Humanizer.resources.dll_17" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ja\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_5"/>
+    <ROW File="Humanizer.resources.dll_18" Component_="Humanizer.resources.dll_18" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;nb\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_19"/>
+    <ROW File="Humanizer.resources.dll_19" Component_="Humanizer.resources.dll_19" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;nb-NO\Humanizer.resources.dll" SelfReg="false" NextFile="Newtonsoft.Json.dll"/>
+    <ROW File="Humanizer.resources.dll_2" Component_="Humanizer.resources.dll_2" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;bg\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_3"/>
+    <ROW File="Humanizer.resources.dll_20" Component_="Humanizer.resources.dll_20" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;nl\Humanizer.resources.dll" SelfReg="false" NextFile="ObservablePropertyChanged.dll"/>
+    <ROW File="Humanizer.resources.dll_21" Component_="Humanizer.resources.dll_21" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;pl\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_22"/>
+    <ROW File="Humanizer.resources.dll_22" Component_="Humanizer.resources.dll_22" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;pt-BR\Humanizer.resources.dll" SelfReg="false" NextFile="ReactiveUI.Blend.dll"/>
+    <ROW File="Humanizer.resources.dll_23" Component_="Humanizer.resources.dll_23" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ro\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_24"/>
+    <ROW File="Humanizer.resources.dll_24" Component_="Humanizer.resources.dll_24" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ru\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_7"/>
+    <ROW File="Humanizer.resources.dll_25" Component_="Humanizer.resources.dll_25" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;sk\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_26"/>
+    <ROW File="Humanizer.resources.dll_26" Component_="Humanizer.resources.dll_26" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;sl\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_27"/>
+    <ROW File="Humanizer.resources.dll_27" Component_="Humanizer.resources.dll_27" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;sr\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_28"/>
+    <ROW File="Humanizer.resources.dll_28" Component_="Humanizer.resources.dll_28" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;sr-Latn\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_29"/>
+    <ROW File="Humanizer.resources.dll_29" Component_="Humanizer.resources.dll_29" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;sv\Humanizer.resources.dll" SelfReg="false" NextFile="System.Reactive.Core.dll"/>
+    <ROW File="Humanizer.resources.dll_3" Component_="Humanizer.resources.dll_3" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;bn-BD\Humanizer.resources.dll" SelfReg="false" NextFile="Caliburn.Micro.dll"/>
+    <ROW File="Humanizer.resources.dll_30" Component_="Humanizer.resources.dll_30" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;tr\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_31"/>
+    <ROW File="Humanizer.resources.dll_31" Component_="Humanizer.resources.dll_31" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;uz-Cyrl-UZ\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_32"/>
+    <ROW File="Humanizer.resources.dll_32" Component_="Humanizer.resources.dll_32" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;uz-Latn-UZ\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_33"/>
+    <ROW File="Humanizer.resources.dll_33" Component_="Humanizer.resources.dll_33" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;vi\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_34"/>
+    <ROW File="Humanizer.resources.dll_34" Component_="Humanizer.resources.dll_34" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;zh-CN\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_35"/>
+    <ROW File="Humanizer.resources.dll_35" Component_="Humanizer.resources.dll_35" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;zh-Hans\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_8"/>
+    <ROW File="Humanizer.resources.dll_36" Component_="Humanizer.resources.dll_36" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;zh-Hant\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_9"/>
+    <ROW File="Humanizer.resources.dll_4" Component_="Humanizer.resources.dll_4" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;cs\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_5"/>
+    <ROW File="Humanizer.resources.dll_5" Component_="Humanizer.resources.dll_5" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;da\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_6"/>
+    <ROW File="Humanizer.resources.dll_6" Component_="Humanizer.resources.dll_6" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;de\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll"/>
+    <ROW File="Humanizer.resources.dll_7" Component_="Humanizer.resources.dll_7" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;el\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_1"/>
+    <ROW File="Humanizer.resources.dll_8" Component_="Humanizer.resources.dll_8" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;es\Humanizer.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_2"/>
+    <ROW File="Humanizer.resources.dll_9" Component_="Humanizer.resources.dll_9" FileName="HUMANI~1.DLL|Humanizer.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;fa\Humanizer.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_10"/>
+    <ROW File="Humanizer.xml" Component_="Autofac.Configuration.xml" FileName="HUMANI~1.XML|Humanizer.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Humanizer.xml" SelfReg="false" NextFile="ICSharpCode.AvalonEdit.dll"/>
+    <ROW File="ICSharpCode.AvalonEdit.dll" Component_="ICSharpCode.AvalonEdit.dll" FileName="ICSHAR~1.DLL|ICSharpCode.AvalonEdit.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ICSharpCode.AvalonEdit.dll" SelfReg="false" NextFile="ICSharpCode.AvalonEdit.xml"/>
+    <ROW File="ICSharpCode.AvalonEdit.xml" Component_="Autofac.Configuration.xml" FileName="ICSHAR~1.XML|ICSharpCode.AvalonEdit.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;ICSharpCode.AvalonEdit.xml" SelfReg="false" NextFile="Humanizer.resources.dll_15"/>
+    <ROW File="Mindscape.Raygun4Net.dll" Component_="Mindscape.Raygun4Net.dll" FileName="MINDSC~1.DLL|Mindscape.Raygun4Net.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.Raygun4Net.dll" SelfReg="false" NextFile="Mindscape.Raygun4Net.pdb"/>
+    <ROW File="Mindscape.Raygun4Net.pdb" Component_="Mindscape.Raygun4Net.dll" FileName="MINDSC~1.PDB|Mindscape.Raygun4Net.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.Raygun4Net.pdb" SelfReg="false" NextFile="Mindscape.Raygun4Net4.dll"/>
+    <ROW File="Mindscape.Raygun4Net4.dll" Component_="Mindscape.Raygun4Net4.dll" FileName="MINDSC~2.DLL|Mindscape.Raygun4Net4.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.Raygun4Net4.dll" SelfReg="false" NextFile="Mindscape.Raygun4Net4.pdb"/>
+    <ROW File="Mindscape.Raygun4Net4.pdb" Component_="Mindscape.Raygun4Net4.dll" FileName="MINDSC~2.PDB|Mindscape.Raygun4Net4.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.Raygun4Net4.pdb" SelfReg="false" NextFile="Mindscape.WpfDiagramming.FlowDiagrams.dll"/>
+    <ROW File="Mindscape.WpfDiagramming.FlowDiagrams.dll" Component_="Mindscape.WpfDiagramming.FlowDiagrams.dl" FileName="MINDSC~3.DLL|Mindscape.WpfDiagramming.FlowDiagrams.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.WpfDiagramming.FlowDiagrams.dll" SelfReg="false" NextFile="Mindscape.WpfDiagramming.FlowDiagrams.xml"/>
+    <ROW File="Mindscape.WpfDiagramming.FlowDiagrams.xml" Component_="Autofac.Configuration.xml" FileName="MINDSC~1.XML|Mindscape.WpfDiagramming.FlowDiagrams.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.WpfDiagramming.FlowDiagrams.xml" SelfReg="false" NextFile="Mindscape.WpfDiagramming.Foundation.dll"/>
+    <ROW File="Mindscape.WpfDiagramming.Foundation.dll" Component_="Mindscape.WpfDiagramming.Foundation.dll" FileName="MINDSC~4.DLL|Mindscape.WpfDiagramming.Foundation.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.WpfDiagramming.Foundation.dll" SelfReg="false" NextFile="Mindscape.WpfDiagramming.Foundation.xml"/>
+    <ROW File="Mindscape.WpfDiagramming.Foundation.xml" Component_="Autofac.Configuration.xml" FileName="MINDSC~2.XML|Mindscape.WpfDiagramming.Foundation.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Mindscape.WpfDiagramming.Foundation.xml" SelfReg="false" NextFile="Humanizer.resources.dll_18"/>
+    <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Newtonsoft.Json.dll" SelfReg="false" NextFile="Newtonsoft.Json.xml"/>
+    <ROW File="Newtonsoft.Json.xml" Component_="Autofac.Configuration.xml" FileName="NEWTON~1.XML|Newtonsoft.Json.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Newtonsoft.Json.xml" SelfReg="false" NextFile="Humanizer.resources.dll_20"/>
+    <ROW File="ObservablePropertyChanged.dll" Component_="ObservablePropertyChanged.dll" FileName="OBSERV~1.DLL|ObservablePropertyChanged.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ObservablePropertyChanged.dll" SelfReg="false" NextFile="ObservablePropertyChanged.pdb"/>
+    <ROW File="ObservablePropertyChanged.pdb" Component_="ObservablePropertyChanged.dll" FileName="OBSERV~1.PDB|ObservablePropertyChanged.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;ObservablePropertyChanged.pdb" SelfReg="false" NextFile="Humanizer.resources.dll_21"/>
     <ROW File="Particular.ServiceInsight.exe" Component_="Particular.ServiceInsight.exe" FileName="Servic~1.exe|ServiceInsight.exe" Attributes="0" SourcePath="&lt;SI_PATH&gt;ServiceInsight.exe" SelfReg="false" NextFile="Particular.ServiceInsight.pdb" DigSign="true"/>
-    <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Servic~1.pdb|ServiceInsight.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;ServiceInsight.pdb" SelfReg="false"/>
+    <ROW File="Particular.ServiceInsight.pdb" Component_="Particular.ServiceInsight.exe" FileName="Servic~1.pdb|ServiceInsight.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;ServiceInsight.pdb" SelfReg="false" NextFile="Humanizer.resources.dll"/>
+    <ROW File="ReactiveUI.Blend.dll" Component_="ReactiveUI.Blend.dll" FileName="REACTI~1.DLL|ReactiveUI.Blend.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.Blend.dll" SelfReg="false" NextFile="ReactiveUI.Blend.xml"/>
+    <ROW File="ReactiveUI.Blend.xml" Component_="Autofac.Configuration.xml" FileName="REACTI~1.XML|ReactiveUI.Blend.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.Blend.xml" SelfReg="false" NextFile="ReactiveUI.dll"/>
+    <ROW File="ReactiveUI.Xaml.dll" Component_="ReactiveUI.Xaml.dll" FileName="REACTI~3.DLL|ReactiveUI.Xaml.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.Xaml.dll" SelfReg="false" NextFile="ReactiveUI.Xaml.xml"/>
+    <ROW File="ReactiveUI.Xaml.xml" Component_="Autofac.Configuration.xml" FileName="REACTI~2.XML|ReactiveUI.Xaml.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.Xaml.xml" SelfReg="false" NextFile="ReactiveUI.xml"/>
+    <ROW File="ReactiveUI.dll" Component_="ReactiveUI.dll" FileName="REACTI~2.DLL|ReactiveUI.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.dll" SelfReg="false" NextFile="ReactiveUI.Xaml.dll"/>
+    <ROW File="ReactiveUI.xml" Component_="Autofac.Configuration.xml" FileName="REACTI~3.XML|ReactiveUI.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;ReactiveUI.xml" SelfReg="false" NextFile="RestSharp.dll"/>
+    <ROW File="RestSharp.dll" Component_="RestSharp.dll" FileName="RESTSH~1.DLL|RestSharp.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;RestSharp.dll" SelfReg="false" NextFile="RestSharp.xml"/>
+    <ROW File="RestSharp.xml" Component_="Autofac.Configuration.xml" FileName="RESTSH~1.XML|RestSharp.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;RestSharp.xml" SelfReg="false" NextFile="Humanizer.resources.dll_23"/>
+    <ROW File="Serilog.FullNetFx.dll" Component_="Serilog.FullNetFx.dll" FileName="SERILO~1.DLL|Serilog.FullNetFx.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.FullNetFx.dll" SelfReg="false" NextFile="Serilog.FullNetFx.pdb"/>
+    <ROW File="Serilog.FullNetFx.pdb" Component_="Serilog.FullNetFx.dll" FileName="SERILO~1.PDB|Serilog.FullNetFx.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.FullNetFx.pdb" SelfReg="false" NextFile="Serilog.FullNetFx.xml"/>
+    <ROW File="Serilog.FullNetFx.xml" Component_="Autofac.Configuration.xml" FileName="SERILO~1.XML|Serilog.FullNetFx.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.FullNetFx.xml" SelfReg="false" NextFile="Serilog.pdb"/>
+    <ROW File="Serilog.dll" Component_="Serilog.dll" FileName="Serilog.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.dll" SelfReg="false" NextFile="Serilog.FullNetFx.dll"/>
+    <ROW File="Serilog.pdb" Component_="Serilog.dll" FileName="Serilog.pdb" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.pdb" SelfReg="false" NextFile="Serilog.xml"/>
+    <ROW File="Serilog.xml" Component_="Autofac.Configuration.xml" FileName="Serilog.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;Serilog.xml" SelfReg="false" NextFile="ServiceInsight.exe.config"/>
+    <ROW File="ServiceInsight.exe.config" Component_="Autofac.Configuration.xml" FileName="SERVIC~1.CON|ServiceInsight.exe.config" Attributes="0" SourcePath="&lt;SI_PATH&gt;ServiceInsight.exe.config" SelfReg="false" NextFile="Humanizer.resources.dll_25"/>
+    <ROW File="System.Reactive.Core.dll" Component_="System.Reactive.Core.dll" FileName="SYSTEM~1.DLL|System.Reactive.Core.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Core.dll" SelfReg="false" NextFile="System.Reactive.Core.xml"/>
+    <ROW File="System.Reactive.Core.xml" Component_="Autofac.Configuration.xml" FileName="SYSTEM~1.XML|System.Reactive.Core.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Core.xml" SelfReg="false" NextFile="System.Reactive.Interfaces.dll"/>
+    <ROW File="System.Reactive.Interfaces.dll" Component_="System.Reactive.Interfaces.dll" FileName="SYSTEM~2.DLL|System.Reactive.Interfaces.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Interfaces.dll" SelfReg="false" NextFile="System.Reactive.Interfaces.xml"/>
+    <ROW File="System.Reactive.Interfaces.xml" Component_="Autofac.Configuration.xml" FileName="SYSTEM~2.XML|System.Reactive.Interfaces.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Interfaces.xml" SelfReg="false" NextFile="System.Reactive.Linq.dll"/>
+    <ROW File="System.Reactive.Linq.dll" Component_="System.Reactive.Linq.dll" FileName="SYSTEM~3.DLL|System.Reactive.Linq.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Linq.dll" SelfReg="false" NextFile="System.Reactive.Linq.xml"/>
+    <ROW File="System.Reactive.Linq.xml" Component_="Autofac.Configuration.xml" FileName="SYSTEM~3.XML|System.Reactive.Linq.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Linq.xml" SelfReg="false" NextFile="System.Reactive.PlatformServices.dll"/>
+    <ROW File="System.Reactive.PlatformServices.dll" Component_="System.Reactive.PlatformServices.dll" FileName="SYSTEM~4.DLL|System.Reactive.PlatformServices.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.PlatformServices.dll" SelfReg="false" NextFile="System.Reactive.PlatformServices.xml"/>
+    <ROW File="System.Reactive.PlatformServices.xml" Component_="Autofac.Configuration.xml" FileName="SYSTEM~4.XML|System.Reactive.PlatformServices.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.PlatformServices.xml" SelfReg="false" NextFile="System.Reactive.Windows.Threading.dll"/>
+    <ROW File="System.Reactive.Windows.Threading.dll" Component_="System.Reactive.Windows.Threading.dll" FileName="SYSTEM~5.DLL|System.Reactive.Windows.Threading.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Windows.Threading.dll" SelfReg="false" NextFile="System.Reactive.Windows.Threading.xml"/>
+    <ROW File="System.Reactive.Windows.Threading.xml" Component_="Autofac.Configuration.xml" FileName="SYSTEM~5.XML|System.Reactive.Windows.Threading.xml" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Reactive.Windows.Threading.xml" SelfReg="false" NextFile="System.Windows.Interactivity.dll"/>
+    <ROW File="System.Windows.Interactivity.dll" Component_="System.Windows.Interactivity.dll" FileName="SYSTEM~6.DLL|System.Windows.Interactivity.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;System.Windows.Interactivity.dll" SelfReg="false" NextFile="Humanizer.resources.dll_30"/>
+    <ROW File="System.Windows.Interactivity.resources.dll" Component_="System.Windows.Interactivity.resources.d" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;de\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="DevExpress.Data.v14.1.dll"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_1" Component_="System.Windows.Interactivity.resources_1" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;en\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_8"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_2" Component_="System.Windows.Interactivity.resources_2" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;es\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_9"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_3" Component_="System.Windows.Interactivity.resources_3" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;fr\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_12"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_4" Component_="System.Windows.Interactivity.resources_4" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;it\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_17"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_5" Component_="System.Windows.Interactivity.resources_5" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ja\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="System.Windows.Interactivity.resources.dll_6"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_6" Component_="System.Windows.Interactivity.resources_6" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ko\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Mindscape.Raygun4Net.dll"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_7" Component_="System.Windows.Interactivity.resources_7" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;ru\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Serilog.dll"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_8" Component_="System.Windows.Interactivity.resources_8" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;zh-Hans\System.Windows.Interactivity.resources.dll" SelfReg="false" NextFile="Humanizer.resources.dll_36"/>
+    <ROW File="System.Windows.Interactivity.resources.dll_9" Component_="System.Windows.Interactivity.resources_9" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.resources.dll" Attributes="0" SourcePath="&lt;SI_PATH&gt;zh-Hant\System.Windows.Interactivity.resources.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="PROJECT_PATH" Path="." Type="2" Content="0"/>
@@ -106,7 +370,6 @@
     <ROW Action="AI_ExtractLzma" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
-    <ROW Property="AI_DOTNET45_SEARCH" Signature_="AI_DotNet45SearchSgn" Builds="DefaultBuild"/>
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild"/>
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
   </COMPONENT>
@@ -114,6 +377,7 @@
     <ROW Name="ExternalUICleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ExternalUICleaner.dll"/>
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="ServiceInsightwhite.png" SourcePath="&lt;PROJECT_PATH&gt;res\ServiceInsight - white.png"/>
+    <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
     <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe"/>
@@ -179,7 +443,7 @@
     <ROW Dialog_="OutOfRbDiskDlg" Control="Text" Type="Text" X="17" Y="139" Width="312" Height="53" Attributes="65539" Text="Not enough disk space on the highlighted volumes. Choose a different destination drive, remove some files or install less features." Order="700" TextLocId="Metro.Control.Text.OutOfDiskDlg#Text" MsiKey="OutOfRbDiskDlg#Text"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="800"/>
     <ROW Dialog_="PatchWelcomeDlg" Control="PatchWelcomeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="700"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="600"/>
     <ROW Dialog_="PrepareDlg" Control="ProductLogo" Type="Bitmap" X="41" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="800"/>
     <ROW Dialog_="ProgressDlg" Control="Text" Type="Text" X="17" Y="105" Width="312" Height="30" Attributes="65539" Text="Please wait while the [Wizard] [Progress2] [ProductName].  This may take several minutes." Order="700" TextLocId="Control.Text.ProgressDlg#Text" MsiKey="ProgressDlg#Text"/>
     <ROW Dialog_="ProgressDlg" Control="StatusLabel" Type="Text" X="17" Y="171" Width="45" Height="13" Attributes="65539" Text="Status:" TextStyle="[SubnoteFontStyle]" Order="800" TextLocId="Control.Text.ProgressDlg#StatusLabel" MsiKey="ProgressDlg#StatusLabel"/>
@@ -205,12 +469,12 @@
     <ROW Dialog_="VerifyRepairDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="200" MsiKey="VerifyRepairDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
     <ROW Dialog_="VerifyRepairDlg" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="65539" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="700" MsiKey="VerifyRepairDlg#AdvInst"/>
     <ROW Dialog_="VerifyRepairDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="13" Width="264" Height="58" Attributes="1" Text="[AppLogoIcon]" Order="800"/>
-    <ATTRIBUTE name="DeletedRows" value="CustomizeDlg#ProductLogo@ExitDialog#ProductNameTitle@InstallDlg#CompanyText@OutOfDiskDlg#CompanyText@PrepareDlg#ProductNameTitle@PrepareDlg#CompanyText@ProgressDlg#ProductLogo@AdminInstallPointDlg#ProductNameTitle@InstallDlg#ProductLogo@MsiRMFilesInUse#ProductLogo@OutOfDiskDlg#ProductLogo@AdminBrowseDlg#CompanyText@InstallDlg#ProductNameTitle@AdminInstallPointDlg#ProductLogo@ProgressDlg#ProductNameTitle@ResumeDlg#ProductLogo@ProgressDlg#CompanyText@VerifyRepairDlg#ProductLogo@ExitDialog#CompanyText@ExitDialog#ProductLogo@BrowseDlg#ProductNameTitle@BrowseDlg#CompanyText@BrowseDlg#ProductLogo@MaintenanceTypeDlg#CompanyText@LicenseAgreementDlg#ProductLogo@AdminInstallPointDlg#CompanyText@LicenseAgreementDlg#ProductNameTitle@LicenseAgreementDlg#CompanyText@MaintenanceTypeDlg#ProductNameTitle@MaintenanceTypeDlg#ProductLogo@DiskCostDlg#ProductLogo@VerifyRemoveDlg#ProductNameTitle@MaintenanceTypeDlg#MetroModifyText@VerifyRemoveDlg#CompanyText@VerifyRemoveDlg#ProductLogo@AdminWelcomeDlg#ProductLogo@OutOfDiskDlg#ProductNameTitle@VerifyRepairDlg#ProductNameTitle@VerifyRepairDlg#CompanyText@FilesInUse#CompanyText@PatchWelcomeDlg#ProductNameTitle@AdminBrowseDlg#Bitmap@PatchWelcomeDlg#CompanyText@MaintenanceTypeDlg#MetroRepairButton@PatchWelcomeDlg#ProductLogo@CustomizeDlg#ProductNameTitle@ResumeDlg#ProductNameTitle@ResumeDlg#CompanyText@AdminWelcomeDlg#ProductNameTitle@AdminWelcomeDlg#CompanyText@AdminInstallPointDlg#TitleIcon@AdminBrowseDlg#ProductNameTitle@AdminBrowseDlg#ProductLogo@OutOfRbDiskDlg#ProductNameTitle@CustomizeDlg#CompanyText@DiskCostDlg#ProductNameTitle@FatalError#ProductNameTitle@MaintenanceTypeDlg#MetroRepairText@DiskCostDlg#CompanyText@FatalError#CompanyText@OutOfRbDiskDlg#CompanyText@FatalError#ProductLogo@FilesInUse#ProductNameTitle@FilesInUse#ProductLogo@MsiRMFilesInUse#ProductNameTitle@MsiRMFilesInUse#Bitmap@OutOfRbDiskDlg#ProductLogo@UserExit#ProductNameTitle@UserExit#CompanyText@UserExit#ProductLogo@ExitDialog#Bitmap@PrepareDlg#ProductLogo@MaintenanceTypeDlg#MetroModifyButton"/>
+    <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#Bitmap@AdminBrowseDlg#CompanyText@AdminBrowseDlg#ProductLogo@AdminBrowseDlg#ProductNameTitle@AdminInstallPointDlg#CompanyText@AdminInstallPointDlg#ProductLogo@AdminInstallPointDlg#ProductNameTitle@AdminInstallPointDlg#TitleIcon@AdminWelcomeDlg#CompanyText@AdminWelcomeDlg#ProductLogo@AdminWelcomeDlg#ProductNameTitle@BrowseDlg#CompanyText@BrowseDlg#ProductLogo@BrowseDlg#ProductNameTitle@CustomizeDlg#CompanyText@CustomizeDlg#ProductLogo@CustomizeDlg#ProductNameTitle@DiskCostDlg#CompanyText@DiskCostDlg#ProductLogo@DiskCostDlg#ProductNameTitle@ExitDialog#Bitmap@ExitDialog#CompanyText@ExitDialog#ProductLogo@ExitDialog#ProductNameTitle@FatalError#CompanyText@FatalError#ProductLogo@FatalError#ProductNameTitle@FilesInUse#CompanyText@FilesInUse#ProductLogo@FilesInUse#ProductNameTitle@InstallDlg#CompanyText@InstallDlg#ProductLogo@InstallDlg#ProductNameTitle@LicenseAgreementDlg#CompanyText@LicenseAgreementDlg#ProductLogo@LicenseAgreementDlg#ProductNameTitle@MaintenanceTypeDlg#CompanyText@MaintenanceTypeDlg#MetroModifyButton@MaintenanceTypeDlg#MetroModifyText@MaintenanceTypeDlg#MetroRepairButton@MaintenanceTypeDlg#MetroRepairText@MaintenanceTypeDlg#ProductLogo@MaintenanceTypeDlg#ProductNameTitle@MsiRMFilesInUse#Bitmap@MsiRMFilesInUse#ProductLogo@MsiRMFilesInUse#ProductNameTitle@OutOfDiskDlg#CompanyText@OutOfDiskDlg#ProductLogo@OutOfDiskDlg#ProductNameTitle@OutOfRbDiskDlg#CompanyText@OutOfRbDiskDlg#ProductLogo@OutOfRbDiskDlg#ProductNameTitle@PatchWelcomeDlg#CompanyText@PatchWelcomeDlg#ProductLogo@PatchWelcomeDlg#ProductNameTitle@PrepareDlg#CompanyText@PrepareDlg#ProductLogo@PrepareDlg#ProductNameTitle@ProgressDlg#CompanyText@ProgressDlg#ProductLogo@ProgressDlg#ProductNameTitle@ResumeDlg#CompanyText@ResumeDlg#ProductLogo@ResumeDlg#ProductNameTitle@UserExit#CompanyText@UserExit#ProductLogo@UserExit#ProductNameTitle@VerifyRemoveDlg#CompanyText@VerifyRemoveDlg#ProductLogo@VerifyRemoveDlg#ProductNameTitle@VerifyRepairDlg#CompanyText@VerifyRepairDlg#ProductLogo@VerifyRepairDlg#ProductNameTitle"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
     <ROW Dialog_="InstallDlg" Control_="Next" Action="Show" Condition="(Text_Next &lt;&gt; Text_Install) AND (InstallDlg)" MsiKey="InstallDlg#Next#Show#(Text_Next &lt;&gt; Text_Install) AND (InstallDlg)"/>
     <ROW Dialog_="InstallDlg" Control_="InstallButton" Action="Hide" Condition="(Text_Next &lt;&gt; Text_Install) AND (InstallDlg)" MsiKey="InstallDlg#InstallButton#Hide#(Text_Next &lt;&gt; Text_Install) AND (InstallDlg)"/>
-    <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@PrepareDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfRbDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRemoveDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminInstallPointDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ProgressDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ExitDialog#ProductNameTitle#Hide#NOT AIEXTERNALUI@ResumeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@BrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRepairDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminWelcomeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@CustomizeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@FatalError#ProductNameTitle#Hide#NOT AIEXTERNALUI@UserExit#ProductNameTitle#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyButton#Default#AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyText#Show#AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyText#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#MetroRepairText#Show#AIEXTERNALUI@MaintenanceTypeDlg#MetroRepairText#Hide#NOT AIEXTERNALUI"/>
+    <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminInstallPointDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@AdminWelcomeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@BrowseDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@CustomizeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ExitDialog#ProductNameTitle#Hide#NOT AIEXTERNALUI@FatalError#ProductNameTitle#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyButton#Default#AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyText#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#MetroModifyText#Show#AIEXTERNALUI@MaintenanceTypeDlg#MetroRepairText#Hide#NOT AIEXTERNALUI@MaintenanceTypeDlg#MetroRepairText#Show#AIEXTERNALUI@MaintenanceTypeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@OutOfRbDiskDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@PrepareDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ProgressDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@ResumeDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@UserExit#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRemoveDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI@VerifyRepairDlg#ProductNameTitle#Hide#NOT AIEXTERNALUI"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="InstallDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="301"/>
@@ -275,7 +539,7 @@
     <ATTRIBUTE name="DeletedRows" value="MaintenanceTypeDlg#MetroModifyButton#[AiEventsControl]#ChangeButton#1@MaintenanceTypeDlg#MetroRepairButton#[AiEventsControl]#RepairButton#1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
-    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
@@ -286,6 +550,7 @@
     <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
     <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
     <ROW Action="AI_DoRemoveExternalUIStub" Type="3585" Source="ExternalUICleaner.dll" Target="DoRemoveExternalUIStub" WithoutSeq="true"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EstimateExtractFiles" Type="1" Source="Prereq.dll" Target="EstimateExtractFiles"/>
@@ -300,7 +565,6 @@
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_RemoveExternalUIStub" Type="1" Source="ExternalUICleaner.dll" Target="RemoveExternalUIStub"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Type="1" Source="aicustact.dll" Target="GetLocalizedCredentials"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="Launch_URL" Type="194" Source="viewer.exe" Target="http://www.particular.net/Installation-completed?installer=ServiceInsight&amp;version=[ProductVersion]" Options="1"/>
@@ -316,14 +580,12 @@
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1502"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
-    <ROW Action="AI_GetArpIconPath" Sequence="51"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_RemoveExternalUIStub" Condition="(REMOVE=&quot;ALL&quot;) AND ((VersionNT &gt; 500) OR((VersionNT = 500) AND (ServicePackLevel &gt;= 4)))" Sequence="1501"/>
     <ROW Action="InstallFinalize" Sequence="6595" SeqType="0" MsiKey="InstallFinalize"/>
     <ROW Action="Launch_URL" Condition="( NOT Installed ) AND ( UILevel &lt;&gt; &quot;2&quot; )" Sequence="6596"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
-    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102" Builds="DefaultBuild"/>
     <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
     <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild"/>
     <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild"/>
@@ -334,26 +596,28 @@
     <ROW Action="AI_ExtractFiles" Sequence="3998" Builds="DefaultBuild"/>
     <ROW Action="AI_DATA_SETTER" Sequence="3997"/>
     <ROW Action="AI_EstimateExtractFiles" Sequence="3999" Builds="DefaultBuild"/>
+    <ROW Action="AI_GetArpIconPath" Sequence="1401"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="InstallDlg" Condition="AI_INSTALL" Sequence="1230" SeqType="3" MsiKey="WelcomeDlg"/>
     <ROW Action="MaintenanceTypeDlg" Condition="AI_MAINT" Sequence="1250" SeqType="3" MsiKey="MaintenanceTypeDlg"/>
     <ROW Action="AI_ChooseTextStyles" Sequence="73"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
-    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102"/>
     <ROW Action="ExecuteAction" Sequence="1298" SeqType="0" MsiKey="ExecuteAction"/>
     <ROW Action="AI_DpiContentScale" Sequence="51"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
-    <ROW Condition="(AI_DOTNET45_SEARCH &gt;= &quot;4.5&quot;)" Description="[ProductName] cannot be installed on systems with .NET Framework version lower than [AI_MINDOTNETVERSION]" DescriptionLocId="AI.LaunchCondition.DotNET" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT40Display]" DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
-    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="AI_DETECTED_DOTNET_VERSION &gt;= AI_REQUIRED_DOTNET_VERSION" Description="[ProductName] cannot be installed on systems with .NET Framework version lower than [AI_REQUIRED_DOTNET_DISPLAY]." DescriptionLocId="AI.LaunchCondition.DotNET" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
-    <ROW Signature_="AI_DotNet45SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Name="Version" Type="2"/>
     <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
     <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
   </COMPONENT>
