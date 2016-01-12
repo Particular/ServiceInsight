@@ -250,12 +250,14 @@
     <Compile Include="Framework\Commands\CommandsModule.cs" />
     <Compile Include="Framework\Commands\CopyConversationIDCommand.cs" />
     <Compile Include="Framework\Commands\CopyMessageURICommand.cs" />
+    <Compile Include="Framework\Commands\ReportMessageCommand.cs" />
     <Compile Include="Framework\Commands\RetryMessageCommand.cs" />
     <Compile Include="Framework\Commands\SearchByMessageIDCommand.cs" />
     <Compile Include="Framework\Commands\ShowExceptionCommand.cs" />
     <Compile Include="Framework\Commands\ShowSagaCommand.cs" />
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
+    <Compile Include="Framework\RaygunUtility.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />
     <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
