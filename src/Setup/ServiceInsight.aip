@@ -41,7 +41,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="Deskto~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="Profiler_Dir" Directory_Parent="APPDIR" DefaultDir="Servic~1|ServiceInsight"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
@@ -164,7 +164,7 @@
     <ROW Component="ReactiveUI.Xaml.dll" ComponentId="{D01555F6-21DF-4416-950B-9D2DE2257ADC}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ReactiveUI.Xaml.dll"/>
     <ROW Component="ReactiveUI.dll" ComponentId="{EDDA65B2-E97F-412E-B291-634BDF51EE8C}" Directory_="Profiler_Dir" Attributes="0" KeyPath="ReactiveUI.dll"/>
     <ROW Component="RestSharp.dll" ComponentId="{DFCD26AB-C297-42A2-9B50-3BCA1DC17CBD}" Directory_="Profiler_Dir" Attributes="0" KeyPath="RestSharp.dll"/>
-    <ROW Component="SHORTCUTDIR" ComponentId="{EA7996F1-7FA9-4A26-A0CD-53C695E5EDBE}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{F4091F72-317A-4DD2-B833-25FF6A9CE476}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Serilog.FullNetFx.dll" ComponentId="{A4251FCA-9B51-469E-A25F-70B8595F464F}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Serilog.FullNetFx.dll"/>
     <ROW Component="Serilog.dll" ComponentId="{FBEFECE3-7E70-45F1-A16B-D4783AAE88AC}" Directory_="Profiler_Dir" Attributes="0" KeyPath="Serilog.dll"/>
     <ROW Component="System.Reactive.Core.dll" ComponentId="{C941325D-6CA0-4151-84DA-EAC13136673D}" Directory_="Profiler_Dir" Attributes="0" KeyPath="System.Reactive.Core.dll"/>
@@ -625,7 +625,7 @@
     <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
     <ROW Registry="Comments" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Comments" Value="[ARPCOMMENTS]" Component_="AI_CustomARPName"/>
     <ROW Registry="Contact" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Contact" Value="[ARPCONTACT]" Component_="AI_CustomARPName"/>
-    <ROW Registry="DefaultIcon" Root="0" Key="si" Name="DefaultIcon" Value="&quot;[Profiler_Dir]Particular.ServiceInsight.exe&quot;" Component_="DefaultIcon"/>
+    <ROW Registry="DefaultIcon" Root="0" Key="si" Name="DefaultIcon" Value="&quot;[#Particular.ServiceInsight.exe]&quot;" Component_="DefaultIcon"/>
     <ROW Registry="DisplayIcon" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayIcon" Value="[ARP_ICON_PATH]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayName" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayName" Value="[AI_PRODUCTNAME_ARP]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayVersion" Value="[ProductVersion]" Component_="AI_CustomARPName"/>
@@ -647,13 +647,13 @@
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#5" Component_="AI_CustomARPName"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
     <ROW Registry="__1" Root="0" Key="si" Value="URL:Service Insight" Component_="_"/>
-    <ROW Registry="__2" Root="0" Key="si\shell\open\command" Value="&quot;[Profiler_Dir]ServiceInsight.exe&quot; &quot;%1&quot;" Component_="__1"/>
+    <ROW Registry="__2" Root="0" Key="si\shell\open\command" Value="&quot;[#Particular.ServiceInsight.exe]&quot; &quot;%1&quot;" Component_="__1"/>
     <ROW Registry="open" Root="0" Key="si\shell\open" Name="+" Component_="open"/>
     <ROW Registry="shell" Root="0" Key="si\shell" Name="+" Component_="shell"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ServiceInsightforNServiceBus" Directory_="SHORTCUTDIR" Name="Servic~1|ServiceInsight for NServiceBus" Component_="Particular.ServiceInsight.exe" Target="[#Particular.ServiceInsight.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Profiler_Dir"/>
-    <ROW Shortcut="ServiceInsightforNServiceBus_1" Directory_="DesktopFolder" Name="Servic~1|ServiceInsight for NServiceBus" Component_="Particular.ServiceInsight.exe" Target="[#Particular.ServiceInsight.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Profiler_Dir"/>
+    <ROW Shortcut="ServiceInsight" Directory_="SHORTCUTDIR" Name="SERVIC~2|ServiceInsight for NServiceBus" Component_="Particular.ServiceInsight.exe" Target="[#Particular.ServiceInsight.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Profiler_Dir"/>
+    <ROW Shortcut="ServiceInsightforNServiceBus" Directory_="DesktopFolder" Name="SERVIC~1|ServiceInsight for NServiceBus" Component_="Particular.ServiceInsight.exe" Target="[#Particular.ServiceInsight.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Profiler_Dir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="surface"/>
