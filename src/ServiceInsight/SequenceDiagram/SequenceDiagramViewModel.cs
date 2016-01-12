@@ -203,8 +203,6 @@
                 CreateElements(messages);
                 loadedConversationId = conversationId;
                 RefreshSelection();
-
-                throw new Exception("Testing");
             }
             catch (Exception ex)
             {
