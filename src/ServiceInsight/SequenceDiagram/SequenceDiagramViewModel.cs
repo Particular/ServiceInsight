@@ -207,7 +207,7 @@
             catch (Exception ex)
             {
                 ClearState();
-                ErrorMessage = $"There was an error processing the message data: {ex.Message}";
+                ErrorMessage = $"There was an error processing the message data.";
                 ReportPackage = new ReportMessageCommand.ReportMessagePackage(ex, Selection?.SelectedMessage);
             }
         }
