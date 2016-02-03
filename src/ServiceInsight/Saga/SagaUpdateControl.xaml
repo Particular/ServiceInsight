@@ -226,7 +226,7 @@
                                             Margin="0,4,0,0"
                                             Template="{StaticResource EventIcon}"
                                             ToolTip="Event"
-                                            Width="22" 
+                                            Width="22"
                                             Visibility="{Binding IsEventMessage,
                                                                 Converter={StaticResource BoolToVisibilityConverter}}">
                             </ContentControl>
@@ -576,151 +576,170 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid x:Name="SagaNodePanel"
+    <Grid>
+        <Grid Visibility="{Binding MissingData, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="..." />
+            <TextBlock Grid.Row="1" Text="Data Unavailable" />
+            <TextBlock Grid.Row="2" Text="..." VerticalAlignment="Top" />
+        </Grid>
+        <Grid x:Name="SagaNodePanel"
           Grid.IsSharedSizeScope="True"
-          SnapsToDevicePixels="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".95*" />
-            <ColumnDefinition Width="1.1*" />
-            <ColumnDefinition Width=".95*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+          SnapsToDevicePixels="True" Visibility="{Binding MissingData, Converter={StaticResource BoolToVisibilityConverterInverted}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".95*" />
+                <ColumnDefinition Width="1.1*" />
+                <ColumnDefinition Width=".95*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Grid x:Name="InitialMessageTop"
+            <Grid x:Name="InitialMessageTop"
               HorizontalAlignment="Right"
               VerticalAlignment="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
-            </Grid.ColumnDefinitions>
-            <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageTop}" />
-        </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageTop}" />
+            </Grid>
 
-        <Grid x:Name="InitialMessageBottom"
+            <Grid x:Name="InitialMessageBottom"
               Grid.Row="1"
               HorizontalAlignment="Right"
               VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
-            </Grid.ColumnDefinitions>
-            <Border BorderBrush="Black" BorderThickness="0 2 0 0">
-                <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageBottom}" />
-            </Border>
-        </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Black" BorderThickness="0 2 0 0">
+                    <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageBottom}" />
+                </Border>
+            </Grid>
 
-        <Border x:Name="Middle"
+            <Border x:Name="Middle"
                 Grid.Column="1"
                 Background="{StaticResource SagaBackground}">
-            <StackPanel Margin="10 12 10 0" Background="{StaticResource SagaBackground}">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
-                    <ContentControl Margin="0 4 4 4" Template="{StaticResource SagaTimeoutIcon}" />
+                <StackPanel Margin="10 12 10 0" Background="{StaticResource SagaBackground}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
+                        <ContentControl Margin="0 4 4 4" Template="{StaticResource SagaTimeoutIcon}" />
 
-                    <TextBlock FontSize="16px"
+                        <TextBlock FontSize="16px"
                                FontWeight="Bold"
                                Foreground="{StaticResource SagaBlue}"
                                Text="Timeout Invoked" />
-                </StackPanel>
+                    </StackPanel>
 
-                <StackPanel x:Name="StepName" Orientation="Horizontal">
-                    <ContentControl Margin="0 4 4 4"
+                    <StackPanel x:Name="StepName" Orientation="Horizontal">
+                        <ContentControl Margin="0 4 4 4"
                                     VerticalAlignment="Top"
                                     Template="{StaticResource SagaInitiatedIcon}"
                                     Visibility="{Binding IsFirstNode,
                                                          Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <ContentControl Margin="0 4 4 4"
+                        <ContentControl Margin="0 4 4 4"
                                     VerticalAlignment="Top"
                                     Template="{StaticResource SagaUpdatedIcon}"
                                     Visibility="{Binding IsFirstNode,
                                                          Converter={StaticResource BoolToVisibilityConverterInverted}}" />
 
-                    <TextBlock x:Name="StepNameBox"
+                        <TextBlock x:Name="StepNameBox"
                                FontSize="16px"
                                FontWeight="Bold"
                                Text="{Binding Label}" />
-                    <TextBlock Margin="10 5"
+                        <TextBlock Margin="10 5"
                                FontSize="12px"
                                Text="{Binding StartTime}" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Border>
+            </Border>
 
-        <Grid x:Name="Properties"
+            <Grid x:Name="Properties"
               Grid.Row="1"
               Grid.Column="1"
               Background="{StaticResource SagaBackground}">
-            <Border Margin="0 0 10 0"
+                <Border Margin="0 0 10 0"
                     BorderBrush="Black"
                     BorderThickness="0 2 0 0">
-                <Grid>
-                    <StackPanel Margin="30 10 0 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Foreground="#B3B3B3" Text="Properties: " />
-                            <RadioButton x:Name="All"
+                    <Grid>
+                        <StackPanel Margin="30 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="#B3B3B3" Text="Properties: " />
+                                <RadioButton x:Name="All"
                                          Content="All"
                                          Style="{StaticResource PropertiesRadioButton}" />
-                            <TextBlock Foreground="#B3B3B3" Text=" /" />
-                            <RadioButton x:Name="Updated"
+                                <TextBlock Foreground="#B3B3B3" Text=" /" />
+                                <RadioButton x:Name="Updated"
                                          Content="Updated"
                                          IsChecked="True"
                                          Style="{StaticResource PropertiesRadioButton}" />
-                        </StackPanel>
+                            </StackPanel>
 
-                        <ItemsControl ItemsSource="{Binding Values}">
-                            <ItemsControl.Style>
-                                <Style TargetType="{x:Type ItemsControl}">
-                                    <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
-                                            <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ItemsControl.Style>
-                        </ItemsControl>
-                    </StackPanel>
-                    <Border Margin="15 0 0 0"
+                            <ItemsControl ItemsSource="{Binding Values}">
+                                <ItemsControl.Style>
+                                    <Style TargetType="{x:Type ItemsControl}">
+                                        <Setter Property="ItemTemplate" Value="{StaticResource UpdatedValuesTemplate}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=Updated}" Value="False">
+                                                <Setter Property="ItemTemplate" Value="{StaticResource AllValuesTemplate}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                            </ItemsControl>
+                        </StackPanel>
+                        <Border Margin="15 0 0 0"
                             BorderBrush="Black"
                             BorderThickness="2 0 0 0"
                             Visibility="{Binding HasTimeoutMessages,
                                                  Converter={StaticResource BoolToVisibilityConverter}}" />
-                </Grid>
-            </Border>
-            <Border BorderBrush="Black"
+                    </Grid>
+                </Border>
+                <Border BorderBrush="Black"
                     BorderThickness="0 2 0 0"
                     Visibility="{Binding HasNonTimeoutMessages,
                                          Converter={StaticResource BoolToVisibilityConverter}}" />
-        </Grid>
+            </Grid>
 
-        <Border x:Name="SagaMessages"
+            <Border x:Name="SagaMessages"
                 Grid.Row="1"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Visibility="{Binding HasNonTimeoutMessages,
                                      Converter={StaticResource BoolToVisibilityConverter}}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0,0,-1,0"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="0,0,-1,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             BorderBrush="Black"
                             BorderThickness="0,2,2,0" />
-                </Grid>
+                    </Grid>
 
-                <Polygon Grid.Row="1"
+                    <Polygon Grid.Row="1"
                          Width="10"
                          Height="10"
                          HorizontalAlignment="Center"
@@ -728,18 +747,19 @@
                          Points="0,0 1,0 0.5,1"
                          Stretch="Fill" />
 
-                <ItemsControl Grid.Row="2"
+                    <ItemsControl Grid.Row="2"
                               Margin="0 -15 0 0"
                               HorizontalAlignment="Center"
                               ItemTemplate="{StaticResource Message}"
                               ItemsSource="{Binding NonTimeoutMessages}" />
-            </Grid>
-        </Border>
+                </Grid>
+            </Border>
 
-        <ItemsControl x:Name="TimeoutMessages"
+            <ItemsControl x:Name="TimeoutMessages"
                       Grid.Row="2"
                       Grid.ColumnSpan="3"
                       ItemTemplate="{StaticResource TimeoutMessage}"
                       ItemsSource="{Binding TimeoutMessages}" />
+        </Grid>
     </Grid>
 </UserControl>
