@@ -133,6 +133,7 @@
     <Compile Include="SequenceDiagramModelCreatorTestsForJson1.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson2.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson3.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTestsForJson4.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
@@ -147,6 +148,7 @@
     <None Include="ConversationsData\json1.json" />
     <None Include="ConversationsData\json2.json" />
     <None Include="ConversationsData\json3.json" />
+    <None Include="ConversationsData\json4.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

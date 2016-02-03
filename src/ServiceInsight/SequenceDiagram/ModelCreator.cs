@@ -10,12 +10,14 @@ namespace ServiceInsight.SequenceDiagram
 
     public class ModelCreator
     {
+        public const string ConversationStartHandlerName = "First";
+
         readonly List<StoredMessage> messages;
+        readonly IMessageCommandContainer container;
 
         List<EndpointItem> endpoints = new List<EndpointItem>();
         List<Handler> handlers = new List<Handler>();
         List<MessageProcessingRoute> processingRoutes = new List<MessageProcessingRoute>();
-        IMessageCommandContainer container;
 
         public ModelCreator(List<StoredMessage> messages, IMessageCommandContainer container)
         {
@@ -45,8 +47,8 @@ namespace ServiceInsight.SequenceDiagram
             var endpointRegistry = new EndpointRegistry();
             var handlerRegistry = new HandlerRegistry();
 
-            var messageTrees = CreateMessageTrees(messages).ToArray();
-            var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToArray();
+            var messageTrees = CreateMessageTrees(messages).ToList();
+            var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToList();
 
             // NOTE: All sending endpoints are created first to ensure version info is retained
             foreach (var message in messagesInOrder)
@@ -103,10 +105,13 @@ namespace ServiceInsight.SequenceDiagram
                 processingRoutes.Add(messageProcessingRoute);
                 processingHandler.In = arrow;
 
-                sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
+                sendingHandler.Out = sendingHandler.Out.Concat(new[]
+                {
+                    arrow
+                }).OrderBy(a => a).ToList();
             }
 
-            handlers.Sort((x, y) => DateTime.Compare(x.HandledAt.GetValueOrDefault(), y.HandledAt.GetValueOrDefault()));
+            //handlers.Sort((x, y) => DateTime.Compare(x.ProcessedAt.GetValueOrDefault(), y.ProcessedAt.GetValueOrDefault()));
         }
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler)
@@ -145,7 +150,7 @@ namespace ServiceInsight.SequenceDiagram
 
         Handler CreateSendingHandler(StoredMessage message, EndpointItem sendingEndpoint)
         {
-            var handler = new Handler(message.GetHeaderByKey(MessageHeaderKeys.RelatedTo, "First"), container)
+            var handler = new Handler(message.GetHeaderByKey(MessageHeaderKeys.RelatedTo, ConversationStartHandlerName), container)
             {
                 State = HandlerState.Success,
                 Endpoint = sendingEndpoint

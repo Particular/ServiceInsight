@@ -22,10 +22,12 @@ namespace ServiceInsight.Tests.ConversationsData
             };
 
             var messages = deserializer.Deserialize<List<StoredMessage>>(new PayLoad(content));
-            var creator = new ModelCreator(messages, GetContainer());
+            ModelCreator = new ModelCreator(messages, GetContainer());
 
-            result = creator.Endpoints;
+            result = ModelCreator.Endpoints;
         }
+
+        protected ModelCreator ModelCreator { get; }
 
         private IMessageCommandContainer GetContainer()
         {
