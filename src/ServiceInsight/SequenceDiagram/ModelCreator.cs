@@ -47,8 +47,8 @@ namespace ServiceInsight.SequenceDiagram
             var endpointRegistry = new EndpointRegistry();
             var handlerRegistry = new HandlerRegistry();
 
-            var messageTrees = CreateMessageTrees(messages).ToList();
-            var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToList();
+            var messageTrees = CreateMessageTrees(messages).ToArray();
+            var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToArray();
 
             // NOTE: All sending endpoints are created first to ensure version info is retained
             foreach (var message in messagesInOrder)
@@ -105,13 +105,8 @@ namespace ServiceInsight.SequenceDiagram
                 processingRoutes.Add(messageProcessingRoute);
                 processingHandler.In = arrow;
 
-                sendingHandler.Out = sendingHandler.Out.Concat(new[]
-                {
-                    arrow
-                }).OrderBy(a => a).ToList();
+                sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
             }
-
-            //handlers.Sort((x, y) => DateTime.Compare(x.ProcessedAt.GetValueOrDefault(), y.ProcessedAt.GetValueOrDefault()));
         }
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler)
