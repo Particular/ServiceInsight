@@ -149,12 +149,17 @@
             </Style>
 
             <DataTemplate x:Key="MessageDataItem" DataType="{x:Type local:SagaMessageDataItem}">
-                <StackPanel x:Name="MessageDataItemPanel" Orientation="Horizontal" MaxWidth="250" HorizontalAlignment="Left">
+                <StackPanel x:Name="MessageDataItemPanel"
+                            MaxWidth="250"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
                     <TextBlock FontWeight="Bold"
                                Foreground="{StaticResource SagaForeground}"
                                Text="{Binding Key}" />
                     <TextBlock Foreground="{StaticResource SagaForeground}" Text=" = " />
-                    <TextBlock Foreground="{StaticResource SagaForeground}" Text="{Binding Value}" TextTrimming="CharacterEllipsis">
+                    <TextBlock Foreground="{StaticResource SagaForeground}"
+                               Text="{Binding Value}"
+                               TextTrimming="CharacterEllipsis">
                         <TextBlock.ToolTip>
                             <TextBlock Text="{Binding Value}" />
                         </TextBlock.ToolTip>
@@ -197,8 +202,8 @@
                     <Border x:Name="NoEndpointsBorder"
                             Grid.Row="1"
                             MinWidth="220"
-                            Background="{StaticResource MessageBackground}"
-                            Padding="2">
+                            Padding="2"
+                            Background="{StaticResource MessageBackground}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40" />
@@ -221,15 +226,14 @@
                                             Visibility="{Binding IsCommandMessage,
                                                                  Converter={StaticResource BoolToVisibilityConverter}}" />
                             <ContentControl Grid.Column="0"
+                                            Width="22"
+                                            Margin="0,4,0,0"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Margin="0,4,0,0"
                                             Template="{StaticResource EventIcon}"
                                             ToolTip="Event"
-                                            Width="22"
                                             Visibility="{Binding IsEventMessage,
-                                                                Converter={StaticResource BoolToVisibilityConverter}}">
-                            </ContentControl>
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
                             <ContentControl Grid.Column="0"
                                             Width="24"
                                             HorizontalAlignment="Center"
@@ -253,7 +257,9 @@
                 </Grid>
 
                 <DataTemplate.Triggers>
-                    <DataTrigger d:DataContext="{d:DesignInstance local:SagaMessage}" Binding="{Binding IsSelected}" Value="True">
+                    <DataTrigger Binding="{Binding IsSelected}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
+                                 Value="True">
                         <DataTrigger.Setters>
                             <Setter TargetName="NoEndpointsBorder" Property="BorderBrush" Value="Black" />
                             <Setter TargetName="NoEndpointsBorder" Property="BorderThickness" Value="2" />
@@ -289,9 +295,9 @@
                                                  Converter={StaticResource BoolToVisibilityConverter}}">
                         <StackPanel x:Name="MessageDataPanel" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ItemsControl x:Name="MessageData"
+                                          Padding="4"
                                           ItemTemplate="{StaticResource MessageDataItem}"
-                                          ItemsSource="{Binding Data}"
-                                          Padding="4" />
+                                          ItemsSource="{Binding Data}" />
                             <TextBlock x:Name="EmptyPropertyText"
                                        HorizontalAlignment="Center"
                                        Foreground="Black"
@@ -471,7 +477,8 @@
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup IsOpen="{Binding MessageContentVisible, Mode=TwoWay}"
+                    <Popup IsOpen="{Binding MessageContentVisible,
+                                            Mode=TwoWay}"
                            Placement="Center"
                            StaysOpen="True">
                         <local:SagaContentViewer DataContext="{Binding}" />
@@ -577,27 +584,37 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding MissingData, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Grid Margin="0,15,0,5" Visibility="{Binding MissingData, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="FontSize" Value="16" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
             </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".95*" />
+                <ColumnDefinition Width="1.1*" />
+                <ColumnDefinition Width=".95*" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Text="..." />
-            <TextBlock Grid.Row="1" Text="Data Unavailable" />
-            <TextBlock Grid.Row="2" Text="..." VerticalAlignment="Top" />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       FontWeight="Bold"
+                       Text="Saga data too large" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="Because of the large amount of data in this saga, ServiceInsight is only able to show the first 100 and last 100 changes." />
         </Grid>
         <Grid x:Name="SagaNodePanel"
-          Grid.IsSharedSizeScope="True"
-          SnapsToDevicePixels="True" Visibility="{Binding MissingData, Converter={StaticResource BoolToVisibilityConverterInverted}}">
+              Grid.IsSharedSizeScope="True"
+              SnapsToDevicePixels="True"
+              Visibility="{Binding MissingData,
+                                   Converter={StaticResource BoolToVisibilityConverterInverted}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".95*" />
                 <ColumnDefinition Width="1.1*" />
@@ -610,8 +627,8 @@
             </Grid.RowDefinitions>
 
             <Grid x:Name="InitialMessageTop"
-              HorizontalAlignment="Right"
-              VerticalAlignment="Bottom">
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
                 </Grid.ColumnDefinitions>
@@ -619,9 +636,9 @@
             </Grid>
 
             <Grid x:Name="InitialMessageBottom"
-              Grid.Row="1"
-              HorizontalAlignment="Right"
-              VerticalAlignment="Top">
+                  Grid.Row="1"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
                 </Grid.ColumnDefinitions>
@@ -631,60 +648,60 @@
             </Grid>
 
             <Border x:Name="Middle"
-                Grid.Column="1"
-                Background="{StaticResource SagaBackground}">
+                    Grid.Column="1"
+                    Background="{StaticResource SagaBackground}">
                 <StackPanel Margin="10 12 10 0" Background="{StaticResource SagaBackground}">
                     <StackPanel Orientation="Horizontal" Visibility="{Binding IsSagaTimeoutMessage, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
                         <ContentControl Margin="0 4 4 4" Template="{StaticResource SagaTimeoutIcon}" />
 
                         <TextBlock FontSize="16px"
-                               FontWeight="Bold"
-                               Foreground="{StaticResource SagaBlue}"
-                               Text="Timeout Invoked" />
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource SagaBlue}"
+                                   Text="Timeout Invoked" />
                     </StackPanel>
 
                     <StackPanel x:Name="StepName" Orientation="Horizontal">
                         <ContentControl Margin="0 4 4 4"
-                                    VerticalAlignment="Top"
-                                    Template="{StaticResource SagaInitiatedIcon}"
-                                    Visibility="{Binding IsFirstNode,
-                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource SagaInitiatedIcon}"
+                                        Visibility="{Binding IsFirstNode,
+                                                             Converter={StaticResource BoolToVisibilityConverter}}" />
                         <ContentControl Margin="0 4 4 4"
-                                    VerticalAlignment="Top"
-                                    Template="{StaticResource SagaUpdatedIcon}"
-                                    Visibility="{Binding IsFirstNode,
-                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource SagaUpdatedIcon}"
+                                        Visibility="{Binding IsFirstNode,
+                                                             Converter={StaticResource BoolToVisibilityConverterInverted}}" />
 
                         <TextBlock x:Name="StepNameBox"
-                               FontSize="16px"
-                               FontWeight="Bold"
-                               Text="{Binding Label}" />
+                                   FontSize="16px"
+                                   FontWeight="Bold"
+                                   Text="{Binding Label}" />
                         <TextBlock Margin="10 5"
-                               FontSize="12px"
-                               Text="{Binding StartTime}" />
+                                   FontSize="12px"
+                                   Text="{Binding StartTime}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <Grid x:Name="Properties"
-              Grid.Row="1"
-              Grid.Column="1"
-              Background="{StaticResource SagaBackground}">
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Background="{StaticResource SagaBackground}">
                 <Border Margin="0 0 10 0"
-                    BorderBrush="Black"
-                    BorderThickness="0 2 0 0">
+                        BorderBrush="Black"
+                        BorderThickness="0 2 0 0">
                     <Grid>
                         <StackPanel Margin="30 10 0 0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Foreground="#B3B3B3" Text="Properties: " />
                                 <RadioButton x:Name="All"
-                                         Content="All"
-                                         Style="{StaticResource PropertiesRadioButton}" />
+                                             Content="All"
+                                             Style="{StaticResource PropertiesRadioButton}" />
                                 <TextBlock Foreground="#B3B3B3" Text=" /" />
                                 <RadioButton x:Name="Updated"
-                                         Content="Updated"
-                                         IsChecked="True"
-                                         Style="{StaticResource PropertiesRadioButton}" />
+                                             Content="Updated"
+                                             IsChecked="True"
+                                             Style="{StaticResource PropertiesRadioButton}" />
                             </StackPanel>
 
                             <ItemsControl ItemsSource="{Binding Values}">
@@ -701,25 +718,25 @@
                             </ItemsControl>
                         </StackPanel>
                         <Border Margin="15 0 0 0"
-                            BorderBrush="Black"
-                            BorderThickness="2 0 0 0"
-                            Visibility="{Binding HasTimeoutMessages,
-                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+                                BorderBrush="Black"
+                                BorderThickness="2 0 0 0"
+                                Visibility="{Binding HasTimeoutMessages,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
                     </Grid>
                 </Border>
                 <Border BorderBrush="Black"
-                    BorderThickness="0 2 0 0"
-                    Visibility="{Binding HasNonTimeoutMessages,
-                                         Converter={StaticResource BoolToVisibilityConverter}}" />
+                        BorderThickness="0 2 0 0"
+                        Visibility="{Binding HasNonTimeoutMessages,
+                                             Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
 
             <Border x:Name="SagaMessages"
-                Grid.Row="1"
-                Grid.Column="2"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Visibility="{Binding HasNonTimeoutMessages,
-                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="{Binding HasNonTimeoutMessages,
+                                         Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
@@ -733,33 +750,33 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border Margin="0,0,-1,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            BorderBrush="Black"
-                            BorderThickness="0,2,2,0" />
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                BorderBrush="Black"
+                                BorderThickness="0,2,2,0" />
                     </Grid>
 
                     <Polygon Grid.Row="1"
-                         Width="10"
-                         Height="10"
-                         HorizontalAlignment="Center"
-                         Fill="Black"
-                         Points="0,0 1,0 0.5,1"
-                         Stretch="Fill" />
+                             Width="10"
+                             Height="10"
+                             HorizontalAlignment="Center"
+                             Fill="Black"
+                             Points="0,0 1,0 0.5,1"
+                             Stretch="Fill" />
 
                     <ItemsControl Grid.Row="2"
-                              Margin="0 -15 0 0"
-                              HorizontalAlignment="Center"
-                              ItemTemplate="{StaticResource Message}"
-                              ItemsSource="{Binding NonTimeoutMessages}" />
+                                  Margin="0 -15 0 0"
+                                  HorizontalAlignment="Center"
+                                  ItemTemplate="{StaticResource Message}"
+                                  ItemsSource="{Binding NonTimeoutMessages}" />
                 </Grid>
             </Border>
 
             <ItemsControl x:Name="TimeoutMessages"
-                      Grid.Row="2"
-                      Grid.ColumnSpan="3"
-                      ItemTemplate="{StaticResource TimeoutMessage}"
-                      ItemsSource="{Binding TimeoutMessages}" />
+                          Grid.Row="2"
+                          Grid.ColumnSpan="3"
+                          ItemTemplate="{StaticResource TimeoutMessage}"
+                          ItemsSource="{Binding TimeoutMessages}" />
         </Grid>
     </Grid>
 </UserControl>
