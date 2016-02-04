@@ -24,7 +24,9 @@
 
         void OnShellLoaded(object sender, RoutedEventArgs e)
         {
-            DXSplashScreen.Close();
+            if (DXSplashScreen.IsActive)
+                DXSplashScreen.Close();
+
             Activate();
 
             OpenClosedPanels();
