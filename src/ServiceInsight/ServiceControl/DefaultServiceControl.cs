@@ -10,6 +10,7 @@
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
+    using Framework;
     using RestSharp;
     using RestSharp.Contrib;
     using RestSharp.Deserializers;
@@ -51,7 +52,14 @@
 
         public bool IsAlive()
         {
-            return GetVersion() != null;
+            var version = GetVersion();
+
+            if (version != null)
+            {
+                RaygunUtility.LastServiceControlVersion = version;
+            }
+
+            return version != null;
         }
 
         public string GetVersion()
