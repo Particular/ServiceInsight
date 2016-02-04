@@ -26,7 +26,7 @@
 
         public bool IsSagaTimeoutMessage
         {
-            get { return InitiatingMessage.IsSagaTimeoutMessage; }
+            get { return !MissingData && InitiatingMessage.IsSagaTimeoutMessage; }
         }
 
         public List<SagaMessage> NonTimeoutMessages
@@ -45,6 +45,8 @@
 
         public string StateAfterChange { get; set; }
 
+        public bool MissingData { get; set; }
+
         void OnStateAfterChangeChanged()
         {
             UpdateValues();
@@ -55,10 +57,18 @@
             UpdateValues();
         }
 
+        void OnMissingDataChanged()
+        {
+            UpdateValues();
+        }
+
         void UpdateValues()
         {
-            if (string.IsNullOrEmpty(StateAfterChange) || InitiatingMessage == null)
+            if (string.IsNullOrEmpty(StateAfterChange) || InitiatingMessage == null || MissingData)
+            {
+                Values = new List<SagaUpdatedValue>();
                 return;
+            }
 
             Values = JsonPropertiesHelper.ProcessValues(StateAfterChange, s => s.TrimStart('[').TrimEnd(']'))
                                          .Select(v => new SagaUpdatedValue(InitiatingMessage.MessageType, v.Key, v.Value))

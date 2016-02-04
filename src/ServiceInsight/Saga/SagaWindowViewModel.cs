@@ -49,9 +49,9 @@
 
         void RefreshShowData()
         {
-            var messages = Data.Changes
+            var messages = Data.Changes.Where(c => !c.MissingData)
                                .Select(c => c.InitiatingMessage)
-                               .Union(Data.Changes.SelectMany(c => c.OutgoingMessages));
+                               .Union(Data.Changes.Where(c => !c.MissingData).SelectMany(c => c.OutgoingMessages));
 
             foreach (var message in messages)
             {
@@ -229,7 +229,7 @@
                 return;
             }
 
-            foreach (var step in Data.Changes)
+            foreach (var step in Data.Changes.Where(c => !c.MissingData))
             {
                 SetSelected(step.InitiatingMessage, selectedMessageId);
                 SetSelected(step.OutgoingMessages, selectedMessageId);

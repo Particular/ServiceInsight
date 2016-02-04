@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using Caliburn.Micro;
     using RestSharp;
     using RestSharp.Deserializers;
     using RestSharp.Extensions;
@@ -67,6 +68,10 @@
 
         void Map(object target, IDictionary<string, object> data)
         {
+            var notifiableTarget = target as INotifyPropertyChangedEx;
+            if (notifiableTarget != null)
+                notifiableTarget.IsNotifying = false;
+
             var objType = target.GetType();
             var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
 
@@ -94,6 +99,9 @@
 
                 prop.SetValue(target, ConvertValue(type, value), null);
             }
+
+            if (notifiableTarget != null)
+                notifiableTarget.IsNotifying = true;
         }
 
         IDictionary BuildDictionary(Type type, object parent)
@@ -119,6 +127,17 @@
             var elements = parent as IList;
             if (elements != null)
             {
+                if (elements.Count > 200)
+                {
+                    var missingJObject = new JsonObject();
+                    missingJObject["missing_data"] = true;
+
+                    elements = elements.Cast<object>().Take(100)
+                        .Concat(new[] { missingJObject })
+                        .Concat(elements.Cast<object>().Skip(elements.Count - 100))
+                        .ToList();
+                }
+
                 foreach (var element in elements)
                 {
                     if (itemType.IsPrimitive)
