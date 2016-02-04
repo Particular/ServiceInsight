@@ -22,6 +22,7 @@
             };
             MessageIconsMaps = new Dictionary<MessageBoxImage, MessageIcon>
             {
+                {MessageBoxImage.None, MessageIcon.None},
                 {MessageBoxImage.Exclamation, MessageIcon.Warning},
                 {MessageBoxImage.Asterisk, MessageIcon.Information},
                 {MessageBoxImage.Hand, MessageIcon.Error},

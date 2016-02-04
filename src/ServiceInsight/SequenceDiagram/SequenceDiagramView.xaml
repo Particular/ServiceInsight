@@ -71,21 +71,38 @@
                            FontWeight="Bold"
                            Foreground="#D3D3D3"
                            Text="Data not available" />
-                <StackPanel>
-                    <Border Margin="0,20,0,0" Background="#FFE4E4E4">
-                        <StackPanel Margin="40,20">
-                            <TextBlock Margin="5,5,5,2"
+                <Grid Margin="0,20,0,0">
+                    <Border Background="#FFE4E4E4">
+                        <TextBlock Margin="40,20"
+                                   HorizontalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="#FF565656">
+                            <Run Text="Data could not be found. " />
+                            <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">Learn more</Hyperlink>
+                            <Run Text=" about the possible reasons for this to happen." />
+                        </TextBlock>
+                    </Border>
+                    <Border Background="#FFE4E4E4" Visibility="{Binding ErrorMessage, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+                        <StackPanel>
+                            <TextBlock Margin="40,20,40,0"
+                                       HorizontalAlignment="Center"
+                                       FontSize="16"
+                                       Foreground="#FF565656"
+                                       Text="{Binding ErrorMessage}" />
+                            <TextBlock Margin="40,0,40,20"
                                        HorizontalAlignment="Center"
                                        FontSize="16"
                                        Foreground="#FF565656">
-                                <Run Text="Data could not be found. " />
-                                <Hyperlink Command="{Binding OpenLink}" TextDecorations="Underline">Learn more</Hyperlink>
-                                <Run Text=" about the possible reasons for this to happen." />
+                                <Hyperlink Command="{Binding ReportMessageCommand}"
+                                           CommandParameter="{Binding ReportPackage}"
+                                           TextDecorations="Underline">
+                                    Click here
+                                </Hyperlink>
+                                <Run Text=" to send your message data to Particular Software for debugging." />
                             </TextBlock>
-
                         </StackPanel>
                     </Border>
-                </StackPanel>
+                </Grid>
             </StackPanel>
 
             <ScrollViewer Name="ScrollViewer_Header"
@@ -148,7 +165,6 @@
                                 <Rectangle Grid.Row="1"
                                            Grid.Column="1"
                                            Fill="#FFE9EEF4" />
-
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -163,9 +179,9 @@
                 <diagram:DiagramHeader x:Name="header"
                                        MinWidth="{Binding ElementName=diagram,
                                                           Path=ActualWidth}"
-                                       ItemsSource="{Binding HeaderItems}"
                                        Padding="{Binding ElementName=diagram,
-                                                         Path=Padding}" />
+                                                         Path=Padding}"
+                                       ItemsSource="{Binding HeaderItems}" />
             </ScrollViewer>
 
             <ContentControl Grid.Row="0"
@@ -183,7 +199,6 @@
                                                Converter={StaticResource BoolToVisibilityHiddenConverter}}">
                 <diagram:DiagramControl x:Name="diagram" ItemsSource="{Binding DiagramItems}" />
             </ScrollViewer>
-
         </Grid>
     </Grid>
 </UserControl>

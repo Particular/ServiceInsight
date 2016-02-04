@@ -1,14 +1,12 @@
 ﻿namespace ServiceInsight.Framework
 {
     using System;
-    using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Anotar.Serilog;
-    using ExtensionMethods;
     using Mindscape.Raygun4Net;
 
     public partial class ExceptionHandler
@@ -17,11 +15,7 @@
 
         static ExceptionHandler()
         {
-            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
-            client = new RaygunClient("uX5c/PiCVqF31xlEm3jShA==")
-            {
-                ApplicationVersion = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version"
-            };
+            client = RaygunUtility.GetClient();
         }
 
         public static void Attach()
@@ -117,7 +111,7 @@
 
         void ReportClick(object sender, RoutedEventArgs e)
         {
-            client.SendInBackground(Exception);
+            RaygunUtility.SendError(client, Exception);
             ((Button)sender).IsEnabled = false;
         }
     }

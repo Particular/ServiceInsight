@@ -12,6 +12,7 @@
     using Caliburn.Micro;
     using Diagram;
     using Microsoft.Win32;
+    using ServiceInsight.DiagramLegend;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
@@ -21,7 +22,6 @@
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
-    using ServiceInsight.DiagramLegend;
 
     public class SequenceDiagramViewModel : Screen,
         IHandle<SelectedMessageChanged>,
@@ -47,6 +47,7 @@
             SearchByMessageIDCommand searchByMessageIDCommand,
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
             ShowExceptionCommand showExceptionCommand,
+            ReportMessageCommand reportMessageCommand,
             SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
@@ -59,6 +60,7 @@
             SearchByMessageIDCommand = searchByMessageIDCommand;
             ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             ShowExceptionCommand = showExceptionCommand;
+            ReportMessageCommand = reportMessageCommand;
             OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
             ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
             DiagramLegend = diagramLegend;
@@ -73,7 +75,7 @@
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            this.view = (SequenceDiagramView) view;
+            this.view = (SequenceDiagramView)view;
         }
 
         void ExportToPng(SequenceDiagramView view)
@@ -137,9 +139,15 @@
 
         public ICommand ShowExceptionCommand { get; }
 
+        public ICommand ReportMessageCommand { get; }
+
         public DiagramLegendViewModel DiagramLegend { get; }
 
-        public DiagramItemCollection DiagramItems { get; set; }
+        public DiagramItemCollection DiagramItems { get; }
+
+        public string ErrorMessage { get; set; }
+
+        public ReportMessageCommand.ReportMessagePackage ReportPackage { get; set; }
 
         public bool ShowLegend { get; set; }
 
@@ -151,7 +159,7 @@
 
         public bool HasItems => DiagramItems != null && DiagramItems.Count > 0;
 
-        public DiagramItemCollection HeaderItems { get; set; }
+        public DiagramItemCollection HeaderItems { get; }
 
         public MessageSelectionContext Selection { get; }
 
@@ -169,37 +177,39 @@
 
         public void Handle(SelectedMessageChanged message)
         {
-            var storedMessage = Selection.SelectedMessage;
-            if (storedMessage == null)
+            try
             {
-                ClearState();
-                return;
-            }
+                var conversationId = Selection?.SelectedMessage?.ConversationId;
+                if (string.IsNullOrEmpty(conversationId))
+                {
+                    ClearState();
+                    return;
+                }
 
-            var conversationId = storedMessage.ConversationId;
-            if (conversationId == null)
-            {
-                ClearState();
-                return;
-            }
+                if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
+                {
+                    RefreshSelection();
+                    return;
+                }
 
-            if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
-            {
+                var messages = serviceControl.GetConversationById(conversationId).ToList();
+                if (messages.Count == 0)
+                {
+                    LogTo.Warning("No messages found for conversation id {0}", conversationId);
+                    ClearState();
+                    return;
+                }
+
+                CreateElements(messages);
+                loadedConversationId = conversationId;
                 RefreshSelection();
-                return;
             }
-
-            var messages = serviceControl.GetConversationById(conversationId).ToList();
-            if (messages.Count == 0)
+            catch (Exception ex)
             {
-                LogTo.Warning("No messages found for conversation id {0}", conversationId);
                 ClearState();
-                return;
+                ErrorMessage = $"There was an error processing the message data.";
+                ReportPackage = new ReportMessageCommand.ReportMessagePackage(ex, Selection?.SelectedMessage);
             }
-
-            CreateElements(messages);
-            loadedConversationId = conversationId;
-            RefreshSelection();
         }
 
         void RefreshSelection()
@@ -243,6 +253,7 @@
 
         void ClearState()
         {
+            ErrorMessage = "";
             DiagramItems.Clear();
             HeaderItems.Clear();
             NotifyOfPropertyChange(nameof(HasItems));
