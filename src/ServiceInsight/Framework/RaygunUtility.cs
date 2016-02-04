@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mindscape.Raygun4Net;
@@ -10,6 +11,8 @@ namespace ServiceInsight.Framework
 {
     static class RaygunUtility
     {
+        public static string LastServiceControlVersion { get; set; }
+
         public static RaygunClient GetClient()
         {
             var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
@@ -17,17 +20,30 @@ namespace ServiceInsight.Framework
             {
                 ApplicationVersion = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version"
             };
+            client.AddWrapperExceptions(typeof(AggregateException));
             return client;
         }
 
         public static void SendError(RaygunClient client, Exception e)
         {
-            client.SendInBackground(e);
+            var extraData = new Dictionary<string, object>();
+            AddServiceControlVersion(extraData);
+
+            client.SendInBackground(e, null, extraData);
         }
 
         public static void SendError(RaygunClient client, Exception e, StoredMessage storedMessage)
         {
-            client.SendInBackground(e, null, StoredMessageToDictionary(storedMessage));
+            var extraData = StoredMessageToDictionary(storedMessage);
+            AddServiceControlVersion(extraData);
+
+            client.SendInBackground(e, null, extraData);
+        }
+
+        private static void AddServiceControlVersion(IDictionary extraData)
+        {
+            if (!string.IsNullOrEmpty(LastServiceControlVersion))
+                extraData.Add("ServiceControlVersion", LastServiceControlVersion);
         }
 
         private static IDictionary StoredMessageToDictionary(StoredMessage storedMessage)

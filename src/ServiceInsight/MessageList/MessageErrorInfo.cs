@@ -109,7 +109,7 @@
                     return "Archived";
 
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new NotSupportedException($"Enum 'Status' is {Status}");
             }
         }
     }
