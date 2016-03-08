@@ -56,7 +56,7 @@
 
         public void OnSaveLayout(ISettingsProvider settingProvider)
         {
-            var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>();
+            var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>() ?? new ShellLayoutSettings();
 
             if (!layoutSetting.ResetLayout)
             {
