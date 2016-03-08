@@ -79,7 +79,7 @@
 
         public void OnRestoreLayout(ISettingsProvider settingsProvider)
         {
-            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>();
+            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>() ?? new ShellLayoutSettings();
             var currentLayoutVersion = GetCurrentLayoutVersion();
 
             if (layoutSetting.LayoutVersion == currentLayoutVersion)
