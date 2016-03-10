@@ -56,7 +56,7 @@
 
         public void OnSaveLayout(ISettingsProvider settingProvider)
         {
-            var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>() ?? new ShellLayoutSettings();
+            var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>();
 
             if (!layoutSetting.ResetLayout)
             {
@@ -79,7 +79,7 @@
 
         public void OnRestoreLayout(ISettingsProvider settingsProvider)
         {
-            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>() ?? new ShellLayoutSettings();
+            var layoutSetting = settingsProvider.GetSettings<ShellLayoutSettings>();
             var currentLayoutVersion = GetCurrentLayoutVersion();
 
             if (layoutSetting.LayoutVersion == currentLayoutVersion)

@@ -21,7 +21,9 @@ namespace ServiceInsight.Framework.Settings
             {
                 if (settingsRepository.HasSettings(GetKey<T>()))
                 {
-                    return LoadSettings<T>(ReadSettingMetadata<T>());
+                    var settings = LoadSettings<T>(ReadSettingMetadata<T>());
+                    if (!Equals(settings, default(T)))
+                        return settings;
                 }
                 return GetDefaultSettings<T>();
             }
