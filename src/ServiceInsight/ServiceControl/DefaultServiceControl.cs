@@ -157,7 +157,7 @@
 
         public void LoadBody(StoredMessage message)
         {
-            var request = new RestRequestWithCache(message.BodyUrl, message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
+            var request = new RestRequestWithCache(message.BodyUrl, RestRequestWithCache.CacheStyle.Immutable);
 
             var baseUrl = message.BodyUrl;
             if (!baseUrl.StartsWith("http"))
