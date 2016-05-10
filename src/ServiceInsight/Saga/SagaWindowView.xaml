@@ -20,7 +20,7 @@
                     <DataTemplate DataType="{x:Type l:SagaUpdate}">
                         <l:SagaUpdateControl DataContext="{Binding}"
                                              SelectedMessageId="{Binding DataContext.SelectedMessageId,
-                                                                       ElementName=uc}"
+                                                                         ElementName=uc}"
                                              TimeoutClick="Hyperlink_Click" />
                     </DataTemplate>
 
@@ -33,10 +33,10 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="1" Background="{StaticResource SagaBackground}">
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}">
-                                    <TextBlock FontSize="12px"
+                                    <TextBlock cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]"
+                                               FontSize="12px"
                                                Foreground="{StaticResource SagaBlue}"
-                                               Text="&#x2190; Back to Message View"
-                                               cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]" />
+                                               Text="&#x2190; Back to Message View" />
                                     <Border BorderBrush="{StaticResource SagaBlue}"
                                             BorderThickness="0 0 0 2"
                                             Padding="0 5 0 5">
@@ -174,47 +174,13 @@
                                        FontSize="16"
                                        Padding="2"
                                        Style="{StaticResource CodeStyle}"
-                                       Text="For NSB v6 endpoints, install-package ServiceControl.Plugin.Nsb6.SagaAudit" />
+                                       Text="{Binding InstallScriptText}" />
                             <Button Margin="5,0,0,0"
                                     Command="{Binding CopyCommand}"
-                                    CommandParameter="install-package ServiceControl.Plugin.Nsb6.SagaAudit"
                                     Style="{StaticResource BlankButtonStyle}"
                                     ToolTip="Copy nuget command to clipboard">
                                 <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Margin="5,2,5,5"
-                                    HorizontalAlignment="Center"
-                                    Orientation="Horizontal">
-                            <TextBlock Background="{x:Null}"
-                                       FontFamily="Consolas"
-                                       FontSize="16"
-                                       Padding="2"
-                                       Style="{StaticResource CodeStyle}"
-                                       Text="For NSB v5 endpoints, install-package ServiceControl.Plugin.Nsb5.SagaAudit" />
-                            <Button Margin="5,0,0,0"
-                                    Command="{Binding CopyCommand}"
-                                    CommandParameter="install-package ServiceControl.Plugin.Nsb5.SagaAudit"
-                                    Style="{StaticResource BlankButtonStyle}"
-                                    ToolTip="Copy nuget command to clipboard">
-                                <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Margin="5,2,5,5"
-                                    HorizontalAlignment="Center"
-                                    Orientation="Horizontal">
-                            <TextBlock Background="{x:Null}"
-                                       FontFamily="Consolas"
-                                       FontSize="16"
-                                       Padding="2"
-                                       Style="{StaticResource CodeStyle}"
-                                       Text="For NSB v4 endpoints, install-package ServiceControl.Plugin.Nsb4.SagaAudit" />
-                            <Button Margin="5,0,0,0"
-                                    Command="{Binding CopyCommand}"
-                                    CommandParameter="install-package ServiceControl.Plugin.Nsb4.SagaAudit"
-                                    Style="{StaticResource BlankButtonStyle}"
-                                    ToolTip="Copy nuget command to clipboard">
-                                <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
+
                             </Button>
                         </StackPanel>
                     </StackPanel>
@@ -229,7 +195,9 @@
                                                Converter={StaticResource BoolToVisibilityConverter}}">
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" CanContentScroll="False">
+                        <ScrollViewer x:Name="ScrollViewer"
+                                      CanContentScroll="False"
+                                      Padding="{TemplateBinding Padding}">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>

@@ -7,10 +7,10 @@
     using Caliburn.Micro;
     using Models;
     using ServiceControl;
-    using ServiceInsight.ExtensionMethods;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.MessageList;
+    using ExtensionMethods;
+    using Framework;
+    using Framework.Events;
+    using MessageList;
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -27,8 +27,10 @@
             this.serviceControl = serviceControl;
             this.selection = selectionContext;
             ShowSagaNotFoundWarning = false;
-            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(arg.ToString()));
+            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(InstallScriptText));
         }
+
+        public string InstallScriptText { get; set; }
 
         public ICommand CopyCommand { get; private set; }
 
@@ -76,9 +78,22 @@
             var message = selection.SelectedMessage;
             if (message == null) return;
 
+            UpdateInstallScriptText(message);
+
             RefreshSaga(message);
 
             SelectedMessageId = message.MessageId;
+        }
+
+        void UpdateInstallScriptText(StoredMessage message)
+        {
+            InstallScriptText = $"install-package ServiceControl.Plugin.NSB{GetMajorVersion(message)}.SagaAudit";
+        }
+
+        string GetMajorVersion(StoredMessage message)
+        {
+            var version = message.GetHeaderByKey(MessageHeaderKeys.Version);
+            return version?.Split('.').First();
         }
 
         void RefreshSaga(StoredMessage message)
