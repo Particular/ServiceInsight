@@ -9,6 +9,7 @@
     using Castle.Core.Logging;
     using Framework;
     using NUnit.Framework;
+    using NUnit.Framework.Interfaces;
     using Services;
     using TestStack.White;
     using TestStack.White.Configuration;
@@ -24,9 +25,9 @@
         public Window MainWindow { get; set; }
 
         public Application Application { get; set; }
-        
+
         public IContainer Container { get; set; }
-        
+
         public ICoreConfiguration CoreConfiguration { get; set; }
 
         public IMouse Mouse { get; set; }
@@ -37,7 +38,7 @@
 
         public ILogger Logger { get; set; }
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void InitializeApplication()
         {
             try
@@ -62,7 +63,7 @@
                 var screenshot = Desktop.CaptureScreenshot();
                 var testName = GetTestName();
                 var screenshotFile = Path.Combine(TestConfiguration.ScreenshotFolder, string.Format(@"{0}.png", testName));
-                
+
                 screenshot.Save(screenshotFile);
             }
             catch (Exception ex)
@@ -90,7 +91,7 @@
                    .Where(c => c.IsAssignableTo<IAutoRegister>())
                    .AsSelf()
                    .PropertiesAutowired();
-            
+
             builder.RegisterAssemblyTypes(TestAssembly)
                    .Where(c => c.IsAssignableTo<UIElement>())
                    .AsSelf()
@@ -103,7 +104,7 @@
             builder.RegisterInstance(Logger);
             builder.Register(c => ApplicationLauncher.LaunchApplication(TestConfiguration.ApplicationExecutablePath));
             builder.Register(c => GetMainWindow(c.Resolve<Application>()));
-            
+
             Container = builder.Build();
         }
 
@@ -123,7 +124,7 @@
         {
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void CleanUpTest()
         {
             Container.Dispose();
@@ -132,7 +133,7 @@
 
         void CaptureScreenIfTestFailed()
         {
-            if (TestContext.CurrentContext.Result.Status == TestStatus.Failed)
+            if (TestContext.CurrentContext.Result.FailCount > 0)
             {
                 TryCaptureScreenshot();
             }

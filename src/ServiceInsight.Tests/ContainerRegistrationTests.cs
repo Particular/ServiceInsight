@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System.Threading;
     using Autofac;
     using ServiceInsight.Shell;
     using ServiceInsight.Startup;
@@ -8,7 +9,7 @@
     using ReactiveUI.Testing;
     using Shouldly;
 
-    [TestFixture, RequiresSTA]
+    [TestFixture, Apartment(ApartmentState.STA)]
     public class ContainerRegistrationTests
     {
         TestableAppBootstrapper Bootstrapper;
@@ -28,7 +29,7 @@
         }
 
         [Test]
-        [Ignore]
+        [Explicit]
         public void should_resolve_the_shell()
         {
             new TestScheduler().With(sched =>

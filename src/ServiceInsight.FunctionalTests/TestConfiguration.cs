@@ -3,16 +3,17 @@
     using System;
     using System.IO;
     using System.Reflection;
+    using NUnit.Framework;
 
-    public class TestConfiguration          
+    public class TestConfiguration
     {
         public const int ExtraIdleWaitSecs = 3;
 
-        const string ApplicationProcess = "Particular.ServiceInsight.exe";
+        const string ApplicationProcess = "ServiceInsight.exe";
 
         static TestConfiguration()
         {
-            ApplicationPath = GetApplicationPath();
+            ApplicationPath = TestContext.CurrentContext.TestDirectory;
             LogsFolder = Path.Combine(ApplicationPath, "Logs");
             ScreenshotFolder = Path.Combine(ApplicationPath, "Screenshots");
 

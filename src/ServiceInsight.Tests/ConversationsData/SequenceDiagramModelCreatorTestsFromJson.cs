@@ -6,6 +6,7 @@ namespace ServiceInsight.Tests.ConversationsData
     using global::ServiceInsight.SequenceDiagram;
     using global::ServiceInsight.SequenceDiagram.Diagram;
     using NSubstitute;
+    using NUnit.Framework;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Models;
 
@@ -15,7 +16,8 @@ namespace ServiceInsight.Tests.ConversationsData
 
         protected SequenceDiagramModelCreatorTestsFromJson(string fileName)
         {
-            var content = File.ReadAllText(@"..\..\ConversationsData\" + fileName);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\ConversationsData\" + fileName);
+            var content = File.ReadAllText(path);
             var deserializer = new JsonMessageDeserializer
             {
                 DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK"
