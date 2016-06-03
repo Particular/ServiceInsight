@@ -1,11 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using Caliburn.Micro;
-using ObservablePropertyChanged;
-
-namespace ServiceInsight.Framework.Rx
+﻿namespace ServiceInsight.Framework.Rx
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using Caliburn.Micro;
+    using ObservablePropertyChanged;
+
     public class RxScreen : Screen, IObservablePropertyChanged
     {
         ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();

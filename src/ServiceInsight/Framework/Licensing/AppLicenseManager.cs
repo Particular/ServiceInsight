@@ -10,7 +10,7 @@
         public AppLicenseManager()
         {
             var licenseText = GetExistingLicense();
-            if (!String.IsNullOrEmpty(licenseText))
+            if (!string.IsNullOrEmpty(licenseText))
             {
                 Exception ex;
                 if (LicenseVerifier.TryVerify(licenseText, out ex))
@@ -89,9 +89,6 @@
             return License.TrialLicense(trialStartDate);
         }
 
-        public bool IsLicenseExpired()
-        {
-            return LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
-        }
+        public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
     }
 }

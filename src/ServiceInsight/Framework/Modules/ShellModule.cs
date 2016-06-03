@@ -8,8 +8,8 @@
     using ExtensionMethods;
     using MessageFlow;
     using Options;
-    using ServiceInsight.MessageList;
     using Search;
+    using ServiceInsight.MessageList;
     using Shell;
 
     public class ShellModule : Module

@@ -1,36 +1,36 @@
 ﻿namespace ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using ServiceInsight.MessageViewers.JsonViewer;
-    using ServiceInsight.Models;
     using NSubstitute;
     using NUnit.Framework;
+    using ServiceInsight.MessageViewers.JsonViewer;
+    using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
 
     [TestFixture]
     public class JsonViewerTests
     {
-        JsonMessageViewModel ViewModel;
-        IJsonMessageView View;
+        JsonMessageViewModel viewModel;
+        IJsonMessageView view;
 
         [SetUp]
         public void TestInitialize()
         {
-            View = Substitute.For<IJsonMessageView>();
-            ViewModel = new JsonMessageViewModel();
-            ((IActivate)ViewModel).Activate();
+            view = Substitute.For<IJsonMessageView>();
+            viewModel = new JsonMessageViewModel();
+            ((IActivate)viewModel).Activate();
         }
 
         [Test]
-        public void should_display_json_message()
+        public void Should_display_json_message()
         {
             const string TestMessage = @"[{""$type"":""NSB.Messages.CRM.RegisterCustomer, NSB.Messages"",""Name"":""Hadi"",""Password"":""123456"",""EmailAddress"":""h.eskandari@gmail.com"",""RegistrationDate"":""2013-01-28T03:24:05.0546437Z""}]";
 
-            ((IViewAware)ViewModel).AttachView(View);
+            ((IViewAware)viewModel).AttachView(view);
 
-            ViewModel.SelectedMessage = new MessageBody { Body = new PresentationBody { Text = TestMessage } }; 
+            viewModel.SelectedMessage = new MessageBody { Body = new PresentationBody { Text = TestMessage } };
 
-            View.Received(1).Display(Arg.Any<string>());
+            view.Received(1).Display(Arg.Any<string>());
         }
     }
 }

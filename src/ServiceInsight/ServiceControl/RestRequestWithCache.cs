@@ -4,7 +4,8 @@ namespace ServiceInsight.ServiceControl
 
     public class RestRequestWithCache : RestRequest
     {
-        public RestRequestWithCache(CacheStyle cacheStyle) : this(null, cacheStyle)
+        public RestRequestWithCache(CacheStyle cacheStyle)
+            : this(null, cacheStyle)
         {
         }
 

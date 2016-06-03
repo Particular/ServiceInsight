@@ -20,10 +20,14 @@
         {
             var vm = DataContext as LogWindowViewModel;
             if (vm == null)
+            {
                 return;
+            }
 
             if (logSubscription != null)
+            {
                 logSubscription.Dispose();
+            }
 
             logSubscription = vm.Logs.ItemsAdded.SubscribeOn(RxApp.MainThreadScheduler).Subscribe(_ => richTextBox.ScrollToEnd());
         }

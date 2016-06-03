@@ -11,6 +11,7 @@
     public class SagaMessageDataItem
     {
         public string Key { get; set; }
+
         public string Value { get; set; }
     }
 
@@ -22,23 +23,11 @@
 
         public MessageIntent Intent { get; set; }
 
-        public bool IsEventMessage
-        {
-            get { return Intent == MessageIntent.Publish; }
-        }
+        public bool IsEventMessage => Intent == MessageIntent.Publish;
 
-        public bool IsCommandMessage
-        {
-            get { return !IsEventMessage && !IsTimeout; }
-        }
+        public bool IsCommandMessage => !IsEventMessage && !IsTimeout;
 
-        public virtual bool IsTimeout
-        {
-            get
-            {
-                return IsSagaTimeoutMessage;
-            }
-        }
+        public virtual bool IsTimeout => IsSagaTimeoutMessage;
 
         public bool IsSagaTimeoutMessage { get; set; } //for SC, not to be confused with timeout outgoing messages
 
@@ -48,22 +37,24 @@
             set;
         }
 
-        public string MessageFriendlyTypeName
-        {
-            get { return TypeHumanizer.ToName(MessageType); }
-        }
+        public string MessageFriendlyTypeName => TypeHumanizer.ToName(MessageType);
 
         DateTime? timeSent;
+
         public DateTime? TimeSent
         {
             get { return timeSent; }
+
             set
             {
                 if (value == DateTime.MinValue)
+                {
                     timeSent = null;
+                }
                 else
+                {
                     timeSent = value;
-
+                }
             }
         }
 
@@ -112,10 +103,7 @@
 
         public TimeSpan Timeout { get; set; }
 
-        public override bool IsTimeout
-        {
-            get { return (DeliverAt != DateTime.MinValue || Timeout != TimeSpan.MinValue); }
-        }
+        public override bool IsTimeout => DeliverAt != DateTime.MinValue || Timeout != TimeSpan.MinValue;
 
         public DateTime DeliverAt { get; set; }
 
@@ -130,7 +118,9 @@
             get
             {
                 if (Timeout != TimeSpan.MinValue)
+                {
                     return string.Format("{0}{1}{2}{3}", GetFriendly(Timeout.Days, "d"), GetFriendly(Timeout.Hours, "h"), GetFriendly(Timeout.Minutes, "m"), GetFriendly(Timeout.Seconds, "s"));
+                }
 
                 return DeliverAt.ToString();
             }

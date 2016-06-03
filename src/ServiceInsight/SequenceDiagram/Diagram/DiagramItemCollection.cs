@@ -7,11 +7,11 @@
 
     public sealed class DiagramItemCollection : ObservableCollection<DiagramItem>
     {
-        bool _suppressNotification;
+        bool suppressNotification;
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (!_suppressNotification)
+            if (!suppressNotification)
             {
                 base.OnCollectionChanged(e);
             }
@@ -19,11 +19,14 @@
 
         public void AddRange(IEnumerable<DiagramItem> items)
         {
-            if (items == null) throw new ArgumentNullException("items");
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
 
             try
             {
-                _suppressNotification = true;
+                suppressNotification = true;
 
                 foreach (var item in items)
                 {
@@ -32,7 +35,7 @@
             }
             finally
             {
-                _suppressNotification = false;
+                suppressNotification = false;
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }

@@ -46,8 +46,8 @@
             MessageSelectionContext selectionContext,
             IClipboard clipboard)
         {
-            this.SearchBar = searchBarViewModel;
-            this.Selection = selectionContext;
+            SearchBar = searchBarViewModel;
+            Selection = selectionContext;
 
             this.clipboard = clipboard;
             this.eventAggregator = eventAggregator;
@@ -62,7 +62,7 @@
             Rows = new BindableCollection<StoredMessage>();
         }
 
-        public new ShellViewModel Parent { get { return (ShellViewModel)base.Parent; } }
+        public new ShellViewModel Parent => (ShellViewModel)base.Parent;
 
         public SearchBarViewModel SearchBar { get; }
 
@@ -70,7 +70,7 @@
 
         public MessageSelectionContext Selection { get; }
 
-        public bool WorkInProgress { get { return workCount > 0 && !Parent.AutoRefresh; } }
+        public bool WorkInProgress => workCount > 0 && !Parent.AutoRefresh;
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -170,10 +170,7 @@
             }
         }
 
-        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg)
-        {
-            return new MessageErrorInfo(msg.Status);
-        }
+        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
 
         public void Handle(WorkStarted @event)
         {
@@ -213,7 +210,10 @@
         public void Handle(SelectedMessageChanged message)
         {
             var msg = Selection.SelectedMessage;
-            if (msg == null) return;
+            if (msg == null)
+            {
+                return;
+            }
 
             var newFocusedRow = Rows.FirstOrDefault(row => row.MessageId == msg.MessageId &&
                                                            row.TimeSent == msg.TimeSent &&

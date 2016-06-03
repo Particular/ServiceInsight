@@ -46,10 +46,7 @@
             }
         }
 
-        bool IsSoftError(Exception rootError)
-        {
-            return rootError is NotImplementedException;
-        }
+        bool IsSoftError(Exception rootError) => rootError is NotImplementedException;
 
         void ShowWarning(Exception error)
         {

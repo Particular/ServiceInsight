@@ -34,7 +34,7 @@
         SequenceDiagramSettings settings;
         SequenceDiagramView view;
 
-        private const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
+        const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
@@ -112,7 +112,7 @@
             }
         }
 
-        private static void SaveAsPNG(RenderTargetBitmap bmp, string filename)
+        static void SaveAsPNG(RenderTargetBitmap bmp, string filename)
         {
             var enc = new PngBitmapEncoder();
             enc.Frames.Add(BitmapFrame.Create(bmp));
@@ -151,7 +151,7 @@
 
         public bool ShowLegend { get; set; }
 
-        private void OnShowLegendChanged()
+        void OnShowLegendChanged()
         {
             settings.ShowLegend = ShowLegend;
             settingsProvider.SaveSettings(settings);
@@ -274,10 +274,15 @@
     public interface IMessageCommandContainer
     {
         ICommand CopyConversationIDCommand { get; }
+
         ICommand CopyMessageURICommand { get; }
+
         ICommand RetryMessageCommand { get; }
+
         ICommand SearchByMessageIDCommand { get; }
+
         ICommand ChangeSelectedMessageCommand { get; }
+
         ICommand ShowExceptionCommand { get; }
     }
 }

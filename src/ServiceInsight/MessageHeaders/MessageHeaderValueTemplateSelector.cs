@@ -11,7 +11,6 @@
         public DataTemplate TextTemplate
         { get; set; }
 
-     
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             var obj = item as MessageHeaderKeyValue;
@@ -25,7 +24,9 @@
                 return TextTemplate;
             }
             else
+            {
                 return base.SelectTemplate(item, container);
+            }
         }
     }
 }

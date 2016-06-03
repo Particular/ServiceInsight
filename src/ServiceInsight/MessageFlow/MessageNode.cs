@@ -14,7 +14,7 @@
     public class MessageNode : DiagramNode
     {
         int heightNoEndpoints = 56;
-        const int endpointsHeight = 25;
+        int endpointsHeight = 25;
 
         public MessageNode(MessageFlowViewModel owner, StoredMessage message)
         {
@@ -41,25 +41,31 @@
 
         string ProcessSagaType(StoredMessage message)
         {
-            if (message.Sagas == null) return string.Empty;
+            if (message.Sagas == null)
+            {
+                return string.Empty;
+            }
 
             var originatingSaga = message.Sagas.FirstOrDefault();
-            if (originatingSaga == null) return string.Empty;
+            if (originatingSaga == null)
+            {
+                return string.Empty;
+            }
 
             return TypeHumanizer.ToName(originatingSaga.SagaType);
         }
 
-        public StoredMessage Message
-        {
-            get { return Data as StoredMessage; }
-        }
+        public StoredMessage Message => Data as StoredMessage;
 
-        public MessageFlowViewModel Owner { get; private set; }
+        public MessageFlowViewModel Owner { get; }
 
-        public ICommand CopyConversationIDCommand { get; private set; }
-        public ICommand CopyMessageURICommand { get; private set; }
-        public ICommand SearchByMessageIDCommand { get; private set; }
-        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand CopyConversationIDCommand { get; }
+
+        public ICommand CopyMessageURICommand { get; }
+
+        public ICommand SearchByMessageIDCommand { get; }
+
+        public ICommand RetryMessageCommand { get; }
 
         public void ShowBody()
         {
@@ -78,43 +84,19 @@
             Bounds = new Rect(new Point(), new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
         }
 
-        public bool ShowExceptionInfo
-        {
-            get { return !string.IsNullOrEmpty(ExceptionMessage); }
-        }
+        public bool ShowExceptionInfo => !string.IsNullOrEmpty(ExceptionMessage);
 
-        public string NSBVersion
-        {
-            get { return Message.GetHeaderByKey(MessageHeaderKeys.Version); }
-        }
+        public string NSBVersion => Message.GetHeaderByKey(MessageHeaderKeys.Version);
 
-        public bool IsPublished
-        {
-            get { return Message.MessageIntent == MessageIntent.Publish; }
-        }
+        public bool IsPublished => Message.MessageIntent == MessageIntent.Publish;
 
-        public bool IsEventMessage
-        {
-            get { return IsPublished && !IsTimeout; }
-        }
+        public bool IsEventMessage => IsPublished && !IsTimeout;
 
-        public bool IsCommandMessage
-        {
-            get { return !IsPublished && !IsTimeout; }
-        }
+        public bool IsCommandMessage => !IsPublished && !IsTimeout;
 
-        public bool IsTimeoutMessage
-        {
-            get { return IsTimeout; }
-        }
+        public bool IsTimeoutMessage => IsTimeout;
 
-        public bool IsSagaInitiated
-        {
-            get
-            {
-                return string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId)) && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
-            }
-        }
+        public bool IsSagaInitiated => string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId)) && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
 
         public bool IsSagaCompleted
         {
@@ -140,37 +122,22 @@
             {
                 var timeString = Message.GetHeaderByKey(MessageHeaderKeys.TimeSent);
                 if (string.IsNullOrEmpty(timeString))
+                {
                     return null;
+                }
+
                 return DateTime.ParseExact(timeString, HeaderInfo.MessageDateFormat, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
 
-        public bool HasFailed
-        {
-            get
-            {
-                return Message.Status == MessageStatus.Failed ||
-                       Message.Status == MessageStatus.RepeatedFailure || Message.Status == MessageStatus.ArchivedFailure;
-            }
-        }
+        public bool HasFailed => Message.Status == MessageStatus.Failed ||
+       Message.Status == MessageStatus.RepeatedFailure || Message.Status == MessageStatus.ArchivedFailure;
 
-        public bool HasRetried
-        {
-            get
-            {
-                return Message.Status == MessageStatus.RetryIssued;
-            }
-        }
+        public bool HasRetried => Message.Status == MessageStatus.RetryIssued;
 
-        public string SagaType { get; private set; }
+        public string SagaType { get; }
 
-        public bool HasSaga
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(SagaType);
-            }
-        }
+        public bool HasSaga => !string.IsNullOrEmpty(SagaType);
 
         public string ExceptionMessage { get; set; }
 

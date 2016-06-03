@@ -7,8 +7,8 @@ namespace ServiceInsight.Shell
     using System.Windows.Input;
     using Caliburn.Micro;
     using ExtensionMethods;
-    using ServiceInsight.Framework;
     using ServiceControl;
+    using ServiceInsight.Framework;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
@@ -17,15 +17,15 @@ namespace ServiceInsight.Shell
 
         IServiceControl serviceControl;
 
-        public event EventHandler<ActivationEventArgs> Activated = delegate { };
+        public event EventHandler<ActivationEventArgs> Activated = (s, e) => { };
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public event PropertyChangedEventHandler PropertyChanged = (s, e) => { };
 
-        public bool IsSplash { get; private set; }
+        public bool IsSplash { get; }
 
-        public bool HasFullLicense { get { return License != null && !License.HasTrialLicense; } }
+        public bool HasFullLicense => License != null && !License.HasTrialLicense;
 
-        public LicenseRegistrationViewModel License { get; private set; }
+        public LicenseRegistrationViewModel License { get; }
 
         public string AppVersion { get; private set; }
 
@@ -39,7 +39,7 @@ namespace ServiceInsight.Shell
 
         public bool IsActive { get; private set; }
 
-        public ICommand NavigateToSiteCommand { get; private set; }
+        public ICommand NavigateToSiteCommand { get; }
 
         public AboutViewModel(
             NetworkOperations networkOperations,
@@ -118,7 +118,9 @@ namespace ServiceInsight.Shell
         void LoadVersions()
         {
             if (serviceControl == null)
+            {
                 return;
+            }
 
             ServiceControlVersion = DetectingServiceControlVersion;
 

@@ -48,12 +48,6 @@
             View.OnRestoreLayout(settingsProvider);
         }
 
-        public string FormattedSource
-        {
-            get
-            {
-                return string.Format("{0} (@{1})", Exception.ExceptionType, Exception.Source);
-            }
-        }
+        public string FormattedSource => string.Format("{0} (@{1})", Exception.ExceptionType, Exception.Source);
     }
 }

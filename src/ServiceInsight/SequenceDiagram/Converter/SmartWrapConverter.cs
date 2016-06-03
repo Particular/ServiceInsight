@@ -7,7 +7,7 @@ namespace ServiceInsight.SequenceDiagram.Converter
 
     public class SmartWrapConverter : IValueConverter
     {
-        private static readonly Regex PascalCaseWordPartsRegex;
+        static readonly Regex PascalCaseWordPartsRegex;
 
         static SmartWrapConverter()
         {

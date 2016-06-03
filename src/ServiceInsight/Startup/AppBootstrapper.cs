@@ -45,7 +45,7 @@
             ClearAutomationEventsHelper.IsEnabled = false;
         }
 
-        private void CreateContainer()
+        void CreateContainer()
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
@@ -75,10 +75,7 @@
             Application.Exit += OnExit;
         }
 
-        protected override IEnumerable<object> GetAllInstances(Type service)
-        {
-            return container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
-        }
+        protected override IEnumerable<object> GetAllInstances(Type service) => container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
 
         protected override object GetInstance(Type service, string key)
         {

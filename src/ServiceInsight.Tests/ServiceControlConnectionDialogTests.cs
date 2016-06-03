@@ -2,12 +2,12 @@
 {
     using Autofac;
     using Caliburn.Micro;
-    using ServiceInsight.ServiceControl;
-    using ServiceInsight.Settings;
-    using ServiceInsight.Shell;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Framework.Settings;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
     using Shouldly;
 
     [TestFixture]
@@ -35,7 +35,7 @@
         }
 
         [Test]
-        public void should_be_able_to_connect_to_a_valid_service()
+        public void Should_be_able_to_connect_to_a_valid_service()
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
@@ -46,7 +46,7 @@
         }
 
         [Test]
-        public void should_store_connection_address_and_add_it_to_recent_entries()
+        public void Should_store_connection_address_and_add_it_to_recent_entries()
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";

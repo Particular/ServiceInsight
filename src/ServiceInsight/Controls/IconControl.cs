@@ -6,7 +6,6 @@
     using System.Windows.Shapes;
     using global::ServiceInsight.SequenceDiagram.Diagram;
 
-
     [TemplatePart(Name = "PART_Path", Type = typeof(Path))]
     public class IconControl : Control
     {
@@ -27,12 +26,13 @@
             set { SetValue(DataProperty, value); }
         }
 
-        public ArrowType Type {
+        public ArrowType Type
+        {
             get { return (ArrowType)GetValue(TypeProperty); }
             set { SetValue(TypeProperty, value); }
         }
 
-        private Path path;
+        Path path;
 
         public override void OnApplyTemplate()
         {
@@ -46,7 +46,9 @@
         void OnDataChanged()
         {
             if (path != null)
+            {
                 path.Data = Data;
+            }
         }
     }
 }

@@ -4,9 +4,6 @@
 
     public class EnvironmentWrapper
     {
-        public virtual string[] GetCommandLineArgs()
-        {
-            return Environment.GetCommandLineArgs();
-        }
+        public virtual string[] GetCommandLineArgs() => Environment.GetCommandLineArgs();
     }
 }

@@ -13,9 +13,9 @@ namespace ServiceInsight.Controls
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(MvvmTextEditor), new PropertyMetadata((obj, args) =>
             {
-                var target = (MvvmTextEditor) obj;
+                var target = (MvvmTextEditor)obj;
 
-                target.Text = (string) args.NewValue;
+                target.Text = (string)args.NewValue;
             }));
 
         /// <summary>
@@ -41,7 +41,6 @@ namespace ServiceInsight.Controls
         /// </summary>
         /// <param name="property">The name of the property that updates</param>
         public void RaisePropertyChanged(string property)
-
         {
             if (PropertyChanged != null)
             {

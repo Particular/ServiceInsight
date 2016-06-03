@@ -5,9 +5,6 @@
 
     static class UniversalDateParser
     {
-        public static DateTime Parse(string value)
-        {
-            return DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal).ToUniversalTime();
-        }
+        public static DateTime Parse(string value) => DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal).ToUniversalTime();
     }
 }

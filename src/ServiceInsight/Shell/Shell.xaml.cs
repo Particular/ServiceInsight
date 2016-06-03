@@ -25,14 +25,16 @@
         void OnShellLoaded(object sender, RoutedEventArgs e)
         {
             if (DXSplashScreen.IsActive)
+            {
                 DXSplashScreen.Close();
+            }
 
             Activate();
 
             OpenClosedPanels();
         }
 
-        private void OpenClosedPanels()
+        void OpenClosedPanels()
         {
             foreach (var panel in DockManager.ClosedPanels.ToArray())
             {
@@ -113,10 +115,7 @@
             OnRestoreLayout(settingsProvider);
         }
 
-        string GetCurrentLayoutVersion()
-        {
-            return DXSerializer.GetLayoutVersion(BarManager);
-        }
+        string GetCurrentLayoutVersion() => DXSerializer.GetLayoutVersion(BarManager);
 
         string GetLayout(dynamic control) //Lack of common interface :(
         {
@@ -138,7 +137,9 @@
         void SetLayout(dynamic control, Stream layout)
         {
             if (layout == null)
+            {
                 return;
+            }
 
             try
             {
@@ -150,10 +151,7 @@
             }
         }
 
-        ShellViewModel Model
-        {
-            get { return DataContext as ShellViewModel; }
-        }
+        ShellViewModel Model => DataContext as ShellViewModel;
 
         void MessageBody_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

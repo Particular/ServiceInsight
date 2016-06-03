@@ -6,9 +6,9 @@ namespace ServiceInsight.Tests
     [TestFixture]
     class SequenceDiagramModelCreatorTestsForJson3 : SequenceDiagramModelCreatorTestsFromJson
     {
-        public SequenceDiagramModelCreatorTestsForJson3() : base("json3.json")
+        public SequenceDiagramModelCreatorTestsForJson3()
+            : base("json3.json")
         {
-
         }
 
         [Test]

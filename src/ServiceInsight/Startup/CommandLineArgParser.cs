@@ -13,12 +13,9 @@
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
 
-        public CommandLineOptions ParsedOptions { get; private set; }
+        public CommandLineOptions ParsedOptions { get; }
 
-        public bool HasUnsupportedKeys
-        {
-            get { return unsupportedKeys.Count > 0; }
-        }
+        public bool HasUnsupportedKeys => unsupportedKeys.Count > 0;
 
         public CommandLineArgParser(EnvironmentWrapper environment)
         {
@@ -33,11 +30,17 @@
 
             LogTo.Debug("Application invoked with following arguments: {args}", args);
 
-            if (args.Length != 2) return;
+            if (args.Length != 2)
+            {
+                return;
+            }
 
             var uri = args[1].Split(UriSeparator);
 
-            if (uri.Length == 0) return;
+            if (uri.Length == 0)
+            {
+                return;
+            }
 
             if (uri.Length > 0)
             {

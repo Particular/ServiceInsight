@@ -44,7 +44,10 @@ namespace ServiceInsight.Framework.MessageDecoders
 
         bool TryLoadIntoDocument(string xml, XmlDocument document)
         {
-            if (string.IsNullOrWhiteSpace(xml)) return false;
+            if (string.IsNullOrWhiteSpace(xml))
+            {
+                return false;
+            }
 
             try
             {
@@ -57,9 +60,6 @@ namespace ServiceInsight.Framework.MessageDecoders
             }
         }
 
-        DecoderResult IContentDecoder.Decode(byte[] content)
-        {
-            return Decode(content);
-        }
+        DecoderResult IContentDecoder.Decode(byte[] content) => Decode(content);
     }
 }

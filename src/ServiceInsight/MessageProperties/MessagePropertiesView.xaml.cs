@@ -17,15 +17,12 @@
             {
                 var propertyProvider = data.Value as IPropertyDataProvider;
                 var valueToCopy = propertyProvider != null ? propertyProvider.DisplayName : data.Value;
-                
+
                 Model.CopyPropertyValue(valueToCopy);
             }
         }
 
-        MessagePropertiesViewModel Model
-        {
-            get { return (MessagePropertiesViewModel)DataContext; }
-        }
+        MessagePropertiesViewModel Model => (MessagePropertiesViewModel)DataContext;
     }
 
     public interface IMessagePropertiesView

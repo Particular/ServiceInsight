@@ -5,9 +5,9 @@ namespace ServiceInsight.LogWindow
 
     public class LogMessage
     {
-        private readonly string log;
-        private readonly Brush brush;
-        private readonly FontWeight weight;
+        readonly string log;
+        readonly Brush brush;
+        readonly FontWeight weight;
 
         public LogMessage(string log, Color color, bool bold = false)
         {
@@ -16,10 +16,10 @@ namespace ServiceInsight.LogWindow
             weight = bold ? FontWeights.Bold : FontWeights.Normal;
         }
 
-        public string Log { get { return log; } }
+        public string Log => log;
 
-        public Brush Brush { get { return brush; } }
+        public Brush Brush => brush;
 
-        public FontWeight Weight { get { return weight; } }
+        public FontWeight Weight => weight;
     }
 }

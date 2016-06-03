@@ -15,7 +15,9 @@
         {
             var handler = e.Instance as IHandle;
             if (handler != null)
+            {
                 e.Context.Resolve<IEventAggregator>().Subscribe(handler);
+            }
         }
     }
 }

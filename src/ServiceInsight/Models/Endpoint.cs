@@ -7,6 +7,7 @@
     public class Endpoint
     {
         string host;
+
         public string Name { get; set; }
 
         public string Host
@@ -25,61 +26,61 @@
         {
             get
             {
-                if (EndpointProperties == null) return false;
+                if (EndpointProperties == null)
+                {
+                    return false;
+                }
+
                 var heartbeat = EndpointProperties.FirstOrDefault(p => string.Equals("monitored", p.Key, StringComparison.InvariantCultureIgnoreCase));
-                if (heartbeat == null) return false;
+                if (heartbeat == null)
+                {
+                    return false;
+                }
+
                 return bool.Parse(heartbeat.Value);
             }
         }
 
-        public string Address
-        {
-            get { return string.Format("{0}{1}", Name, AtMachine()); }
-        }
+        public string Address => string.Format("{0}{1}", Name, AtMachine());
 
-        string AtMachine()
-        {
-            return string.IsNullOrEmpty(Host) ? string.Empty : string.Format("@{0}", Host);
-        }
+        string AtMachine() => string.IsNullOrEmpty(Host) ? string.Empty : string.Format("@{0}", Host);
 
-        protected bool Equals(Endpoint other)
-        {
-            return other != null && string.Equals(Address, other.Address);
-        }
+        protected bool Equals(Endpoint other) => other != null && string.Equals(Address, other.Address);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
             return Equals((Endpoint)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return (Address != null ? Address.GetHashCode() : 0);
-        }
+        public override int GetHashCode() => Address != null ? Address.GetHashCode() : 0;
 
-        public static bool operator ==(Endpoint left, Endpoint right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==(Endpoint left, Endpoint right) => Equals(left, right);
 
-        public static bool operator !=(Endpoint left, Endpoint right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=(Endpoint left, Endpoint right) => !Equals(left, right);
 
-        public override string ToString()
-        {
-            return Address;
-        }
+        public override string ToString() => Address;
     }
 
     [Serializable]
     public class EndpointProperty //not using KeyValuePair<,> as it is read-only and the rest client can't hydrate it
     {
         public string Key { get; set; }
+
         public string Value { get; set; }
     }
 }

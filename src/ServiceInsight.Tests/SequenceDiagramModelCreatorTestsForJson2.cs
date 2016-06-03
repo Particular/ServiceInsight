@@ -7,7 +7,8 @@ namespace ServiceInsight.Tests
     [TestFixture]
     class SequenceDiagramModelCreatorTestsForJson2 : SequenceDiagramModelCreatorTestsFromJson
     {
-        public SequenceDiagramModelCreatorTestsForJson2() : base("json2.json")
+        public SequenceDiagramModelCreatorTestsForJson2()
+            : base("json2.json")
         {
         }
 

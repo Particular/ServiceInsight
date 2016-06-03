@@ -26,7 +26,7 @@
 
     public class EventConnection : DiagramConnection
     {
-        public EventConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint) 
+        public EventConnection(DiagramConnectionPoint fromConnectionPoint, DiagramConnectionPoint toConnectionPoint)
             : base(fromConnectionPoint, toConnectionPoint)
         {
             LineType = null;

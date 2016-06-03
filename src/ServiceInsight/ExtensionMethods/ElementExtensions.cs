@@ -8,7 +8,11 @@
     {
         public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj) where T : DependencyObject
         {
-            if (depObj == null) yield break;
+            if (depObj == null)
+            {
+                yield break;
+            }
+
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
                 var child = VisualTreeHelper.GetChild(depObj, i);
@@ -26,7 +30,7 @@
 
         public static T GetResource<T>(this DependencyObject element, object key)
         {
-            for (var dependencyObject = element; dependencyObject != null; dependencyObject = (LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject)))
+            for (var dependencyObject = element; dependencyObject != null; dependencyObject = LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject))
             {
                 var frameworkElement = dependencyObject as FrameworkElement;
                 if (frameworkElement != null)

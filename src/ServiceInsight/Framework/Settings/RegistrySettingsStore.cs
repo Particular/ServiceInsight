@@ -16,7 +16,9 @@
             this.registryKey = registryKey;
 
             if (!this.registryKey.EndsWith("\\"))
+            {
                 this.registryKey += "\\";
+            }
         }
 
         public void Save<T>(string key, T settings)

@@ -1,12 +1,13 @@
 ﻿namespace ServiceInsight.Tests
 {
-    using NUnit.Framework;
     using ConversationsData;
+    using NUnit.Framework;
 
     [TestFixture]
     class SequenceDiagramModelCreatorTestsForJson4 : SequenceDiagramModelCreatorTestsFromJson
     {
-        public SequenceDiagramModelCreatorTestsForJson4() : base("json4.json")
+        public SequenceDiagramModelCreatorTestsForJson4()
+            : base("json4.json")
         {
         }
 

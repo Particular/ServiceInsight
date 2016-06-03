@@ -9,7 +9,9 @@
         {
             var count = VisualTreeHelper.GetChildrenCount(parentElement);
             if (count == 0)
+            {
                 return null;
+            }
 
             for (int i = 0; i < count; i++)
             {
@@ -23,8 +25,9 @@
                 {
                     var result = FindFirstVisualChild<T>(child);
                     if (result != null)
+                    {
                         return result;
-
+                    }
                 }
             }
             return null;

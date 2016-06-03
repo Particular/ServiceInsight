@@ -2,7 +2,7 @@
 {
     using System.Windows.Input;
 
-    public partial class SearchBarView 
+    public partial class SearchBarView
     {
         public SearchBarView()
         {
@@ -17,9 +17,6 @@
             }
         }
 
-        SearchBarViewModel Model
-        {
-            get { return DataContext as SearchBarViewModel; }
-        }
+        SearchBarViewModel Model => DataContext as SearchBarViewModel;
     }
 }

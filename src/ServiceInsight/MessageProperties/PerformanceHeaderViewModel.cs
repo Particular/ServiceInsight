@@ -31,7 +31,7 @@
 
         [Description("Calculated duration of processing")]
         public string ProcessingTime { get; private set; }
-        
+
         protected override void OnMessagePropertiesLoaded()
         {
             if (!ProcessingStarted.HasValue ||

@@ -16,23 +16,22 @@
         public Handler(string id, IMessageCommandContainer container)
         {
             this.id = id;
-            this.ChangeCurrentMessage = container?.ChangeSelectedMessageCommand;
+            ChangeCurrentMessage = container?.ChangeSelectedMessageCommand;
             Out = new List<Arrow>();
         }
 
         public EndpointItem Endpoint { get; set; }
 
-        public bool IsPartOfSaga
-        {
-            get { return PartOfSaga != null; }
-        }
+        public bool IsPartOfSaga => PartOfSaga != null;
 
         public HandlerState State { get; set; }
+
         public string PartOfSaga { get; set; }
 
         public Arrow In
         {
             get { return arrowIn; }
+
             set
             {
                 if (arrowIn != null)
@@ -53,7 +52,9 @@
         public void UpdateProcessedAtGuess(DateTime? timeSent)
         {
             if (!timeSent.HasValue)
+            {
                 return;
+            }
 
             if (!processedAtGuess.HasValue || processedAtGuess.Value > timeSent.Value)
             {
@@ -61,19 +62,13 @@
             }
         }
 
-        public DateTime? HandledAt
-        {
-            get { return ProcessedAt ?? processedAtGuess; }
-        }
+        public DateTime? HandledAt => ProcessedAt ?? processedAtGuess;
 
         public TimeSpan? ProcessingTime { get; set; }
 
         public Direction EffectiveArrowDirection => Out?.FirstOrDefault()?.Direction == Direction.Left ? Direction.Right : Direction.Left;
 
-        public string ID
-        {
-            get { return id; }
-        }
+        public string ID => id;
 
         protected override void OnIsFocusedChanged()
         {
@@ -83,13 +78,7 @@
             }
         }
 
-        public StoredMessage SelectedMessage
-        {
-            get
-            {
-                return Route?.FromArrow.SelectedMessage;
-            }
-        }
+        public StoredMessage SelectedMessage => Route?.FromArrow.SelectedMessage;
 
         public MessageProcessingRoute Route { get; set; }
 

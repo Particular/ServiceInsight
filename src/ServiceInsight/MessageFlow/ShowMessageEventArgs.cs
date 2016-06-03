@@ -9,6 +9,6 @@
             MessageNode = message;
         }
 
-        public MessageNode MessageNode { get; private set; }
+        public MessageNode MessageNode { get; }
     }
 }

@@ -14,8 +14,11 @@
     public class JsonMessageDeserializer : IDeserializer
     {
         public string RootElement { get; set; }
+
         public string Namespace { get; set; }
+
         public string DateFormat { get; set; }
+
         public CultureInfo Culture { get; set; }
 
         public JsonMessageDeserializer()
@@ -70,7 +73,9 @@
         {
             var notifiableTarget = target as INotifyPropertyChangedEx;
             if (notifiableTarget != null)
+            {
                 notifiableTarget.IsNotifying = false;
+            }
 
             var objType = target.GetType();
             var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
@@ -95,13 +100,18 @@
                 var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
                 var value = actualName != null ? data[actualName] : null;
 
-                if (value == null) continue;
+                if (value == null)
+                {
+                    continue;
+                }
 
                 prop.SetValue(target, ConvertValue(type, value), null);
             }
 
             if (notifiableTarget != null)
+            {
                 notifiableTarget.IsNotifying = true;
+            }
         }
 
         IDictionary BuildDictionary(Type type, object parent)
@@ -183,12 +193,15 @@
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 // Since the type is nullable and no value is provided return null
-                if (String.IsNullOrEmpty(stringValue)) return null;
+                if (string.IsNullOrEmpty(stringValue))
+                {
+                    return null;
+                }
 
                 type = type.GetGenericArguments()[0];
             }
 
-            if (type == typeof(Object) && value != null)
+            if (type == typeof(object) && value != null)
             {
                 type = value.GetType();
             }
@@ -231,12 +244,14 @@
                     return (DateTimeOffset)dt;
                 }
             }
-            else if (type == typeof(Decimal))
+            else if (type == typeof(decimal))
             {
                 if (value is double)
+                {
                     return (decimal)((double)value);
+                }
 
-                return Decimal.Parse(stringValue, Culture);
+                return decimal.Parse(stringValue, Culture);
             }
             else if (type == typeof(byte[]))
             {
@@ -291,9 +306,6 @@
             return instance;
         }
 
-        byte[] ConvertByteArray(string str)
-        {
-            return str.Length > 0 ? Encoding.UTF8.GetBytes(str) : new byte[0];
-        }
+        byte[] ConvertByteArray(string str) => str.Length > 0 ? Encoding.UTF8.GetBytes(str) : new byte[0];
     }
 }

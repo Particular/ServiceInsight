@@ -80,9 +80,6 @@
             return new DecoderResult<IList<HeaderInfo>>();
         }
 
-        DecoderResult IContentDecoder.Decode(byte[] content)
-        {
-            return Decode(content);
-        }
+        DecoderResult IContentDecoder.Decode(byte[] content) => Decode(content);
     }
 }

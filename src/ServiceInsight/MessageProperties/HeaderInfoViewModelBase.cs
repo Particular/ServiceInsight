@@ -25,7 +25,7 @@
             MapHeaderKeys();
         }
 
-        protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; private set; }
+        protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; }
 
         protected IEventAggregator EventAggregator { get; }
 

@@ -9,7 +9,9 @@
         public static BitmapImage ToBitmapImage(this Image image)
         {
             if (image == null)
+            {
                 return null;
+            }
 
             var ms = new MemoryStream();
             image.Save(ms, image.RawFormat);

@@ -7,7 +7,8 @@
     // Properties without a DisplayNameAttribute aren't automatically added to the options dialog.
     public class ProfilerSettings : INotifyPropertyChanged
     {
-        int autoRefresh, cacheSize;
+        int autoRefresh;
+        int cacheSize;
 
         public ProfilerSettings()
         {

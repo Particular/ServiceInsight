@@ -5,8 +5,8 @@
     using System.Linq;
     using Autofac;
     using Caliburn.Micro;
-    using ServiceInsight.Framework.Settings;
     using ServiceControl;
+    using ServiceInsight.Framework.Settings;
     using Settings;
 
     public class ServiceControlConnectionViewModel : Screen
@@ -42,20 +42,14 @@
             RecentEntries = GetRecentServiceEntries();
         }
 
-        List<string> GetRecentServiceEntries()
-        {
-            return appSettings.RecentServiceControlEntries.ToList();
-        }
+        List<string> GetRecentServiceEntries() => appSettings.RecentServiceControlEntries.ToList();
 
         public virtual void Close()
         {
             TryClose(false);
         }
 
-        public virtual bool CanAccept()
-        {
-            return !string.IsNullOrEmpty(ServiceUrl);
-        }
+        public virtual bool CanAccept() => !string.IsNullOrEmpty(ServiceUrl);
 
         public List<string> RecentEntries { get; private set; }
 
@@ -96,7 +90,9 @@
         {
             var existingEntry = appSettings.RecentServiceControlEntries.FirstOrDefault(x => x.Equals(ServiceUrl, StringComparison.InvariantCultureIgnoreCase));
             if (existingEntry != null)
+            {
                 appSettings.RecentServiceControlEntries.Remove(existingEntry);
+            }
 
             appSettings.RecentServiceControlEntries.Add(ServiceUrl);
             appSettings.LastUsedServiceControl = ServiceUrl;

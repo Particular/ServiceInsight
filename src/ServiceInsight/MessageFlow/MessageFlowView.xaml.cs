@@ -21,7 +21,10 @@
 
         public void ApplyLayout()
         {
-            if (!IsVisible) return;
+            if (!IsVisible)
+            {
+                return;
+            }
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -35,10 +38,7 @@
             }), DispatcherPriority.Loaded);
         }
 
-        public DiagramSurface Surface
-        {
-            get { return ds; }
-        }
+        public DiagramSurface Surface => ds;
 
         void MessageRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -69,7 +69,7 @@
             }
         }
 
-        private void OnBoundsChangeRequested(object sender, BoundsChangeRequestedEventArgs e)
+        void OnBoundsChangeRequested(object sender, BoundsChangeRequestedEventArgs e)
         {
             var node = e.DiagramNodeElement.Node;
             node.Bounds = new Rect(node.Bounds.X, node.Bounds.Y, e.Width, node.Bounds.Height);

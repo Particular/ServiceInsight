@@ -38,8 +38,10 @@
         }
 
         public ReactiveList<LogMessage> Logs { get; set; }
-        public ICommand ClearCommand { get; private set; }
-        public ICommand CopyCommand { get; private set; }
+
+        public ICommand ClearCommand { get; }
+
+        public ICommand CopyCommand { get; }
 
         void Clear()
         {
@@ -54,7 +56,9 @@
         void UpdateLog(LogEvent loggingEvent)
         {
             if (Logs.Count > MaxTextLength)
+            {
                 Clear();
+            }
 
             var sr = new StringWriter();
             textFormatter.Format(loggingEvent, sr);

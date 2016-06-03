@@ -22,7 +22,7 @@
         IHandle<WorkFinished>,
         IWorkTracker
     {
-        private const int MAX_SAVED_SEARCHES = 10;
+        const int MAX_SAVED_SEARCHES = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
@@ -44,7 +44,9 @@
             RestoreRecentSearchEntries();
 
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
+            {
                 Search(commandLineArgParser.ParsedOptions.SearchQuery);
+            }
         }
 
         public void GoToFirstPage()
@@ -67,9 +69,9 @@
             Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
         }
 
-        public ICommand SearchCommand { get; private set; }
+        public ICommand SearchCommand { get; }
 
-        public ICommand CancelSearchCommand { get; private set; }
+        public ICommand CancelSearchCommand { get; }
 
         public void Search(string searchQuery, bool performSearch = true)
         {
@@ -78,7 +80,10 @@
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
 
-            if (performSearch) Search();
+            if (performSearch)
+            {
+                Search();
+            }
         }
 
         public void Search()
@@ -109,20 +114,11 @@
             Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
         }
 
-        public bool CanGoToLastPage
-        {
-            get { return CurrentPage < PageCount && !WorkInProgress; }
-        }
+        public bool CanGoToLastPage => CurrentPage < PageCount && !WorkInProgress;
 
-        public bool CanCancelSearch
-        {
-            get { return SearchInProgress; }
-        }
+        public bool CanCancelSearch => SearchInProgress;
 
-        public new MessageListViewModel Parent
-        {
-            get { return base.Parent as MessageListViewModel; }
-        }
+        public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
         public int PageCount
         {
@@ -137,46 +133,25 @@
             }
         }
 
-        public bool WorkInProgress
-        {
-            get { return workCount > 0; }
-        }
+        public bool WorkInProgress => workCount > 0;
 
         public Endpoint SelectedEndpoint { get; private set; }
 
         public string SearchQuery { get; set; }
 
-        public string SearchResultMessage
-        {
-            get { return GetSearchResultMessage(); }
-        }
+        public string SearchResultMessage => GetSearchResultMessage();
 
-        public string SearchResultHeader
-        {
-            get { return GetSearchResultHeader(); }
-        }
+        public string SearchResultHeader => GetSearchResultHeader();
 
-        public string SearchResultResults
-        {
-            get { return GetSearchResultResults(); }
-        }
+        public string SearchResultResults => GetSearchResultResults();
 
         public bool IsVisible { get; set; }
 
-        public bool CanGoToFirstPage
-        {
-            get { return CurrentPage > 1 && !WorkInProgress; }
-        }
+        public bool CanGoToFirstPage => CurrentPage > 1 && !WorkInProgress;
 
-        public bool CanGoToPreviousPage
-        {
-            get { return CurrentPage - 1 >= 1 && !WorkInProgress; }
-        }
+        public bool CanGoToPreviousPage => CurrentPage - 1 >= 1 && !WorkInProgress;
 
-        public bool CanGoToNextPage
-        {
-            get { return CurrentPage + 1 <= PageCount && !WorkInProgress; }
-        }
+        public bool CanGoToNextPage => CurrentPage + 1 <= PageCount && !WorkInProgress;
 
         public IList<StoredMessage> Result { get; private set; }
 
@@ -184,7 +159,7 @@
 
         public int CurrentPage { get; private set; }
 
-        public int PageSize { get; private set; }
+        public int PageSize { get; }
 
         public int TotalItemCount { get; private set; }
 
@@ -192,15 +167,9 @@
 
         public bool SearchEnabled { get; private set; }
 
-        public bool CanSearch
-        {
-            get { return !WorkInProgress && !string.IsNullOrWhiteSpace(SearchQuery); }
-        }
+        public bool CanSearch => !WorkInProgress && !string.IsNullOrWhiteSpace(SearchQuery);
 
-        public bool CanRefreshResult
-        {
-            get { return !WorkInProgress; }
-        }
+        public bool CanRefreshResult => !WorkInProgress;
 
         public void NotifyPropertiesChanged()
         {
@@ -265,7 +234,10 @@
 
         void AddRecentSearchEntry(string searchQuery)
         {
-            if (searchQuery.IsEmpty()) return;
+            if (searchQuery.IsEmpty())
+            {
+                return;
+            }
 
             var setting = settingProvider.GetSettings<ProfilerSettings>();
             if (!setting.RecentSearchEntries.Contains(searchQuery, StringComparer.OrdinalIgnoreCase))
@@ -274,19 +246,20 @@
                 setting.RecentSearchEntries.Insert(0, searchQuery);
 
                 while (RecentSearchQueries.Count > MAX_SAVED_SEARCHES)
+                {
                     RecentSearchQueries.RemoveAt(RecentSearchQueries.Count - 1);
+                }
 
                 while (setting.RecentSearchEntries.Count > MAX_SAVED_SEARCHES)
+                {
                     setting.RecentSearchEntries.RemoveAt(setting.RecentSearchEntries.Count - 1);
+                }
 
                 settingProvider.SaveSettings(setting);
             }
         }
 
-        string GetSearchResultMessage()
-        {
-            return string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
-        }
+        string GetSearchResultMessage() => string.Format("{0}{1}", GetSearchResultHeader(), GetSearchResultResults());
 
         string GetSearchResultHeader()
         {

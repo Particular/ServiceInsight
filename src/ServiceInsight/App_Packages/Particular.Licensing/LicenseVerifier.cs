@@ -22,7 +22,6 @@
                 failure = ex;
                 return false;
             }
-
         }
 
         public static void Verify(string licenseText)

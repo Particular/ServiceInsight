@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Mindscape.Raygun4Net;
-using ServiceInsight.ExtensionMethods;
-using ServiceInsight.Models;
-
-namespace ServiceInsight.Framework
+﻿namespace ServiceInsight.Framework
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Mindscape.Raygun4Net;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Models;
+
     static class RaygunUtility
     {
         public static string LastServiceControlVersion { get; set; }
@@ -40,15 +40,14 @@ namespace ServiceInsight.Framework
             client.SendInBackground(e, null, extraData);
         }
 
-        private static void AddServiceControlVersion(IDictionary extraData)
+        static void AddServiceControlVersion(IDictionary extraData)
         {
             if (!string.IsNullOrEmpty(LastServiceControlVersion))
+            {
                 extraData.Add("ServiceControlVersion", LastServiceControlVersion);
+            }
         }
 
-        private static IDictionary StoredMessageToDictionary(StoredMessage storedMessage)
-        {
-            return storedMessage.Headers.ToDictionary(h => h.Key, h => h.Value);
-        }
+        static IDictionary StoredMessageToDictionary(StoredMessage storedMessage) => storedMessage.Headers.ToDictionary(h => h.Key, h => h.Value);
     }
 }

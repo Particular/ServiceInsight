@@ -1,43 +1,43 @@
 ﻿namespace ServiceInsight.Tests
 {
     using Caliburn.Micro;
-    using ServiceInsight.MessageViewers.XmlViewer;
-    using ServiceInsight.Models;
     using NSubstitute;
     using NUnit.Framework;
+    using ServiceInsight.MessageViewers.XmlViewer;
+    using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
     using Shouldly;
 
     [TestFixture]
     public class XmlViewerViewModelTests
     {
-        XmlMessageViewModel ViewModel;
-        IXmlMessageView View;
+        XmlMessageViewModel viewModel;
+        IXmlMessageView view;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
         public void TestInitialize()
         {
-            View = Substitute.For<IXmlMessageView>();
-            ViewModel = new XmlMessageViewModel();
-            ((IActivate)ViewModel).Activate();
+            view = Substitute.For<IXmlMessageView>();
+            viewModel = new XmlMessageViewModel();
+            ((IActivate)viewModel).Activate();
         }
 
         [Test]
-        public void should_clear_message_body_when_selected_message_is_unselected()
+        public void Should_clear_message_body_when_selected_message_is_unselected()
         {
-            ViewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
-            ViewModel.Display(null);
+            viewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
+            viewModel.Display(null);
 
-            ViewModel.SelectedMessage.ShouldBe(null);
+            viewModel.SelectedMessage.ShouldBe(null);
         }
 
         [Test]
-        public void should_not_load_the_message_when_view_is_not_loaded()
+        public void Should_not_load_the_message_when_view_is_not_loaded()
         {
-            ViewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
+            viewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
 
-            View.DidNotReceive().Display(Arg.Any<string>());
+            view.DidNotReceive().Display(Arg.Any<string>());
         }
     }
 }

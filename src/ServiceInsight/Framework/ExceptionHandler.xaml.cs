@@ -29,7 +29,9 @@
         {
             var ex = e.ExceptionObject as Exception;
             if (ex != null)
+            {
                 HandleException(ex);
+            }
         }
 
         static void CurrentDispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -44,10 +46,12 @@
             HandleException(e.Exception);
         }
 
-        public static Action<Exception> HandleException = ex =>
+        public static Action<Exception> HandleException { get; set; } = ex =>
         {
             if (ex == null)
+            {
                 return;
+            }
 
             var rootError = ex.GetBaseException();
 
@@ -58,7 +62,9 @@
         static void LogException(Exception ex)
         {
             if (ex == null)
+            {
                 return;
+            }
 
             var baseError = ex.GetBaseException();
 

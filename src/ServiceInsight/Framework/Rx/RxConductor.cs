@@ -1,11 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using Caliburn.Micro;
-using ObservablePropertyChanged;
-
-namespace ServiceInsight.Framework.Rx
+﻿namespace ServiceInsight.Framework.Rx
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using Caliburn.Micro;
+    using ObservablePropertyChanged;
+
     public class RxConductor<T> : Conductor<T>, IObservablePropertyChanged where T : class
     {
         ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();

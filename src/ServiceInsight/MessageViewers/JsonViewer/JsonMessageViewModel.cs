@@ -24,7 +24,10 @@
 
         public void OnSelectedMessageChanged()
         {
-            if (messageView == null) return;
+            if (messageView == null)
+            {
+                return;
+            }
 
             messageView.Clear();
 

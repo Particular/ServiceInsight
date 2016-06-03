@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.Framework.Commands
 {
-    using Settings;
-    using UI.ScreenManager;
     using MessageFlow;
     using Models;
+    using Settings;
+    using UI.ScreenManager;
 
     public class ShowExceptionCommand : BaseCommand
     {
@@ -20,7 +20,7 @@
         {
             var selectedMessage = (StoredMessage)parameter;
             var model = new ExceptionDetailViewModel(settingsProvider, new ExceptionDetails(selectedMessage));
-            
+
             windowManager.ShowDialog(model);
         }
     }

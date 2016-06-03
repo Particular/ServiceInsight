@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Models;
-    using ServiceControl;
     using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using MessageList;
+    using Models;
+    using ServiceControl;
 
     public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -25,14 +25,14 @@
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
-            this.selection = selectionContext;
+            selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(InstallScriptText));
         }
 
         public string InstallScriptText { get; set; }
 
-        public ICommand CopyCommand { get; private set; }
+        public ICommand CopyCommand { get; }
 
         public void OnShowMessageDataChanged()
         {
@@ -76,7 +76,10 @@
         public void Handle(SelectedMessageChanged @event)
         {
             var message = selection.SelectedMessage;
-            if (message == null) return;
+            if (message == null)
+            {
+                return;
+            }
 
             UpdateInstallScriptText(message);
 
@@ -196,11 +199,12 @@
 
         public bool ShowSagaNotFoundWarning { get; set; }
 
-        public bool HasSaga { get { return Data != null; } }
+        public bool HasSaga => Data != null;
 
         public SagaData Data
         {
             get { return data; }
+
             private set
             {
                 data = value;
@@ -230,6 +234,7 @@
         public string SelectedMessageId
         {
             get { return selectedMessageId; }
+
             set
             {
                 selectedMessageId = value;
@@ -254,7 +259,9 @@
         void SetSelected(IEnumerable<SagaMessage> messages, string id)
         {
             if (messages == null)
+            {
                 return;
+            }
 
             foreach (var message in messages)
             {

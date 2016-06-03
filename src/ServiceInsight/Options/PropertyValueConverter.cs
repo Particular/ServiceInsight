@@ -13,7 +13,9 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
+            {
                 return Binding.DoNothing;
+            }
 
             var properties = value.GetType().GetProperties();
 
@@ -49,9 +51,6 @@
             return browsable == null || browsable.State != EditorBrowsableState.Never;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Binding.DoNothing;
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
     }
 }

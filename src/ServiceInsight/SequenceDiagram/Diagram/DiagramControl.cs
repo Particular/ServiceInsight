@@ -35,32 +35,27 @@
             set { SetValue(LayoutManagerProperty, value); }
         }
 
-        public DiagramItemCollection DiagramItems
-        {
-            get { return ItemsSource as DiagramItemCollection; }
-        }
+        public DiagramItemCollection DiagramItems => ItemsSource as DiagramItemCollection;
 
         public DiagramVisualItem GetItemFromContainer(DiagramItem item)
         {
-            if (item == null) return null;
+            if (item == null)
+            {
+                return null;
+            }
+
             return (DiagramVisualItem)ItemContainerGenerator.ContainerFromItem(item);
         }
-        
+
         public void BringIntoView(DiagramItem item)
         {
             var visual = GetItemFromContainer(item);
             visual?.BringIntoView();
         }
 
-        protected override bool IsItemItsOwnContainerOverride(object item)
-        {
-            return item is DiagramVisualItem;
-        }
+        protected override bool IsItemItsOwnContainerOverride(object item) => item is DiagramVisualItem;
 
-        protected override DependencyObject GetContainerForItemOverride()
-        {
-            return new DiagramVisualItem();
-        }
+        protected override DependencyObject GetContainerForItemOverride() => new DiagramVisualItem();
 
         public override void OnApplyTemplate()
         {

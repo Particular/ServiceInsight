@@ -14,7 +14,8 @@
             DecodedHeaders = decodedResult.IsParsed ? decodedResult.Value : new HeaderInfo[0];
         }
 
-        public IList<HeaderInfo> DecodedHeaders { get; private set; }
-        public string RawHeader { get; private set; }
+        public IList<HeaderInfo> DecodedHeaders { get; }
+
+        public string RawHeader { get; }
     }
 }

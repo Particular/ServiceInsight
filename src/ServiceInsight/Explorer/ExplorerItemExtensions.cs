@@ -4,10 +4,7 @@
 
     public static class ExplorerItemExtensions
     {
-        public static bool IsEndpointExplorerSelected(this ExplorerItem explorerItem)
-        {
-            return explorerItem is EndpointExplorerItem ||
-                   explorerItem is ServiceControlExplorerItem;
-        }
+        public static bool IsEndpointExplorerSelected(this ExplorerItem explorerItem) => explorerItem is EndpointExplorerItem ||
+       explorerItem is ServiceControlExplorerItem;
     }
 }

@@ -12,7 +12,10 @@
     {
         public static void RegisterHighlightings()
         {
-            if (HighlightingManager.Instance.HighlightingDefinitions.ToList().Exists(p => p.Name == "StackTrace")) return;
+            if (HighlightingManager.Instance.HighlightingDefinitions.ToList().Exists(p => p.Name == "StackTrace"))
+            {
+                return;
+            }
 
             // Load our custom highlighting definition
             IHighlightingDefinition stackTraceHighlighting;

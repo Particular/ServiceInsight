@@ -10,9 +10,6 @@ namespace ServiceInsight.Explorer
         {
         }
 
-        public override Bitmap Image
-        {
-            get { return Resources.TreeDocFile; }
-        }
+        public override Bitmap Image => Resources.TreeDocFile;
     }
 }

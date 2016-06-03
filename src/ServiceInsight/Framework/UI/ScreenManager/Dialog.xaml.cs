@@ -66,21 +66,22 @@
                     {
                         var window = FindFirstModalDialog(w);
                         if (window != null)
+                        {
                             return window;
+                        }
                     }
                 }
 
                 if ((bool)ownerWindow.GetValue(IsModalProperty) && ownerWindow.IsEnabled && ownerWindow.IsVisible && ownerWindow.IsActive)
+                {
                     return ownerWindow;
+                }
             }
 
             return null;
         }
 
-        public static bool GetIsModalProperty(Window window)
-        {
-            return (bool)window.GetValue(IsModalProperty);
-        }
+        public static bool GetIsModalProperty(Window window) => (bool)window.GetValue(IsModalProperty);
 
         public static void SetIsModalProperty(Window window, bool value)
         {

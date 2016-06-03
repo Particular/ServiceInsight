@@ -7,9 +7,10 @@ namespace ServiceInsight.ValueConverters
 
     public class BoolToStrokeDashArrayConverter : IValueConverter
     {
-        private static DoubleCollection emptyStrokeDashArray = new DoubleCollection();
+        static DoubleCollection emptyStrokeDashArray = new DoubleCollection();
 
         public bool Invert { get; set; }
+
         public DoubleCollection StrokeDashArray { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

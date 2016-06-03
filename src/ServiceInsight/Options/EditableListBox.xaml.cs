@@ -14,7 +14,7 @@
 
         static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs basevalue)
         {
-            ((EditableListBox) d).OnItemsSourceChanged();
+            ((EditableListBox)d).OnItemsSourceChanged();
         }
 
         protected void OnItemsSourceChanged()
@@ -24,7 +24,7 @@
 
         public ObservableCollection<string> ItemsSource
         {
-            get { return (ObservableCollection<string>) GetValue(ItemsSourceProperty); }
+            get { return (ObservableCollection<string>)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 

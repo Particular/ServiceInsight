@@ -1,44 +1,44 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using NSubstitute;
+    using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
     using ServiceInsight.Models;
     using ServiceInsight.Search;
     using ServiceInsight.Startup;
-    using NSubstitute;
-    using NUnit.Framework;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Settings;
     using Shouldly;
 
     [TestFixture]
     public class SearchViewModelTests
     {
-        SearchBarViewModel ViewModel;
-        CommandLineArgParser ArgParser;
-        ISettingsProvider SettingProvider;
+        SearchBarViewModel viewModel;
+        CommandLineArgParser argParser;
+        ISettingsProvider settingProvider;
 
         [SetUp]
         public void TestInitialize()
         {
-            ArgParser = Substitute.For<CommandLineArgParser>();
-            SettingProvider = Substitute.For<ISettingsProvider>();
-            ViewModel = new SearchBarViewModel(ArgParser, SettingProvider);
+            argParser = Substitute.For<CommandLineArgParser>();
+            settingProvider = Substitute.For<ISettingsProvider>();
+            viewModel = new SearchBarViewModel(argParser, settingProvider);
         }
 
         [Test]
         public void Should_enable_search_textbox_when_an_endpoint_is_selected()
         {
-            ViewModel.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(new Endpoint())));
+            viewModel.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(new Endpoint())));
 
-            ViewModel.SearchEnabled.ShouldBe(true);
+            viewModel.SearchEnabled.ShouldBe(true);
         }
 
         [Test]
         public void Should_enable_search_textbox_when_service_control_node_is_selected()
         {
-            ViewModel.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem("http://localhost")));
+            viewModel.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem("http://localhost")));
 
-            ViewModel.SearchEnabled.ShouldBe(true);
+            viewModel.SearchEnabled.ShouldBe(true);
         }
     }
 }

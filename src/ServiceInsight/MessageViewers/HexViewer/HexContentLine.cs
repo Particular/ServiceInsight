@@ -2,15 +2,16 @@ namespace ServiceInsight.MessageViewers.HexViewer
 {
     public struct HexContentLine
     {
-        private readonly byte[] data;
+        readonly byte[] data;
 
-        public HexContentLine(byte[] data, int line) : this()
+        public HexContentLine(byte[] data, int line)
+            : this()
         {
             this.data = data;
             Line = line;
         }
 
-        public int Line { get; private set; }
+        public int Line { get; }
 
         public byte? this[int i]
         {

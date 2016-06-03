@@ -31,9 +31,6 @@ namespace ServiceInsight.Framework.Settings
 
         protected abstract string ReadTextFile(string filename);
 
-        public virtual bool HasSettings(string key)
-        {
-            return true;
-        }
+        public virtual bool HasSettings(string key) => true;
     }
 }

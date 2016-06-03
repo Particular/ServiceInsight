@@ -23,7 +23,9 @@ namespace ServiceInsight.Framework.Settings
                 {
                     var settings = LoadSettings<T>(ReadSettingMetadata<T>());
                     if (!Equals(settings, default(T)))
+                    {
                         return settings;
+                    }
                 }
                 return GetDefaultSettings<T>();
             }
@@ -49,10 +51,7 @@ namespace ServiceInsight.Framework.Settings
             return defaultSetting;
         }
 
-        protected virtual T LoadSettings<T>(IList<SettingDescriptor> metadata) where T : new()
-        {
-            return settingsRepository.Load<T>(GetKey<T>(), metadata);
-        }
+        protected virtual T LoadSettings<T>(IList<SettingDescriptor> metadata) where T : new() => settingsRepository.Load<T>(GetKey<T>(), metadata);
 
         protected string GetKey<T>()
         {
@@ -76,18 +75,12 @@ namespace ServiceInsight.Framework.Settings
             settingsRepository.Save(GetKey<T>(), settings);
         }
 
-        public virtual IList<SettingDescriptor> ReadSettingMetadata<T>()
-        {
-            return ReadSettingMetadata(typeof(T));
-        }
+        public virtual IList<SettingDescriptor> ReadSettingMetadata<T>() => ReadSettingMetadata(typeof(T));
 
-        public virtual IList<SettingDescriptor> ReadSettingMetadata(Type settingsType)
-        {
-            return settingsType.GetProperties()
-                .Where(x => x.CanRead && x.CanWrite)
-                .Select(x => new SettingDescriptor(x))
-                .ToArray();
-        }
+        public virtual IList<SettingDescriptor> ReadSettingMetadata(Type settingsType) => settingsType.GetProperties()
+    .Where(x => x.CanRead && x.CanWrite)
+    .Select(x => new SettingDescriptor(x))
+    .ToArray();
 
         static string GetSettingTypeName(string name)
         {
@@ -135,7 +128,7 @@ namespace ServiceInsight.Framework.Settings
             }
         }
 
-        public PropertyInfo Property { get; private set; }
+        public PropertyInfo Property { get; }
 
         public object DefaultValue { get; private set; }
 
@@ -148,9 +141,6 @@ namespace ServiceInsight.Framework.Settings
             Property.SetValue(settings, value, null);
         }
 
-        public object ReadValue(object settings)
-        {
-            return Property.GetValue(settings, null);
-        }
+        public object ReadValue(object settings) => Property.GetValue(settings, null);
     }
 }

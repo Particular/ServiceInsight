@@ -27,20 +27,11 @@ namespace ServiceInsight.SequenceDiagram
             Initialize();
         }
 
-        public ReadOnlyCollection<EndpointItem> Endpoints
-        {
-            get { return endpoints.AsReadOnly(); }
-        }
+        public ReadOnlyCollection<EndpointItem> Endpoints => endpoints.AsReadOnly();
 
-        public ReadOnlyCollection<Handler> Handlers
-        {
-            get { return handlers.AsReadOnly(); }
-        }
+        public ReadOnlyCollection<Handler> Handlers => handlers.AsReadOnly();
 
-        public ReadOnlyCollection<MessageProcessingRoute> Routes
-        {
-            get { return processingRoutes.AsReadOnly(); }
-        }
+        public ReadOnlyCollection<MessageProcessingRoute> Routes => processingRoutes.AsReadOnly();
 
         void Initialize()
         {
@@ -109,10 +100,7 @@ namespace ServiceInsight.SequenceDiagram
             }
         }
 
-        MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler)
-        {
-            return new MessageProcessingRoute(arrow, processingHandler);
-        }
+        MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler) => new MessageProcessingRoute(arrow, processingHandler);
 
         IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messages)
         {
@@ -133,15 +121,9 @@ namespace ServiceInsight.SequenceDiagram
             return nodes.Except(resolved);
         }
 
-        private static EndpointItem CreateProcessingEndpoint(StoredMessage m)
-        {
-            return new EndpointItem(m.ReceivingEndpoint.Name, m.ReceivingEndpoint.Host, m.ReceivingEndpoint.HostId, m.SendingEndpoint.Equals(m.ReceivingEndpoint) ? m.GetHeaderByKey(MessageHeaderKeys.Version, null) : null);
-        }
+        static EndpointItem CreateProcessingEndpoint(StoredMessage m) => new EndpointItem(m.ReceivingEndpoint.Name, m.ReceivingEndpoint.Host, m.ReceivingEndpoint.HostId, m.SendingEndpoint.Equals(m.ReceivingEndpoint) ? m.GetHeaderByKey(MessageHeaderKeys.Version, null) : null);
 
-        private static EndpointItem CreateSendingEndpoint(StoredMessage m)
-        {
-            return new EndpointItem(m.SendingEndpoint.Name, m.SendingEndpoint.Host, m.SendingEndpoint.HostId, m.GetHeaderByKey(MessageHeaderKeys.Version, null));
-        }
+        static EndpointItem CreateSendingEndpoint(StoredMessage m) => new EndpointItem(m.SendingEndpoint.Name, m.SendingEndpoint.Host, m.SendingEndpoint.HostId, m.GetHeaderByKey(MessageHeaderKeys.Version, null));
 
         Handler CreateSendingHandler(StoredMessage message, EndpointItem sendingEndpoint)
         {
@@ -218,7 +200,7 @@ namespace ServiceInsight.SequenceDiagram
 
             return arrow;
         }
-        
+
         class EndpointRegistry
         {
             IDictionary<Tuple<string, string, string>, List<EndpointItem>> store = new Dictionary<Tuple<string, string, string>, List<EndpointItem>>();
@@ -259,10 +241,7 @@ namespace ServiceInsight.SequenceDiagram
                        ?? store[key].FirstOrDefault();
             }
 
-            Tuple<string, string, string> MakeKey(EndpointItem item)
-            {
-                return Tuple.Create(item.FullName, item.Host, item.HostId);
-            }
+            Tuple<string, string, string> MakeKey(EndpointItem item) => Tuple.Create(item.FullName, item.Host, item.HostId);
         }
 
         class HandlerRegistry
@@ -296,19 +275,13 @@ namespace ServiceInsight.SequenceDiagram
                 Parent = msg.GetHeaderByKey(MessageHeaderKeys.RelatedTo, null);
             }
 
-            public string Id
-            {
-                get { return Message.MessageId; }
-            }
+            public string Id => Message.MessageId;
 
             public string Parent { get; set; }
 
             public StoredMessage Message { get; set; }
 
-            public IEnumerable<MessageTreeNode> Children
-            {
-                get { return children; }
-            }
+            public IEnumerable<MessageTreeNode> Children => children;
 
             public void AddChild(MessageTreeNode childNode)
             {

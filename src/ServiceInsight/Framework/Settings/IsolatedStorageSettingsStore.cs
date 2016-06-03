@@ -29,7 +29,9 @@ namespace ServiceInsight.Framework.Settings
                 if (isoStore.FileExists(filename))
                 {
                     using (var stream = new IsolatedStorageFileStream(filename, FileMode.Open, isoStore))
+                    {
                         return new StreamReader(stream).ReadToEnd();
+                    }
                 }
             }
 

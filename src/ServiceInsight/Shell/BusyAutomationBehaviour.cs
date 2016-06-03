@@ -9,7 +9,7 @@
 
         static BusyAutomationBehaviour()
         {
-            IsApplicationBusyProperty = DependencyProperty.RegisterAttached("IsApplicationBusy", typeof (bool), typeof (BusyAutomationBehaviour), new PropertyMetadata(OnChanged));
+            IsApplicationBusyProperty = DependencyProperty.RegisterAttached("IsApplicationBusy", typeof(bool), typeof(BusyAutomationBehaviour), new PropertyMetadata(OnChanged));
         }
 
         static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -22,9 +22,6 @@
             element.SetValue(IsApplicationBusyProperty, value);
         }
 
-        public static bool GetIsApplicationBusy(DependencyObject element)
-        {
-            return (bool)element.GetValue(IsApplicationBusyProperty);
-        }
+        public static bool GetIsApplicationBusy(DependencyObject element) => (bool)element.GetValue(IsApplicationBusyProperty);
     }
 }

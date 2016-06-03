@@ -14,7 +14,7 @@
 
         static void DataChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var hexControl = ((HexControl) dependencyObject);
+            var hexControl = (HexControl)dependencyObject;
 
             if (hexControl.items == null)
             {
@@ -23,14 +23,14 @@
 
             if (hexControl.Body == null)
             {
-                hexControl.items.ItemsSource = new List<HexContentLine>(0); 
+                hexControl.items.ItemsSource = new List<HexContentLine>(0);
                 return;
             }
 
             var body = Encoding.Default.GetBytes(hexControl.Body);
             var lines = (int)Math.Ceiling(body.Length / 16.0);
             var contentLines = new List<HexContentLine>(lines);
-            
+
             for (var i = 0; i < lines; i++)
             {
                 contentLines.Add(new HexContentLine(body, i));

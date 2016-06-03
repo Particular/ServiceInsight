@@ -32,15 +32,14 @@
         public static Stream GetAsStream(this string someString)
         {
             if (string.IsNullOrWhiteSpace(someString))
+            {
                 return null;
+            }
 
             var bytes = Encoding.UTF8.GetBytes(someString);
             return new MemoryStream(bytes);
         }
 
-        public static string GetAsString(this byte[] data)
-        {
-            return Encoding.UTF8.GetString(data);
-        }
+        public static string GetAsString(this byte[] data) => Encoding.UTF8.GetString(data);
     }
 }

@@ -9,7 +9,7 @@
 
         public ChangeSelectedMessageCommand(MessageSelectionContext selectionContext)
         {
-            this.selection = selectionContext;
+            selection = selectionContext;
         }
 
         public override bool CanExecute(object parameter)

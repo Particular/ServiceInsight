@@ -9,32 +9,32 @@
     [TestFixture]
     public class XmlDecoderTests
     {
-        byte[] XmlContent;
-        IContentDecoder Decoder;
+        byte[] xmlContent;
+        IContentDecoder decoder;
 
         [SetUp]
         public void TestInitialize()
         {
-            XmlContent = Encoding.Default.GetBytes("<xml version=\"1.0\" encoding=\"utf-8\"><packages>test package</packages>");
-            Decoder = new XmlContentDecoder();
+            xmlContent = Encoding.Default.GetBytes("<xml version=\"1.0\" encoding=\"utf-8\"><packages>test package</packages>");
+            decoder = new XmlContentDecoder();
         }
 
         [Test]
-        public void should_decode_content_to_xmldocument()
+        public void Should_decode_content_to_xmldocument()
         {
-            Decoder.Decode(XmlContent);
+            decoder.Decode(xmlContent);
         }
 
         [Test]
-        public void should_not_get_null_document_when_decoding_flat_strings()
+        public void Should_not_get_null_document_when_decoding_flat_strings()
         {
-            Decoder.Decode(new byte[0]).ShouldNotBe(null);
+            decoder.Decode(new byte[0]).ShouldNotBe(null);
         }
 
         [Test]
-        public void should_get_empty_document_when_decoding_flat_strings()
+        public void Should_get_empty_document_when_decoding_flat_strings()
         {
-            ((XmlDocument)Decoder.Decode(new byte[0]).Value).InnerXml.ShouldBeEmpty();
+            ((XmlDocument)decoder.Decode(new byte[0]).Value).InnerXml.ShouldBeEmpty();
         }
     }
 }

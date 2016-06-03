@@ -15,6 +15,6 @@
 
         public DateTime? TimeSent { get; set; }
 
-        public string FriendlyMessageType { get { return TypeHumanizer.ToName(MessageType); } }
+        public string FriendlyMessageType => TypeHumanizer.ToName(MessageType);
     }
 }

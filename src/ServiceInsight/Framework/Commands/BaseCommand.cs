@@ -5,10 +5,7 @@ namespace ServiceInsight.Framework.Commands
 
     public abstract class BaseCommand : ICommand
     {
-        public virtual bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public virtual bool CanExecute(object parameter) => true;
 
         public event EventHandler CanExecuteChanged;
 
@@ -18,7 +15,9 @@ namespace ServiceInsight.Framework.Commands
         {
             var handler = CanExecuteChanged;
             if (handler != null)
+            {
                 handler(this, EventArgs.Empty);
+            }
         }
     }
 }

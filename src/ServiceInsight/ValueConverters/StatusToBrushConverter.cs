@@ -15,7 +15,7 @@
 
             if (value is MessageStatus)
             {
-                var status = (MessageStatus) value;
+                var status = (MessageStatus)value;
                 switch (status)
                 {
                     case MessageStatus.Failed:

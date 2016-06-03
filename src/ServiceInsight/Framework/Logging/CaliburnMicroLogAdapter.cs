@@ -6,7 +6,7 @@
 
     public class CaliburnMicroLogAdapter : ILog
     {
-        private readonly ILogger logger;
+        readonly ILogger logger;
 
         public CaliburnMicroLogAdapter(ILogger logger)
         {

@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.ServiceControl
 {
-    public class ServiceControlConnectionProvider 
+    public class ServiceControlConnectionProvider
     {
         public void ConnectTo(string url)
         {

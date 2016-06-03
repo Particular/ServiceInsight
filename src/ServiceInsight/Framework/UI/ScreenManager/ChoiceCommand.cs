@@ -8,7 +8,7 @@
 
     public class ChoiceCommand : PropertyChangedBase, ICommand
     {
-        public event EventHandler CanExecuteChanged = delegate { };
+        public event EventHandler CanExecuteChanged = (s, e) => { };
 
         ButtonCommandHandler commandHandler;
 
@@ -21,10 +21,7 @@
             Result = result;
         }
 
-        public virtual bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public virtual bool CanExecute(object parameter) => true;
 
         public virtual void Execute(object parameter)
         {
@@ -52,7 +49,6 @@
         public virtual MessageChoice Result
         {
             get;
-            private set;
         }
     }
 }

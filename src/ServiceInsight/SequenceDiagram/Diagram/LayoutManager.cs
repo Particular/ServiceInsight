@@ -74,13 +74,22 @@
             public void Position(MessageProcessingRoute route)
             {
                 var handler = diagram.GetItemFromContainer(route.ProcessingHandler);
-                if (handler == null) return;
+                if (handler == null)
+                {
+                    return;
+                }
 
                 var arrow = diagram.GetItemFromContainer(route.FromArrow);
-                if (arrow == null) return;
+                if (arrow == null)
+                {
+                    return;
+                }
 
                 var routeVisual = diagram.GetItemFromContainer(route);
-                if (routeVisual == null) return;
+                if (routeVisual == null)
+                {
+                    return;
+                }
 
                 var height = Math.Abs(arrow.Y - handler.Y);
 
@@ -106,7 +115,10 @@
             public void Position(Arrow arrow)
             {
                 var arrowVisual = diagram.GetItemFromContainer(arrow);
-                if (arrowVisual == null) return;
+                if (arrowVisual == null)
+                {
+                    return;
+                }
 
                 var fromEndpointIndex = 0;
                 var fromHandler = arrow.FromHandler;
@@ -123,13 +135,22 @@
                 var toEndpointIndex = endpointItemLayout.GetIndexPosition(arrow.ToHandler.Endpoint);
 
                 var fromHandlerVisual = diagram.GetItemFromContainer(fromHandler);
-                if (fromHandlerVisual == null) return;
+                if (fromHandlerVisual == null)
+                {
+                    return;
+                }
 
                 var toHandlerVisual = diagram.GetItemFromContainer(arrow.ToHandler);
-                if (toHandlerVisual == null) return;
+                if (toHandlerVisual == null)
+                {
+                    return;
+                }
 
                 var messageProcessingRouteVisual = diagram.GetItemFromContainer(arrow.MessageProcessingRoute);
-                if (messageProcessingRouteVisual == null) return;
+                if (messageProcessingRouteVisual == null)
+                {
+                    return;
+                }
 
                 arrowVisual.HilightChangedEvent += (sender, e) =>
                 {
@@ -193,10 +214,16 @@
             public void Position(EndpointTimeline timeline)
             {
                 var timelineVisual = diagram.GetItemFromContainer(timeline);
-                if (timelineVisual == null) return;
+                if (timelineVisual == null)
+                {
+                    return;
+                }
 
                 var endpointVisual = diagram.GetItemFromContainer(timeline.Endpoint);
-                if (endpointVisual == null) return;
+                if (endpointVisual == null)
+                {
+                    return;
+                }
 
                 timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
                 timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight;
@@ -232,10 +259,16 @@
             public void Position(Handler handler)
             {
                 var handlerVisual = diagram.GetItemFromContainer(handler);
-                if (handlerVisual == null) return;
+                if (handlerVisual == null)
+                {
+                    return;
+                }
 
                 var endpointVisual = diagram.GetItemFromContainer(handler.Endpoint);
-                if (endpointVisual == null) return;
+                if (endpointVisual == null)
+                {
+                    return;
+                }
 
                 handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2 - 7;
 
@@ -264,15 +297,15 @@
                 SetMaxHeight();
             }
 
-            public double MaxHeight
-            {
-                get { return maxHeight; }
-            }
+            public double MaxHeight => maxHeight;
 
             public void Position(EndpointItem endpoint)
             {
                 var endpointVisual = diagram.GetItemFromContainer(endpoint);
-                if (endpointVisual == null) return;
+                if (endpointVisual == null)
+                {
+                    return;
+                }
 
                 if (index == 0)
                 {
@@ -281,7 +314,7 @@
 
                 if (lastEndpoint != null)
                 {
-                    endpointVisual.X = firstX + ((lastEndpoint.ActualWidth) * index);
+                    endpointVisual.X = firstX + (lastEndpoint.ActualWidth * index);
                 }
 
                 if (endpointVisual.ActualHeight < MaxHeight)
@@ -296,15 +329,9 @@
                 index++;
             }
 
-            public int GetIndexPosition(EndpointItem endpoint)
-            {
-                return position[endpoint];
-            }
+            public int GetIndexPosition(EndpointItem endpoint) => position[endpoint];
 
-            public EndpointItem GetFirst()
-            {
-                return position.Single(kv => kv.Value == 0).Key;
-            }
+            public EndpointItem GetFirst() => position.Single(kv => kv.Value == 0).Key;
 
             void SetMaxHeight()
             {

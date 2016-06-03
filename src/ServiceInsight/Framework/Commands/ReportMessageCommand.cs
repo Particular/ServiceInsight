@@ -1,10 +1,10 @@
-﻿using System;
-using Mindscape.Raygun4Net;
-using ServiceInsight.Framework.UI.ScreenManager;
-using ServiceInsight.Models;
-
-namespace ServiceInsight.Framework.Commands
+﻿namespace ServiceInsight.Framework.Commands
 {
+    using System;
+    using Mindscape.Raygun4Net;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.Models;
+
     public class ReportMessageCommand : BaseCommand
     {
         readonly RaygunClient client;
@@ -20,7 +20,9 @@ namespace ServiceInsight.Framework.Commands
         {
             var package = parameter as ReportMessagePackage;
             if (package == null)
+            {
                 return;
+            }
 
             RaygunUtility.SendError(client, package.Exception, package.Message);
 

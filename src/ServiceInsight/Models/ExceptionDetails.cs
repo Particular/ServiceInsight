@@ -3,9 +3,12 @@
     using System.Diagnostics;
 
     [DebuggerDisplay("Type={ExceptionType},Message={Message}")]
-    public class ExceptionDetails 
+    public class ExceptionDetails
     {
-        public ExceptionDetails() { }
+        public ExceptionDetails()
+        {
+        }
+
         public ExceptionDetails(StoredMessage message)
         {
             ExceptionType = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
@@ -15,9 +18,11 @@
         }
 
         public string ExceptionType { get; set; }
+
         public string Message { get; set; }
+
         public string Source { get; set; }
+
         public string StackTrace { get; set; }
     }
-
 }

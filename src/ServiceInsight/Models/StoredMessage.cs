@@ -14,33 +14,26 @@
         }
 
         public MessageStatus Status { get; set; }
+
         public MessageIntent MessageIntent { get; set; }
+
         public Endpoint SendingEndpoint { get; set; }
+
         public Endpoint ReceivingEndpoint { get; set; }
+
         public TimeSpan ProcessingTime { get; set; }
+
         public DateTime ProcessedAt { get; set; }
+
         public string ConversationId { get; set; }
 
-        public string RelatedToMessageId
-        {
-            get { return GetHeaderByKey(MessageHeaderKeys.RelatedTo); }
-        }
+        public string RelatedToMessageId => GetHeaderByKey(MessageHeaderKeys.RelatedTo);
 
-        public string ContentType
-        {
-            get { return GetHeaderByKey(MessageHeaderKeys.ContentType); }
-        }
+        public string ContentType => GetHeaderByKey(MessageHeaderKeys.ContentType);
 
-        public string ExceptionMessage
-        {
-            get {  return GetHeaderByKey(MessageHeaderKeys.ExceptionMessage); }
-        }
+        public string ExceptionMessage => GetHeaderByKey(MessageHeaderKeys.ExceptionMessage);
 
-        public string ExceptionType
-        {
-            get { return GetHeaderByKey(MessageHeaderKeys.ExceptionType); }
-        }
-
+        public string ExceptionType => GetHeaderByKey(MessageHeaderKeys.ExceptionType);
 
         public string MessageId { get; set; }
 
@@ -64,7 +57,9 @@
                 }
 
                 if (OriginatesFromSaga != null)
+                {
                     return new List<SagaInfo> { OriginatesFromSaga };
+                }
 
                 return null;
             }
@@ -74,10 +69,7 @@
 
         public SagaInfo OriginatesFromSaga { get; set; }
 
-        public string GetURIQuery()
-        {
-            return string.Format("?EndpointName={0}&Search={1}", ReceivingEndpoint.Name, MessageId);
-        }
+        public string GetURIQuery() => string.Format("?EndpointName={0}&Search={1}", ReceivingEndpoint.Name, MessageId);
 
         public string GetHeaderByKey(string key, string defaultValue = "")
         {
@@ -88,21 +80,19 @@
             return pair == null ? defaultValue : pair.Value;
         }
 
-        public bool DisplayPropertiesChanged(StoredMessage focusedMessage)
-        {
-            return (focusedMessage == null) ||
-                   (Status != focusedMessage.Status) ||
-                   (TimeSent != focusedMessage.TimeSent) ||
-                   (ProcessingTime != focusedMessage.ProcessingTime) ||
-                   (ReceivingEndpoint != focusedMessage.ReceivingEndpoint) ||
-                   (SendingEndpoint != focusedMessage.SendingEndpoint);
-        }
+        public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||
+       (Status != focusedMessage.Status) ||
+       (TimeSent != focusedMessage.TimeSent) ||
+       (ProcessingTime != focusedMessage.ProcessingTime) ||
+       (ReceivingEndpoint != focusedMessage.ReceivingEndpoint) ||
+       (SendingEndpoint != focusedMessage.SendingEndpoint);
     }
 
     [DebuggerDisplay("Key={Key},Value={Value}")]
     public class StoredMessageHeader
     {
         public string Key { get; set; }
+
         public string Value { get; set; }
     }
 
@@ -110,7 +100,9 @@
     public class SagaInfo
     {
         public string ChangeStatus { get; set; }
+
         public string SagaType { get; set; }
+
         public Guid SagaId { get; set; }
     }
 

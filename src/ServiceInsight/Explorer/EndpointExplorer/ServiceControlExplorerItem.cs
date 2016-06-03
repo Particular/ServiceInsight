@@ -12,19 +12,10 @@
         {
         }
 
-        public override Bitmap Image
-        {
-            get { return Resources.TreeMonitoring; }
-        }
+        public override Bitmap Image => Resources.TreeMonitoring;
 
-        public bool EndpointExists(Endpoint endpoint)
-        {
-            return Children.Any(item => item.Endpoint == endpoint);
-        }
+        public bool EndpointExists(Endpoint endpoint) => Children.Any(item => item.Endpoint == endpoint);
 
-        public EndpointExplorerItem GetEndpointNode(Endpoint endpoint)
-        {
-            return Children.First(item => item.Endpoint == endpoint);
-        }
+        public EndpointExplorerItem GetEndpointNode(Endpoint endpoint) => Children.First(item => item.Endpoint == endpoint);
     }
 }

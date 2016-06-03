@@ -35,67 +35,67 @@
     public class ShellViewModelTests
     {
         ShellViewModel shell;
-        WindowManagerEx WindowManager;
-        EndpointExplorerViewModel EndpointExplorer;
-        MessageListViewModel MessageList;
-        MessageFlowViewModel MessageFlow;
-        SagaWindowViewModel SagaWindow;
-        IEventAggregator EventAggregator;
-        StatusBarManager StatusbarManager;
-        MessageBodyViewModel MessageBodyView;
-        MessageHeadersViewModel HeaderView;
-        SequenceDiagramViewModel SequenceDiagramView;
-        ISettingsProvider SettingsProvider;
-        AppLicenseManager LicenseManager;
-        IShellViewStub View;
-        MessagePropertiesViewModel MessageProperties;
-        LogWindowViewModel LogWindow;
-        IAppCommands App;
-        CommandLineArgParser CommandLineArgParser;
+        WindowManagerEx windowManager;
+        EndpointExplorerViewModel endpointExplorer;
+        MessageListViewModel messageList;
+        MessageFlowViewModel messageFlow;
+        SagaWindowViewModel sagaWindow;
+        IEventAggregator eventAggregator;
+        StatusBarManager statusbarManager;
+        MessageBodyViewModel messageBodyView;
+        MessageHeadersViewModel headerView;
+        SequenceDiagramViewModel sequenceDiagramView;
+        ISettingsProvider settingsProvider;
+        AppLicenseManager licenseManager;
+        IShellViewStub view;
+        MessagePropertiesViewModel messageProperties;
+        LogWindowViewModel logWindow;
+        IAppCommands app;
+        CommandLineArgParser commandLineArgParser;
 
         [SetUp]
         public void TestInitialize()
         {
-            WindowManager = Substitute.For<WindowManagerEx>();
-            EndpointExplorer = Substitute.For<EndpointExplorerViewModel>();
-            MessageList = Substitute.For<MessageListViewModel>();
-            StatusbarManager = Substitute.For<StatusBarManager>();
-            EventAggregator = Substitute.For<IEventAggregator>();
-            MessageFlow = Substitute.For<MessageFlowViewModel>();
-            SagaWindow = Substitute.For<SagaWindowViewModel>();
-            MessageBodyView = Substitute.For<MessageBodyViewModel>();
-            MessageProperties = Substitute.For<MessagePropertiesViewModel>();
-            View = Substitute.For<IShellViewStub>();
-            HeaderView = Substitute.For<MessageHeadersViewModel>();
-            SequenceDiagramView = Substitute.For<SequenceDiagramViewModel>();
-            SettingsProvider = Substitute.For<ISettingsProvider>();
-            LicenseManager = Substitute.For<AppLicenseManager>();
-            LogWindow = Substitute.For<LogWindowViewModel>();
-            SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
-            App = Substitute.For<IAppCommands>();
-            CommandLineArgParser = MockEmptyStartupOptions();
+            windowManager = Substitute.For<WindowManagerEx>();
+            endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
+            messageList = Substitute.For<MessageListViewModel>();
+            statusbarManager = Substitute.For<StatusBarManager>();
+            eventAggregator = Substitute.For<IEventAggregator>();
+            messageFlow = Substitute.For<MessageFlowViewModel>();
+            sagaWindow = Substitute.For<SagaWindowViewModel>();
+            messageBodyView = Substitute.For<MessageBodyViewModel>();
+            messageProperties = Substitute.For<MessagePropertiesViewModel>();
+            view = Substitute.For<IShellViewStub>();
+            headerView = Substitute.For<MessageHeadersViewModel>();
+            sequenceDiagramView = Substitute.For<SequenceDiagramViewModel>();
+            settingsProvider = Substitute.For<ISettingsProvider>();
+            licenseManager = Substitute.For<AppLicenseManager>();
+            logWindow = Substitute.For<LogWindowViewModel>();
+            settingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
+            app = Substitute.For<IAppCommands>();
+            commandLineArgParser = MockEmptyStartupOptions();
 
             shell = new ShellViewModel(
-                        App,
-                        WindowManager,
-                        EndpointExplorer,
-                        MessageList,
+                        app,
+                        windowManager,
+                        endpointExplorer,
+                        messageList,
                         () => Substitute.For<ServiceControlConnectionViewModel>(),
                         () => Substitute.For<LicenseRegistrationViewModel>(),
-                        StatusbarManager,
-                        EventAggregator,
-                        LicenseManager,
-                        MessageFlow,
-                        SagaWindow,
-                        MessageBodyView,
-                        HeaderView,
-                        SequenceDiagramView,
-                        SettingsProvider,
-                        MessageProperties,
-                        LogWindow,
-                        CommandLineArgParser);
+                        statusbarManager,
+                        eventAggregator,
+                        licenseManager,
+                        messageFlow,
+                        sagaWindow,
+                        messageBodyView,
+                        headerView,
+                        sequenceDiagramView,
+                        settingsProvider,
+                        messageProperties,
+                        logWindow,
+                        commandLineArgParser);
 
-            ((IViewAware)shell).AttachView(View);
+            ((IViewAware)shell).AttachView(view);
         }
 
         CommandLineArgParser MockEmptyStartupOptions()
@@ -108,13 +108,13 @@
         }
 
         [Test]
-        public void should_reload_stored_layout()
+        public void Should_reload_stored_layout()
         {
-            View.Received().OnRestoreLayout(SettingsProvider);
+            view.Received().OnRestoreLayout(settingsProvider);
         }
 
         [Test]
-        public void should_still_report_work_in_progress_when_only_part_of_the_work_is_finished()
+        public void Should_still_report_work_in_progress_when_only_part_of_the_work_is_finished()
         {
             shell.Handle(new WorkStarted("Some Work"));
             shell.Handle(new WorkStarted("Some Other Work"));
@@ -125,7 +125,7 @@
         }
 
         [Test]
-        public void should_finish_all_the_works_in_progress_when_the_work_is_finished()
+        public void Should_finish_all_the_works_in_progress_when_the_work_is_finished()
         {
             shell.Handle(new WorkStarted());
 
@@ -136,16 +136,16 @@
         }
 
         [Test]
-        public void deactivating_shell_saves_layout()
+        public void Deactivating_shell_saves_layout()
         {
             ((IScreen)shell).Activate();
 
             ((IScreen)shell).Deactivate(true);
 
-            View.Received().OnSaveLayout(SettingsProvider);
+            view.Received().OnSaveLayout(settingsProvider);
         }
 
-        public void should_track_selected_explorer()
+        public void Should_track_selected_explorer()
         {
             var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
 
@@ -156,7 +156,7 @@
         }
 
         [Test]
-        public void should_validate_trial_license()
+        public void Should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
             const string LicenseType = "Trial";
@@ -169,12 +169,12 @@
                 RegisteredTo = RegisteredUser
             };
 
-            LicenseManager.CurrentLicense = issuedLicense;
-            LicenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
+            licenseManager.CurrentLicense = issuedLicense;
+            licenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
 
             shell.OnApplicationIdle();
 
-            StatusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
+            statusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
         }
 
         [TearDown]
@@ -183,12 +183,9 @@
             ((IScreen)shell).Deactivate(true);
         }
 
-        static ProfilerSettings DefaultAppSetting()
+        static ProfilerSettings DefaultAppSetting() => new ProfilerSettings
         {
-            return new ProfilerSettings
-            {
-                AutoRefreshTimer = 15,
-            };
-        }
+            AutoRefreshTimer = 15,
+        };
     }
 }

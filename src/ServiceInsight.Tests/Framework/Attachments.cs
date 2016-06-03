@@ -1,13 +1,13 @@
 ﻿namespace ServiceInsight.Tests.Framework
 {
     using System;
-    using ServiceInsight.Framework.Attachments;
     using NUnit.Framework;
+    using ServiceInsight.Framework.Attachments;
 
     [TestFixture]
     public class Attachments
     {
-        private class TestAttachment : Attachment<object>
+        class TestAttachment : Attachment<object>
         {
             readonly object original;
 
@@ -23,9 +23,9 @@
         }
 
         [Test]
-        public void attachment_sets_instance_before_onattach()
+        public void Attachment_sets_instance_before_onattach()
         {
-            var testObject = new Object();
+            var testObject = new object();
 
             IAttachment attachment = new TestAttachment(testObject);
 

@@ -7,37 +7,37 @@
 
     public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
-        static IDictionary<MessageChoice, MessageBoxResult> MessageOptionsMaps;
-        static IDictionary<MessageBoxImage, MessageIcon> MessageIconsMaps;
-        static IDictionary<DialogResult, bool?> DialogResultMaps;
+        static IDictionary<MessageChoice, MessageBoxResult> messageOptionsMaps;
+        static IDictionary<MessageBoxImage, MessageIcon> messageIconsMaps;
+        static IDictionary<DialogResult, bool?> dialogResultMaps;
 
         static WindowManagerEx()
         {
-            MessageOptionsMaps = new Dictionary<MessageChoice, MessageBoxResult>
+            messageOptionsMaps = new Dictionary<MessageChoice, MessageBoxResult>
             {
-                {MessageChoice.OK, MessageBoxResult.OK},
-                {MessageChoice.Cancel, MessageBoxResult.Cancel},
-                {MessageChoice.Yes, MessageBoxResult.Yes},
-                {MessageChoice.No, MessageBoxResult.No}
+                { MessageChoice.OK, MessageBoxResult.OK },
+                { MessageChoice.Cancel, MessageBoxResult.Cancel },
+                { MessageChoice.Yes, MessageBoxResult.Yes },
+                { MessageChoice.No, MessageBoxResult.No }
             };
-            MessageIconsMaps = new Dictionary<MessageBoxImage, MessageIcon>
+            messageIconsMaps = new Dictionary<MessageBoxImage, MessageIcon>
             {
-                {MessageBoxImage.None, MessageIcon.None},
-                {MessageBoxImage.Exclamation, MessageIcon.Warning},
-                {MessageBoxImage.Asterisk, MessageIcon.Information},
-                {MessageBoxImage.Hand, MessageIcon.Error},
-                {MessageBoxImage.Question, MessageIcon.Question}
+                { MessageBoxImage.None, MessageIcon.None },
+                { MessageBoxImage.Exclamation, MessageIcon.Warning },
+                { MessageBoxImage.Asterisk, MessageIcon.Information },
+                { MessageBoxImage.Hand, MessageIcon.Error },
+                { MessageBoxImage.Question, MessageIcon.Question }
             };
-            DialogResultMaps = new Dictionary<DialogResult, bool?>
+            dialogResultMaps = new Dictionary<DialogResult, bool?>
             {
-                {DialogResult.Abort,  null },
-                {DialogResult.Cancel, null },
-                {DialogResult.Ignore, null },
-                {DialogResult.None,   null },
-                {DialogResult.Retry,  null },
-                {DialogResult.Yes,    true },
-                {DialogResult.OK,     true },
-                {DialogResult.No,     false},
+                { DialogResult.Abort,  null },
+                { DialogResult.Cancel, null },
+                { DialogResult.Ignore, null },
+                { DialogResult.None,   null },
+                { DialogResult.Retry,  null },
+                { DialogResult.Yes,    true },
+                { DialogResult.OK,     true },
+                { DialogResult.No,     false },
             };
         }
 
@@ -54,7 +54,7 @@
                 dialog.Title = model.Title;
 
                 var dialogResult = dialog.ShowDialog();
-                var result = new FileDialogResult(DialogResultMaps[dialogResult], dialog.FileNames);
+                var result = new FileDialogResult(dialogResultMaps[dialogResult], dialog.FileNames);
 
                 return result;
             }
@@ -64,11 +64,13 @@
         {
             var parent = Dialog.ActiveModalWindow;
             var choices = GetMessageChoice(button);
-            var icon = MessageIconsMaps[image];
+            var icon = messageIconsMaps[image];
             var result = DialogViewModel.Show(parent, icon, caption, message, choices, help, enableDontAsk, defaultChoice);
 
-            if (MessageOptionsMaps.ContainsKey(result))
-                return MessageOptionsMaps[result];
+            if (messageOptionsMaps.ContainsKey(result))
+            {
+                return messageOptionsMaps[result];
+            }
 
             return MessageBoxResult.None;
         }
@@ -76,7 +78,7 @@
         public bool? ShowDialog<T>() where T : class
         {
             var screen = IoC.Get<T>(); // Yick!
-            return base.ShowDialog(screen);
+            return ShowDialog(screen);
         }
 
         static MessageChoice GetMessageChoice(MessageBoxButton button)

@@ -6,16 +6,14 @@
 
     public class AuditEndpointExplorerItem : EndpointExplorerItem
     {
-        public AuditEndpointExplorerItem(Endpoint endpoint, string hostNames = "") : base(endpoint)
+        public AuditEndpointExplorerItem(Endpoint endpoint, string hostNames = "")
+            : base(endpoint)
         {
             HostNames = hostNames;
         }
 
         public string HostNames { get; set; }
 
-        public override Bitmap Image
-        {
-            get { return Resources.TreeAuditQueue; }
-        }
+        public override Bitmap Image => Resources.TreeAuditQueue;
     }
 }

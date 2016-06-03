@@ -44,7 +44,7 @@
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
-            this.selection = selectionContext;
+            selection = selectionContext;
             this.exceptionDetail = exceptionDetail;
 
             CopyConversationIDCommand = container.Resolve<CopyConversationIDCommand>();
@@ -128,10 +128,13 @@
             ShowEndpoints = !ShowEndpoints;
         }
 
-        public ICommand CopyConversationIDCommand { get; private set; }
-        public ICommand CopyMessageURICommand { get; private set; }
-        public ICommand SearchByMessageIDCommand { get; private set; }
-        public ICommand RetryMessageCommand { get; private set; }
+        public ICommand CopyConversationIDCommand { get; }
+
+        public ICommand CopyMessageURICommand { get; }
+
+        public ICommand SearchByMessageIDCommand { get; }
+
+        public ICommand RetryMessageCommand { get; }
 
         public void Handle(SelectedMessageChanged @event)
         {

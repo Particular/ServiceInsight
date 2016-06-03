@@ -16,13 +16,12 @@
             FileNames = fileNames;
         }
 
-        public bool? Result { get; private set; }
-        public IEnumerable<string> FileNames { get; private set; }
-        public string FileName { get { return FileNames.FirstOrDefault(); } }
+        public bool? Result { get; }
 
-        public static implicit operator bool?(FileDialogResult result)
-        {
-            return result.Result;
-        }
+        public IEnumerable<string> FileNames { get; }
+
+        public string FileName => FileNames.FirstOrDefault();
+
+        public static implicit operator bool?(FileDialogResult result) => result.Result;
     }
 }

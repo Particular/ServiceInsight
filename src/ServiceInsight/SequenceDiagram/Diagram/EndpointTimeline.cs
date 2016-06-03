@@ -3,7 +3,5 @@
     public class EndpointTimeline : DiagramItem
     {
         public EndpointItem Endpoint { get; set; }
-
-        
     }
 }

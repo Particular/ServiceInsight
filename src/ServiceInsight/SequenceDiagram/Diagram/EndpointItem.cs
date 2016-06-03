@@ -21,19 +21,19 @@
             Handlers = new List<Handler>();
         }
 
-        public EndpointTimeline Timeline { get; private set; }
+        public EndpointTimeline Timeline { get; }
 
-        public string FullName { get; private set; }
-        public string Version { get; private set; }
-        public string Host { get; private set; }
-        public string HostId { get; private set; }
+        public string FullName { get; }
 
-        public List<Handler> Handlers { get; private set; }
+        public string Version { get; }
 
-        public override int GetHashCode()
-        {
-            return FullName.GetHashCode() ^ (HostId ?? String.Empty).GetHashCode() ^ (Host ?? String.Empty).GetHashCode() ^ (Version ?? String.Empty).GetHashCode();
-        }
+        public string Host { get; }
+
+        public string HostId { get; }
+
+        public List<Handler> Handlers { get; }
+
+        public override int GetHashCode() => FullName.GetHashCode() ^ (HostId ?? string.Empty).GetHashCode() ^ (Host ?? string.Empty).GetHashCode() ^ (Version ?? string.Empty).GetHashCode();
 
         public bool Equals(EndpointItem other)
         {

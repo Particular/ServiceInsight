@@ -46,7 +46,7 @@
 
         public virtual void Clear()
         {
-            document.Document.Text = String.Empty;
+            document.Document.Text = string.Empty;
             foldingStrategy.UpdateFoldings(foldingManager, document.Document);
         }
     }

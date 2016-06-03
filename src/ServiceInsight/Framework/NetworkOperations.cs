@@ -9,10 +9,7 @@
 
     public class NetworkOperations
     {
-        public Task<IList<string>> GetMachines()
-        {
-            return Task.Run(() => NetworkBrowser.GetNetworkComputers());
-        }
+        public Task<IList<string>> GetMachines() => Task.Run(() => NetworkBrowser.GetNetworkComputers());
 
         public void Browse(string productUrl)
         {
@@ -33,18 +30,21 @@
             [StructLayout(LayoutKind.Sequential)]
             struct ServerInfo
             {
+#pragma warning disable SA1307 // Accessible fields must begin with upper-case letter
                 internal int sv100_platform_id;
 
                 [MarshalAs(UnmanagedType.LPWStr)]
                 internal string sv100_name;
+
+#pragma warning restore SA1307 // Accessible fields must begin with upper-case letter
             }
 
             public static IList<string> GetNetworkComputers()
             {
                 var networkComputers = new List<string>();
-                var MAX_PREFERRED_LENGTH = -1;
-                var SV_TYPE_WORKSTATION = 1;
-                var SV_TYPE_SERVER = 2;
+                var mAX_PREFERRED_LENGTH = -1;
+                var sV_TYPE_WORKSTATION = 1;
+                var sV_TYPE_SERVER = 2;
                 var buffer = IntPtr.Zero;
                 var sizeofINFO = Marshal.SizeOf(typeof(ServerInfo));
 
@@ -53,10 +53,10 @@
                     int entriesRead;
                     int totalEntries;
                     int resHandle;
-                    var result = NetServerEnum(null, 100, ref buffer, MAX_PREFERRED_LENGTH,
+                    var result = NetServerEnum(null, 100, ref buffer, mAX_PREFERRED_LENGTH,
                                             out entriesRead,
                                             out totalEntries,
-                                            SV_TYPE_WORKSTATION | SV_TYPE_SERVER,
+                                            sV_TYPE_WORKSTATION | sV_TYPE_SERVER,
                                             null,
                                             out resHandle);
                     if (result == 0)

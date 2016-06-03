@@ -20,7 +20,9 @@
         void ShowDialog(Window parent, MessageIcon icon, string title, string content, MessageChoice choices, string help, bool enableDontAsk, MessageChoice defaultChoice)
         {
             if (IsSet(choices, MessageChoice.Yes | MessageChoice.OK) || (choices == MessageChoice.Help))
+            {
                 throw new ArgumentException();
+            }
 
             view = CreateWindow(parent);
 
@@ -32,22 +34,34 @@
             Result = MessageChoice.None;
 
             if (!string.IsNullOrEmpty(help))
+            {
                 HelpMessage = help;
+            }
 
             if (IsSet(choices, MessageChoice.Yes))
+            {
                 Choices.Add(new ChoiceCommand(CloseCommand, defaultChoice == MessageChoice.Yes, false, "Yes", MessageChoice.Yes));
+            }
 
             if (IsSet(choices, MessageChoice.No))
+            {
                 Choices.Add(new ChoiceCommand(CloseCommand, defaultChoice == MessageChoice.No, !IsSet(choices, MessageChoice.Cancel), "No", MessageChoice.No));
+            }
 
             if (IsSet(choices, MessageChoice.OK))
+            {
                 Choices.Add(new ChoiceCommand(CloseCommand, choices == MessageChoice.OK || defaultChoice == MessageChoice.OK, !IsSet(choices, MessageChoice.Cancel), "OK", MessageChoice.OK));
+            }
 
             if (IsSet(choices, MessageChoice.Cancel))
+            {
                 Choices.Add(new ChoiceCommand(CloseCommand, choices == MessageChoice.Cancel || defaultChoice == MessageChoice.Cancel, true, "Cancel", MessageChoice.Cancel));
+            }
 
             if (IsSet(choices, MessageChoice.Help))
+            {
                 Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
+            }
 
             view.ShowDialog();
         }
@@ -68,10 +82,7 @@
             return dialog;
         }
 
-        static bool IsSet(MessageChoice choices, MessageChoice bits)
-        {
-            return ((choices & bits) == bits);
-        }
+        static bool IsSet(MessageChoice choices, MessageChoice bits) => (choices & bits) == bits;
 
         void HelpCommand(object target)
         {
@@ -82,7 +93,9 @@
         {
             var command = target as ChoiceCommand;
             if (command != null)
+            {
                 Close(command.Result);
+            }
         }
 
         public void Close(MessageChoice closeResult)
@@ -139,9 +152,6 @@
             set;
         }
 
-        public virtual bool ShowIcon
-        {
-            get { return Icon != MessageIcon.None; }
-        }
+        public virtual bool ShowIcon => Icon != MessageIcon.None;
     }
 }

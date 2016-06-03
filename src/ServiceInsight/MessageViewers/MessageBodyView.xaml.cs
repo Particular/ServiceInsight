@@ -13,7 +13,7 @@
 
         void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            var link = (Hyperlink) sender;
+            var link = (Hyperlink)sender;
 
             var url = link.NavigateUri.AbsoluteUri;
 

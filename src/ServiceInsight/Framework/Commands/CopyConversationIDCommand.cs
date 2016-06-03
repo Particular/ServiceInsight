@@ -5,7 +5,7 @@ namespace ServiceInsight.Framework.Commands
 
     public class CopyConversationIDCommand : BaseCommand
     {
-        private readonly IClipboard clipboard;
+        readonly IClipboard clipboard;
 
         public CopyConversationIDCommand(IClipboard clipboard)
         {
@@ -22,7 +22,9 @@ namespace ServiceInsight.Framework.Commands
         {
             var message = parameter as StoredMessage;
             if (message == null)
+            {
                 return;
+            }
 
             clipboard.CopyTo(message.ConversationId);
         }

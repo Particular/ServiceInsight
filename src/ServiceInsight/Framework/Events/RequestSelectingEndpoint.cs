@@ -4,7 +4,7 @@
 
     public class RequestSelectingEndpoint
     {
-        public Endpoint Endpoint { get; private set; }
+        public Endpoint Endpoint { get; }
 
         public RequestSelectingEndpoint(Endpoint endpoint)
         {

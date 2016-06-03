@@ -39,35 +39,26 @@
             Items = new BindableCollection<ExplorerItem>();
         }
 
-        public IObservableCollection<ExplorerItem> Items { get; private set; }
+        public IObservableCollection<ExplorerItem> Items { get; }
 
-        public ServiceControlExplorerItem ServiceControlRoot
-        {
-            get
-            {
-                return Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
-            }
-        }
+        public ServiceControlExplorerItem ServiceControlRoot => Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
 
         public ExplorerItem SelectedNode { get; set; }
 
         public string ServiceUrl { get; private set; }
 
-        public new ShellViewModel Parent
-        {
-            get { return (ShellViewModel)base.Parent; }
-        }
+        public new ShellViewModel Parent => (ShellViewModel)base.Parent;
 
-        bool IsConnected
-        {
-            get { return ServiceUrl != null; }
-        }
+        bool IsConnected => ServiceUrl != null;
 
         protected override void OnActivate()
         {
             base.OnActivate();
 
-            if (IsConnected) return;
+            if (IsConnected)
+            {
+                return;
+            }
 
             var configuredConnection = GetConfiguredAddress();
             var existingConnection = connectionProvider.Url;
@@ -89,7 +80,9 @@
             {
                 var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
                 if (appSettings != null && appSettings.LastUsedServiceControl != null)
+                {
                     return appSettings.LastUsedServiceControl;
+                }
 
                 var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
                 return string.Format("http://localhost:{0}/api", managementConfig.Port);
@@ -120,7 +113,10 @@
 
         void SelectDefaultEndpoint()
         {
-            if (ServiceControlRoot == null) return;
+            if (ServiceControlRoot == null)
+            {
+                return;
+            }
 
             if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
@@ -143,7 +139,9 @@
         public void ConnectToService(string url)
         {
             if (url == null)
+            {
                 return;
+            }
 
             connectionProvider.ConnectTo(url);
             ServiceUrl = url;

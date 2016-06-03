@@ -25,19 +25,19 @@
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public GeneralHeaderViewModel General { get; private set; }
+        public GeneralHeaderViewModel General { get; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public PerformanceHeaderViewModel Performance { get; private set; }
+        public PerformanceHeaderViewModel Performance { get; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public ErrorHeaderViewModel Errors { get; private set; }
+        public ErrorHeaderViewModel Errors { get; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public GatewayHeaderViewModel Gateway { get; private set; }
+        public GatewayHeaderViewModel Gateway { get; }
 
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public SagaHeaderViewModel Saga { get; private set; }
+        public SagaHeaderViewModel Saga { get; }
 
         public void CopyPropertyValue(object value)
         {

@@ -12,7 +12,7 @@
 
         public Arrow(StoredMessage message, IMessageCommandContainer container)
         {
-            this.storedMessage = message;
+            storedMessage = message;
 
             CopyConversationIDCommand = container?.CopyConversationIDCommand;
             CopyMessageURICommand = container?.CopyMessageURICommand;
@@ -49,7 +49,7 @@
         public Endpoint Receiving => storedMessage.ReceivingEndpoint;
 
         public Endpoint Sending => storedMessage.SendingEndpoint;
-        
+
         public DateTime? SentTime => storedMessage.TimeSent;
 
         public string MessageId => storedMessage.MessageId;

@@ -17,17 +17,17 @@
         readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
-        static Dictionary<string, MessageContentType> ContentTypeMaps;
+        static Dictionary<string, MessageContentType> contentTypeMaps;
 
         static MessageBodyViewModel()
         {
-            ContentTypeMaps = new Dictionary<string, MessageContentType>
+            contentTypeMaps = new Dictionary<string, MessageContentType>
             {
-                {"application/json", MessageContentType.Json},
-                {"text/json", MessageContentType.Json},
-                {"application/xml", MessageContentType.Xml},
-                {"text/xml", MessageContentType.Xml},
-                {"", MessageContentType.NotSpecified}
+                { "application/json", MessageContentType.Json },
+                { "text/json", MessageContentType.Json },
+                { "application/xml", MessageContentType.Xml },
+                { "text/xml", MessageContentType.Xml },
+                { "", MessageContentType.NotSpecified }
             };
         }
 
@@ -41,7 +41,7 @@
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
-            this.selection = selectionContext;
+            selection = selectionContext;
 
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
@@ -70,45 +70,18 @@
             }
         }
 
-        public bool JsonViewerVisible
-        {
-            get
-            {
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json)
-                            && PresentationHint == PresentationHint.Standard;
-            }
-        }
+        public bool JsonViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json)
+            && PresentationHint == PresentationHint.Standard;
 
-        public bool XmlViewerVisible
-        {
-            get
-            {
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml)
-                            && PresentationHint == PresentationHint.Standard;
-            }
-        }
+        public bool XmlViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml)
+            && PresentationHint == PresentationHint.Standard;
 
-        public bool HexViewerVisible
-        {
-            get
-            {
-                return (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
-                            && PresentationHint == PresentationHint.Standard;
-            }
-        }
+        public bool HexViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
+            && PresentationHint == PresentationHint.Standard;
 
-        public bool NoContentHelpNotVisible
-        {
-            get { return PresentationHint != PresentationHint.NoContent; }
-        }
+        public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
 
-        public bool NoContentHelpVisible
-        {
-            get
-            {
-                return PresentationHint == PresentationHint.NoContent;
-            }
-        }
+        public bool NoContentHelpVisible => PresentationHint == PresentationHint.NoContent;
 
         public void Handle(SelectedMessageChanged @event)
         {
@@ -116,7 +89,7 @@
 
             if (selection.SelectedMessage != null)
             {
-                ContentType = ContentTypeMaps.GetValueOrDefault(selection.SelectedMessage.ContentType, MessageContentType.NotSpecified);
+                ContentType = contentTypeMaps.GetValueOrDefault(selection.SelectedMessage.ContentType, MessageContentType.NotSpecified);
 
                 if (selection.SelectedMessage.Body != null)
                 {

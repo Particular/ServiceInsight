@@ -31,9 +31,6 @@ namespace ServiceInsight.Tests.ConversationsData
 
         protected ModelCreator ModelCreator { get; }
 
-        private IMessageCommandContainer GetContainer()
-        {
-            return Substitute.For<IMessageCommandContainer>();
-        }
+        IMessageCommandContainer GetContainer() => Substitute.For<IMessageCommandContainer>();
     }
 }

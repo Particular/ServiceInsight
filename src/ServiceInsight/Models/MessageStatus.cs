@@ -6,7 +6,7 @@
     {
         [Description("Failed")]
         Failed = 1,
-        
+
         [Description("Repeated Failures")]
         RepeatedFailure = 2,
 

@@ -24,15 +24,15 @@
 
     public class DefaultServiceControl : IServiceControl
     {
-        private static ILogger AnotarLogger = Log.ForContext<IServiceControl>();
+        static ILogger anotarLogger = Log.ForContext<IServiceControl>();
 
-        private const string ConversationEndpoint = "conversations/{0}";
-        private const string EndpointsEndpoint = "endpoints";
-        private const string EndpointMessagesEndpoint = "endpoints/{0}/messages/";
-        private const string RetryEndpoint = "errors/{0}/retry";
-        private const string MessagesEndpoint = "messages/";
-        private const string MessageBodyEndpoint = "messages/{0}/body";
-        private const string SagaEndpoint = "sagas/{0}";
+        const string ConversationEndpoint = "conversations/{0}";
+        const string EndpointsEndpoint = "endpoints";
+        const string EndpointMessagesEndpoint = "endpoints/{0}/messages/";
+        const string RetryEndpoint = "errors/{0}/retry";
+        const string MessagesEndpoint = "messages/";
+        const string MessageBodyEndpoint = "messages/{0}/body";
+        const string SagaEndpoint = "sagas/{0}";
 
         ServiceControlConnectionProvider connection;
         MemoryCache cache;
@@ -84,10 +84,7 @@
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public SagaData GetSagaById(Guid sagaId)
-        {
-            return GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
-        }
+        public SagaData GetSagaById(Guid sagaId) => GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
 
         public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
         {
@@ -125,7 +122,7 @@
 
         public IEnumerable<StoredMessage> GetConversationById(string conversationId)
         {
-            var request = new RestRequestWithCache(String.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
+            var request = new RestRequestWithCache(string.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
             var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
 
             return messages;
@@ -141,7 +138,7 @@
 
         public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
         {
-            var request = new RestRequestWithCache(String.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
+            var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
             var body = Execute(request, response => response.Content);
 
@@ -191,7 +188,11 @@
 
         void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
-            if (orderBy == null) return;
+            if (orderBy == null)
+            {
+                return;
+            }
+
             request.AddParameter("sort", orderBy, ParameterType.GetOrPost);
             request.AddParameter("direction", ascending ? "asc" : "desc", ParameterType.GetOrPost);
         }
@@ -203,7 +204,11 @@
 
         void AppendSearchQuery(IRestRequest request, string searchQuery)
         {
-            if (searchQuery == null) return;
+            if (searchQuery == null)
+            {
+                return;
+            }
+
             request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
         }
 
@@ -230,12 +235,9 @@
             return client;
         }
 
-        static RestRequestWithCache CreateMessagesRequest(string endpointName = null)
-        {
-            return endpointName != null
-                ? new RestRequestWithCache(String.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
-                : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
-        }
+        static RestRequestWithCache CreateMessagesRequest(string endpointName = null) => endpointName != null
+    ? new RestRequestWithCache(string.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
+    : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
 
         PagedResult<T> GetPagedResult<T>(RestRequestWithCache request) where T : class, new()
         {
@@ -249,10 +251,7 @@
         }
 
         T GetModel<T>(RestRequestWithCache request)
-            where T : class, new()
-        {
-            return Execute<T, T>(request, response => response.Data);
-        }
+where T : class, new() => Execute<T, T>(request, response => response.Data);
 
         T Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
         {
@@ -427,15 +426,9 @@
             }
         }
 
-        static string CacheKey<T>(IRestClient restClient, IRestRequest request)
-        {
-            return CacheKey(restClient, request, typeof(T));
-        }
+        static string CacheKey<T>(IRestClient restClient, IRestRequest request) => CacheKey(restClient, request, typeof(T));
 
-        static string CacheKey(IRestClient restClient, IRestRequest request, Type t)
-        {
-            return restClient.BuildUri(request).AbsoluteUri + "-" + t;
-        }
+        static string CacheKey(IRestClient restClient, IRestRequest request, Type t) => restClient.BuildUri(request).AbsoluteUri + "-" + t;
 
         T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)
         {
@@ -485,10 +478,7 @@
             return new List<KeyValuePair<string, string>>();
         }
 
-        static string CleanupBodyString(string bodyString)
-        {
-            return bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
-        }
+        static string CleanupBodyString(string bodyString) => bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
 
         void LogRequest(RestRequestWithCache request)
         {
@@ -529,12 +519,9 @@
             LogTo.Error(exception, errorMessage);
         }
 
-        static bool HasSucceeded(IRestResponse response)
-        {
-            return SuccessCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
-        }
+        static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
 
-        static IEnumerable<HttpStatusCode> SuccessCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
+        static IEnumerable<HttpStatusCode> successCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
     }
 
     public enum PresentationHint

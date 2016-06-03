@@ -23,11 +23,12 @@
             Description = status.GetDescription();
         }
 
-        public BitmapImage Image { get; private set; }
+        public BitmapImage Image { get; }
 
         public MessageStatus Status
         {
             get { return status; }
+
             private set
             {
                 status = value;
@@ -35,7 +36,7 @@
             }
         }
 
-        public string Description { get; private set; }
+        public string Description { get; }
 
         BitmapImage GetImage()
         {
@@ -72,7 +73,10 @@
         public int CompareTo(object obj)
         {
             var that = obj as MessageErrorInfo;
-            if (that == null) return -1;
+            if (that == null)
+            {
+                return -1;
+            }
 
             if (statusSpecified == false &&
                 that.statusSpecified == false)

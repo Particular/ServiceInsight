@@ -48,88 +48,31 @@
             return string.Format("ServiceInsight - {0} Trial Expired", TrialTypeText);
         }
 
-        public string TrialTypeText
-        {
-            get
-            {
-                return licenseManager.CurrentLicense.IsExtendedTrial ? "Extended" : "Initial";
-            }
-        }
+        public string TrialTypeText => licenseManager.CurrentLicense.IsExtendedTrial ? "Extended" : "Initial";
 
-        public string LicenseType
-        {
-            get { return licenseManager.CurrentLicense.LicenseType; }
-        }
+        public string LicenseType => licenseManager.CurrentLicense.LicenseType;
 
-        public string RegisteredTo
-        {
-            get { return licenseManager.CurrentLicense.RegisteredTo; }
-        }
+        public string RegisteredTo => licenseManager.CurrentLicense.RegisteredTo;
 
-        public int TrialDaysRemaining
-        {
-            get { return licenseManager.GetRemainingTrialDays(); }
-        }
+        public int TrialDaysRemaining => licenseManager.GetRemainingTrialDays();
 
-        public bool HasTrialLicense
-        {
-            get { return licenseManager.CurrentLicense.IsTrialLicense; }
-        }
+        public bool HasTrialLicense => licenseManager.CurrentLicense.IsTrialLicense;
 
-        public bool HasFullLicense
-        {
-            get { return licenseManager.CurrentLicense.IsCommercialLicense; }
-        }
+        public bool HasFullLicense => licenseManager.CurrentLicense.IsCommercialLicense;
 
-        public bool HasRemainingTrial
-        {
-            get { return HasTrialLicense && TrialDaysRemaining > 0; }
-        }
+        public bool HasRemainingTrial => HasTrialLicense && TrialDaysRemaining > 0;
 
-        public bool AllowedToUse
-        {
-            get { return HasRemainingTrial || HasFullLicense; }
-        }
+        public bool AllowedToUse => HasRemainingTrial || HasFullLicense;
 
-        public bool CanExtendTrial
-        {
-            get
-            {
-                return HasTrialLicense && !licenseManager.CurrentLicense.IsExtendedTrial;
-            }
-        }
+        public bool CanExtendTrial => HasTrialLicense && !licenseManager.CurrentLicense.IsExtendedTrial;
 
-        public bool CanBuyNow
-        {
-            get
-            {
-                return CanContactSales;
-            }
-        }
+        public bool CanBuyNow => CanContactSales;
 
-        public bool CanContactSales
-        {
-            get
-            {
-                return HasTrialLicense && licenseManager.CurrentLicense.IsExtendedTrial;
-            }
-        }
+        public bool CanContactSales => HasTrialLicense && licenseManager.CurrentLicense.IsExtendedTrial;
 
-        public bool MustExtendTrial
-        {
-            get
-            {
-                return HasTrialLicense && !HasRemainingTrial && !licenseManager.CurrentLicense.IsExtendedTrial;
-            }
-        }
+        public bool MustExtendTrial => HasTrialLicense && !HasRemainingTrial && !licenseManager.CurrentLicense.IsExtendedTrial;
 
-        public bool MustPurchase
-        {
-            get
-            {
-                return HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
-            }
-        }
+        public bool MustPurchase => HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
 
         public void OnLicenseChanged()
         {

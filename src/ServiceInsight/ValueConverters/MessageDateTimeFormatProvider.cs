@@ -11,6 +11,6 @@
             MessageDateFormat = string.Format("{0} hh:mm:ss.ffff tt", culture.DateTimeFormat.ShortDatePattern);
         }
 
-        public static string MessageDateFormat { get; private set; }
+        public static string MessageDateFormat { get; }
     }
 }

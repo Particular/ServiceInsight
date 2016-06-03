@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using ServiceInsight.Models;
     using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;
+    using ServiceInsight.Models;
 
     [TestFixture]
     class SequenceDiagramModelCreatorTests
@@ -19,10 +19,7 @@
             container = Substitute.For<IMessageCommandContainer>();
         }
 
-        ModelCreator GetModelCreator(List<StoredMessage> messages)
-        {
-            return new ModelCreator(messages, container);
-        }
+        ModelCreator GetModelCreator(List<StoredMessage> messages) => new ModelCreator(messages, container);
 
         [Test]
         public void NoMessages()
@@ -54,12 +51,12 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.Version,
+                            Key = MessageHeaderKeys.Version,
                             Value = "1"
                         },
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "10"
                         }
                     }
@@ -93,12 +90,12 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.Version,
+                            Key = MessageHeaderKeys.Version,
                             Value = "1"
                         },
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "10"
                         }
                     }
@@ -118,12 +115,12 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.Version,
+                            Key = MessageHeaderKeys.Version,
                             Value = "2"
                         },
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "10"
                         }
                     }
@@ -143,12 +140,12 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.Version,
+                            Key = MessageHeaderKeys.Version,
                             Value = "3"
                         },
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "10"
                         }
                     }
@@ -184,7 +181,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "2"
                         }
                     }
@@ -217,7 +214,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -254,7 +251,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -290,7 +287,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -311,7 +308,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -362,7 +359,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -382,7 +379,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     }
@@ -433,7 +430,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -458,7 +455,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -483,7 +480,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -529,7 +526,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "2"
                         }
                     },
@@ -570,7 +567,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -594,7 +591,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -618,7 +615,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "4"
                         }
                     },
@@ -663,7 +660,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -687,7 +684,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -711,7 +708,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -735,7 +732,7 @@
                     {
                         new StoredMessageHeader
                         {
-                            Key =  MessageHeaderKeys.RelatedTo,
+                            Key = MessageHeaderKeys.RelatedTo,
                             Value = "1"
                         }
                     },
@@ -766,7 +763,6 @@
                 Msg("3", "1", "ProductPurchaseTakingTooLong", start.AddSeconds(19).AddMilliseconds(305698), "Provisioning.CRM.Orchestrator", start.AddSeconds(19).AddMilliseconds(352572), "Provisioning.Communication.Orchestrator"),
                 Msg("4", "2", "GpOrderSagaTimeout", start.AddSeconds(63).AddMilliseconds(647730), "Provisioning.GP.Orchestrator", start.AddMinutes(9).AddSeconds(24).AddMilliseconds(352189), "Provisioning.GP.Orchestrator"),
                 Msg("5", "1", "CrmOrderSagaTimeout", start.AddMinutes(5).AddSeconds(19).AddMilliseconds(233001), "Provisioning.CRM.Orchestrator", start.AddMinutes(5).AddSeconds(19).AddMilliseconds(795543), "Provisioning.CRM.Orchestrator"),
-
             };
 
             var creator = GetModelCreator(messages);
@@ -779,34 +775,30 @@
             Assert.AreEqual("2", result[2].ID, "Third handler is for message 2 (even though we don't know what that was)");
             Assert.AreEqual("GpOrderSagaTimeout", result[3].Name, "Fourth handler should be for the GpOrderSagaTimeout");
             Assert.AreEqual("CrmOrderSagaTimeout", result[4].Name, "Latest handler should be for CrmOrderSagaTimeout");
-
         }
-        private static StoredMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to)
+
+        static StoredMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to) => new StoredMessage
         {
-            return new StoredMessage
+            MessageId = id,
+            MessageType = messageType,
+            ProcessedAt = processed,
+            TimeSent = sent,
+            SendingEndpoint = new Endpoint
             {
-                MessageId = id,
-                MessageType = messageType,
-                ProcessedAt = processed,
-                TimeSent = sent,
-                SendingEndpoint = new Endpoint
-                {
-                    Name = from
-                },
-                ReceivingEndpoint = new Endpoint
-                {
-                    Name = to
-                },
-                Headers = new List<StoredMessageHeader>
+                Name = from
+            },
+            ReceivingEndpoint = new Endpoint
+            {
+                Name = to
+            },
+            Headers = new List<StoredMessageHeader>
                 {
                     new StoredMessageHeader
                     {
-                        Key =  MessageHeaderKeys.RelatedTo,
+                        Key = MessageHeaderKeys.RelatedTo,
                         Value = relatedTo
                     }
                 }
-            };
-        }
-
+        };
     }
 }

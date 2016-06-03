@@ -9,6 +9,6 @@
             SelectedExplorerItem = explorerItem;
         }
 
-        public ExplorerItem SelectedExplorerItem { get; private set; }
+        public ExplorerItem SelectedExplorerItem { get; }
     }
 }

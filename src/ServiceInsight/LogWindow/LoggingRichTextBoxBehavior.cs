@@ -20,7 +20,7 @@ namespace ServiceInsight.LogWindow
         }
 
         private Paragraph paragraph;
-        private IDisposable logSubscription;
+        IDisposable logSubscription;
 
         public object LogData
         {
@@ -33,7 +33,9 @@ namespace ServiceInsight.LogWindow
             base.OnAttached();
 
             if (AssociatedObject.Document == null)
+            {
                 AssociatedObject.Document = new FlowDocument();
+            }
 
             paragraph = new Paragraph();
 
@@ -75,7 +77,7 @@ namespace ServiceInsight.LogWindow
                 .Subscribe(ProcessChange);
         }
 
-        private void ProcessChange(NotifyCollectionChangedEventArgs args)
+        void ProcessChange(NotifyCollectionChangedEventArgs args)
         {
             if (args.Action == NotifyCollectionChangedAction.Add)
             {

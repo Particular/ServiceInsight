@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace ServiceInsight.SequenceDiagram.Diagram
+﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
+    using System.Windows.Controls;
+
     public class DiagramHeader : ItemsControl
     {
     }

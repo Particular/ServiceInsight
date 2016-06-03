@@ -34,13 +34,9 @@ namespace ServiceInsight.Framework.Behaviors
             // Have to set it to null first or CanExecute won't be called.
             commandHolder.Command = null;
             commandHolder.Command = temp;
-
         }
 
-        public static object GetCommandParameter(UIElement target)
-        {
-            return target.GetValue(CommandParameterProperty);
-        }
+        public static object GetCommandParameter(UIElement target) => target.GetValue(CommandParameterProperty);
 
         public static void SetCommandParameter(UIElement target, object value)
         {

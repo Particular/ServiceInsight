@@ -10,7 +10,7 @@
         {
             if (value is double)
             {
-                var d = (double) value;
+                var d = (double)value;
                 return double.IsNaN(d) ? 0 : d;
             }
 

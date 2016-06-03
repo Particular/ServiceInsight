@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.Tests
 {
-    using ServiceInsight.Models;
-    using ServiceInsight.Startup;
     using NSubstitute;
     using NUnit.Framework;
+    using ServiceInsight.Models;
+    using ServiceInsight.Startup;
     using Shouldly;
 
     [TestFixture]
@@ -17,17 +17,17 @@
         [SetUp]
         public void Initialize()
         {
-            environment = Substitute.For<EnvironmentWrapper>();            
+            environment = Substitute.For<EnvironmentWrapper>();
         }
 
         [Test]
-        public void strips_application_path_from_the_command_line_args()
+        public void Strips_application_path_from_the_command_line_args()
         {
             const string Uri = "localhost:12345";
             const string ExpectedUri = "http://localhost:12345/";
 
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, Uri);
-            
+
             environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
 
             var sut = CreateSut();
@@ -43,7 +43,7 @@
         [TestCase("servicecontrol.myserver.com/")]
         [TestCase("servicecontrol.myserver.com/api")]
         [TestCase("servicecontrol.myserver.com:33333/api")]
-        public void can_parse_valid_uri_from_command_line_args(string validUri)
+        public void Can_parse_valid_uri_from_command_line_args(string validUri)
         {
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, validUri);
 
@@ -56,7 +56,7 @@
         }
 
         [Test]
-        public void can_parse_endpoint_name_from_command_line_arg()
+        public void Can_parse_endpoint_name_from_command_line_arg()
         {
             const string EndpointName = "VideoStore.Sales";
             const string Uri = "localhost:12345";
@@ -70,7 +70,7 @@
         }
 
         [Test]
-        public void can_parse_and_decode_search_query_from_command_line_arg()
+        public void Can_parse_and_decode_search_query_from_command_line_arg()
         {
             const string SearchQuery = "Sample%20Search%20Criteria";
             const string Uri = "localhost:12345";
@@ -84,7 +84,7 @@
         }
 
         [Test]
-        public void can_parse_auto_refresh_rate_from_command_line_arg()
+        public void Can_parse_auto_refresh_rate_from_command_line_arg()
         {
             const string AutoRefreshRate = "100";
             const string Uri = "localhost:12345";
@@ -100,7 +100,7 @@
         [Test]
         [TestCase("thisiswrong")]
         [TestCase("somerandomname")]
-        public void leaves_service_uri_empty_if_passed_in_argument_is_not_valid(string wrongUri)
+        public void Leaves_service_uri_empty_if_passed_in_argument_is_not_valid(string wrongUri)
         {
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, wrongUri);
 
@@ -112,7 +112,7 @@
         }
 
         [Test]
-        public void passing_wrong_key_will_throw()
+        public void Passing_wrong_key_will_throw()
         {
             const string Uri = "localhost:12345";
             const string UnsupportedKey = "UnsupportedKey";

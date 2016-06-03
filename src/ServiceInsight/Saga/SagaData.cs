@@ -25,7 +25,10 @@
             get
             {
                 if (Changes == null)
+                {
                     return false;
+                }
+
                 return Changes.Any(c => c.Status == SagaStateChangeStatus.Completed);
             }
         }
@@ -35,11 +38,15 @@
             get
             {
                 if (Changes == null)
+                {
                     return DateTime.MinValue;
+                }
 
                 var change = Changes.FirstOrDefault(c => c.Status == SagaStateChangeStatus.Completed);
                 if (change == null)
+                {
                     return DateTime.MinValue;
+                }
 
                 return change.FinishTime;
             }

@@ -12,7 +12,9 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null || !(value is Enum))
+            {
                 return Inverted ? Visibility.Visible : Visibility.Collapsed;
+            }
 
             var currentState = value.ToString();
             var stateStrings = parameter.ToString();
@@ -20,10 +22,12 @@
 
             foreach (var state in stateStrings.Split(','))
             {
-                found = (currentState == state.Trim());
+                found = currentState == state.Trim();
 
                 if (found)
+                {
                     break;
+                }
             }
 
             if (!Inverted)

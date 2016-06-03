@@ -11,6 +11,6 @@
             Message = message.IsEmpty() ? DefaultMessage : string.Format("Operation Failed: {0}", message);
         }
 
-        public string Message { get; private set; }
+        public string Message { get; }
     }
 }

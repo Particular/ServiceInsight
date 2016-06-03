@@ -18,15 +18,12 @@
 
         public abstract Bitmap Image { get; }
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public virtual string DisplayName { get { return Name; } }
+        public virtual string DisplayName => Name;
 
-        public IObservableCollection<EndpointExplorerItem> Children { get; private set; }
+        public IObservableCollection<EndpointExplorerItem> Children { get; }
 
-        public override string ToString()
-        {
-            return DisplayName;
-        }
+        public override string ToString() => DisplayName;
     }
 }

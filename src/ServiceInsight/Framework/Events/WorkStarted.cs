@@ -12,6 +12,6 @@
             Message = string.Format(message, args);
         }
 
-        public string Message { get; private set; }
+        public string Message { get; }
     }
 }

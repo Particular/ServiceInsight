@@ -4,9 +4,9 @@
     using System.Xml;
     using Autofac;
     using Models;
+    using ServiceControl;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.MessageDecoders;
-    using ServiceControl;
     using Startup;
 
     public class CoreModule : Module

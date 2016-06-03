@@ -23,9 +23,6 @@ namespace ServiceInsight.Framework.MessageDecoders
             return new DecoderResult<string>("", false);
         }
 
-        DecoderResult IContentDecoder.Decode(byte[] content)
-        {
-            return Decode(content);
-        }
+        DecoderResult IContentDecoder.Decode(byte[] content) => Decode(content);
     }
 }

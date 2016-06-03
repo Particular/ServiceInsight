@@ -19,29 +19,17 @@
 
         public List<SagaUpdatedValue> Values { get; private set; }
 
-        public bool IsFirstNode
-        {
-            get { return Status == SagaStateChangeStatus.New; }
-        }
+        public bool IsFirstNode => Status == SagaStateChangeStatus.New;
 
-        public bool IsSagaTimeoutMessage
-        {
-            get { return !MissingData && InitiatingMessage.IsSagaTimeoutMessage; }
-        }
+        public bool IsSagaTimeoutMessage => !MissingData && InitiatingMessage.IsSagaTimeoutMessage;
 
-        public List<SagaMessage> NonTimeoutMessages
-        {
-            get { return OutgoingMessages.Where(m => !m.IsTimeout).Cast<SagaMessage>().ToList(); }
-        }
+        public List<SagaMessage> NonTimeoutMessages => OutgoingMessages.Where(m => !m.IsTimeout).Cast<SagaMessage>().ToList();
 
-        public List<SagaTimeoutMessage> TimeoutMessages
-        {
-            get { return OutgoingMessages.Where(m => m.IsTimeout).ToList(); }
-        }
+        public List<SagaTimeoutMessage> TimeoutMessages => OutgoingMessages.Where(m => m.IsTimeout).ToList();
 
-        public bool HasNonTimeoutMessages { get { return NonTimeoutMessages.Any(); } }
+        public bool HasNonTimeoutMessages => NonTimeoutMessages.Any();
 
-        public bool HasTimeoutMessages { get { return TimeoutMessages.Any(); } }
+        public bool HasTimeoutMessages => TimeoutMessages.Any();
 
         public string StateAfterChange { get; set; }
 

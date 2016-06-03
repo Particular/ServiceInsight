@@ -12,6 +12,7 @@
     public interface IMessageListView
     {
         void BeginDataUpdate();
+
         void EndDataUpdate();
     }
 
@@ -25,7 +26,6 @@
         public MessageListView()
         {
             InitializeComponent();
-            
         }
 
         public void BeginDataUpdate()
@@ -44,10 +44,7 @@
             Model.RaiseSelectedMessageChanged(msg);
         }
 
-        MessageListViewModel Model
-        {
-            get { return (MessageListViewModel)DataContext; }
-        }
+        MessageListViewModel Model => (MessageListViewModel)DataContext;
 
         void OnRequestAdvancedMessageData(object sender, GridColumnDataEventArgs e)
         {
@@ -85,11 +82,17 @@
         {
             var grid = e.Source as GridControl;
 
-            if (grid == null || Model == null || Model.WorkInProgress) return;
+            if (grid == null || Model == null || Model.WorkInProgress)
+            {
+                return;
+            }
 
             var sortInfo = grid.SortInfo.FirstOrDefault();
 
-            if (sortInfo == null) return;
+            if (sortInfo == null)
+            {
+                return;
+            }
 
             var column = grid.Columns.First(c => c.FieldName == sortInfo.FieldName);
 
@@ -98,7 +101,7 @@
             e.Handled = true;
         }
 
-        private void OnGridClicked(object sender, MouseButtonEventArgs e)
+        void OnGridClicked(object sender, MouseButtonEventArgs e)
         {
             var info = ((TableView)grid.View).CalcHitInfo(e.OriginalSource as DependencyObject);
             if (info.HitTest == TableViewHitTest.RowCell)

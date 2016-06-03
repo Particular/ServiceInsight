@@ -3,61 +3,62 @@
     using System;
     using System.Text;
     using System.Windows.Media;
-    using ServiceInsight.Framework;
-    using ServiceInsight.LogWindow;
+    using LogWindow;
     using NSubstitute;
     using NUnit.Framework;
     using Serilog.Events;
     using Serilog.Parsing;
+    using ServiceInsight.Framework;
 
     [TestFixture]
     public class LogWindowViewModelTests
     {
-        LogWindowViewModel ViewModel;
-        IClipboard Clipboard;
+        LogWindowViewModel viewModel;
+        IClipboard clipboard;
 
         [SetUp]
         public void TestInitialize()
         {
-            Clipboard = Substitute.For<IClipboard>();
-            ViewModel = new LogWindowViewModel(Clipboard);
-        }
-
-        [Test, Ignore("Need to use the test scheduler to force the observable to update")]
-        public void hooks_up_observer_to_list()
-        {
-            var currentLogCount = ViewModel.Logs.Count;
-            LogWindowViewModel.LogObserver.OnNext(new LogEvent(DateTimeOffset.Now, LogEventLevel.Information, null, new MessageTemplate("LOGME", new MessageTemplateToken[0]), new LogEventProperty[0]));
-            Assert.AreEqual(currentLogCount + 1, ViewModel.Logs.Count);
+            clipboard = Substitute.For<IClipboard>();
+            viewModel = new LogWindowViewModel(clipboard);
         }
 
         [Test]
-        public void clear_command_removes_logs()
+        [Ignore("Need to use the test scheduler to force the observable to update")]
+        public void Hooks_up_observer_to_list()
         {
-            while (ViewModel.Logs.Count < 10)
+            var currentLogCount = viewModel.Logs.Count;
+            LogWindowViewModel.LogObserver.OnNext(new LogEvent(DateTimeOffset.Now, LogEventLevel.Information, null, new MessageTemplate("LOGME", new MessageTemplateToken[0]), new LogEventProperty[0]));
+            Assert.AreEqual(currentLogCount + 1, viewModel.Logs.Count);
+        }
+
+        [Test]
+        public void Clear_command_removes_logs()
+        {
+            while (viewModel.Logs.Count < 10)
             {
-                ViewModel.Logs.Add(new LogMessage("", Colors.Red));
+                viewModel.Logs.Add(new LogMessage("", Colors.Red));
             }
 
-            ViewModel.ClearCommand.Execute(null);
+            viewModel.ClearCommand.Execute(null);
 
-            Assert.AreEqual(0, ViewModel.Logs.Count);
+            Assert.AreEqual(0, viewModel.Logs.Count);
         }
 
         [Test]
-        public void copy_command_uses_clipboard()
+        public void Copy_command_uses_clipboard()
         {
-            ViewModel.Logs.Clear();
+            viewModel.Logs.Clear();
             var sb = new StringBuilder();
             for (var i = 0; i < 10; i++)
             {
-                ViewModel.Logs.Add(new LogMessage(i + Environment.NewLine, Colors.Red));
+                viewModel.Logs.Add(new LogMessage(i + Environment.NewLine, Colors.Red));
                 sb.AppendLine(i.ToString());
             }
 
-            ViewModel.CopyCommand.Execute(null);
+            viewModel.CopyCommand.Execute(null);
 
-            Clipboard.Received(1).CopyTo(sb.ToString());
+            clipboard.Received(1).CopyTo(sb.ToString());
         }
     }
 }

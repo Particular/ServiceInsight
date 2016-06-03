@@ -7,11 +7,11 @@
 
     public class DiagramLegendViewModel : Screen
     {
-        private const int ArrowWidth = 50;
-        private const int LocalArrowWidth = 30;
-        private const int HandlerWidth = 20;
-        private const int HandlerHeight = 25;
-        
+        const int ArrowWidth = 50;
+        const int LocalArrowWidth = 30;
+        const int HandlerWidth = 20;
+        const int HandlerHeight = 25;
+
         public DiagramLegendViewModel()
         {
             DiagramItemsDescription = new BindableCollection<DiagramItemDescription>();
@@ -111,7 +111,7 @@
             return diagramItem;
         }
 
-        private DiagramVisualItem CreateHandler()
+        DiagramVisualItem CreateHandler()
         {
             var handler = new Handler("Handler", null) { State = HandlerState.Success };
             var diagramItem = new DiagramVisualItem
@@ -134,6 +134,7 @@
         }
 
         public DiagramVisualItem Item { get; }
+
         public string Description { get; }
     }
 }

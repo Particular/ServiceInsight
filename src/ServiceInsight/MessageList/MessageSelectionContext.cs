@@ -6,8 +6,8 @@
 
     public class MessageSelectionContext : PropertyChangedBase
     {
-        private IEventAggregator eventAggregator;
-        private StoredMessage selectedMessage;
+        IEventAggregator eventAggregator;
+        StoredMessage selectedMessage;
 
         public MessageSelectionContext(IEventAggregator eventAggregator)
         {
@@ -17,6 +17,7 @@
         public StoredMessage SelectedMessage
         {
             get { return selectedMessage; }
+
             set
             {
                 if (selectedMessage != value)
@@ -28,7 +29,7 @@
             }
         }
 
-        private void OnSelectedMessageChanged()
+        void OnSelectedMessageChanged()
         {
             eventAggregator.PublishOnUIThread(new SelectedMessageChanged());
         }

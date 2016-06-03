@@ -5,6 +5,7 @@
     using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
+    using ReactiveUI.Testing;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageViewers;
@@ -13,30 +14,29 @@
     using ServiceInsight.MessageViewers.XmlViewer;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
-    using ReactiveUI.Testing;
 
     [TestFixture]
     public class MessageBodyViewModelTests
     {
-        IEventAggregator EventAggregator;
-        IServiceControl ServiceControl;
-        HexContentViewModel HexContent;
-        JsonMessageViewModel JsonContent;
-        XmlMessageViewModel XmlContent;
-        Func<MessageBodyViewModel> MessageBodyFunc;
-        MessageSelectionContext Selection;
+        IEventAggregator eventAggregator;
+        IServiceControl serviceControl;
+        HexContentViewModel hexContent;
+        JsonMessageViewModel jsonContent;
+        XmlMessageViewModel xmlContent;
+        Func<MessageBodyViewModel> messageBodyFunc;
+        MessageSelectionContext selection;
 
         [SetUp]
         public void TestInitialize()
         {
-            EventAggregator = Substitute.For<IEventAggregator>();
-            ServiceControl = Substitute.For<IServiceControl>();
-            HexContent = Substitute.For<HexContentViewModel>();
-            JsonContent = Substitute.For<JsonMessageViewModel>();
-            XmlContent = Substitute.For<XmlMessageViewModel>();
-            Selection = new MessageSelectionContext(EventAggregator);
+            eventAggregator = Substitute.For<IEventAggregator>();
+            serviceControl = Substitute.For<IServiceControl>();
+            hexContent = Substitute.For<HexContentViewModel>();
+            jsonContent = Substitute.For<JsonMessageViewModel>();
+            xmlContent = Substitute.For<XmlMessageViewModel>();
+            selection = new MessageSelectionContext(eventAggregator);
 
-            MessageBodyFunc = () => new MessageBodyViewModel(HexContent, JsonContent, XmlContent, ServiceControl, EventAggregator, Selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, selection);
         }
 
         [Test]
@@ -46,17 +46,17 @@
             {
                 const string uri = "http://localhost:3333/api/somemessageid/body";
 
-                var messageBody = MessageBodyFunc();
+                var messageBody = messageBodyFunc();
 
                 messageBody.Handle(new BodyTabSelectionChanged(true));
 
-                Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+                selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
                 messageBody.Handle(new SelectedMessageChanged());
 
                 sched.AdvanceByMs(500);
 
-                ServiceControl.Received(1).LoadBody(Selection.SelectedMessage);
+                serviceControl.Received(1).LoadBody(selection.SelectedMessage);
             });
         }
 
@@ -65,15 +65,14 @@
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            var messageBody = MessageBodyFunc();
+            var messageBody = messageBodyFunc();
 
-            Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+            selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
             messageBody.Handle(new SelectedMessageChanged());
 
             messageBody.Handle(new BodyTabSelectionChanged(true));
 
-
-            ServiceControl.Received(1).LoadBody(Selection.SelectedMessage);
+            serviceControl.Received(1).LoadBody(selection.SelectedMessage);
         }
 
         [Test]
@@ -81,29 +80,29 @@
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            var messageBody = MessageBodyFunc();
+            var messageBody = messageBodyFunc();
 
             messageBody.Handle(new BodyTabSelectionChanged(false));
 
-            Selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+            selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
             messageBody.Handle(new SelectedMessageChanged());
 
-            ServiceControl.Received(0).LoadBody(Selection.SelectedMessage);
+            serviceControl.Received(0).LoadBody(selection.SelectedMessage);
         }
 
         [Test]
         public void Should_not_load_body_content_when_selected_message_has_no_body_url()
         {
-            var messageBody = MessageBodyFunc();
+            var messageBody = messageBodyFunc();
 
             messageBody.Handle(new BodyTabSelectionChanged(true));
 
-            Selection.SelectedMessage = new StoredMessage { BodyUrl = null };
+            selection.SelectedMessage = new StoredMessage { BodyUrl = null };
 
             messageBody.Handle(new SelectedMessageChanged());
 
-            ServiceControl.Received(0).LoadBody(Selection.SelectedMessage);
+            serviceControl.Received(0).LoadBody(selection.SelectedMessage);
         }
     }
 }

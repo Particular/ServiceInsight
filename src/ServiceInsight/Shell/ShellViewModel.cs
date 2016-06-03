@@ -156,48 +156,45 @@
 
         public IShellView View { get; private set; }
 
-        public MessagePropertiesViewModel MessageProperties { get; private set; }
+        public MessagePropertiesViewModel MessageProperties { get; }
 
-        public EndpointExplorerViewModel EndpointExplorer { get; private set; }
+        public EndpointExplorerViewModel EndpointExplorer { get; }
 
-        public MessageListViewModel Messages { get; private set; }
+        public MessageListViewModel Messages { get; }
 
-        public MessageFlowViewModel MessageFlow { get; private set; }
+        public MessageFlowViewModel MessageFlow { get; }
 
-        public MessageBodyViewModel MessageBody { get; private set; }
+        public MessageBodyViewModel MessageBody { get; }
 
-        public MessageHeadersViewModel MessageHeaders { get; private set; }
+        public MessageHeadersViewModel MessageHeaders { get; }
 
-        public SequenceDiagramViewModel SequenceDiagram { get; private set; }
+        public SequenceDiagramViewModel SequenceDiagram { get; }
 
-        public SagaWindowViewModel SagaWindow { get; private set; }
+        public SagaWindowViewModel SagaWindow { get; }
 
-        public StatusBarManager StatusBarManager { get; private set; }
+        public StatusBarManager StatusBarManager { get; }
 
-        public LogWindowViewModel LogWindow { get; private set; }
+        public LogWindowViewModel LogWindow { get; }
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
-        public bool WorkInProgress
-        {
-            get { return workCounter > 0; }
-        }
+        public bool WorkInProgress => workCounter > 0;
 
-        public ICommand ShutDownCommand { get; private set; }
+        public ICommand ShutDownCommand { get; }
 
-        public ICommand AboutCommand { get; private set; }
+        public ICommand AboutCommand { get; }
 
-        public ICommand HelpCommand { get; private set; }
+        public ICommand HelpCommand { get; }
 
-        public ICommand ConnectToServiceControlCommand { get; private set; }
+        public ICommand ConnectToServiceControlCommand { get; }
 
-        public ICommand RefreshAllCommand { get; private set; }
+        public ICommand RefreshAllCommand { get; }
 
-        public ICommand RegisterCommand { get; private set; }
+        public ICommand RegisterCommand { get; }
 
-        public ICommand ResetLayoutCommand { get; private set; }
+        public ICommand ResetLayoutCommand { get; }
 
-        public ICommand OptionsCommand { get; private set; }
+        public ICommand OptionsCommand { get; }
 
         public void ConnectToServiceControl()
         {
@@ -225,10 +222,7 @@
 
         public int SelectedMessageTabItem { get; set; }
 
-        public bool CanConnectToServiceControl
-        {
-            get { return !WorkInProgress || AutoRefresh; }
-        }
+        public bool CanConnectToServiceControl => !WorkInProgress || AutoRefresh;
 
         void InitializeIdleTimer()
         {
@@ -251,7 +245,9 @@
         internal void OnApplicationIdle()
         {
             if (idleTimer != null)
+            {
                 idleTimer.Stop();
+            }
 
             ValidateCommandLineArgs();
             ValidateLicense();
@@ -260,7 +256,9 @@
         internal void OnAutoRefreshing()
         {
             if (!AutoRefresh || WorkInProgress)
+            {
                 return;
+            }
 
             RefreshAll();
         }
@@ -312,7 +310,7 @@
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, ("day").PluralizeWord(licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, "day".PluralizeWord(licenseManager.GetRemainingTrialDays()));
             }
         }
 
@@ -348,7 +346,9 @@
         public void Handle(WorkFinished @event)
         {
             if (workCounter <= 0)
+            {
                 return;
+            }
 
             workCounter--;
             NotifyPropertiesChanged();

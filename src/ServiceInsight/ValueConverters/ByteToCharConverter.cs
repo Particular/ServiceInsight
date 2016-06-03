@@ -12,8 +12,8 @@ namespace ServiceInsight.ValueConverters
         {
             if (value is byte)
             {
-                Func<byte, string> ByteToStringConverter = byteValue => Encoding.UTF8.GetString(new[] { byteValue });
-                var c = ByteToStringConverter.TryGetValue((byte)value, " ");
+                Func<byte, string> byteToStringConverter = byteValue => Encoding.UTF8.GetString(new[] { byteValue });
+                var c = byteToStringConverter.TryGetValue((byte)value, " ");
                 if (c == "\r" || c == "\n" || c == "\t")
                 {
                     return ".";

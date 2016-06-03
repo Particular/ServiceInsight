@@ -7,8 +7,8 @@ namespace ServiceInsight.Framework.Commands
 
     public class SearchByMessageIDCommand : BaseCommand
     {
-        private readonly IEventAggregator eventAggregator;
-        private readonly SearchBarViewModel searchBar;
+        readonly IEventAggregator eventAggregator;
+        readonly SearchBarViewModel searchBar;
 
         public SearchByMessageIDCommand(IEventAggregator eventAggregator, SearchBarViewModel searchBar)
         {
@@ -26,7 +26,9 @@ namespace ServiceInsight.Framework.Commands
         {
             var message = parameter as StoredMessage;
             if (message == null)
+            {
                 return;
+            }
 
             searchBar.Search(performSearch: true, searchQuery: message.MessageId);
             eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));

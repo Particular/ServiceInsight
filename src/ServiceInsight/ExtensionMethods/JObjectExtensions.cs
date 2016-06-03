@@ -12,7 +12,7 @@
         {
             if (document == null)
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             var sb = new StringBuilder();

@@ -7,22 +7,16 @@
 
     public static class BuilderExtensions
     {
-        public static bool IsAttachment(this Type type)
-        {
-            return type != null &&
-                   type.IsClass &&
-                   !type.IsAbstract &&
-                   typeof(IAttachment).IsAssignableFrom(type);
-        }
+        public static bool IsAttachment(this Type type) => type != null &&
+       type.IsClass &&
+       !type.IsAbstract &&
+       typeof(IAttachment).IsAssignableFrom(type);
 
-        public static bool IsViewOrViewModel(this Type type)
-        {
-            return type != null &&
-                   type.IsClass &&
-                   !type.IsAbstract &&
-                   type.Namespace != null &&
-                   MatchingNames.Any(ns => type.Name.EndsWith(ns, StringComparison.InvariantCultureIgnoreCase));
-        }
+        public static bool IsViewOrViewModel(this Type type) => type != null &&
+       type.IsClass &&
+       !type.IsAbstract &&
+       type.Namespace != null &&
+       MatchingNames.Any(ns => type.Name.EndsWith(ns, StringComparison.InvariantCultureIgnoreCase));
 
         static IEnumerable<string> MatchingNames
         {

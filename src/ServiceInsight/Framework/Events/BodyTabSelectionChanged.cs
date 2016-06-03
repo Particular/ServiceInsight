@@ -2,7 +2,7 @@
 {
     public class BodyTabSelectionChanged
     {
-        public bool IsSelected { get; private set; }
+        public bool IsSelected { get; }
 
         public BodyTabSelectionChanged(bool isSelected)
         {

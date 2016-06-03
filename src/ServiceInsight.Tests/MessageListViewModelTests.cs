@@ -18,32 +18,32 @@
     [TestFixture]
     public class MessageListViewModelTests
     {
-        IEventAggregator EventAggregator;
-        IServiceControl ServiceControl;
-        SearchBarViewModel SearchBar;
-        Func<MessageListViewModel> MessageListFunc;
-        IClipboard Clipboard;
+        IEventAggregator eventAggregator;
+        IServiceControl serviceControl;
+        SearchBarViewModel searchBar;
+        Func<MessageListViewModel> messageListFunc;
+        IClipboard clipboard;
 
         [SetUp]
         public void TestInitialize()
         {
-            EventAggregator = Substitute.For<IEventAggregator>();
-            ServiceControl = Substitute.For<IServiceControl>();
-            SearchBar = Substitute.For<SearchBarViewModel>();
-            Clipboard = Substitute.For<IClipboard>();
-            MessageListFunc = () => new MessageListViewModel(EventAggregator,
-                                                   ServiceControl,
-                                                   SearchBar,
+            eventAggregator = Substitute.For<IEventAggregator>();
+            serviceControl = Substitute.For<IServiceControl>();
+            searchBar = Substitute.For<SearchBarViewModel>();
+            clipboard = Substitute.For<IClipboard>();
+            messageListFunc = () => new MessageListViewModel(eventAggregator,
+                                                   serviceControl,
+                                                   searchBar,
                                                    Substitute.For<GeneralHeaderViewModel>(),
                                                    Substitute.For<MessageSelectionContext>(),
-                                                   Clipboard);
+                                                   clipboard);
         }
 
         [Test]
-        public void should_load_the_messages_from_the_endpoint()
+        public void Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
-            ServiceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
+            serviceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
                              .Returns(x => new PagedResult<StoredMessage>
                              {
                                  CurrentPage = 1,
@@ -55,14 +55,14 @@
                                  }
                              });
 
-            var messageList = MessageListFunc();
+            var messageList = messageListFunc();
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            EventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
-            EventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
+            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
+            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
             messageList.Rows.Count.ShouldBe(2);
-            SearchBar.IsVisible.ShouldBe(true);
+            searchBar.IsVisible.ShouldBe(true);
         }
     }
 }

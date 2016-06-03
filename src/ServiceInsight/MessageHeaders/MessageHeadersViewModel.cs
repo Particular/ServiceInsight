@@ -2,9 +2,9 @@
 {
     using System.Linq;
     using Caliburn.Micro;
+    using ReactiveUI;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
-    using ReactiveUI;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -22,7 +22,11 @@
         {
             KeyValues.Clear();
             var storedMessage = selection.SelectedMessage;
-            if (storedMessage == null) return;
+            if (storedMessage == null)
+            {
+                return;
+            }
+
             var headers = storedMessage.Headers;
 
             using (KeyValues.SuppressChangeNotifications())
