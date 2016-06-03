@@ -66,7 +66,7 @@
             }
         }
 
-        internal License CurrentLicense { get; private set; }
+        internal License CurrentLicense { get; set; }
 
         public int GetRemainingTrialDays()
         {

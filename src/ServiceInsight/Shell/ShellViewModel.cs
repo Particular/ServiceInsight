@@ -37,6 +37,8 @@
         IHandle<SwitchToFlowWindow>,
         IWorkTracker
     {
+        internal const string UnlicensedStatusMessage = "Trial license: {0} left";
+
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
@@ -310,7 +312,7 @@
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo("Trial license: {0} left", ("day").PluralizeWord(licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, ("day").PluralizeWord(licenseManager.GetRemainingTrialDays()));
             }
         }
 

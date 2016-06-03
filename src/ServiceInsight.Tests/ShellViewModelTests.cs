@@ -155,7 +155,7 @@
             shell.SelectedExplorerItem.ShouldBeSameAs(selected);
         }
 
-        [Test, Ignore("Need to figure out why this one is failing")]
+        [Test]
         public void should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
@@ -165,16 +165,16 @@
             var issuedLicense = new License
             {
                 LicenseType = LicenseType,
-                ExpirationDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
+                ExpirationDate = DateTime.Now.AddDays(NumberOfDaysRemainingFromTrial),
                 RegisteredTo = RegisteredUser
             };
 
-            LicenseManager.CurrentLicense.Returns(issuedLicense);
+            LicenseManager.CurrentLicense = issuedLicense;
             LicenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
 
             shell.OnApplicationIdle();
 
-            //StatusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
+            StatusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
         }
 
         [TearDown]
