@@ -2,44 +2,16 @@
 {
     using System;
     using Anotar.Serilog;
-    using Microsoft.Win32;
     using Particular.Licensing;
 
     public class AppLicenseManager
     {
         public AppLicenseManager()
         {
-            var licenseText = GetExistingLicense();
-            if (!string.IsNullOrEmpty(licenseText))
-            {
-                Exception ex;
-                if (LicenseVerifier.TryVerify(licenseText, out ex))
-                {
-                    CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
-                    return;
-                }
-            }
-
-            CurrentLicense = CreateTrialLicense();
-        }
-
-        string GetExistingLicense()
-        {
-            string existingLicense;
-
-            //look in HKCU
-            if (UserSidChecker.IsNotSystemSid() && new RegistryLicenseStore(Registry.CurrentUser).TryReadLicense(out existingLicense))
-            {
-                return existingLicense;
-            }
-
-            //look in HKLM
-            if (new RegistryLicenseStore(Registry.LocalMachine).TryReadLicense(out existingLicense))
-            {
-                return existingLicense;
-            }
-
-            return string.Empty;
+            var result = ActiveLicense.Find("ServiceInsight",
+                new LicenseSourceHKLMRegKey(),
+                new LicenseSourceHKCURegKey());
+            CurrentLicense = result.License;
         }
 
         public bool TryInstallLicense(string licenseText)
@@ -71,22 +43,12 @@
         public int GetRemainingTrialDays()
         {
             var now = DateTime.UtcNow.Date;
-
             var expiration = (CurrentLicense == null || CurrentLicense.ExpirationDate == null) ?
                 TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
 
             var remainingDays = (expiration - now).Days;
 
             return remainingDays > 0 ? remainingDays : 0;
-        }
-
-        License CreateTrialLicense()
-        {
-            var trialStartDate = TrialStartDateStore.GetTrialStartDate();
-
-            LogTo.Information("Configuring ServiceInsight to run in trial mode.");
-
-            return License.TrialLicense(trialStartDate);
         }
 
         public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
