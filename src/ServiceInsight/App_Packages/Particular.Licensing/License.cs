@@ -5,13 +5,16 @@
 
     class License
     {
-        public static License TrialLicense(DateTime trialStartDate) => new License
+        public static License TrialLicense(DateTime trialStartDate)
         {
-            LicenseType = "Trial",
-            ExpirationDate = trialStartDate.AddDays(14),
-            IsExtendedTrial = false,
-            ValidApplications = new List<string> { "All" }
-        };
+            return new License
+            {
+                LicenseType = "Trial",
+                ExpirationDate = trialStartDate.AddDays(14),
+                IsExtendedTrial = false,
+                ValidApplications = new List<string> { "All" }
+            };
+        }
 
         public License()
         {
@@ -28,12 +31,17 @@
 
         public string LicenseType { get; set; }
 
+        public string Edition { get; set; }
+
         public string RegisteredTo { get; set; }
 
         public DateTime? UpgradeProtectionExpiration { get; internal set; }
 
         public List<string> ValidApplications { get; internal set; }
 
-        public bool ValidForApplication(string applicationName) => ValidApplications.Contains(applicationName) || ValidApplications.Contains("All");
+        public bool ValidForApplication(string applicationName)
+        {
+            return ValidApplications.Contains(applicationName) || ValidApplications.Contains("All");
+        }
     }
 }

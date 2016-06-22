@@ -11,9 +11,7 @@ namespace Particular.Licensing
             var license = new License();
             var doc = new XmlDocument();
             doc.LoadXml(licenseText);
-
             var applications = doc.SelectSingleNode("/license/@Applications");
-
             if (applications != null)
             {
                 license.ValidApplications.AddRange(applications.Value.Split(';'));
@@ -45,6 +43,13 @@ namespace Particular.Licensing
             if (licenseType != null)
             {
                 license.LicenseType = licenseType.Value;
+            }
+
+            var licenseEdition = doc.SelectSingleNode("/license/@Edition");
+
+            if (licenseEdition != null)
+            {
+                license.Edition = licenseEdition.Value;
             }
 
             var name = doc.SelectSingleNode("/license/name");
