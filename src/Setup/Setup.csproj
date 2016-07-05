@@ -63,17 +63,17 @@
     <Copy SourceFiles="res\ServiceInsights.ico" DestinationFolder="$(IntermediateOutputPath)res\" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name SI_PATH -value $(SolutionDir)ServiceInsight\bin\$(Configuration) -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetVersion $(GitVersion_MajorMinorPatch)" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetPackageName ServiceInsight-$(GitVersion_MajorMinorPatch).exe -buildname DefaultBuild" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetVersion $(GfvMajorMinorPatch)" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /SetPackageName ServiceInsight-$(GfvMajorMinorPatch).exe -buildname DefaultBuild" />
     <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)ServiceInsight.aip" />
-    <Copy SourceFiles="$(IntermediateOutputPath)bin\ServiceInsight-$(GitVersion_MajorMinorPatch).exe" DestinationFolder="$(OutputPath)" />
+    <Copy SourceFiles="$(IntermediateOutputPath)bin\ServiceInsight-$(GfvMajorMinorPatch).exe" DestinationFolder="$(OutputPath)" />
   </Target>
-  <Import Project="..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" />
+  <Import Project="..\packages\GitVersionTask.2.0.1\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.2.0.1\build\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.2.0.1\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.2.0.1\build\GitVersionTask.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
