@@ -4,6 +4,7 @@ namespace ServiceInsight.SequenceDiagram
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using DevExpress.Data.Filtering.Helpers;
     using ServiceInsight.Framework;
     using ServiceInsight.Models;
     using ServiceInsight.SequenceDiagram.Diagram;
@@ -25,6 +26,7 @@ namespace ServiceInsight.SequenceDiagram
             this.container = container;
 
             Initialize();
+            OrderHandlers();
         }
 
         public ReadOnlyCollection<EndpointItem> Endpoints => endpoints.AsReadOnly();
@@ -98,6 +100,17 @@ namespace ServiceInsight.SequenceDiagram
 
                 sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
             }
+        }
+
+        private void OrderHandlers()
+        {
+            var start = handlers.Where(h => h.ID == ConversationStartHandlerName);
+            var orderedByHandledAt = handlers.Where(h => h.ID != ConversationStartHandlerName)
+                                             .OrderBy(h => h.HandledAt)
+                                             .ToList();
+
+            handlers = new List<Handler>(start);
+            handlers.AddRange(orderedByHandledAt);
         }
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler) => new MessageProcessingRoute(arrow, processingHandler);
