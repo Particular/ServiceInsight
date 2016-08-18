@@ -136,6 +136,7 @@
     <Compile Include="SequenceDiagramModelCreatorTestsForJson1.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson2.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson3.cs" />
+    <Compile Include="SequenceDiagramModelCreatorTestsForJson5.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson4.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
@@ -151,6 +152,7 @@
     <None Include="ConversationsData\json1.json" />
     <None Include="ConversationsData\json2.json" />
     <None Include="ConversationsData\json3.json" />
+    <None Include="ConversationsData\json5.json" />
     <None Include="ConversationsData\json4.json" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -164,9 +166,6 @@
       <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
       <Name>ServiceInsight</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
