@@ -15,8 +15,8 @@ namespace ServiceInsight.SequenceDiagram
         readonly List<StoredMessage> messages;
         readonly IMessageCommandContainer container;
 
+        List<Handler> handlers;
         List<EndpointItem> endpoints = new List<EndpointItem>();
-        List<Handler> handlers = new List<Handler>();
         List<MessageProcessingRoute> processingRoutes = new List<MessageProcessingRoute>();
 
         public ModelCreator(List<StoredMessage> messages, IMessageCommandContainer container)
@@ -37,6 +37,7 @@ namespace ServiceInsight.SequenceDiagram
         {
             var endpointRegistry = new EndpointRegistry();
             var handlerRegistry = new HandlerRegistry();
+            var firstOrderHandlers = new List<Handler>();
 
             var messageTrees = CreateMessageTrees(messages).ToArray();
             var messagesInOrder = messageTrees.SelectMany(x => x.Walk()).ToArray();
@@ -71,7 +72,7 @@ namespace ServiceInsight.SequenceDiagram
 
                 if (handlerRegistry.TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out sendingHandler))
                 {
-                    handlers.Add(sendingHandler);
+                    firstOrderHandlers.Add(sendingHandler);
                     sendingEndpoint.Handlers.Add(sendingHandler);
                 }
 
@@ -79,7 +80,7 @@ namespace ServiceInsight.SequenceDiagram
 
                 if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
                 {
-                    handlers.Add(processingHandler);
+                    firstOrderHandlers.Add(processingHandler);
                     processingEndpoint.Handlers.Add(processingHandler);
                 }
                 else
@@ -98,6 +99,14 @@ namespace ServiceInsight.SequenceDiagram
 
                 sendingHandler.Out = sendingHandler.Out.Concat(new[] { arrow }).OrderBy(a => a).ToList();
             }
+
+            var start = firstOrderHandlers.Where(h => h.ID == ConversationStartHandlerName);
+            var orderedByHandledAt = firstOrderHandlers.Where(h => h.ID != ConversationStartHandlerName)
+                                                    .OrderBy(h => h.HandledAt)
+                                                    .ToList();
+
+            handlers = new List<Handler>(start);
+            handlers.AddRange(orderedByHandledAt);
         }
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler) => new MessageProcessingRoute(arrow, processingHandler);

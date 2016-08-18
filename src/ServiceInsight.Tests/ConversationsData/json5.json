@@ -1,0 +1,827 @@
+﻿[
+  {
+    "id": "d4569b84-7913-44cd-4133-d2b87dbc3820",
+    "message_id": "a3f893de-25e0-4838-8d13-a655009bc7df",
+    "message_type": "RelocationProcessCompletedNotification",
+    "sending_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "receiving_endpoint": {
+      "name": "CrmDefault",
+      "host_id": "72220399-e091-2c8e-96d4-6d8199721d1f",
+      "host": "MachineOne"
+    },
+    "time_sent": "2016-08-01T07:27:10.822878Z",
+    "processed_at": "2016-08-01T07:27:10.936081Z",
+    "critical_time": "00:00:00.1132030",
+    "processing_time": "00:00:00.0468000",
+    "delivery_time": "00:00:00.0664030",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "a3f893de-25e0-4838-8d13-a655009bc7df"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "345c6add-3337-41bf-8faa-a655009bc7e4"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Publish"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:10:822878 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "RelocationSaga, RelocationSaga.1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "RelocationProcessCompletedNotification, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "a3f893de-25e0-4838-8d13-a655009bc7df\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "699659a9-6bdd-4cbc-b425-a655009bc7c8"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "CrmDefault@MachineOne"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:10:889281 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:10:936081 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MachineOne"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "CrmDefault"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "publish",
+    "body_url": "/messages/a3f893de-25e0-4838-8d13-a655009bc7df/body",
+    "body_size": 113,
+    "originates_from_saga": {
+      "saga_type": "RelocationSaga",
+      "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+    }
+  },
+  {
+    "id": "21a2086c-e34b-d73c-1f59-61e413d5f78e",
+    "message_id": "699659a9-6bdd-4cbc-b425-a655009bc7c8",
+    "message_type": "RelocationOrderRequisitionProcessingSucceededNotification",
+    "sending_endpoint": {
+      "name": "SubscriberEndpoint",
+      "host_id": "91892910-93f0-3665-c53b-cfc8dbb8702e",
+      "host": "Machine-P1"
+    },
+    "receiving_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "time_sent": "2016-08-01T07:27:10.745191Z",
+    "processed_at": "2016-08-01T07:27:10.854119Z",
+    "critical_time": "00:00:00.1089280",
+    "processing_time": "00:00:00.0312410",
+    "delivery_time": "00:00:00.0776870",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "699659a9-6bdd-4cbc-b425-a655009bc7c8"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "b11f40f3-2c8e-4b34-b806-a655009bc7cd"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Publish"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:10:745191 Z"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "RelocationOrderRequisitionProcessingSucceededNotification, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "699659a9-6bdd-4cbc-b425-a655009bc7c8\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "8f096ac6-37e2-4152-9725-a655009bc224"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "Machine-P1"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "SubscriberEndpoint"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "RelocationSaga:3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7:Completed"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:10:822878 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:10:854119 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "SubscriberEndpoint@Machine-P1"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "publish",
+    "body_url": "/messages/699659a9-6bdd-4cbc-b425-a655009bc7c8/body",
+    "body_size": 131,
+    "invoked_sagas": [
+      {
+        "change_status": "Completed",
+        "saga_type": "RelocationSaga",
+        "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      }
+    ]
+  },
+  {
+    "id": "32f74d3a-d910-cb7b-660c-6ec115b77777",
+    "message_id": "8f096ac6-37e2-4152-9725-a655009bc224",
+    "message_type": "ProcessRelocationOrderRequisitionCommand",
+    "sending_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "receiving_endpoint": {
+      "name": "SubscriberEndpoint",
+      "host_id": "91892910-93f0-3665-c53b-cfc8dbb8702e",
+      "host": "Machine-P1"
+    },
+    "time_sent": "2016-08-01T07:27:05.932365Z",
+    "processed_at": "2016-08-01T07:27:10.776445Z",
+    "critical_time": "00:00:04.8440800",
+    "processing_time": "00:00:04.7500890",
+    "delivery_time": "00:00:00.0939910",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "8f096ac6-37e2-4152-9725-a655009bc224"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "8f096ac6-37e2-4152-9725-a655009bc224"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:05:932365 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "RelocationSaga, RelocationSaga.1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "ProcessRelocationOrderRequisitionCommand, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "8f096ac6-37e2-4152-9725-a655009bc224\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "045e4d09-4aef-42f7-b82b-a655009bc212"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "SubscriberEndpoint@Machine-P1"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:06:026356 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:10:776445 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "Machine-P1"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "SubscriberEndpoint"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/8f096ac6-37e2-4152-9725-a655009bc224/body",
+    "body_size": 2937,
+    "originates_from_saga": {
+      "saga_type": "RelocationSaga",
+      "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+    }
+  },
+  {
+    "id": "05dd0d5a-e14f-de2b-287d-67ce73f5c7b8",
+    "message_id": "045e4d09-4aef-42f7-b82b-a655009bc212",
+    "message_type": "GetRequestorIdByPersonIdResponse",
+    "sending_endpoint": {
+      "name": "RequestorIdentificationManagerRouter",
+      "host_id": "84585ccc-a7a9-8cd2-ea88-56a9e0ecd8ff",
+      "host": "MachineTwo-P1"
+    },
+    "receiving_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "time_sent": "2016-08-01T07:27:05.870717Z",
+    "processed_at": "2016-08-01T07:27:05.947913Z",
+    "critical_time": "00:00:00.0771960",
+    "processing_time": "00:00:00.0155480",
+    "delivery_time": "00:00:00.0616480",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "045e4d09-4aef-42f7-b82b-a655009bc212"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Reply"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.9"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:05:870717 Z"
+      },
+      {
+        "key": "NServiceBus.SagaId",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.SagaType",
+        "value": "RelocationSaga, RelocationSaga.1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "GetRequestorIdByPersonIdResponse, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MachineTwo-P1"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RequestorIdentificationManagerRouter"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "RelocationSaga:3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7:Updated"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:05:932365 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:05:947913 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RequestorIdentificationManagerRouter@MachineTwo-P1"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "reply",
+    "body_url": "/messages/045e4d09-4aef-42f7-b82b-a655009bc212/body",
+    "body_size": 193,
+    "invoked_sagas": [
+      {
+        "change_status": "Updated",
+        "saga_type": "RelocationSaga",
+        "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      }
+    ]
+  },
+  {
+    "id": "80fb01be-d21e-3855-36b1-b1399e5cc327",
+    "message_id": "af05c484-4339-461b-b1a5-a655009bc1ec",
+    "message_type": "GetRequestorIdByPersonIdRequest",
+    "sending_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "receiving_endpoint": {
+      "name": "RequestorIdentificationManagerRouter",
+      "host_id": "84585ccc-a7a9-8cd2-ea88-56a9e0ecd8ff",
+      "host": "MachineTwo-P1"
+    },
+    "time_sent": "2016-08-01T07:27:05.744777Z",
+    "processed_at": "2016-08-01T07:27:05.870717Z",
+    "critical_time": "00:00:00.1259400",
+    "processing_time": "00:00:00.0781240",
+    "delivery_time": "00:00:00.0478160",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:05:744777 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "RelocationSaga, RelocationSaga.1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "GetRequestorIdByPersonIdRequest, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "af05c484-4339-461b-b1a5-a655009bc1ec\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "RequestorIdentificationManagerRouter@MachineTwo-P1"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:05:792593 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:05:870717 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MachineTwo-P1"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "RequestorIdentificationManagerRouter"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/af05c484-4339-461b-b1a5-a655009bc1ec/body",
+    "body_size": 243,
+    "originates_from_saga": {
+      "saga_type": "RelocationSaga",
+      "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+    }
+  },
+  {
+    "id": "4da23d3e-1c98-a135-de3b-7800aa72c0ff",
+    "message_id": "2a87c3e6-9ced-40d2-ab3d-a655009bc1e7",
+    "message_type": "RelocationProcessStartedNotification",
+    "sending_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "receiving_endpoint": {
+      "name": "CrmDefault",
+      "host_id": "72220399-e091-2c8e-96d4-6d8199721d1f",
+      "host": "MachineOne"
+    },
+    "time_sent": "2016-08-01T07:27:05.729168Z",
+    "processed_at": "2016-08-01T07:27:05.912881Z",
+    "critical_time": "00:00:00.1837130",
+    "processing_time": "00:00:00.1248000",
+    "delivery_time": "00:00:00.0589130",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "2a87c3e6-9ced-40d2-ab3d-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "5531daa2-4bae-405d-8aad-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Publish"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:05:729168 Z"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "RelocationSaga, RelocationSaga.1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "RelocationProcessStartedNotification, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "2a87c3e6-9ced-40d2-ab3d-a655009bc1e7\\0"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "Company\\intserviceaccount"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "CrmDefault@MachineOne"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:05:788081 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:05:912881 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MachineOne"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "CrmDefault"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "publish",
+    "body_url": "/messages/2a87c3e6-9ced-40d2-ab3d-a655009bc1e7/body",
+    "body_size": 2839,
+    "originates_from_saga": {
+      "saga_type": "RelocationSaga",
+      "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+    }
+  },
+  {
+    "id": "5a59b85e-e1ea-4e25-aeb3-e082ad697738",
+    "message_id": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de",
+    "message_type": "StartRelocationProcessCommand",
+    "sending_endpoint": {
+      "name": "RelocationOrderManager",
+      "host_id": "9d4a9c3c-5c8f-17e8-d509-7d114281f829",
+      "host": "MachineTwo-P1"
+    },
+    "receiving_endpoint": {
+      "name": "RelocationSaga",
+      "host_id": "6f12632d-f9b3-fbde-fafa-531a8a29ad9f",
+      "host": "SERVICEBUS"
+    },
+    "time_sent": "2016-08-01T07:27:05.698841Z",
+    "processed_at": "2016-08-01T07:27:05.760418Z",
+    "critical_time": "00:00:00.0615770",
+    "processing_time": "00:00:00.0312500",
+    "delivery_time": "00:00:00.0303270",
+    "is_system_message": false,
+    "conversation_id": "fdbe054e-d6b9-4a37-9208-a655009bc1de",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "5.2.14"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2016-08-01 07:27:05:698841 Z"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "StartRelocationProcessCommand, ServiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "CorrId",
+        "value": "2c9ecac1-0d9d-4fec-a2c8-a655009bc1de\\0"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "fdbe054e-d6b9-4a37-9208-a655009bc1de"
+      },
+      {
+        "key": "WinIdName",
+        "value": "CN=Prod.Client.RelocationOrderManager.Seas.Local, OU=Integration, O=SEAS-NVE, C=DK; 87B2EA188FAAD9705758A5E5FBC2882E6CC03047"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MachineTwo-P1"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "RelocationOrderManager"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "RelocationSaga@SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "RelocationSaga:3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "3dfc648e-0e3b-4296-8623-a655009bc1e7:New"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2016-08-01 07:27:05:729168 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2016-08-01 07:27:05:760418 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "SERVICEBUS"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "RelocationSaga"
+      },
+      {
+        "key": "NServiceBus.OriginatingAddress",
+        "value": "RelocationOrderManager@MachineTwo-P1"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/2c9ecac1-0d9d-4fec-a2c8-a655009bc1de/body",
+    "body_size": 2826,
+    "invoked_sagas": [
+      {
+        "change_status": "New",
+        "saga_type": "RelocationSaga",
+        "saga_id": "3dfc648e-0e3b-4296-8623-a655009bc1e7"
+      }
+    ]
+  }
+]
