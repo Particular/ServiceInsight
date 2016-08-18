@@ -11,6 +11,8 @@ Once you have your change merged into `master` (AVOID BUNDLING CHANGES, RELEASE 
 ![Promote](Promote.PNG)
 ![Promote_dialog](Promote_dialog.PNG)
 
+Make sure that all the issues related to this build are in the matching milestone and are closed, otherwise the deployment will fail.
+
 ### 3. Deploy using OctopusDeploy
 You are now ready to go to [OctopusDeploy](http://deploy.particular.net/app#/projects/serviceinsight).
 You should have a new "Staging" build waiting to be released.  
