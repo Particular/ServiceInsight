@@ -3,7 +3,6 @@
     using System;
     using System.Reactive.Linq;
     using System.Windows;
-    using ReactiveUI;
 
     public partial class LogWindowView
     {
@@ -29,7 +28,7 @@
                 logSubscription.Dispose();
             }
 
-            logSubscription = vm.Logs.ItemsAdded.SubscribeOn(RxApp.MainThreadScheduler).Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }

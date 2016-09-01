@@ -6,6 +6,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using Particular.Licensing;
+    using ServiceControl;
     using ServiceInsight.Explorer.EndpointExplorer;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
@@ -91,6 +92,8 @@
                         headerView,
                         sequenceDiagramView,
                         settingsProvider,
+                        Substitute.For<ServiceControlConnectionProvider>(),
+                        Substitute.For<IServiceControl>(),
                         messageProperties,
                         logWindow,
                         commandLineArgParser);

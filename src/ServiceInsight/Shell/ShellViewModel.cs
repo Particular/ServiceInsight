@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
@@ -10,6 +11,7 @@
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using Framework.Rx;
     using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
@@ -20,6 +22,7 @@
     using MessageViewers;
     using Options;
     using Saga;
+    using ServiceControl;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
@@ -50,6 +53,8 @@
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
         Func<LicenseRegistrationViewModel> licenceRegistration;
+        ServiceControlConnectionProvider connectionProvider;
+        IServiceControl serviceControl;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -67,6 +72,8 @@
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
+            ServiceControlConnectionProvider connectionProvider,
+            IServiceControl serviceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
@@ -79,6 +86,8 @@
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenceRegistration = licenceRegistration;
+            this.connectionProvider = connectionProvider;
+            this.serviceControl = serviceControl;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -104,7 +113,7 @@
             HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
             ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
-            RefreshAllCommand = this.CreateCommand(RefreshAll);
+            RefreshAllCommand = this.CreateCommandAsync(() => RefreshAll(true));
 
             RegisterCommand = this.CreateCommand(() =>
             {
@@ -117,6 +126,23 @@
             OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
+        string GetConfiguredAddress(CommandLineArgParser commandLineParser)
+        {
+            if (commandLineParser.ParsedOptions.EndpointUri == null)
+            {
+                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+                if (appSettings != null && appSettings.LastUsedServiceControl != null)
+                {
+                    return appSettings.LastUsedServiceControl;
+                }
+
+                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
+                return string.Format("http://localhost:{0}/api", managementConfig.Port);
+            }
+
+            return commandLineParser.ParsedOptions.EndpointUri.ToString();
+        }
+
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
@@ -125,6 +151,24 @@
             DisplayName = GetProductName();
             StatusBarManager.Done();
             RestoreLayout();
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            var configuredConnection = GetConfiguredAddress(comandLineArgParser);
+            var existingConnection = connectionProvider.Url;
+
+            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl"));
+
+            connectionProvider.ConnectTo(configuredConnection);
+            if (!serviceControl.IsAlive())
+            {
+                connectionProvider.ConnectTo(existingConnection);
+            }
+
+            eventAggregator.PublishOnUIThread(new WorkFinished());
         }
 
         protected override void OnDeactivate(bool close)
@@ -203,14 +247,17 @@
 
             if (result.GetValueOrDefault(false))
             {
-                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                //EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
                 eventAggregator.PublishOnUIThread(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
-        void RefreshAll()
+        async Task RefreshAll(bool manual)
         {
-            EndpointExplorer.RefreshData();
+            if (manual)
+            {
+                await RxServiceControl.Instance.Refresh();
+            }
             Messages.RefreshMessages();
             SagaWindow.RefreshSaga();
         }
@@ -218,6 +265,15 @@
         public void OnAutoRefreshChanged()
         {
             refreshTimer.IsEnabled = AutoRefresh;
+
+            if (AutoRefresh)
+            {
+                RxServiceControl.Instance.SetRefresh(refreshTimer.Interval);
+            }
+            else
+            {
+                RxServiceControl.Instance.DisableRefresh();
+            }
         }
 
         public int SelectedMessageTabItem { get; set; }
@@ -253,14 +309,14 @@
             ValidateLicense();
         }
 
-        internal void OnAutoRefreshing()
+        internal Task OnAutoRefreshing()
         {
             if (!AutoRefresh || WorkInProgress)
             {
-                return;
+                return Task.FromResult(0);
             }
 
-            RefreshAll();
+            return RefreshAll(false);
         }
 
         public void OnBodyTabSelectedChanged()

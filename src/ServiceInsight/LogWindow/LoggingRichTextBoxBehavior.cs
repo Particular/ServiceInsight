@@ -73,7 +73,6 @@ namespace ServiceInsight.LogWindow
 
             logSubscription = logs.Changed
                 .Where(e => e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset)
-                .SubscribeOn(RxApp.MainThreadScheduler)
                 .Subscribe(ProcessChange);
         }
 
