@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using Caliburn.Micro;
-    using EndpointExplorer;
     using Framework;
     using Framework.Events;
     using Newtonsoft.Json;
@@ -11,11 +10,11 @@
 
     public class EndpointExplorerViewModel : Screen, IHandle<RequestSelectingEndpoint>, IHandle<SelectedExplorerItemChanged>
     {
-        static JsonSerializer serializer = new JsonSerializer();
+        static JsonSerializer serializer;
 
         static EndpointExplorerViewModel()
         {
-            serializer.ContractResolver = new SnakeCasePropertyNamesContractResolver();
+            serializer = new JsonSerializer { ContractResolver = new SnakeCasePropertyNamesContractResolver() };
         }
 
         IEventAggregator eventAggregator;
@@ -42,9 +41,9 @@
 
             var toRemove = root.Children.ToList();
             var endpointInstancesGroupedByName = e.Data.OrderBy(x => x.name).GroupBy(x => x.name);
-            foreach (var scaledOutEndpoint in endpointInstancesGroupedByName)
+            foreach (var endpointGroup in endpointInstancesGroupedByName)
             {
-                var instances = scaledOutEndpoint.ToList();
+                var instances = endpointGroup.ToList();
                 var endpoint = instances.Cast<JObject>().First().ToObject<Models.Endpoint>(serializer);
                 var node = root.GetEndpointNode(endpoint);
                 if (node != null)
