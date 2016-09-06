@@ -3,10 +3,12 @@
     using System;
     using System.Linq;
     using Caliburn.Micro;
+    using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Startup;
 
     public class EndpointExplorerViewModel : Screen, IHandle<RequestSelectingEndpoint>, IHandle<SelectedExplorerItemChanged>
     {
@@ -18,11 +20,14 @@
         }
 
         IEventAggregator eventAggregator;
+        string initialEndpoint;
 
-        public EndpointExplorerViewModel(IEventAggregator eventAggregator)
+        public EndpointExplorerViewModel(IEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
         {
             this.eventAggregator = eventAggregator;
             Items = new BindableCollection<ExplorerItem>();
+
+            initialEndpoint = commandLineParser.ParsedOptions.EndpointName;
 
             RxServiceControl.Instance.Endpoints().Subscribe(MergeEndpoints);
         }
@@ -37,6 +42,8 @@
                 root.IsExpanded = true;
 
                 Items.Add(root);
+
+                SelectedNode = root;
             }
 
             var toRemove = root.Children.ToList();
@@ -49,13 +56,21 @@
                 if (node != null)
                 {
                     toRemove.Remove(node);
-                    continue;
+                }
+                else
+                {
+                    var hostNames = instances.Select(instance => instance.host_display_name).Distinct();
+                    var tooltip = string.Join(", ", hostNames);
+
+                    node = new AuditEndpointExplorerItem(endpoint, tooltip);
+                    root.Children.Add(node);
                 }
 
-                var hostNames = instances.Select(instance => instance.host_display_name).Distinct();
-                var tooltip = string.Join(", ", hostNames);
-
-                root.Children.Add(new AuditEndpointExplorerItem(endpoint, tooltip));
+                if (!initialEndpoint.IsEmpty() && string.Equals(node.Name, initialEndpoint, StringComparison.OrdinalIgnoreCase))
+                {
+                    SelectedNode = node;
+                    initialEndpoint = "";
+                }
             }
             if (toRemove.Any())
             {
