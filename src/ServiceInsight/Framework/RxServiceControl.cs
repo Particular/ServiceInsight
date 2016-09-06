@@ -15,7 +15,7 @@
     using ReactiveUI;
     using Serilog;
 
-    interface IRxServiceControl
+    public interface IRxServiceControl
     {
         Task Refresh();
 
@@ -40,15 +40,17 @@
     {
         static Serilog.ILogger anotarLogger = Log.ForContext<IRxServiceControl>();
 
-        public static IRxServiceControl Instance { get; set; }
-
         readonly IBlobCache cache;
 
         List<string> serviceControlUrls;
 
-        Subject<Unit> manualRefresh;
-        Subject<IObservable<Unit>> trigger;
-        IObservable<Unit> subject;
+        IObserver<Unit> manualRefreshTrigger;
+        IObserver<IObservable<Unit>> timerTriggerProvider;
+        IObservable<Unit> trigger;
+
+        IObservable<ServiceControlData> endpointsStream;
+        IObservable<ServiceControlData> messagesStream;
+        Dictionary<string, IObservable<ServiceControlData>> endpointMessagesStreams;
 
         public RxServiceControl(IBlobCache cache)
         {
@@ -56,17 +58,23 @@
 
             serviceControlUrls = new List<string>();
 
-            manualRefresh = new Subject<Unit>();
-            trigger = new Subject<IObservable<Unit>>();
+            var manualRefresh = new Subject<Unit>();
+            manualRefreshTrigger = manualRefresh.AsObserver();
+            var timerProvider = new Subject<IObservable<Unit>>();
+            timerTriggerProvider = timerProvider.AsObserver();
 
-            subject = Observable.Merge(
+            trigger = Observable.Merge(
                 manualRefresh,
-                trigger.Switch());
+                timerProvider.Switch());
+
+            endpointsStream = InitializeStream("endpoints");
+            messagesStream = InitializeStream("messages");
+            endpointMessagesStreams = new Dictionary<string, IObservable<ServiceControlData>>(StringComparer.OrdinalIgnoreCase);
         }
 
         public Task Refresh()
         {
-            manualRefresh.OnNext(Unit.Default);
+            manualRefreshTrigger.OnNext(Unit.Default);
             return Task.FromResult(0);
         }
 
@@ -111,40 +119,30 @@
             return Task.FromResult(0);
         }
 
-        public IObservable<ServiceControlData> Endpoints()
-        {
-            return subject.SelectMany(_ =>
-            {
-                var data = serviceControlUrls.Select(url =>
-                    GetData($"{url}/endpoints")
-                    .Select(d => new ServiceControlData(url, d)));
+        public IObservable<ServiceControlData> Endpoints() => endpointsStream;
 
-                return Observable.Merge(data);
-            }).Publish().RefCount();
-        }
-
-        public IObservable<ServiceControlData> Messages()
-        {
-            return subject.SelectMany(_ =>
-            {
-                var data = serviceControlUrls.Select(url =>
-                    GetData($"{url}/messages")
-                    .Select(d => new ServiceControlData(url, d)));
-
-                return Observable.Merge(data);
-            }).Publish().RefCount();
-        }
+        public IObservable<ServiceControlData> Messages() => messagesStream;
 
         public IObservable<ServiceControlData> EndpointMessages(string endpointName)
         {
-            return subject.SelectMany(_ =>
+            var url = $"endpoints/{endpointName}/messages/";
+            IObservable<ServiceControlData> result;
+            if (!endpointMessagesStreams.TryGetValue(url, out result))
             {
-                var data = serviceControlUrls.Select(url =>
-                    GetData($"{url}/endpoints/{endpointName}/messages/")
-                    .Select(d => new ServiceControlData(url, d)));
+                result = InitializeStream(url);
+                endpointMessagesStreams.Add(url, result);
+            }
+            return result;
+        }
 
-                return Observable.Merge(data);
-            }).Publish().RefCount();
+        public void SetRefresh(TimeSpan interval)
+        {
+            timerTriggerProvider.OnNext(Observable.Interval(interval).Select(_ => Unit.Default).ObserveOn(RxApp.MainThreadScheduler));
+        }
+
+        public void DisableRefresh()
+        {
+            timerTriggerProvider.OnNext(Observable.Never<Unit>());
         }
 
         private IObservable<IEnumerable<JObject>> GetData(string url)
@@ -155,18 +153,20 @@
                 .Select(j => JArray.Parse(j).Cast<JObject>());
         }
 
-        public void SetRefresh(TimeSpan interval)
+        private IObservable<ServiceControlData> InitializeStream(string url)
         {
-            trigger.OnNext(Observable.Interval(interval).Select(_ => Unit.Default).ObserveOn(RxApp.MainThreadScheduler));
-        }
+            return trigger.SelectMany(_ =>
+            {
+                var data = serviceControlUrls.Select(baseurl =>
+                    GetData($"{baseurl}/{url}")
+                    .Select(d => new ServiceControlData(baseurl, d)));
 
-        public void DisableRefresh()
-        {
-            trigger.OnNext(Observable.Never<Unit>());
+                return Observable.Merge(data);
+            }).Publish().RefCount();
         }
     }
 
-    class ServiceControlData
+    public class ServiceControlData
     {
         public ServiceControlData(string url, IEnumerable<JObject> data)
         {

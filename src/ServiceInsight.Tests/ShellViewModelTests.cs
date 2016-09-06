@@ -8,6 +8,7 @@
     using Particular.Licensing;
     using ServiceControl;
     using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
@@ -94,6 +95,7 @@
                         settingsProvider,
                         Substitute.For<ServiceControlConnectionProvider>(),
                         Substitute.For<IServiceControl>(),
+                        Substitute.For<IRxServiceControl>(),
                         messageProperties,
                         logWindow,
                         commandLineArgParser);

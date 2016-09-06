@@ -30,8 +30,6 @@
         {
             BlobCache.ApplicationName = "ServiceInsight";
 
-            RxServiceControl.Instance = new RxServiceControl(BlobCache.UserAccount);
-
             CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();

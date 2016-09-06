@@ -4,17 +4,24 @@
 
     public class ServiceControlConnectionProvider
     {
+        IRxServiceControl serviceControl;
+
+        public ServiceControlConnectionProvider(IRxServiceControl serviceControl)
+        {
+            this.serviceControl = serviceControl;
+        }
+
         public void ConnectTo(string url)
         {
             Url = url;
 
             AsyncPump.Run(async () =>
             {
-                await RxServiceControl.Instance.ClearServiceControls();
-                await RxServiceControl.Instance.AddServiceControl(url);
+                await serviceControl.ClearServiceControls();
+                await serviceControl.AddServiceControl(url);
 
                 // Prime the streams
-                await RxServiceControl.Instance.Refresh();
+                await serviceControl.Refresh();
             });
         }
 

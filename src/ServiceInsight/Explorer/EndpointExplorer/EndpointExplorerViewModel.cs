@@ -22,14 +22,14 @@
         IEventAggregator eventAggregator;
         string initialEndpoint;
 
-        public EndpointExplorerViewModel(IEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
+        public EndpointExplorerViewModel(IRxServiceControl serviceControl, IEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
         {
             this.eventAggregator = eventAggregator;
             Items = new BindableCollection<ExplorerItem>();
 
             initialEndpoint = commandLineParser.ParsedOptions.EndpointName;
 
-            RxServiceControl.Instance.Endpoints().Subscribe(MergeEndpoints);
+            serviceControl.Endpoints().Subscribe(MergeEndpoints);
         }
 
         private void MergeEndpoints(ServiceControlData e)

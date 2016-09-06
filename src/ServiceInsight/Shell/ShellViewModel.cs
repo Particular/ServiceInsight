@@ -55,6 +55,7 @@
         Func<LicenseRegistrationViewModel> licenceRegistration;
         ServiceControlConnectionProvider connectionProvider;
         IServiceControl serviceControl;
+        IRxServiceControl rxServiceControl;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -74,6 +75,7 @@
             ISettingsProvider settingsProvider,
             ServiceControlConnectionProvider connectionProvider,
             IServiceControl serviceControl,
+            IRxServiceControl rxServiceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
@@ -88,6 +90,7 @@
             this.licenceRegistration = licenceRegistration;
             this.connectionProvider = connectionProvider;
             this.serviceControl = serviceControl;
+            this.rxServiceControl = rxServiceControl;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -256,7 +259,7 @@
         {
             if (manual)
             {
-                await RxServiceControl.Instance.Refresh();
+                await rxServiceControl.Refresh();
             }
             Messages.RefreshMessages();
             SagaWindow.RefreshSaga();
@@ -268,11 +271,11 @@
 
             if (AutoRefresh)
             {
-                RxServiceControl.Instance.SetRefresh(refreshTimer.Interval);
+                rxServiceControl.SetRefresh(refreshTimer.Interval);
             }
             else
             {
-                RxServiceControl.Instance.DisableRefresh();
+                rxServiceControl.DisableRefresh();
             }
         }
 
