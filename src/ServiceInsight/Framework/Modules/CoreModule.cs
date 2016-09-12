@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Xml;
+    using Akavache;
     using Autofac;
     using Models;
     using ServiceControl;
@@ -20,6 +21,7 @@
             builder.RegisterType<AppLicenseManager>().SingleInstance();
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
+            builder.RegisterInstance(new RxServiceControl(BlobCache.UserAccount)).As<IRxServiceControl>().SingleInstance();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
         }
     }

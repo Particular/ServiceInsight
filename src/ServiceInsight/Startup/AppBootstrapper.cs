@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Windows;
     using System.Windows.Markup;
+    using Akavache;
     using Autofac;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
@@ -27,6 +28,8 @@
 
         protected override void Configure()
         {
+            BlobCache.ApplicationName = "ServiceInsight";
+
             CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();
@@ -66,7 +69,7 @@
 
         void ExtendConventions()
         {
-            ConventionManager.AddElementConvention<BarButtonItem>(BarButtonItem.IsVisibleProperty, "DataContext", "ItemClick");
+            ConventionManager.AddElementConvention<BarButtonItem>(BarItem.IsVisibleProperty, "DataContext", "ItemClick");
         }
 
         protected override void PrepareApplication()

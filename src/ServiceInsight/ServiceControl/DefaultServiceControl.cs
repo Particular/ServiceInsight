@@ -128,14 +128,6 @@
             return messages;
         }
 
-        public IEnumerable<Endpoint> GetEndpoints()
-        {
-            var request = new RestRequestWithCache(EndpointsEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = GetModel<List<Endpoint>>(request);
-
-            return messages ?? new List<Endpoint>();
-        }
-
         public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
         {
             var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
