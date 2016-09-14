@@ -9,6 +9,7 @@
     using ExtensionMethods;
     using MessageList;
     using Models;
+    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Rx;
     using ServiceInsight.Framework.Settings;
@@ -33,8 +34,8 @@
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
 
-            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
-            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
+            SearchCommand = Command.Create(Search, () => CanSearch);
+            CancelSearchCommand = Command.Create(CancelSearch, () => CanCancelSearch);
         }
 
         protected override void OnActivate()

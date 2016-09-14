@@ -12,7 +12,7 @@
     using Anotar.Serilog;
     using ExtensionMethods;
     using Newtonsoft.Json.Linq;
-    using ReactiveUI;
+    using Pirac;
     using Serilog;
 
     public interface IRxServiceControl
@@ -137,7 +137,7 @@
 
         public void SetRefresh(TimeSpan interval)
         {
-            timerTriggerProvider.OnNext(Observable.Interval(interval).Select(_ => Unit.Default).ObserveOn(RxApp.MainThreadScheduler));
+            timerTriggerProvider.OnNext(Observable.Interval(interval).Select(_ => Unit.Default).ObserveOnPiracMain());
         }
 
         public void DisableRefresh()

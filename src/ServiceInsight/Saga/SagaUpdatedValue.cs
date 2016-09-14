@@ -2,7 +2,7 @@
 {
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
+    using Pirac;
 
     public class SagaUpdatedValue : PropertyChangedBase
     {
@@ -13,7 +13,7 @@
             SagaName = sagaName;
             Name = propertyName;
             NewValue = propertyValue;
-            ShowEntireContentCommand = this.CreateCommand(ShowEntireContent);
+            ShowEntireContentCommand = Command.Create(ShowEntireContent);
         }
 
         public string SagaName { get; }

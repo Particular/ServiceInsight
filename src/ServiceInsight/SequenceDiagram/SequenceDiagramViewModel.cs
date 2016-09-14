@@ -12,8 +12,8 @@
     using Caliburn.Micro;
     using Diagram;
     using Microsoft.Win32;
+    using Pirac;
     using ServiceInsight.DiagramLegend;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
@@ -23,7 +23,7 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
-    public class SequenceDiagramViewModel : Screen,
+    public class SequenceDiagramViewModel : Caliburn.Micro.Screen,
         IHandle<SelectedMessageChanged>,
         IHandle<ScrollDiagramItemIntoView>,
         IMessageCommandContainer
@@ -48,6 +48,7 @@
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
             ShowExceptionCommand showExceptionCommand,
             ReportMessageCommand reportMessageCommand,
+            NetworkOperations networkOperations,
             SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
@@ -61,8 +62,8 @@
             ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             ShowExceptionCommand = showExceptionCommand;
             ReportMessageCommand = reportMessageCommand;
-            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
-            ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
+            OpenLink = Command.Create(() => networkOperations.Browse(SequenceDiagramDocumentationUrl));
+            ExportDiagramCommand = Command.Create(() => ExportToPng(view), () => HasItems);
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();

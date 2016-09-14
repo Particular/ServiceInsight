@@ -7,6 +7,7 @@ namespace ServiceInsight.Shell
     using System.Windows.Input;
     using Caliburn.Micro;
     using ExtensionMethods;
+    using Pirac;
     using ServiceControl;
     using ServiceInsight.Framework;
 
@@ -52,7 +53,7 @@ namespace ServiceInsight.Shell
             IsSplash = false;
             DisplayName = "About";
 
-            NavigateToSiteCommand = this.CreateCommand(() => networkOperations.Browse("http://www.particular.net"));
+            NavigateToSiteCommand = Command.Create(() => networkOperations.Browse("http://www.particular.net"));
         }
 
         AboutViewModel()

@@ -1,7 +1,9 @@
 ﻿namespace ServiceInsight.LogWindow
 {
     using System;
+    using System.Collections.Specialized;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows;
 
     public partial class LogWindowView
@@ -23,12 +25,12 @@
                 return;
             }
 
-            if (logSubscription != null)
-            {
-                logSubscription.Dispose();
-            }
+            Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
-            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                h => vm.Logs.CollectionChanged += h,
+                h => vm.Logs.CollectionChanged -= h)
+                .Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }

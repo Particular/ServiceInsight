@@ -5,14 +5,14 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using MessageList;
     using Models;
+    using Pirac;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class SagaWindowViewModel : Caliburn.Micro.Screen, IHandle<SelectedMessageChanged>
     {
         SagaData data;
         StoredMessage currentMessage;
@@ -27,7 +27,7 @@
             this.serviceControl = serviceControl;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
-            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(InstallScriptText));
+            CopyCommand = Command.Create(() => clipboard.CopyTo(InstallScriptText));
         }
 
         public string InstallScriptText { get; set; }

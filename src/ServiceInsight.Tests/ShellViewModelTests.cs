@@ -98,6 +98,7 @@
                         Substitute.For<IRxServiceControl>(),
                         messageProperties,
                         logWindow,
+                        Substitute.For<NetworkOperations>(),
                         commandLineArgParser);
 
             ((IViewAware)shell).AttachView(view);

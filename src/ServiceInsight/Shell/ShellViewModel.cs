@@ -1,7 +1,6 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
-    using System.Diagnostics;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
@@ -21,6 +20,7 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
+    using Pirac;
     using Saga;
     using ServiceControl;
     using ServiceInsight.Framework.Events;
@@ -78,6 +78,7 @@
             IRxServiceControl rxServiceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
+            NetworkOperations networkOperations,
             CommandLineArgParser comandLineArgParser)
         {
             this.appCommander = appCommander;
@@ -111,22 +112,22 @@
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
 
-            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
-            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
-            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
-            ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+            ShutDownCommand = Command.Create(appCommander.ShutdownImmediately);
+            AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = Command.Create(() => networkOperations.Browse(@"http://docs.particular.net/"));
+            ConnectToServiceControlCommand = Command.Create(ConnectToServiceControl, () => CanConnectToServiceControl);
 
-            RefreshAllCommand = this.CreateCommandAsync(() => RefreshAll(true));
+            RefreshAllCommand = Command.CreateAsync(() => RefreshAll(true));
 
-            RegisterCommand = this.CreateCommand(() =>
+            RegisterCommand = Command.Create(() =>
             {
                 this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
                 DisplayRegistrationStatus();
             });
 
-            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
+            ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
-            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
+            OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
         string GetConfiguredAddress(CommandLineArgParser commandLineParser)

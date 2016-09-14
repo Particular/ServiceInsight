@@ -75,7 +75,7 @@
         {
             //NOTE: Some keys start with NServiceBus, some don't
             var keyWithPrefix = "NServiceBus." + key;
-            var pair = Headers.FirstOrDefault(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
+            var pair = Headers?.FirstOrDefault(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) ||
                                                    x.Key.Equals(keyWithPrefix, StringComparison.InvariantCultureIgnoreCase));
             return pair == null ? defaultValue : pair.Value;
         }

@@ -13,7 +13,7 @@
     using Framework.Rx;
     using MessageProperties;
     using Models;
-    using ReactiveUI;
+    using Pirac;
     using Search;
     using ServiceControl;
     using ServiceInsight.Framework.Commands;
@@ -58,7 +58,10 @@
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
-            CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
+            CopyHeadersCommand = generalHeaderDisplay
+                .ChangedProperty<string>(nameof(GeneralHeaderViewModel.HeaderContent))
+                .Select(pcd => !pcd.After.IsEmpty())
+                .ToCommand(_ => CopyHeaders());
             Rows = new BindableCollection<StoredMessage>();
         }
 
