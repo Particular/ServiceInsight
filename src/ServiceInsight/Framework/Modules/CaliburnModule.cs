@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.Framework.Modules
 {
     using Autofac;
+    using Autofac.Core;
     using Caliburn.Micro;
     using ServiceInsight.Framework.UI.ScreenManager;
 
@@ -8,24 +9,22 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<WindowManagerEx>().InstancePerLifetimeScope();
-            //builder.RegisterType<DefaultEventAggregator>().As<IEventAggregator>().InstancePerLifetimeScope();
-            //builder.RegisterType<DefaultDispatcher>().As<IDispatcher>().InstancePerLifetimeScope();
-
             builder.RegisterType<WindowManagerEx>().As<IWindowManager>().As<IWindowManagerEx>().InstancePerLifetimeScope();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().InstancePerLifetimeScope();
+        }
 
-            //  register view models
-            //builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
-            //  .Where(type => type.Name.EndsWith("ViewModel"))
-            //  .AsSelf()
-            //  .InstancePerDependency();
+        protected override void AttachToComponentRegistration(IComponentRegistry registry, IComponentRegistration registration)
+        {
+            registration.Activated += OnComponentActivated;
+        }
 
-            //  register views
-            //builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
-            //  .Where(type => type.Name.EndsWith("View"))
-            //  .AsSelf()
-            //  .InstancePerDependency();
+        static void OnComponentActivated(object sender, ActivatedEventArgs<object> e)
+        {
+            var handler = e.Instance as IHandle;
+            if (handler != null)
+            {
+                e.Context.Resolve<IEventAggregator>().Subscribe(handler);
+            }
         }
     }
 }

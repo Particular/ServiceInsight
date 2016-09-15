@@ -507,7 +507,6 @@
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
     <Compile Include="Framework\Modules\CaliburnModule.cs" />
-    <Compile Include="Framework\Modules\EventAggregationAutoSubscriptionModule.cs" />
     <Compile Include="Framework\Modules\SettingsModule.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
