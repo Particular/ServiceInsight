@@ -175,8 +175,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.5.2\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.6.1\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -273,6 +273,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
+    <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
     <Compile Include="Framework\Commands\CommandsModule.cs" />
@@ -501,7 +502,6 @@
     <Compile Include="MessageProperties\ErrorHeaderViewModel.cs" />
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
-    <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
     <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>

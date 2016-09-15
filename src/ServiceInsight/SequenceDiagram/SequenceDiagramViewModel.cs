@@ -23,10 +23,7 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
-    public class SequenceDiagramViewModel : Caliburn.Micro.Screen,
-        IHandle<SelectedMessageChanged>,
-        IHandle<ScrollDiagramItemIntoView>,
-        IMessageCommandContainer
+    public class SequenceDiagramViewModel : Caliburn.Micro.Screen, IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
         readonly ISettingsProvider settingsProvider;
@@ -37,6 +34,7 @@
         const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
+            IRxEventAggregator eventAggregator,
             IServiceControl serviceControl,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,
@@ -71,6 +69,9 @@
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
 
             ShowLegend = settings.ShowLegend;
+
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().Subscribe(Handle);
         }
 
         protected override void OnViewLoaded(object view)
@@ -176,7 +177,7 @@
             DiagramLegend.DeactivateWith(this);
         }
 
-        public void Handle(SelectedMessageChanged message)
+        void Handle(SelectedMessageChanged message)
         {
             try
             {
@@ -260,7 +261,7 @@
             NotifyOfPropertyChange(nameof(HasItems));
         }
 
-        public void Handle(ScrollDiagramItemIntoView @event)
+        void Handle(ScrollDiagramItemIntoView @event)
         {
             var diagramItem = DiagramItems.OfType<Arrow>()
                 .FirstOrDefault(a => a.SelectedMessage.Id == @event.Message.Id);

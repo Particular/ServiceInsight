@@ -23,6 +23,7 @@
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
             builder.RegisterInstance(new RxServiceControl(BlobCache.UserAccount)).As<IRxServiceControl>().SingleInstance();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
+            builder.RegisterType<RxEventAggregator>().As<IRxEventAggregator>().SingleInstance();
         }
     }
 }

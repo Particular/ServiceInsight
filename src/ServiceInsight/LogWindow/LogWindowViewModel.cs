@@ -30,7 +30,7 @@
             Logs = new ObservableCollection<LogMessage>();
 
             textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
-            LogObserver.SubscribeOnPiracBackground().Subscribe(UpdateLog);
+            LogObserver.ObserveOnPiracMain().Subscribe(UpdateLog);
 
             ClearCommand = Command.Create(Clear);
             CopyCommand = Command.Create(Copy);

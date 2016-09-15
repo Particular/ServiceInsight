@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
-    using Caliburn.Micro;
     using Framework;
     using Framework.Events;
     using MessageList;
@@ -12,22 +11,23 @@
     using Pirac;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Caliburn.Micro.Screen, IHandle<SelectedMessageChanged>
+    public class SagaWindowViewModel : Caliburn.Micro.Screen
     {
         SagaData data;
         StoredMessage currentMessage;
         string selectedMessageId;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IServiceControl serviceControl;
         readonly MessageSelectionContext selection;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
+        public SagaWindowViewModel(IRxEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = Command.Create(() => clipboard.CopyTo(InstallScriptText));
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
         }
 
         public string InstallScriptText { get; set; }
@@ -73,7 +73,7 @@
             NotifyOfPropertyChange(() => Data);
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        void Handle(SelectedMessageChanged @event)
         {
             var message = selection.SelectedMessage;
             if (message == null)
@@ -123,7 +123,7 @@
         {
             try
             {
-                eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
+                eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
                 var previousSagaId = Guid.Empty;
 
@@ -174,7 +174,7 @@
             }
             finally
             {
-                eventAggregator.PublishOnUIThread(new WorkFinished());
+                eventAggregator.Publish(new WorkFinished());
             }
         }
 
@@ -223,7 +223,7 @@
 
         public void ShowFlow()
         {
-            eventAggregator.PublishOnUIThread(SwitchToFlowWindow.Instance);
+            eventAggregator.Publish(SwitchToFlowWindow.Instance);
         }
 
         public void RefreshSaga()

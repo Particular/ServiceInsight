@@ -2,19 +2,19 @@
 {
     using System;
     using System.Windows;
-    using Caliburn.Micro;
+    using Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.UI.ScreenManager;
 
     public class AppExceptionHandler
     {
         IWindowManagerEx windowManager;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         ShellViewModel shell;
 
         public AppExceptionHandler(
             IWindowManagerEx windowManager,
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             ShellViewModel shell)
         {
             this.windowManager = windowManager;
@@ -42,7 +42,7 @@
         {
             if (shell.WorkInProgress)
             {
-                eventAggregator.PublishOnUIThread(new AsyncOperationFailed(rootError.Message));
+                eventAggregator.Publish(new AsyncOperationFailed(rootError.Message));
             }
         }
 

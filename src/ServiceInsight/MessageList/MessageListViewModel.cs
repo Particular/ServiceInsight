@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Comparers;
@@ -20,17 +21,10 @@
     using ServiceInsight.Framework.Events;
     using Shell;
 
-    public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
-        IWorkTracker,
-        IHandle<SelectedExplorerItemChanged>,
-        IHandle<WorkStarted>,
-        IHandle<WorkFinished>,
-        IHandle<AsyncOperationFailed>,
-        IHandle<RetryMessage>,
-        IHandle<SelectedMessageChanged>
+    public class MessageListViewModel : RxConductor<RxScreen>.RxCollection.AllActive, IWorkTracker
     {
         readonly IClipboard clipboard;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
         string lastSortColumn;
@@ -39,7 +33,7 @@
         IMessageListView view;
 
         public MessageListViewModel(
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
@@ -63,6 +57,19 @@
                 .Select(pcd => !pcd.After.IsEmpty())
                 .ToCommand(_ => CopyHeaders());
             Rows = new BindableCollection<StoredMessage>();
+
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
+            eventAggregator.GetEvent<AsyncOperationFailed>().Subscribe(Handle);
+            eventAggregator.GetEvent<RetryMessage>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+
+            this.ChangedProperty(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
+            {
+                RefreshMessages();
+                //NotifyPropertiesChanged();
+            });
         }
 
         public new ShellViewModel Parent => (ShellViewModel)base.Parent;
@@ -119,7 +126,7 @@
         {
             try
             {
-                eventAggregator.PublishOnUIThread(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
+                eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
 
                 if (orderBy != null)
                 {
@@ -169,25 +176,22 @@
             }
             finally
             {
-                eventAggregator.PublishOnUIThread(new WorkFinished());
+                eventAggregator.Publish(new WorkFinished());
             }
         }
 
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
 
-        public void Handle(WorkStarted @event)
+        void Handle(WorkStarted @event)
         {
-            workCount++;
+            Interlocked.Increment(ref workCount);
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
-        public void Handle(WorkFinished @event)
+        void Handle(WorkFinished @event)
         {
-            if (workCount > 0)
-            {
-                workCount--;
-                NotifyOfPropertyChange(() => WorkInProgress);
-            }
+            Interlocked.Decrement(ref workCount);
+            NotifyOfPropertyChange(() => WorkInProgress);
         }
 
         public void Handle(SelectedExplorerItemChanged @event)
@@ -195,13 +199,13 @@
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public void Handle(AsyncOperationFailed message)
+        void Handle(AsyncOperationFailed message)
         {
             workCount = 0;
             NotifyOfPropertyChange(() => WorkInProgress);
         }
 
-        public void Handle(RetryMessage message)
+        void Handle(RetryMessage message)
         {
             var msg = Rows.FirstOrDefault(x => x.Id == message.Id);
             if (msg != null)
@@ -210,7 +214,7 @@
             }
         }
 
-        public void Handle(SelectedMessageChanged message)
+        void Handle(SelectedMessageChanged message)
         {
             var msg = Selection.SelectedMessage;
             if (msg == null)
@@ -227,12 +231,6 @@
                 Selection.SelectedMessage = newFocusedRow;
                 NotifyPropertiesChanged();
             }
-        }
-
-        public void OnSelectedExplorerItemChanged()
-        {
-            RefreshMessages();
-            NotifyPropertiesChanged();
         }
 
         void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
@@ -294,7 +292,7 @@
 
         public void BringIntoView(StoredMessage msg)
         {
-            eventAggregator.PublishOnUIThread(new ScrollDiagramItemIntoView(msg));
+            eventAggregator.Publish(new ScrollDiagramItemIntoView(msg));
         }
     }
 }

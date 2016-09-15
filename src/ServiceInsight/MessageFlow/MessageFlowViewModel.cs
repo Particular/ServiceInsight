@@ -6,10 +6,11 @@
     using System.Linq;
     using System.Windows.Input;
     using Autofac;
-    using Caliburn.Micro;
+    using Framework;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
+    using Pirac;
     using ServiceControl;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
@@ -18,12 +19,11 @@
     using ServiceInsight.MessageList;
     using Settings;
 
-    public class MessageFlowViewModel : Screen,
-        IHandle<SelectedMessageChanged>
+    public class MessageFlowViewModel : Caliburn.Micro.Screen
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         MessageSelectionContext selection;
@@ -33,9 +33,9 @@
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            IContainer container,
+            Autofac.IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext)
@@ -54,6 +54,8 @@
 
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
+
+            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
         public FlowDiagramModel Diagram
@@ -90,7 +92,7 @@
 
             var message = e.MessageNode.Message;
 
-            eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
             selection.SelectedMessage = message;
         }
 
@@ -104,7 +106,7 @@
 
         public void ShowMessageBody()
         {
-            eventAggregator.PublishOnUIThread(SwitchToMessageBody.Instance);
+            eventAggregator.Publish(SwitchToMessageBody.Instance);
         }
 
         public void ShowSagaWindow()
@@ -113,7 +115,7 @@
             {
                 selection.SelectedMessage = SelectedMessage.Message;
             }
-            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
+            eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
 
         public void ShowException(ExceptionDetails exception)
@@ -136,7 +138,7 @@
 
         public ICommand RetryMessageCommand { get; }
 
-        public void Handle(SelectedMessageChanged @event)
+        void Handle(SelectedMessageChanged @event)
         {
             var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)

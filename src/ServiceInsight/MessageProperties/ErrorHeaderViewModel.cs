@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Caliburn.Micro;
     using ExtensionMethods;
+    using Framework;
     using Models;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
@@ -12,7 +12,7 @@
     public class ErrorHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public ErrorHeaderViewModel(
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
             : base(eventAggregator, decoder, selectionContext)

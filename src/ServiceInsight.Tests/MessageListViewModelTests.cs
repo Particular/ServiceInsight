@@ -18,7 +18,7 @@
     [TestFixture]
     public class MessageListViewModelTests
     {
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IServiceControl serviceControl;
         SearchBarViewModel searchBar;
         Func<MessageListViewModel> messageListFunc;
@@ -27,7 +27,7 @@
         [SetUp]
         public void TestInitialize()
         {
-            eventAggregator = Substitute.For<IEventAggregator>();
+            eventAggregator = Substitute.For<IRxEventAggregator>();
             serviceControl = Substitute.For<IServiceControl>();
             searchBar = Substitute.For<SearchBarViewModel>();
             clipboard = Substitute.For<IClipboard>();
@@ -59,8 +59,8 @@
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
-            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
+            eventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
+            eventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);
         }

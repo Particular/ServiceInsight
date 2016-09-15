@@ -1,15 +1,16 @@
 ﻿namespace ServiceInsight.MessageList
 {
     using Caliburn.Micro;
+    using Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Models;
 
     public class MessageSelectionContext : PropertyChangedBase
     {
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         StoredMessage selectedMessage;
 
-        public MessageSelectionContext(IEventAggregator eventAggregator)
+        public MessageSelectionContext(IRxEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
         }
@@ -31,7 +32,7 @@
 
         void OnSelectedMessageChanged()
         {
-            eventAggregator.PublishOnUIThread(new SelectedMessageChanged());
+            eventAggregator.Publish(new SelectedMessageChanged());
         }
     }
 }

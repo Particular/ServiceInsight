@@ -2,19 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using Caliburn.Micro;
+    using Framework;
     using Framework.Rx;
     using Models;
+    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
 
-    public abstract class HeaderInfoViewModelBase : RxScreen, IHeaderInfoViewModel
+    public abstract class HeaderInfoViewModelBase : RxScreen
     {
         IContentDecoder<IList<HeaderInfo>> decoder;
 
         protected HeaderInfoViewModelBase(
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
         {
@@ -23,17 +24,18 @@
             Selection = selectionContext;
             ConditionsMap = new Dictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>>();
             MapHeaderKeys();
+            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
         protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; }
 
-        protected IEventAggregator EventAggregator { get; }
+        protected IRxEventAggregator EventAggregator { get; }
 
         protected IList<HeaderInfo> Headers { get; private set; }
 
         protected MessageSelectionContext Selection { get; }
 
-        public void Handle(SelectedMessageChanged @event)
+        void Handle(SelectedMessageChanged @event)
         {
             ClearHeaderValues();
 

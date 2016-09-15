@@ -7,10 +7,10 @@ namespace ServiceInsight.Framework.Commands
 
     public class RetryMessageCommand : BaseCommand
     {
-        readonly IEventAggregator eventAggregator;
+        readonly IRxEventAggregator eventAggregator;
         readonly IServiceControl serviceControl;
 
-        public RetryMessageCommand(IEventAggregator eventAggregator, IServiceControl serviceControl)
+        public RetryMessageCommand(IRxEventAggregator eventAggregator, IServiceControl serviceControl)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
@@ -37,10 +37,10 @@ namespace ServiceInsight.Framework.Commands
                 return;
             }
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
+            eventAggregator.Publish(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
             serviceControl.RetryMessage(message.Id);
-            eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
-            eventAggregator.PublishOnUIThread(new WorkFinished());
+            eventAggregator.Publish(new RetryMessage { Id = message.Id });
+            eventAggregator.Publish(new WorkFinished());
 
             message.Status = MessageStatus.RetryIssued;
 

@@ -7,6 +7,7 @@
     using Caliburn.Micro;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using MessageList;
     using Models;
     using Pirac;
@@ -17,18 +18,14 @@
     using Shell;
     using Startup;
 
-    public class SearchBarViewModel : RxScreen,
-        IHandle<SelectedExplorerItemChanged>,
-        IHandle<WorkStarted>,
-        IHandle<WorkFinished>,
-        IWorkTracker
+    public class SearchBarViewModel : RxScreen, IWorkTracker
     {
         const int MAX_SAVED_SEARCHES = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
 
-        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider, IRxEventAggregator eventAggregator)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
@@ -36,6 +33,10 @@
 
             SearchCommand = Command.Create(Search, () => CanSearch);
             CancelSearchCommand = Command.Create(CancelSearch, () => CanCancelSearch);
+
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
         }
 
         protected override void OnActivate()
@@ -194,7 +195,7 @@
             }
         }
 
-        public virtual void Handle(SelectedExplorerItemChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
             var endpointNode = @event.SelectedExplorerItem as EndpointExplorerItem;
             if (endpointNode != null)
@@ -212,13 +213,13 @@
             NotifyPropertiesChanged();
         }
 
-        public void Handle(WorkStarted @event)
+        void Handle(WorkStarted @event)
         {
             workCount++;
             NotifyPropertiesChanged();
         }
 
-        public void Handle(WorkFinished @event)
+        void Handle(WorkFinished @event)
         {
             if (workCount > 0)
             {
