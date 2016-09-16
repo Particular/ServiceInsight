@@ -27,12 +27,15 @@
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = Command.Create(() => clipboard.CopyTo(InstallScriptText));
+            ShowFlowComamnd = Command.Create(() => eventAggregator.Publish(SwitchToFlowWindow.Instance));
             eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
         }
 
         public string InstallScriptText { get; set; }
 
         public ICommand CopyCommand { get; }
+
+        public ICommand ShowFlowComamnd { get; }
 
         public void OnShowMessageDataChanged()
         {
@@ -220,11 +223,6 @@
         public bool ShowEndpoints { get; set; }
 
         public bool ShowMessageData { get; set; }
-
-        public void ShowFlow()
-        {
-            eventAggregator.Publish(SwitchToFlowWindow.Instance);
-        }
 
         public void RefreshSaga()
         {

@@ -154,7 +154,6 @@
     <Compile Include="SequenceDiagramModelCreatorTestsForJson3.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson5.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson4.cs" />
-    <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
     <Compile Include="StreamExtensionMethodTests.cs" />

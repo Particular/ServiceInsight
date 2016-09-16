@@ -7,9 +7,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:search="clr-namespace:ServiceInsight.Search"
              x:Name="searchbar"
+             d:DataContext="{d:DesignInstance search:SearchBarViewModel}"
              d:DesignHeight="35"
              d:DesignWidth="600"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance search:SearchBarViewModel}">
+             mc:Ignorable="d">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -21,10 +22,10 @@
 
         <Button Grid.Column="0"
                 Margin="4"
-                Padding="5"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                cal:Message.Attach="[Event Click]=[Action RefreshResult]">
+                Command="{Binding RefreshResultCommand}"
+                Padding="5">
             <Image Width="14"
                    Height="14"
                    Source="/Images/SearchRefresh.png"
@@ -65,13 +66,13 @@
                     <Setter Property="Margin" Value="2,0,2,0" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="9" cal:Message.Attach="[Event Click]=[Action GoToFirstPage]" />
-            <Button Content="3" cal:Message.Attach="[Event Click]=[Action GoToPreviousPage]" />
+            <Button Command="{Binding GoToFirstPageCommand}" Content="9" />
+            <Button Command="{Binding GoToPreviousPageCommand}" Content="3" />
             <TextBlock Text="Page" />
             <TextBlock Text="{Binding CurrentPage}" />
             <TextBlock Text="{Binding PageCount, StringFormat=of {0}}" />
-            <Button Content="4" cal:Message.Attach="[Event Click]=[Action GoToNextPage]" />
-            <Button Content=":" cal:Message.Attach="[Event Click]=[Action GoToLastPage]" />
+            <Button Command="{Binding GoToNextPageCommand}" Content="4" />
+            <Button Command="{Binding GoToLastPageCommand}" Content=":" />
         </StackPanel>
 
         <dxe:ComboBoxEdit Grid.Column="3"

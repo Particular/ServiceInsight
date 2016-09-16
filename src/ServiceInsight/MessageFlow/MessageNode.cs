@@ -31,6 +31,7 @@
             CopyMessageURICommand = owner.CopyMessageURICommand;
             SearchByMessageIDCommand = owner.SearchByMessageIDCommand;
             RetryMessageCommand = owner.RetryMessageCommand;
+            ShowExceptionCommand = Command.Create(ShowException);
 
             message.ChangedProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
             {
@@ -67,12 +68,14 @@
 
         public ICommand RetryMessageCommand { get; }
 
+        public ICommand ShowExceptionCommand { get; }
+
         public void ShowBody()
         {
             Owner.ShowMessageBody();
         }
 
-        public void ShowException()
+        void ShowException()
         {
             Owner.ShowException(new ExceptionDetails(Message));
         }

@@ -9,6 +9,9 @@
               xmlns:shell="clr-namespace:ServiceInsight.Shell"
               Width="380"
               Height="180"
+              d:DataContext="{d:DesignInstance shell:ServiceControlConnectionViewModel}"
+              d:DesignHeight="300"
+              d:DesignWidth="300"
               AutomationProperties.AutomationId="ServiceControlConnectionDialog"
               FocusManager.FocusedElement="{Binding ElementName=name}"
               Icon="/Images/ConnectService.png"
@@ -17,9 +20,6 @@
               ShowInTaskbar="False"
               ShowTitle="True"
               WindowStartupLocation="CenterOwner"
-              d:DataContext="{d:DesignInstance shell:ServiceControlConnectionViewModel}"
-              d:DesignHeight="300"
-              d:DesignWidth="300"
               mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -104,17 +104,17 @@
             <Button Width="80"
                     Margin="5"
                     AutomationProperties.AutomationId="OK"
+                    Command="{Binding AcceptCommand}"
                     Content="OK"
                     IsDefault="True"
                     IsEnabled="{Binding WorkInProgress,
-                                        Converter={StaticResource BooleanInverseConverter}}"
-                    cal:Message.Attach="Accept" />
+                                        Converter={StaticResource BooleanInverseConverter}}" />
             <Button Width="80"
                     Margin="5"
                     AutomationProperties.AutomationId="Cancel"
+                    Command="{Binding CancelCommand}"
                     Content="Cancel"
-                    IsCancel="True"
-                    cal:Message.Attach="Close" />
+                    IsCancel="True" />
         </StackPanel>
     </Grid>
 </dxc:DXWindow>

@@ -51,6 +51,7 @@
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
             RetryMessageCommand = container.Resolve<RetryMessageCommand>();
             SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
+            ShowSagaWindowCommand = Command.Create(ShowSagaWindow);
 
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
@@ -109,7 +110,7 @@
             eventAggregator.Publish(SwitchToMessageBody.Instance);
         }
 
-        public void ShowSagaWindow()
+        void ShowSagaWindow()
         {
             if (SelectedMessage != null)
             {
@@ -137,6 +138,8 @@
         public ICommand SearchByMessageIDCommand { get; }
 
         public ICommand RetryMessageCommand { get; }
+
+        public ICommand ShowSagaWindowCommand { get; }
 
         void Handle(SelectedMessageChanged @event)
         {

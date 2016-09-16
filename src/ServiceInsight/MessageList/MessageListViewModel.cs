@@ -54,7 +54,8 @@
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
             CopyHeadersCommand = generalHeaderDisplay
                 .ChangedProperty<string>(nameof(GeneralHeaderViewModel.HeaderContent))
-                .Select(pcd => !pcd.After.IsEmpty())
+                //.Select(pcd => !pcd.After.IsEmpty())
+                .Select(_ => !generalHeaderDisplay.HeaderContent.IsEmpty())
                 .ToCommand(_ => CopyHeaders());
             Rows = new BindableCollection<StoredMessage>();
 
@@ -68,7 +69,6 @@
             this.ChangedProperty(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
             {
                 RefreshMessages();
-                //NotifyPropertiesChanged();
             });
         }
 
