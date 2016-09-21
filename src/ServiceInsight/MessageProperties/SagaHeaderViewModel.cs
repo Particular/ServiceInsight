@@ -34,7 +34,7 @@
         [Description("Is this a saga timeout message?")]
         public string IsSagaTimeoutMessage { get; private set; }
 
-        [Description("Id of the sage")]
+        [Description("Id of the saga")]
         public string SagaId { get; private set; }
 
         protected override void MapHeaderKeys()
