@@ -1,24 +1,28 @@
 ﻿namespace ServiceInsight.MessageHeaders
 {
+    using System;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using Caliburn.Micro;
-    using ReactiveUI;
+    using DynamicData;
+    using Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
 
-    public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class MessageHeadersViewModel : Screen
     {
         readonly MessageSelectionContext selection;
 
-        public MessageHeadersViewModel(MessageSelectionContext selectionContext)
+        public MessageHeadersViewModel(MessageSelectionContext selectionContext, IRxEventAggregator eventAggregator)
         {
             selection = selectionContext;
-            KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
+            KeyValues = new ObservableCollection<MessageHeaderKeyValue>();
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
         }
 
-        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; }
+        public ObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
 
-        public void Handle(SelectedMessageChanged @event)
+        void Handle(SelectedMessageChanged @event)
         {
             KeyValues.Clear();
             var storedMessage = selection.SelectedMessage;
@@ -29,14 +33,11 @@
 
             var headers = storedMessage.Headers;
 
-            using (KeyValues.SuppressChangeNotifications())
+            KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
             {
-                KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
-                {
-                    Key = h.Key,
-                    Value = h.Value
-                }));
-            }
+                Key = h.Key,
+                Value = h.Value
+            }));
         }
     }
 }

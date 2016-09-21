@@ -1,8 +1,10 @@
 ﻿namespace ServiceInsight.MessageViewers
 {
+    using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
     using ExtensionMethods;
+    using Framework;
     using HexViewer;
     using JsonViewer;
     using ServiceInsight.Framework.Events;
@@ -10,12 +12,10 @@
     using ServiceInsight.ServiceControl;
     using XmlViewer;
 
-    public class MessageBodyViewModel : Screen,
-        IHandle<SelectedMessageChanged>,
-        IHandle<BodyTabSelectionChanged>
+    public class MessageBodyViewModel : Screen
     {
         readonly IServiceControl serviceControl;
-        readonly IEventAggregator eventAggregator;
+        readonly IRxEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
         static Dictionary<string, MessageContentType> contentTypeMaps;
 
@@ -36,7 +36,7 @@
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
             IServiceControl serviceControl,
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
@@ -46,6 +46,9 @@
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
+
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<BodyTabSelectionChanged>().Subscribe(Handle);
         }
 
         public HexContentViewModel HexViewer { get; }
@@ -70,13 +73,16 @@
             }
         }
 
-        public bool JsonViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json)
+        public bool JsonViewerVisible
+            => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json)
             && PresentationHint == PresentationHint.Standard;
 
-        public bool XmlViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml)
+        public bool XmlViewerVisible
+            => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Xml)
             && PresentationHint == PresentationHint.Standard;
 
-        public bool HexViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
+        public bool HexViewerVisible
+            => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
             && PresentationHint == PresentationHint.Standard;
 
         public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
@@ -126,13 +132,13 @@
                 return;
             }
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
+            eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
             serviceControl.LoadBody(selection.SelectedMessage);
 
             RefreshChildren();
 
-            eventAggregator.PublishOnUIThread(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
     }
 }

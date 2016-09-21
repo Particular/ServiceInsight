@@ -10,7 +10,7 @@
     using Newtonsoft.Json.Linq;
     using Startup;
 
-    public class EndpointExplorerViewModel : Screen, IHandle<RequestSelectingEndpoint>, IHandle<SelectedExplorerItemChanged>
+    public class EndpointExplorerViewModel : Screen
     {
         static JsonSerializer serializer;
 
@@ -19,10 +19,10 @@
             serializer = new JsonSerializer { ContractResolver = new SnakeCasePropertyNamesContractResolver() };
         }
 
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         string initialEndpoint;
 
-        public EndpointExplorerViewModel(IRxServiceControl serviceControl, IEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
+        public EndpointExplorerViewModel(IRxServiceControl serviceControl, IRxEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
         {
             this.eventAggregator = eventAggregator;
             Items = new BindableCollection<ExplorerItem>();
@@ -30,6 +30,9 @@
             initialEndpoint = commandLineParser.ParsedOptions.EndpointName;
 
             serviceControl.Endpoints().Subscribe(MergeEndpoints);
+
+            eventAggregator.GetEvent<RequestSelectingEndpoint>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
         }
 
         private void MergeEndpoints(ServiceControlData e)
@@ -86,10 +89,10 @@
 
         public void OnSelectedNodeChanged()
         {
-            eventAggregator.PublishOnUIThread(new SelectedExplorerItemChanged(SelectedNode));
+            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
         }
 
-        public void Handle(RequestSelectingEndpoint message)
+        void Handle(RequestSelectingEndpoint message)
         {
             foreach (var item in Items.OfType<ServiceControlExplorerItem>())
             {
@@ -102,7 +105,7 @@
             }
         }
 
-        public void Handle(SelectedExplorerItemChanged message)
+        void Handle(SelectedExplorerItemChanged message)
         {
             var endpoint = message.SelectedExplorerItem as AuditEndpointExplorerItem;
             if (endpoint != null)

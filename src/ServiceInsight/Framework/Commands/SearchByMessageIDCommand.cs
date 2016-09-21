@@ -7,10 +7,10 @@ namespace ServiceInsight.Framework.Commands
 
     public class SearchByMessageIDCommand : BaseCommand
     {
-        readonly IEventAggregator eventAggregator;
+        readonly IRxEventAggregator eventAggregator;
         readonly SearchBarViewModel searchBar;
 
-        public SearchByMessageIDCommand(IEventAggregator eventAggregator, SearchBarViewModel searchBar)
+        public SearchByMessageIDCommand(IRxEventAggregator eventAggregator, SearchBarViewModel searchBar)
         {
             this.eventAggregator = eventAggregator;
             this.searchBar = searchBar;
@@ -31,7 +31,7 @@ namespace ServiceInsight.Framework.Commands
             }
 
             searchBar.Search(performSearch: true, searchQuery: message.MessageId);
-            eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
     }
 }

@@ -3,12 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using MessageList;
     using Models;
+    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Rx;
     using ServiceInsight.Framework.Settings;
@@ -16,25 +19,42 @@
     using Shell;
     using Startup;
 
-    public class SearchBarViewModel : RxScreen,
-        IHandle<SelectedExplorerItemChanged>,
-        IHandle<WorkStarted>,
-        IHandle<WorkFinished>,
-        IWorkTracker
+    public class SearchBarViewModel : RxScreen, IWorkTracker
     {
         const int MAX_SAVED_SEARCHES = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
 
-        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider, IRxEventAggregator eventAggregator)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
 
-            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
-            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
+            SearchCommand = Command.Create(Search, () => CanSearch);
+            CancelSearchCommand = this.ChangedProperty(nameof(SearchInProgress))
+                //.Select(pcd => pcd.After)
+                .Select(_ => SearchInProgress)
+                .ToCommand(_ => CancelSearch());
+            RefreshResultCommand = Command.Create(() => Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery));
+
+            GoToFirstPageCommand = CreateNavigationCommand(nameof(CanGoToFirstPage), _ => CanGoToFirstPage, 1);
+            GoToPreviousPageCommand = CreateNavigationCommand(nameof(CanGoToPreviousPage), _ => CanGoToPreviousPage, CurrentPage - 1);
+            GoToNextPageCommand = CreateNavigationCommand(nameof(CanGoToNextPage), _ => CanGoToNextPage, CurrentPage + 1);
+            GoToLastPageCommand = CreateNavigationCommand(nameof(CanGoToLastPage), _ => CanGoToLastPage, PageCount);
+
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
+        }
+
+        private ICommand CreateNavigationCommand(string canExecuteName, Func<PropertyChangedData, bool> selector, int pageNum)
+        {
+            return this.ChangedProperty(canExecuteName)
+                //.Select(pcd => pcd.After)
+                .Select(selector)
+                .ToCommand(_ => Parent.RefreshMessages(SelectedEndpoint, pageNum, SearchQuery));
         }
 
         protected override void OnActivate()
@@ -49,29 +69,19 @@
             }
         }
 
-        public void GoToFirstPage()
-        {
-            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
-        }
-
-        public void GoToPreviousPage()
-        {
-            Parent.RefreshMessages(SelectedEndpoint, CurrentPage - 1, SearchQuery);
-        }
-
-        public void GoToNextPage()
-        {
-            Parent.RefreshMessages(SelectedEndpoint, CurrentPage + 1, SearchQuery);
-        }
-
-        public void GoToLastPage()
-        {
-            Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
-        }
-
         public ICommand SearchCommand { get; }
 
         public ICommand CancelSearchCommand { get; }
+
+        public ICommand RefreshResultCommand { get; }
+
+        public ICommand GoToFirstPageCommand { get; }
+
+        public ICommand GoToPreviousPageCommand { get; }
+
+        public ICommand GoToNextPageCommand { get; }
+
+        public ICommand GoToLastPageCommand { get; }
 
         public void Search(string searchQuery, bool performSearch = true)
         {
@@ -109,15 +119,6 @@
             NotifyPropertiesChanged();
         }
 
-        public void RefreshResult()
-        {
-            Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
-        }
-
-        public bool CanGoToLastPage => CurrentPage < PageCount && !WorkInProgress;
-
-        public bool CanCancelSearch => SearchInProgress;
-
         public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
         public int PageCount
@@ -153,6 +154,8 @@
 
         public bool CanGoToNextPage => CurrentPage + 1 <= PageCount && !WorkInProgress;
 
+        public bool CanGoToLastPage => CurrentPage < PageCount && !WorkInProgress;
+
         public IList<StoredMessage> Result { get; private set; }
 
         public IObservableCollection<string> RecentSearchQueries { get; private set; }
@@ -180,7 +183,7 @@
             NotifyOfPropertyChange(nameof(CanGoToPreviousPage));
             NotifyOfPropertyChange(nameof(CanRefreshResult));
             NotifyOfPropertyChange(nameof(SearchEnabled));
-            NotifyOfPropertyChange(nameof(CanCancelSearch));
+            NotifyOfPropertyChange(nameof(SearchInProgress));
             NotifyOfPropertyChange(nameof(WorkInProgress));
             NotifyOfPropertyChange(nameof(SearchResultMessage));
         }
@@ -193,7 +196,7 @@
             }
         }
 
-        public virtual void Handle(SelectedExplorerItemChanged @event)
+        public void Handle(SelectedExplorerItemChanged @event)
         {
             var endpointNode = @event.SelectedExplorerItem as EndpointExplorerItem;
             if (endpointNode != null)
@@ -211,13 +214,13 @@
             NotifyPropertiesChanged();
         }
 
-        public void Handle(WorkStarted @event)
+        void Handle(WorkStarted @event)
         {
             workCount++;
             NotifyPropertiesChanged();
         }
 
-        public void Handle(WorkFinished @event)
+        void Handle(WorkFinished @event)
         {
             if (workCount > 0)
             {

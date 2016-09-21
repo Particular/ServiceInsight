@@ -3,29 +3,43 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive.Linq;
+    using System.Windows.Input;
     using Autofac;
-    using Caliburn.Micro;
+    using ExtensionMethods;
+    using Framework.Rx;
+    using Pirac;
     using ServiceControl;
     using ServiceInsight.Framework.Settings;
     using Settings;
 
-    public class ServiceControlConnectionViewModel : Screen
+    public class ServiceControlConnectionViewModel : RxScreen
     {
         public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
 
         ISettingsProvider settingsProvider;
         ProfilerSettings appSettings;
-        IContainer container;
+        Autofac.IContainer container;
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
-            IContainer container)
+            Autofac.IContainer container)
         {
             this.settingsProvider = settingsProvider;
             this.container = container;
             appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
+
+            AcceptCommand = this.ChangedProperty<string>(nameof(ServiceUrl))
+                //.Select(pcd => !pcd.After.IsEmpty())
+                .Select(_ => !ServiceUrl.IsEmpty())
+                .ToCommand(_ => Accept());
+            CancelCommand = Command.Create(() => TryClose(false));
         }
+
+        public ICommand AcceptCommand { get; }
+
+        public ICommand CancelCommand { get; }
 
         public string ServiceUrl { get; set; }
 
@@ -44,18 +58,11 @@
 
         List<string> GetRecentServiceEntries() => appSettings.RecentServiceControlEntries.ToList();
 
-        public virtual void Close()
-        {
-            TryClose(false);
-        }
-
-        public virtual bool CanAccept() => !string.IsNullOrEmpty(ServiceUrl);
-
         public List<string> RecentEntries { get; private set; }
 
         public string Version { get; private set; }
 
-        public virtual void Accept()
+        void Accept()
         {
             StartWorkInProgress();
             ServiceUrl = ServiceUrl.Trim();

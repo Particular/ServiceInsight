@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Caliburn.Micro;
+    using Framework;
     using Models;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
@@ -11,7 +11,7 @@
     public class SagaHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public SagaHeaderViewModel(
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
             : base(eventAggregator, decoder, selectionContext)

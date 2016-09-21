@@ -33,10 +33,11 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="1" Background="{StaticResource SagaBackground}">
                                 <StackPanel Margin="10" Background="{StaticResource SagaBackground}">
-                                    <TextBlock cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowFlow]"
-                                               FontSize="12px"
-                                               Foreground="{StaticResource SagaBlue}"
-                                               Text="&#x2190; Back to Message View" />
+                                    <Button Command="{Binding ShowFlowCommand}">
+                                        <TextBlock FontSize="12px"
+                                                   Foreground="{StaticResource SagaBlue}"
+                                                   Text="&#x2190; Back to Message View" />
+                                    </Button>
                                     <Border BorderBrush="{StaticResource SagaBlue}"
                                             BorderThickness="0 0 0 2"
                                             Padding="0 5 0 5">
@@ -108,7 +109,6 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -180,13 +180,11 @@
                                     Style="{StaticResource BlankButtonStyle}"
                                     ToolTip="Copy nuget command to clipboard">
                                 <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
-
                             </Button>
                         </StackPanel>
                     </StackPanel>
                 </Border>
             </StackPanel>
-
         </StackPanel>
         <Grid x:Name="Surface" Grid.Row="1">
             <ItemsControl x:Name="Steps"
@@ -211,6 +209,5 @@
                 </ItemsControl.ItemsSource>
             </ItemsControl>
         </Grid>
-
     </Grid>
 </UserControl>

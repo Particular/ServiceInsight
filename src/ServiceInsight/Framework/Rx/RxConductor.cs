@@ -4,13 +4,13 @@
     using System.Runtime.CompilerServices;
     using System.Threading;
     using Caliburn.Micro;
-    using ObservablePropertyChanged;
+    using Pirac;
 
     public class RxConductor<T> : Conductor<T>, IObservablePropertyChanged where T : class
     {
-        ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
+        PiracHelper helper = new PiracHelper();
 
-        public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+        public IObservable<PropertyChangedData> Changed => helper.Changed;
 
         public void Dispose()
         {
@@ -20,16 +20,16 @@
         public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
         {
             base.NotifyOfPropertyChange(propertyName);
-            helper.PropertyChanged(this, propertyName);
+            helper.PropertyChanged(propertyName);
         }
 
         public class RxCollection
         {
             public class AllActive : Collection.AllActive, IObservablePropertyChanged
             {
-                ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
+                PiracHelper helper = new PiracHelper();
 
-                public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+                public IObservable<PropertyChangedData> Changed => helper.Changed;
 
                 public void Dispose()
                 {
@@ -39,15 +39,15 @@
                 public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
                 {
                     base.NotifyOfPropertyChange(propertyName);
-                    helper.PropertyChanged(this, propertyName);
+                    helper.PropertyChanged(propertyName);
                 }
             }
 
             public class OneActive : Collection.OneActive, IObservablePropertyChanged
             {
-                ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
+                PiracHelper helper = new PiracHelper();
 
-                public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+                public IObservable<PropertyChangedData> Changed => helper.Changed;
 
                 public void Dispose()
                 {
@@ -57,7 +57,7 @@
                 public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
                 {
                     base.NotifyOfPropertyChange(propertyName);
-                    helper.PropertyChanged(this, propertyName);
+                    helper.PropertyChanged(propertyName);
                 }
             }
         }

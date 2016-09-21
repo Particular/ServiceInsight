@@ -84,6 +84,10 @@
     <Reference Include="Comparers">
       <HintPath>..\packages\Comparers.4.0.0\lib\net40-client\Comparers.dll</HintPath>
     </Reference>
+    <Reference Include="Conventional, Version=2.0.0.36, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Conventional.2.0.0.36\lib\net40\Conventional.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Data.v14.1">
       <HintPath>..\..\lib\DevExpress\DevExpress.Data.v14.1.dll</HintPath>
       <Private>True</Private>
@@ -140,6 +144,10 @@
       <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v14.1.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DynamicData, Version=4.8.1.1181, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.4.8.1.1181\lib\net45\DynamicData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.1\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
@@ -167,8 +175,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="ObservablePropertyChanged, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ObservablePropertyChanged.0.1.3\lib\ObservablePropertyChanged.dll</HintPath>
+    <Reference Include="Pirac, Version=0.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.6.1\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -179,18 +187,6 @@
     <Reference Include="PropertyChanged, Version=1.50.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="ReactiveUI, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-core.5.5.1\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.Blend, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Blend.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.Xaml, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
@@ -277,6 +273,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
+    <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
     <Compile Include="Framework\Commands\CommandsModule.cs" />
@@ -290,6 +287,7 @@
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
     <Compile Include="Framework\RaygunUtility.cs" />
+    <Compile Include="Framework\Rx\PiracHelper.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />
     <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\RxServiceControl.cs" />
@@ -311,7 +309,6 @@
       <DependentUpon>ExceptionHandler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
-    <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageList\MessageSelectionContext.cs" />
@@ -505,13 +502,11 @@
     <Compile Include="MessageProperties\ErrorHeaderViewModel.cs" />
     <Compile Include="MessageProperties\GeneralHeaderViewModel.cs" />
     <Compile Include="MessageProperties\HeaderInfoViewModelBase.cs" />
-    <Compile Include="MessageProperties\IHeaderInfoViewModel.cs" />
     <Compile Include="MessageViewers\MessageBodyView.xaml.cs">
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
     <Compile Include="Framework\Modules\CaliburnModule.cs" />
-    <Compile Include="Framework\Modules\EventAggregationAutoSubscriptionModule.cs" />
     <Compile Include="Framework\Modules\SettingsModule.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

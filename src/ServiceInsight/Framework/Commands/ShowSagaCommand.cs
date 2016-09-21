@@ -7,10 +7,10 @@ namespace ServiceInsight.Framework.Commands
 
     class ShowSagaCommand : BaseCommand
     {
-        readonly IEventAggregator eventAggregator;
+        readonly IRxEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
 
-        public ShowSagaCommand(IEventAggregator eventAggregator, MessageSelectionContext selectionContext)
+        public ShowSagaCommand(IRxEventAggregator eventAggregator, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             selection = selectionContext;
@@ -31,7 +31,7 @@ namespace ServiceInsight.Framework.Commands
             }
 
             selection.SelectedMessage = message;
-            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
+            eventAggregator.Publish(SwitchToSagaWindow.Instance);
         }
     }
 }

@@ -8,7 +8,7 @@
     using Framework;
     using Mindscape.WpfDiagramming;
     using Models;
-    using ReactiveUI;
+    using Pirac;
 
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
@@ -31,8 +31,9 @@
             CopyMessageURICommand = owner.CopyMessageURICommand;
             SearchByMessageIDCommand = owner.SearchByMessageIDCommand;
             RetryMessageCommand = owner.RetryMessageCommand;
+            ShowExceptionCommand = Command.Create(ShowException);
 
-            message.ObservableForProperty(m => m.Status).Subscribe(_ =>
+            message.ChangedProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
             {
                 OnPropertyChanged("HasFailed");
                 OnPropertyChanged("HasRetried");
@@ -67,12 +68,14 @@
 
         public ICommand RetryMessageCommand { get; }
 
+        public ICommand ShowExceptionCommand { get; }
+
         public void ShowBody()
         {
             Owner.ShowMessageBody();
         }
 
-        public void ShowException()
+        void ShowException()
         {
             Owner.ShowException(new ExceptionDetails(Message));
         }

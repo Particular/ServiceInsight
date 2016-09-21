@@ -12,8 +12,8 @@
     using Caliburn.Micro;
     using Diagram;
     using Microsoft.Win32;
+    using Pirac;
     using ServiceInsight.DiagramLegend;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
@@ -23,10 +23,7 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
-    public class SequenceDiagramViewModel : Screen,
-        IHandle<SelectedMessageChanged>,
-        IHandle<ScrollDiagramItemIntoView>,
-        IMessageCommandContainer
+    public class SequenceDiagramViewModel : Caliburn.Micro.Screen, IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
         readonly ISettingsProvider settingsProvider;
@@ -37,6 +34,7 @@
         const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
+            IRxEventAggregator eventAggregator,
             IServiceControl serviceControl,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,
@@ -48,6 +46,7 @@
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
             ShowExceptionCommand showExceptionCommand,
             ReportMessageCommand reportMessageCommand,
+            NetworkOperations networkOperations,
             SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
@@ -61,8 +60,8 @@
             ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             ShowExceptionCommand = showExceptionCommand;
             ReportMessageCommand = reportMessageCommand;
-            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
-            ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
+            OpenLink = Command.Create(() => networkOperations.Browse(SequenceDiagramDocumentationUrl));
+            ExportDiagramCommand = Command.Create(() => ExportToPng(view), () => HasItems);
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
@@ -70,6 +69,9 @@
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
 
             ShowLegend = settings.ShowLegend;
+
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().Subscribe(Handle);
         }
 
         protected override void OnViewLoaded(object view)
@@ -175,7 +177,7 @@
             DiagramLegend.DeactivateWith(this);
         }
 
-        public void Handle(SelectedMessageChanged message)
+        void Handle(SelectedMessageChanged message)
         {
             try
             {
@@ -259,7 +261,7 @@
             NotifyOfPropertyChange(nameof(HasItems));
         }
 
-        public void Handle(ScrollDiagramItemIntoView @event)
+        void Handle(ScrollDiagramItemIntoView @event)
         {
             var diagramItem = DiagramItems.OfType<Arrow>()
                 .FirstOrDefault(a => a.SelectedMessage.Id == @event.Message.Id);

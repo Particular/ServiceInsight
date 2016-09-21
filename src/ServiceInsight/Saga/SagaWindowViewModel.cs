@@ -4,35 +4,38 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
-    using Caliburn.Micro;
-    using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using MessageList;
     using Models;
+    using Pirac;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class SagaWindowViewModel : Caliburn.Micro.Screen
     {
         SagaData data;
         StoredMessage currentMessage;
         string selectedMessageId;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IServiceControl serviceControl;
         readonly MessageSelectionContext selection;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
+        public SagaWindowViewModel(IRxEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
-            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(InstallScriptText));
+            CopyCommand = Command.Create(() => clipboard.CopyTo(InstallScriptText));
+            ShowFlowComamnd = Command.Create(() => eventAggregator.Publish(SwitchToFlowWindow.Instance));
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
         }
 
         public string InstallScriptText { get; set; }
 
         public ICommand CopyCommand { get; }
+
+        public ICommand ShowFlowComamnd { get; }
 
         public void OnShowMessageDataChanged()
         {
@@ -73,7 +76,7 @@
             NotifyOfPropertyChange(() => Data);
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        void Handle(SelectedMessageChanged @event)
         {
             var message = selection.SelectedMessage;
             if (message == null)
@@ -123,7 +126,7 @@
         {
             try
             {
-                eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
+                eventAggregator.Publish(new WorkStarted("Loading message body..."));
 
                 var previousSagaId = Guid.Empty;
 
@@ -174,7 +177,7 @@
             }
             finally
             {
-                eventAggregator.PublishOnUIThread(new WorkFinished());
+                eventAggregator.Publish(new WorkFinished());
             }
         }
 
@@ -220,11 +223,6 @@
         public bool ShowEndpoints { get; set; }
 
         public bool ShowMessageData { get; set; }
-
-        public void ShowFlow()
-        {
-            eventAggregator.PublishOnUIThread(SwitchToFlowWindow.Instance);
-        }
 
         public void RefreshSaga()
         {

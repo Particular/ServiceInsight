@@ -36,12 +36,12 @@
 
         ServiceControlConnectionProvider connection;
         MemoryCache cache;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         ProfilerSettings settings;
 
         public DefaultServiceControl(
             ServiceControlConnectionProvider connection,
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
             this.connection = connection;
@@ -507,7 +507,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
-            eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));
+            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
         }
 

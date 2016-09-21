@@ -1,13 +1,15 @@
 namespace ServiceInsight.LogWindow
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.Reactive;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Interactivity;
-    using ReactiveUI;
 
     public class LoggingRichTextBoxBehavior : Behavior<RichTextBox>
     {
@@ -52,18 +54,14 @@ namespace ServiceInsight.LogWindow
 
         void OnLogDataChanged(DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var logs = dependencyPropertyChangedEventArgs.NewValue as ReactiveList<LogMessage>;
+            var logs = dependencyPropertyChangedEventArgs.NewValue as ObservableCollection<LogMessage>;
             if (logs == null)
             {
                 paragraph.Inlines.Clear();
                 return;
             }
 
-            if (logSubscription != null)
-            {
-                logSubscription.Dispose();
-                logSubscription = null;
-            }
+            Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
             paragraph.Inlines.Clear();
             foreach (var log in logs)
@@ -71,21 +69,22 @@ namespace ServiceInsight.LogWindow
                 paragraph.Inlines.Add(new Run(log.Log) { Foreground = log.Brush, FontWeight = log.Weight });
             }
 
-            logSubscription = logs.Changed
-                .Where(e => e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset)
+            logSubscription = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                h => logs.CollectionChanged += h,
+                h => logs.CollectionChanged -= h)
                 .Subscribe(ProcessChange);
         }
 
-        void ProcessChange(NotifyCollectionChangedEventArgs args)
+        void ProcessChange(EventPattern<NotifyCollectionChangedEventArgs> args)
         {
-            if (args.Action == NotifyCollectionChangedAction.Add)
+            if (args.EventArgs.Action == NotifyCollectionChangedAction.Add)
             {
-                var log = (LogMessage)args.NewItems[0];
+                var log = (LogMessage)args.EventArgs.NewItems[0];
 
                 paragraph.Inlines.Add(new Run(log.Log) { Foreground = log.Brush, FontWeight = log.Weight });
             }
 
-            if (args.Action == NotifyCollectionChangedAction.Reset)
+            if (args.EventArgs.Action == NotifyCollectionChangedAction.Reset)
             {
                 paragraph.Inlines.Clear();
             }

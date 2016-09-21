@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
-    using Caliburn.Micro;
     using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
     using ReactiveUI.Testing;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageViewers;
@@ -18,7 +18,7 @@
     [TestFixture]
     public class MessageBodyViewModelTests
     {
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         IServiceControl serviceControl;
         HexContentViewModel hexContent;
         JsonMessageViewModel jsonContent;
@@ -29,7 +29,7 @@
         [SetUp]
         public void TestInitialize()
         {
-            eventAggregator = Substitute.For<IEventAggregator>();
+            eventAggregator = Substitute.For<IRxEventAggregator>();
             serviceControl = Substitute.For<IServiceControl>();
             hexContent = Substitute.For<HexContentViewModel>();
             jsonContent = Substitute.For<JsonMessageViewModel>();

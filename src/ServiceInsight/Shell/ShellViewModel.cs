@@ -1,13 +1,11 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
-    using System.Diagnostics;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
-    using Caliburn.Micro;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
@@ -21,6 +19,7 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
+    using Pirac;
     using Saga;
     using ServiceControl;
     using ServiceInsight.Framework.Events;
@@ -31,20 +30,13 @@
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
-        IHandle<WorkStarted>,
-        IHandle<WorkFinished>,
-        IHandle<SelectedExplorerItemChanged>,
-        IHandle<SwitchToMessageBody>,
-        IHandle<SwitchToSagaWindow>,
-        IHandle<SwitchToFlowWindow>,
-        IWorkTracker
+    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive, IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
-        IEventAggregator eventAggregator;
+        IRxEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -65,7 +57,7 @@
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
             Func<LicenseRegistrationViewModel> licenceRegistration,
             StatusBarManager statusBarManager,
-            IEventAggregator eventAggregator,
+            IRxEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
@@ -78,6 +70,7 @@
             IRxServiceControl rxServiceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
+            NetworkOperations networkOperations,
             CommandLineArgParser comandLineArgParser)
         {
             this.appCommander = appCommander;
@@ -111,22 +104,29 @@
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
 
-            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
-            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
-            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
-            ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+            ShutDownCommand = Command.Create(appCommander.ShutdownImmediately);
+            AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = Command.Create(() => networkOperations.Browse(@"http://docs.particular.net/"));
+            ConnectToServiceControlCommand = Command.Create(ConnectToServiceControl, () => CanConnectToServiceControl);
 
-            RefreshAllCommand = this.CreateCommandAsync(() => RefreshAll(true));
+            RefreshAllCommand = Command.CreateAsync(() => RefreshAll(true));
 
-            RegisterCommand = this.CreateCommand(() =>
+            RegisterCommand = Command.Create(() =>
             {
                 this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
                 DisplayRegistrationStatus();
             });
 
-            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
+            ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
-            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
+            OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
+
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<SwitchToMessageBody>().Subscribe(Handle);
+            eventAggregator.GetEvent<SwitchToSagaWindow>().Subscribe(Handle);
+            eventAggregator.GetEvent<SwitchToFlowWindow>().Subscribe(Handle);
         }
 
         string GetConfiguredAddress(CommandLineArgParser commandLineParser)
@@ -163,7 +163,7 @@
             var configuredConnection = GetConfiguredAddress(comandLineArgParser);
             var existingConnection = connectionProvider.Url;
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl"));
+            eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl"));
 
             connectionProvider.ConnectTo(configuredConnection);
             if (!serviceControl.IsAlive())
@@ -171,7 +171,7 @@
                 connectionProvider.ConnectTo(existingConnection);
             }
 
-            eventAggregator.PublishOnUIThread(new WorkFinished());
+            eventAggregator.Publish(new WorkFinished());
         }
 
         protected override void OnDeactivate(bool close)
@@ -251,7 +251,7 @@
             if (result.GetValueOrDefault(false))
             {
                 //EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                eventAggregator.PublishOnUIThread(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
@@ -324,7 +324,7 @@
 
         public void OnBodyTabSelectedChanged()
         {
-            eventAggregator.PublishOnUIThread(new BodyTabSelectionChanged(BodyTabSelected));
+            eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip
@@ -418,17 +418,17 @@
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        public void Handle(SwitchToMessageBody @event)
+        void Handle(SwitchToMessageBody @event)
         {
             View.SelectTab("MessageBody");
         }
 
-        public virtual void Handle(SwitchToSagaWindow @event)
+        void Handle(SwitchToSagaWindow @event)
         {
             View.SelectTab("SagaWindow");
         }
 
-        public virtual void Handle(SwitchToFlowWindow @event)
+        void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
         }
