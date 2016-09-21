@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.MessageViewers.HexViewer
 {
-    using Caliburn.Micro;
+    using Framework.Rx;
     using ServiceInsight.Models;
 
-    public class HexContentViewModel : Screen, IDisplayMessageBody
+    public class HexContentViewModel : RxScreen, IDisplayMessageBody
     {
         public MessageBody SelectedMessage { get; set; }
 

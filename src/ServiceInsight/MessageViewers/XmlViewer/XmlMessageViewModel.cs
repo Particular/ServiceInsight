@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
-    using Caliburn.Micro;
+    using Framework.Rx;
     using ServiceInsight.Models;
 
-    public class XmlMessageViewModel : Screen, IDisplayMessageBody
+    public class XmlMessageViewModel : RxScreen, IDisplayMessageBody
     {
         IXmlMessageView messageView;
 

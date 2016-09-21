@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.DiagramLegend
 {
     using System.Collections.ObjectModel;
-    using Caliburn.Micro;
+    using Framework.Rx;
     using SequenceDiagram.Diagram;
     using ServiceInsight.Models;
 
-    public class DiagramLegendViewModel : Screen
+    public class DiagramLegendViewModel : RxScreen
     {
         const int ArrowWidth = 50;
         const int LocalArrowWidth = 30;
@@ -14,7 +14,7 @@
 
         public DiagramLegendViewModel()
         {
-            DiagramItemsDescription = new BindableCollection<DiagramItemDescription>();
+            DiagramItemsDescription = new ObservableCollection<DiagramItemDescription>();
         }
 
         public ObservableCollection<DiagramItemDescription> DiagramItemsDescription { get; }

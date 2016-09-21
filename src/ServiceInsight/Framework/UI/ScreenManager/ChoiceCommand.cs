@@ -2,11 +2,11 @@
 {
     using System;
     using System.Windows.Input;
-    using Caliburn.Micro;
+    using Pirac;
 
     public delegate void ButtonCommandHandler(object target);
 
-    public class ChoiceCommand : PropertyChangedBase, ICommand
+    public class ChoiceCommand : BindableObject, ICommand
     {
         public event EventHandler CanExecuteChanged = (s, e) => { };
 
@@ -28,27 +28,12 @@
             commandHandler(this);
         }
 
-        public virtual bool IsCancel
-        {
-            get;
-            set;
-        }
+        public virtual bool IsCancel { get; set; }
 
-        public virtual bool IsDefault
-        {
-            get;
-            set;
-        }
+        public virtual bool IsDefault { get; set; }
 
-        public virtual string Label
-        {
-            get;
-            set;
-        }
+        public virtual string Label { get; set; }
 
-        public virtual MessageChoice Result
-        {
-            get;
-        }
+        public virtual MessageChoice Result { get; }
     }
 }

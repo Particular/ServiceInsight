@@ -48,6 +48,24 @@
             }
         }
 
+        public static void RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+        {
+            if (collection == null || collection.Count == 0)
+            {
+                throw new ArgumentException($"{nameof(collection)} is null or empty.", nameof(collection));
+            }
+
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items), $"{nameof(items)} is null.");
+            }
+
+            foreach (var item in items)
+            {
+                collection.Remove(item);
+            }
+        }
+
         public static IEnumerable<T> FullExcept<T>(this IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer = null)
         {
             if (first == null)

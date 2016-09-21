@@ -19,6 +19,7 @@
     public class MessageBodyViewModelTests
     {
         IRxEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         HexContentViewModel hexContent;
         JsonMessageViewModel jsonContent;
@@ -30,13 +31,14 @@
         public void TestInitialize()
         {
             eventAggregator = Substitute.For<IRxEventAggregator>();
+            workNotifier = Substitute.For<IWorkNotifier>();
             serviceControl = Substitute.For<IServiceControl>();
             hexContent = Substitute.For<HexContentViewModel>();
             jsonContent = Substitute.For<JsonMessageViewModel>();
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, workNotifier, selection);
         }
 
         [Test]

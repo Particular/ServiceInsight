@@ -3,13 +3,14 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using Caliburn.Micro;
     using DynamicData;
     using Framework;
+    using Framework.Rx;
+    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
 
-    public class MessageHeadersViewModel : Screen
+    public class MessageHeadersViewModel : RxScreen
     {
         readonly MessageSelectionContext selection;
 
@@ -17,7 +18,7 @@
         {
             selection = selectionContext;
             KeyValues = new ObservableCollection<MessageHeaderKeyValue>();
-            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
         public ObservableCollection<MessageHeaderKeyValue> KeyValues { get; }

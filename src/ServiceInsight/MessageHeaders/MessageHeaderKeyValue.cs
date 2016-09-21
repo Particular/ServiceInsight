@@ -1,8 +1,8 @@
 ﻿namespace ServiceInsight.MessageHeaders
 {
-    using Caliburn.Micro;
+    using Pirac;
 
-    public class MessageHeaderKeyValue : PropertyChangedBase
+    public class MessageHeaderKeyValue : BindableObject
     {
         public string Key { get; set; }
 

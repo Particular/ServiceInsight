@@ -86,6 +86,7 @@
                         () => Substitute.For<LicenseRegistrationViewModel>(),
                         statusbarManager,
                         eventAggregator,
+                        Substitute.For<IWorkNotifier>(),
                         licenseManager,
                         messageFlow,
                         sagaWindow,

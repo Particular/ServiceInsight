@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.Options
 {
     using System.ComponentModel;
-    using Caliburn.Micro;
+    using Framework.Rx;
     using ServiceInsight.Framework.Settings;
     using Settings;
 
-    public class OptionsViewModel : Screen
+    public class OptionsViewModel : RxScreen
     {
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {

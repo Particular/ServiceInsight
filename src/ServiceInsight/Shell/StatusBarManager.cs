@@ -1,11 +1,12 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
-    using Caliburn.Micro;
+
     using Framework;
+    using Pirac;
     using ServiceInsight.Framework.Events;
 
-    public class StatusBarManager : PropertyChangedBase
+    public class StatusBarManager : BindableObject
     {
         public const string DoneStatusMessage = "Done";
 

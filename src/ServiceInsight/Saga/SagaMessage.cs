@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Caliburn.Micro;
+
     using Framework;
     using Models;
+    using Pirac;
     using ServiceControl;
 
     public class SagaMessageDataItem
@@ -15,7 +16,7 @@
         public string Value { get; set; }
     }
 
-    public class SagaMessage : PropertyChangedBase
+    public class SagaMessage : BindableObject
     {
         public string MessageId { get; set; }
 
