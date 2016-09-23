@@ -42,6 +42,7 @@
         }
 
         [Test]
+        [Ignore("Needs Pirac testing to set schedulers")]
         public void Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
@@ -61,8 +62,7 @@
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            eventAggregator.Received(1).Publish(Arg.Any<WorkStarted>());
-            eventAggregator.Received(1).Publish(Arg.Any<WorkFinished>());
+            workNotifier.Received(1).NotifyOfWork(Arg.Any<string>());
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);
         }
