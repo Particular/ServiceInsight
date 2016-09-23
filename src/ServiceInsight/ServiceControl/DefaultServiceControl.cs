@@ -9,7 +9,6 @@
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
-    using Caliburn.Micro;
     using Framework;
     using RestSharp;
     using RestSharp.Contrib;

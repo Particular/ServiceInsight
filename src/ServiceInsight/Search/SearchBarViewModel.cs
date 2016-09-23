@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Reactive.Linq;
     using System.Windows.Input;
-    using Caliburn.Micro;
+
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework;
@@ -33,7 +33,7 @@
             PageSize = 50; //NOTE: Do we need to change this?
 
             SearchCommand = Command.Create(Search, () => CanSearch);
-            CancelSearchCommand = this.ChangedProperty(nameof(SearchInProgress))
+            CancelSearchCommand = this.WhenPropertiesChanged(nameof(SearchInProgress))
                 //.Select(pcd => pcd.After)
                 .Select(_ => SearchInProgress)
                 .ToCommand(_ => CancelSearch());
@@ -51,7 +51,7 @@
 
         private ICommand CreateNavigationCommand(string canExecuteName, Func<PropertyChangedData, bool> selector, int pageNum)
         {
-            return this.ChangedProperty(canExecuteName)
+            return this.WhenPropertiesChanged(canExecuteName)
                 //.Select(pcd => pcd.After)
                 .Select(selector)
                 .ToCommand(_ => Parent.RefreshMessages(SelectedEndpoint, pageNum, SearchQuery));
@@ -158,7 +158,7 @@
 
         public IList<StoredMessage> Result { get; private set; }
 
-        public IObservableCollection<string> RecentSearchQueries { get; private set; }
+        public IList<string> RecentSearchQueries { get; private set; }
 
         public int CurrentPage { get; private set; }
 
@@ -232,7 +232,7 @@
         void RestoreRecentSearchEntries()
         {
             var setting = settingProvider.GetSettings<ProfilerSettings>();
-            RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
+            RecentSearchQueries = new List<string>(setting.RecentSearchEntries);
         }
 
         void AddRecentSearchEntry(string searchQuery)

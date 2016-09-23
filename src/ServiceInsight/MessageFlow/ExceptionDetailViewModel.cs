@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.MessageFlow
 {
-    using Caliburn.Micro;
+    using Framework.Rx;
     using Models;
     using ServiceInsight.Framework.Settings;
     using Shell;
 
-    public class ExceptionDetailViewModel : Screen
+    public class ExceptionDetailViewModel : RxScreen
     {
         ISettingsProvider settingsProvider;
 

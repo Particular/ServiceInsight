@@ -1,10 +1,11 @@
 ﻿namespace ServiceInsight.MessageProperties
 {
     using System.ComponentModel;
-    using Caliburn.Micro;
-    using Framework;
 
-    public class MessagePropertiesViewModel : Screen
+    using Framework;
+    using Framework.Rx;
+
+    public class MessagePropertiesViewModel : RxScreen
     {
         readonly IClipboard clipboard;
 

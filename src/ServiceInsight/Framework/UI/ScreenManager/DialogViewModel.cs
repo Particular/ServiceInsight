@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Input;
-    using Caliburn.Micro;
+    using Rx;
 
-    public class DialogViewModel : Screen
+    public class DialogViewModel : RxScreen
     {
         Dialog view;
 

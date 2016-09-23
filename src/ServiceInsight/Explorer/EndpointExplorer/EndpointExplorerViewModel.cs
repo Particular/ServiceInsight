@@ -1,16 +1,19 @@
 ﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
-    using Caliburn.Micro;
     using ExtensionMethods;
     using Framework;
     using Framework.Events;
+    using Framework.Rx;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Pirac;
     using Startup;
 
-    public class EndpointExplorerViewModel : Screen
+    public class EndpointExplorerViewModel : RxScreen
     {
         static JsonSerializer serializer;
 
@@ -25,11 +28,11 @@
         public EndpointExplorerViewModel(IRxServiceControl serviceControl, IRxEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
         {
             this.eventAggregator = eventAggregator;
-            Items = new BindableCollection<ExplorerItem>();
+            Items = new ObservableCollection<ExplorerItem>();
 
             initialEndpoint = commandLineParser.ParsedOptions.EndpointName;
 
-            serviceControl.Endpoints().Subscribe(MergeEndpoints);
+            serviceControl.Endpoints().ObserveOnPiracMain().Subscribe(MergeEndpoints);
 
             eventAggregator.GetEvent<RequestSelectingEndpoint>().Subscribe(Handle);
             eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
@@ -83,7 +86,7 @@
             }
         }
 
-        public IObservableCollection<ExplorerItem> Items { get; }
+        public ICollection<ExplorerItem> Items { get; }
 
         public ExplorerItem SelectedNode { get; set; }
 

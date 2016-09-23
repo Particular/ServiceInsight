@@ -1,8 +1,7 @@
 ﻿namespace ServiceInsight.MessageProperties
 {
-    using Caliburn.Micro;
-
-    public interface IPropertyDataProvider : IScreen
+    public interface IPropertyDataProvider
     {
+        string DisplayName { get; }
     }
 }

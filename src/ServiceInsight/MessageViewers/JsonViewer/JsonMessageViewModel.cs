@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
-    using Caliburn.Micro;
+    using Framework.Rx;
     using ServiceInsight.Models;
 
-    public class JsonMessageViewModel : Screen, IDisplayMessageBody
+    public class JsonMessageViewModel : RxScreen, IDisplayMessageBody
     {
         IJsonMessageView messageView;
 

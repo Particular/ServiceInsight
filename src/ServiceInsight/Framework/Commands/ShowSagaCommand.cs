@@ -1,6 +1,5 @@
 namespace ServiceInsight.Framework.Commands
 {
-    using Caliburn.Micro;
     using Events;
     using Models;
     using ServiceInsight.MessageList;

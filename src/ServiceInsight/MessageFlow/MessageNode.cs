@@ -33,7 +33,7 @@
             RetryMessageCommand = owner.RetryMessageCommand;
             ShowExceptionCommand = Command.Create(ShowException);
 
-            message.ChangedProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
+            message.WhenPropertiesChanged(nameof(StoredMessage.Status)).Subscribe(_ =>
             {
                 OnPropertyChanged("HasFailed");
                 OnPropertyChanged("HasRetried");

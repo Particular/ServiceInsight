@@ -70,7 +70,7 @@
 
             ShowLegend = settings.ShowLegend;
 
-            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
             eventAggregator.GetEvent<ScrollDiagramItemIntoView>().Subscribe(Handle);
         }
 

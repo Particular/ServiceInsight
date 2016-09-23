@@ -30,13 +30,14 @@
     using Startup;
     using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive, IWorkTracker
+    public class ShellViewModel : RxConductor<IScreen>.RxCollection.AllActive, IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
         IRxEventAggregator eventAggregator;
+        IWorkNotifier workNotifer;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -58,6 +59,7 @@
             Func<LicenseRegistrationViewModel> licenceRegistration,
             StatusBarManager statusBarManager,
             IRxEventAggregator eventAggregator,
+            IWorkNotifier workNotifer,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
@@ -73,6 +75,7 @@
             NetworkOperations networkOperations,
             CommandLineArgParser comandLineArgParser)
         {
+            this.workNotifer = workNotifer;
             this.appCommander = appCommander;
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
@@ -163,15 +166,14 @@
             var configuredConnection = GetConfiguredAddress(comandLineArgParser);
             var existingConnection = connectionProvider.Url;
 
-            eventAggregator.Publish(new WorkStarted("Trying to connect to ServiceControl"));
-
-            connectionProvider.ConnectTo(configuredConnection);
-            if (!serviceControl.IsAlive())
+            using (workNotifer.NotifyOfWork("Trying to connect to ServiceControl"))
             {
-                connectionProvider.ConnectTo(existingConnection);
+                connectionProvider.ConnectTo(configuredConnection);
+                if (!serviceControl.IsAlive())
+                {
+                    connectionProvider.ConnectTo(existingConnection);
+                }
             }
-
-            eventAggregator.Publish(new WorkFinished());
         }
 
         protected override void OnDeactivate(bool close)
@@ -250,7 +252,6 @@
 
             if (result.GetValueOrDefault(false))
             {
-                //EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
                 eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }

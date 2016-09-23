@@ -1,13 +1,13 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System.IO;
-    using Caliburn.Micro;
+    using Framework.Rx;
     using Particular.Licensing;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.UI.ScreenManager;
 
-    public class LicenseRegistrationViewModel : Screen
+    public class LicenseRegistrationViewModel : RxScreen
     {
         AppLicenseManager licenseManager;
         IWindowManagerEx dialogManager;

@@ -2,9 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Caliburn.Micro;
+
     using ExtensionMethods;
     using Framework;
+    using Framework.Rx;
     using HexViewer;
     using JsonViewer;
     using ServiceInsight.Framework.Events;
@@ -12,10 +13,11 @@
     using ServiceInsight.ServiceControl;
     using XmlViewer;
 
-    public class MessageBodyViewModel : Screen
+    public class MessageBodyViewModel : RxScreen
     {
         readonly IServiceControl serviceControl;
         readonly IRxEventAggregator eventAggregator;
+        readonly IWorkNotifier workNotifier;
         readonly MessageSelectionContext selection;
         static Dictionary<string, MessageContentType> contentTypeMaps;
 
@@ -37,8 +39,10 @@
             XmlMessageViewModel xmlViewer,
             IServiceControl serviceControl,
             IRxEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
         {
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             selection = selectionContext;
@@ -132,13 +136,12 @@
                 return;
             }
 
-            eventAggregator.Publish(new WorkStarted("Loading message body..."));
+            using (workNotifier.NotifyOfWork("Loading message body..."))
+            {
+                serviceControl.LoadBody(selection.SelectedMessage);
 
-            serviceControl.LoadBody(selection.SelectedMessage);
-
-            RefreshChildren();
-
-            eventAggregator.Publish(new WorkFinished());
+                RefreshChildren();
+            }
         }
     }
 }

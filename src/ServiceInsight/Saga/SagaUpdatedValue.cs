@@ -1,10 +1,10 @@
 ﻿namespace ServiceInsight.Saga
 {
     using System.Windows.Input;
-    using Caliburn.Micro;
+
     using Pirac;
 
-    public class SagaUpdatedValue : PropertyChangedBase
+    public class SagaUpdatedValue : BindableObject
     {
         public const byte MaxValueLength = 30;
 

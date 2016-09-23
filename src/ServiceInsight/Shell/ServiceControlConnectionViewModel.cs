@@ -30,7 +30,7 @@
             appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
 
-            AcceptCommand = this.ChangedProperty<string>(nameof(ServiceUrl))
+            AcceptCommand = this.WhenPropertiesChanged<string>(nameof(ServiceUrl))
                 //.Select(pcd => !pcd.After.IsEmpty())
                 .Select(_ => !ServiceUrl.IsEmpty())
                 .ToCommand(_ => Accept());

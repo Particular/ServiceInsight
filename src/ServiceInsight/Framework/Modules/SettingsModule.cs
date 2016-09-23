@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.Linq;
     using Autofac;
-    using Caliburn.Micro;
+    using ExtensionMethods;
     using ServiceInsight.Framework.Settings;
 
     public class SettingsModule : Module

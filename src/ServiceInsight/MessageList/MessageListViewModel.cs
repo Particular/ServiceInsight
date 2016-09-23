@@ -1,11 +1,12 @@
 ﻿namespace ServiceInsight.MessageList
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reactive.Linq;
     using System.Threading;
     using System.Windows.Input;
-    using Caliburn.Micro;
+
     using Comparers;
     using Explorer;
     using Explorer.EndpointExplorer;
@@ -25,6 +26,7 @@
     {
         readonly IClipboard clipboard;
         IRxEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
         string lastSortColumn;
@@ -34,6 +36,7 @@
 
         public MessageListViewModel(
             IRxEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
@@ -45,19 +48,20 @@
 
             this.clipboard = clipboard;
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
 
             Items.Add(SearchBar);
 
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
             CopyHeadersCommand = generalHeaderDisplay
-                .ChangedProperty<string>(nameof(GeneralHeaderViewModel.HeaderContent))
+                .WhenPropertiesChanged<string>(nameof(GeneralHeaderViewModel.HeaderContent))
                 //.Select(pcd => !pcd.After.IsEmpty())
                 .Select(_ => !generalHeaderDisplay.HeaderContent.IsEmpty())
                 .ToCommand(_ => CopyHeaders());
-            Rows = new BindableCollection<StoredMessage>();
+            Rows = new List<StoredMessage>();
 
             eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
             eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
@@ -66,7 +70,7 @@
             eventAggregator.GetEvent<RetryMessage>().Subscribe(Handle);
             eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
 
-            this.ChangedProperty(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
+            this.WhenPropertiesChanged(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
             {
                 RefreshMessages();
             });
@@ -76,7 +80,7 @@
 
         public SearchBarViewModel SearchBar { get; }
 
-        public IObservableCollection<StoredMessage> Rows { get; }
+        public IList<StoredMessage> Rows { get; }
 
         public MessageSelectionContext Selection { get; }
 
@@ -124,10 +128,8 @@
 
         public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            try
+            using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                eventAggregator.Publish(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
-
                 if (orderBy != null)
                 {
                     lastSortColumn = orderBy;
@@ -173,10 +175,6 @@
                     TotalCount = pagedResult.TotalCount,
                     Result = pagedResult.Result,
                 });
-            }
-            finally
-            {
-                eventAggregator.Publish(new WorkFinished());
             }
         }
 
