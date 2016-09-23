@@ -80,21 +80,21 @@
 
         void Grid_OnStartSorting(object sender, RoutedEventArgs e)
         {
-            var grid = e.Source as GridControl;
+            var sourceGrid = e.Source as GridControl;
 
-            if (grid == null || Model == null || Model.WorkInProgress)
+            if (sourceGrid == null || Model == null || Model.WorkInProgress)
             {
                 return;
             }
 
-            var sortInfo = grid.SortInfo.FirstOrDefault();
+            var sortInfo = sourceGrid.SortInfo.FirstOrDefault();
 
             if (sortInfo == null)
             {
                 return;
             }
 
-            var column = grid.Columns.First(c => c.FieldName == sortInfo.FieldName);
+            var column = sourceGrid.Columns.First(c => c.FieldName == sortInfo.FieldName);
 
             SortData(column, sortInfo.SortOrder);
 

@@ -28,12 +28,12 @@
             commandHandler(this);
         }
 
-        public virtual bool IsCancel { get; set; }
+        public bool IsCancel { get; set; }
 
-        public virtual bool IsDefault { get; set; }
+        public bool IsDefault { get; set; }
 
-        public virtual string Label { get; set; }
+        public string Label { get; set; }
 
-        public virtual MessageChoice Result { get; }
+        public MessageChoice Result { get; }
     }
 }

@@ -4,7 +4,6 @@ namespace ServiceInsight.SequenceDiagram
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using DevExpress.Data.Filtering.Helpers;
     using ServiceInsight.Framework;
     using ServiceInsight.Models;
     using ServiceInsight.SequenceDiagram.Diagram;
@@ -86,7 +85,7 @@ namespace ServiceInsight.SequenceDiagram
                 }
                 else
                 {
-                    UpdateProcessingHandler(processingHandler, message, processingEndpoint);
+                    UpdateProcessingHandler(processingHandler, message);
                 }
 
                 var arrow = CreateArrow(message);
@@ -115,9 +114,9 @@ namespace ServiceInsight.SequenceDiagram
 
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler) => new MessageProcessingRoute(arrow, processingHandler);
 
-        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messages)
+        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messagesForNode)
         {
-            var nodes = messages.Select(x => new MessageTreeNode(x)).ToList();
+            var nodes = messagesForNode.Select(x => new MessageTreeNode(x)).ToList();
             var resolved = new HashSet<MessageTreeNode>();
             var index = nodes.ToLookup(x => x.Id);
 
@@ -156,12 +155,12 @@ namespace ServiceInsight.SequenceDiagram
                 Endpoint = processingEndpoint
             };
 
-            UpdateProcessingHandler(handler, message, processingEndpoint);
+            UpdateProcessingHandler(handler, message);
 
             return handler;
         }
 
-        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message, EndpointItem processingEndpoint)
+        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message)
         {
             processingHandler.ProcessedAt = message.ProcessedAt;
             processingHandler.ProcessingTime = message.ProcessingTime;

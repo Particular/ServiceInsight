@@ -80,10 +80,10 @@
             this.view = (SequenceDiagramView)view;
         }
 
-        void ExportToPng(SequenceDiagramView view)
+        void ExportToPng(SequenceDiagramView viewToExport)
         {
-            var bodyElement = (UIElement)view.ScrollViewer_Body.Content;
-            var headerElement = (UIElement)view.ScrollViewer_Header.Content;
+            var bodyElement = (UIElement)viewToExport.ScrollViewer_Body.Content;
+            var headerElement = (UIElement)viewToExport.ScrollViewer_Header.Content;
 
             var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
             var actualWidth = bodyElement.RenderSize.Width;
