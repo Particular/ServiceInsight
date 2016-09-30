@@ -6,9 +6,14 @@
     using System.Net.Http;
     using System.Reactive.Linq;
     using Akavache;
+    using Anotar.Serilog;
+    using Framework;
+    using Serilog;
 
     public static class AkavacheExtensions
     {
+        static ILogger anotarLogger = Log.ForContext<IRxServiceControl>();
+
         public static IObservable<string> GetOrFetchWithETag(this IBlobCache cache, string url)
         {
             var result =
@@ -80,8 +85,12 @@
                         request.Headers.TryAddWithoutValidation("If-None-Match", etag);
                     }
 
+                    LogRequest(request);
+
                     var response = await client.SendAsync(request)
                         .ConfigureAwait(false);
+
+                    LogResponse(response);
 
                     if (!response.IsSuccessStatusCode &&
                         response.StatusCode != HttpStatusCode.NotModified)
@@ -103,6 +112,30 @@
                 }
                 observer.OnCompleted();
             });
+        }
+
+        private static void LogRequest(HttpRequestMessage request)
+        {
+            LogTo.Information("HTTP {Method:l} {url:l}", request.Method, request.RequestUri);
+
+            foreach (var parameter in request.Properties)
+            {
+                LogTo.Debug("Request Parameter: {Name} : {Value}",
+                                                       parameter.Key,
+                                                       parameter.Value);
+            }
+        }
+
+        private static void LogResponse(HttpResponseMessage response)
+        {
+            LogTo.Debug("HTTP Status {code} ({uri})", response.StatusCode, response.RequestMessage.RequestUri);
+
+            foreach (var header in response.Headers)
+            {
+                LogTo.Debug("Response Header: {Name} : {Value}",
+                                                     header.Key,
+                                                     header.Value);
+            }
         }
     }
 }

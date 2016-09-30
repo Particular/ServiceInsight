@@ -9,7 +9,6 @@
     using System.Reactive.Subjects;
     using System.Threading.Tasks;
     using Akavache;
-    using Anotar.Serilog;
     using ExtensionMethods;
     using Newtonsoft.Json.Linq;
     using Pirac;
@@ -147,8 +146,6 @@
 
         private IObservable<IEnumerable<JObject>> GetData(string url)
         {
-            LogTo.Information("Rx HTTP {url}", url);
-
             return cache.GetOrFetchWithETag(url)
                 .Select(j => JArray.Parse(j).Cast<JObject>());
         }
