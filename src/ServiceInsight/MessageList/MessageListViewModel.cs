@@ -68,7 +68,7 @@
             eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
             eventAggregator.GetEvent<AsyncOperationFailed>().Subscribe(Handle);
             eventAggregator.GetEvent<RetryMessage>().Subscribe(Handle);
-            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
 
             this.WhenPropertiesChanged(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
             {
