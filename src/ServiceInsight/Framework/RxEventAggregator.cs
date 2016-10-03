@@ -19,7 +19,7 @@
 
         public IObservable<TEvent> GetEvent<TEvent>()
         {
-            return subject.OfType<TEvent>().AsObservable().ObserveOnPiracBackground();
+            return subject.OfType<TEvent>().AsObservable().ObserveOnPiracMain();
         }
 
         public void Publish<TEvent>(TEvent sampleEvent)
