@@ -337,27 +337,27 @@
                         BorderBrush="#1E1E1E"
                         BorderThickness="0 1 0 0" />
                 <MenuItem Grid.Row="1"
-                          Click="OnMenuClicked"
-                          Command="{Binding RetryMessageCommand}"
                           CommandParameter="{Binding Message}"
+                          Command="{Binding RetryMessageCommand}"
+                          Click="OnMenuClicked"
                           Header="Retry Message"
                           Style="{StaticResource ContextMenuItem}" />
                 <MenuItem Grid.Row="2"
-                          Click="OnMenuClicked"
-                          Command="{Binding CopyConversationIDCommand}"
                           CommandParameter="{Binding Message}"
+                          Command="{Binding CopyConversationIDCommand}"
+                          Click="OnMenuClicked"
                           Header="Copy Conversation Id"
                           Style="{StaticResource ContextMenuItem}" />
                 <MenuItem Grid.Row="3"
-                          Click="OnMenuClicked"
-                          Command="{Binding CopyMessageURICommand}"
                           CommandParameter="{Binding Message}"
+                          Command="{Binding CopyMessageURICommand}"
+                          Click="OnMenuClicked"
                           Header="Copy Message URI"
                           Style="{StaticResource ContextMenuItem}" />
                 <MenuItem Grid.Row="4"
-                          Click="OnMenuClicked"
-                          Command="{Binding SearchByMessageIDCommand}"
                           CommandParameter="{Binding Message}"
+                          Command="{Binding SearchByMessageIDCommand}"
+                          Click="OnMenuClicked"
                           Header="Search by Message Id"
                           Style="{StaticResource ContextMenuItem}" />
             </Grid>
@@ -421,8 +421,8 @@
                             BorderBrush="Red"
                             BorderThickness="0 0 0 1">
                         <Button Margin="0 0 0 -2"
-                                Click="OnMenuClicked"
                                 Command="{Binding ShowExceptionCommand}"
+                                Click="OnMenuClicked"
                                 Foreground="Red">
                             <TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" />
                         </Button>
