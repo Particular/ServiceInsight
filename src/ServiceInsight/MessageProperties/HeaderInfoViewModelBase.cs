@@ -5,7 +5,6 @@
     using Framework;
     using Framework.Rx;
     using Models;
-    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
@@ -24,7 +23,7 @@
             Selection = selectionContext;
             ConditionsMap = new Dictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>>();
             MapHeaderKeys();
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
         }
 
         protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; }

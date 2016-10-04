@@ -175,8 +175,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.7.3\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.7.5\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -316,6 +316,8 @@
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
+    <Compile Include="MessageViewers\BaseMessageViewModel.cs" />
+    <Compile Include="MessageViewers\IMessageView.cs" />
     <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\ElementHeightConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
@@ -457,7 +459,6 @@
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\HexViewer\HexContentViewModel.cs" />
-    <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
     <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
@@ -551,7 +552,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MessageViewers\XmlViewer\IXmlMessageView.cs" />
     <Compile Include="MessageViewers\XmlViewer\XmlMessageView.xaml.cs">
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>

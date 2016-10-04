@@ -44,9 +44,9 @@
             GoToNextPageCommand = CreateNavigationCommand(nameof(CanGoToNextPage), _ => CanGoToNextPage, CurrentPage + 1);
             GoToLastPageCommand = CreateNavigationCommand(nameof(CanGoToLastPage), _ => CanGoToLastPage, PageCount);
 
-            eventAggregator.GetEvent<SelectedExplorerItemChanged>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkStarted>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkFinished>().ObserveOnPiracMain().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
         }
 
         private ICommand CreateNavigationCommand(string canExecuteName, Func<PropertyChangedData, bool> selector, int pageNum)

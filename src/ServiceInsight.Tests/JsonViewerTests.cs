@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.Tests
 {
     using Caliburn.Micro;
+    using MessageViewers;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.MessageViewers.JsonViewer;
@@ -11,12 +12,12 @@
     public class JsonViewerTests
     {
         JsonMessageViewModel viewModel;
-        IJsonMessageView view;
+        IMessageView view;
 
         [SetUp]
         public void TestInitialize()
         {
-            view = Substitute.For<IJsonMessageView>();
+            view = Substitute.For<IMessageView>();
             viewModel = new JsonMessageViewModel();
             ((IActivate)viewModel).Activate();
         }

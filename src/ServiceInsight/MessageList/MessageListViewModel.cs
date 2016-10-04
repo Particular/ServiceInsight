@@ -68,12 +68,14 @@
             eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
             eventAggregator.GetEvent<AsyncOperationFailed>().Subscribe(Handle);
             eventAggregator.GetEvent<RetryMessage>().Subscribe(Handle);
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
 
-            this.WhenPropertiesChanged(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
-            {
-                RefreshMessages();
-            });
+            this.WhenPropertiesChanged(nameof(SelectedExplorerItem))
+                .ObserveOnPiracMain()
+                .Subscribe(_ =>
+                {
+                    RefreshMessages();
+                });
         }
 
         public new ShellViewModel Parent => (ShellViewModel)base.Parent;

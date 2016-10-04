@@ -5,7 +5,6 @@
     using System.Reactive.Linq;
     using Caliburn.Micro;
     using LogWindow;
-    using Pirac;
     using Serilog;
     using Serilog.Events;
     using Serilog.Filters;
@@ -31,7 +30,7 @@
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
                     .Filter.ByIncludingOnly(le => Matching.FromSource<IServiceControl>()(le) || Matching.FromSource<IRxServiceControl>()(le))
-                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).ObserveOnPiracMain().Subscribe()))
+                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).Subscribe()))
                 .CreateLogger();
         }
 
