@@ -24,11 +24,6 @@
                    .AsSelf()
                    .SingleInstance();
 
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                .Where(t => t.IsAttachment())
-                .AsSelf()
-                .InstancePerDependency();
-
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
