@@ -23,9 +23,8 @@
             this.network = network;
         }
 
-        protected override void OnActivate()
+        public void Initialize()
         {
-            base.OnActivate();
             DisplayName = GetScreenTitle();
         }
 
