@@ -7,6 +7,7 @@
     using System.Windows.Input;
     using Autofac;
     using Framework;
+    using Framework.Rx;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
@@ -19,7 +20,7 @@
     using ServiceInsight.MessageList;
     using Settings;
 
-    public class MessageFlowViewModel : Caliburn.Micro.Screen
+    public class MessageFlowViewModel : RxScreen
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;

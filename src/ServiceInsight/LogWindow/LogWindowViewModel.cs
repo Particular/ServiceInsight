@@ -10,12 +10,13 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using Framework;
+    using Framework.Rx;
     using Pirac;
     using Serilog.Events;
     using Serilog.Formatting;
     using Serilog.Formatting.Display;
 
-    public class LogWindowViewModel : Caliburn.Micro.Screen
+    public class LogWindowViewModel : RxScreen
     {
         public static Subject<LogEvent> LogObserver = new Subject<LogEvent>();
 

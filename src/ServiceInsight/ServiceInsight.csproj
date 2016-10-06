@@ -33,6 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>..\CommonRuleSet.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -175,8 +176,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.7.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.7.5\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.2\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -273,6 +274,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
+    <Compile Include="Framework\Events\RefreshEndpointMessages.cs" />
     <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />

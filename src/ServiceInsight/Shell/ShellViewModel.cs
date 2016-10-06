@@ -98,11 +98,7 @@
             Messages = messages;
             LogWindow = logWindow;
 
-            Items.Add(endpointExplorer);
-            Items.Add(messages);
-            Items.Add(messageHeadersViewer);
-            Items.Add(messageBodyViewer);
-            Items.Add(messageFlow);
+            AddChildren(endpointExplorer, messages, messageHeadersViewer, messageBodyViewer, messageFlow);
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
@@ -130,6 +126,8 @@
             eventAggregator.GetEvent<SwitchToMessageBody>().Subscribe(Handle);
             eventAggregator.GetEvent<SwitchToSagaWindow>().Subscribe(Handle);
             eventAggregator.GetEvent<SwitchToFlowWindow>().Subscribe(Handle);
+
+            this.WhenPropertyChanged(nameof(AutoRefresh)).Subscribe(pcd => messages.AutoRefresh = AutoRefresh);
         }
 
         string GetConfiguredAddress(CommandLineArgParser commandLineParser)

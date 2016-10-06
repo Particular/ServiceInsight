@@ -75,8 +75,8 @@
       <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Pirac, Version=0.7.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.7.5\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.2\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
