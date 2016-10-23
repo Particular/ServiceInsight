@@ -169,8 +169,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.8.3\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.4\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -269,6 +269,7 @@
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
     <Compile Include="Framework\Events\RefreshEndpointMessages.cs" />
+    <Compile Include="Framework\Logging\SerilogLogger.cs" />
     <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />

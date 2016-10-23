@@ -55,7 +55,7 @@
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            PiracRunner.SetContext(new PiracContext { Container = new AutofacContainer() });
+            PiracRunner.SetContext(new PiracContext { Container = new AutofacContainer(), Logger = s => new SerilogLogger(s) });
             LogTo.Information("Starting the application...");
             DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             base.OnStartup(e);

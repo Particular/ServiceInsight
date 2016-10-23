@@ -10,6 +10,7 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework;
+    using Framework.Rx;
     using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
     using MessageFlow;
@@ -28,7 +29,7 @@
     using Settings;
     using Startup;
 
-    public class ShellViewModel : ViewModelBase, IWorkTracker
+    public class ShellViewModel : RxScreen, IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
