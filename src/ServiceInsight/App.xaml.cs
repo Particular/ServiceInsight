@@ -3,9 +3,12 @@
     using System;
     using System.Diagnostics;
     using System.Windows;
+    using Akavache;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
+    using Framework;
     using Framework.Logging;
+    using Pirac;
     using Shell;
 
     public interface IAppCommands
@@ -40,6 +43,7 @@
     {
         public App()
         {
+            BlobCache.ApplicationName = "ServiceInsight";
             LoggingConfig.SetupLogging();
             if (!Debugger.IsAttached)
             {
@@ -51,9 +55,11 @@
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            PiracRunner.SetContext(new PiracContext { Container = new AutofacContainer() });
             LogTo.Information("Starting the application...");
             DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             base.OnStartup(e);
+            PiracRunner.Start<ShellViewModel>();
             LogTo.Information("Application startup finished.");
         }
 

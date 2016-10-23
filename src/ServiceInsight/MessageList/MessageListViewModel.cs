@@ -22,7 +22,7 @@
     using ServiceInsight.Framework.Events;
     using Shell;
 
-    public class MessageListViewModel : RxConductor<RxScreen>.RxCollection.AllActive, IWorkTracker
+    public class MessageListViewModel : RxScreen, IWorkTracker
     {
         readonly IClipboard clipboard;
         IRxEventAggregator eventAggregator;

@@ -45,6 +45,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>..\CommonRuleSet.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
@@ -73,14 +74,6 @@
     </Reference>
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Comparers">
       <HintPath>..\packages\Comparers.4.0.0\lib\net40-client\Comparers.dll</HintPath>
@@ -176,8 +169,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.8.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.8.2\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.3\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -272,9 +265,11 @@
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\AkavacheExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="Framework\AutofacContainer.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
     <Compile Include="Framework\Events\RefreshEndpointMessages.cs" />
+    <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
@@ -289,10 +284,8 @@
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
     <Compile Include="Framework\RaygunUtility.cs" />
-    <Compile Include="Framework\Rx\PiracHelper.cs" />
-    <Compile Include="Framework\Rx\RxConductor.cs" />
-    <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\RxServiceControl.cs" />
+    <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\SnakeCasePropertyNamesContractResolver.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
@@ -508,7 +501,6 @@
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
-    <Compile Include="Framework\Modules\CaliburnModule.cs" />
     <Compile Include="Framework\Modules\SettingsModule.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -534,11 +526,8 @@
     <Compile Include="Startup\CommandLineArgParser.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Framework\Logging\LoggingConfig.cs" />
-    <Compile Include="Startup\AppBootstrapper.cs" />
-    <Compile Include="Framework\Logging\CaliburnMicroLogAdapter.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />
     <Compile Include="Framework\Modules\CoreModule.cs" />
-    <Compile Include="Framework\Modules\LoggerModule.cs" />
     <Compile Include="Framework\Modules\ShellModule.cs" />
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>

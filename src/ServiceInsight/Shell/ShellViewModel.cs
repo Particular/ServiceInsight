@@ -10,7 +10,6 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework;
-    using Framework.Rx;
     using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
     using MessageFlow;
@@ -28,9 +27,8 @@
     using ServiceInsight.Framework.UI.ScreenManager;
     using Settings;
     using Startup;
-    using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : RxConductor<IScreen>.RxCollection.AllActive, IWorkTracker
+    public class ShellViewModel : ViewModelBase, IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
@@ -147,12 +145,11 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(FrameworkElement view)
         {
-            base.OnViewAttached(view, context);
             View = (IShellView)view;
 
-            DisplayName = GetProductName();
+            ProductName = GetProductName();
             StatusBarManager.Done();
             RestoreLayout();
         }
@@ -196,6 +193,8 @@
                 View.OnRestoreLayout(settingsProvider);
             }
         }
+
+        public string ProductName { get; set; }
 
         public bool AutoRefresh { get; set; }
 
@@ -385,8 +384,8 @@
 
         void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => CanConnectToServiceControl);
+            OnPropertyChanged(nameof(WorkInProgress), null, null);
+            OnPropertyChanged(nameof(CanConnectToServiceControl), null, null);
         }
 
         string GetProductName()

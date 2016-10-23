@@ -166,8 +166,6 @@
                 <ResourceDictionary Source="SequenceDiagram/SequenceDiagramResources.xaml" />
 
                 <ResourceDictionary>
-                    <startup:AppBootstrapper x:Key="Bootstrapper" />
-
                     <!--  TextBlock Styles  -->
                     <Style x:Key="Informational" TargetType="{x:Type TextBlock}">
                         <Setter Property="FontFamily" Value="{StaticResource DialogFonts}" />
