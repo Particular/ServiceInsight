@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reactive.Linq;
     using System.Threading;
+    using System.Windows;
     using System.Windows.Input;
 
     using Comparers;
@@ -97,9 +98,8 @@
 
         public ICommand CopyHeadersCommand { get; }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(FrameworkElement view)
         {
-            base.OnViewAttached(view, context);
             this.view = (IMessageListView)view;
         }
 
@@ -186,13 +186,13 @@
         void Handle(WorkStarted @event)
         {
             Interlocked.Increment(ref workCount);
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         void Handle(WorkFinished @event)
         {
             Interlocked.Decrement(ref workCount);
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         public void Handle(SelectedExplorerItemChanged @event)
@@ -203,7 +203,7 @@
         void Handle(AsyncOperationFailed message)
         {
             workCount = 0;
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         void Handle(RetryMessage message)
@@ -272,7 +272,7 @@
 
         void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => SelectedExplorerItem);
+            NotifyOfPropertyChange(nameof(SelectedExplorerItem));
             SearchBar.NotifyPropertiesChanged();
         }
 

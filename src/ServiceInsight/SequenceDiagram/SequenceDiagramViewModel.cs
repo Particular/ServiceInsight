@@ -73,12 +73,11 @@
             ShowLegend = settings.ShowLegend;
 
             eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().Subscribe(Handle);
+            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
-        protected override void OnViewLoaded(object view)
+        protected override void OnViewLoaded(FrameworkElement view)
         {
-            base.OnViewLoaded(view);
             this.view = (SequenceDiagramView)view;
         }
 

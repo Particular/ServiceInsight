@@ -18,9 +18,8 @@
 
         public bool IsModified { get; set; }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
             LoadSettings();
             IsModified = false;
         }

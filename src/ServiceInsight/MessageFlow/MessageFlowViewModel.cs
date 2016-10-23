@@ -4,6 +4,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
     using Autofac;
     using Framework;
@@ -78,9 +79,8 @@
             set;
         }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(FrameworkElement view)
         {
-            base.OnViewAttached(view, context);
             this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }
@@ -98,9 +98,8 @@
             selection.SelectedMessage = message;
         }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
             var settings = settingsProvider.GetSettings<ProfilerSettings>();
 
             ShowEndpoints = settings.ShowEndpoints;

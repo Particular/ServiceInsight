@@ -58,10 +58,8 @@
                 .ToCommand(_ => eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, pageNum, SearchQuery)));
         }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
-
             RestoreRecentSearchEntries();
 
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))

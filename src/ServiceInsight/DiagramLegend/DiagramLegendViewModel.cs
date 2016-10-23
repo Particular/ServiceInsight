@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.DiagramLegend
 {
     using System.Collections.ObjectModel;
+    using System.Windows;
     using Framework.Rx;
     using SequenceDiagram.Diagram;
     using ServiceInsight.Models;
@@ -19,9 +20,8 @@
 
         public ObservableCollection<DiagramItemDescription> DiagramItemsDescription { get; }
 
-        protected override void OnViewLoaded(object view)
+        protected override void OnViewLoaded(FrameworkElement view)
         {
-            base.OnViewLoaded(view);
             GenerateLegendData();
         }
 

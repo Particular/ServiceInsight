@@ -71,7 +71,7 @@
                 message.ShowData = ShowMessageData;
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         void RefreshMessageProperties()
@@ -81,7 +81,7 @@
                 message.RefreshData(serviceControl);
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         void Handle(SelectedMessageChanged @event)
