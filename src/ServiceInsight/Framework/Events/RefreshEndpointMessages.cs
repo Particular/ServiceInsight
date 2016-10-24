@@ -1,7 +1,7 @@
-﻿using ServiceInsight.Models;
-
-namespace ServiceInsight.Framework.Events
+﻿namespace ServiceInsight.Framework.Events
 {
+    using ServiceInsight.Models;
+
     public class RefreshEndpointMessages
     {
         public RefreshEndpointMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
