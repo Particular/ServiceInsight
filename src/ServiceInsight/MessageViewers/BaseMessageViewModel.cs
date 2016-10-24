@@ -1,7 +1,6 @@
 ﻿namespace ServiceInsight.MessageViewers
 {
     using System;
-    using System.Windows;
     using Framework.Rx;
     using Pirac;
     using ServiceInsight.Models;
@@ -32,7 +31,7 @@
             }
         }
 
-        protected override void OnViewAttached(FrameworkElement view)
+        protected override void OnViewAttached(object view)
         {
             messageView = (IMessageView)view;
             UpdateSelectedMessage();

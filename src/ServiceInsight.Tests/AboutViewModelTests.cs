@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.Tests
 {
-    using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Framework;
@@ -14,7 +13,6 @@
         NetworkOperations networkOperations;
         IServiceControl serviceControl;
         LicenseRegistrationViewModel licenseRegistration;
-        AboutViewModel sut;
 
         [SetUp]
         public void Initialize()
@@ -22,14 +20,12 @@
             networkOperations = Substitute.For<NetworkOperations>();
             serviceControl = Substitute.For<IServiceControl>();
             licenseRegistration = Substitute.For<LicenseRegistrationViewModel>();
-
-            sut = new AboutViewModel(networkOperations, serviceControl, licenseRegistration);
         }
 
         [Test]
         public void Should_fetch_service_control_version()
         {
-            ((IActivate)sut).Activate();
+            var sut = CreateViewModel();
 
             serviceControl.Received(1).GetVersion();
         }
@@ -40,7 +36,7 @@
             const string ServiceControlVersion = "0.8.0-Unstable379";
             serviceControl.GetVersion().Returns(ServiceControlVersion);
 
-            ((IActivate)sut).Activate();
+            var sut = CreateViewModel();
 
             sut.ServiceControlVersion.ShouldBe(ServiceControlVersion);
         }
@@ -48,7 +44,7 @@
         [Test]
         public void Should_display_application_version_number()
         {
-            ((IActivate)sut).Activate();
+            var sut = CreateViewModel();
 
             sut.AppVersion.ShouldNotBe(null);
             sut.AppVersion.ShouldNotBeEmpty();
@@ -57,10 +53,15 @@
         [Test]
         public void Should_display_short_commit_hash()
         {
-            ((IActivate)sut).Activate();
+            var sut = CreateViewModel();
 
             sut.CommitHash.ShouldNotBe(null);
             sut.CommitHash.Length.ShouldBe(7);
+        }
+
+        private AboutViewModel CreateViewModel()
+        {
+            return new AboutViewModel(networkOperations, serviceControl, licenseRegistration);
         }
     }
 }

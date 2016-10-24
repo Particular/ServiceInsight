@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
-    using Caliburn.Micro;
     using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;
     using Particular.Licensing;
+    using Pirac;
     using ServiceControl;
     using ServiceInsight.Explorer.EndpointExplorer;
     using ServiceInsight.Framework;
@@ -102,7 +102,7 @@
                         Substitute.For<NetworkOperations>(),
                         commandLineArgParser);
 
-            ((IViewAware)shell).AttachView(view);
+            ((IHaveView)shell).AttachView(view);
         }
 
         CommandLineArgParser MockEmptyStartupOptions()
@@ -149,9 +149,9 @@
         [Ignore("Need to fix test to support observables.")]
         public void Deactivating_shell_saves_layout()
         {
-            ((IScreen)shell).Activate();
+            ((IActivatable)shell).Activate();
 
-            ((IScreen)shell).Deactivate(true);
+            ((IActivatable)shell).Deactivate(true);
 
             view.Received().OnSaveLayout(settingsProvider);
         }
@@ -194,7 +194,7 @@
         [TearDown]
         public void TestCleanup()
         {
-            ((IScreen)shell).Deactivate(true);
+            ((IActivatable)shell).Deactivate(true);
         }
 
         static ProfilerSettings DefaultAppSetting() => new ProfilerSettings

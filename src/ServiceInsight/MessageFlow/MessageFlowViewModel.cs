@@ -4,7 +4,6 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
     using System.Windows.Input;
     using Autofac;
     using Framework;
@@ -79,7 +78,7 @@
             set;
         }
 
-        protected override void OnViewAttached(FrameworkElement view)
+        protected override void OnViewAttached(object view)
         {
             this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;

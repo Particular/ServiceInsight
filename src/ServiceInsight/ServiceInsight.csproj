@@ -168,8 +168,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.8.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.8.4\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.7\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -179,6 +179,10 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PropertyChanged, Version=1.50.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PropertyChanging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanging.Fody.1.27.2.0\Lib\dotnet\PropertyChanging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RestSharp">

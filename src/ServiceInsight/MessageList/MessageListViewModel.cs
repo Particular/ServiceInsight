@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Reactive.Linq;
     using System.Threading;
-    using System.Windows;
     using System.Windows.Input;
 
     using Comparers;
@@ -98,7 +97,7 @@
 
         public ICommand CopyHeadersCommand { get; }
 
-        protected override void OnViewAttached(FrameworkElement view)
+        protected override void OnViewAttached(object view)
         {
             this.view = (IMessageListView)view;
         }

@@ -21,7 +21,7 @@
             Exception = exception;
         }
 
-        protected override void OnViewAttached(FrameworkElement view)
+        protected override void OnViewAttached(object view)
         {
             View = (IPersistableLayout)view;
         }

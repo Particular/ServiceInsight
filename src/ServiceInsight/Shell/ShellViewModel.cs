@@ -146,7 +146,7 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        protected override void OnViewAttached(FrameworkElement view)
+        protected override void OnViewAttached(object view)
         {
             View = (IShellView)view;
 
