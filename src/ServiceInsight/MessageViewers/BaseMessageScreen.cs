@@ -5,11 +5,11 @@
     using Pirac;
     using ServiceInsight.Models;
 
-    public abstract class BaseMessageViewModel : RxScreen, IDisplayMessageBody
+    public abstract class BaseMessageScreen : RxScreen, IDisplayMessageBody
     {
-        IMessageView messageView;
+        IMessageViewer messageView;
 
-        public BaseMessageViewModel(string displayName)
+        public BaseMessageScreen(string displayName)
         {
             DisplayName = displayName;
             this.WhenPropertyChanged(nameof(SelectedMessage))
@@ -33,7 +33,7 @@
 
         protected override void OnViewAttached(object view)
         {
-            messageView = (IMessageView)view;
+            messageView = (IMessageViewer)view;
             UpdateSelectedMessage();
         }
 

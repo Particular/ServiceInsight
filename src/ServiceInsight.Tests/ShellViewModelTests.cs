@@ -26,7 +26,7 @@
     using ServiceInsight.Startup;
     using Shouldly;
 
-    public interface IShellViewStub : IShellView
+    public interface IShellViewStub : IShell
     {
         bool IsOpen { get; set; }
 

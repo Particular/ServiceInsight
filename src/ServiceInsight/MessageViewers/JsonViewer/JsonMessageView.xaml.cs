@@ -7,7 +7,7 @@
     using Newtonsoft.Json.Linq;
     using ServiceInsight.ExtensionMethods;
 
-    public partial class JsonMessageView : IMessageView
+    public partial class JsonMessageView : IMessageViewer
     {
         FoldingManager foldingManager;
         BraceFoldingStrategy foldingStrategy;

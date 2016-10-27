@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.MessageViewers
 {
-    public interface IMessageView
+    public interface IMessageViewer
     {
         void Display(string message);
 

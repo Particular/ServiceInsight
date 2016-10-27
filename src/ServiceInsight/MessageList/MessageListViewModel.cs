@@ -32,7 +32,7 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
-        IMessageListView view;
+        MessageListView view;
 
         public MessageListViewModel(
             IRxEventAggregator eventAggregator,
@@ -99,7 +99,7 @@
 
         protected override void OnViewAttached(object view)
         {
-            this.view = (IMessageListView)view;
+            this.view = (MessageListView)view;
         }
 
         public void CopyHeaders()

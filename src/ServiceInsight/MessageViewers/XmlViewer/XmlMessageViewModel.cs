@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
-    public class XmlMessageViewModel : BaseMessageViewModel
+    public class XmlMessageViewModel : BaseMessageScreen
     {
         public XmlMessageViewModel()
             : base("Xml")

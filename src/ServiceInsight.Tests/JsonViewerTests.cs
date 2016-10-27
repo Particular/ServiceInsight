@@ -12,12 +12,12 @@
     public class JsonViewerTests
     {
         JsonMessageViewModel viewModel;
-        IMessageView view;
+        IMessageViewer view;
 
         [SetUp]
         public void TestInitialize()
         {
-            view = Substitute.For<IMessageView>();
+            view = Substitute.For<IMessageViewer>();
             viewModel = new JsonMessageViewModel();
             ((IActivatable)viewModel).Activate();
         }

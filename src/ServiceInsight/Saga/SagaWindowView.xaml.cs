@@ -5,7 +5,7 @@
     using System.Windows.Documents;
     using System.Windows.Media;
 
-    public partial class SagaWindowView : ISagaWindowView
+    public partial class SagaWindowView
     {
         public SagaWindowView()
         {
@@ -39,9 +39,5 @@
                 item.BringIntoView();
             }
         }
-    }
-
-    public interface ISagaWindowView
-    {
     }
 }

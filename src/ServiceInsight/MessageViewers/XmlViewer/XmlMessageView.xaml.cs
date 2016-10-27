@@ -5,7 +5,7 @@
     using ICSharpCode.AvalonEdit.Folding;
     using ServiceInsight.ExtensionMethods;
 
-    public partial class XmlMessageView : IMessageView
+    public partial class XmlMessageView : IMessageViewer
     {
         FoldingManager foldingManager;
         XmlFoldingStrategy foldingStrategy;

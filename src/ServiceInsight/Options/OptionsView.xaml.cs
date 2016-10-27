@@ -1,10 +1,6 @@
 ﻿namespace ServiceInsight.Options
 {
-    public interface IOptionsView
-    {
-    }
-
-    public partial class OptionsView : IOptionsView
+    public partial class OptionsView
     {
         public OptionsView()
         {

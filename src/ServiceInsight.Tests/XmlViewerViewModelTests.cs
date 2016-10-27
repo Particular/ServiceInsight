@@ -13,13 +13,13 @@
     public class XmlViewerViewModelTests
     {
         XmlMessageViewModel viewModel;
-        IMessageView view;
+        IMessageViewer view;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
         public void TestInitialize()
         {
-            view = Substitute.For<IMessageView>();
+            view = Substitute.For<IMessageViewer>();
             viewModel = new XmlMessageViewModel();
             ((IActivatable)viewModel).Activate();
         }

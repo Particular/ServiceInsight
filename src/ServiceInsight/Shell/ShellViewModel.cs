@@ -148,7 +148,7 @@
 
         protected override void OnViewAttached(object view)
         {
-            View = (IShellView)view;
+            View = (IShell)view;
 
             ProductName = GetProductName();
             StatusBarManager.Done();
@@ -201,7 +201,7 @@
 
         public bool BodyTabSelected { get; set; }
 
-        public IShellView View { get; private set; }
+        public IShell View { get; private set; }
 
         public MessagePropertiesViewModel MessageProperties { get; }
 

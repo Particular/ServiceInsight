@@ -313,8 +313,8 @@
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
-    <Compile Include="MessageViewers\BaseMessageViewModel.cs" />
-    <Compile Include="MessageViewers\IMessageView.cs" />
+    <Compile Include="MessageViewers\BaseMessageScreen.cs" />
+    <Compile Include="MessageViewers\IMessageViewer.cs" />
     <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\ElementHeightConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
@@ -523,7 +523,7 @@
     <Compile Include="Framework\UI\ScreenManager\MessageChoice.cs" />
     <Compile Include="Framework\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
-    <Compile Include="Shell\IShellView.cs" />
+    <Compile Include="Shell\IShell.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="ExtensionMethods\BuilderExtensions.cs" />

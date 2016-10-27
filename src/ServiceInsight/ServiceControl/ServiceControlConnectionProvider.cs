@@ -22,7 +22,8 @@
 
             AsyncPump.Run(async () =>
             {
-                await serviceControl.ClearServiceControls();
+                // TODO turned off clearing old urls to revert #574
+                //await serviceControl.ClearServiceControls();
                 await serviceControl.AddServiceControl(url);
 
                 // Prime the streams

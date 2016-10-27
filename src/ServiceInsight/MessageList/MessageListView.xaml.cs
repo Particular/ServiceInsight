@@ -9,14 +9,7 @@
     using DevExpress.Xpf.Grid;
     using ServiceInsight.Models;
 
-    public interface IMessageListView
-    {
-        void BeginDataUpdate();
-
-        void EndDataUpdate();
-    }
-
-    public partial class MessageListView : IMessageListView
+    public partial class MessageListView
     {
         static class UnboundColumns
         {
