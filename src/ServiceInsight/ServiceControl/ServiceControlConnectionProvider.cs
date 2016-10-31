@@ -15,6 +15,11 @@
         {
             Url = url;
 
+            if (url == null)
+            {
+                return;
+            }
+
             AsyncPump.Run(async () =>
             {
                 await serviceControl.ClearServiceControls();
