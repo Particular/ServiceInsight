@@ -229,7 +229,6 @@
             if (newFocusedRow != null)
             {
                 Selection.SelectedMessage = newFocusedRow;
-                NotifyPropertiesChanged();
             }
         }
 
@@ -267,12 +266,6 @@
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
-        }
-
-        void NotifyPropertiesChanged()
-        {
-            NotifyOfPropertyChange(nameof(SelectedExplorerItem));
-            SearchBar.NotifyPropertiesChanged();
         }
 
         void EndDataUpdate()
