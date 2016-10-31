@@ -169,7 +169,7 @@
             using (workNotifer.NotifyOfWork("Trying to connect to ServiceControl"))
             {
                 connectionProvider.ConnectTo(configuredConnection);
-                if (!serviceControl.IsAlive())
+                if (!serviceControl.IsAlive() && existingConnection != null)
                 {
                     connectionProvider.ConnectTo(existingConnection);
                 }
