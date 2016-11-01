@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Net;
     using System.Runtime.Caching;
+    using System.Text;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
@@ -24,6 +25,7 @@
     public class DefaultServiceControl : IServiceControl
     {
         static ILogger anotarLogger = Log.ForContext<IServiceControl>();
+        static string byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         const string ConversationEndpoint = "conversations/{0}";
         const string EndpointsEndpoint = "endpoints";
@@ -140,7 +142,7 @@
 
             return body.StartsWith("<?xml") ?
                 GetXmlData(body) :
-                JsonPropertiesHelper.ProcessValues(body, CleanupBodyString);
+                JsonPropertiesHelper.ProcessValues(body, CleanUp);
         }
 
         public void LoadBody(StoredMessage message)
@@ -160,7 +162,7 @@
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        presentationBody.Text = CleanupBodyString(response.Content);
+                        presentationBody.Text = CleanUp(response.Content);
                         break;
                     case HttpStatusCode.NoContent:
                         presentationBody.Hint = PresentationHint.NoContent;
@@ -469,8 +471,6 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return new List<KeyValuePair<string, string>>();
         }
 
-        static string CleanupBodyString(string bodyString) => bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
-
         void LogRequest(RestRequestWithCache request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
@@ -508,6 +508,11 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
             eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
+        }
+
+        string CleanUp(string content)
+        {
+            return content.StartsWith(byteOrderMarkUtf8) ? content.Remove(0, byteOrderMarkUtf8.Length) : content;
         }
 
         static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
