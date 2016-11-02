@@ -1,12 +1,14 @@
 ﻿namespace ServiceInsight.Framework.Modules
 {
-    using System;
-    using Attachments;
+    using System.Linq;
     using Autofac;
     using Autofac.Core;
+    using Pirac;
 
     class AutoAttachmentModule : Module
     {
+        private IConventionManager conventionManager;
+
         protected override void AttachToComponentRegistration(
             IComponentRegistry componentRegistry,
             IComponentRegistration registration)
@@ -16,25 +18,21 @@
 
         void Activating(object sender, ActivatingEventArgs<object> e)
         {
-            var vmType = e.Instance.GetType();
-
-            if (!vmType.FullName.EndsWith("ViewModel"))
+            if (e.Instance is IConventionManager)
             {
                 return;
             }
 
-            // Convention to find attachments from a ViewModel
-            // This can be done better.
-            var attachmentType = Type.GetType(vmType.FullName.Replace("ViewModel", "Attachment"));
-
-            if (attachmentType == null || !e.Context.IsRegistered(attachmentType))
+            if (conventionManager == null)
             {
-                return;
+                conventionManager = e.Context.Resolve<IConventionManager>();
             }
 
-            var attachment = (IAttachment)e.Context.Resolve(attachmentType);
-
-            attachment.AttachTo(e.Instance);
+            var matchingAttachments = conventionManager.FindMatchingAttachments(e.Instance).Select(e.Context.Resolve).Cast<IAttachment>();
+            foreach (var attachment in matchingAttachments)
+            {
+                attachment.AttachTo(e.Instance);
+            }
         }
     }
 }

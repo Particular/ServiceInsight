@@ -18,6 +18,7 @@
     <WarningLevel>4</WarningLevel>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>612,618</WarningsNotAsErrors>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
@@ -72,14 +73,6 @@
     </Reference>
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Comparers">
       <HintPath>..\packages\Comparers.4.0.0\lib\net40-client\Comparers.dll</HintPath>
@@ -175,8 +168,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Pirac, Version=0.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.7.3\lib\Pirac.dll</HintPath>
+    <Reference Include="Pirac, Version=0.8.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pirac.0.8.7\lib\Pirac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -186,6 +179,10 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PropertyChanged, Version=1.50.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PropertyChanging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanging.Fody.1.27.2.0\Lib\dotnet\PropertyChanging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -271,8 +268,12 @@
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\AkavacheExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="Framework\AutofacContainer.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\AsyncPump.cs" />
+    <Compile Include="Framework\Events\RefreshEndpointMessages.cs" />
+    <Compile Include="Framework\Logging\SerilogLogger.cs" />
+    <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="Framework\RxEventAggregator.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
@@ -287,17 +288,14 @@
     <Compile Include="Controls\IconControl.cs" />
     <Compile Include="Framework\Events\ScrollDiagramItemIntoView.cs" />
     <Compile Include="Framework\RaygunUtility.cs" />
-    <Compile Include="Framework\Rx\PiracHelper.cs" />
-    <Compile Include="Framework\Rx\RxConductor.cs" />
-    <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\RxServiceControl.cs" />
+    <Compile Include="Framework\Rx\RxScreen.cs" />
     <Compile Include="Framework\SnakeCasePropertyNamesContractResolver.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtensionMethods\ContainerExtensions.cs" />
-    <Compile Include="Framework\Attachments\Attachment.cs" />
     <Compile Include="Framework\Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Framework\TypeHumanizer.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
@@ -309,13 +307,14 @@
     <Compile Include="Framework\ExceptionHandler.xaml.cs">
       <DependentUpon>ExceptionHandler.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageList\MessageSelectionContext.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
+    <Compile Include="MessageViewers\BaseMessageScreen.cs" />
+    <Compile Include="MessageViewers\IMessageViewer.cs" />
     <Compile Include="SequenceDiagram\Converter\CenterToolTipConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\ElementHeightConverter.cs" />
     <Compile Include="SequenceDiagram\Converter\SmartWrapConverter.cs" />
@@ -457,7 +456,6 @@
       <DependentUpon>HexContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\HexViewer\HexContentViewModel.cs" />
-    <Compile Include="MessageViewers\JsonViewer\IJsonMessageView.cs" />
     <Compile Include="MessageViewers\JsonViewer\JsonMessageView.xaml.cs">
       <DependentUpon>JsonMessageView.xaml</DependentUpon>
     </Compile>
@@ -507,7 +505,6 @@
       <DependentUpon>MessageBodyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageViewers\MessageBodyViewModel.cs" />
-    <Compile Include="Framework\Modules\CaliburnModule.cs" />
     <Compile Include="Framework\Modules\SettingsModule.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -526,18 +523,15 @@
     <Compile Include="Framework\UI\ScreenManager\MessageChoice.cs" />
     <Compile Include="Framework\UI\ScreenManager\MessageIcon.cs" />
     <Compile Include="Shell\IPersistableLayout.cs" />
-    <Compile Include="Shell\IShellView.cs" />
+    <Compile Include="Shell\IShell.cs" />
     <Compile Include="Shell\IWorkTracker.cs" />
     <Compile Include="Shell\StatusBarManager.cs" />
     <Compile Include="ExtensionMethods\BuilderExtensions.cs" />
     <Compile Include="Startup\CommandLineArgParser.cs" />
     <Compile Include="Startup\EnvironmentWrapper.cs" />
     <Compile Include="Framework\Logging\LoggingConfig.cs" />
-    <Compile Include="Startup\AppBootstrapper.cs" />
-    <Compile Include="Framework\Logging\CaliburnMicroLogAdapter.cs" />
     <Compile Include="Explorer\ExplorerItem.cs" />
     <Compile Include="Framework\Modules\CoreModule.cs" />
-    <Compile Include="Framework\Modules\LoggerModule.cs" />
     <Compile Include="Framework\Modules\ShellModule.cs" />
     <Compile Include="MessageList\MessageListView.xaml.cs">
       <DependentUpon>MessageListView.xaml</DependentUpon>
@@ -551,7 +545,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MessageViewers\XmlViewer\IXmlMessageView.cs" />
     <Compile Include="MessageViewers\XmlViewer\XmlMessageView.xaml.cs">
       <DependentUpon>XmlMessageView.xaml</DependentUpon>
     </Compile>

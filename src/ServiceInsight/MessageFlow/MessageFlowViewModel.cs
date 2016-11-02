@@ -7,6 +7,7 @@
     using System.Windows.Input;
     using Autofac;
     using Framework;
+    using Framework.Rx;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
@@ -19,7 +20,7 @@
     using ServiceInsight.MessageList;
     using Settings;
 
-    public class MessageFlowViewModel : Caliburn.Micro.Screen
+    public class MessageFlowViewModel : RxScreen
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
@@ -77,9 +78,8 @@
             set;
         }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(object view)
         {
-            base.OnViewAttached(view, context);
             this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }
@@ -97,9 +97,8 @@
             selection.SelectedMessage = message;
         }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
             var settings = settingsProvider.GetSettings<ProfilerSettings>();
 
             ShowEndpoints = settings.ShowEndpoints;

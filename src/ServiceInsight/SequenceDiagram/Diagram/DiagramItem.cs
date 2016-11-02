@@ -1,6 +1,8 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
-    public abstract class DiagramItem : Caliburn.Micro.PropertyChangedBase
+    using Pirac;
+
+    public abstract class DiagramItem : BindableObject
     {
         public string Name { get; set; }
 
@@ -8,6 +10,12 @@
 
         protected virtual void OnIsFocusedChanged()
         {
+        }
+
+        public void Refresh()
+        {
+            OnPropertyChanging("", null);
+            OnPropertyChanged("", null, null);
         }
     }
 }

@@ -6,7 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
-    using Caliburn.Micro;
+    using Pirac;
     using RestSharp;
     using RestSharp.Deserializers;
     using RestSharp.Extensions;
@@ -71,46 +71,49 @@
 
         void Map(object target, IDictionary<string, object> data)
         {
-            var notifiableTarget = target as INotifyPropertyChangedEx;
+            IDisposable notificationSuppression = null;
+            var notifiableTarget = target as BindableObject;
             if (notifiableTarget != null)
             {
-                notifiableTarget.IsNotifying = false;
+                notificationSuppression = notifiableTarget.SuppressNotifications();
             }
 
-            var objType = target.GetType();
-            var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
-
-            foreach (var prop in props)
+            try
             {
-                var type = prop.PropertyType;
+                var objType = target.GetType();
+                var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
 
-                string name;
-
-                var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
-                if (attributes.Length > 0)
+                foreach (var prop in props)
                 {
-                    var attribute = (DeserializeAsAttribute)attributes[0];
-                    name = attribute.Name;
-                }
-                else
-                {
-                    name = prop.Name;
-                }
+                    var type = prop.PropertyType;
 
-                var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
-                var value = actualName != null ? data[actualName] : null;
+                    string name;
 
-                if (value == null)
-                {
-                    continue;
+                    var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
+                    if (attributes.Length > 0)
+                    {
+                        var attribute = (DeserializeAsAttribute)attributes[0];
+                        name = attribute.Name;
+                    }
+                    else
+                    {
+                        name = prop.Name;
+                    }
+
+                    var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
+                    var value = actualName != null ? data[actualName] : null;
+
+                    if (value == null)
+                    {
+                        continue;
+                    }
+
+                    prop.SetValue(target, ConvertValue(type, value), null);
                 }
-
-                prop.SetValue(target, ConvertValue(type, value), null);
             }
-
-            if (notifiableTarget != null)
+            finally
             {
-                notifiableTarget.IsNotifying = true;
+                notificationSuppression?.Dispose();
             }
         }
 

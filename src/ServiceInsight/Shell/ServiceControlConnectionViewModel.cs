@@ -47,10 +47,8 @@
 
         public bool WorkInProgress { get; private set; }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
-
             IsAddressValid = true;
             ServiceUrl = appSettings.LastUsedServiceControl;
             RecentEntries = GetRecentServiceEntries();

@@ -1,8 +1,9 @@
 ﻿namespace ServiceInsight.Tests
 {
-    using Caliburn.Micro;
+    using MessageViewers;
     using NSubstitute;
     using NUnit.Framework;
+    using Pirac;
     using ServiceInsight.MessageViewers.XmlViewer;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
@@ -12,15 +13,15 @@
     public class XmlViewerViewModelTests
     {
         XmlMessageViewModel viewModel;
-        IXmlMessageView view;
+        IMessageViewer view;
         const string TestMessage = "<?xml version=\"1.0\"?><Test title=\"test title\"/>";
 
         [SetUp]
         public void TestInitialize()
         {
-            view = Substitute.For<IXmlMessageView>();
+            view = Substitute.For<IMessageViewer>();
             viewModel = new XmlMessageViewModel();
-            ((IActivate)viewModel).Activate();
+            ((IActivatable)viewModel).Activate();
         }
 
         [Test]

@@ -11,7 +11,6 @@
     using Akavache;
     using ExtensionMethods;
     using Newtonsoft.Json.Linq;
-    using Pirac;
     using Serilog;
 
     public interface IRxServiceControl
@@ -136,7 +135,7 @@
 
         public void SetRefresh(TimeSpan interval)
         {
-            timerTriggerProvider.OnNext(Observable.Interval(interval).Select(_ => Unit.Default).ObserveOnPiracMain());
+            timerTriggerProvider.OnNext(Observable.Interval(interval).Select(_ => Unit.Default));
         }
 
         public void DisableRefresh()

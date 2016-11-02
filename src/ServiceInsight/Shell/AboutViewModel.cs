@@ -1,26 +1,42 @@
 namespace ServiceInsight.Shell
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
     using System.Windows.Input;
-    using Caliburn.Micro;
     using ExtensionMethods;
+    using Framework;
     using Pirac;
     using ServiceControl;
-    using ServiceInsight.Framework;
 
-    public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
+    public class AboutViewModel : BindableObject
     {
         const string DetectingServiceControlVersion = "(Detecting...)";
         const string NotConnectedToServiceControl = "(Not Connected)";
 
         IServiceControl serviceControl;
 
-        public event EventHandler<ActivationEventArgs> Activated = (s, e) => { };
+        public AboutViewModel(
+            NetworkOperations networkOperations,
+            IServiceControl serviceControl,
+            LicenseRegistrationViewModel licenseInfo)
+        {
+            this.serviceControl = serviceControl;
+            License = licenseInfo;
 
-        public event PropertyChangedEventHandler PropertyChanged = (s, e) => { };
+            IsSplash = false;
+            NavigateToSiteCommand = Command.Create(() => networkOperations.Browse("http://www.particular.net"));
+
+            Initialize();
+        }
+
+        public AboutViewModel()
+        {
+            IsSplash = true;
+            NavigateToSiteCommand = Command.Create(() => { }, () => false);
+
+            Initialize();
+        }
 
         public bool IsSplash { get; }
 
@@ -34,48 +50,11 @@ namespace ServiceInsight.Shell
 
         public string CopyrightText { get; private set; }
 
-        public string DisplayName { get; set; }
-
         public string CommitHash { get; private set; }
-
-        public bool IsActive { get; private set; }
 
         public ICommand NavigateToSiteCommand { get; }
 
-        public AboutViewModel(
-            NetworkOperations networkOperations,
-            IServiceControl serviceControl,
-            LicenseRegistrationViewModel licenseInfo)
-        {
-            this.serviceControl = serviceControl;
-
-            License = licenseInfo;
-            IsSplash = false;
-            DisplayName = "About";
-
-            NavigateToSiteCommand = Command.Create(() => networkOperations.Browse("http://www.particular.net"));
-        }
-
-        AboutViewModel()
-        {
-            IsSplash = true;
-        }
-
-        public static AboutViewModel AsSplashScreenModel()
-        {
-            var vm = new AboutViewModel();
-            vm.Activate();
-            return vm;
-        }
-
-        public void Activate()
-        {
-            OnActivate();
-            IsActive = true;
-            Activated(this, new ActivationEventArgs());
-        }
-
-        void OnActivate()
+        void Initialize()
         {
             ActivateLicense();
             LoadAppVersion();
@@ -87,7 +66,7 @@ namespace ServiceInsight.Shell
         {
             if (License != null)
             {
-                ((IActivate)License).Activate();
+                License.Initialize();
             }
         }
 
@@ -124,7 +103,6 @@ namespace ServiceInsight.Shell
             }
 
             ServiceControlVersion = DetectingServiceControlVersion;
-
             var version = serviceControl.GetVersion();
             ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }

@@ -6,12 +6,13 @@
     using System.Windows.Input;
     using Framework;
     using Framework.Events;
+    using Framework.Rx;
     using MessageList;
     using Models;
     using Pirac;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Caliburn.Micro.Screen
+    public class SagaWindowViewModel : RxScreen
     {
         SagaData data;
         StoredMessage currentMessage;
@@ -70,7 +71,7 @@
                 message.ShowData = ShowMessageData;
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         void RefreshMessageProperties()
@@ -80,7 +81,7 @@
                 message.RefreshData(serviceControl);
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         void Handle(SelectedMessageChanged @event)

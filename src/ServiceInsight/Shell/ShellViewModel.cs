@@ -28,9 +28,8 @@
     using ServiceInsight.Framework.UI.ScreenManager;
     using Settings;
     using Startup;
-    using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : RxConductor<IScreen>.RxCollection.AllActive, IWorkTracker
+    public class ShellViewModel : RxScreen, IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
@@ -98,11 +97,7 @@
             Messages = messages;
             LogWindow = logWindow;
 
-            Items.Add(endpointExplorer);
-            Items.Add(messages);
-            Items.Add(messageHeadersViewer);
-            Items.Add(messageBodyViewer);
-            Items.Add(messageFlow);
+            AddChildren(endpointExplorer, messages, messageHeadersViewer, messageBodyViewer, messageFlow);
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
@@ -130,6 +125,8 @@
             eventAggregator.GetEvent<SwitchToMessageBody>().Subscribe(Handle);
             eventAggregator.GetEvent<SwitchToSagaWindow>().Subscribe(Handle);
             eventAggregator.GetEvent<SwitchToFlowWindow>().Subscribe(Handle);
+
+            this.WhenPropertyChanged(nameof(AutoRefresh)).Subscribe(pcd => messages.AutoRefresh = AutoRefresh);
         }
 
         string GetConfiguredAddress(CommandLineArgParser commandLineParser)
@@ -149,12 +146,11 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(object view)
         {
-            base.OnViewAttached(view, context);
-            View = (IShellView)view;
+            View = (IShell)view;
 
-            DisplayName = GetProductName();
+            ProductName = GetProductName();
             StatusBarManager.Done();
             RestoreLayout();
         }
@@ -199,11 +195,13 @@
             }
         }
 
+        public string ProductName { get; set; }
+
         public bool AutoRefresh { get; set; }
 
         public bool BodyTabSelected { get; set; }
 
-        public IShellView View { get; private set; }
+        public IShell View { get; private set; }
 
         public MessagePropertiesViewModel MessageProperties { get; }
 
@@ -387,8 +385,8 @@
 
         void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => CanConnectToServiceControl);
+            OnPropertyChanged(nameof(WorkInProgress), null, null);
+            OnPropertyChanged(nameof(CanConnectToServiceControl), null, null);
         }
 
         string GetProductName()

@@ -22,7 +22,7 @@
     using ServiceInsight.Framework.Events;
     using Shell;
 
-    public class MessageListViewModel : RxConductor<RxScreen>.RxCollection.AllActive, IWorkTracker
+    public class MessageListViewModel : RxScreen, IWorkTracker
     {
         readonly IClipboard clipboard;
         IRxEventAggregator eventAggregator;
@@ -32,7 +32,7 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         int workCount;
-        IMessageListView view;
+        MessageListView view;
 
         public MessageListViewModel(
             IRxEventAggregator eventAggregator,
@@ -52,7 +52,7 @@
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
 
-            Items.Add(SearchBar);
+            AddChildren(SearchBar);
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
@@ -68,15 +68,16 @@
             eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
             eventAggregator.GetEvent<AsyncOperationFailed>().Subscribe(Handle);
             eventAggregator.GetEvent<RetryMessage>().Subscribe(Handle);
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedMessageChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<RefreshEndpointMessages>().Subscribe(m => RefreshMessages(m.Endpoint, m.PageIndex, m.SearchQuery, m.OrderBy, m.Ascending));
 
-            this.WhenPropertiesChanged(nameof(SelectedExplorerItem)).ObserveOnPiracMain().Subscribe(_ =>
-            {
-                RefreshMessages();
-            });
+            this.WhenPropertiesChanged(nameof(SelectedExplorerItem))
+                .ObserveOnPiracMain()
+                .Subscribe(_ =>
+                {
+                    RefreshMessages();
+                });
         }
-
-        public new ShellViewModel Parent => (ShellViewModel)base.Parent;
 
         public SearchBarViewModel SearchBar { get; }
 
@@ -84,7 +85,9 @@
 
         public MessageSelectionContext Selection { get; }
 
-        public bool WorkInProgress => workCount > 0 && !Parent.AutoRefresh;
+        public bool AutoRefresh { get; set; }
+
+        public bool WorkInProgress => workCount > 0 && !AutoRefresh;
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -94,10 +97,9 @@
 
         public ICommand CopyHeadersCommand { get; }
 
-        protected override void OnViewAttached(object view, object context)
+        protected override void OnViewAttached(object view)
         {
-            base.OnViewAttached(view, context);
-            this.view = (IMessageListView)view;
+            this.view = (MessageListView)view;
         }
 
         public void CopyHeaders()
@@ -126,7 +128,7 @@
             }
         }
 
-        public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
+        void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
@@ -183,13 +185,13 @@
         void Handle(WorkStarted @event)
         {
             Interlocked.Increment(ref workCount);
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         void Handle(WorkFinished @event)
         {
             Interlocked.Decrement(ref workCount);
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         public void Handle(SelectedExplorerItemChanged @event)
@@ -200,7 +202,7 @@
         void Handle(AsyncOperationFailed message)
         {
             workCount = 0;
-            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
         }
 
         void Handle(RetryMessage message)
@@ -227,7 +229,6 @@
             if (newFocusedRow != null)
             {
                 Selection.SelectedMessage = newFocusedRow;
-                NotifyPropertiesChanged();
             }
         }
 
@@ -265,12 +266,6 @@
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
-        }
-
-        void NotifyPropertiesChanged()
-        {
-            NotifyOfPropertyChange(() => SelectedExplorerItem);
-            SearchBar.NotifyPropertiesChanged();
         }
 
         void EndDataUpdate()

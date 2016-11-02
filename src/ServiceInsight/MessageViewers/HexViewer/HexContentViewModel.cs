@@ -5,13 +5,12 @@
 
     public class HexContentViewModel : RxScreen, IDisplayMessageBody
     {
-        public MessageBody SelectedMessage { get; set; }
-
-        protected override void OnActivate()
+        public HexContentViewModel()
         {
-            base.OnActivate();
             DisplayName = "Hex";
         }
+
+        public MessageBody SelectedMessage { get; set; }
 
         public void Display(StoredMessage selectedMessage)
         {

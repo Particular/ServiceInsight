@@ -9,7 +9,6 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework;
-    using MessageList;
     using Models;
     using Pirac;
     using ServiceInsight.Framework.Events;
@@ -25,28 +24,30 @@
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
+        IRxEventAggregator eventAggregator;
 
         public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider, IRxEventAggregator eventAggregator)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
+            this.eventAggregator = eventAggregator;
 
             SearchCommand = Command.Create(Search, () => CanSearch);
             CancelSearchCommand = this.WhenPropertiesChanged(nameof(SearchInProgress))
                 //.Select(pcd => pcd.After)
                 .Select(_ => SearchInProgress)
                 .ToCommand(_ => CancelSearch());
-            RefreshResultCommand = Command.Create(() => Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery));
+            RefreshResultCommand = Command.Create(() => eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, CurrentPage, SearchQuery)));
 
             GoToFirstPageCommand = CreateNavigationCommand(nameof(CanGoToFirstPage), _ => CanGoToFirstPage, 1);
             GoToPreviousPageCommand = CreateNavigationCommand(nameof(CanGoToPreviousPage), _ => CanGoToPreviousPage, CurrentPage - 1);
             GoToNextPageCommand = CreateNavigationCommand(nameof(CanGoToNextPage), _ => CanGoToNextPage, CurrentPage + 1);
             GoToLastPageCommand = CreateNavigationCommand(nameof(CanGoToLastPage), _ => CanGoToLastPage, PageCount);
 
-            eventAggregator.GetEvent<SelectedExplorerItemChanged>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkStarted>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkFinished>().ObserveOnPiracMain().Subscribe(Handle);
+            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
+            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
         }
 
         private ICommand CreateNavigationCommand(string canExecuteName, Func<PropertyChangedData, bool> selector, int pageNum)
@@ -54,13 +55,11 @@
             return this.WhenPropertiesChanged(canExecuteName)
                 //.Select(pcd => pcd.After)
                 .Select(selector)
-                .ToCommand(_ => Parent.RefreshMessages(SelectedEndpoint, pageNum, SearchQuery));
+                .ToCommand(_ => eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, pageNum, SearchQuery)));
         }
 
-        protected override void OnActivate()
+        protected override void OnActivate(bool wasInitialized)
         {
-            base.OnActivate();
-
             RestoreRecentSearchEntries();
 
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
@@ -100,14 +99,14 @@
         {
             SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
-            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, 1, SearchQuery));
         }
 
         public void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+            eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, 1, SearchQuery));
         }
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
@@ -118,8 +117,6 @@
 
             NotifyPropertiesChanged();
         }
-
-        public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
         public int PageCount
         {

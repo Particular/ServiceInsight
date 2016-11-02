@@ -9,8 +9,8 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Anotar.Serilog;
-    using Caliburn.Micro;
     using Diagram;
+    using Framework.Rx;
     using Microsoft.Win32;
     using Pirac;
     using ServiceInsight.DiagramLegend;
@@ -23,7 +23,7 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
-    public class SequenceDiagramViewModel : Caliburn.Micro.Screen, IMessageCommandContainer
+    public class SequenceDiagramViewModel : RxScreen, IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
         readonly ISettingsProvider settingsProvider;
@@ -66,17 +66,18 @@
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
 
+            AddChildren(diagramLegend);
+
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
 
             ShowLegend = settings.ShowLegend;
 
             eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().Subscribe(Handle);
+            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
-        protected override void OnViewLoaded(object view)
+        protected override void OnViewLoaded(FrameworkElement view)
         {
-            base.OnViewLoaded(view);
             this.view = (SequenceDiagramView)view;
         }
 
@@ -164,18 +165,6 @@
         public DiagramItemCollection HeaderItems { get; }
 
         public MessageSelectionContext Selection { get; }
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            DiagramLegend.ActivateWith(this);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-            DiagramLegend.DeactivateWith(this);
-        }
 
         void Handle(SelectedMessageChanged message)
         {

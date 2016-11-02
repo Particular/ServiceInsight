@@ -3,9 +3,7 @@
     using System;
     using System.IO;
     using System.Reactive.Linq;
-    using Caliburn.Micro;
     using LogWindow;
-    using Pirac;
     using Serilog;
     using Serilog.Events;
     using Serilog.Filters;
@@ -17,31 +15,26 @@
         {
             var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Particular", "ServiceInsight", "log-{Date}.txt");
 
+            Func<LogEvent, bool> serviceControlLogFilter = le => Matching.FromSource<IServiceControl>()(le) || Matching.FromSource<IRxServiceControl>()(le);
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
 
-                // Turn off some of Caliburn.Micro's chattiness
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(Caliburn.Micro.Screen).FullName)(le) && le.Level <= LogEventLevel.Information)
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(Caliburn.Micro.Action).FullName)(le) && le.Level <= LogEventLevel.Information)
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(ActionMessage).FullName)(le) && le.Level <= LogEventLevel.Information)
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(ViewModelBinder).FullName)(le) && le.Level <= LogEventLevel.Information)
-
+                // Log to file
                 .WriteTo.RollingFile(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}")
-                .WriteTo.Trace(outputTemplate: "[{Level}] ({SourceContext}) {Message}{NewLine}{Exception}")
+
+                // Log to trace
+                .WriteTo.Logger(lc => lc
+                    .MinimumLevel.Information()
+                    .Filter.ByExcluding(serviceControlLogFilter)
+                    .WriteTo.Trace(outputTemplate: "[{Level}] ({SourceContext}) {Message}{NewLine}{Exception}"))
+
+                // Log to LogWindow
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
-                    .Filter.ByIncludingOnly(le => Matching.FromSource<IServiceControl>()(le) || Matching.FromSource<IRxServiceControl>()(le))
-                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).ObserveOnPiracMain().Subscribe()))
+                    .Filter.ByIncludingOnly(serviceControlLogFilter)
+                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).Subscribe()))
                 .CreateLogger();
-        }
-
-        public static void SetupCaliburnMicroLogging()
-        {
-            LogManager.GetLog = type => new CaliburnMicroLogAdapter(Log.ForContext(type));
-        }
-
-        static void SetupReactiveUILogging()
-        {
         }
     }
 }
