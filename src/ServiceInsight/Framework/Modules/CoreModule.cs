@@ -21,14 +21,16 @@
             builder.RegisterType<HeaderContentDecoder>().As<IContentDecoder<IList<HeaderInfo>>>();
             builder.RegisterType<NetworkOperations>().SingleInstance();
             builder.RegisterType<AppLicenseManager>().SingleInstance();
-            builder.RegisterType<ServiceControlConnectionProvider>().SingleInstance();
-            builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
             builder.RegisterInstance(new RxServiceControl(BlobCache.UserAccount)).As<IRxServiceControl>().SingleInstance();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
             builder.RegisterType<RxEventAggregator>().As<IRxEventAggregator>().SingleInstance();
             builder.RegisterType<WorkNotifier>().As<IWorkNotifier>();
             builder.RegisterType<WindowManagerEx>().As<IWindowManagerEx>();
             builder.RegisterInstance(PiracRunner.WindowManager).As<IWindowManager>();
+
+            // Scope used to check new SC connection before changing
+            builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
         }
     }
 }

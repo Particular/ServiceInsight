@@ -7,11 +7,6 @@
         {
         }
 
-        public WorkFinished(string format, params object[] args)
-            : this(string.Format(format, args))
-        {
-        }
-
         public WorkFinished(string message)
         {
             Message = message;

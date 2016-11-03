@@ -250,7 +250,8 @@
 
             if (result.GetValueOrDefault(false))
             {
-                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                connectionProvider.ConnectTo(connectionViewModel.ServiceUrl);
+                workNotifer.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}").Dispose();
             }
         }
 
