@@ -44,19 +44,13 @@
 
             if (root == null)
             {
-                if (!Items.Any())
-                {
-                    root = new ServiceControlExplorerItem(e.Url);
-                    root.IsExpanded = true;
+                root = new ServiceControlExplorerItem(e.Url);
+                root.IsExpanded = true;
 
-                    Items.Add(root);
+                Items.Clear();
+                Items.Add(root);
 
-                    SelectedNode = root;
-                }
-                else
-                {
-                    return;
-                }
+                SelectedNode = root;
             }
 
             var toRemove = root.Children.ToList();
