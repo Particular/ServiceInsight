@@ -1,10 +1,47 @@
 ﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
-    public class JsonMessageViewModel : BaseMessageScreen
+    using Caliburn.Micro;
+    using ServiceInsight.Models;
+
+    public class JsonMessageViewModel : Screen, IDisplayMessageBody
     {
-        public JsonMessageViewModel()
-            : base("Json")
+        IJsonMessageView messageView;
+
+        protected override void OnActivate()
         {
+            base.OnActivate();
+            DisplayName = "Json";
+        }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+            messageView = (IJsonMessageView)view;
+            OnSelectedMessageChanged();
+        }
+
+        public MessageBody SelectedMessage { get; set; }
+
+        public void OnSelectedMessageChanged()
+        {
+            if (messageView == null)
+            {
+                return;
+            }
+
+            messageView.Clear();
+
+            if (SelectedMessage == null || SelectedMessage.Body == null)
+            {
+                return;
+            }
+
+            messageView.Display(SelectedMessage.Body.Text);
+        }
+
+        public void Display(StoredMessage selectedMessage)
+        {
+            SelectedMessage = selectedMessage;
         }
     }
 }

@@ -1,21 +1,14 @@
 ﻿namespace ServiceInsight.Shell
 {
-    using System;
-
-    using Framework;
-    using Pirac;
+    using Caliburn.Micro;
     using ServiceInsight.Framework.Events;
 
-    public class StatusBarManager : BindableObject
+    public class StatusBarManager : PropertyChangedBase,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IHandle<AsyncOperationFailed>
     {
         public const string DoneStatusMessage = "Done";
-
-        public StatusBarManager(IRxEventAggregator eventAggregator)
-        {
-            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
-            eventAggregator.GetEvent<AsyncOperationFailed>().Subscribe(Handle);
-        }
 
         public string StatusMessage { get; private set; }
 
@@ -23,12 +16,12 @@
 
         public bool ErrorMessageVisible { get; private set; }
 
-        void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             SetSuccessStatusMessage(@event.Message);
         }
 
-        void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (!ErrorMessageVisible)
             {
@@ -36,7 +29,7 @@
             }
         }
 
-        void Handle(AsyncOperationFailed @event)
+        public void Handle(AsyncOperationFailed @event)
         {
             StatusMessage = @event.Message;
             ErrorMessageVisible = true;

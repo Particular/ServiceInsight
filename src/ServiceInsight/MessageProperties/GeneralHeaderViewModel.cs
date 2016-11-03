@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Framework;
+    using Caliburn.Micro;
     using MessageFlow;
     using Models;
     using ServiceInsight.Framework.MessageDecoders;
@@ -14,7 +14,7 @@
         IContentDecoder<IList<HeaderInfo>> decoder;
 
         public GeneralHeaderViewModel(
-            IRxEventAggregator eventAggregator,
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
             : base(eventAggregator, decoder, selectionContext)

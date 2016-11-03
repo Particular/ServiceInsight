@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.Models
 {
     using System;
+    using Caliburn.Micro;
     using Framework;
-    using Pirac;
 
     [Serializable]
-    public class MessageInfo : BindableObject
+    public class MessageInfo : PropertyChangedBase
     {
         public string Id { get; set; }
 

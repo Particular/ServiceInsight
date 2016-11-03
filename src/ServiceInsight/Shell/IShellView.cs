@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.Shell
 {
-    public interface IShell : IPersistableLayout
+    public interface IShellView : IPersistableLayout
     {
         void ChangeTheme(string name);
 

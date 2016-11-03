@@ -14,8 +14,8 @@
 
         public override Bitmap Image => Resources.TreeMonitoring;
 
-        public bool EndpointExists(Endpoint endpoint) => Children.Any(item => object.Equals(item.Endpoint, endpoint));
+        public bool EndpointExists(Endpoint endpoint) => Children.Any(item => item.Endpoint == endpoint);
 
-        public EndpointExplorerItem GetEndpointNode(Endpoint endpoint) => Children.FirstOrDefault(item => object.Equals(item.Endpoint, endpoint));
+        public EndpointExplorerItem GetEndpointNode(Endpoint endpoint) => Children.First(item => item.Endpoint == endpoint);
     }
 }

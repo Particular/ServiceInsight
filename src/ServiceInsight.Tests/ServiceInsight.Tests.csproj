@@ -46,8 +46,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData, Version=4.8.1.1181, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.4.8.1.1181\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -63,12 +67,15 @@
       <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Pirac, Version=0.8.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pirac.0.8.7\lib\Pirac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="ReactiveUI, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\reactiveui-core.5.5.1\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Testing">
+      <HintPath>..\packages\reactiveui-testing.5.5.1\lib\net45\ReactiveUI.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -107,10 +114,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Windows.Threading, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-XAML.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -124,6 +127,7 @@
     <Compile Include="CommandLineArgParserTests.cs" />
     <Compile Include="ConversationsData\PayLoad.cs" />
     <Compile Include="ConversationsData\SequenceDiagramModelCreatorTestsFromJson.cs" />
+    <Compile Include="Framework\Attachments.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="JsonViewerTests.cs" />
     <Compile Include="MessageBodyViewModelTests.cs" />
@@ -132,8 +136,8 @@
     <Compile Include="SequenceDiagramModelCreatorTestsForJson1.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson2.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson3.cs" />
-    <Compile Include="SequenceDiagramModelCreatorTestsForJson5.cs" />
     <Compile Include="SequenceDiagramModelCreatorTestsForJson4.cs" />
+    <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
     <Compile Include="StreamExtensionMethodTests.cs" />
@@ -147,7 +151,6 @@
     <None Include="ConversationsData\json1.json" />
     <None Include="ConversationsData\json2.json" />
     <None Include="ConversationsData\json3.json" />
-    <None Include="ConversationsData\json5.json" />
     <None Include="ConversationsData\json4.json" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -161,6 +164,9 @@
       <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
       <Name>ServiceInsight</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

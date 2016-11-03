@@ -1,7 +1,6 @@
 ﻿namespace ServiceInsight.LogWindow
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -9,14 +8,15 @@
     using System.Reactive.Subjects;
     using System.Windows.Input;
     using System.Windows.Media;
+    using Caliburn.Micro;
+    using ExtensionMethods;
     using Framework;
-    using Framework.Rx;
-    using Pirac;
+    using ReactiveUI;
     using Serilog.Events;
     using Serilog.Formatting;
     using Serilog.Formatting.Display;
 
-    public class LogWindowViewModel : RxScreen
+    public class LogWindowViewModel : Screen
     {
         public static Subject<LogEvent> LogObserver = new Subject<LogEvent>();
 
@@ -28,16 +28,16 @@
         {
             this.clipboard = clipboard;
 
-            Logs = new ObservableCollection<LogMessage>();
+            Logs = new ReactiveList<LogMessage>();
 
             textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
-            LogObserver.ObserveOnPiracMain().Subscribe(UpdateLog);
+            LogObserver.SubscribeOn(RxApp.TaskpoolScheduler).Subscribe(UpdateLog);
 
-            ClearCommand = Command.Create(Clear);
-            CopyCommand = Command.Create(Copy);
+            ClearCommand = this.CreateCommand(Clear);
+            CopyCommand = this.CreateCommand(Copy);
         }
 
-        public ObservableCollection<LogMessage> Logs { get; set; }
+        public ReactiveList<LogMessage> Logs { get; set; }
 
         public ICommand ClearCommand { get; }
 

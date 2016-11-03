@@ -1,17 +1,26 @@
 ﻿namespace ServiceInsight.Framework.Rx
 {
     using System;
-    using Pirac;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using Caliburn.Micro;
+    using ObservablePropertyChanged;
 
-    public class RxScreen : ViewModelBase
+    public class RxScreen : Screen, IObservablePropertyChanged
     {
-        public string DisplayName { get; set; }
+        ObservablePropertyChangeHelper helper = new ObservablePropertyChangeHelper();
 
-        [Obsolete("Old CM Method")]
-        protected void NotifyOfPropertyChange(string propertyName)
+        public IObservable<PropertyChangeData> Changed => helper.ChangedObservable;
+
+        public void Dispose()
         {
-            OnPropertyChanging(propertyName, null);
-            OnPropertyChanged(propertyName, null, null);
+            Interlocked.Exchange(ref helper, null)?.Dispose();
+        }
+
+        public override void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+        {
+            base.NotifyOfPropertyChange(propertyName);
+            helper.PropertyChanged(this, propertyName);
         }
     }
 }

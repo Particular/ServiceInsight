@@ -12,7 +12,7 @@
     using ServiceInsight.Framework.Settings;
     using Settings;
 
-    public partial class ShellView : IShell
+    public partial class ShellView : IShellView
     {
         public ShellView()
         {

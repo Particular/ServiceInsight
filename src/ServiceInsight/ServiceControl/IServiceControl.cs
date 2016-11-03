@@ -23,6 +23,8 @@ namespace ServiceInsight.ServiceControl
 
         IEnumerable<StoredMessage> GetConversationById(string conversationId);
 
+        IEnumerable<Endpoint> GetEndpoints();
+
         IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId);
 
         void LoadBody(StoredMessage message);

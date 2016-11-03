@@ -1,11 +1,12 @@
 ﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
+    using System;
     using System.Windows.Media;
     using System.Xml;
     using ICSharpCode.AvalonEdit.Folding;
     using ServiceInsight.ExtensionMethods;
 
-    public partial class XmlMessageView : IMessageViewer
+    public partial class XmlMessageView : IXmlMessageView
     {
         FoldingManager foldingManager;
         XmlFoldingStrategy foldingStrategy;

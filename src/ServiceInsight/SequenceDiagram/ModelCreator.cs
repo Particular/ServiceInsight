@@ -25,7 +25,6 @@ namespace ServiceInsight.SequenceDiagram
             this.container = container;
 
             Initialize();
-            OrderHandlers();
         }
 
         public ReadOnlyCollection<EndpointItem> Endpoints => endpoints.AsReadOnly();
@@ -85,7 +84,7 @@ namespace ServiceInsight.SequenceDiagram
                 }
                 else
                 {
-                    UpdateProcessingHandler(processingHandler, message);
+                    UpdateProcessingHandler(processingHandler, message, processingEndpoint);
                 }
 
                 var arrow = CreateArrow(message);
@@ -101,22 +100,11 @@ namespace ServiceInsight.SequenceDiagram
             }
         }
 
-        private void OrderHandlers()
-        {
-            var start = handlers.Where(h => h.ID == ConversationStartHandlerName);
-            var orderedByHandledAt = handlers.Where(h => h.ID != ConversationStartHandlerName)
-                                             .OrderBy(h => h.HandledAt)
-                                             .ToList();
-
-            handlers = new List<Handler>(start);
-            handlers.AddRange(orderedByHandledAt);
-        }
-
         MessageProcessingRoute CreateRoute(Arrow arrow, Handler processingHandler) => new MessageProcessingRoute(arrow, processingHandler);
 
-        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messagesForNode)
+        IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messages)
         {
-            var nodes = messagesForNode.Select(x => new MessageTreeNode(x)).ToList();
+            var nodes = messages.Select(x => new MessageTreeNode(x)).ToList();
             var resolved = new HashSet<MessageTreeNode>();
             var index = nodes.ToLookup(x => x.Id);
 
@@ -155,12 +143,12 @@ namespace ServiceInsight.SequenceDiagram
                 Endpoint = processingEndpoint
             };
 
-            UpdateProcessingHandler(handler, message);
+            UpdateProcessingHandler(handler, message, processingEndpoint);
 
             return handler;
         }
 
-        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message)
+        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message, EndpointItem processingEndpoint)
         {
             processingHandler.ProcessedAt = message.ProcessedAt;
             processingHandler.ProcessingTime = message.ProcessingTime;

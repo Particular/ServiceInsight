@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Framework;
+    using Caliburn.Micro;
     using Models;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
@@ -11,7 +11,7 @@
     public class SagaHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public SagaHeaderViewModel(
-            IRxEventAggregator eventAggregator,
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
             : base(eventAggregator, decoder, selectionContext)
@@ -34,7 +34,7 @@
         [Description("Is this a saga timeout message?")]
         public string IsSagaTimeoutMessage { get; private set; }
 
-        [Description("Id of the saga")]
+        [Description("Id of the sage")]
         public string SagaId { get; private set; }
 
         protected override void MapHeaderKeys()

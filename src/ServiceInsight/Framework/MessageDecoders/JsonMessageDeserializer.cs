@@ -6,7 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
-    using Pirac;
+    using Caliburn.Micro;
     using RestSharp;
     using RestSharp.Deserializers;
     using RestSharp.Extensions;
@@ -71,49 +71,46 @@
 
         void Map(object target, IDictionary<string, object> data)
         {
-            IDisposable notificationSuppression = null;
-            var notifiableTarget = target as BindableObject;
+            var notifiableTarget = target as INotifyPropertyChangedEx;
             if (notifiableTarget != null)
             {
-                notificationSuppression = notifiableTarget.SuppressNotifications();
+                notifiableTarget.IsNotifying = false;
             }
 
-            try
-            {
-                var objType = target.GetType();
-                var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
+            var objType = target.GetType();
+            var props = objType.GetProperties().Where(p => p.CanWrite).ToList();
 
-                foreach (var prop in props)
+            foreach (var prop in props)
+            {
+                var type = prop.PropertyType;
+
+                string name;
+
+                var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
+                if (attributes.Length > 0)
                 {
-                    var type = prop.PropertyType;
-
-                    string name;
-
-                    var attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);
-                    if (attributes.Length > 0)
-                    {
-                        var attribute = (DeserializeAsAttribute)attributes[0];
-                        name = attribute.Name;
-                    }
-                    else
-                    {
-                        name = prop.Name;
-                    }
-
-                    var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
-                    var value = actualName != null ? data[actualName] : null;
-
-                    if (value == null)
-                    {
-                        continue;
-                    }
-
-                    prop.SetValue(target, ConvertValue(type, value), null);
+                    var attribute = (DeserializeAsAttribute)attributes[0];
+                    name = attribute.Name;
                 }
+                else
+                {
+                    name = prop.Name;
+                }
+
+                var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
+                var value = actualName != null ? data[actualName] : null;
+
+                if (value == null)
+                {
+                    continue;
+                }
+
+                prop.SetValue(target, ConvertValue(type, value), null);
             }
-            finally
+
+            if (notifiableTarget != null)
             {
-                notificationSuppression?.Dispose();
+                notifiableTarget.IsNotifying = true;
             }
         }
 

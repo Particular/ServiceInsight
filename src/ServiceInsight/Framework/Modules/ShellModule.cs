@@ -24,6 +24,11 @@
                    .AsSelf()
                    .SingleInstance();
 
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .Where(t => t.IsAttachment())
+                .AsSelf()
+                .InstancePerDependency();
+
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
@@ -31,12 +36,12 @@
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
             builder.RegisterType<ShellViewModel>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<MessageSelectionContext>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<ShellView>().As<IShell>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
-            builder.RegisterType<OptionsView>().InstancePerDependency();
+            builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
         }
 

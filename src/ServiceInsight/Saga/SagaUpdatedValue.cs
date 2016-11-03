@@ -1,10 +1,10 @@
 ﻿namespace ServiceInsight.Saga
 {
     using System.Windows.Input;
+    using Caliburn.Micro;
+    using ExtensionMethods;
 
-    using Pirac;
-
-    public class SagaUpdatedValue : BindableObject
+    public class SagaUpdatedValue : PropertyChangedBase
     {
         public const byte MaxValueLength = 30;
 
@@ -13,7 +13,7 @@
             SagaName = sagaName;
             Name = propertyName;
             NewValue = propertyValue;
-            ShowEntireContentCommand = Command.Create(ShowEntireContent);
+            ShowEntireContentCommand = this.CreateCommand(ShowEntireContent);
         }
 
         public string SagaName { get; }

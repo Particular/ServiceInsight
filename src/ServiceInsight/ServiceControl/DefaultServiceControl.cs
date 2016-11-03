@@ -6,10 +6,10 @@
     using System.Linq;
     using System.Net;
     using System.Runtime.Caching;
-    using System.Text;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
+    using Caliburn.Micro;
     using Framework;
     using RestSharp;
     using RestSharp.Contrib;
@@ -25,7 +25,6 @@
     public class DefaultServiceControl : IServiceControl
     {
         static ILogger anotarLogger = Log.ForContext<IServiceControl>();
-        static string byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         const string ConversationEndpoint = "conversations/{0}";
         const string EndpointsEndpoint = "endpoints";
@@ -37,12 +36,12 @@
 
         ServiceControlConnectionProvider connection;
         MemoryCache cache;
-        IRxEventAggregator eventAggregator;
+        IEventAggregator eventAggregator;
         ProfilerSettings settings;
 
         public DefaultServiceControl(
             ServiceControlConnectionProvider connection,
-            IRxEventAggregator eventAggregator,
+            IEventAggregator eventAggregator,
             ISettingsProvider settingsProvider)
         {
             this.connection = connection;
@@ -129,6 +128,14 @@
             return messages;
         }
 
+        public IEnumerable<Endpoint> GetEndpoints()
+        {
+            var request = new RestRequestWithCache(EndpointsEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
+            var messages = GetModel<List<Endpoint>>(request);
+
+            return messages ?? new List<Endpoint>();
+        }
+
         public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
         {
             var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
@@ -142,7 +149,7 @@
 
             return body.StartsWith("<?xml") ?
                 GetXmlData(body) :
-                JsonPropertiesHelper.ProcessValues(body, CleanUp);
+                JsonPropertiesHelper.ProcessValues(body, CleanupBodyString);
         }
 
         public void LoadBody(StoredMessage message)
@@ -162,7 +169,7 @@
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        presentationBody.Text = CleanUp(response.Content);
+                        presentationBody.Text = CleanupBodyString(response.Content);
                         break;
                     case HttpStatusCode.NoContent:
                         presentationBody.Hint = PresentationHint.NoContent;
@@ -471,6 +478,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return new List<KeyValuePair<string, string>>();
         }
 
+        static string CleanupBodyString(string bodyString) => bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
+
         void LogRequest(RestRequestWithCache request)
         {
             var resource = request.Resource != null ? request.Resource.TrimStart('/') : string.Empty;
@@ -506,13 +515,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             var exception = response != null ? response.ErrorException : null;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
-            eventAggregator.Publish(new AsyncOperationFailed(errorMessage));
+            eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
-        }
-
-        string CleanUp(string content)
-        {
-            return content.StartsWith(byteOrderMarkUtf8) ? content.Remove(0, byteOrderMarkUtf8.Length) : content;
         }
 
         static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);

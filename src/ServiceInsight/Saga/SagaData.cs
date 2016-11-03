@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using Caliburn.Micro;
     using Framework;
-    using Pirac;
 
-    public class SagaData : BindableObject
+    public class SagaData : PropertyChangedBase
     {
         public List<SagaUpdate> Changes { get; set; }
 

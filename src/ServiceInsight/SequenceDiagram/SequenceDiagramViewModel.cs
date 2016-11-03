@@ -9,11 +9,11 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Anotar.Serilog;
+    using Caliburn.Micro;
     using Diagram;
-    using Framework.Rx;
     using Microsoft.Win32;
-    using Pirac;
     using ServiceInsight.DiagramLegend;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
@@ -23,7 +23,10 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
-    public class SequenceDiagramViewModel : RxScreen, IMessageCommandContainer
+    public class SequenceDiagramViewModel : Screen,
+        IHandle<SelectedMessageChanged>,
+        IHandle<ScrollDiagramItemIntoView>,
+        IMessageCommandContainer
     {
         readonly IServiceControl serviceControl;
         readonly ISettingsProvider settingsProvider;
@@ -34,7 +37,6 @@
         const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
 
         public SequenceDiagramViewModel(
-            IRxEventAggregator eventAggregator,
             IServiceControl serviceControl,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,
@@ -46,7 +48,6 @@
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
             ShowExceptionCommand showExceptionCommand,
             ReportMessageCommand reportMessageCommand,
-            NetworkOperations networkOperations,
             SequenceDiagramView view)
         {
             this.serviceControl = serviceControl;
@@ -60,31 +61,27 @@
             ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             ShowExceptionCommand = showExceptionCommand;
             ReportMessageCommand = reportMessageCommand;
-            OpenLink = Command.Create(() => networkOperations.Browse(SequenceDiagramDocumentationUrl));
-            ExportDiagramCommand = Command.Create(() => ExportToPng(view), () => HasItems);
+            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            ExportDiagramCommand = this.CreateCommand(() => ExportToPng(view), m => m.HasItems);
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
 
-            AddChildren(diagramLegend);
-
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
 
             ShowLegend = settings.ShowLegend;
-
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
-            eventAggregator.GetEvent<ScrollDiagramItemIntoView>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
-        protected override void OnViewLoaded(FrameworkElement view)
+        protected override void OnViewLoaded(object view)
         {
+            base.OnViewLoaded(view);
             this.view = (SequenceDiagramView)view;
         }
 
-        void ExportToPng(SequenceDiagramView viewToExport)
+        void ExportToPng(SequenceDiagramView view)
         {
-            var bodyElement = (UIElement)viewToExport.ScrollViewer_Body.Content;
-            var headerElement = (UIElement)viewToExport.ScrollViewer_Header.Content;
+            var bodyElement = (UIElement)view.ScrollViewer_Body.Content;
+            var headerElement = (UIElement)view.ScrollViewer_Header.Content;
 
             var actualHeight = bodyElement.RenderSize.Height + headerElement.RenderSize.Height;
             var actualWidth = bodyElement.RenderSize.Width;
@@ -166,7 +163,19 @@
 
         public MessageSelectionContext Selection { get; }
 
-        void Handle(SelectedMessageChanged message)
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            DiagramLegend.ActivateWith(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            DiagramLegend.DeactivateWith(this);
+        }
+
+        public void Handle(SelectedMessageChanged message)
         {
             try
             {
@@ -250,7 +259,7 @@
             NotifyOfPropertyChange(nameof(HasItems));
         }
 
-        void Handle(ScrollDiagramItemIntoView @event)
+        public void Handle(ScrollDiagramItemIntoView @event)
         {
             var diagramItem = DiagramItems.OfType<Arrow>()
                 .FirstOrDefault(a => a.SelectedMessage.Id == @event.Message.Id);

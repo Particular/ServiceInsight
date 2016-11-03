@@ -1,126 +1,205 @@
 ﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
-    using ExtensionMethods;
-    using Framework;
-    using Framework.Events;
-    using Framework.Rx;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Pirac;
-    using Startup;
+    using Caliburn.Micro;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
 
-    public class EndpointExplorerViewModel : RxScreen
+    public class EndpointExplorerViewModel : Screen,
+        IHandle<RequestSelectingEndpoint>
     {
-        static JsonSerializer serializer;
+        IEventAggregator eventAggregator;
+        ISettingsProvider settingsProvider;
+        IServiceControl serviceControl;
+        NetworkOperations networkOperations;
+        ServiceControlConnectionProvider connectionProvider;
+        CommandLineArgParser commandLineParser;
 
-        static EndpointExplorerViewModel()
-        {
-            serializer = new JsonSerializer { ContractResolver = new SnakeCasePropertyNamesContractResolver() };
-        }
-
-        IRxEventAggregator eventAggregator;
-        string initialEndpoint;
-
-        public EndpointExplorerViewModel(IRxServiceControl serviceControl, IRxEventAggregator eventAggregator, CommandLineArgParser commandLineParser)
+        public EndpointExplorerViewModel(
+            IEventAggregator eventAggregator,
+            ISettingsProvider settingsProvider,
+            ServiceControlConnectionProvider connectionProvider,
+            CommandLineArgParser commandLineParser,
+            IServiceControl serviceControl,
+            NetworkOperations networkOperations)
         {
             this.eventAggregator = eventAggregator;
-            Items = new ObservableCollection<ExplorerItem>();
-
-            initialEndpoint = commandLineParser.ParsedOptions.EndpointName;
-
-            serviceControl.Endpoints().ObserveOnPiracMain().Subscribe(MergeEndpoints);
-
-            eventAggregator.GetEvent<RequestSelectingEndpoint>().Subscribe(Handle);
-            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
+            this.settingsProvider = settingsProvider;
+            this.serviceControl = serviceControl;
+            this.networkOperations = networkOperations;
+            this.connectionProvider = connectionProvider;
+            this.commandLineParser = commandLineParser;
+            Items = new BindableCollection<ExplorerItem>();
         }
 
-        private void MergeEndpoints(ServiceControlData e)
-        {
-            var root = Items.OfType<ServiceControlExplorerItem>().SingleOrDefault(i => i.Name == e.Url);
+        public IObservableCollection<ExplorerItem> Items { get; }
 
-            if (root == null)
-            {
-                if (!Items.Any())
-                {
-                    root = new ServiceControlExplorerItem(e.Url);
-                    root.IsExpanded = true;
-
-                    Items.Add(root);
-
-                    SelectedNode = root;
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            var toRemove = root.Children.ToList();
-            var endpointInstancesGroupedByName = e.Data.OrderBy(x => x.name).GroupBy(x => x.name);
-            foreach (var endpointGroup in endpointInstancesGroupedByName)
-            {
-                var instances = endpointGroup.ToList();
-                var endpoint = instances.Cast<JObject>().First().ToObject<Models.Endpoint>(serializer);
-                var node = root.GetEndpointNode(endpoint);
-                if (node != null)
-                {
-                    toRemove.Remove(node);
-                }
-                else
-                {
-                    var hostNames = instances.Select(instance => instance.host_display_name).Distinct();
-                    var tooltip = string.Join(", ", hostNames);
-
-                    node = new AuditEndpointExplorerItem(endpoint, tooltip);
-                    root.Children.Add(node);
-                }
-
-                if (!initialEndpoint.IsEmpty() && string.Equals(node.Name, initialEndpoint, StringComparison.OrdinalIgnoreCase))
-                {
-                    SelectedNode = node;
-                    initialEndpoint = "";
-                }
-            }
-            if (toRemove.Any())
-            {
-                var saveSelectedNode = SelectedNode;
-                root.Children.RemoveRange(toRemove);
-                SelectedNode = saveSelectedNode;
-            }
-        }
-
-        public ICollection<ExplorerItem> Items { get; }
+        public ServiceControlExplorerItem ServiceControlRoot => Items.OfType<ServiceControlExplorerItem>().FirstOrDefault();
 
         public ExplorerItem SelectedNode { get; set; }
 
-        public void OnSelectedNodeChanged()
+        public string ServiceUrl { get; private set; }
+
+        public new ShellViewModel Parent => (ShellViewModel)base.Parent;
+
+        bool IsConnected => ServiceUrl != null;
+
+        protected override void OnActivate()
         {
-            eventAggregator.Publish(new SelectedExplorerItemChanged(SelectedNode));
+            base.OnActivate();
+
+            if (IsConnected)
+            {
+                return;
+            }
+
+            var configuredConnection = GetConfiguredAddress();
+            var existingConnection = connectionProvider.Url;
+            var available = ServiceAvailable(configuredConnection);
+            var connectTo = available ? configuredConnection : existingConnection;
+
+            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
+
+            ConnectToService(connectTo);
+
+            SelectDefaultEndpoint();
+
+            eventAggregator.PublishOnUIThread(new WorkFinished());
         }
 
-        void Handle(RequestSelectingEndpoint message)
+        string GetConfiguredAddress()
         {
-            foreach (var item in Items.OfType<ServiceControlExplorerItem>())
+            if (commandLineParser.ParsedOptions.EndpointUri == null)
             {
-                if (item.EndpointExists(message.Endpoint))
+                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+                if (appSettings != null && appSettings.LastUsedServiceControl != null)
                 {
-                    var node = item.GetEndpointNode(message.Endpoint);
-                    SelectedNode = node;
-                    break;
+                    return appSettings.LastUsedServiceControl;
                 }
+
+                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
+                return string.Format("http://localhost:{0}/api", managementConfig.Port);
+            }
+
+            return commandLineParser.ParsedOptions.EndpointUri.ToString();
+        }
+
+        bool ServiceAvailable(string serviceUrl)
+        {
+            connectionProvider.ConnectTo(serviceUrl);
+
+            var connected = serviceControl.IsAlive();
+
+            return connected;
+        }
+
+        void AddServiceNode()
+        {
+            Items.Clear();
+            Items.Add(new ServiceControlExplorerItem(ServiceUrl));
+        }
+
+        public void OnSelectedNodeChanged()
+        {
+            eventAggregator.PublishOnUIThread(new SelectedExplorerItemChanged(SelectedNode));
+        }
+
+        void SelectDefaultEndpoint()
+        {
+            if (ServiceControlRoot == null)
+            {
+                return;
+            }
+
+            if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
+            {
+                foreach (var endpoint in ServiceControlRoot.Children)
+                {
+                    if (endpoint.Name.Equals(commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        //SelectedNode = endpoint;
+                        SelectedNode = ServiceControlRoot;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                SelectedNode = ServiceControlRoot;
             }
         }
 
-        void Handle(SelectedExplorerItemChanged message)
+        public void ConnectToService(string url)
         {
-            var endpoint = message.SelectedExplorerItem as AuditEndpointExplorerItem;
-            if (endpoint != null)
+            if (url == null)
             {
-                Handle(new RequestSelectingEndpoint(endpoint.Endpoint));
+                return;
+            }
+
+            connectionProvider.ConnectTo(url);
+            ServiceUrl = url;
+            AddServiceNode();
+            RefreshData();
+            ExpandServiceNode();
+        }
+
+        public void RefreshData()
+        {
+            if (ServiceControlRoot == null)
+            {
+                TryReconnectToServiceControl();
+            }
+            if (ServiceControlRoot == null)
+            {
+                return;
+            }
+
+            var endpoints = serviceControl.GetEndpoints();
+            if (endpoints == null)
+            {
+                return;
+            }
+
+            ServiceControlRoot.Children.Clear();
+
+            var endpointInstancesGroupedByName = endpoints.OrderBy(x => x.Name).GroupBy(x => x.Name);
+            foreach (var scaledOutEndpoint in endpointInstancesGroupedByName)
+            {
+                var instances = scaledOutEndpoint.ToList();
+                var hostNames = instances.Select(instance => instance.HostDisplayName).Distinct();
+                var tooltip = string.Join(", ", hostNames);
+                ServiceControlRoot.Children.Add(new AuditEndpointExplorerItem(instances.First(), tooltip));
+            }
+        }
+
+        void TryReconnectToServiceControl()
+        {
+            ConnectToService(GetConfiguredAddress());
+        }
+
+        public void Navigate(string navigateUri)
+        {
+            networkOperations.Browse(navigateUri);
+        }
+
+        void ExpandServiceNode()
+        {
+            ServiceControlRoot.IsExpanded = true;
+        }
+
+        public void Handle(RequestSelectingEndpoint message)
+        {
+            if (ServiceControlRoot.EndpointExists(message.Endpoint))
+            {
+                var node = ServiceControlRoot.GetEndpointNode(message.Endpoint);
+                SelectedNode = node;
             }
         }
     }

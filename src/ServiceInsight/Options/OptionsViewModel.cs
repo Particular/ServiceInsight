@@ -1,11 +1,11 @@
 ﻿namespace ServiceInsight.Options
 {
     using System.ComponentModel;
-    using Framework.Rx;
+    using Caliburn.Micro;
     using ServiceInsight.Framework.Settings;
     using Settings;
 
-    public class OptionsViewModel : RxScreen
+    public class OptionsViewModel : Screen
     {
         public OptionsViewModel(ISettingsProvider settingsProvider)
         {
@@ -18,8 +18,9 @@
 
         public bool IsModified { get; set; }
 
-        protected override void OnActivate(bool wasInitialized)
+        protected override void OnActivate()
         {
+            base.OnActivate();
             LoadSettings();
             IsModified = false;
         }

@@ -289,38 +289,41 @@
                         Grid.ColumnSpan="2"
                         Margin="6,3,0,0"
                         Orientation="Horizontal">
-                <ContentControl Width="22"
-                                HorizontalAlignment="Center"
+                <ContentControl HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 Template="{StaticResource CommandIcon}"
                                 ToolTip="Command"
+                                Width="22"
                                 Visibility="{Binding IsCommandMessage,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
-                <ContentControl Width="22"
-                                HorizontalAlignment="Center"
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                </ContentControl>
+                <ContentControl HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 Template="{StaticResource EventIcon}"
                                 ToolTip="Event"
+                                Width="22" 
                                 Visibility="{Binding IsEventMessage,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
-                <ContentControl Width="22"
-                                HorizontalAlignment="Center"
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                </ContentControl>
+                <ContentControl HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 Template="{StaticResource TimeoutIcon}"
                                 ToolTip="Timeout"
+                                Width="22"
                                 Visibility="{Binding IsTimeoutMessage,
-                                                     Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Margin="4,0"
-                           VerticalAlignment="Center"
-                           FontSize="13px"
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                </ContentControl>
+                <TextBlock FontSize="13px"
                            FontWeight="Bold"
-                           Foreground="White"
-                           Text="{Binding Message.FriendlyMessageType}"
+                           Foreground="White" 
+                           Margin="4,0"
+                           VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis"
-                           ToolTip="{Binding Message.FriendlyMessageType}" />
+                           ToolTip="{Binding Message.FriendlyMessageType}"
+                           Text="{Binding Message.FriendlyMessageType}"/>
             </StackPanel>
             <Grid Grid.Row="1"
                   Grid.Column="0"
@@ -331,35 +334,43 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0"
                         BorderBrush="#1E1E1E"
                         BorderThickness="0 1 0 0" />
                 <MenuItem Grid.Row="1"
-                          CommandParameter="{Binding Message}"
-                          Command="{Binding RetryMessageCommand}"
+                          Click="OnMenuClicked"
+                          Header="Refresh"
+                          Style="{StaticResource ContextMenuItem}"
+                          Visibility="Collapsed"
+                          cal:Action.TargetWithoutContext="{Binding}"
+                          cal:Message.Attach="[Event Click]=[Action Refresh]" />
+                <MenuItem Grid.Row="2"
                           Click="OnMenuClicked"
                           Header="Retry Message"
-                          Style="{StaticResource ContextMenuItem}" />
-                <MenuItem Grid.Row="2"
+                          Style="{StaticResource ContextMenuItem}"
                           CommandParameter="{Binding Message}"
-                          Command="{Binding CopyConversationIDCommand}"
+                          Command="{Binding RetryMessageCommand}" />
+                <MenuItem Grid.Row="3"
                           Click="OnMenuClicked"
                           Header="Copy Conversation Id"
-                          Style="{StaticResource ContextMenuItem}" />
-                <MenuItem Grid.Row="3"
+                          Style="{StaticResource ContextMenuItem}"
                           CommandParameter="{Binding Message}"
-                          Command="{Binding CopyMessageURICommand}"
+                          Command="{Binding CopyConversationIDCommand}" />
+                <MenuItem Grid.Row="4"
                           Click="OnMenuClicked"
                           Header="Copy Message URI"
-                          Style="{StaticResource ContextMenuItem}" />
-                <MenuItem Grid.Row="4"
+                          Style="{StaticResource ContextMenuItem}"
                           CommandParameter="{Binding Message}"
-                          Command="{Binding SearchByMessageIDCommand}"
+                          Command="{Binding CopyMessageURICommand}" />
+                <MenuItem Grid.Row="5"
                           Click="OnMenuClicked"
                           Header="Search by Message Id"
-                          Style="{StaticResource ContextMenuItem}" />
+                          Style="{StaticResource ContextMenuItem}"
+                          CommandParameter="{Binding Message}"
+                          Command="{Binding SearchByMessageIDCommand}" />
             </Grid>
             <Grid Grid.Row="1"
                   Grid.Column="1"
@@ -420,12 +431,13 @@
                     <Border Margin="0 0 0 2"
                             BorderBrush="Red"
                             BorderThickness="0 0 0 1">
-                        <Button Margin="0 0 0 -2"
-                                Command="{Binding ShowExceptionCommand}"
-                                Click="OnMenuClicked"
-                                Foreground="Red">
-                            <TextBlock Text="{Binding ExceptionMessage}" TextTrimming="CharacterEllipsis" />
-                        </Button>
+                        <TextBlock Margin="0 0 0 -2"
+                                   Foreground="Red"
+                                   MouseLeftButtonUp="OnMenuClicked"
+                                   Text="{Binding ExceptionMessage}"
+                                   TextTrimming="CharacterEllipsis"
+                                   cal:Action.TargetWithoutContext="{Binding}"
+                                   cal:Message.Attach="[Event MouseLeftButtonDown]=[Action ShowException]" />
                     </Border>
                 </TextBlock>
             </Grid>

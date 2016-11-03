@@ -1,9 +1,8 @@
 ﻿namespace ServiceInsight.Tests
 {
-    using MessageViewers;
+    using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
-    using Pirac;
     using ServiceInsight.MessageViewers.JsonViewer;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
@@ -12,14 +11,14 @@
     public class JsonViewerTests
     {
         JsonMessageViewModel viewModel;
-        IMessageViewer view;
+        IJsonMessageView view;
 
         [SetUp]
         public void TestInitialize()
         {
-            view = Substitute.For<IMessageViewer>();
+            view = Substitute.For<IJsonMessageView>();
             viewModel = new JsonMessageViewModel();
-            ((IActivatable)viewModel).Activate();
+            ((IActivate)viewModel).Activate();
         }
 
         [Test]
@@ -27,7 +26,7 @@
         {
             const string TestMessage = @"[{""$type"":""NSB.Messages.CRM.RegisterCustomer, NSB.Messages"",""Name"":""Hadi"",""Password"":""123456"",""EmailAddress"":""h.eskandari@gmail.com"",""RegistrationDate"":""2013-01-28T03:24:05.0546437Z""}]";
 
-            ((IHaveView)viewModel).AttachView(view);
+            ((IViewAware)viewModel).AttachView(view);
 
             viewModel.SelectedMessage = new MessageBody { Body = new PresentationBody { Text = TestMessage } };
 
