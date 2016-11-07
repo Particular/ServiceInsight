@@ -1,15 +1,16 @@
 namespace ServiceInsight.Framework.Commands
 {
+    using Caliburn.Micro;
     using Events;
     using Models;
     using ServiceInsight.MessageList;
 
     class ShowSagaCommand : BaseCommand
     {
-        readonly IRxEventAggregator eventAggregator;
+        readonly IEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
 
-        public ShowSagaCommand(IRxEventAggregator eventAggregator, MessageSelectionContext selectionContext)
+        public ShowSagaCommand(IEventAggregator eventAggregator, MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             selection = selectionContext;
@@ -30,7 +31,7 @@ namespace ServiceInsight.Framework.Commands
             }
 
             selection.SelectedMessage = message;
-            eventAggregator.Publish(SwitchToSagaWindow.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
         }
     }
 }

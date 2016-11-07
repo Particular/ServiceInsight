@@ -1,18 +1,17 @@
 namespace ServiceInsight.Framework.Commands
 {
+    using Caliburn.Micro;
     using Events;
     using Models;
     using ServiceControl;
 
     public class RetryMessageCommand : BaseCommand
     {
-        readonly IRxEventAggregator eventAggregator;
-        readonly IWorkNotifier workNotifier;
+        readonly IEventAggregator eventAggregator;
         readonly IServiceControl serviceControl;
 
-        public RetryMessageCommand(IRxEventAggregator eventAggregator, IWorkNotifier workNotifier, IServiceControl serviceControl)
+        public RetryMessageCommand(IEventAggregator eventAggregator, IServiceControl serviceControl)
         {
-            this.workNotifier = workNotifier;
             this.eventAggregator = eventAggregator;
             this.serviceControl = serviceControl;
         }
@@ -38,11 +37,10 @@ namespace ServiceInsight.Framework.Commands
                 return;
             }
 
-            using (workNotifier.NotifyOfWork($"Retrying to send selected error message {message.SendingEndpoint}"))
-            {
-                serviceControl.RetryMessage(message.Id);
-                eventAggregator.Publish(new RetryMessage { Id = message.Id });
-            }
+            eventAggregator.PublishOnUIThread(new WorkStarted("Retrying to send selected error message {0}", message.SendingEndpoint));
+            serviceControl.RetryMessage(message.Id);
+            eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
+            eventAggregator.PublishOnUIThread(new WorkFinished());
 
             message.Status = MessageStatus.RetryIssued;
 

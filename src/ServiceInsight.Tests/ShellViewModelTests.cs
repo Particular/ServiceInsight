@@ -1,14 +1,12 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
+    using Caliburn.Micro;
     using global::ServiceInsight.SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;
     using Particular.Licensing;
-    using Pirac;
-    using ServiceControl;
     using ServiceInsight.Explorer.EndpointExplorer;
-    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
@@ -26,7 +24,7 @@
     using ServiceInsight.Startup;
     using Shouldly;
 
-    public interface IShellViewStub : IShell
+    public interface IShellViewStub : IShellView
     {
         bool IsOpen { get; set; }
 
@@ -42,7 +40,7 @@
         MessageListViewModel messageList;
         MessageFlowViewModel messageFlow;
         SagaWindowViewModel sagaWindow;
-        IRxEventAggregator eventAggregator;
+        IEventAggregator eventAggregator;
         StatusBarManager statusbarManager;
         MessageBodyViewModel messageBodyView;
         MessageHeadersViewModel headerView;
@@ -62,7 +60,7 @@
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
             statusbarManager = Substitute.For<StatusBarManager>();
-            eventAggregator = Substitute.For<IRxEventAggregator>();
+            eventAggregator = Substitute.For<IEventAggregator>();
             messageFlow = Substitute.For<MessageFlowViewModel>();
             sagaWindow = Substitute.For<SagaWindowViewModel>();
             messageBodyView = Substitute.For<MessageBodyViewModel>();
@@ -86,7 +84,6 @@
                         () => Substitute.For<LicenseRegistrationViewModel>(),
                         statusbarManager,
                         eventAggregator,
-                        Substitute.For<IWorkNotifier>(),
                         licenseManager,
                         messageFlow,
                         sagaWindow,
@@ -94,15 +91,11 @@
                         headerView,
                         sequenceDiagramView,
                         settingsProvider,
-                        Substitute.For<ServiceControlConnectionProvider>(),
-                        Substitute.For<IServiceControl>(),
-                        Substitute.For<IRxServiceControl>(),
                         messageProperties,
                         logWindow,
-                        Substitute.For<NetworkOperations>(),
                         commandLineArgParser);
 
-            ((IHaveView)shell).AttachView(view);
+            ((IViewAware)shell).AttachView(view);
         }
 
         CommandLineArgParser MockEmptyStartupOptions()
@@ -115,14 +108,12 @@
         }
 
         [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Should_reload_stored_layout()
         {
             view.Received().OnRestoreLayout(settingsProvider);
         }
 
         [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Should_still_report_work_in_progress_when_only_part_of_the_work_is_finished()
         {
             shell.Handle(new WorkStarted("Some Work"));
@@ -134,7 +125,6 @@
         }
 
         [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Should_finish_all_the_works_in_progress_when_the_work_is_finished()
         {
             shell.Handle(new WorkStarted());
@@ -146,18 +136,15 @@
         }
 
         [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Deactivating_shell_saves_layout()
         {
-            ((IActivatable)shell).Activate();
+            ((IScreen)shell).Activate();
 
-            ((IActivatable)shell).Deactivate(true);
+            ((IScreen)shell).Deactivate(true);
 
             view.Received().OnSaveLayout(settingsProvider);
         }
 
-        [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Should_track_selected_explorer()
         {
             var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
@@ -169,7 +156,6 @@
         }
 
         [Test]
-        [Ignore("Need to fix test to support observables.")]
         public void Should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
@@ -194,7 +180,7 @@
         [TearDown]
         public void TestCleanup()
         {
-            ((IActivatable)shell).Deactivate(true);
+            ((IScreen)shell).Deactivate(true);
         }
 
         static ProfilerSettings DefaultAppSetting() => new ProfilerSettings

@@ -11,7 +11,7 @@
 
         public static Window AsSplashScreen()
         {
-            var vm = new AboutViewModel();
+            var vm = AboutViewModel.AsSplashScreenModel();
             var view = new AboutView { DataContext = vm, WindowStyle = WindowStyle.None };
 
             return view;

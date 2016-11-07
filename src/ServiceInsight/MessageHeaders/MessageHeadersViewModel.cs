@@ -1,29 +1,24 @@
 ﻿namespace ServiceInsight.MessageHeaders
 {
-    using System;
-    using System.Collections.ObjectModel;
     using System.Linq;
-    using DynamicData;
-    using Framework;
-    using Framework.Rx;
-    using Pirac;
+    using Caliburn.Micro;
+    using ReactiveUI;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
 
-    public class MessageHeadersViewModel : RxScreen
+    public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
         readonly MessageSelectionContext selection;
 
-        public MessageHeadersViewModel(MessageSelectionContext selectionContext, IRxEventAggregator eventAggregator)
+        public MessageHeadersViewModel(MessageSelectionContext selectionContext)
         {
             selection = selectionContext;
-            KeyValues = new ObservableCollection<MessageHeaderKeyValue>();
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
+            KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
         }
 
-        public ObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
+        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; }
 
-        void Handle(SelectedMessageChanged @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             KeyValues.Clear();
             var storedMessage = selection.SelectedMessage;
@@ -34,11 +29,14 @@
 
             var headers = storedMessage.Headers;
 
-            KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
+            using (KeyValues.SuppressChangeNotifications())
             {
-                Key = h.Key,
-                Value = h.Value
-            }));
+                KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
+                {
+                    Key = h.Key,
+                    Value = h.Value
+                }));
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
@@ -17,8 +18,7 @@
     [TestFixture]
     public class MessageListViewModelTests
     {
-        IRxEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
+        IEventAggregator eventAggregator;
         IServiceControl serviceControl;
         SearchBarViewModel searchBar;
         Func<MessageListViewModel> messageListFunc;
@@ -27,13 +27,11 @@
         [SetUp]
         public void TestInitialize()
         {
-            eventAggregator = Substitute.For<IRxEventAggregator>();
-            workNotifier = Substitute.For<IWorkNotifier>();
+            eventAggregator = Substitute.For<IEventAggregator>();
             serviceControl = Substitute.For<IServiceControl>();
             searchBar = Substitute.For<SearchBarViewModel>();
             clipboard = Substitute.For<IClipboard>();
             messageListFunc = () => new MessageListViewModel(eventAggregator,
-                                                   workNotifier,
                                                    serviceControl,
                                                    searchBar,
                                                    Substitute.For<GeneralHeaderViewModel>(),
@@ -42,7 +40,6 @@
         }
 
         [Test]
-        [Ignore("Needs Pirac testing to set schedulers")]
         public void Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
@@ -62,7 +59,8 @@
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            workNotifier.Received(1).NotifyOfWork(Arg.Any<string>());
+            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
+            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);
         }

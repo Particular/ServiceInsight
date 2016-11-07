@@ -1,19 +1,37 @@
 ﻿namespace ServiceInsight.MessageList
 {
-    using System;
-    using Framework;
-    using Pirac;
+    using Caliburn.Micro;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Models;
 
-    public class MessageSelectionContext : BindableObject
+    public class MessageSelectionContext : PropertyChangedBase
     {
-        public MessageSelectionContext(IRxEventAggregator eventAggregator)
+        IEventAggregator eventAggregator;
+        StoredMessage selectedMessage;
+
+        public MessageSelectionContext(IEventAggregator eventAggregator)
         {
-            this.WhenPropertyChanged(nameof(SelectedMessage))
-                .Subscribe(_ => eventAggregator.Publish(new SelectedMessageChanged()));
+            this.eventAggregator = eventAggregator;
         }
 
-        public StoredMessage SelectedMessage { get; set; }
+        public StoredMessage SelectedMessage
+        {
+            get { return selectedMessage; }
+
+            set
+            {
+                if (selectedMessage != value)
+                {
+                    selectedMessage = value;
+                    NotifyOfPropertyChange(nameof(SelectedMessage));
+                    OnSelectedMessageChanged();
+                }
+            }
+        }
+
+        void OnSelectedMessageChanged()
+        {
+            eventAggregator.PublishOnUIThread(new SelectedMessageChanged());
+        }
     }
 }

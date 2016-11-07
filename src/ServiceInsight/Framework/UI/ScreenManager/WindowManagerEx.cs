@@ -3,15 +3,13 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
-    using Pirac;
+    using Caliburn.Micro;
 
-    public class WindowManagerEx : IWindowManagerEx
+    public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
         static IDictionary<MessageChoice, MessageBoxResult> messageOptionsMaps;
         static IDictionary<MessageBoxImage, MessageIcon> messageIconsMaps;
         static IDictionary<DialogResult, bool?> dialogResultMaps;
-
-        IWindowManager windowManager;
 
         static WindowManagerEx()
         {
@@ -41,11 +39,6 @@
                 { DialogResult.OK,     true },
                 { DialogResult.No,     false },
             };
-        }
-
-        public WindowManagerEx(IWindowManager windowManager)
-        {
-            this.windowManager = windowManager;
         }
 
         public FileDialogResult OpenFileDialog(FileDialogModel model)
@@ -82,6 +75,12 @@
             return MessageBoxResult.None;
         }
 
+        public bool? ShowDialog<T>() where T : class
+        {
+            var screen = IoC.Get<T>(); // Yick!
+            return ShowDialog(screen);
+        }
+
         static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
             //TODO: Use map to avoid switch/case
@@ -110,13 +109,5 @@
             }
             return choices;
         }
-
-        public bool? ShowDialog<TViewModel>() => windowManager.ShowDialog<TViewModel>();
-
-        public bool? ShowDialog(object viewModel) => windowManager.ShowDialog(viewModel);
-
-        public void ShowWindow<TViewModel>() => windowManager.ShowWindow<TViewModel>();
-
-        public void ShowWindow(object viewModel) => windowManager.ShowWindow(viewModel);
     }
 }

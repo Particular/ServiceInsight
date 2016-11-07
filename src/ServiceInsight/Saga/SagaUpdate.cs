@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Pirac;
+    using Caliburn.Micro;
 
-    public class SagaUpdate : BindableObject
+    public class SagaUpdate : PropertyChangedBase
     {
         public DateTime FinishTime { get; set; }
 

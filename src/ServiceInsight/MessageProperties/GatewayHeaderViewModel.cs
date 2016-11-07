@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Framework;
+    using Caliburn.Micro;
     using Models;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.MessageList;
@@ -11,7 +11,7 @@
     public class GatewayHeaderViewModel : HeaderInfoViewModelBase, IPropertyDataProvider
     {
         public GatewayHeaderViewModel(
-            IRxEventAggregator eventAggregator,
+            IEventAggregator eventAggregator,
             IContentDecoder<IList<HeaderInfo>> decoder,
             MessageSelectionContext selectionContext)
             : base(eventAggregator, decoder, selectionContext)

@@ -13,7 +13,7 @@
                 double.TryParse((string)parameter, out scalingFactor);
             }
 
-            if (Math.Abs(scalingFactor) < double.Epsilon)
+            if (scalingFactor == 0.0d)
             {
                 return double.NaN;
             }

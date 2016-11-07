@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Weavers>
-  <PropertyChanging />
-  <PropertyChanged />
-  <EmptyConstructor />
-  <Virtuosity />
-  <Anotar.Serilog />
+  <PropertyChanged/>
+  <Virtuosity/>
+  <EmptyConstructor/>
+  <Anotar.Serilog/>
 </Weavers>

@@ -1,9 +1,7 @@
 ﻿namespace ServiceInsight.ExtensionMethods
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using System.Reflection;
 
     public static class ReflectionHelper
@@ -26,11 +24,6 @@
             var attribute = field.GetAttribute<DescriptionAttribute>();
 
             return attribute != null ? attribute.Description : value.ToString();
-        }
-
-        public static IEnumerable<T> GetAttributes<T>(this MemberInfo member, bool inherit)
-        {
-            return Attribute.GetCustomAttributes(member, inherit).OfType<T>();
         }
     }
 }

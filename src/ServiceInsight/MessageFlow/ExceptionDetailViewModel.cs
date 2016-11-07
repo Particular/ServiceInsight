@@ -1,12 +1,11 @@
 ﻿namespace ServiceInsight.MessageFlow
 {
-    using System.Windows;
-    using Framework.Rx;
+    using Caliburn.Micro;
     using Models;
     using ServiceInsight.Framework.Settings;
     using Shell;
 
-    public class ExceptionDetailViewModel : RxScreen
+    public class ExceptionDetailViewModel : Screen
     {
         ISettingsProvider settingsProvider;
 
@@ -21,13 +20,15 @@
             Exception = exception;
         }
 
-        protected override void OnViewAttached(object view)
+        protected override void OnViewAttached(object view, object context)
         {
+            base.OnViewAttached(view, context);
             View = (IPersistableLayout)view;
         }
 
-        protected override void OnViewLoaded(FrameworkElement view)
+        protected override void OnViewLoaded(object view)
         {
+            base.OnViewLoaded(view);
             RestoreLayout();
         }
 
@@ -47,6 +48,6 @@
             View.OnRestoreLayout(settingsProvider);
         }
 
-        public string FormattedSource => $"{Exception.ExceptionType} (@{Exception.Source})";
+        public string FormattedSource => string.Format("{0} (@{1})", Exception.ExceptionType, Exception.Source);
     }
 }

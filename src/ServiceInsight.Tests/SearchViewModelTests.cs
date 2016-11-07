@@ -3,7 +3,6 @@
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
-    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Models;
@@ -17,15 +16,13 @@
         SearchBarViewModel viewModel;
         CommandLineArgParser argParser;
         ISettingsProvider settingProvider;
-        IRxEventAggregator eventAggregator;
 
         [SetUp]
         public void TestInitialize()
         {
             argParser = Substitute.For<CommandLineArgParser>();
             settingProvider = Substitute.For<ISettingsProvider>();
-            eventAggregator = Substitute.For<IRxEventAggregator>();
-            viewModel = new SearchBarViewModel(argParser, settingProvider, eventAggregator);
+            viewModel = new SearchBarViewModel(argParser, settingProvider);
         }
 
         [Test]

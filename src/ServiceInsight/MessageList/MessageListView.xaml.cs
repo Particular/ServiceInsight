@@ -9,7 +9,14 @@
     using DevExpress.Xpf.Grid;
     using ServiceInsight.Models;
 
-    public partial class MessageListView
+    public interface IMessageListView
+    {
+        void BeginDataUpdate();
+
+        void EndDataUpdate();
+    }
+
+    public partial class MessageListView : IMessageListView
     {
         static class UnboundColumns
         {
@@ -73,21 +80,21 @@
 
         void Grid_OnStartSorting(object sender, RoutedEventArgs e)
         {
-            var sourceGrid = e.Source as GridControl;
+            var grid = e.Source as GridControl;
 
-            if (sourceGrid == null || Model == null || Model.WorkInProgress)
+            if (grid == null || Model == null || Model.WorkInProgress)
             {
                 return;
             }
 
-            var sortInfo = sourceGrid.SortInfo.FirstOrDefault();
+            var sortInfo = grid.SortInfo.FirstOrDefault();
 
             if (sortInfo == null)
             {
                 return;
             }
 
-            var column = sourceGrid.Columns.First(c => c.FieldName == sortInfo.FieldName);
+            var column = grid.Columns.First(c => c.FieldName == sortInfo.FieldName);
 
             SortData(column, sortInfo.SortOrder);
 

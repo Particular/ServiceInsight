@@ -6,12 +6,10 @@
     using System.Linq;
     using System.Windows.Input;
     using Autofac;
-    using Framework;
-    using Framework.Rx;
+    using Caliburn.Micro;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
-    using Pirac;
     using ServiceControl;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
@@ -20,11 +18,12 @@
     using ServiceInsight.MessageList;
     using Settings;
 
-    public class MessageFlowViewModel : RxScreen
+    public class MessageFlowViewModel : Screen,
+        IHandle<SelectedMessageChanged>
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
-        IRxEventAggregator eventAggregator;
+        IEventAggregator eventAggregator;
         IWindowManagerEx windowManager;
         ISettingsProvider settingsProvider;
         MessageSelectionContext selection;
@@ -34,9 +33,9 @@
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
-            IRxEventAggregator eventAggregator,
+            IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            Autofac.IContainer container,
+            IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext)
@@ -52,12 +51,9 @@
             CopyMessageURICommand = container.Resolve<CopyMessageURICommand>();
             RetryMessageCommand = container.Resolve<RetryMessageCommand>();
             SearchByMessageIDCommand = container.Resolve<SearchByMessageIDCommand>();
-            ShowSagaWindowCommand = Command.Create(ShowSagaWindow);
 
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
-
-            eventAggregator.GetEvent<SelectedMessageChanged>().ObserveOnPiracMain().Subscribe(Handle);
         }
 
         public FlowDiagramModel Diagram
@@ -78,8 +74,9 @@
             set;
         }
 
-        protected override void OnViewAttached(object view)
+        protected override void OnViewAttached(object view, object context)
         {
+            base.OnViewAttached(view, context);
             this.view = (MessageFlowView)view;
             this.view.ShowMessage += OnShowMessage;
         }
@@ -93,12 +90,13 @@
 
             var message = e.MessageNode.Message;
 
-            eventAggregator.Publish(new RequestSelectingEndpoint(message.ReceivingEndpoint));
+            eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
             selection.SelectedMessage = message;
         }
 
-        protected override void OnActivate(bool wasInitialized)
+        protected override void OnActivate()
         {
+            base.OnActivate();
             var settings = settingsProvider.GetSettings<ProfilerSettings>();
 
             ShowEndpoints = settings.ShowEndpoints;
@@ -106,16 +104,16 @@
 
         public void ShowMessageBody()
         {
-            eventAggregator.Publish(SwitchToMessageBody.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToMessageBody.Instance);
         }
 
-        void ShowSagaWindow()
+        public void ShowSagaWindow()
         {
             if (SelectedMessage != null)
             {
                 selection.SelectedMessage = SelectedMessage.Message;
             }
-            eventAggregator.Publish(SwitchToSagaWindow.Instance);
+            eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
         }
 
         public void ShowException(ExceptionDetails exception)
@@ -138,9 +136,7 @@
 
         public ICommand RetryMessageCommand { get; }
 
-        public ICommand ShowSagaWindowCommand { get; }
-
-        void Handle(SelectedMessageChanged @event)
+        public void Handle(SelectedMessageChanged @event)
         {
             var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)

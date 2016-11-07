@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="ServiceInsight.MessageList.MessageListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:l="clr-namespace:ServiceInsight.MessageList"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:pirac="clr-namespace:Pirac;assembly=Pirac"
              d:DataContext="{d:DesignInstance l:MessageListViewModel}"
              d:DesignHeight="200"
              d:DesignWidth="500"
@@ -37,7 +37,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <pirac:ViewModelControl Grid.Row="0" Content="{Binding SearchBar}" />
+            <ContentControl Grid.Row="0" cal:View.Model="{Binding SearchBar}" />
 
             <dxg:GridControl x:Name="grid"
                              Grid.Row="1"

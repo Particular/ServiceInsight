@@ -3,7 +3,7 @@
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.PropertyGrid;
 
-    public partial class MessagePropertiesView
+    public partial class MessagePropertiesView : IMessagePropertiesView
     {
         public MessagePropertiesView()
         {
@@ -23,5 +23,9 @@
         }
 
         MessagePropertiesViewModel Model => (MessagePropertiesViewModel)DataContext;
+    }
+
+    public interface IMessagePropertiesView
+    {
     }
 }

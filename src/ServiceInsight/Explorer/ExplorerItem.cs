@@ -1,16 +1,14 @@
 ﻿namespace ServiceInsight.Explorer
 {
-    using System.Collections.Generic;
     using System.Drawing;
-
+    using Caliburn.Micro;
     using EndpointExplorer;
-    using Pirac;
 
-    public abstract class ExplorerItem : BindableObject
+    public abstract class ExplorerItem : PropertyChangedBase
     {
         protected ExplorerItem(string name)
         {
-            Children = new List<EndpointExplorerItem>();
+            Children = new BindableCollection<EndpointExplorerItem>();
             Name = name;
         }
 
@@ -24,7 +22,7 @@
 
         public virtual string DisplayName => Name;
 
-        public IList<EndpointExplorerItem> Children { get; }
+        public IObservableCollection<EndpointExplorerItem> Children { get; }
 
         public override string ToString() => DisplayName;
     }

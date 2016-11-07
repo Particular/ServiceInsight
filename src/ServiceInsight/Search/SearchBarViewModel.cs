@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reactive.Linq;
     using System.Windows.Input;
-
+    using Caliburn.Micro;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
-    using Framework;
+    using MessageList;
     using Models;
-    using Pirac;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Rx;
     using ServiceInsight.Framework.Settings;
@@ -18,48 +16,31 @@
     using Shell;
     using Startup;
 
-    public class SearchBarViewModel : RxScreen, IWorkTracker
+    public class SearchBarViewModel : RxScreen,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IWorkTracker
     {
         const int MAX_SAVED_SEARCHES = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
-        IRxEventAggregator eventAggregator;
 
-        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider, IRxEventAggregator eventAggregator)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
-            this.eventAggregator = eventAggregator;
 
-            SearchCommand = Command.Create(Search, () => CanSearch);
-            CancelSearchCommand = this.WhenPropertiesChanged(nameof(SearchInProgress))
-                //.Select(pcd => pcd.After)
-                .Select(_ => SearchInProgress)
-                .ToCommand(_ => CancelSearch());
-            RefreshResultCommand = Command.Create(() => eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, CurrentPage, SearchQuery)));
-
-            GoToFirstPageCommand = CreateNavigationCommand(nameof(CanGoToFirstPage), _ => CanGoToFirstPage, 1);
-            GoToPreviousPageCommand = CreateNavigationCommand(nameof(CanGoToPreviousPage), _ => CanGoToPreviousPage, CurrentPage - 1);
-            GoToNextPageCommand = CreateNavigationCommand(nameof(CanGoToNextPage), _ => CanGoToNextPage, CurrentPage + 1);
-            GoToLastPageCommand = CreateNavigationCommand(nameof(CanGoToLastPage), _ => CanGoToLastPage, PageCount);
-
-            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
+            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
+            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
         }
 
-        private ICommand CreateNavigationCommand(string canExecuteName, Func<PropertyChangedData, bool> selector, int pageNum)
+        protected override void OnActivate()
         {
-            return this.WhenPropertiesChanged(canExecuteName)
-                //.Select(pcd => pcd.After)
-                .Select(selector)
-                .ToCommand(_ => eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, pageNum, SearchQuery)));
-        }
+            base.OnActivate();
 
-        protected override void OnActivate(bool wasInitialized)
-        {
             RestoreRecentSearchEntries();
 
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
@@ -68,19 +49,29 @@
             }
         }
 
+        public void GoToFirstPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
+        }
+
+        public void GoToPreviousPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage - 1, SearchQuery);
+        }
+
+        public void GoToNextPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage + 1, SearchQuery);
+        }
+
+        public void GoToLastPage()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, PageCount, SearchQuery);
+        }
+
         public ICommand SearchCommand { get; }
 
         public ICommand CancelSearchCommand { get; }
-
-        public ICommand RefreshResultCommand { get; }
-
-        public ICommand GoToFirstPageCommand { get; }
-
-        public ICommand GoToPreviousPageCommand { get; }
-
-        public ICommand GoToNextPageCommand { get; }
-
-        public ICommand GoToLastPageCommand { get; }
 
         public void Search(string searchQuery, bool performSearch = true)
         {
@@ -99,14 +90,14 @@
         {
             SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
-            eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, 1, SearchQuery));
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            eventAggregator.Publish(new RefreshEndpointMessages(SelectedEndpoint, 1, SearchQuery));
+            Parent.RefreshMessages(SelectedEndpoint, 1, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
@@ -117,6 +108,17 @@
 
             NotifyPropertiesChanged();
         }
+
+        public void RefreshResult()
+        {
+            Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);
+        }
+
+        public bool CanGoToLastPage => CurrentPage < PageCount && !WorkInProgress;
+
+        public bool CanCancelSearch => SearchInProgress;
+
+        public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
         public int PageCount
         {
@@ -151,11 +153,9 @@
 
         public bool CanGoToNextPage => CurrentPage + 1 <= PageCount && !WorkInProgress;
 
-        public bool CanGoToLastPage => CurrentPage < PageCount && !WorkInProgress;
-
         public IList<StoredMessage> Result { get; private set; }
 
-        public IList<string> RecentSearchQueries { get; private set; }
+        public IObservableCollection<string> RecentSearchQueries { get; private set; }
 
         public int CurrentPage { get; private set; }
 
@@ -180,7 +180,7 @@
             NotifyOfPropertyChange(nameof(CanGoToPreviousPage));
             NotifyOfPropertyChange(nameof(CanRefreshResult));
             NotifyOfPropertyChange(nameof(SearchEnabled));
-            NotifyOfPropertyChange(nameof(SearchInProgress));
+            NotifyOfPropertyChange(nameof(CanCancelSearch));
             NotifyOfPropertyChange(nameof(WorkInProgress));
             NotifyOfPropertyChange(nameof(SearchResultMessage));
         }
@@ -193,7 +193,7 @@
             }
         }
 
-        public void Handle(SelectedExplorerItemChanged @event)
+        public virtual void Handle(SelectedExplorerItemChanged @event)
         {
             var endpointNode = @event.SelectedExplorerItem as EndpointExplorerItem;
             if (endpointNode != null)
@@ -211,13 +211,13 @@
             NotifyPropertiesChanged();
         }
 
-        void Handle(WorkStarted @event)
+        public void Handle(WorkStarted @event)
         {
             workCount++;
             NotifyPropertiesChanged();
         }
 
-        void Handle(WorkFinished @event)
+        public void Handle(WorkFinished @event)
         {
             if (workCount > 0)
             {
@@ -229,7 +229,7 @@
         void RestoreRecentSearchEntries()
         {
             var setting = settingProvider.GetSettings<ProfilerSettings>();
-            RecentSearchQueries = new List<string>(setting.RecentSearchEntries);
+            RecentSearchQueries = new BindableCollection<string>(setting.RecentSearchEntries);
         }
 
         void AddRecentSearchEntry(string searchQuery)

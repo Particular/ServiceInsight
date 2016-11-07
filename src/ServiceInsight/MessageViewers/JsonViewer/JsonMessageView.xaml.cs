@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
+    using System;
     using System.Windows.Media;
     using ICSharpCode.AvalonEdit.Folding;
     using ICSharpCode.AvalonEdit.Indentation;
@@ -7,7 +8,7 @@
     using Newtonsoft.Json.Linq;
     using ServiceInsight.ExtensionMethods;
 
-    public partial class JsonMessageView : IMessageViewer
+    public partial class JsonMessageView : IJsonMessageView
     {
         FoldingManager foldingManager;
         BraceFoldingStrategy foldingStrategy;

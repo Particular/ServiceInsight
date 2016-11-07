@@ -1,13 +1,13 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System.IO;
-    using Framework.Rx;
+    using Caliburn.Micro;
     using Particular.Licensing;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.UI.ScreenManager;
 
-    public class LicenseRegistrationViewModel : RxScreen
+    public class LicenseRegistrationViewModel : Screen
     {
         AppLicenseManager licenseManager;
         IWindowManagerEx dialogManager;
@@ -23,8 +23,9 @@
             this.network = network;
         }
 
-        public void Initialize()
+        protected override void OnActivate()
         {
+            base.OnActivate();
             DisplayName = GetScreenTitle();
         }
 
@@ -75,9 +76,9 @@
 
         public void OnLicenseChanged()
         {
-            NotifyOfPropertyChange(nameof(LicenseType));
-            NotifyOfPropertyChange(nameof(RegisteredTo));
-            NotifyOfPropertyChange(nameof(TrialDaysRemaining));
+            NotifyOfPropertyChange(() => LicenseType);
+            NotifyOfPropertyChange(() => RegisteredTo);
+            NotifyOfPropertyChange(() => TrialDaysRemaining);
         }
 
         public void LoadLicense()

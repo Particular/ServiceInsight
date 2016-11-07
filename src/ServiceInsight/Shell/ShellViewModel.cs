@@ -1,15 +1,15 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
+    using System.Diagnostics;
     using System.Reflection;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
+    using Caliburn.Micro;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
-    using Framework;
     using Framework.Rx;
     using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
@@ -19,24 +19,29 @@
     using MessageProperties;
     using MessageViewers;
     using Options;
-    using Pirac;
     using Saga;
-    using ServiceControl;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using Settings;
     using Startup;
+    using IScreen = Caliburn.Micro.IScreen;
 
-    public class ShellViewModel : RxScreen, IWorkTracker
+    public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
+        IHandle<WorkStarted>,
+        IHandle<WorkFinished>,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<SwitchToMessageBody>,
+        IHandle<SwitchToSagaWindow>,
+        IHandle<SwitchToFlowWindow>,
+        IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
 
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
-        IRxEventAggregator eventAggregator;
-        IWorkNotifier workNotifer;
+        IEventAggregator eventAggregator;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -45,9 +50,6 @@
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
         Func<LicenseRegistrationViewModel> licenceRegistration;
-        ServiceControlConnectionProvider connectionProvider;
-        IServiceControl serviceControl;
-        IRxServiceControl rxServiceControl;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -57,8 +59,7 @@
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
             Func<LicenseRegistrationViewModel> licenceRegistration,
             StatusBarManager statusBarManager,
-            IRxEventAggregator eventAggregator,
-            IWorkNotifier workNotifer,
+            IEventAggregator eventAggregator,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
@@ -66,15 +67,10 @@
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
-            ServiceControlConnectionProvider connectionProvider,
-            IServiceControl serviceControl,
-            IRxServiceControl rxServiceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
-            NetworkOperations networkOperations,
             CommandLineArgParser comandLineArgParser)
         {
-            this.workNotifer = workNotifer;
             this.appCommander = appCommander;
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
@@ -83,9 +79,6 @@
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenceRegistration = licenceRegistration;
-            this.connectionProvider = connectionProvider;
-            this.serviceControl = serviceControl;
-            this.rxServiceControl = rxServiceControl;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -97,79 +90,41 @@
             Messages = messages;
             LogWindow = logWindow;
 
-            AddChildren(endpointExplorer, messages, messageHeadersViewer, messageBodyViewer, messageFlow);
+            Items.Add(endpointExplorer);
+            Items.Add(messages);
+            Items.Add(messageHeadersViewer);
+            Items.Add(messageBodyViewer);
+            Items.Add(messageFlow);
 
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
 
-            ShutDownCommand = Command.Create(appCommander.ShutdownImmediately);
-            AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
-            HelpCommand = Command.Create(() => networkOperations.Browse(@"http://docs.particular.net/"));
-            ConnectToServiceControlCommand = Command.Create(ConnectToServiceControl, () => CanConnectToServiceControl);
+            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
+            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
+            ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
-            RefreshAllCommand = Command.CreateAsync(() => RefreshAll(true));
+            RefreshAllCommand = this.CreateCommand(RefreshAll);
 
-            RegisterCommand = Command.Create(() =>
+            RegisterCommand = this.CreateCommand(() =>
             {
                 this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
                 DisplayRegistrationStatus();
             });
 
-            ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
+            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
 
-            OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
-
-            eventAggregator.GetEvent<WorkStarted>().Subscribe(Handle);
-            eventAggregator.GetEvent<WorkFinished>().Subscribe(Handle);
-            eventAggregator.GetEvent<SelectedExplorerItemChanged>().Subscribe(Handle);
-            eventAggregator.GetEvent<SwitchToMessageBody>().Subscribe(Handle);
-            eventAggregator.GetEvent<SwitchToSagaWindow>().Subscribe(Handle);
-            eventAggregator.GetEvent<SwitchToFlowWindow>().Subscribe(Handle);
-
-            this.WhenPropertyChanged(nameof(AutoRefresh)).Subscribe(pcd => messages.AutoRefresh = AutoRefresh);
+            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
-        string GetConfiguredAddress(CommandLineArgParser commandLineParser)
+        protected override void OnViewAttached(object view, object context)
         {
-            if (commandLineParser.ParsedOptions.EndpointUri == null)
-            {
-                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
-                if (appSettings != null && appSettings.LastUsedServiceControl != null)
-                {
-                    return appSettings.LastUsedServiceControl;
-                }
+            base.OnViewAttached(view, context);
+            View = (IShellView)view;
 
-                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
-                return string.Format("http://localhost:{0}/api", managementConfig.Port);
-            }
-
-            return commandLineParser.ParsedOptions.EndpointUri.ToString();
-        }
-
-        protected override void OnViewAttached(object view)
-        {
-            View = (IShell)view;
-
-            ProductName = GetProductName();
+            DisplayName = GetProductName();
             StatusBarManager.Done();
             RestoreLayout();
-        }
-
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            var configuredConnection = GetConfiguredAddress(comandLineArgParser);
-            var existingConnection = connectionProvider.Url;
-
-            using (workNotifer.NotifyOfWork("Trying to connect to ServiceControl"))
-            {
-                connectionProvider.ConnectTo(configuredConnection);
-                if (!serviceControl.IsAlive() && existingConnection != null)
-                {
-                    connectionProvider.ConnectTo(existingConnection);
-                }
-            }
         }
 
         protected override void OnDeactivate(bool close)
@@ -195,13 +150,11 @@
             }
         }
 
-        public string ProductName { get; set; }
-
         public bool AutoRefresh { get; set; }
 
         public bool BodyTabSelected { get; set; }
 
-        public IShell View { get; private set; }
+        public IShellView View { get; private set; }
 
         public MessagePropertiesViewModel MessageProperties { get; }
 
@@ -250,16 +203,14 @@
 
             if (result.GetValueOrDefault(false))
             {
-                eventAggregator.Publish(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                eventAggregator.PublishOnUIThread(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
             }
         }
 
-        async Task RefreshAll(bool manual)
+        void RefreshAll()
         {
-            if (manual)
-            {
-                await rxServiceControl.Refresh();
-            }
+            EndpointExplorer.RefreshData();
             Messages.RefreshMessages();
             SagaWindow.RefreshSaga();
         }
@@ -267,15 +218,6 @@
         public void OnAutoRefreshChanged()
         {
             refreshTimer.IsEnabled = AutoRefresh;
-
-            if (AutoRefresh)
-            {
-                rxServiceControl.SetRefresh(refreshTimer.Interval);
-            }
-            else
-            {
-                rxServiceControl.DisableRefresh();
-            }
         }
 
         public int SelectedMessageTabItem { get; set; }
@@ -311,19 +253,19 @@
             ValidateLicense();
         }
 
-        internal Task OnAutoRefreshing()
+        internal void OnAutoRefreshing()
         {
             if (!AutoRefresh || WorkInProgress)
             {
-                return Task.FromResult(0);
+                return;
             }
 
-            return RefreshAll(false);
+            RefreshAll();
         }
 
         public void OnBodyTabSelectedChanged()
         {
-            eventAggregator.Publish(new BodyTabSelectionChanged(BodyTabSelected));
+            eventAggregator.PublishOnUIThread(new BodyTabSelectionChanged(BodyTabSelected));
         }
 
         public string AutoRefreshTooltip
@@ -385,8 +327,8 @@
 
         void NotifyPropertiesChanged()
         {
-            OnPropertyChanged(nameof(WorkInProgress), null, null);
-            OnPropertyChanged(nameof(CanConnectToServiceControl), null, null);
+            NotifyOfPropertyChange(() => WorkInProgress);
+            NotifyOfPropertyChange(() => CanConnectToServiceControl);
         }
 
         string GetProductName()
@@ -417,17 +359,17 @@
             SelectedExplorerItem = @event.SelectedExplorerItem;
         }
 
-        void Handle(SwitchToMessageBody @event)
+        public void Handle(SwitchToMessageBody @event)
         {
             View.SelectTab("MessageBody");
         }
 
-        void Handle(SwitchToSagaWindow @event)
+        public virtual void Handle(SwitchToSagaWindow @event)
         {
             View.SelectTab("SagaWindow");
         }
 
-        void Handle(SwitchToFlowWindow @event)
+        public virtual void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
         }

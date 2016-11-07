@@ -1,9 +1,11 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
+    using Caliburn.Micro;
+    using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
-    using ServiceInsight.Framework;
+    using ReactiveUI.Testing;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageViewers;
@@ -16,8 +18,7 @@
     [TestFixture]
     public class MessageBodyViewModelTests
     {
-        IRxEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
+        IEventAggregator eventAggregator;
         IServiceControl serviceControl;
         HexContentViewModel hexContent;
         JsonMessageViewModel jsonContent;
@@ -28,31 +29,35 @@
         [SetUp]
         public void TestInitialize()
         {
-            eventAggregator = Substitute.For<IRxEventAggregator>();
-            workNotifier = Substitute.For<IWorkNotifier>();
+            eventAggregator = Substitute.For<IEventAggregator>();
             serviceControl = Substitute.For<IServiceControl>();
             hexContent = Substitute.For<HexContentViewModel>();
             jsonContent = Substitute.For<JsonMessageViewModel>();
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, workNotifier, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, selection);
         }
 
         [Test]
         public void Should_load_body_content_when_body_tab_is_already_selected()
         {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
+            new TestScheduler().With(sched =>
+            {
+                const string uri = "http://localhost:3333/api/somemessageid/body";
 
-            var messageBody = messageBodyFunc();
+                var messageBody = messageBodyFunc();
 
-            messageBody.Handle(new BodyTabSelectionChanged(true));
+                messageBody.Handle(new BodyTabSelectionChanged(true));
 
-            selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+                selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
-            messageBody.Handle(new SelectedMessageChanged());
+                messageBody.Handle(new SelectedMessageChanged());
 
-            serviceControl.Received(1).LoadBody(selection.SelectedMessage);
+                sched.AdvanceByMs(500);
+
+                serviceControl.Received(1).LoadBody(selection.SelectedMessage);
+            });
         }
 
         [Test]
