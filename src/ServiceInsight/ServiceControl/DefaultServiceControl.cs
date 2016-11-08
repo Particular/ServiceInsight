@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Net;
     using System.Runtime.Caching;
+    using System.Text;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
@@ -25,6 +26,7 @@
     public class DefaultServiceControl : IServiceControl
     {
         static ILogger anotarLogger = Log.ForContext<IServiceControl>();
+        static string byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
         const string ConversationEndpoint = "conversations/{0}";
         const string EndpointsEndpoint = "endpoints";
@@ -478,7 +480,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return new List<KeyValuePair<string, string>>();
         }
 
-        static string CleanupBodyString(string bodyString) => bodyString.Replace("\u005c", string.Empty).Replace("\uFEFF", string.Empty).TrimStart("[\"".ToCharArray()).TrimEnd("]\"".ToCharArray());
+        static string CleanupBodyString(string bodyString) => bodyString.StartsWith(byteOrderMarkUtf8) ? bodyString.Remove(0, byteOrderMarkUtf8.Length) : bodyString;
 
         void LogRequest(RestRequestWithCache request)
         {
