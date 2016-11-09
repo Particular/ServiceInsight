@@ -101,7 +101,7 @@
 
             ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
             AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
-            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/"));
+            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
             ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
             RefreshAllCommand = this.CreateCommand(RefreshAll);
