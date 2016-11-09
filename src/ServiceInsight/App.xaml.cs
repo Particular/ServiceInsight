@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Windows;
+    using Akavache;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
     using Framework.Logging;
@@ -40,6 +41,7 @@
     {
         public App()
         {
+            BlobCache.ApplicationName = "ServiceInsight";
             LoggingConfig.SetupLogging();
             if (!Debugger.IsAttached)
             {
