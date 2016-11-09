@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Caliburn.Micro;
     using ExtensionMethods;
+    using Framework;
     using HexViewer;
     using JsonViewer;
     using ServiceInsight.Framework.Events;
@@ -15,6 +16,7 @@
         IHandle<BodyTabSelectionChanged>
     {
         readonly IServiceControl serviceControl;
+        readonly IWorkNotifier workNotifier;
         readonly IEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
         static Dictionary<string, MessageContentType> contentTypeMaps;
@@ -37,10 +39,12 @@
             XmlMessageViewModel xmlViewer,
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             selection = selectionContext;
 
             HexViewer = hexViewer;
@@ -126,13 +130,12 @@
                 return;
             }
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
+            using (workNotifier.NotifyOfWork("Loading message body..."))
+            {
+                serviceControl.LoadBody(selection.SelectedMessage);
 
-            serviceControl.LoadBody(selection.SelectedMessage);
-
-            RefreshChildren();
-
-            eventAggregator.PublishOnUIThread(new WorkFinished());
+                RefreshChildren();
+            }
         }
     }
 }

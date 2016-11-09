@@ -31,6 +31,7 @@
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         GeneralHeaderViewModel generalHeaderDisplay;
         string lastSortColumn;
@@ -40,6 +41,7 @@
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
@@ -51,12 +53,13 @@
 
             this.clipboard = clipboard;
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
 
             Items.Add(SearchBar);
 
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, serviceControl);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
             CopyHeadersCommand = this.CreateCommand(CopyHeaders, generalHeaderDisplay.WhenAnyValue(ghd => ghd.HeaderContent).Select(s => !s.IsEmpty()));
             Rows = new BindableCollection<StoredMessage>();
@@ -114,10 +117,8 @@
 
         public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            try
+            using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                eventAggregator.PublishOnUIThread(new WorkStarted("Loading {0} messages...", endpoint == null ? "all" : endpoint.Address));
-
                 if (orderBy != null)
                 {
                     lastSortColumn = orderBy;
@@ -163,10 +164,6 @@
                     TotalCount = pagedResult.TotalCount,
                     Result = pagedResult.Result,
                 });
-            }
-            finally
-            {
-                eventAggregator.PublishOnUIThread(new WorkFinished());
             }
         }
 

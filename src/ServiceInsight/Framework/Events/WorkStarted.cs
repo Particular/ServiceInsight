@@ -7,9 +7,9 @@
         {
         }
 
-        public WorkStarted(string message, params object[] args)
+        public WorkStarted(string message)
         {
-            Message = string.Format(message, args);
+            Message = message;
         }
 
         public string Message { get; }

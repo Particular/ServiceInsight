@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Particular.Licensing;
     using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
@@ -41,6 +42,7 @@
         MessageFlowViewModel messageFlow;
         SagaWindowViewModel sagaWindow;
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         StatusBarManager statusbarManager;
         MessageBodyViewModel messageBodyView;
         MessageHeadersViewModel headerView;
@@ -61,6 +63,7 @@
             messageList = Substitute.For<MessageListViewModel>();
             statusbarManager = Substitute.For<StatusBarManager>();
             eventAggregator = Substitute.For<IEventAggregator>();
+            workNotifier = Substitute.For<IWorkNotifier>();
             messageFlow = Substitute.For<MessageFlowViewModel>();
             sagaWindow = Substitute.For<SagaWindowViewModel>();
             messageBodyView = Substitute.For<MessageBodyViewModel>();
@@ -84,6 +87,7 @@
                         () => Substitute.For<LicenseRegistrationViewModel>(),
                         statusbarManager,
                         eventAggregator,
+                        workNotifier,
                         licenseManager,
                         messageFlow,
                         sagaWindow,
