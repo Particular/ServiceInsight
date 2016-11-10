@@ -27,7 +27,8 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<SelectedMessageChanged>
+        IHandle<SelectedMessageChanged>,
+        IHandle<ServiceControlConnectionChanged>
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
@@ -156,18 +157,23 @@
 
                 TryRebindMessageList(pagedResult);
 
-                SearchBar.IsVisible = true;
-                SearchBar.SetupPaging(new PagedResult<StoredMessage>
-                {
-                    CurrentPage = pagedResult.CurrentPage,
-                    TotalCount = pagedResult.TotalCount,
-                    Result = pagedResult.Result,
-                });
+                BindSearchBar(pagedResult);
             }
             finally
             {
                 eventAggregator.PublishOnUIThread(new WorkFinished());
             }
+        }
+
+        private void BindSearchBar(PagedResult<StoredMessage> pagedResult)
+        {
+            SearchBar.IsVisible = true;
+            SearchBar.SetupPaging(new PagedResult<StoredMessage>
+            {
+                CurrentPage = pagedResult.CurrentPage,
+                TotalCount = pagedResult.TotalCount,
+                Result = pagedResult.Result,
+            });
         }
 
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
@@ -226,6 +232,11 @@
             }
         }
 
+        public void Handle(ServiceControlConnectionChanged message)
+        {
+            ClearResult();
+        }
+
         public void OnSelectedExplorerItemChanged()
         {
             RefreshMessages();
@@ -243,6 +254,13 @@
             {
                 Selection.SelectedMessage = Rows[0];
             }
+        }
+
+        void ClearResult()
+        {
+            var emptyResult = new PagedResult<StoredMessage>();
+            BindResult(emptyResult);
+            BindSearchBar(emptyResult);
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
