@@ -109,6 +109,18 @@
             NotifyPropertiesChanged();
         }
 
+        public void ClearPaging()
+        {
+            Result = new List<StoredMessage>();
+            CurrentPage = 0;
+            TotalItemCount = 0;
+            SearchQuery = null;
+            SearchInProgress = false;
+            SelectedEndpoint = null;
+
+            NotifyPropertiesChanged();
+        }
+
         public void RefreshResult()
         {
             Parent.RefreshMessages(SelectedEndpoint, CurrentPage, SearchQuery);

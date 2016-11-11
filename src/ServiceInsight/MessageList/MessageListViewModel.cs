@@ -157,23 +157,18 @@
 
                 TryRebindMessageList(pagedResult);
 
-                BindSearchBar(pagedResult);
+                SearchBar.IsVisible = true;
+                SearchBar.SetupPaging(new PagedResult<StoredMessage>
+                {
+                    CurrentPage = pagedResult.CurrentPage,
+                    TotalCount = pagedResult.TotalCount,
+                    Result = pagedResult.Result,
+                });
             }
             finally
             {
                 eventAggregator.PublishOnUIThread(new WorkFinished());
             }
-        }
-
-        private void BindSearchBar(PagedResult<StoredMessage> pagedResult)
-        {
-            SearchBar.IsVisible = true;
-            SearchBar.SetupPaging(new PagedResult<StoredMessage>
-            {
-                CurrentPage = pagedResult.CurrentPage,
-                TotalCount = pagedResult.TotalCount,
-                Result = pagedResult.Result,
-            });
         }
 
         public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
@@ -258,9 +253,8 @@
 
         void ClearResult()
         {
-            var emptyResult = new PagedResult<StoredMessage>();
-            BindResult(emptyResult);
-            BindSearchBar(emptyResult);
+            BindResult(new PagedResult<StoredMessage>());
+            SearchBar.ClearPaging();
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
