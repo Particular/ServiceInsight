@@ -144,25 +144,25 @@
             timerTriggerProvider.OnNext(Observable.Never<Unit>());
         }
 
-        private IObservable<IEnumerable<JObject>> GetData(string url)
-        {
-            return GetOrFetchWithETag(cache, url)
-                .Select(j => JArray.Parse(j).Cast<JObject>());
-        }
-
         private IObservable<ServiceControlData> InitializeStream(string url)
         {
             return trigger.SelectMany(_ =>
             {
                 var data = serviceControlUrls.Select(baseurl =>
                     GetData($"{baseurl}/{url}")
-                    .Select(d => new ServiceControlData(baseurl, d)));
+                    .Select(d => new ServiceControlData(baseurl, d.Item1, d.Item2)));
 
                 return Observable.Merge(data);
             }).Publish().RefCount();
         }
 
-        private static IObservable<string> GetOrFetchWithETag(IBlobCache cache, string url)
+        private IObservable<Tuple<bool, IEnumerable<JObject>>> GetData(string url)
+        {
+            return GetOrFetchWithETag(cache, url)
+                .Select(j => Tuple.Create(j.Item1, JArray.Parse(j.Item2).Cast<JObject>()));
+        }
+
+        private static IObservable<Tuple<bool, string>> GetOrFetchWithETag(IBlobCache cache, string url)
         {
             var result =
                 // Get from cache
@@ -198,8 +198,8 @@
                 // Select the data from the tuple
                 .Select(x => x.Item2);
 
-            return result
-                .Concat(fetch)
+            return result.Select(s => Tuple.Create(true, s))
+                .Concat(fetch.Select(s => Tuple.Create(false, s)))
                 .Replay()
                 .RefCount();
         }
@@ -289,13 +289,16 @@
 
     public class ServiceControlData
     {
-        public ServiceControlData(string url, IEnumerable<JObject> data)
+        public ServiceControlData(string url, bool cached, IEnumerable<JObject> data)
         {
             Data = data;
             Url = url;
+            Cached = cached;
         }
 
         public string Url { get; }
+
+        public bool Cached { get; set; }
 
         public IEnumerable<dynamic> Data { get; }
     }
