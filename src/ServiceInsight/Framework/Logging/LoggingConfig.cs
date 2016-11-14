@@ -30,7 +30,7 @@
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
                     .Filter.ByIncludingOnly(le => Matching.FromSource<IServiceControl>()(le) || Matching.FromSource<IRxServiceControl>()(le))
-                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).ObserveOnDispatcher().Subscribe()))
+                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).Subscribe()))
                 .CreateLogger();
         }
 
