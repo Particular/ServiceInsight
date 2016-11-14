@@ -31,13 +31,13 @@
             Logs = new ReactiveList<LogMessage>();
 
             textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
-            LogObserver.SubscribeOn(RxApp.TaskpoolScheduler).Subscribe(UpdateLog);
+            LogObserver.ObserveOnDispatcher().Subscribe(UpdateLog);
 
             ClearCommand = this.CreateCommand(Clear);
             CopyCommand = this.CreateCommand(Copy);
         }
 
-        public ReactiveList<LogMessage> Logs { get; set; }
+        public ReactiveList<LogMessage> Logs { get; }
 
         public ICommand ClearCommand { get; }
 
