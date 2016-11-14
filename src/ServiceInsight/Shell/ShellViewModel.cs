@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
@@ -21,6 +22,7 @@
     using MessageViewers;
     using Options;
     using Saga;
+    using ServiceControl;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
@@ -52,6 +54,9 @@
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
         Func<LicenseRegistrationViewModel> licenceRegistration;
+        ServiceControlConnectionProvider connectionProvider;
+        IServiceControl serviceControl;
+        IRxServiceControl rxServiceControl;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -70,6 +75,9 @@
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
+            ServiceControlConnectionProvider connectionProvider,
+            IServiceControl serviceControl,
+            IRxServiceControl rxServiceControl,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
@@ -83,6 +91,9 @@
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenceRegistration = licenceRegistration;
+            this.connectionProvider = connectionProvider;
+            this.serviceControl = serviceControl;
+            this.rxServiceControl = rxServiceControl;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -108,7 +119,7 @@
             HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
             ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
-            RefreshAllCommand = this.CreateCommand(RefreshAll);
+            RefreshAllCommand = this.CreateCommandAsync(() => RefreshAll(true));
 
             RegisterCommand = this.CreateCommand(() =>
             {
@@ -214,8 +225,12 @@
             }
         }
 
-        void RefreshAll()
+        async Task RefreshAll(bool manual)
         {
+            if (manual)
+            {
+                await rxServiceControl.Refresh();
+            }
             EndpointExplorer.RefreshData();
             Messages.RefreshMessages();
             SagaWindow.RefreshSaga();
@@ -259,14 +274,14 @@
             ValidateLicense();
         }
 
-        internal void OnAutoRefreshing()
+        internal Task OnAutoRefreshing()
         {
             if (!AutoRefresh || WorkInProgress)
             {
-                return;
+                return Task.FromResult(0);
             }
 
-            RefreshAll();
+            return RefreshAll(false);
         }
 
         public void OnBodyTabSelectedChanged()
