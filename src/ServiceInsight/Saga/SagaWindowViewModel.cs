@@ -134,7 +134,7 @@
                         previousSagaId = Data.SagaId;
                     }
 
-                    Data = serviceControl.GetSagaById(originatingSaga.SagaId);
+                    Data = FetchOrderedSagaData(originatingSaga.SagaId);
 
                     if (Data != null)
                     {
@@ -176,6 +176,19 @@
             {
                 eventAggregator.PublishOnUIThread(new WorkFinished());
             }
+        }
+
+        private SagaData FetchOrderedSagaData(Guid sagaId)
+        {
+            var sagaData = serviceControl.GetSagaById(sagaId);
+            if (sagaData?.Changes != null)
+            {
+                sagaData.Changes = sagaData.Changes.OrderBy(x => x.StartTime)
+                                                   .ThenBy(x => x.FinishTime)
+                                                   .ToList();
+            }
+
+            return sagaData;
         }
 
         static void ProcessDataValues(IEnumerable<SagaUpdate> list)
