@@ -142,6 +142,24 @@
             RestoreLayout();
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            var configuredConnection = GetConfiguredAddress(comandLineArgParser);
+            var existingConnection = connectionProvider.Url;
+
+            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl"));
+
+            connectionProvider.ConnectTo(configuredConnection);
+            if (!serviceControl.IsAlive())
+            {
+                connectionProvider.ConnectTo(existingConnection);
+            }
+
+            eventAggregator.PublishOnUIThread(new WorkFinished());
+        }
+
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
@@ -218,10 +236,7 @@
 
             if (result.GetValueOrDefault(false))
             {
-                using (workNotifier.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}"))
-                {
-                    EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                }
+                workNotifier.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}").Dispose();
             }
         }
 
@@ -231,7 +246,6 @@
             {
                 await rxServiceControl.Refresh();
             }
-            EndpointExplorer.RefreshData();
             Messages.RefreshMessages();
             SagaWindow.RefreshSaga();
         }
@@ -356,6 +370,23 @@
         {
             var productAttribute = GetType().Assembly.GetAttribute<AssemblyProductAttribute>();
             return productAttribute.Product;
+        }
+
+        string GetConfiguredAddress(CommandLineArgParser commandLineParser)
+        {
+            if (commandLineParser.ParsedOptions.EndpointUri == null)
+            {
+                var appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+                if (appSettings != null && appSettings.LastUsedServiceControl != null)
+                {
+                    return appSettings.LastUsedServiceControl;
+                }
+
+                var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
+                return string.Format("http://localhost:{0}/api", managementConfig.Port);
+            }
+
+            return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
         public void Handle(WorkStarted @event)

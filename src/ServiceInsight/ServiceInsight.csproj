@@ -305,6 +305,7 @@
     <Compile Include="Framework\RxServiceControl.cs" />
     <Compile Include="Framework\Rx\RxConductor.cs" />
     <Compile Include="Framework\Rx\RxScreen.cs" />
+    <Compile Include="Framework\SnakeCasePropertyNamesContractResolver.cs" />
     <Compile Include="Framework\UI\ScreenManager\IWindowManagerEx.cs" />
     <Compile Include="Framework\UI\ScreenManager\WindowManagerEx.cs">
       <SubType>Code</SubType>
