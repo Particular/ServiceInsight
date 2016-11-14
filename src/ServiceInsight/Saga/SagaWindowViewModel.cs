@@ -109,7 +109,6 @@
         void ClearSaga()
         {
             Data = null;
-            NotifyOfPropertyChange(() => Data);
         }
 
         void RefreshSaga(StoredMessage message)

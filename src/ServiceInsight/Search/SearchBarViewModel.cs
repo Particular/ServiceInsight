@@ -117,8 +117,6 @@
             SearchQuery = null;
             SearchInProgress = false;
             SelectedEndpoint = null;
-
-            NotifyPropertiesChanged();
         }
 
         public void RefreshResult()
