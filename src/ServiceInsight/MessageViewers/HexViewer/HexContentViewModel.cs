@@ -17,5 +17,10 @@
         {
             SelectedMessage = selectedMessage;
         }
+
+        public void Clear()
+        {
+            SelectedMessage = null;
+        }
     }
 }

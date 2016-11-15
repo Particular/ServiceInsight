@@ -12,7 +12,9 @@
     using Models;
     using ServiceControl;
 
-    public class SagaWindowViewModel : Screen, IHandle<SelectedMessageChanged>
+    public class SagaWindowViewModel : Screen,
+        IHandle<SelectedMessageChanged>,
+        IHandle<ServiceControlConnectionChanged>
     {
         SagaData data;
         StoredMessage currentMessage;
@@ -88,6 +90,11 @@
             SelectedMessageId = message.MessageId;
         }
 
+        public void Handle(ServiceControlConnectionChanged message)
+        {
+            ClearSaga();
+        }
+
         void UpdateInstallScriptText(StoredMessage message)
         {
             InstallScriptText = $"install-package ServiceControl.Plugin.NSB{GetMajorVersion(message)}.SagaAudit";
@@ -97,6 +104,11 @@
         {
             var version = message.GetHeaderByKey(MessageHeaderKeys.Version);
             return version?.Split('.').First();
+        }
+
+        void ClearSaga()
+        {
+            Data = null;
         }
 
         void RefreshSaga(StoredMessage message)

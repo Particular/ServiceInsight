@@ -12,7 +12,8 @@
 
     public class MessageBodyViewModel : Screen,
         IHandle<SelectedMessageChanged>,
-        IHandle<BodyTabSelectionChanged>
+        IHandle<BodyTabSelectionChanged>,
+        IHandle<ServiceControlConnectionChanged>
     {
         readonly IServiceControl serviceControl;
         readonly IEventAggregator eventAggregator;
@@ -116,6 +117,14 @@
             if (ShouldLoadMessageBody)
             {
                 LoadMessageBody();
+            }
+        }
+
+        public void Handle(ServiceControlConnectionChanged message)
+        {
+            foreach (var messageDisplay in MessageDisplays)
+            {
+                messageDisplay.Clear();
             }
         }
 

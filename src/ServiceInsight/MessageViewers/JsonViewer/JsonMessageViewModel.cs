@@ -43,5 +43,10 @@
         {
             SelectedMessage = selectedMessage;
         }
+
+        public void Clear()
+        {
+            messageView?.Clear();
+        }
     }
 }

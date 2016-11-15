@@ -5,5 +5,7 @@
     public interface IDisplayMessageBody
     {
         void Display(StoredMessage selectedMessage);
+
+        void Clear();
     }
 }

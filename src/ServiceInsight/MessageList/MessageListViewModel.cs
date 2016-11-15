@@ -27,7 +27,8 @@
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
-        IHandle<SelectedMessageChanged>
+        IHandle<SelectedMessageChanged>,
+        IHandle<ServiceControlConnectionChanged>
     {
         readonly IClipboard clipboard;
         IEventAggregator eventAggregator;
@@ -226,6 +227,11 @@
             }
         }
 
+        public void Handle(ServiceControlConnectionChanged message)
+        {
+            ClearResult();
+        }
+
         public void OnSelectedExplorerItemChanged()
         {
             RefreshMessages();
@@ -243,6 +249,12 @@
             {
                 Selection.SelectedMessage = Rows[0];
             }
+        }
+
+        void ClearResult()
+        {
+            BindResult(new PagedResult<StoredMessage>());
+            SearchBar.ClearPaging();
         }
 
         void BindResult(PagedResult<StoredMessage> pagedResult)
