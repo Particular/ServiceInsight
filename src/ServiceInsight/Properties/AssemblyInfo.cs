@@ -16,7 +16,7 @@ using System.Windows;
 [assembly: AssemblyDescription("ServiceInsight")]
 [assembly: AssemblyCopyright("Copyright 2013-2016 NServiceBus Ltd. All rights reserved.")]
 [assembly: AssemblyProduct("ServiceInsight")]
-[assembly: AssemblyCompany("Particular Software Incorporated")]
+[assembly: AssemblyCompany("NServiceBus Ltd.")]
 [assembly: InternalsVisibleTo("ServiceInsight.Tests")]
 
 [assembly:ThemeInfo(
