@@ -20,12 +20,19 @@
         StoredMessage currentMessage;
         string selectedMessageId;
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         readonly MessageSelectionContext selection;
 
-        public SagaWindowViewModel(IEventAggregator eventAggregator, IServiceControl serviceControl, IClipboard clipboard, MessageSelectionContext selectionContext)
+        public SagaWindowViewModel(
+            IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
+            IServiceControl serviceControl,
+            IClipboard clipboard,
+            MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
@@ -133,10 +140,8 @@
 
         void RefreshSaga(SagaInfo originatingSaga)
         {
-            try
+            using (workNotifier.NotifyOfWork("Loading message body..."))
             {
-                eventAggregator.PublishOnUIThread(new WorkStarted("Loading message body..."));
-
                 var previousSagaId = Guid.Empty;
 
                 if (Data == null || Data.SagaId != originatingSaga.SagaId)
@@ -183,10 +188,6 @@
                 {
                     RefreshMessageProperties();
                 }
-            }
-            finally
-            {
-                eventAggregator.PublishOnUIThread(new WorkFinished());
             }
         }
 

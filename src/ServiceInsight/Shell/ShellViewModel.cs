@@ -10,6 +10,7 @@
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using Framework.Rx;
     using global::ServiceInsight.SequenceDiagram;
     using LogWindow;
@@ -42,6 +43,7 @@
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -60,6 +62,7 @@
             Func<LicenseRegistrationViewModel> licenceRegistration,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
@@ -74,6 +77,7 @@
             this.appCommander = appCommander;
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             this.licenseManager = licenseManager;
             this.settingsProvider = settingsProvider;
             this.comandLineArgParser = comandLineArgParser;
@@ -203,8 +207,10 @@
 
             if (result.GetValueOrDefault(false))
             {
-                EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
-                eventAggregator.PublishOnUIThread(new WorkFinished("Connected to ServiceControl Version {0}", connectionViewModel.Version));
+                using (workNotifier.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}"))
+                {
+                    EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                }
             }
         }
 

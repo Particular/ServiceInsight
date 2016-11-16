@@ -21,6 +21,7 @@
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
+            builder.RegisterType<WorkNotifier>().As<IWorkNotifier>().InstancePerLifetimeScope();
         }
     }
 }

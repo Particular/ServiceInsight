@@ -16,6 +16,7 @@
         IHandle<RequestSelectingEndpoint>
     {
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         ISettingsProvider settingsProvider;
         IServiceControl serviceControl;
         NetworkOperations networkOperations;
@@ -24,6 +25,7 @@
 
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier,
             ISettingsProvider settingsProvider,
             ServiceControlConnectionProvider connectionProvider,
             CommandLineArgParser commandLineParser,
@@ -31,6 +33,7 @@
             NetworkOperations networkOperations)
         {
             this.eventAggregator = eventAggregator;
+            this.workNotifier = workNotifier;
             this.settingsProvider = settingsProvider;
             this.serviceControl = serviceControl;
             this.networkOperations = networkOperations;
@@ -65,13 +68,12 @@
             var available = ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl at {0}", connectTo));
+            using (workNotifier.NotifyOfWork($"Trying to connect to ServiceControl at {connectTo}"))
+            {
+                ConnectToService(connectTo);
 
-            ConnectToService(connectTo);
-
-            SelectDefaultEndpoint();
-
-            eventAggregator.PublishOnUIThread(new WorkFinished());
+                SelectDefaultEndpoint();
+            }
         }
 
         string GetConfiguredAddress()

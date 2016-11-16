@@ -6,6 +6,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using ReactiveUI.Testing;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageViewers;
@@ -19,6 +20,7 @@
     public class MessageBodyViewModelTests
     {
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         HexContentViewModel hexContent;
         JsonMessageViewModel jsonContent;
@@ -30,13 +32,14 @@
         public void TestInitialize()
         {
             eventAggregator = Substitute.For<IEventAggregator>();
+            workNotifier = Substitute.For<IWorkNotifier>();
             serviceControl = Substitute.For<IServiceControl>();
             hexContent = Substitute.For<HexContentViewModel>();
             jsonContent = Substitute.For<JsonMessageViewModel>();
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, workNotifier, selection);
         }
 
         [Test]

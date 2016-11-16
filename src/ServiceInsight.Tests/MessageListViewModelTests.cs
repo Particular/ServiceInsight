@@ -19,6 +19,7 @@
     public class MessageListViewModelTests
     {
         IEventAggregator eventAggregator;
+        IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         SearchBarViewModel searchBar;
         Func<MessageListViewModel> messageListFunc;
@@ -28,15 +29,18 @@
         public void TestInitialize()
         {
             eventAggregator = Substitute.For<IEventAggregator>();
+            workNotifier = Substitute.For<IWorkNotifier>();
             serviceControl = Substitute.For<IServiceControl>();
             searchBar = Substitute.For<SearchBarViewModel>();
             clipboard = Substitute.For<IClipboard>();
-            messageListFunc = () => new MessageListViewModel(eventAggregator,
-                                                   serviceControl,
-                                                   searchBar,
-                                                   Substitute.For<GeneralHeaderViewModel>(),
-                                                   Substitute.For<MessageSelectionContext>(),
-                                                   clipboard);
+            messageListFunc = () => new MessageListViewModel(
+                eventAggregator,
+                workNotifier,
+                serviceControl,
+                searchBar,
+                Substitute.For<GeneralHeaderViewModel>(),
+                Substitute.For<MessageSelectionContext>(),
+                clipboard);
         }
 
         [Test]
@@ -44,23 +48,21 @@
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
             serviceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
-                             .Returns(x => new PagedResult<StoredMessage>
-                             {
-                                 CurrentPage = 1,
-                                 TotalCount = 100,
-                                 Result = new List<StoredMessage>
-                                 {
-                                     new StoredMessage(),
-                                     new StoredMessage()
-                                 }
-                             });
+                .Returns(x => new PagedResult<StoredMessage>
+                {
+                    CurrentPage = 1,
+                    TotalCount = 100,
+                    Result = new List<StoredMessage>
+                    {
+                        new StoredMessage(),
+                        new StoredMessage()
+                    }
+                });
 
             var messageList = messageListFunc();
 
             messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
-            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkStarted>());
-            eventAggregator.Received(1).PublishOnUIThread(Arg.Any<WorkFinished>());
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);
         }

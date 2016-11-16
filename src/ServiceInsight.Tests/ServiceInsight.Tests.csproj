@@ -128,6 +128,7 @@
     <Compile Include="ConversationsData\PayLoad.cs" />
     <Compile Include="ConversationsData\SequenceDiagramModelCreatorTestsFromJson.cs" />
     <Compile Include="Framework\Attachments.cs" />
+    <Compile Include="Framework\WorkNotiferTests.cs" />
     <Compile Include="Helpers\BinaryObjectCloner.cs" />
     <Compile Include="JsonViewerTests.cs" />
     <Compile Include="MessageBodyViewModelTests.cs" />
