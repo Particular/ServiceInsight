@@ -6,19 +6,17 @@
     public class ServiceControlConnectionProvider
     {
         IEventAggregator eventAggregator;
-		IRxServiceControl serviceControl;
+        IRxServiceControl serviceControl;
 
         public ServiceControlConnectionProvider(IEventAggregator eventAggregator, IRxServiceControl serviceControl)
         {
             this.eventAggregator = eventAggregator;
-			this.serviceControl = serviceControl;
+            this.serviceControl = serviceControl;
         }
 
         public void ConnectTo(string url)
         {
             Url = url;
-			
-			eventAggregator.PublishOnUIThread(new ServiceControlConnectionChanged());
 
             AsyncPump.Run(async () =>
             {
@@ -28,6 +26,8 @@
                 // Prime the streams
                 await serviceControl.Refresh();
             });
+
+            eventAggregator.PublishOnUIThread(new ServiceControlConnectionChanged());
         }
 
         public string Url { get; private set; }

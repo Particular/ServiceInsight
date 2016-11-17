@@ -20,7 +20,7 @@
             builder.RegisterType<NetworkOperations>().SingleInstance();
             builder.RegisterType<AppLicenseManager>().SingleInstance();
             builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
-			builder.RegisterType<WorkNotifier>().As<IWorkNotifier>().InstancePerLifetimeScope();
+            builder.RegisterType<WorkNotifier>().As<IWorkNotifier>().InstancePerLifetimeScope();
 
             // Lifetime scope used to test new connection
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();

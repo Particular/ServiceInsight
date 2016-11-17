@@ -149,15 +149,14 @@
             var configuredConnection = GetConfiguredAddress(comandLineArgParser);
             var existingConnection = connectionProvider.Url;
 
-            eventAggregator.PublishOnUIThread(new WorkStarted("Trying to connect to ServiceControl"));
-
-            connectionProvider.ConnectTo(configuredConnection);
-            if (!serviceControl.IsAlive())
+            using (workNotifier.NotifyOfWork("Trying to connect to ServiceControl"))
             {
-                connectionProvider.ConnectTo(existingConnection);
+                connectionProvider.ConnectTo(configuredConnection);
+                if (!serviceControl.IsAlive())
+                {
+                    connectionProvider.ConnectTo(existingConnection);
+                }
             }
-
-            eventAggregator.PublishOnUIThread(new WorkFinished());
         }
 
         protected override void OnDeactivate(bool close)
