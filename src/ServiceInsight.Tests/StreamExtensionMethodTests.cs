@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System;
     using System.IO;
     using System.Text;
     using NUnit.Framework;
@@ -7,15 +8,19 @@
     using Shouldly;
 
     [TestFixture]
-    public class StreamExtensionMethodTests
+    public sealed class StreamExtensionMethodTests : IDisposable
     {
         const string SourceMesage = "This is a sample message";
         MemoryStream sourceStream;
 
-        [SetUp]
-        public void TestInitialize()
+        public StreamExtensionMethodTests()
         {
             sourceStream = new MemoryStream(Encoding.Default.GetBytes(SourceMesage));
+        }
+
+        public void Dispose()
+        {
+            sourceStream.Dispose();
         }
 
         [Test]

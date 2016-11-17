@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
@@ -11,18 +12,22 @@
     using Shouldly;
 
     [TestFixture]
-    public class SearchViewModelTests
+    public sealed class SearchViewModelTests : IDisposable
     {
         SearchBarViewModel viewModel;
         CommandLineArgParser argParser;
         ISettingsProvider settingProvider;
 
-        [SetUp]
-        public void TestInitialize()
+        public SearchViewModelTests()
         {
             argParser = Substitute.For<CommandLineArgParser>();
             settingProvider = Substitute.For<ISettingsProvider>();
             viewModel = new SearchBarViewModel(argParser, settingProvider);
+        }
+
+        public void Dispose()
+        {
+            viewModel.Dispose();
         }
 
         [Test]
