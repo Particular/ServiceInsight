@@ -3,6 +3,7 @@ namespace ServiceInsight.LogWindow
     using System;
     using System.Collections.Specialized;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -59,11 +60,7 @@ namespace ServiceInsight.LogWindow
                 return;
             }
 
-            if (logSubscription != null)
-            {
-                logSubscription.Dispose();
-                logSubscription = null;
-            }
+            Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
             paragraph.Inlines.Clear();
             foreach (var log in logs)
@@ -73,7 +70,6 @@ namespace ServiceInsight.LogWindow
 
             logSubscription = logs.Changed
                 .Where(e => e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset)
-                .SubscribeOn(RxApp.MainThreadScheduler)
                 .Subscribe(ProcessChange);
         }
 
