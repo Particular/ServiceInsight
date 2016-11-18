@@ -7,27 +7,13 @@
     public class MessageSelectionContext : PropertyChangedBase
     {
         IEventAggregator eventAggregator;
-        StoredMessage selectedMessage;
 
         public MessageSelectionContext(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
         }
 
-        public StoredMessage SelectedMessage
-        {
-            get { return selectedMessage; }
-
-            set
-            {
-                if (selectedMessage != value)
-                {
-                    selectedMessage = value;
-                    NotifyOfPropertyChange(nameof(SelectedMessage));
-                    OnSelectedMessageChanged();
-                }
-            }
-        }
+        public StoredMessage SelectedMessage { get; set; }
 
         void OnSelectedMessageChanged()
         {
