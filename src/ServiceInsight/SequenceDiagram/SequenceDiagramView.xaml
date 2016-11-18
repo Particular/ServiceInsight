@@ -28,21 +28,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Export will be hidden for now. WIP.  -->
-        <Border BorderBrush="#EFEFF2"
-                BorderThickness="0 0 0 2"
-                Visibility="Collapsed">
-            <StackPanel Margin="5" Orientation="Horizontal">
-                <Button Command="{Binding ExportDiagramCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <ContentControl Width="12"
-                                        Margin="0, 0, 2, 0"
-                                        Template="{StaticResource ExportToPNG}" />
-                        <TextBlock VerticalAlignment="Center" Text="Export to PNG" />
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </Border>
         <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>
