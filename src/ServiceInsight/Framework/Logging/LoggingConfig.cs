@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using Caliburn.Micro;
     using LogWindow;
@@ -30,7 +31,10 @@
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
                     .Filter.ByIncludingOnly(Matching.FromSource<IServiceControl>())
-                    .WriteTo.Observers(logEvents => logEvents.Do(LogWindowViewModel.LogObserver).ObserveOnDispatcher().Subscribe()))
+                    .WriteTo.Observers(logEvents => logEvents
+                        .ObserveOn(TaskPoolScheduler.Default)
+                        .Do(LogWindowViewModel.LogObserver)
+                        .Subscribe()))
                 .CreateLogger();
         }
 
