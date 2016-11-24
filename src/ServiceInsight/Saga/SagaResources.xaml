@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <SolidColorBrush x:Key="SagaBackground" Color="#F2F2F2" />
-    <SolidColorBrush x:Key="SagaForeground" Color="#808080" />
+    <SolidColorBrush x:Key="SagaForeground" Color="#000000" />
+    <SolidColorBrush x:Key="SagaSymbolForeground" Color="#999999" />
     <SolidColorBrush x:Key="SagaBlue" Color="#307BC6" />
     <SolidColorBrush x:Key="FooterBackground" Color="#333333" />
     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
@@ -11,7 +12,17 @@
         <Setter Property="Background" Value="#F8F8F8" />
         <Setter Property="Foreground" Value="#777777" />
     </Style>
-
+    
+    <Style x:Key="LinkText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource SagaBlue}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
     <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
 </ResourceDictionary>

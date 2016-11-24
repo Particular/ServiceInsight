@@ -5,7 +5,6 @@
              xmlns:local="clr-namespace:ServiceInsight.Saga"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:ServiceInsight.Models"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              Background="White"
              d:DataContext="{d:DesignInstance {x:Type local:SagaUpdate}}"
              d:DesignHeight="900"
@@ -23,108 +22,38 @@
                 <Setter Property="Foreground" Value="{StaticResource SagaBlue}" />
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Top" />
-                <Setter Property="Padding" Value="4,1,0,0" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                            <GradientStop Offset="0" Color="#FFA3AEB9" />
-                            <GradientStop Offset="0.375" Color="#FF8399A9" />
-                            <GradientStop Offset="0.375" Color="#FF718597" />
-                            <GradientStop Offset="1" Color="#FF617584" />
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Padding" Value="0,0,0,1" />
+                <Setter Property="FontSize" Value="10" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
-                            <StackPanel>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="MouseOver" />
-                                        <VisualState x:Name="Pressed">
-                                            <Storyboard />
-                                        </VisualState>
-                                        <VisualState x:Name="Disabled">
-                                            <Storyboard>
-                                                <DoubleAnimation Duration="0"
-                                                                 Storyboard.TargetName="contentPresenter"
-                                                                 Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                 To=".55" />
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                    <VisualStateGroup x:Name="CheckStates">
-                                        <VisualState x:Name="Checked">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="FontWeight">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <FontWeight>Bold</FontWeight>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Unchecked" />
-                                    </VisualStateGroup>
-                                    <VisualStateGroup x:Name="FocusStates">
-                                        <VisualState x:Name="Focused">
-                                            <Storyboard />
-                                        </VisualState>
-                                        <VisualState x:Name="Unfocused" />
-                                    </VisualStateGroup>
-                                    <VisualStateGroup x:Name="ValidationStates">
-                                        <VisualState x:Name="Valid" />
-                                        <VisualState x:Name="InvalidUnfocused">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="InvalidFocused">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="validationTooltip" Storyboard.TargetProperty="IsOpen">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <system:Boolean>True</system:Boolean>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-
+                            <Grid>
                                 <TextBlock x:Name="contentPresenter"
                                            Margin="{TemplateBinding Padding}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Text="{TemplateBinding Content}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
+                                           Text="{TemplateBinding Content}"
+                                           Style="{StaticResource LinkText}"
+                                           Visibility="{TemplateBinding IsChecked, Converter={StaticResource BoolToVisibilityConverterInverted}}"/>
+
+                                <TextBlock x:Name="contentPresenterSelected"
+                                           Margin="{TemplateBinding Padding}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Text="{TemplateBinding Content}"
+                                           FontWeight="Bold"
+                                           Foreground="Black"
+                                           Visibility="{TemplateBinding IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <TextBlock.TextDecorations>
+                                        <TextDecoration Location="Underline" PenOffset="2">
+                                            <TextDecoration.Pen>
+                                                <Pen Thickness="3" Brush="Black" />
+                                            </TextDecoration.Pen>
+                                        </TextDecoration>
+                                    </TextBlock.TextDecorations>
                                 </TextBlock>
-                            </StackPanel>
+
+                            </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -377,16 +306,13 @@
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
-                        <TextBlock Foreground="{StaticResource SagaForeground}" Text=" =    " />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
+                        <TextBlock Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding OldValue}"
                                    Visibility="{Binding ShouldDisplayOldValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Style="{StaticResource LinkText}"
                                    Text="{Binding OldValueLink}"
-                                   TextDecorations="Underline"
                                    Visibility="{Binding ShouldDisplayOldValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
@@ -394,18 +320,14 @@
                             </TextBlock.InputBindings>
                         </TextBlock>
                         <TextBlock FontFamily="Symbol"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                                   Foreground="{StaticResource SagaSymbolForeground}"
                                    Text=" ® " />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Style="{StaticResource LinkText}" 
                                    Text="{Binding NewValueLink}"
-                                   TextDecorations="Underline"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
@@ -421,16 +343,13 @@
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Label}"
                                    TextTrimming="CharacterEllipsis" />
-                        <TextBlock Foreground="{StaticResource SagaForeground}" Text=" =    " />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
+                        <TextBlock Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Style="{StaticResource LinkText}"
                                    Text="{Binding NewValueLink}"
-                                   TextDecorations="Underline"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
@@ -460,16 +379,13 @@
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
-                        <TextBlock Foreground="{StaticResource SagaForeground}" Text=" =    " />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
+                        <TextBlock Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
-                        <TextBlock FontWeight="Bold"
-                                   Foreground="{StaticResource SagaForeground}"
+                        <TextBlock Style="{StaticResource LinkText}"
                                    Text="{Binding NewValueLink}"
-                                   TextDecorations="Underline"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
@@ -700,13 +616,12 @@
                     <Grid>
                         <StackPanel Margin="30 10 0 0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Foreground="#B3B3B3" Text="Properties: " />
                                 <RadioButton x:Name="All"
-                                             Content="All"
+                                             Content="ALL PROPERTIES"
                                              Style="{StaticResource PropertiesRadioButton}" />
-                                <TextBlock Foreground="#B3B3B3" Text=" /" />
+                                <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" / " />
                                 <RadioButton x:Name="Updated"
-                                             Content="Updated"
+                                             Content="UPDATED PROPERTIES"
                                              IsChecked="True"
                                              Style="{StaticResource PropertiesRadioButton}" />
                             </StackPanel>
