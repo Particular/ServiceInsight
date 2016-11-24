@@ -2,8 +2,8 @@
 {
     using System;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows;
-    using ReactiveUI;
 
     public partial class LogWindowView
     {
@@ -24,12 +24,9 @@
                 return;
             }
 
-            if (logSubscription != null)
-            {
-                logSubscription.Dispose();
-            }
+            Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
-            logSubscription = vm.Logs.ItemsAdded.SubscribeOn(RxApp.MainThreadScheduler).Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }
