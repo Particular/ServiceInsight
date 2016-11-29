@@ -199,6 +199,12 @@
                 sagaData.Changes = sagaData.Changes.OrderBy(x => x.StartTime)
                                                    .ThenBy(x => x.FinishTime)
                                                    .ToList();
+
+                foreach (var timeout in sagaData.Changes.SelectMany(update => update.TimeoutMessages))
+                {
+                    timeout.HasBeenProcessed =
+                        sagaData.Changes.Any(update => update.InitiatingMessage.MessageId == timeout.MessageId);
+                }
             }
 
             return sagaData;
