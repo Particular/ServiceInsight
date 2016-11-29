@@ -16,6 +16,7 @@
     using RestSharp.Contrib;
     using RestSharp.Deserializers;
     using Serilog;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Framework.Settings;
@@ -26,7 +27,7 @@
     public class DefaultServiceControl : IServiceControl
     {
         static ILogger anotarLogger = Log.ForContext<IServiceControl>();
-        static string byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+        static byte[] byteOrderMarkUtf8 = Encoding.UTF8.GetPreamble();
 
         const string ConversationEndpoint = "conversations/{0}";
         const string EndpointsEndpoint = "endpoints";
@@ -149,9 +150,7 @@
                 return Enumerable.Empty<KeyValuePair<string, string>>();
             }
 
-            return body.StartsWith("<?xml") ?
-                GetXmlData(body) :
-                JsonPropertiesHelper.ProcessValues(body, CleanupBodyString);
+            return body.StartsWith("<?xml") ? GetXmlData(body) : JsonPropertiesHelper.ProcessValues(body);
         }
 
         public void LoadBody(StoredMessage message)
@@ -171,7 +170,7 @@
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        presentationBody.Text = CleanupBodyString(response.Content);
+                        presentationBody.Text = response.Content;
                         break;
                     case HttpStatusCode.NoContent:
                         presentationBody.Hint = PresentationHint.NoContent;
@@ -289,6 +288,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
             var response = restClient.Execute(request);
 
+            CleanResponse(response);
+
             var data = default(T);
 
             switch (cacheStyle)
@@ -375,6 +376,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             LogRequest(request);
 
             var response = restClient.Execute<T2>(request);
+
+            CleanResponse(response);
 
             var data = default(T);
 
@@ -480,7 +483,17 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return new List<KeyValuePair<string, string>>();
         }
 
-        static string CleanupBodyString(string bodyString) => bodyString.StartsWith(byteOrderMarkUtf8) ? bodyString.Remove(0, byteOrderMarkUtf8.Length) : bodyString;
+        static void CleanResponse(IRestResponse response)
+        {
+            if (response.RawBytes.StartsWith(byteOrderMarkUtf8))
+            {
+                var strippedBytes = response.RawBytes
+                                            .Skip(byteOrderMarkUtf8.Length)
+                                            .ToArray();
+
+                response.Content = new UTF8Encoding(false).GetString(strippedBytes);
+            }
+        }
 
         void LogRequest(RestRequestWithCache request)
         {

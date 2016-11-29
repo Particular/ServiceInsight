@@ -256,6 +256,7 @@
       <DependentUpon>DiagramLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
+    <Compile Include="ExtensionMethods\BytesExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
