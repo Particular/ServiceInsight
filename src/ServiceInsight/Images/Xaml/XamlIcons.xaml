@@ -255,6 +255,10 @@
     <ControlTemplate x:Key="SagaTriggerIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
                 <Line Stroke="#FFE6E6E6"
                       StrokeMiterLimit="10"
                       StrokeThickness="2"
@@ -265,38 +269,34 @@
                 <Polygon Fill="#FFE6E6E6"
                          FillRule="NonZero"
                          Points="10.493,8.571 11.986,3 6.415,4.492      " />
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaInitiatedIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
-                <Polygon Fill="#FFCCCCCC"
-                         FillRule="NonZero"
-                         Points="4.986,4 11.048,7.5 4.986,11    " />
                 <Rectangle Canvas.Left="0"
                            Width="15"
                            Height="15"
                            Fill="#FF333333" />
+                <Polygon Fill="#FFCCCCCC"
+                         FillRule="NonZero"
+                         Points="4.986,4 11.048,7.5 4.986,11    " />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
     <ControlTemplate x:Key="SagaUpdatedIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M3.612 5.274l2.74 0.885V3H8.62v3.159l2.74-0.885l0.616 1.953L9.183 8.086l1.822 2.609l-1.678 1.193     L7.51 9.423l-1.879 2.464l-1.678-1.193l1.835-2.609L2.996 7.228L3.612 5.274z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
@@ -318,15 +318,15 @@
     <ControlTemplate x:Key="SagaTimeoutIcon">
         <Viewbox Stretch="Uniform">
             <Canvas Width="14.986" Height="15">
+                <Rectangle Canvas.Left="0"
+                           Width="15"
+                           Height="15"
+                           Fill="#FF333333" />
                 <Path Fill="#FFCCCCCC">
                     <Path.Data>
                         <PathGeometry Figures="M10.986 8h-4V4h1v3h3V8z M7.486 3.201c-2.376 0-4.299 1.923-4.299 4.299    c0 2.376 1.923 4.299 4.299 4.299c2.376 0 4.299-1.923 4.299-4.299C11.784 5.124 9.861 3.201 7.486 3.201 M7.486 2    c3.038 0 5.5 2.462 5.5 5.5s-2.462 5.5-5.5 5.5s-5.5-2.462-5.5-5.5S4.448 2 7.486 2z" FillRule="NonZero" />
                     </Path.Data>
                 </Path>
-                <Rectangle Canvas.Left="0"
-                           Width="15"
-                           Height="15"
-                           Fill="#FF333333" />
             </Canvas>
         </Viewbox>
     </ControlTemplate>
