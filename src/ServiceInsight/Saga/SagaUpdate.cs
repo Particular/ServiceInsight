@@ -58,7 +58,7 @@
                 return;
             }
 
-            Values = JsonPropertiesHelper.ProcessValues(StateAfterChange, s => s.TrimStart('[').TrimEnd(']'))
+            Values = JsonPropertiesHelper.ProcessArray(StateAfterChange)
                                          .Select(v => new SagaUpdatedValue(InitiatingMessage.MessageType, v.Key, v.Value))
                                          .ToList();
         }
