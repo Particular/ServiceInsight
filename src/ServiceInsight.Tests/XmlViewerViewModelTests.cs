@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System.Text;
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
@@ -38,6 +39,25 @@
             viewModel.Display(new StoredMessage { Body = new PresentationBody { Text = TestMessage } });
 
             view.DidNotReceive().Display(Arg.Any<string>());
+        }
+
+        [Test]
+        public void Should_not_throw_when_message_has_preamble_header()
+        {
+            ((IViewAware)viewModel).AttachView(view); //Activetes the view
+
+            var messageBodyWithBOM = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble()) + TestMessage;
+
+            var message = new StoredMessage
+            {
+                Body = new PresentationBody
+                {
+                    Text = messageBodyWithBOM
+                }
+            };
+
+            Should.NotThrow(() => viewModel.Display(message));
+            view.Received().Display(Arg.Is(messageBodyWithBOM));
         }
     }
 }

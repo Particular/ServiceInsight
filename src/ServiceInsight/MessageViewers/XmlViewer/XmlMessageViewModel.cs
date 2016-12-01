@@ -1,6 +1,11 @@
 ﻿namespace ServiceInsight.MessageViewers.XmlViewer
 {
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Linq;
     using Caliburn.Micro;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Models;
 
     public class XmlMessageViewModel : Screen, IDisplayMessageBody
@@ -36,7 +41,7 @@
                 return;
             }
 
-            messageView.Display(SelectedMessage.Body.Text);
+            messageView.Display(GetFormatted(SelectedMessage.Body.Text));
         }
 
         public void Display(StoredMessage selectedMessage)
@@ -54,6 +59,25 @@
         public void Clear()
         {
             messageView?.Clear();
+        }
+
+        private string GetFormatted(string message)
+        {
+            try
+            {
+                using (var stringReader = new StringReader(message))
+                using (var xmlReader = new XmlTextReader(stringReader))
+                {
+                    var xml = XDocument.Load(xmlReader);
+                    return xml.ToString();
+                }
+            }
+            catch (Exception)
+            {
+                return message;
+                // It looks like we having issues parsing the xml
+                // Best to do in this circunstances is to still display the text
+            }
         }
     }
 }

@@ -22,25 +22,7 @@
 
         public virtual void Display(string message)
         {
-            if (message == null)
-            {
-                return;
-            }
-
-            var doc = new XmlDocument();
-            var text = message;
-            try
-            {
-                doc.LoadXml(message);
-                text = doc.GetFormatted();
-            }
-            catch (XmlException)
-            {
-                // It looks like we having issues parsing the xml
-                // Best to do in this circunstances is to still display the text
-            }
-
-            document.Document.Text = text;
+            document.Document.Text = message ?? string.Empty;
             foldingStrategy.UpdateFoldings(foldingManager, document.Document);
         }
 
