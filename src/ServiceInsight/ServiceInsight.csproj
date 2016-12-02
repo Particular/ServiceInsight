@@ -172,18 +172,6 @@
       <HintPath>..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ReactiveUI, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-core.5.5.1\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.Blend, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Blend.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.Xaml, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\reactiveui-platforms.5.5.1\lib\net45\ReactiveUI.Xaml.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -257,8 +245,11 @@
     </Compile>
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\BytesExtensions.cs" />
+    <Compile Include="ExtensionMethods\ObservableExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
+    <Compile Include="Framework\Commands\DelegateCommand.cs" />
+    <Compile Include="Framework\Commands\ObservableCommand.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />

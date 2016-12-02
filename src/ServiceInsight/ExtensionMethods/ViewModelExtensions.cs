@@ -1,44 +1,35 @@
 ﻿namespace ServiceInsight.ExtensionMethods
 {
     using System;
-    using System.Linq.Expressions;
+    using System.ComponentModel;
+    using System.Reactive.Linq;
     using System.Windows.Input;
-    using ReactiveUI;
+    using Framework.Commands;
 
     public static class ViewModelExtensions
     {
         // ReSharper disable UnusedParameter.Global
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executAction, IObservable<bool> canExecuteObservable) where TViewModel : class
-        // ReSharper restore UnusedParameter.Global
+
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executeAction, IObservable<bool> canExecuteObservable) where TViewModel : class
         {
-            var command = new ReactiveCommand(canExecuteObservable);
-            command.Subscribe(_ => executAction());
-            return command;
+            return new ObservableCommand(canExecuteObservable, _ => executeAction());
         }
 
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executAction, Expression<Func<TViewModel, bool>> canExecuteSelector) where TViewModel : class
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executeAction, Func<TViewModel, bool> canExecuteSelector) where TViewModel : class, INotifyPropertyChanged
         {
-            var command = new ReactiveCommand(viewModel.ObservableForProperty(canExecuteSelector, b => b));
-            command.Subscribe(_ => executAction());
-            return command;
+            return CreateCommand(viewModel, executeAction, viewModel.Changed().Select(_ => canExecuteSelector(viewModel)));
         }
 
-        // ReSharper disable UnusedParameter.Global
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executAction) where TViewModel : class
-        // ReSharper restore UnusedParameter.Global
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action executeAction) where TViewModel : class
         {
-            var command = new ReactiveCommand();
-            command.Subscribe(_ => executAction());
-            return command;
+            return CreateCommand(viewModel, _ => executeAction());
         }
 
-        // ReSharper disable UnusedParameter.Global
-        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action<object> executAction) where TViewModel : class
-        // ReSharper restore UnusedParameter.Global
+        public static ICommand CreateCommand<TViewModel>(this TViewModel viewModel, Action<object> executeAction) where TViewModel : class
         {
-            var command = new ReactiveCommand();
-            command.Subscribe(arg => executAction(arg));
-            return command;
+            return new DelegateCommand(executeAction);
         }
+
+        // ReSharper restore UnusedParameter.Global
     }
 }

@@ -1,6 +1,7 @@
 namespace ServiceInsight.LogWindow
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Reactive.Linq;
     using System.Threading;
@@ -8,7 +9,7 @@ namespace ServiceInsight.LogWindow
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Interactivity;
-    using ReactiveUI;
+    using ExtensionMethods;
 
     public class LoggingRichTextBoxBehavior : Behavior<RichTextBox>
     {
@@ -53,7 +54,7 @@ namespace ServiceInsight.LogWindow
 
         void OnLogDataChanged(DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var logs = dependencyPropertyChangedEventArgs.NewValue as ReactiveList<LogMessage>;
+            var logs = dependencyPropertyChangedEventArgs.NewValue as ObservableCollection<LogMessage>;
             if (logs == null)
             {
                 paragraph.Inlines.Clear();
@@ -68,9 +69,9 @@ namespace ServiceInsight.LogWindow
                 paragraph.Inlines.Add(new Run(log.Log) { Foreground = log.Brush, FontWeight = log.Weight });
             }
 
-            logSubscription = logs.Changed
-                .Where(e => e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset)
-                .Subscribe(ProcessChange);
+            logSubscription = logs.ChangedCollection()
+                .Where(e => e.EventArgs.Action == NotifyCollectionChangedAction.Add || e.EventArgs.Action == NotifyCollectionChangedAction.Reset)
+                .Subscribe(e => ProcessChange(e.EventArgs));
         }
 
         void ProcessChange(NotifyCollectionChangedEventArgs args)

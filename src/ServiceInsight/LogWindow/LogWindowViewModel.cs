@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.LogWindow
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -11,7 +12,6 @@
     using Caliburn.Micro;
     using ExtensionMethods;
     using Framework;
-    using ReactiveUI;
     using Serilog.Events;
     using Serilog.Formatting;
     using Serilog.Formatting.Display;
@@ -28,7 +28,7 @@
         {
             this.clipboard = clipboard;
 
-            Logs = new ReactiveList<LogMessage>();
+            Logs = new ObservableCollection<LogMessage>();
 
             textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}", CultureInfo.InvariantCulture);
             LogObserver
@@ -39,7 +39,7 @@
             CopyCommand = this.CreateCommand(Copy);
         }
 
-        public ReactiveList<LogMessage> Logs { get; set; }
+        public ObservableCollection<LogMessage> Logs { get; set; }
 
         public ICommand ClearCommand { get; }
 

@@ -1,10 +1,9 @@
 ﻿namespace ServiceInsight.MessageHeaders
 {
-    using System.Linq;
+    using System.Collections.ObjectModel;
     using Caliburn.Micro;
     using Framework.Events;
     using MessageList;
-    using ReactiveUI;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -13,10 +12,10 @@
         public MessageHeadersViewModel(MessageSelectionContext selectionContext)
         {
             selection = selectionContext;
-            KeyValues = new MessageHeadersKeyValueList { ResetChangeThreshold = 0 };
+            KeyValues = new ObservableCollection<MessageHeaderKeyValue>();
         }
 
-        public MessageHeadersKeyValueList KeyValues { get; }
+        public ObservableCollection<MessageHeaderKeyValue> KeyValues { get; }
 
         public void Handle(SelectedMessageChanged @event)
         {
@@ -29,18 +28,10 @@
 
             var headers = storedMessage.Headers;
 
-            using (KeyValues.SuppressChangeNotifications())
+            foreach (var item in headers)
             {
-                KeyValues.AddRange(headers.Select(h => new MessageHeaderKeyValue
-                {
-                    Key = h.Key,
-                    Value = h.Value
-                }));
+                KeyValues.Add(new MessageHeaderKeyValue { Key = item.Key, Value = item.Value });
             }
         }
-    }
-
-    public class MessageHeadersKeyValueList : ReactiveList<MessageHeaderKeyValue>
-    {
     }
 }

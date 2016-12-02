@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Windows;
+    using ExtensionMethods;
 
     public partial class LogWindowView
     {
@@ -25,7 +26,7 @@
 
             Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
-            logSubscription = vm.Logs.ItemsAdded.Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = vm.Logs.Changed().Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }
