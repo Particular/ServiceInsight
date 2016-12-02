@@ -7,7 +7,6 @@
     using System.Windows.Input;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
-    using ServiceInsight.Models;
 
     public interface IMessageListView
     {
@@ -36,12 +35,6 @@
         public void EndDataUpdate()
         {
             grid.EndDataUpdate();
-        }
-
-        void GridOnCurrentItemChanged(object sender, CurrentItemChangedEventArgs currentItemChangedEventArgs)
-        {
-            var msg = currentItemChangedEventArgs.NewItem as StoredMessage;
-            Model.RaiseSelectedMessageChanged(msg);
         }
 
         MessageListViewModel Model => (MessageListViewModel)DataContext;

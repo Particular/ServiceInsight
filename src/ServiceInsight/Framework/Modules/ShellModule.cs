@@ -35,7 +35,7 @@
             builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
             builder.RegisterType<ShellViewModel>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<MessageSelectionContext>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<MessageSelectionContext>().SingleInstance();
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
