@@ -419,7 +419,6 @@
     <Compile Include="ExtensionMethods\ReflectionHelper.cs" />
     <Compile Include="ExtensionMethods\StreamHelper.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
-    <Compile Include="ExtensionMethods\XmlDocumentExtensions.cs" />
     <Compile Include="LogWindow\LogWindowView.xaml.cs">
       <DependentUpon>LogWindowView.xaml</DependentUpon>
     </Compile>
