@@ -509,21 +509,28 @@
                                                 VerticalAlignment="Top"
                                                 Template="{StaticResource SagaTimeoutIcon}" />
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock>
-                                        <Hyperlink Click="Hyperlink_Click"
-                                                   FontSize="16px"
-                                                   FontWeight="Bold"
-                                                   Foreground="{StaticResource SagaBlue}">
-                                            <InlineUIContainer>
-                                                <TextBlock Text="Timeout Requested = " />
-                                            </InlineUIContainer><Run Text=" " />
-                                            <InlineUIContainer>
-                                                <TextBlock Text="{Binding TimeoutFriendly}" />
-                                            </InlineUIContainer>
-                                        </Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
+                                <TextBlock Visibility="{Binding HasBeenProcessed,Converter={StaticResource BoolToVisibilityConverter}}"
+                                        FontSize="16px"
+                                        FontWeight="Bold">
+                                    <Hyperlink Click="Hyperlink_Click" Foreground="{StaticResource SagaBlue}">
+                                        <InlineUIContainer>
+                                            <TextBlock Text="Timeout Requested = " />
+                                        </InlineUIContainer>
+                                        <InlineUIContainer>
+                                            <TextBlock Text="{Binding TimeoutFriendly}" />
+                                        </InlineUIContainer>
+                                    </Hyperlink>
+                                </TextBlock>
+                                <TextBlock Visibility="{Binding HasBeenProcessed,Converter={StaticResource BoolToVisibilityConverterInverted}}"
+                                        FontSize="16px"
+                                        FontWeight="Bold">
+                                    <InlineUIContainer>
+                                        <TextBlock Text="Timeout Requested = " />
+                                    </InlineUIContainer>
+                                    <InlineUIContainer>
+                                        <TextBlock Text="{Binding TimeoutFriendly}" />
+                                    </InlineUIContainer>
+                                </TextBlock>
                             </StackPanel>
                         </Border>
                     </Grid>

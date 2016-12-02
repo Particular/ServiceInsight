@@ -126,6 +126,8 @@
             }
         }
 
+        public bool HasBeenProcessed { get; set; }
+
         string GetFriendly(int time, string text)
         {
             if (time > 0)
