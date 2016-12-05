@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.MessageViewers.JsonViewer
 {
-    using System;
     using System.Windows.Media;
     using ICSharpCode.AvalonEdit.Folding;
     using ICSharpCode.AvalonEdit.Indentation;

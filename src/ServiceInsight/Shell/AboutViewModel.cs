@@ -6,9 +6,9 @@ namespace ServiceInsight.Shell
     using System.Reflection;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
-    using ServiceControl;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
+    using ServiceInsight.ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {

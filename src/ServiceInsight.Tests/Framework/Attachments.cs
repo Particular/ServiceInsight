@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.Tests.Framework
 {
-    using System;
     using NUnit.Framework;
     using ServiceInsight.Framework.Attachments;
 

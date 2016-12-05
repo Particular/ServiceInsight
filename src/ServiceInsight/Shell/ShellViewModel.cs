@@ -7,27 +7,26 @@
     using System.Windows.Input;
     using System.Windows.Threading;
     using Caliburn.Micro;
-    using Explorer;
-    using Explorer.EndpointExplorer;
-    using ExtensionMethods;
-    using Framework;
-    using Framework.Rx;
-    using global::ServiceInsight.SequenceDiagram;
-    using LogWindow;
-    using MessageFlow;
-    using MessageHeaders;
-    using MessageList;
-    using MessageProperties;
-    using MessageViewers;
-    using Options;
-    using Saga;
+    using ServiceInsight.Explorer;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.Rx;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
-    using Settings;
-    using Startup;
-    using IScreen = Caliburn.Micro.IScreen;
+    using ServiceInsight.LogWindow;
+    using ServiceInsight.MessageFlow;
+    using ServiceInsight.MessageHeaders;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.MessageProperties;
+    using ServiceInsight.MessageViewers;
+    using ServiceInsight.Options;
+    using ServiceInsight.Saga;
+    using ServiceInsight.SequenceDiagram;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Startup;
 
     public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
         IHandle<WorkStarted>,
