@@ -48,14 +48,14 @@
 
                 <TextBlock Style="{StaticResource InfoText}">
                     <Run Text="Version  " />
-                    <Run Text="{Binding AppVersion}" />
+                    <Run Text="{Binding AppVersion, Mode=OneWay}" />
                     <Run Text="  Commit hash:  " />
-                    <Run Text="{Binding CommitHash}" />
+                    <Run Text="{Binding CommitHash, Mode=OneWay}" />
                 </TextBlock>
 
                 <TextBlock Style="{StaticResource InfoText}" Visibility="{Binding IsSplash, Converter={StaticResource BoolToVisibilityConverterInverted}}">
                     <Run Text="ServiceControl:  " />
-                    <Run Text="{Binding ServiceControlVersion}" />
+                    <Run Text="{Binding ServiceControlVersion, Mode=OneWay}" />
                 </TextBlock>
             </StackPanel>
 

@@ -164,7 +164,7 @@
                                AutomationProperties.AutomationId="RegistrationStatus"
                                CategoryName="Status"
                                Content="{Binding StatusBarManager.Registration,
-                                                 Mode=TwoWay}" />
+                                                 Mode=OneWay}" />
 
             <dxb:BarStaticItem x:Name="Status"
                                AutoSizeMode="Fill"
