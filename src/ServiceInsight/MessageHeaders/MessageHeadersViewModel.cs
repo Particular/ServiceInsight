@@ -2,9 +2,9 @@
 {
     using System.Linq;
     using Caliburn.Micro;
+    using Framework.Events;
+    using MessageList;
     using ReactiveUI;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.MessageList;
 
     public class MessageHeadersViewModel : Screen, IHandle<SelectedMessageChanged>
     {
@@ -13,10 +13,10 @@
         public MessageHeadersViewModel(MessageSelectionContext selectionContext)
         {
             selection = selectionContext;
-            KeyValues = new ReactiveList<MessageHeaderKeyValue> { ResetChangeThreshold = 0 };
+            KeyValues = new MessageHeadersKeyValueList { ResetChangeThreshold = 0 };
         }
 
-        public ReactiveList<MessageHeaderKeyValue> KeyValues { get; }
+        public MessageHeadersKeyValueList KeyValues { get; }
 
         public void Handle(SelectedMessageChanged @event)
         {
@@ -38,5 +38,9 @@
                 }));
             }
         }
+    }
+
+    public class MessageHeadersKeyValueList : ReactiveList<MessageHeaderKeyValue>
+    {
     }
 }
