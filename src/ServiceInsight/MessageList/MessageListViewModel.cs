@@ -293,11 +293,6 @@
             view?.BeginDataUpdate();
         }
 
-        public void RaiseSelectedMessageChanged(StoredMessage currentItem)
-        {
-            Selection.SelectedMessage = currentItem;
-        }
-
         public void BringIntoView(StoredMessage msg)
         {
             eventAggregator.PublishOnUIThread(new ScrollDiagramItemIntoView(msg));
