@@ -249,8 +249,6 @@
 
         public SagaFooter Footer { get; private set; }
 
-        public bool ShowEndpoints { get; set; }
-
         public bool ShowMessageData { get; set; }
 
         public void ShowFlow()

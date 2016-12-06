@@ -163,43 +163,6 @@
             </Canvas>
         </Viewbox>
     </ControlTemplate>
-    <ControlTemplate x:Key="ReceivingEndpoint">
-        <Viewbox Stretch="Uniform">
-            <Canvas Width="14">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180" />
-                        <TranslateTransform X="9" Y="10" />
-                        <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-                <Polygon Fill="#FF666666"
-                         FillRule="NonZero"
-                         Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " />
-                <Polygon Fill="#FF666666"
-                         FillRule="NonZero"
-                         Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " />
-            </Canvas>
-        </Viewbox>
-    </ControlTemplate>
-    <ControlTemplate x:Key="SendingEndpoint">
-        <Viewbox Stretch="Uniform">
-            <Canvas Width="14">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <TranslateTransform X="9" Y="10" />
-                        <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-                <Polygon Fill="#FF666666"
-                         FillRule="NonZero"
-                         Points="4,-5.5 4,-2.5 0,-2.5 0,2.5 4,2.5 4,5.5 -7,5.5 -7,-5.5     " />
-                <Polygon Fill="#FF666666"
-                         FillRule="NonZero"
-                         Points="1,1.5 7,1.5 7,-1.5 1,-1.5     " />
-            </Canvas>
-        </Viewbox>
-    </ControlTemplate>
     <ControlTemplate x:Key="Exception">
         <Viewbox Stretch="Uniform">
             <Canvas Width="17" Height="13">
