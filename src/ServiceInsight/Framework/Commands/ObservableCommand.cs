@@ -18,7 +18,6 @@ namespace ServiceInsight.Framework.Commands
             this.action = action;
 
             canExecuteSubscription = canExecuteObservable
-                .ObserveOnDispatcher()
                 .Subscribe(b =>
                 {
                     latest = b;
