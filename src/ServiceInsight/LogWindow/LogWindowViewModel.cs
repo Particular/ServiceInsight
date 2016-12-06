@@ -35,8 +35,8 @@
                 .ObserveOnDispatcher()
                 .Subscribe(UpdateLog);
 
-            ClearCommand = this.CreateCommand(Clear);
-            CopyCommand = this.CreateCommand(Copy);
+            ClearCommand = Command.Create(Clear);
+            CopyCommand = Command.Create(Copy);
         }
 
         public ObservableCollection<LogMessage> Logs { get; set; }

@@ -36,7 +36,7 @@
             this.serviceControl = serviceControl;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
-            CopyCommand = this.CreateCommand(arg => clipboard.CopyTo(InstallScriptText));
+            CopyCommand = Command.Create(arg => clipboard.CopyTo(InstallScriptText));
         }
 
         public string InstallScriptText { get; set; }

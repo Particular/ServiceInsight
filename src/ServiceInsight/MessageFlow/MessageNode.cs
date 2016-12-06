@@ -33,7 +33,7 @@
             SearchByMessageIDCommand = owner.SearchByMessageIDCommand;
             RetryMessageCommand = owner.RetryMessageCommand;
 
-            message.ObservableForProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
+            message.ChangedProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
             {
                 OnPropertyChanged("HasFailed");
                 OnPropertyChanged("HasRetried");

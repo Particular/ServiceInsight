@@ -61,7 +61,7 @@
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
-            CopyHeadersCommand = this.CreateCommand(CopyHeaders,
+            CopyHeadersCommand = Command.Create(CopyHeaders,
                 generalHeaderDisplay.Changed
                 .Where(pc => pc.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
                 .Select(s => !((string)s.Value).IsEmpty()));

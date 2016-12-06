@@ -14,7 +14,7 @@
             SagaName = sagaName;
             Name = propertyName;
             NewValue = propertyValue;
-            ShowEntireContentCommand = this.CreateCommand(ShowEntireContent);
+            ShowEntireContentCommand = Command.Create(ShowEntireContent);
         }
 
         public string SagaName { get; }

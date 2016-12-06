@@ -33,8 +33,8 @@
             this.settingProvider = settingProvider;
             PageSize = 50; //NOTE: Do we need to change this?
 
-            SearchCommand = this.CreateCommand(Search, vm => vm.CanSearch);
-            CancelSearchCommand = this.CreateCommand(CancelSearch, vm => vm.CanCancelSearch);
+            SearchCommand = Command.Create(this, Search, vm => vm.CanSearch);
+            CancelSearchCommand = Command.Create(this, CancelSearch, vm => vm.CanCancelSearch);
         }
 
         protected override void OnActivate()

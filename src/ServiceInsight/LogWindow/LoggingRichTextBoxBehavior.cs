@@ -70,8 +70,8 @@ namespace ServiceInsight.LogWindow
             }
 
             logSubscription = logs.ChangedCollection()
-                .Where(e => e.EventArgs.Action == NotifyCollectionChangedAction.Add || e.EventArgs.Action == NotifyCollectionChangedAction.Reset)
-                .Subscribe(e => ProcessChange(e.EventArgs));
+                .Where(e => e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset)
+                .Subscribe(ProcessChange);
         }
 
         void ProcessChange(NotifyCollectionChangedEventArgs args)

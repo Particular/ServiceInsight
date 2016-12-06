@@ -102,22 +102,22 @@
             InitializeAutoRefreshTimer();
             InitializeIdleTimer();
 
-            ShutDownCommand = this.CreateCommand(() => this.appCommander.ShutdownImmediately());
-            AboutCommand = this.CreateCommand(() => this.windowManager.ShowDialog<AboutViewModel>());
-            HelpCommand = this.CreateCommand(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
-            ConnectToServiceControlCommand = this.CreateCommand(ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+            ShutDownCommand = Command.Create(() => this.appCommander.ShutdownImmediately());
+            AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
+            HelpCommand = Command.Create(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
+            ConnectToServiceControlCommand = Command.Create(this, ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
-            RefreshAllCommand = this.CreateCommand(RefreshAll);
+            RefreshAllCommand = Command.Create(RefreshAll);
 
-            RegisterCommand = this.CreateCommand(() =>
+            RegisterCommand = Command.Create(() =>
             {
                 this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
                 DisplayRegistrationStatus();
             });
 
-            ResetLayoutCommand = this.CreateCommand(() => View.OnResetLayout(settingsProvider));
+            ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
-            OptionsCommand = this.CreateCommand(() => windowManager.ShowDialog<OptionsViewModel>());
+            OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
         }
 
         protected override void OnViewAttached(object view, object context)

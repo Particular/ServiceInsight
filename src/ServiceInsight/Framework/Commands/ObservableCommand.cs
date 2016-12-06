@@ -2,6 +2,7 @@ namespace ServiceInsight.Framework.Commands
 {
     using System;
     using System.Reactive.Disposables;
+    using System.Reactive.Linq;
     using System.Threading;
     using System.Windows.Input;
 
@@ -17,6 +18,7 @@ namespace ServiceInsight.Framework.Commands
             this.action = action;
 
             canExecuteSubscription = canExecuteObservable
+                .ObserveOnDispatcher()
                 .Subscribe(b =>
                 {
                     latest = b;

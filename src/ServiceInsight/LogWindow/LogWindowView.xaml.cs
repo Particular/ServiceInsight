@@ -26,7 +26,7 @@
 
             Interlocked.Exchange(ref logSubscription, null)?.Dispose();
 
-            logSubscription = vm.Logs.Changed().Subscribe(_ => richTextBox.ScrollToEnd());
+            logSubscription = vm.Logs.ChangedCollection().Subscribe(_ => richTextBox.ScrollToEnd());
         }
     }
 }

@@ -283,7 +283,7 @@
       <DependentUpon>ExceptionHandler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Framework\Modules\AutoAttachmentModule.cs" />
-    <Compile Include="ExtensionMethods\ViewModelExtensions.cs" />
+    <Compile Include="ExtensionMethods\Command.cs" />
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageList\MessageSelectionContext.cs" />
