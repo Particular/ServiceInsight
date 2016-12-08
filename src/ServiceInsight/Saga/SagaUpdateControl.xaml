@@ -6,10 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:ServiceInsight.Models"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             Background="White"
              d:DataContext="{d:DesignInstance {x:Type local:SagaUpdate}}"
              d:DesignHeight="900"
              d:DesignWidth="900"
-             Background="White"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -39,21 +39,6 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
                             <StackPanel>
-                                <TextBlock x:Name="contentPresenter"
-                                           Margin="{TemplateBinding Padding}"
-                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Text="{TemplateBinding Content}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal" />
@@ -123,6 +108,22 @@
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
+
+                                <TextBlock x:Name="contentPresenter"
+                                           Margin="{TemplateBinding Padding}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Text="{TemplateBinding Content}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </StackPanel>
                         </ControlTemplate>
                     </Setter.Value>
@@ -167,12 +168,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="MessageTop">
-                <Border x:Name="NoEndpointsBorder"
-                        MinWidth="220"
-                        d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}"
-                        Background="{StaticResource MessageBackground}"
-                        Padding="2">
-                    <Border.Resources>
+                <Grid d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
                         <SolidColorBrush x:Key="EndpointBackground" Color="White" />
                         <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
@@ -180,61 +181,84 @@
                             <Setter Property="FontSize" Value="9" />
                             <Setter Property="Foreground" Value="{StaticResource EndpointForeground}" />
                         </Style>
-                    </Border.Resources>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    </Grid.Resources>
 
-                        <ContentControl Grid.Column="0"
-                                        Width="20"
-                                        Margin="0,4,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Template="{StaticResource CommandIcon}"
-                                        ToolTip="Command"
-                                        Visibility="{Binding IsCommandMessage,
-                                                             Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <ContentControl Grid.Column="0"
-                                        Width="22"
-                                        Margin="0,4,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Template="{StaticResource EventIcon}"
-                                        ToolTip="Event"
-                                        Visibility="{Binding IsEventMessage,
-                                                             Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <ContentControl Grid.Column="0"
-                                        Width="24"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Template="{StaticResource TimeoutIcon}"
-                                        ToolTip="Timeout"
-                                        Visibility="{Binding IsTimeout,
-                                                             Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <StackPanel x:Name="OriginatingEndPoint"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Height="14"
+                                Background="{StaticResource EndpointBackground}"
+                                Orientation="Horizontal"
+                                ToolTip="Sending Endpoint"
+                                Visibility="{Binding ElementName=Surface,
+                                                     Path=DataContext.ShowEndpoints,
+                                                     Converter={StaticResource BoolToVisibilityHiddenConverter}}">
+                        <ContentControl Margin="3,0,3,0" Template="{StaticResource SendingEndpoint}" />
+                        <TextBlock FontSize="10px"
+                                   Style="{StaticResource MessageEndpointText}"
+                                   Text="{Binding OriginatingEndpoint}" />
+                    </StackPanel>
 
-                        <ContentControl x:Name="FailedMessageMarker"
+                    <Border x:Name="NoEndpointsBorder"
+                            Grid.Row="1"
+                            MinWidth="220"
+                            Padding="2"
+                            Background="{StaticResource MessageBackground}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl x:Name="FailedMessageMarker"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource FailedMessageMarker}" />
+
+                            <ContentControl Grid.Column="0"
+                                            Width="20"
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource CommandIcon}"
+                                            ToolTip="Command"
+                                            Visibility="{Binding IsCommandMessage,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <ContentControl Grid.Column="0"
+                                            Width="22"
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource EventIcon}"
+                                            ToolTip="Event"
+                                            Visibility="{Binding IsEventMessage,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <ContentControl Grid.Column="0"
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource TimeoutIcon}"
+                                            ToolTip="Timeout"
+                                            Visibility="{Binding IsTimeout,
+                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                            <StackPanel x:Name="MessageTypeBox"
                                         Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource FailedMessageMarker}" />
-
-                        <StackPanel x:Name="MessageTypeBox"
-                                    Grid.Column="1"
-                                    Margin="0,0,10,0"
-                                    VerticalAlignment="Center">
-                            <TextBlock FontSize="14px"
-                                       FontWeight="Bold"
-                                       Text="{Binding MessageFriendlyTypeName}" />
-                            <TextBlock FontSize="14px" Text="{Binding TimeSent, TargetNullValue='TimeSent value unknown'}" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                                        Margin="0,0,10,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock FontSize="14px"
+                                           FontWeight="Bold"
+                                           Text="{Binding MessageFriendlyTypeName}" />
+                                <TextBlock FontSize="14px" Text="{Binding TimeSent, TargetNullValue='TimeSent value unknown'}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
 
                 <DataTemplate.Triggers>
-                    <DataTrigger d:DataContext="{d:DesignInstance local:SagaMessage}"
-                                 Binding="{Binding IsSelected}"
+                    <DataTrigger Binding="{Binding IsSelected}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
                                  Value="True">
                         <DataTrigger.Setters>
                             <Setter TargetName="NoEndpointsBorder" Property="BorderBrush" Value="Black" />
@@ -246,14 +270,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="MessageBottom">
-                <Border x:Name="MessageDetails"
-                        d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}"
-                        BorderBrush="{StaticResource MessageBackground}"
-                        BorderThickness="1,0,1,1"
-                        Visibility="{Binding ElementName=Surface,
-                                             Path=DataContext.ShowMessageData,
-                                             Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Border.Resources>
+                <Grid d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
                         <SolidColorBrush x:Key="EndpointBackground" Color="White" />
                         <SolidColorBrush x:Key="EndpointForeground" Color="#666666" />
 
@@ -261,24 +283,50 @@
                             <Setter Property="FontSize" Value="9" />
                             <Setter Property="Foreground" Value="{StaticResource EndpointForeground}" />
                         </Style>
-                    </Border.Resources>
+                    </Grid.Resources>
 
-                    <StackPanel x:Name="MessageDataPanel" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <ItemsControl x:Name="MessageData"
-                                      ItemTemplate="{StaticResource MessageDataItem}"
-                                      ItemsSource="{Binding Data}"
-                                      Padding="4" />
-                        <TextBlock x:Name="EmptyPropertyText"
-                                   HorizontalAlignment="Center"
-                                   Foreground="Black"
-                                   Text="Empty"
-                                   Visibility="Collapsed" />
+                    <Border x:Name="MessageDetails"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            BorderBrush="{StaticResource MessageBackground}"
+                            BorderThickness="1,0,1,1"
+                            Visibility="{Binding ElementName=Surface,
+                                                 Path=DataContext.ShowMessageData,
+                                                 Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel x:Name="MessageDataPanel" Visibility="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ItemsControl x:Name="MessageData"
+                                          Padding="4"
+                                          ItemTemplate="{StaticResource MessageDataItem}"
+                                          ItemsSource="{Binding Data}" />
+                            <TextBlock x:Name="EmptyPropertyText"
+                                       HorizontalAlignment="Center"
+                                       Foreground="Black"
+                                       Text="Empty"
+                                       Visibility="Collapsed" />
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel x:Name="ReceivingEndPoint"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="14"
+                                VerticalAlignment="Center"
+                                Background="{StaticResource EndpointBackground}"
+                                Orientation="Horizontal"
+                                ToolTip="Processing Endpoint"
+                                Visibility="{Binding ElementName=Surface,
+                                                     Path=DataContext.ShowEndpoints,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ContentControl Margin="3,0,3,0" Template="{StaticResource ReceivingEndpoint}" />
+                        <TextBlock FontSize="10px"
+                                   Style="{StaticResource MessageEndpointText}"
+                                   Text="{Binding ReceivingEndpoint}" />
                     </StackPanel>
-                </Border>
+                </Grid>
 
                 <DataTemplate.Triggers>
-                    <DataTrigger d:DataContext="{d:DesignInstance local:SagaMessage}"
-                                 Binding="{Binding ShowData}"
+                    <DataTrigger Binding="{Binding ShowData}"
+                                 d:DataContext="{d:DesignInstance local:SagaMessage}"
                                  Value="False">
                         <DataTrigger.Setters>
                             <Setter TargetName="EmptyPropertyText" Property="Visibility" Value="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -288,7 +336,10 @@
             </DataTemplate>
 
             <DataTemplate x:Key="Message">
-                <Border x:Name="EndpointsBorder" d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}">
+                <Border x:Name="EndpointsBorder"
+                        BorderBrush="Black"
+                        BorderThickness="0"
+                        d:DataContext="{d:DesignInstance {x:Type local:SagaMessage}}">
                     <Grid x:Name="RootGrid"
                           Focusable="True"
                           MouseLeftButtonUp="RootGrid_MouseLeftButtonUp">
@@ -304,10 +355,20 @@
                                         ContentTemplate="{StaticResource MessageBottom}" />
                     </Grid>
                 </Border>
+
+                <DataTemplate.Triggers>
+                    <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaMessage}">
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ElementName=Surface, Path=DataContext.ShowEndpoints}" Value="True" />
+                            <Condition Binding="{Binding IsSelected}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="EndpointsBorder" Property="BorderThickness" Value="2" />
+                    </MultiDataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
 
             <DataTemplate x:Key="UpdatedValuesTemplate">
-                <Grid d:DataContext="{d:DesignInstance local:SagaUpdatedValue}" Background="{StaticResource SagaBackground}">
+                <Grid Background="{StaticResource SagaBackground}" d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
                                 Visibility="{Binding IsValueChanged,
@@ -388,8 +449,8 @@
 
             <DataTemplate x:Key="AllValuesTemplate">
                 <Grid x:Name="AllValuesRoot"
-                      d:DataContext="{d:DesignInstance local:SagaUpdatedValue}"
-                      Background="{StaticResource SagaBackground}">
+                      Background="{StaticResource SagaBackground}"
+                      d:DataContext="{d:DesignInstance local:SagaUpdatedValue}">
                     <ContentPresenter ContentSource="{Binding}" ContentTemplate="{StaticResource UpdatedValuesTemplate}" />
                     <StackPanel Margin="0 6 0 0"
                                 Orientation="Horizontal"
@@ -448,10 +509,9 @@
                                                 VerticalAlignment="Top"
                                                 Template="{StaticResource SagaTimeoutIcon}" />
 
-                                <TextBlock FontSize="16px"
-                                           FontWeight="Bold"
-                                           Visibility="{Binding HasBeenProcessed,
-                                                                Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Visibility="{Binding HasBeenProcessed,Converter={StaticResource BoolToVisibilityConverter}}"
+                                        FontSize="16px"
+                                        FontWeight="Bold">
                                     <Hyperlink Click="Hyperlink_Click" Foreground="{StaticResource SagaBlue}">
                                         <InlineUIContainer>
                                             <TextBlock Text="Timeout Requested = " />
@@ -461,10 +521,9 @@
                                         </InlineUIContainer>
                                     </Hyperlink>
                                 </TextBlock>
-                                <TextBlock FontSize="16px"
-                                           FontWeight="Bold"
-                                           Visibility="{Binding HasBeenProcessed,
-                                                                Converter={StaticResource BoolToVisibilityConverterInverted}}">
+                                <TextBlock Visibility="{Binding HasBeenProcessed,Converter={StaticResource BoolToVisibilityConverterInverted}}"
+                                        FontSize="16px"
+                                        FontWeight="Bold">
                                     <InlineUIContainer>
                                         <TextBlock Text="Timeout Requested = " />
                                     </InlineUIContainer>
@@ -583,6 +642,18 @@
                 <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageTop}" />
             </Grid>
 
+            <Grid x:Name="InitialMessageBottom"
+                  Grid.Row="1"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Black" BorderThickness="0 2 0 0">
+                    <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageBottom}" />
+                </Border>
+            </Grid>
+
             <Border x:Name="Middle"
                     Grid.Column="1"
                     Background="{StaticResource SagaBackground}">
@@ -618,18 +689,6 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-
-            <Grid x:Name="InitialMessageBottom"
-                  Grid.Row="1"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="InitialMessageColumn" />
-                </Grid.ColumnDefinitions>
-                <Border BorderBrush="Black" BorderThickness="0 2 0 0">
-                    <ContentPresenter Content="{Binding InitiatingMessage}" ContentTemplate="{StaticResource MessageBottom}" />
-                </Border>
-            </Grid>
 
             <Grid x:Name="Properties"
                   Grid.Row="1"
@@ -713,6 +772,7 @@
                              Stretch="Fill" />
 
                     <ItemsControl Grid.Row="2"
+                                  Margin="0 -15 0 0"
                                   HorizontalAlignment="Center"
                                   ItemTemplate="{StaticResource Message}"
                                   ItemsSource="{Binding NonTimeoutMessages}" />
