@@ -10,8 +10,8 @@
 *.DOT	diff=astextplain
 *.pdf	diff=astextplain
 *.PDF	diff=astextplain
-*.rtf	diff=astextplain
-*.RTF	diff=astextplain
+*.rtf	-text diff=astextplain
+*.RTF	-text diff=astextplain
 
 *.exe	-text -diff
 *.jpg  	-text -diff
