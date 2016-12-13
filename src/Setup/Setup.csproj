@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="License.rtf" />
     <None Include="packages.config" />
     <None Include="ServiceInsight.aip">
       <SubType>Designer</SubType>
@@ -61,6 +62,7 @@
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
     </PropertyGroup>
     <Copy SourceFiles="ServiceInsight.aip" DestinationFolder="$(IntermediateOutputPath)" />
+    <Copy SourceFiles="License.rtf" DestinationFolder="$(IntermediateOutputPath)" />
     <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)res\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)ServiceInsight.aip /NewPathVariable -name SI_PATH -value $(SolutionDir)ServiceInsight\bin\$(Configuration) -valuetype Folder" />
