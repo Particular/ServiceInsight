@@ -5,7 +5,6 @@
     using System.Xml;
     using System.Xml.Linq;
     using Caliburn.Micro;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Models;
 
     public class XmlMessageViewModel : Screen, IDisplayMessageBody

@@ -94,22 +94,22 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <DataTemplate x:Key="TextTemplate">
+            <TextBlock Text="{Binding Value}" d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersKeyValueList}" />
+        </DataTemplate>
+        
+        <DataTemplate x:Key="ExceptionTemplate">
+            <controls:MvvmTextEditor d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersKeyValueList}"
+                                     FontFamily="Consolas"
+                                     FontSize="10pt"
+                                     IsReadOnly="true"
+                                     ScrollViewer.CanContentScroll="False"
+                                     Style="{StaticResource MvvmTextEditorScrollFixStyle}"
+                                     SyntaxHighlighting="StackTrace"
+                                     Text="{Binding Value}" />
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="TextTemplate">
-                <TextBlock Text="{Binding Value}" />
-            </DataTemplate>
-            <DataTemplate x:Key="ExceptionTemplate">
-                <controls:MvvmTextEditor FontFamily="Consolas"
-                                         FontSize="10pt"
-                                         IsReadOnly="true"
-                                         ScrollViewer.CanContentScroll="False"
-                                         Style="{StaticResource MvvmTextEditorScrollFixStyle}"
-                                         SyntaxHighlighting="StackTrace"
-                                         Text="{Binding Value}" />
-            </DataTemplate>
-        </Grid.Resources>
         <DataGrid Name="gridView"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
@@ -127,7 +127,6 @@
                   VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Key}" Header="Key" />
-                <!--<DataGridTextColumn Header="Value"  Binding="{Binding Value}"/>-->
                 <DataGridTemplateColumn ClipboardContentBinding="{Binding Value}" Header="Value">
                     <DataGridTemplateColumn.CellTemplateSelector>
                         <messageHeaders:MessageHeaderValueTemplateSelector ExceptionTemplate="{StaticResource ExceptionTemplate}" TextTemplate="{StaticResource TextTemplate}" />

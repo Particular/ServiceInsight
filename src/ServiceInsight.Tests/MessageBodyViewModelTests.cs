@@ -39,7 +39,7 @@
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, eventAggregator, workNotifier, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, workNotifier, selection);
         }
 
         [Test]

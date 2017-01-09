@@ -18,7 +18,6 @@
     {
         readonly IServiceControl serviceControl;
         readonly IWorkNotifier workNotifier;
-        readonly IEventAggregator eventAggregator;
         readonly MessageSelectionContext selection;
         static Dictionary<string, MessageContentType> contentTypeMaps;
 
@@ -39,12 +38,10 @@
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
             IServiceControl serviceControl,
-            IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
         {
             this.serviceControl = serviceControl;
-            this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             selection = selectionContext;
 

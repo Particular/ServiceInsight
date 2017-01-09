@@ -17,7 +17,7 @@
                     <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
                     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
                     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#000" />
-                    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#007AC7" />
+                    <SolidColorBrush x:Key="SelectedNodeBackgroundBrush" Color="#007AC7" />
 
                     <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
                         <GradientBrush.GradientStops>
@@ -150,7 +150,7 @@
                                 <Setter TargetName="Icon" Property="Visibility" Value="Hidden" />
                             </Trigger>
                             <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedNodeBackgroundBrush}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
@@ -210,7 +210,7 @@
                                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                             <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedNodeBackgroundBrush}" />
                             </Trigger>
                             <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
                                 <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="4" />

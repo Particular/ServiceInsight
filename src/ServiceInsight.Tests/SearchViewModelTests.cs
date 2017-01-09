@@ -15,13 +15,12 @@
     public sealed class SearchViewModelTests : IDisposable
     {
         SearchBarViewModel viewModel;
-        CommandLineArgParser argParser;
-        ISettingsProvider settingProvider;
 
         public SearchViewModelTests()
         {
-            argParser = Substitute.For<CommandLineArgParser>();
-            settingProvider = Substitute.For<ISettingsProvider>();
+            var argParser = Substitute.For<CommandLineArgParser>();
+            var settingProvider = Substitute.For<ISettingsProvider>();
+
             viewModel = new SearchBarViewModel(argParser, settingProvider);
         }
 

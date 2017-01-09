@@ -139,8 +139,10 @@
             {
                 if (elements.Count > 200)
                 {
-                    var missingJObject = new JsonObject();
-                    missingJObject["missing_data"] = true;
+                    var missingJObject = new JsonObject
+                    {
+                        ["missing_data"] = true
+                    };
 
                     elements = elements.Cast<object>().Take(100)
                         .Concat(new[] { missingJObject })
