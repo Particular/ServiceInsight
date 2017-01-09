@@ -7,12 +7,13 @@
     public class SagaUpdatedValue : PropertyChangedBase
     {
         public const byte MaxValueLength = 30;
+        public const string NullValue = "null";
 
         public SagaUpdatedValue(string sagaName, string propertyName, string propertyValue)
         {
             SagaName = sagaName;
             Name = propertyName;
-            NewValue = propertyValue;
+            NewValue = propertyValue ?? NullValue;
             ShowEntireContentCommand = this.CreateCommand(ShowEntireContent);
         }
 
@@ -53,7 +54,7 @@
 
         public void UpdateOldValue(SagaUpdatedValue oldValueHolder)
         {
-            OldValue = oldValueHolder != null ? oldValueHolder.NewValue : string.Empty;
+            OldValue = oldValueHolder != null ? oldValueHolder.NewValue ?? NullValue : string.Empty;
         }
     }
 }
