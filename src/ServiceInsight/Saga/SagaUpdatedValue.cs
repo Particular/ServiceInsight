@@ -3,6 +3,7 @@
     using System.Windows.Input;
     using Caliburn.Micro;
     using ExtensionMethods;
+    using Framework;
     using Humanizer;
 
     public class SagaUpdatedValue : PropertyChangedBase

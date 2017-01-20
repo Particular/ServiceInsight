@@ -1,10 +1,11 @@
-﻿namespace ServiceInsight.ExtensionMethods
+﻿namespace ServiceInsight.Framework
 {
     using System;
     using System.ComponentModel;
     using System.Reactive.Linq;
     using System.Windows.Input;
-    using Framework.Commands;
+    using Commands;
+    using ExtensionMethods;
 
     public static class Command
     {

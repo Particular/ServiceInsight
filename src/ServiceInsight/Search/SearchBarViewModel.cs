@@ -7,6 +7,7 @@
     using Caliburn.Micro;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
+    using Framework;
     using MessageList;
     using Models;
     using ServiceInsight.Framework.Events;
