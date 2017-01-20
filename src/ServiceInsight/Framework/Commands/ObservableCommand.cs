@@ -3,7 +3,6 @@ namespace ServiceInsight.Framework.Commands
     using System;
     using System.Reactive.Disposables;
     using System.Reactive.Linq;
-    using System.Threading;
     using System.Windows.Input;
 
     class ObservableCommand : ICommand
@@ -44,7 +43,8 @@ namespace ServiceInsight.Framework.Commands
 
         public void Dispose()
         {
-            Interlocked.Exchange(ref canExecuteSubscription, null)?.Dispose();
+            canExecuteSubscription?.Dispose();
+            canExecuteSubscription = null;
         }
 
         private IDisposable StartExecuting()
