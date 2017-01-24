@@ -27,6 +27,7 @@
     public class XamlIconsTests
     {
         [Test]
+        [Explicit]
         [TestCaseSource(typeof(XamlIconsTests), nameof(GetControlTemplates))]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void ApproveControlTemplate(string resourceName)
@@ -44,6 +45,7 @@
         }
 
         [Test]
+        [Explicit]
         [TestCaseSource(typeof(XamlIconsTests), nameof(GetDrawingImages))]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void ApproveDrawingImage(string resourceName)
@@ -61,6 +63,7 @@
         }
 
         [Test]
+        [Explicit]
         [TestCaseSource(typeof(XamlIconsTests), nameof(GetGeometries))]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void ApproveGeometry(string resourceName)
