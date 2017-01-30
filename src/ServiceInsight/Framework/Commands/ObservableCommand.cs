@@ -5,7 +5,7 @@ namespace ServiceInsight.Framework.Commands
     using System.Reactive.Linq;
     using System.Windows.Input;
 
-    class ObservableCommand : ICommand
+    class ObservableCommand : ICommand, IDisposable
     {
         private Action<object> action;
         private IDisposable canExecuteSubscription;
