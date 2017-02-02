@@ -5,10 +5,9 @@ namespace ServiceInsight.Framework.Commands
     using System.Reactive.Linq;
     using System.Windows.Input;
 
-    class ObservableCommand : ICommand, IDisposable
+    class ObservableCommand : ICommand
     {
         private Action<object> action;
-        private IDisposable canExecuteSubscription;
         private bool latest;
         private bool isExecuting;
 
@@ -16,7 +15,7 @@ namespace ServiceInsight.Framework.Commands
         {
             this.action = action;
 
-            canExecuteSubscription = canExecuteObservable
+            canExecuteObservable
                 .Subscribe(b =>
                 {
                     latest = b;
@@ -36,15 +35,9 @@ namespace ServiceInsight.Framework.Commands
             }
         }
 
-        public void RaiseCanExecuteChanged()
+        private void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Dispose()
-        {
-            canExecuteSubscription?.Dispose();
-            canExecuteSubscription = null;
         }
 
         private IDisposable StartExecuting()
