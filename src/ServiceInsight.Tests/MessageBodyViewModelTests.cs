@@ -2,10 +2,8 @@
 {
     using System;
     using Caliburn.Micro;
-    using Microsoft.Reactive.Testing;
     using NSubstitute;
     using NUnit.Framework;
-    using ReactiveUI.Testing;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
@@ -45,22 +43,17 @@
         [Test]
         public void Should_load_body_content_when_body_tab_is_already_selected()
         {
-            new TestScheduler().With(sched =>
-            {
-                const string uri = "http://localhost:3333/api/somemessageid/body";
+            const string uri = "http://localhost:3333/api/somemessageid/body";
 
-                var messageBody = messageBodyFunc();
+            var messageBody = messageBodyFunc();
 
-                messageBody.Handle(new BodyTabSelectionChanged(true));
+            messageBody.Handle(new BodyTabSelectionChanged(true));
 
-                selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+            selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
-                messageBody.Handle(new SelectedMessageChanged());
+            messageBody.Handle(new SelectedMessageChanged());
 
-                sched.AdvanceByMs(500);
-
-                serviceControl.Received(1).LoadBody(selection.SelectedMessage);
-            });
+            serviceControl.Received(1).LoadBody(selection.SelectedMessage);
         }
 
         [Test]

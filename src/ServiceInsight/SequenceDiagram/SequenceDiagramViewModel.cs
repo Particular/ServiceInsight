@@ -55,7 +55,7 @@
             ChangeSelectedMessageCommand = changeSelectedMessageCommand;
             ShowExceptionCommand = showExceptionCommand;
             ReportMessageCommand = reportMessageCommand;
-            OpenLink = this.CreateCommand(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            OpenLink = Command.Create(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();

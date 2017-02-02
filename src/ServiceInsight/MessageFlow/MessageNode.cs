@@ -3,12 +3,13 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reactive.Linq;
     using System.Windows;
     using System.Windows.Input;
+    using ExtensionMethods;
     using Framework;
     using Mindscape.WpfDiagramming;
     using Models;
-    using ReactiveUI;
 
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
@@ -32,7 +33,7 @@
             SearchByMessageIDCommand = owner.SearchByMessageIDCommand;
             RetryMessageCommand = owner.RetryMessageCommand;
 
-            message.ObservableForProperty(m => m.Status).Subscribe(_ =>
+            message.ChangedProperty(nameof(StoredMessage.Status)).Subscribe(_ =>
             {
                 OnPropertyChanged("HasFailed");
                 OnPropertyChanged("HasRetried");
