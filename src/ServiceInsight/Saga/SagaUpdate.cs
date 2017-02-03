@@ -23,9 +23,11 @@
 
         public bool IsSagaTimeoutMessage => !MissingData && InitiatingMessage.IsSagaTimeoutMessage;
 
-        public List<SagaMessage> NonTimeoutMessages => OutgoingMessages.Where(m => !m.IsTimeout).Cast<SagaMessage>().ToList();
+        public List<SagaMessage> NonTimeoutMessages
+            => OutgoingMessages?.Where(m => !m.IsTimeout).Cast<SagaMessage>().ToList() ?? new List<SagaMessage>();
 
-        public List<SagaTimeoutMessage> TimeoutMessages => OutgoingMessages.Where(m => m.IsTimeout).ToList();
+        public List<SagaTimeoutMessage> TimeoutMessages
+            => OutgoingMessages?.Where(m => m.IsTimeout).ToList() ?? new List<SagaTimeoutMessage>();
 
         public bool HasNonTimeoutMessages => NonTimeoutMessages.Any();
 
