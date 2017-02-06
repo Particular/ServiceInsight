@@ -1,3 +1,4 @@
+src/ServiceInsight.Tests/XamlIconResults/**/*.received.*
 
 # Created by https://www.gitignore.io/api/visualstudio
 
@@ -12,7 +13,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.vcxproj.filters
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -47,11 +47,11 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
-# DNX
+# .NET Core
 project.lock.json
 project.fragment.lock.json
 artifacts/
-Properties/launchSettings.json
+**/Properties/launchSettings.json
 
 *_i.c
 *_p.c
@@ -276,7 +276,7 @@ __pycache__/
 *.pyc
 
 # Cake - Uncomment if you are using it
-# tools/
+# tools/**
+# !tools/packages.config
 
-### VisualStudio Patch ###
-build/
+# End of https://www.gitignore.io/api/visualstudio
