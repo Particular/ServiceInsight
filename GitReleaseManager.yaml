@@ -1,0 +1,9 @@
+create:
+  include-footer: true
+  footer-heading: Where to get it
+  footer-content: You can download this release from our [website](http://particular.net/downloads).
+issue-labels-include:
+  - "Type: Bug"
+  - "Type: Feature"
+issue-labels-exclude:
+  - "Type: Refactoring"
