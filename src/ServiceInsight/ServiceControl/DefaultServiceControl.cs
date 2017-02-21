@@ -13,7 +13,6 @@
     using Caliburn.Micro;
     using Framework;
     using RestSharp;
-    using RestSharp.Contrib;
     using RestSharp.Deserializers;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
@@ -210,7 +209,10 @@
                 return;
             }
 
-            request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
+            // Due to bug ServiceInsight/#639 SC doesn't accept encoded search strings.
+            // When ServiceControl/#921 is fixed, update this to handle the fixed case too.
+            //request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
+            request.Resource += $"search/{searchQuery}";
         }
 
         IRestClient CreateClient(string baseUrl = null)
