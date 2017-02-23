@@ -10,7 +10,7 @@
 
         public static IList<KeyValuePair<string, string>> ProcessValues(string stateAfterChange) => JsonConvert.DeserializeObject<Dictionary<string, object>>(stateAfterChange)
                   .Where(m => StandardKeys.All(s => s != m.Key))
-                  .Select(f => new KeyValuePair<string, string>(f.Key, f.Value == null ? string.Empty : f.Value.ToString()))
+                  .Select(f => new KeyValuePair<string, string>(f.Key, f.Value?.ToString()))
                   .ToList();
 
         public static IList<KeyValuePair<string, string>> ProcessArray(string stateAfterChange) => ProcessValues(stateAfterChange.TrimStart('[').TrimEnd(']'));
