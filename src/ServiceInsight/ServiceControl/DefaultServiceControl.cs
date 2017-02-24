@@ -210,7 +210,7 @@
                 return;
             }
 
-            request.Resource += string.Format("search/{0}", HttpUtility.UrlEncode(searchQuery));
+            request.Resource += string.Format("search?q={0}", HttpUtility.UrlEncode(searchQuery));
         }
 
         IRestClient CreateClient(string baseUrl = null)
