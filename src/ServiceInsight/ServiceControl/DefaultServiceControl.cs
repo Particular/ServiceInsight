@@ -13,7 +13,6 @@
     using Caliburn.Micro;
     using Framework;
     using RestSharp;
-    using RestSharp.Contrib;
     using RestSharp.Deserializers;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
@@ -210,7 +209,8 @@
                 return;
             }
 
-            request.Resource += string.Format("search?q={0}", HttpUtility.UrlEncode(searchQuery));
+            request.Resource += "search";
+            request.AddParameter("q", searchQuery, ParameterType.GetOrPost);
         }
 
         IRestClient CreateClient(string baseUrl = null)
