@@ -307,8 +307,9 @@
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Foreground="{StaticResource SagaForeground}"
-                                   Text="{Binding OldValue}"
+                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                                   Text="{Binding OldValue, TargetNullValue='Null'}"
+                                   Tag="{Binding OldValue}"
                                    Visibility="{Binding ShouldDisplayOldValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock Style="{StaticResource LinkText}"
@@ -322,8 +323,9 @@
                         <TextBlock FontFamily="Symbol"
                                    Foreground="{StaticResource SagaSymbolForeground}"
                                    Text=" ® " />
-                        <TextBlock Foreground="{StaticResource SagaForeground}"
-                                   Text="{Binding NewValue}"
+                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                                   Text="{Binding NewValue, TargetNullValue='Null'}"
+                                   Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock Style="{StaticResource LinkText}" 
@@ -344,8 +346,9 @@
                                    Text="{Binding Label}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Foreground="{StaticResource SagaForeground}"
-                                   Text="{Binding NewValue}"
+                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                                   Text="{Binding NewValue, TargetNullValue='Null'}"
+                                   Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock Style="{StaticResource LinkText}"
@@ -380,8 +383,9 @@
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Foreground="{StaticResource SagaForeground}"
-                                   Text="{Binding NewValue}"
+                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                                   Text="{Binding NewValue, TargetNullValue='Null'}"
+                                   Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
                         <TextBlock Style="{StaticResource LinkText}"
