@@ -287,6 +287,10 @@
     <Compile Include="LogWindow\LogMessage.cs" />
     <Compile Include="MessageHeaders\MessageHeaderValueTemplateSelector.cs" />
     <Compile Include="MessageList\MessageSelectionContext.cs" />
+    <Compile Include="MessagePayloadViewer\MessagePayloadView.xaml.cs">
+      <DependentUpon>MessagePayloadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessagePayloadViewer\MessagePayloadViewModel.cs" />
     <Compile Include="MessageViewers\HexViewer\HexContentLine.cs" />
     <Compile Include="MessageViewers\IDisplayMessageBody.cs" />
     <Compile Include="MessageViewers\JsonViewer\BraceFoldingStrategy.cs" />
@@ -348,9 +352,6 @@
       <DependentUpon>AssemblyInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="Saga\JsonPropertiesHelper.cs" />
-    <Compile Include="Saga\SagaContentViewer.xaml.cs">
-      <DependentUpon>SagaContentViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Saga\SagaData.cs" />
     <Compile Include="Saga\SagaFooter.cs" />
     <Compile Include="Saga\SagaHeader.cs" />
@@ -561,6 +562,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MessagePayloadViewer\MessagePayloadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SequenceDiagram\DarkMenus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -622,14 +627,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\OptionsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Saga\DarkTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Saga\SagaContentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

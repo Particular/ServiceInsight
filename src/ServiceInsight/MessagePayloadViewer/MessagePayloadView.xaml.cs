@@ -1,17 +1,19 @@
-﻿namespace ServiceInsight.Saga
+﻿namespace ServiceInsight.MessagePayloadViewer
 {
     using System;
-    using System.Windows.Input;
     using System.Windows.Media;
     using ICSharpCode.AvalonEdit.Folding;
     using ServiceInsight.MessageViewers.JsonViewer;
 
-    public partial class SagaContentViewer
+    /// <summary>
+    /// Interaction logic for MessagePayloadView.xaml
+    /// </summary>
+    public partial class MessagePayloadView
     {
         FoldingManager foldingManager;
         BraceFoldingStrategy foldingStrategy;
 
-        public SagaContentViewer()
+        public MessagePayloadView()
         {
             InitializeComponent();
 
@@ -25,13 +27,6 @@
         void DocumentOnTextChanged(object sender, EventArgs eventArgs)
         {
             foldingStrategy.UpdateFoldings(foldingManager, document.Document);
-        }
-
-        SagaUpdatedValue Model => (SagaUpdatedValue)DataContext;
-
-        void OnCloseGlyphClicked(object sender, MouseButtonEventArgs e)
-        {
-            Model.MessageContentVisible = false;
         }
     }
 }
