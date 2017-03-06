@@ -11,9 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500"
              d:DesignWidth="900"
-             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadView}}">
-    <UserControl.Resources>
-    </UserControl.Resources>
+             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadViewModel}}">
     <Grid>
         <controls:MvvmTextEditor x:Name="document"
                                  FontFamily="{StaticResource MessageBodyFontFamily}"

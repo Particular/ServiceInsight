@@ -4,7 +4,7 @@
 
     public class MessagePayloadViewModel : Screen
     {
-        public string Content { get; private set; }
+        public string Content { get; }
 
         public MessagePayloadViewModel(string content)
         {

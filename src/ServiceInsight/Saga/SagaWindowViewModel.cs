@@ -106,7 +106,10 @@
 
         void ShowEntireContent(SagaUpdatedValue value)
         {
-            windowManager.ShowDialog(new MessagePayloadViewModel(value.EffectiveValue));
+            windowManager.ShowDialog(new MessagePayloadViewModel(value.EffectiveValue)
+            {
+                DisplayName = value.SagaName
+            });
         }
 
         public void Handle(ServiceControlConnectionChanged message)
