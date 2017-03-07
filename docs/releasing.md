@@ -35,3 +35,9 @@ Once you happy, approve the release notes:
 All that is left to do is "Promote to Production".
 
 ![promote to prod](promote_to_prod.png)
+
+### 4. Manage GitHub milestones
+
+Ensure that the milestone matching the version which has just been released has been closed.
+
+Open a new milestone for the next version. Initially, the name of the new milestone should be the name of the previous milestone with the patch version (third version part) incremented. This can be altered later if required.
