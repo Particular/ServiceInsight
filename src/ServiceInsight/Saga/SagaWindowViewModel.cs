@@ -106,7 +106,7 @@
 
         void ShowEntireContent(SagaUpdatedValue value)
         {
-            windowManager.ShowDialog(new MessagePayloadViewModel(value.EffectiveValue)
+            windowManager.ShowModalDialog(new MessagePayloadViewModel(value.EffectiveValue)
             {
                 DisplayName = value.SagaName
             });
