@@ -76,9 +76,9 @@
 
         public void OnLicenseChanged()
         {
-            NotifyOfPropertyChange(() => LicenseType);
-            NotifyOfPropertyChange(() => RegisteredTo);
-            NotifyOfPropertyChange(() => TrialDaysRemaining);
+            NotifyOfPropertyChange(nameof(LicenseType));
+            NotifyOfPropertyChange(nameof(RegisteredTo));
+            NotifyOfPropertyChange(nameof(TrialDaysRemaining));
         }
 
         public void LoadLicense()

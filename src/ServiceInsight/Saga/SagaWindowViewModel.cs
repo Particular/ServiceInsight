@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using MessageList;
@@ -69,7 +68,7 @@
                 message.ShowData = ShowMessageData;
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         void RefreshMessageProperties()
@@ -79,7 +78,7 @@
                 message.RefreshData(serviceControl);
             }
 
-            NotifyOfPropertyChange(() => Data);
+            NotifyOfPropertyChange(nameof(Data));
         }
 
         public void Handle(SelectedMessageChanged @event)

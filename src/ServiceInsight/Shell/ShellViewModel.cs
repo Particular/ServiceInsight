@@ -332,8 +332,8 @@
 
         void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => WorkInProgress);
-            NotifyOfPropertyChange(() => CanConnectToServiceControl);
+            NotifyOfPropertyChange(nameof(WorkInProgress));
+            NotifyOfPropertyChange(nameof(CanConnectToServiceControl));
         }
 
         string GetProductName()

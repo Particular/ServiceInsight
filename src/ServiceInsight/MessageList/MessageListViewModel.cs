@@ -36,7 +36,6 @@
         GeneralHeaderViewModel generalHeaderDisplay;
         string lastSortColumn;
         bool lastSortOrderAscending;
-        int workCount;
         IMessageListView view;
 
         public MessageListViewModel(
@@ -76,7 +75,9 @@
 
         public MessageSelectionContext Selection { get; }
 
-        public bool WorkInProgress => workCount > 0 && !Parent.AutoRefresh;
+        public int WorkCount { get; private set; }
+
+        public bool WorkInProgress => WorkCount > 0 && !Parent.AutoRefresh;
 
         public ExplorerItem SelectedExplorerItem { get; private set; }
 
@@ -174,16 +175,14 @@
 
         public void Handle(WorkStarted @event)
         {
-            workCount++;
-            NotifyOfPropertyChange(() => WorkInProgress);
+            WorkCount++;
         }
 
         public void Handle(WorkFinished @event)
         {
-            if (workCount > 0)
+            if (WorkCount > 0)
             {
-                workCount--;
-                NotifyOfPropertyChange(() => WorkInProgress);
+                WorkCount--;
             }
         }
 
@@ -194,8 +193,7 @@
 
         public void Handle(AsyncOperationFailed message)
         {
-            workCount = 0;
-            NotifyOfPropertyChange(() => WorkInProgress);
+            WorkCount = 0;
         }
 
         public void Handle(RetryMessage message)
@@ -281,7 +279,7 @@
 
         void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(() => SelectedExplorerItem);
+            NotifyOfPropertyChange(nameof(SelectedExplorerItem));
             SearchBar.NotifyPropertiesChanged();
         }
 
