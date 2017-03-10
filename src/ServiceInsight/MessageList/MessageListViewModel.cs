@@ -37,6 +37,7 @@
         string lastSortColumn;
         bool lastSortOrderAscending;
         IMessageListView view;
+        ExplorerItem selectedExplorerItem;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -79,8 +80,6 @@
 
         public bool WorkInProgress => WorkCount > 0 && !Parent.AutoRefresh;
 
-        public ExplorerItem SelectedExplorerItem { get; private set; }
-
         public ICommand RetryMessageCommand { get; }
 
         public ICommand CopyMessageIdCommand { get; }
@@ -100,7 +99,7 @@
 
         public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
-            var serviceControlExplorerItem = SelectedExplorerItem as ServiceControlExplorerItem;
+            var serviceControlExplorerItem = selectedExplorerItem as ServiceControlExplorerItem;
             if (serviceControlExplorerItem != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
@@ -109,7 +108,7 @@
                                      ascending: ascending);
             }
 
-            var endpointNode = SelectedExplorerItem as AuditEndpointExplorerItem;
+            var endpointNode = selectedExplorerItem as AuditEndpointExplorerItem;
             if (endpointNode != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
@@ -188,7 +187,9 @@
 
         public void Handle(SelectedExplorerItemChanged @event)
         {
-            SelectedExplorerItem = @event.SelectedExplorerItem;
+            selectedExplorerItem = @event.SelectedExplorerItem;
+            RefreshMessages();
+            SearchBar.NotifyPropertiesChanged();
         }
 
         public void Handle(AsyncOperationFailed message)
@@ -220,19 +221,13 @@
             if (newFocusedRow != null)
             {
                 Selection.SelectedMessage = newFocusedRow;
-                NotifyPropertiesChanged();
+                SearchBar.NotifyPropertiesChanged();
             }
         }
 
         public void Handle(ServiceControlConnectionChanged message)
         {
             ClearResult();
-        }
-
-        public void OnSelectedExplorerItemChanged()
-        {
-            RefreshMessages();
-            NotifyPropertiesChanged();
         }
 
         void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
@@ -275,12 +270,6 @@
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
-        }
-
-        void NotifyPropertiesChanged()
-        {
-            NotifyOfPropertyChange(nameof(SelectedExplorerItem));
-            SearchBar.NotifyPropertiesChanged();
         }
 
         void EndDataUpdate()
