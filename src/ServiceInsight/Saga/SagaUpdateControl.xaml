@@ -305,7 +305,8 @@
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
-                                   TextTrimming="CharacterEllipsis" />
+                                   TextTrimming="CharacterEllipsis"
+                                   ToolTip="{Binding Name}" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
                         <TextBlock Style="{StaticResource ItalicNullTextStyle}"
                                    Text="{Binding OldValue, TargetNullValue='Null'}"
@@ -344,6 +345,7 @@
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Label}"
+                                   ToolTip="{Binding Label}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
                         <TextBlock Style="{StaticResource ItalicNullTextStyle}"
@@ -381,6 +383,7 @@
                         <TextBlock Width="120px"
                                    Foreground="{StaticResource SagaForeground}"
                                    Text="{Binding Name}"
+                                   ToolTip="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
                         <TextBlock Style="{StaticResource ItalicNullTextStyle}"
