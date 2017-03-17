@@ -307,7 +307,7 @@
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding OldValue, TargetNullValue='Null'}"
                                    Tag="{Binding OldValue}"
                                    Visibility="{Binding ShouldDisplayOldValueLink,
@@ -323,7 +323,7 @@
                         <TextBlock FontFamily="Symbol"
                                    Foreground="{StaticResource SagaSymbolForeground}"
                                    Text=" ® " />
-                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
@@ -346,7 +346,7 @@
                                    Text="{Binding Label}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
@@ -383,7 +383,7 @@
                                    Text="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource ItalicNullTextStyle}"
+                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
