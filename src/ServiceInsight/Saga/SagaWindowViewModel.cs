@@ -87,6 +87,7 @@
             var message = selection.SelectedMessage;
             if (message == null)
             {
+                ClearSaga();
                 return;
             }
 
