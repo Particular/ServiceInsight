@@ -26,11 +26,12 @@
     <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
     <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
 
-    <Style x:Key="ItalicNullTextStyle" TargetType="{x:Type TextBlock}">
+    <Style x:Key="PropertyValueTextStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource SagaForeground}" />
         <Style.Triggers>
             <Trigger Property="Tag" Value="{x:Null}">
                 <Setter Property="FontStyle" Value="Italic" />
+                <Setter Property="Foreground" Value="{StaticResource SagaSymbolForeground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
