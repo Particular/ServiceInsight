@@ -87,6 +87,7 @@
 
         public void Handle(SelectedMessageChanged @event)
         {
+            ClearMessageDisplays();
             LoadMessageBody();
 
             if (selection.SelectedMessage != null)
@@ -122,6 +123,11 @@
         }
 
         public void Handle(ServiceControlConnectionChanged message)
+        {
+            ClearMessageDisplays();
+        }
+
+        void ClearMessageDisplays()
         {
             foreach (var messageDisplay in MessageDisplays)
             {
