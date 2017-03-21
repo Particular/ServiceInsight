@@ -81,6 +81,16 @@
             return ShowDialog(screen);
         }
 
+        public bool? ShowModalDialog<T>(T model) where T : class
+        {
+            var settings = new Dictionary<string, object>
+            {
+                { "ResizeMode", ResizeMode.NoResize }
+            };
+
+            return ShowDialog(model, null, settings);
+        }
+
         static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
             //TODO: Use map to avoid switch/case

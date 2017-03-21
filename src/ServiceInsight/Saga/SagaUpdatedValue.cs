@@ -1,9 +1,6 @@
 ﻿namespace ServiceInsight.Saga
 {
-    using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
-    using Framework;
     using Humanizer;
 
     public class SagaUpdatedValue : PropertyChangedBase
@@ -15,7 +12,6 @@
             SagaName = sagaName;
             Name = propertyName;
             NewValue = propertyValue;
-            ShowEntireContentCommand = Command.Create(ShowEntireContent);
         }
 
         public string SagaName { get; }
@@ -27,15 +23,6 @@
         public string OldValue { get; private set; }
 
         public string EffectiveValue => NewValue ?? OldValue;
-
-        public ICommand ShowEntireContentCommand { get; set; }
-
-        void ShowEntireContent()
-        {
-            MessageContentVisible = true;
-        }
-
-        public bool MessageContentVisible { get; set; }
 
         public string Label => $"{Name}{(IsValueNew ? " (new)" : "")}";
 

@@ -10,5 +10,7 @@ namespace ServiceInsight.Framework.UI.ScreenManager
         MessageBoxResult ShowMessageBox(string message, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage image = MessageBoxImage.None, bool enableDontAsk = false, string help = "", MessageChoice defaultChoice = MessageChoice.OK);
 
         bool? ShowDialog<T>() where T : class;
+
+        bool? ShowModalDialog<T>(T model) where T : class;
     }
 }

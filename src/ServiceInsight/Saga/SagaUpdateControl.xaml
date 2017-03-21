@@ -318,7 +318,7 @@
                                    Visibility="{Binding ShouldDisplayOldValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
+                                <MouseBinding Command="{Binding Model.ShowEntireContentCommand, RelativeSource={RelativeSource AncestorType=local:SagaWindowView}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                         <TextBlock FontFamily="Symbol"
@@ -334,7 +334,7 @@
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
+                                <MouseBinding Command="{Binding Model.ShowEntireContentCommand, RelativeSource={RelativeSource AncestorType=local:SagaWindowView}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
@@ -358,16 +358,10 @@
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
+                                <MouseBinding Command="{Binding Model.ShowEntireContentCommand, RelativeSource={RelativeSource AncestorType=local:SagaWindowView}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup IsOpen="{Binding MessageContentVisible,
-                                            Mode=TwoWay}"
-                           Placement="Center"
-                           StaysOpen="True">
-                        <local:SagaContentViewer DataContext="{Binding}" />
-                    </Popup>
                 </Grid>
             </DataTemplate>
 
@@ -396,16 +390,10 @@
                                    Visibility="{Binding ShouldDisplayNewValueLink,
                                                         Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding ShowEntireContentCommand}" MouseAction="LeftClick" />
+                                <MouseBinding Command="{Binding Model.ShowEntireContentCommand, RelativeSource={RelativeSource AncestorType=local:SagaWindowView}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <Popup IsOpen="{Binding MessageContentVisible,
-                                            Mode=TwoWay}"
-                           Placement="Center"
-                           StaysOpen="True">
-                        <local:SagaContentViewer DataContext="{Binding}" />
-                    </Popup>
                 </Grid>
             </DataTemplate>
 

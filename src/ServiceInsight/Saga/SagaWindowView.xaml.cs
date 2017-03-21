@@ -39,6 +39,11 @@
                 item.BringIntoView();
             }
         }
+
+        public SagaWindowViewModel Model
+        {
+            get { return DataContext as SagaWindowViewModel; }
+        }
     }
 
     public interface ISagaWindowView

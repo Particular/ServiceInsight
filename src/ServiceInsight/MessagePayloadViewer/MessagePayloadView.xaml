@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ServiceInsight.MessagePayloadViewer.MessagePayloadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ServiceInsight.MessagePayloadViewer"
+             xmlns:controls="clr-namespace:ServiceInsight.Controls"
+             Width="800"
+             Height="400"
+             Background="#FF252526"
+             mc:Ignorable="d" 
+             d:DesignHeight="500"
+             d:DesignWidth="900"
+             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadViewModel}}">
+    <Grid>
+        <controls:MvvmTextEditor x:Name="document"
+                                 FontFamily="{StaticResource MessageBodyFontFamily}"
+                                 FontSize="{StaticResource MessageBodyFontSize}"
+                                 WordWrap="True"
+                                 IsReadOnly="True"
+                                 SnapsToDevicePixels="True"
+                                 SyntaxHighlighting="JavaScript"
+                                 Text="{Binding Content}"
+                                 VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 UseLayoutRounding="True">
+            <controls:MvvmTextEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="Copy">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MvvmTextEditor.ContextMenu>
+        </controls:MvvmTextEditor>
+    </Grid>
+</UserControl>

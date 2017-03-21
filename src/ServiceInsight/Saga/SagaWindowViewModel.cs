@@ -5,12 +5,13 @@
     using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ExtensionMethods;
     using Framework;
     using Framework.Events;
     using MessageList;
     using Models;
     using ServiceControl;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.MessagePayloadViewer;
 
     public class SagaWindowViewModel : Screen,
         IHandle<SelectedMessageChanged>,
@@ -22,6 +23,7 @@
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         IServiceControl serviceControl;
+        IWindowManagerEx windowManager;
         readonly MessageSelectionContext selection;
 
         public SagaWindowViewModel(
@@ -29,19 +31,24 @@
             IWorkNotifier workNotifier,
             IServiceControl serviceControl,
             IClipboard clipboard,
+            IWindowManagerEx windowManager,
             MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
+            this.windowManager = windowManager;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = Command.Create(arg => clipboard.CopyTo(InstallScriptText));
+            ShowEntireContentCommand = Command.Create(arg => ShowEntireContent((SagaUpdatedValue)arg));
         }
 
         public string InstallScriptText { get; set; }
 
         public ICommand CopyCommand { get; }
+
+        public ICommand ShowEntireContentCommand { get; set; }
 
         public void OnShowMessageDataChanged()
         {
@@ -96,6 +103,14 @@
             RefreshSaga(message);
 
             SelectedMessageId = message.MessageId;
+        }
+
+        void ShowEntireContent(SagaUpdatedValue value)
+        {
+            windowManager.ShowModalDialog(new MessagePayloadViewModel(value.EffectiveValue)
+            {
+                DisplayName = value.SagaName
+            });
         }
 
         public void Handle(ServiceControlConnectionChanged message)
