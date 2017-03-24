@@ -16,7 +16,6 @@
         <controls:MvvmTextEditor x:Name="document"
                                  FontFamily="{StaticResource MessageBodyFontFamily}"
                                  FontSize="{StaticResource MessageBodyFontSize}"
-                                 WordWrap="True"
                                  IsReadOnly="True"
                                  SnapsToDevicePixels="True"
                                  SyntaxHighlighting="JavaScript"
