@@ -493,11 +493,6 @@
                                           ContentTemplate="{StaticResource Message}" />
                     </Grid>
                 </Grid>
-                <DataTemplate.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                        <Setter TargetName="NextTimeoutBorder" Property="BorderThickness" Value="2 2 0 0" />
-                    </DataTrigger>
-                </DataTemplate.Triggers>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
