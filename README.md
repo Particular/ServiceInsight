@@ -1,4 +1,4 @@
-### ServiceInsight
+## ServiceInsight
 
 Essential insights for distributed solutions
 
