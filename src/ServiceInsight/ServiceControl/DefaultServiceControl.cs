@@ -236,23 +236,25 @@
             return client;
         }
 
-        static RestRequestWithCache CreateMessagesRequest(string endpointName = null) => endpointName != null
-    ? new RestRequestWithCache(string.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
-    : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
+        static RestRequestWithCache CreateMessagesRequest(string endpointName = null) =>
+            endpointName != null
+            ? new RestRequestWithCache(string.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
+            : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
 
         PagedResult<T> GetPagedResult<T>(RestRequestWithCache request) where T : class, new()
         {
             var result = Execute<PagedResult<T>, List<T>>(request, response => new PagedResult<T>
             {
                 Result = response.Data,
-                TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
+                TotalCount = int.Parse(
+                    response.Headers.FirstOrDefault(x => x.Name == ServiceControlHeaders.TotalCount)?.Value?.ToString() ?? "0")
             });
 
             return result;
         }
 
-        T GetModel<T>(RestRequestWithCache request)
-where T : class, new() => Execute<T, T>(request, response => response.Data);
+        T GetModel<T>(RestRequestWithCache request) where T : class, new() =>
+            Execute<T, T>(request, response => response.Data);
 
         T Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
         {
@@ -433,7 +435,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
         static string CacheKey<T>(IRestClient restClient, IRestRequest request) => CacheKey(restClient, request, typeof(T));
 
-        static string CacheKey(IRestClient restClient, IRestRequest request, Type t) => restClient.BuildUri(request).AbsoluteUri + "-" + t;
+        static string CacheKey(IRestClient restClient, IRestRequest request, Type t) =>
+            restClient.BuildUri(request).AbsoluteUri + "-" + t;
 
         T ProcessResponse<T>(Func<IRestResponse, T> selector, IRestResponse response)
         {
@@ -534,9 +537,16 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             LogTo.Error(exception, errorMessage);
         }
 
-        static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
+        static bool HasSucceeded(IRestResponse response) =>
+            successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
 
-        static IEnumerable<HttpStatusCode> successCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
+        static IEnumerable<HttpStatusCode> successCodes = new[]
+        {
+            HttpStatusCode.OK,
+            HttpStatusCode.Accepted,
+            HttpStatusCode.NotModified,
+            HttpStatusCode.NoContent
+        };
     }
 
     public enum PresentationHint
