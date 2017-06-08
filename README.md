@@ -1,4 +1,4 @@
-### ServiceInsight
+## ServiceInsight
 
 Essential insights for distributed solutions
 
@@ -10,3 +10,14 @@ machines showing messages whose processing has failed (and for what reason) as w
 
 
 http://docs.particular.net/Serviceinsight/getting-started-overview
+
+### How to build
+
+You can build ServiceInsight using Visual Studio 2015 or later.
+
+If using Visual Studio 2017, ensure that you have installed:
+
+- Workloads
+  - .NET desktop development
+- Individual components
+  - Blend for Visual Studio SDK for .NET
