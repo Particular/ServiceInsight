@@ -245,6 +245,7 @@
     </Compile>
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\BytesExtensions.cs" />
+    <Compile Include="ExtensionMethods\LayoutExtensions.cs" />
     <Compile Include="ExtensionMethods\ObservableExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
@@ -317,7 +318,9 @@
     <Compile Include="SequenceDiagram\ModelCreator.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
     <Compile Include="ServiceControl\ServiceControlConnectionChanged.cs" />
+    <Compile Include="Settings\MessageListSettings.cs" />
     <Compile Include="Settings\SequenceDiagramSettings.cs" />
+    <Compile Include="Shell\IPersistPartLayout.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>

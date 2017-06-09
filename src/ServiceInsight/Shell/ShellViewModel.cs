@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Input;
@@ -132,15 +133,22 @@
 
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
             refreshTimer.Stop();
             SaveLayout();
+            base.OnDeactivate(close);
         }
 
         void SaveLayout()
         {
             if (!comandLineArgParser.ParsedOptions.ResetLayout)
             {
+                var persistableLayouts = Items.OfType<IPersistPartLayout>();
+
+                foreach (var screen in persistableLayouts)
+                {
+                    screen.OnSavePartLayout();
+                }
+
                 View.OnSaveLayout(settingsProvider);
             }
         }
