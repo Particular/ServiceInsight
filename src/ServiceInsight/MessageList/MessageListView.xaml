@@ -65,7 +65,8 @@
                     </dxb:PopupMenu>
                 </dxb:BarManager.DXContextMenu>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="16"
+                    <dxg:GridColumn Width="30"
+                                    FixedWidth="True"
                                     AllowColumnFiltering="False"
                                     AllowSorting="True"
                                     FieldName="IsFaulted"
@@ -110,21 +111,21 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn Name="ProcessingTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
                                     FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
                     <dxg:GridColumn Name="DeliveryTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
                                     FieldName="DeliveryTime"
                                     Header="Delivery Time"
                                     Tag="delivery_time"
                                     Visible="False"/>
                     <dxg:GridColumn Name="CriticalTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
                                     FieldName="CriticalTime"
                                     Header="Critical Time"
                                     HeaderToolTip="Critical time"

@@ -49,7 +49,9 @@
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Highlighting\StackTrace.xshd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -556,6 +558,7 @@
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToWidthConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanHumanizedConverter.cs" />
+    <Compile Include="ValueConverters\TimeStampToBoolConverter.cs" />
     <Compile Include="ValueConverters\ZoomToCancelScaleConverter.cs" />
     <Page Include="DiagramLegend\DiagramLegendView.xaml">
       <SubType>Designer</SubType>
@@ -709,10 +712,6 @@
     <Resource Include="Images\TreeAuditFolder.png" />
     <Resource Include="Images\SearchRefresh.png" />
     <Resource Include="Images\SearchSeparator.png" />
-    <Resource Include="Images\Bullet-Green.png" />
-    <Resource Include="Images\Bullet-Red.png" />
-    <Resource Include="Images\Bullet-White.png" />
-    <Resource Include="Images\Bullet-Yellow.png" />
     <Resource Include="Images\Clipboard.png" />
     <Resource Include="Images\Properties.png" />
     <Resource Include="Images\Diagram.png" />
@@ -721,7 +720,6 @@
     <Resource Include="Images\ServiceInsight-Banner.png" />
     <Resource Include="Images\TreeErrorQueue.png" />
     <Resource Include="Images\TreeMonitoring.png" />
-    <Resource Include="Images\Bullet-Blue.png" />
     <Resource Include="Images\ErrorStatus.png" />
     <Resource Include="Images\Log.png" />
     <Resource Include="Images\Options.png" />
@@ -790,12 +788,6 @@
     <Resource Include="Images\TreeDocFolder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Msg_Error.png" />
-    <Resource Include="Images\Msg_Help.png" />
-    <Resource Include="Images\Msg_Info.png" />
-    <Resource Include="Images\Msg_Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -805,16 +797,46 @@
     <Resource Include="Images\autoRefresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\msgArchived_16x16x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\retryMsg.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Analyzer Include="..\packages\Particular.CodeRules.0.1.1\tools\..\analyzers\dotnet\cs\Particular.CodeRules.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Failed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Successful.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Failed-Repeatedly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Failed-Repeatedly-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Failed-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Retry-Requested.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Retry-Requested-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Successful-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Archived.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Message-Archived-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\retryMsg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

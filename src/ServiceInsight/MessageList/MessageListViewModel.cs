@@ -177,7 +177,7 @@
             }
         }
 
-        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
+        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg);
 
         public void Handle(WorkStarted @event)
         {
