@@ -76,61 +76,69 @@
     <Reference Include="Comparers">
       <HintPath>..\packages\Comparers.4.0.0\lib\net40-client\Comparers.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Data.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v15.1L">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Data.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Utils.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Mvvm.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Mvvm.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Controls.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v15.1.Core">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Printing.v15.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Mvvm.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Mvvm.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.RichEdit.v15.1.Core">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.RichEdit.v15.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Utils.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Controls.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Controls.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Core.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Core.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Docking.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Docking.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v14.1.Core">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v14.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v14.1.Core">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v14.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v15.1.Core">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Layout.v15.1.Core">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Layout.v15.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.NavBar.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.NavBar.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v15.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v14.1">
-      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v14.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Printing.v15.1">
       <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Printing.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v15.1">
+      <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v15.1">
+      <Private>True</Private>
+      <HintPath>..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v15.1.dll</HintPath>
     </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.1\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
@@ -247,6 +255,7 @@
     <Compile Include="ExtensionMethods\BytesExtensions.cs" />
     <Compile Include="ExtensionMethods\ObservableExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="Framework\Behaviors\ComboBoxEditValuePatcherBehavior.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\DelegateCommand.cs" />
     <Compile Include="Framework\Commands\ObservableCommand.cs" />
@@ -548,6 +557,7 @@
     <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\PopupMenuItemCountVisibleConverter.cs" />
     <Compile Include="ValueConverters\ScaledValueConverter.cs" />
+    <Compile Include="ValueConverters\SearchStringConverter.cs" />
     <Compile Include="ValueConverters\StartSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\StatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\StringEmptyOrNullToVisibilityConverter.cs" />

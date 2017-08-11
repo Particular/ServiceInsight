@@ -3,12 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+             xmlns:dxprgt="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid/themekeys"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ServiceInsight.Framework.Behaviors"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Style x:Key="{dxprgt:PropertyGridControlThemeKey ResourceKey=SearchControlStyle, IsThemeIndependent=True}" TargetType="{x:Type dxe:SearchControl}">
+            <Style.Resources>
+                <Style TargetType="dxe:ComboBoxEdit">
+                    <Setter Property="dxmvvm:Interaction.BehaviorsTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <local:ComboBoxEditValuePatcherBehavior />
+                                </ContentControl>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </UserControl.Resources>
 
     <dxprg:PropertyGridControl AllowInstanceInitializer="False"
                                ExpandCategoriesWhenSelectedObjectChanged="True"
