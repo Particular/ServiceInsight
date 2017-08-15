@@ -8,9 +8,8 @@
     {
         public AppLicenseManager()
         {
-            var result = ActiveLicense.Find("ServiceInsight",
-                new LicenseSourceHKLMRegKey(),
-                new LicenseSourceHKCURegKey());
+            var sources = LicenseSource.GetStandardLicenseSources().ToArray();
+            var result = ActiveLicense.Find("ServiceInsight", sources);
             CurrentLicense = result.License;
         }
 
@@ -28,6 +27,7 @@
                 CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
 
                 new RegistryLicenseStore().StoreLicense(licenseText);
+                new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
 
                 return true;
             }

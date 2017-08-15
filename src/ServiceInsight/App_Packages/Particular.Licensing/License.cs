@@ -41,7 +41,7 @@
 
         public bool ValidForApplication(string applicationName)
         {
-            return ValidApplications.Contains(applicationName) || ValidApplications.Contains("All");
+            return ValidApplications.Contains(applicationName) || ValidApplications.Contains("All") || applicationName == "NServiceBus";
         }
     }
 }
