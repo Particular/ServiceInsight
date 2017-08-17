@@ -155,6 +155,7 @@
     <Compile Include="StreamExtensionMethodTests.cs" />
     <Compile Include="StringDecoderTests.cs" />
     <Compile Include="ViewModels\LogWindowViewModelTests.cs" />
+    <Compile Include="ViewModels\SagaWindowViewModelTests.cs" />
     <Compile Include="XamlIconsTests.cs" />
     <Compile Include="XmlDecoderTests.cs" />
     <Compile Include="XmlViewerViewModelTests.cs" />
