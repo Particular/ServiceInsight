@@ -219,7 +219,7 @@
                 foreach (var timeout in sagaData.Changes.SelectMany(update => update.TimeoutMessages))
                 {
                     timeout.HasBeenProcessed =
-                        sagaData.Changes.Any(update => update.InitiatingMessage.MessageId == timeout.MessageId);
+                        sagaData.Changes.Any(update => update.InitiatingMessage?.MessageId == timeout.MessageId);
                 }
             }
 
