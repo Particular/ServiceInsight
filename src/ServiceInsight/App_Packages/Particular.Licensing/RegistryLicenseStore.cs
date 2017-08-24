@@ -1,4 +1,6 @@
-﻿namespace Particular.Licensing
+﻿#if REGISTRYLICENSESOURCE
+#pragma warning disable PC001 //Registry doesn't exist on non-Windows
+namespace Particular.Licensing
 {
     using System;
     using System.Security;
@@ -80,3 +82,5 @@
         const string DefaultKeyName = "License";
     }
 }
+#pragma warning restore PC001
+#endif

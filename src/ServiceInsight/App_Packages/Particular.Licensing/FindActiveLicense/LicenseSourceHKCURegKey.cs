@@ -1,4 +1,6 @@
-﻿namespace Particular.Licensing
+﻿#if REGISTRYLICENSESOURCE
+#pragma warning disable PC001 //Registry doesn't exist on non-Windows
+namespace Particular.Licensing
 {
     using Microsoft.Win32;
 
@@ -62,3 +64,5 @@
         }
     }
 }
+#pragma warning restore PC001
+#endif
