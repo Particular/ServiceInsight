@@ -339,9 +339,7 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">
-                        <dxe:TextEdit Name="PART_Editor"
-                                      DisplayFormatString="{Binding Source={x:Static cnv:MessageDateTimeFormatProvider.MessageDateFormat}}"
-                                      IsReadOnly="True" />
+                        <dxe:DateEdit Name="PART_Editor" IsReadOnly="True" DisplayFormatString="G" />
                     </DataTemplate>
 
                     <Style x:Key="ItemsControlVirtualisedStyle" TargetType="ItemsControl">
