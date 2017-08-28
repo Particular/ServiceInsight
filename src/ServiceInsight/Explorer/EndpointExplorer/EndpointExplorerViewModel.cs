@@ -194,6 +194,7 @@
         void ExpandServiceNode()
         {
             ServiceControlRoot.IsExpanded = true;
+            SelectedNode = ServiceControlRoot;
         }
 
         public void Handle(RequestSelectingEndpoint message)
