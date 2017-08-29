@@ -1,4 +1,4 @@
-The current maintainers of this repo are [@adamralph](https://github.com/adamralph), [@distantcam](https://github.com/distantcam), and [@HEskandari](https://github.com/HEskandari).
+The current maintainers of this repo are [@adamralph](https://github.com/adamralph), [@HEskandari](https://github.com/HEskandari), and [@WilliamBZA](https://github.com/WilliamBZA)
 
 The maintainers [watch](https://github.com/Particular/ServiceInsight/watchers) this repo and undertake the following responsibilities:
 
@@ -11,6 +11,18 @@ The maintainers [watch](https://github.com/Particular/ServiceInsight/watchers) t
 
 ## Merging pull requests
 
+### Summarized workflow for merging pull requests:
+
+  1. Reviewer: Request changes or comment.
+  2. Submitter: Push fixup.
+  3. (Repeat)
+  4. Reviewer: Request squash.
+  5. Submitter: Squash and force push.
+  6. Reviewer: Approve.
+  7. (Any maintainer): Merge.
+
+### Details 
+
 - A pull request must be approved by two maintainers before it is merged.
   - A pull request created by a maintainer is implicitly approved by that maintainer.
   - Before approving, the maintainer should consider whether a smoke test is required. This is especially important for UI changes, which are not fully covered by automated tests.
@@ -22,3 +34,5 @@ The maintainers [watch](https://github.com/Particular/ServiceInsight/watchers) t
 - After a pull request is merged, the milestone representing the next version should be added to:
   - The issue(s) which the PR is addressing, *or*
   - The PR itself, if it is not addressing any pre-existing issue.
+- Merging using the Github UI by any method other than _"Create a merge commit"_ has been disabled for the repository as the _"Squash/Rebase and merge options"_ create a ff merge.
+- Each individual commit within a pull request must relate to a complete unit of work. If any "fix up" commits are made, they must be squashed before merging.
