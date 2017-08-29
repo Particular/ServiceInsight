@@ -63,8 +63,8 @@
             if (!layoutSetting.ResetLayout)
             {
                 layoutSetting.LayoutVersion = GetCurrentLayoutVersion();
-                layoutSetting.DockLayout = GetLayout(DockManager);
-                layoutSetting.MenuLayout = GetLayout(BarManager);
+                layoutSetting.DockLayout = DockManager.GetLayout();
+                layoutSetting.MenuLayout = BarManager.GetLayout();
                 layoutSetting.MainWindowHeight = Height;
                 layoutSetting.MainWindowWidth = Width;
                 layoutSetting.MainWindowTop = Top;
@@ -86,8 +86,8 @@
 
             if (layoutSetting.LayoutVersion == currentLayoutVersion)
             {
-                SetLayout(DockManager, layoutSetting.DockLayout.GetAsStream());
-                SetLayout(BarManager, layoutSetting.MenuLayout.GetAsStream());
+                DockManager.RestoreLayout(layoutSetting.DockLayout.GetAsStream());
+                BarManager.RestoreLayout(layoutSetting.MenuLayout.GetAsStream());
             }
 
             Top = layoutSetting.MainWindowTop;
@@ -116,40 +116,6 @@
         }
 
         string GetCurrentLayoutVersion() => DXSerializer.GetLayoutVersion(BarManager);
-
-        string GetLayout(dynamic control) //Lack of common interface :(
-        {
-            try
-            {
-                using (var ms = new MemoryStream())
-                {
-                    control.SaveLayoutToStream(ms);
-                    return ms.GetAsString();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogTo.Information(ex, "Failed to save the layout, reason is: {ex}", ex);
-                return null;
-            }
-        }
-
-        void SetLayout(dynamic control, Stream layout)
-        {
-            if (layout == null)
-            {
-                return;
-            }
-
-            try
-            {
-                control.RestoreLayoutFromStream(layout);
-            }
-            catch (Exception ex)
-            {
-                LogTo.Information(ex, "Failed to restore layout, reason is: {ex}", ex);
-            }
-        }
 
         ShellViewModel Model => DataContext as ShellViewModel;
 

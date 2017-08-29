@@ -7,8 +7,12 @@
     using System.Windows.Input;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Grid;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
 
-    public interface IMessageListView
+    public interface IMessageListView : IPersistableLayout
     {
         void BeginDataUpdate();
 
@@ -101,6 +105,26 @@
             {
                 Model.BringIntoView(Model.Selection.SelectedMessage);
             }
+        }
+
+        public void OnSaveLayout(ISettingsProvider settingsProvider)
+        {
+            var layoutSetting = settingsProvider.GetSettings<MessageListSettings>();
+            layoutSetting.GridLayout = grid.GetLayout();
+            settingsProvider.SaveSettings(layoutSetting);
+        }
+
+        public void OnRestoreLayout(ISettingsProvider settingsProvider)
+        {
+            var layoutSetting = settingsProvider.GetSettings<MessageListSettings>();
+            grid.RestoreLayout(layoutSetting.GridLayout.GetAsStream());
+        }
+
+        public void OnResetLayout(ISettingsProvider settingsProvider)
+        {
+            var layoutSettings = settingsProvider.GetSettings<MessageListSettings>();
+            layoutSettings.GridLayout = null;
+            settingsProvider.SaveSettings(layoutSettings);
         }
     }
 }
