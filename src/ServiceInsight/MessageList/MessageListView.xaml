@@ -29,6 +29,9 @@
                                Command="{Binding CopyMessageIdCommand}"
                                CommandParameter="{Binding Selection.SelectedMessage}"
                                Content="Copy Message URI" />
+            <dxb:BarButtonItem Name="columnChooser"
+                               Content="Column Chooser"
+                               Command="{Binding Commands.ShowColumnChooser, ElementName=gridView}"/>
         </dxb:BarManager.Items>
 
         <Grid>
@@ -57,11 +60,13 @@
                             <dxb:BarButtonItemLink BarItemName="retryMessage" />
                             <dxb:BarButtonItemLink BarItemName="copyHeaders" />
                             <dxb:BarButtonItemLink BarItemName="copyMessageId" />
+                            <dxb:BarButtonItemLink BarItemName="columnChooser" />
                         </dxb:PopupMenu.ItemLinks>
                     </dxb:PopupMenu>
                 </dxb:BarManager.DXContextMenu>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="16"
+                    <dxg:GridColumn Width="30"
+                                    FixedWidth="True"
                                     AllowColumnFiltering="False"
                                     AllowSorting="True"
                                     FieldName="IsFaulted"
@@ -79,19 +84,22 @@
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
                     </dxg:GridColumn>
-                    <dxg:GridColumn AllowColumnFiltering="False"
+                    <dxg:GridColumn Name="Id"
+                                    AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="MessageId"
                                     Header="Message ID"
                                     HeaderToolTip="Message Identifier"
                                     Tag="id" />
-                    <dxg:GridColumn AllowColumnFiltering="False"
+                    <dxg:GridColumn Name="MessageType"
+                                    AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="FriendlyMessageType"
                                     Header="Message Type"
                                     HeaderToolTip="Type of the message"
                                     Tag="message_type" />
-                    <dxg:GridColumn AllowColumnFiltering="False"
+                    <dxg:GridColumn Name="TimeSent"
+                                    AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="TimeSent"
                                     Header="Time Sent"
@@ -101,12 +109,36 @@
                             <dxe:DateEditSettings DisplayFormat="G" />
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>
-                    <dxg:GridColumn AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                    <dxg:GridColumn Name="ProcessingTime"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
                                     FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
+                    <dxg:GridColumn Name="DeliveryTime"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
+                                    FieldName="DeliveryTime"
+                                    Header="Delivery Time"
+                                    Tag="delivery_time"
+                                    Visible="False"/>
+                    <dxg:GridColumn Name="CriticalTime"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TimeSpanTextEditGridColumnCellTemplate}"
+                                    FieldName="CriticalTime"
+                                    Header="Critical Time"
+                                    HeaderToolTip="Critical time"
+                                    Tag="critical_time"
+                                    Visible="False"/>
+                    <dxg:GridColumn Name="ProcessedAt"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="ProcessedAt"
+                                    Header="Processed At"
+                                    HeaderToolTip="Processed at"
+                                    Tag="processed_at"
+                                    Visible="False"/>
                 </dxg:GridControl.Columns>
 
                 <dxg:GridControl.View>

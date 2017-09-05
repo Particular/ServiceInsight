@@ -21,7 +21,11 @@
 
         public Endpoint ReceivingEndpoint { get; set; }
 
-        public TimeSpan ProcessingTime { get; set; }
+        public TimeSpan? ProcessingTime { get; set; }
+
+        public TimeSpan? CriticalTime { get; set; }
+
+        public TimeSpan? DeliveryTime { get; set; }
 
         public DateTime ProcessedAt { get; set; }
 
@@ -68,6 +72,10 @@
         public List<SagaInfo> InvokedSagas { get; set; }
 
         public SagaInfo OriginatesFromSaga { get; set; }
+
+        public bool HasClockDrifts => (ProcessingTime.HasValue && ProcessingTime.Value.Ticks < 0) ||
+                                      (CriticalTime.HasValue && CriticalTime.Value.Ticks < 0) ||
+                                      (DeliveryTime.HasValue && DeliveryTime.Value.Ticks < 0);
 
         public string GetURIQuery() => string.Format("?EndpointName={0}&Search={1}", ReceivingEndpoint.Name, MessageId);
 

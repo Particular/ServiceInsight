@@ -9,6 +9,7 @@
              xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys"
              xmlns:startup="clr-namespace:ServiceInsight.Startup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -31,6 +32,7 @@
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToInvertedVisibilityConverter" Inverted="True" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+					<cnv:TimeStampToBoolConverter x:Key="TimeStampToBoolConverter" />
 
                     <!--  Fonts  -->
                     <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
@@ -336,6 +338,20 @@
                             <SolidColorBrush x:Key="{dxet:TextEditThemeKey ResourceKey=NullTextForeground, IsThemeIndependent=True}" Color="#3c3c3c" />
                         </DataTemplate.Resources>
                         <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="TimeSpanTextEditGridColumnCellTemplate" DataType="dxg:RowData">
+                        <DataTemplate.Resources>
+                            <SolidColorBrush x:Key="{dxet:TextEditThemeKey ResourceKey=NullTextForeground, IsThemeIndependent=True}" Color="#3c3c3c" />
+                        </DataTemplate.Resources>
+                        <Border Margin="0" Padding="0" x:Name="PART_Name">
+                            <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=Value, Converter={StaticResource TimeStampToBoolConverter}}" Value="False">
+                                <Setter TargetName="PART_Name" Property="Background" Value="#DDDDDD" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">

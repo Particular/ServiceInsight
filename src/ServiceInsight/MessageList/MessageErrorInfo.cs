@@ -1,120 +1,79 @@
 ﻿namespace ServiceInsight.MessageList
 {
-    using System;
+    using System.Drawing;
     using System.Windows.Media.Imaging;
     using ExtensionMethods;
     using global::ServiceInsight.Properties;
     using Models;
 
-    public class MessageErrorInfo : IComparable
+    public class MessageErrorInfo
     {
-        MessageStatus status;
-        bool statusSpecified;
-
         public MessageErrorInfo()
         {
-            Image = GetImage();
         }
 
-        public MessageErrorInfo(MessageStatus status)
+        public MessageErrorInfo(StoredMessage msg)
         {
-            Status = status;
-            Image = GetImage();
-            Description = status.GetDescription();
+            Description = GetDescription(msg);
+            Image = GetImage(msg);
+        }
+
+        private string GetDescription(StoredMessage msg)
+        {
+            var description = msg.Status.GetDescription();
+
+            if (msg.HasClockDrifts)
+            {
+                description += ". Endpoint shows symptoms of clock drifts.";
+            }
+
+            return description;
         }
 
         public BitmapImage Image { get; }
 
-        public MessageStatus Status
-        {
-            get { return status; }
-
-            private set
-            {
-                status = value;
-                statusSpecified = true;
-            }
-        }
-
         public string Description { get; }
 
-        BitmapImage GetImage()
+        BitmapImage GetImage(StoredMessage msg)
         {
-            if (!statusSpecified)
+            var imageName = GetImageName(msg);
+
+            if (msg.HasClockDrifts && msg.Status != MessageStatus.ResolvedSuccessfully) /* Don't have Warning on Warning */
             {
-                return Resources.BulletWhite.ToBitmapImage();
+                imageName += "_Warning";
             }
 
-            switch (Status)
+            return GetImage(imageName).ToBitmapImage();
+        }
+
+        private string GetImageName(StoredMessage msg)
+        {
+            switch (msg.Status)
             {
                 case MessageStatus.Failed:
-                    return Resources.BulletYellow.ToBitmapImage();
+                    return "Message_Failed";
 
                 case MessageStatus.ArchivedFailure:
-                    return Resources.BulletArchived.ToBitmapImage();
+                    return "Message_Archived";
 
                 case MessageStatus.RepeatedFailure:
-                    return Resources.BulletRed.ToBitmapImage();
-
-                case MessageStatus.Successful:
-                    return Resources.BulletGreen.ToBitmapImage();
+                    return "Message_Failed_Repeatedly";
 
                 case MessageStatus.ResolvedSuccessfully:
-                    return Resources.BulletGreen.ToBitmapImage();
+                    return "Message_Warning";
 
                 case MessageStatus.RetryIssued:
-                    return Resources.BulletWhite.ToBitmapImage();
+                    return "Message_Retry_Requested";
 
+                case MessageStatus.Successful:
                 default:
-                    throw new ArgumentOutOfRangeException(string.Format("Status {0} is not implemented", Status));
+                    return "Message_Successful";
             }
         }
 
-        public int CompareTo(object obj)
+        private Bitmap GetImage(string name)
         {
-            var that = obj as MessageErrorInfo;
-            if (that == null)
-            {
-                return -1;
-            }
-
-            if (statusSpecified == false &&
-                that.statusSpecified == false)
-            {
-                return 0;
-            }
-
-            return that.Status.CompareTo(Status);
-        }
-
-        public override string ToString()
-        {
-            if (!statusSpecified)
-            {
-                return "Not Specified";
-            }
-
-            switch (Status)
-            {
-                case MessageStatus.Failed:
-                    return "Failed";
-
-                case MessageStatus.RepeatedFailure:
-                    return "Faulted";
-
-                case MessageStatus.Successful:
-                case MessageStatus.ResolvedSuccessfully:
-                    return "Success";
-
-                case MessageStatus.RetryIssued:
-                    return "Retried";
-
-                case MessageStatus.ArchivedFailure:
-                    return "Archived";
-
-                default:
-                    throw new NotSupportedException($"Enum 'Status' is {Status}");
-            }
+            return Resources.ResourceManager.GetObject(name) as Bitmap;
         }
     }
 }

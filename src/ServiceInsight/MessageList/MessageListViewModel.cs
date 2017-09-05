@@ -17,6 +17,7 @@
     using ServiceControl;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
     using Shell;
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
@@ -27,9 +28,11 @@
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
         IHandle<SelectedMessageChanged>,
-        IHandle<ServiceControlConnectionChanged>
+        IHandle<ServiceControlConnectionChanged>,
+        IPersistPartLayout
     {
-        readonly IClipboard clipboard;
+        IClipboard clipboard;
+        ISettingsProvider settingsProvider;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         IServiceControl serviceControl;
@@ -46,12 +49,14 @@
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
             MessageSelectionContext selectionContext,
-            IClipboard clipboard)
+            IClipboard clipboard,
+            ISettingsProvider settingsProvider)
         {
             SearchBar = searchBarViewModel;
             Selection = selectionContext;
 
             this.clipboard = clipboard;
+            this.settingsProvider = settingsProvider;
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
@@ -90,6 +95,8 @@
         {
             base.OnViewAttached(view, context);
             this.view = (IMessageListView)view;
+
+            RestoreLayout();
         }
 
         public void CopyHeaders()
@@ -170,7 +177,7 @@
             }
         }
 
-        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
+        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg);
 
         public void Handle(WorkStarted @event)
         {
@@ -285,6 +292,16 @@
         public void BringIntoView(StoredMessage msg)
         {
             eventAggregator.PublishOnUIThread(new ScrollDiagramItemIntoView(msg));
+        }
+
+        public void OnSavePartLayout()
+        {
+            view.OnSaveLayout(settingsProvider);
+        }
+
+        void RestoreLayout()
+        {
+            view.OnRestoreLayout(settingsProvider);
         }
     }
 }
