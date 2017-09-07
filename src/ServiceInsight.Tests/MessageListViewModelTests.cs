@@ -8,6 +8,7 @@
     using ServiceInsight.Explorer.EndpointExplorer;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessageProperties;
     using ServiceInsight.Models;
@@ -24,6 +25,7 @@
         SearchBarViewModel searchBar;
         Func<MessageListViewModel> messageListFunc;
         IClipboard clipboard;
+        ISettingsProvider settingsProvider;
 
         [SetUp]
         public void TestInitialize()
@@ -33,6 +35,7 @@
             serviceControl = Substitute.For<IServiceControl>();
             searchBar = Substitute.For<SearchBarViewModel>();
             clipboard = Substitute.For<IClipboard>();
+            settingsProvider = Substitute.For<ISettingsProvider>();
             messageListFunc = () => new MessageListViewModel(
                 eventAggregator,
                 workNotifier,
@@ -40,7 +43,8 @@
                 searchBar,
                 Substitute.For<GeneralHeaderViewModel>(),
                 Substitute.For<MessageSelectionContext>(),
-                clipboard);
+                clipboard,
+                settingsProvider);
         }
 
         [Test]

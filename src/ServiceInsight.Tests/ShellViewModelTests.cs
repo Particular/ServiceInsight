@@ -149,6 +149,16 @@
             view.Received().OnSaveLayout(settingsProvider);
         }
 
+        [Test]
+        public void Deactivating_shell_saves_part_layouts()
+        {
+            ((IScreen)shell).Activate();
+
+            ((IScreen)shell).Deactivate(true);
+
+            messageList.Received().OnSavePartLayout();
+        }
+
         public void Should_track_selected_explorer()
         {
             var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
