@@ -260,6 +260,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="Framework\Behaviors\ComboBoxEditValuePatcherBehavior.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
+    <Compile Include="Framework\Commands\CloseWindowCommand.cs" />
     <Compile Include="Framework\Commands\DelegateCommand.cs" />
     <Compile Include="Framework\Commands\ObservableCommand.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
