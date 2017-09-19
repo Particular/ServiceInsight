@@ -51,7 +51,7 @@
                                                         Converter={StaticResource BooleanInverseConverter}}"
                              ItemsSource="{Binding Rows}"
                              SelectionMode="Row"
-                             SelectedItem="{Binding Selection.SelectedMessage}"
+                             SelectedItem="{Binding Selection.SelectedMessage, Delay=50}"
                              ShowLoadingPanel="{Binding WorkInProgress}"
                              StartSorting="Grid_OnStartSorting">
                 <dxb:BarManager.DXContextMenu>
