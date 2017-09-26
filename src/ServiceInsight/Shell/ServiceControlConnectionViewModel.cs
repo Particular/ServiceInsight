@@ -6,6 +6,7 @@
     using Autofac;
     using Caliburn.Micro;
     using ServiceControl;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Settings;
     using Settings;
 
@@ -102,7 +103,7 @@
 
         bool IsValidUrl(string serviceUrl)
         {
-            if (Uri.IsWellFormedUriString(serviceUrl, UriKind.Absolute))
+            if (serviceUrl.IsValidUrl())
             {
                 using (var scope = container.BeginLifetimeScope())
                 {
