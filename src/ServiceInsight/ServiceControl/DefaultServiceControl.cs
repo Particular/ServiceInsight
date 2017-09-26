@@ -41,6 +41,11 @@
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
 
+        static DefaultServiceControl()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => ApplicationConfiguration.SkipCertificateValidation;
+        }
+
         public DefaultServiceControl(
             ServiceControlConnectionProvider connection,
             IEventAggregator eventAggregator,
