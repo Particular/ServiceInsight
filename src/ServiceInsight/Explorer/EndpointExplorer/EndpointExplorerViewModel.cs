@@ -95,6 +95,11 @@
 
         bool ServiceAvailable(string serviceUrl)
         {
+            if (!serviceUrl.IsValidUrl())
+            {
+                return false;
+            }
+
             connectionProvider.ConnectTo(serviceUrl);
 
             var connected = serviceControl.IsAlive();
@@ -140,7 +145,7 @@
 
         public void ConnectToService(string url)
         {
-            if (url == null)
+            if (!url.IsValidUrl())
             {
                 return;
             }

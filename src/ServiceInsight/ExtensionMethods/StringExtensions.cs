@@ -15,5 +15,16 @@
 
             return source.IndexOf(toCheck, comparison) >= 0;
         }
+
+        public static bool IsValidUrl(this string source)
+        {
+            if (Uri.TryCreate(source, UriKind.Absolute, out var result))
+            {
+                return result.Scheme == Uri.UriSchemeHttp ||
+                       result.Scheme == Uri.UriSchemeHttps;
+            }
+
+            return false;
+        }
     }
 }
