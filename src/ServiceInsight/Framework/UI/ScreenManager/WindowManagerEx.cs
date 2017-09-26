@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
+    using System.Windows.Input;
     using Caliburn.Micro;
+    using ServiceInsight.Framework.Commands;
 
     public class WindowManagerEx : WindowManager, IWindowManagerEx
     {
@@ -73,6 +75,15 @@
             }
 
             return MessageBoxResult.None;
+        }
+
+        protected override Window CreateWindow(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
+        {
+            var window = base.CreateWindow(rootModel, isDialog, context, settings);
+
+            window.InputBindings.Add(new KeyBinding(new CloseWindowCommand(window), new KeyGesture(Key.Escape)));
+
+            return window;
         }
 
         public bool? ShowDialog<T>() where T : class
