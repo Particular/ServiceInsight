@@ -43,7 +43,7 @@
 
         static DefaultServiceControl()
         {
-            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => Properties.Settings.Default.AllowSelfSignedCertificates;
+            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => ApplicationConfiguration.SkipCertificateValidation;
         }
 
         public DefaultServiceControl(
