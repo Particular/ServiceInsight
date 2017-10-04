@@ -704,6 +704,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
     <Resource Include="Images\Clear.png" />
     <Resource Include="ServiceInsight-About.png" />
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -746,6 +751,10 @@
     <Resource Include="Images\Exclamation.png" />
     <Resource Include="Images\saga.png" />
     <Resource Include="Images\Headers.png" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
