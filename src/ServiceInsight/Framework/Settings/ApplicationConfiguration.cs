@@ -9,18 +9,18 @@
 
         public static void Initialize()
         {
-            SkipCertificateValidation = GetValue<bool>("SkipCertificateValidation");
+            SkipCertificateValidation = GetSkipCertificateValidation();
         }
 
-        private static T GetValue<T>(string key)
+        private static bool GetSkipCertificateValidation()
         {
             try
             {
-                return (T)Convert.ChangeType(ConfigurationManager.AppSettings[key], typeof(T));
+                return Convert.ToBoolean(ConfigurationManager.AppSettings["SkipCertificateValidation"]);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"The value of '{key}' in app.config is not a valid {typeof(T).Name} type.", ex);
+                throw new ApplicationException("Application setting 'SkipCertificateValidation' is either missing or cannot be converted to type boolean.", ex);
             }
         }
     }
