@@ -13,7 +13,6 @@
     using ExtensionMethods;
     using Framework;
     using Framework.Logging;
-    using ServiceInsight.Framework.Settings;
     using Shell;
     using IContainer = Autofac.IContainer;
 
@@ -28,8 +27,6 @@
 
         protected override void Configure()
         {
-            ApplicationConfiguration.Initialize();
-
             CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();

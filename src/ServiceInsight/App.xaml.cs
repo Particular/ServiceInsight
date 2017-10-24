@@ -6,6 +6,7 @@
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
     using Framework.Logging;
+    using ServiceInsight.Framework.Settings;
     using Shell;
 
     public interface IAppCommands
@@ -53,6 +54,7 @@
         {
             LogTo.Information("Starting the application...");
             DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
+            ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
         }
