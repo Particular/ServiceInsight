@@ -3,7 +3,7 @@
     using System;
     using System.Configuration;
 
-    public class ApplicationConfiguration
+    public static class ApplicationConfiguration
     {
         public static bool SkipCertificateValidation { get; private set; }
 
@@ -20,7 +20,7 @@
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Application setting 'SkipCertificateValidation' is either missing or cannot be converted to type boolean.", ex);
+                throw new ConfigurationErrorsException("Application setting 'SkipCertificateValidation' is either missing or cannot be converted to type Boolean.", ex);
             }
         }
     }
