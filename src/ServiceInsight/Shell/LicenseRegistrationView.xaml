@@ -118,10 +118,7 @@
                     Height="24"
                     Margin="{StaticResource ButtonMargin}"
                     Content="Browse..."
-                    Style="{StaticResource FlatButton}"
-                    Visibility="{Binding HasTrialLicense,
-                                         Converter={StaticResource BoolToVisibilityConverter}}" />
-
+                    Style="{StaticResource FlatButton}" />
         </StackPanel>
     </Grid>
 </dxc:DXWindow>
