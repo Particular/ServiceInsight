@@ -16,11 +16,11 @@
         {
             try
             {
-                return Convert.ToBoolean(ConfigurationManager.AppSettings["SkipCertificateValidation"]);
+                return Convert.ToBoolean(ConfigurationManager.AppSettings["SkipCertificateValidation"] ?? "false");
             }
             catch (Exception ex)
             {
-                throw new ConfigurationErrorsException("Application setting 'SkipCertificateValidation' is either missing or cannot be converted to type Boolean.", ex);
+                throw new ConfigurationErrorsException("Application setting 'SkipCertificateValidation' cannot be converted to type Boolean.", ex);
             }
         }
     }
