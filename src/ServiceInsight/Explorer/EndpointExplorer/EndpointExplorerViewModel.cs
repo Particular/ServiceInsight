@@ -204,7 +204,7 @@
 
         public void Handle(RequestSelectingEndpoint message)
         {
-            if (ServiceControlRoot.EndpointExists(message.Endpoint))
+            if (ServiceControlRoot?.EndpointExists(message.Endpoint) == true)
             {
                 var node = ServiceControlRoot.GetEndpointNode(message.Endpoint);
                 SelectedNode = node;
