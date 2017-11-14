@@ -66,9 +66,7 @@
 
         public bool CanExtendTrial => HasTrialLicense && !licenseManager.CurrentLicense.IsExtendedTrial;
 
-        public bool CanBuyNow => CanContactSales;
-
-        public bool CanContactSales => HasTrialLicense && licenseManager.CurrentLicense.IsExtendedTrial;
+        public bool CanBuyNow => HasTrialLicense && licenseManager.CurrentLicense.IsExtendedTrial;
 
         public bool MustExtendTrial => HasTrialLicense && !HasRemainingTrial && !licenseManager.CurrentLicense.IsExtendedTrial;
 
@@ -123,7 +121,7 @@
 
         public void ContactSales()
         {
-            network.Browse("http://particular.net/extend-your-trial-45");
+            network.Browse("mailto:contact@particular.net?subject=ServiceInsight");
         }
 
         string ReadAllTextWithoutLocking(string path)
