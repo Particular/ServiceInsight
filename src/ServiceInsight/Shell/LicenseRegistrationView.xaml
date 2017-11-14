@@ -92,9 +92,7 @@
                     Height="24"
                     Margin="5 0"
                     Content="Contact Sales"
-                    Style="{StaticResource FlatButton}"
-                    Visibility="{Binding CanContactSales,
-                                         Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Style="{StaticResource FlatButton}" />
 
             <Button x:Name="Extend"
                     Width="120"
