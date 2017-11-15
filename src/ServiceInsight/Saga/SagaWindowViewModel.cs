@@ -44,7 +44,7 @@
             ShowEntireContentCommand = Command.Create(arg => ShowEntireContent((SagaUpdatedValue)arg));
         }
 
-        public string InstallScriptText { get; set; }
+        public string InstallScriptText { get; } = "install-package NServiceBus.SagaAudit";
 
         public ICommand CopyCommand { get; }
 
@@ -98,8 +98,6 @@
                 return;
             }
 
-            UpdateInstallScriptText(message);
-
             RefreshSaga(message);
 
             SelectedMessageId = message.MessageId;
@@ -116,17 +114,6 @@
         public void Handle(ServiceControlConnectionChanged message)
         {
             ClearSaga();
-        }
-
-        void UpdateInstallScriptText(StoredMessage message)
-        {
-            InstallScriptText = $"install-package ServiceControl.Plugin.NSB{GetMajorVersion(message)}.SagaAudit";
-        }
-
-        string GetMajorVersion(StoredMessage message)
-        {
-            var version = message.GetHeaderByKey(MessageHeaderKeys.Version);
-            return version?.Split('.').First();
         }
 
         void ClearSaga()
