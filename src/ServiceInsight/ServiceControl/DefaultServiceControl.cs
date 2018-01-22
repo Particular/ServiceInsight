@@ -14,6 +14,7 @@
     using Caliburn.Micro;
     using Framework;
     using RestSharp;
+    using RestSharp.Contrib;
     using RestSharp.Deserializers;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
@@ -257,20 +258,40 @@
                     linksByRel.TryGetValue("first", out first);
                 }
 
+                var requestUri = baseUrl ?? request.Resource;
+                var requestQueryParameters = HttpUtility.ParseQueryString(requestUri);
+
                 var pageSize = DefaultPageSize;
+                var pageSizeAsString = requestQueryParameters["per_page"];
+                if (pageSizeAsString != null)
+                {
+                    pageSize = int.Parse(pageSizeAsString);
+                }
                 var pageSizeText = (string)response.Headers.FirstOrDefault(x => x.Name == ServiceControlHeaders.PageSize)?.Value;
                 if (pageSizeText != null)
                 {
                     pageSize = int.Parse(pageSizeText);
                 }
+
+                var currentPage = 0;
+                var currentPageAsString = requestQueryParameters["page"];
+                if (currentPageAsString != null)
+                {
+                    currentPage = int.Parse(currentPageAsString);
+                }
+
+                var totalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString());
+                var responseData = response.Data;
+
                 return new PagedResult<T>
                 {
-                    Result = response.Data,
+                    CurrentPage = currentPage,
+                    Result = responseData,
                     NextLink = next,
                     PrevLink = prev,
                     LastLink = last,
                     FirstLink = first,
-                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
+                    TotalCount = totalCount,
                     PageSize = pageSize
                 };
             }, baseUrl);
