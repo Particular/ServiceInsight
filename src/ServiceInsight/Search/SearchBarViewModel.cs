@@ -51,22 +51,22 @@
 
         public void GoToFirstPage()
         {
-            Parent.NavigateToPage(FirstLink, 1);
+            Parent.NavigateToPage(FirstLink);
         }
 
         public void GoToPreviousPage()
         {
-            Parent.NavigateToPage(PrevLink, CurrentPage - 1);
+            Parent.NavigateToPage(PrevLink);
         }
 
         public void GoToNextPage()
         {
-            Parent.NavigateToPage(NextLink, CurrentPage + 1);
+            Parent.NavigateToPage(NextLink);
         }
 
         public void GoToLastPage()
         {
-            Parent.NavigateToPage(LastLink, PageCount);
+            Parent.NavigateToPage(LastLink);
         }
 
         public ICommand SearchCommand { get; }
@@ -135,19 +135,6 @@
 
         public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
-        public int PageCount
-        {
-            get
-            {
-                if (TotalItemCount == 0 || PageSize == 0)
-                {
-                    return 0;
-                }
-
-                return (int)Math.Ceiling((double)TotalItemCount / PageSize);
-            }
-        }
-
         public bool WorkInProgress => workCount > 0;
 
         public Endpoint SelectedEndpoint { get; private set; }
@@ -198,7 +185,6 @@
 
         public void NotifyPropertiesChanged()
         {
-            NotifyOfPropertyChange(nameof(PageCount));
             NotifyOfPropertyChange(nameof(CanGoToFirstPage));
             NotifyOfPropertyChange(nameof(CanGoToLastPage));
             NotifyOfPropertyChange(nameof(CanGoToNextPage));

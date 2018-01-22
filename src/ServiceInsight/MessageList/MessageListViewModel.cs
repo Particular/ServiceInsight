@@ -104,7 +104,7 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public void NavigateToPage(string link, int pageIndex)
+        public void NavigateToPage(string link)
         {
             using (workNotifier.NotifyOfWork("Loading messages..."))
             {
@@ -115,7 +115,6 @@
                     return;
                 }
 
-                pagedResult.CurrentPage = pageIndex;
                 TryRebindMessageList(pagedResult);
 
                 SearchBar.IsVisible = true;
