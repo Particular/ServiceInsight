@@ -41,7 +41,7 @@ namespace ServiceInsight.Framework.Commands
 
             using (workNotifier.NotifyOfWork($"Retrying to send selected error message {message.SendingEndpoint}"))
             {
-                serviceControl.RetryMessage(message.Id);
+                serviceControl.RetryMessage(message.Id, message.InstanceId);
                 eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
             }
 

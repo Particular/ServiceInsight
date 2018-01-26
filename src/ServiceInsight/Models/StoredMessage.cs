@@ -37,6 +37,8 @@
 
         public string MessageId { get; set; }
 
+        public string InstanceId { get; set; }
+
         public List<StoredMessageHeader> Headers
         {
             get;

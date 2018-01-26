@@ -78,9 +78,11 @@
             return header == null ? null : header.Value.ToString();
         }
 
-        public void RetryMessage(string messageId)
+        public void RetryMessage(string messageId, string instanceId)
         {
-            var url = string.Format(RetryEndpoint, messageId);
+            var url = instanceId != null ?
+                string.Format(RetryEndpoint + "?instance_id={1}", messageId, instanceId) :
+                string.Format(RetryEndpoint, messageId);
             var request = new RestRequestWithCache(url, Method.POST);
             Execute(request, _ => true);
         }
