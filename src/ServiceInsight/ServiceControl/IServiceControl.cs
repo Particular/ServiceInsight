@@ -11,7 +11,7 @@ namespace ServiceInsight.ServiceControl
 
         string GetVersion();
 
-        void RetryMessage(string messageId);
+        void RetryMessage(string messageId, string instanceId);
 
         Uri CreateServiceInsightUri(StoredMessage message);
 
