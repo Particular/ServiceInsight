@@ -122,37 +122,34 @@
             }
         }
 
-        public void RefreshMessages(string orderBy = null, bool ascending = false)
+        public void RefreshMessages(string orderBy, bool ascending)
+        {
+            lastSortColumn = orderBy;
+            lastSortOrderAscending = ascending;
+            RefreshMessages();
+        }
+
+        public void RefreshMessages()
         {
             var serviceControlExplorerItem = selectedExplorerItem as ServiceControlExplorerItem;
             if (serviceControlExplorerItem != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: null,
-                                     orderBy: orderBy,
-                                     ascending: ascending);
+                                     endpoint: null);
             }
 
             var endpointNode = selectedExplorerItem as AuditEndpointExplorerItem;
             if (endpointNode != null)
             {
                 RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: endpointNode.Endpoint,
-                                     orderBy: orderBy,
-                                     ascending: ascending);
+                                     endpoint: endpointNode.Endpoint);
             }
         }
 
-        public void RefreshMessages(Endpoint endpoint, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public void RefreshMessages(Endpoint endpoint, string searchQuery = null)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                if (orderBy != null)
-                {
-                    lastSortColumn = orderBy;
-                    lastSortOrderAscending = ascending;
-                }
-
                 var pagedResult = serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
                 if (pagedResult == null)
                 {
