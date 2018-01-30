@@ -17,9 +17,11 @@ namespace ServiceInsight.ServiceControl
 
         SagaData GetSagaById(Guid sagaId);
 
-        PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false);
+        PagedResult<StoredMessage> Search(string searchQuery, string orderBy = null, bool ascending = false);
 
-        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false);
+        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, string orderBy = null, bool ascending = false);
+
+        PagedResult<StoredMessage> GetAuditMessages(string link);
 
         IEnumerable<StoredMessage> GetConversationById(string conversationId);
 
@@ -34,5 +36,7 @@ namespace ServiceInsight.ServiceControl
     {
         public const string ParticularVersion = "X-Particular-Version";
         public const string TotalCount = "Total-Count";
+        public const string Link = "Link";
+        public const string PageSize = "Page-Size";
     }
 }

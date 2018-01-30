@@ -104,6 +104,24 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
+        public void RefreshMessages(string link)
+        {
+            using (workNotifier.NotifyOfWork("Loading messages..."))
+            {
+                var pagedResult = serviceControl.GetAuditMessages(link);
+
+                if (pagedResult == null)
+                {
+                    return;
+                }
+
+                TryRebindMessageList(pagedResult);
+
+                SearchBar.IsVisible = true;
+                SearchBar.SetupPaging(pagedResult);
+            }
+        }
+
         public void RefreshMessages(string orderBy = null, bool ascending = false)
         {
             var serviceControlExplorerItem = selectedExplorerItem as ServiceControlExplorerItem;
@@ -125,7 +143,7 @@
             }
         }
 
-        public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public void RefreshMessages(Endpoint endpoint, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
@@ -140,21 +158,20 @@
                 if (endpoint != null)
                 {
                     pagedResult = serviceControl.GetAuditMessages(endpoint,
-                        pageIndex: pageIndex,
                         searchQuery: searchQuery,
                         orderBy: lastSortColumn,
                         ascending: lastSortOrderAscending);
                 }
                 else if (!searchQuery.IsEmpty())
                 {
-                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
+                    pagedResult = serviceControl.Search(
                         searchQuery: searchQuery,
                         orderBy: lastSortColumn,
                         ascending: lastSortOrderAscending);
                 }
                 else
                 {
-                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
+                    pagedResult = serviceControl.Search(
                         searchQuery: null,
                         orderBy: lastSortColumn,
                         ascending: lastSortOrderAscending);
@@ -173,6 +190,11 @@
                     CurrentPage = pagedResult.CurrentPage,
                     TotalCount = pagedResult.TotalCount,
                     Result = pagedResult.Result,
+                    PageSize = pagedResult.PageSize,
+                    FirstLink = pagedResult.FirstLink,
+                    PrevLink = pagedResult.PrevLink,
+                    NextLink = pagedResult.NextLink,
+                    LastLink = pagedResult.LastLink,
                 });
             }
         }
