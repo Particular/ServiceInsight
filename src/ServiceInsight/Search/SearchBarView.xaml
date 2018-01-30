@@ -69,7 +69,6 @@
             <Button Content="3" cal:Message.Attach="[Event Click]=[Action GoToPreviousPage]" />
             <TextBlock Text="Page" />
             <TextBlock Text="{Binding CurrentPage}" />
-            <TextBlock Text="{Binding PageCount, StringFormat=of {0}}" />
             <Button Content="4" cal:Message.Attach="[Event Click]=[Action GoToNextPage]" />
             <Button Content=":" cal:Message.Attach="[Event Click]=[Action GoToLastPage]" />
         </StackPanel>

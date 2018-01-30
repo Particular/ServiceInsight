@@ -13,6 +13,16 @@
 
         public int TotalCount { get; set; }
 
+        public int PageSize { get; set; }
+
         public int CurrentPage { get; set; }
+
+        public string FirstLink { get; set; }
+
+        public string LastLink { get; set; }
+
+        public string NextLink { get; set; }
+
+        public string PrevLink { get; set; }
     }
 }

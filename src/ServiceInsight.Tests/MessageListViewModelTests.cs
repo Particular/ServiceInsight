@@ -51,7 +51,7 @@
         public void Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
-            serviceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<bool>())
+            serviceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())
                 .Returns(x => new PagedResult<StoredMessage>
                 {
                     CurrentPage = 1,
