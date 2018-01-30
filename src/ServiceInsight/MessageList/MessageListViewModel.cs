@@ -131,18 +131,14 @@
 
         public void RefreshMessages()
         {
-            var serviceControlExplorerItem = selectedExplorerItem as ServiceControlExplorerItem;
-            if (serviceControlExplorerItem != null)
+            if (selectedExplorerItem is ServiceControlExplorerItem serviceControlExplorerItem)
             {
-                RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: null);
+                RefreshMessages(null, SearchBar.SearchQuery);
             }
 
-            var endpointNode = selectedExplorerItem as AuditEndpointExplorerItem;
-            if (endpointNode != null)
+            if (selectedExplorerItem is AuditEndpointExplorerItem endpointNode)
             {
-                RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: endpointNode.Endpoint);
+                RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery);
             }
         }
 
