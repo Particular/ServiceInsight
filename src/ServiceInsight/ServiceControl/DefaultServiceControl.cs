@@ -112,7 +112,7 @@
 
         public PagedResult<StoredMessage> GetAuditMessages(string link)
         {
-            if (link.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            if (IsAbsoluteUrl(link))
             {
                 var request = new RestRequestWithCache("", RestRequestWithCache.CacheStyle.IfNotModified);
                 return GetPagedResult<StoredMessage>(request, link);
@@ -580,6 +580,11 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
             eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
+        }
+
+        static bool IsAbsoluteUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
 
         static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
