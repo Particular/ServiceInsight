@@ -153,30 +153,7 @@
                     lastSortOrderAscending = ascending;
                 }
 
-                PagedResult<StoredMessage> pagedResult;
-
-                if (endpoint != null)
-                {
-                    pagedResult = serviceControl.GetAuditMessages(endpoint,
-                        searchQuery: searchQuery,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
-                else if (!searchQuery.IsEmpty())
-                {
-                    pagedResult = serviceControl.GetAuditMessages(
-                        searchQuery: searchQuery,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
-                else
-                {
-                    pagedResult = serviceControl.GetAuditMessages(
-                        searchQuery: null,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
-
+                var pagedResult = serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
                 if (pagedResult == null)
                 {
                     return;
@@ -185,17 +162,7 @@
                 TryRebindMessageList(pagedResult);
 
                 SearchBar.IsVisible = true;
-                SearchBar.SetupPaging(new PagedResult<StoredMessage>
-                {
-                    CurrentPage = pagedResult.CurrentPage,
-                    TotalCount = pagedResult.TotalCount,
-                    Result = pagedResult.Result,
-                    PageSize = pagedResult.PageSize,
-                    FirstLink = pagedResult.FirstLink,
-                    PrevLink = pagedResult.PrevLink,
-                    NextLink = pagedResult.NextLink,
-                    LastLink = pagedResult.LastLink,
-                });
+                SearchBar.SetupPaging(pagedResult);
             }
         }
 
