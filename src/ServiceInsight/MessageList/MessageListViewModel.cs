@@ -151,7 +151,6 @@
                     return;
                 }
 
-                pagedResult.CurrentPage = 1;
                 TryRebindMessageList(pagedResult);
 
                 SearchBar.IsVisible = true;
