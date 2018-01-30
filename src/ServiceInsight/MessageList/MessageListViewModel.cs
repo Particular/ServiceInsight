@@ -146,7 +146,7 @@
             }
         }
 
-        public void RefreshMessages(Endpoint endpoint, string searchQuery = null)
+        public void RefreshMessages(Endpoint endpoint, string searchQuery)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
