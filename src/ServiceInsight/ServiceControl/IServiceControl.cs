@@ -17,9 +17,7 @@ namespace ServiceInsight.ServiceControl
 
         SagaData GetSagaById(Guid sagaId);
 
-        PagedResult<StoredMessage> Search(string searchQuery, string orderBy = null, bool ascending = false);
-
-        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, string orderBy = null, bool ascending = false);
+        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false);
 
         PagedResult<StoredMessage> GetAuditMessages(string link);
 

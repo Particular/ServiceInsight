@@ -164,14 +164,14 @@
                 }
                 else if (!searchQuery.IsEmpty())
                 {
-                    pagedResult = serviceControl.Search(
+                    pagedResult = serviceControl.GetAuditMessages(
                         searchQuery: searchQuery,
                         orderBy: lastSortColumn,
                         ascending: lastSortOrderAscending);
                 }
                 else
                 {
-                    pagedResult = serviceControl.Search(
+                    pagedResult = serviceControl.GetAuditMessages(
                         searchQuery: null,
                         orderBy: lastSortColumn,
                         ascending: lastSortOrderAscending);

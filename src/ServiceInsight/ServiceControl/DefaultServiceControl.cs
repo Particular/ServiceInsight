@@ -98,22 +98,9 @@
 
         public SagaData GetSagaById(Guid sagaId) => GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
 
-        public PagedResult<StoredMessage> Search(string searchQuery, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            var request = CreateMessagesRequest();
-
-            AppendSystemMessages(request);
-            AppendSearchQuery(request, searchQuery);
-            AppendPaging(request);
-            AppendOrdering(request, orderBy, ascending);
-
-            var result = GetPagedResult<StoredMessage>(request);
-            return result;
-        }
-
-        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, string orderBy = null, bool ascending = false)
-        {
-            var request = CreateMessagesRequest(endpoint.Name);
+            var request = CreateMessagesRequest(endpoint?.Name);
 
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
