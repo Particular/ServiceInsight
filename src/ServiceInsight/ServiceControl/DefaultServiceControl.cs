@@ -202,7 +202,7 @@
             request.AddParameter("include_system_messages", settings.DisplaySystemMessages);
         }
 
-        void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
+        static void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
             if (orderBy == null)
             {
@@ -213,7 +213,7 @@
             request.AddParameter("direction", ascending ? "asc" : "desc", ParameterType.GetOrPost);
         }
 
-        void AppendPaging(IRestRequest request)
+        static void AppendPaging(IRestRequest request)
         {
             request.AddParameter("per_page", DefaultPageSize, ParameterType.GetOrPost);
         }
