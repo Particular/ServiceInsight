@@ -107,8 +107,7 @@
             AppendPaging(request);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = GetPagedResult<StoredMessage>(request);
-            return result;
+            return GetPagedResult<StoredMessage>(request);
         }
 
         public PagedResult<StoredMessage> GetAuditMessages(string link)
