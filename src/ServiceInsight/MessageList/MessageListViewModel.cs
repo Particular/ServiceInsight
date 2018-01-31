@@ -104,61 +104,11 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public void RefreshMessages(string orderBy = null, bool ascending = false)
+        public void RefreshMessages(string link)
         {
-            var serviceControlExplorerItem = selectedExplorerItem as ServiceControlExplorerItem;
-            if (serviceControlExplorerItem != null)
+            using (workNotifier.NotifyOfWork("Loading messages..."))
             {
-                RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: null,
-                                     orderBy: orderBy,
-                                     ascending: ascending);
-            }
-
-            var endpointNode = selectedExplorerItem as AuditEndpointExplorerItem;
-            if (endpointNode != null)
-            {
-                RefreshMessages(searchQuery: SearchBar.SearchQuery,
-                                     endpoint: endpointNode.Endpoint,
-                                     orderBy: orderBy,
-                                     ascending: ascending);
-            }
-        }
-
-        public void RefreshMessages(Endpoint endpoint, int pageIndex = 1, string searchQuery = null, string orderBy = null, bool ascending = false)
-        {
-            using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
-            {
-                if (orderBy != null)
-                {
-                    lastSortColumn = orderBy;
-                    lastSortOrderAscending = ascending;
-                }
-
-                PagedResult<StoredMessage> pagedResult;
-
-                if (endpoint != null)
-                {
-                    pagedResult = serviceControl.GetAuditMessages(endpoint,
-                        pageIndex: pageIndex,
-                        searchQuery: searchQuery,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
-                else if (!searchQuery.IsEmpty())
-                {
-                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
-                        searchQuery: searchQuery,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
-                else
-                {
-                    pagedResult = serviceControl.Search(pageIndex: pageIndex,
-                        searchQuery: null,
-                        orderBy: lastSortColumn,
-                        ascending: lastSortOrderAscending);
-                }
+                var pagedResult = serviceControl.GetAuditMessages(link);
 
                 if (pagedResult == null)
                 {
@@ -168,12 +118,44 @@
                 TryRebindMessageList(pagedResult);
 
                 SearchBar.IsVisible = true;
-                SearchBar.SetupPaging(new PagedResult<StoredMessage>
+                SearchBar.SetupPaging(pagedResult);
+            }
+        }
+
+        public void RefreshMessages(string orderBy, bool ascending)
+        {
+            lastSortColumn = orderBy;
+            lastSortOrderAscending = ascending;
+            RefreshMessages();
+        }
+
+        public void RefreshMessages()
+        {
+            if (selectedExplorerItem is ServiceControlExplorerItem serviceControlExplorerItem)
+            {
+                RefreshMessages(null, SearchBar.SearchQuery);
+            }
+
+            if (selectedExplorerItem is AuditEndpointExplorerItem endpointNode)
+            {
+                RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery);
+            }
+        }
+
+        public void RefreshMessages(Endpoint endpoint, string searchQuery)
+        {
+            using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
+            {
+                var pagedResult = serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
+                if (pagedResult == null)
                 {
-                    CurrentPage = pagedResult.CurrentPage,
-                    TotalCount = pagedResult.TotalCount,
-                    Result = pagedResult.Result,
-                });
+                    return;
+                }
+
+                TryRebindMessageList(pagedResult);
+
+                SearchBar.IsVisible = true;
+                SearchBar.SetupPaging(pagedResult);
             }
         }
 

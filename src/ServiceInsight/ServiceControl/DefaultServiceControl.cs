@@ -7,12 +7,14 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Framework;
     using RestSharp;
+    using RestSharp.Contrib;
     using RestSharp.Deserializers;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
@@ -35,6 +37,7 @@
         const string MessagesEndpoint = "messages/";
         const string MessageBodyEndpoint = "messages/{0}/body";
         const string SagaEndpoint = "sagas/{0}";
+        const int DefaultPageSize = 50;
 
         ServiceControlConnectionProvider connection;
         MemoryCache cache;
@@ -95,38 +98,30 @@
 
         public SagaData GetSagaById(Guid sagaId) => GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
 
-        public PagedResult<StoredMessage> Search(string searchQuery, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
-            var request = CreateMessagesRequest();
+            var request = CreateMessagesRequest(endpoint?.Name);
 
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
-            AppendPaging(request, pageIndex);
+            AppendPaging(request);
             AppendOrdering(request, orderBy, ascending);
 
-            var result = GetPagedResult<StoredMessage>(request);
-            if (result != null)
-            {
-                result.CurrentPage = pageIndex;
-            }
-            return result;
+            return GetPagedResult<StoredMessage>(request);
         }
 
-        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint, string searchQuery = null, int pageIndex = 1, string orderBy = null, bool ascending = false)
+        public PagedResult<StoredMessage> GetAuditMessages(string link)
         {
-            var request = CreateMessagesRequest(endpoint.Name);
-
-            AppendSystemMessages(request);
-            AppendSearchQuery(request, searchQuery);
-            AppendPaging(request, pageIndex);
-            AppendOrdering(request, orderBy, ascending);
-
-            var result = GetPagedResult<StoredMessage>(request);
-            if (result != null)
+            if (IsAbsoluteUrl(link))
             {
-                result.CurrentPage = pageIndex;
+                var request = new RestRequestWithCache("", RestRequestWithCache.CacheStyle.IfNotModified);
+                return GetPagedResult<StoredMessage>(request, link);
             }
-            return result;
+            else
+            {
+                var request = new RestRequestWithCache(link, RestRequestWithCache.CacheStyle.IfNotModified);
+                return GetPagedResult<StoredMessage>(request);
+            }
         }
 
         public IEnumerable<StoredMessage> GetConversationById(string conversationId)
@@ -193,7 +188,7 @@
             request.AddParameter("include_system_messages", settings.DisplaySystemMessages);
         }
 
-        void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
+        static void AppendOrdering(IRestRequest request, string orderBy, bool ascending)
         {
             if (orderBy == null)
             {
@@ -204,9 +199,9 @@
             request.AddParameter("direction", ascending ? "asc" : "desc", ParameterType.GetOrPost);
         }
 
-        void AppendPaging(IRestRequest request, int pageIndex)
+        static void AppendPaging(IRestRequest request)
         {
-            request.AddParameter("page", pageIndex, ParameterType.GetOrPost);
+            request.AddParameter("per_page", DefaultPageSize, ParameterType.GetOrPost);
         }
 
         void AppendSearchQuery(IRestRequest request, string searchQuery)
@@ -247,13 +242,59 @@
     ? new RestRequestWithCache(string.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
     : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
 
-        PagedResult<T> GetPagedResult<T>(RestRequestWithCache request) where T : class, new()
+        PagedResult<T> GetPagedResult<T>(RestRequestWithCache request, string url = null) where T : class, new()
         {
-            var result = Execute<PagedResult<T>, List<T>>(request, response => new PagedResult<T>
+            var result = Execute<PagedResult<T>, List<T>>(request, response =>
             {
-                Result = response.Data,
-                TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString())
-            });
+                string first = null, prev = null, next = null, last = null;
+                var links = (string)response.Headers.FirstOrDefault(header => header.Name == ServiceControlHeaders.Link)?.Value;
+                if (links != null)
+                {
+                    var linksByRel = linkExpression.Matches(links)
+                        .Cast<Match>()
+                        .ToDictionary(match => match.Groups[2].Value, match => match.Groups[1].Value);
+
+                    linksByRel.TryGetValue("first", out first);
+                    linksByRel.TryGetValue("prev", out prev);
+                    linksByRel.TryGetValue("next", out next);
+                    linksByRel.TryGetValue("last", out last);
+                }
+
+                var requestQueryParameters = HttpUtility.ParseQueryString(url ?? request.Resource);
+
+                var pageSize = DefaultPageSize;
+                var perPage = requestQueryParameters["per_page"];
+                if (perPage != null)
+                {
+                    pageSize = int.Parse(perPage);
+                }
+
+                var pageSizeText = (string)response.Headers.FirstOrDefault(header => header.Name == ServiceControlHeaders.PageSize)?.Value;
+                if (pageSizeText != null)
+                {
+                    pageSize = int.Parse(pageSizeText);
+                }
+
+                var currentPage = 0;
+                var page = requestQueryParameters["page"];
+                if (page != null)
+                {
+                    currentPage = int.Parse(page);
+                }
+
+                return new PagedResult<T>
+                {
+                    CurrentPage = currentPage,
+                    Result = response.Data,
+                    NextLink = next,
+                    PrevLink = prev,
+                    LastLink = last,
+                    FirstLink = first,
+                    TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
+                    PageSize = pageSize
+                };
+            },
+            url);
 
             return result;
         }
@@ -348,12 +389,12 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return data;
         }
 
-        T Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector)
+        T Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector, string url = null)
             where T : class, new()
             where T2 : class, new()
         {
             var cacheStyle = request.CacheSyle;
-            var restClient = CreateClient();
+            var restClient = CreateClient(url);
 
             switch (cacheStyle)
             {
@@ -541,9 +582,15 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             LogTo.Error(exception, errorMessage);
         }
 
+        static bool IsAbsoluteUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
+        }
+
         static bool HasSucceeded(IRestResponse response) => successCodes.Any(x => response != null && x == response.StatusCode && response.ErrorException == null);
 
         static IEnumerable<HttpStatusCode> successCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
+        static Regex linkExpression = new Regex(@"<([^>]+)>;\s?rel=""(\w+)"",?\s?", RegexOptions.Compiled);
     }
 
     public enum PresentationHint
