@@ -357,6 +357,7 @@
     <Compile Include="SequenceDiagram\ModelCreator.cs" />
     <Compile Include="ServiceControl\RestRequestWithCache.cs" />
     <Compile Include="ServiceControl\ServiceControlConnectionChanged.cs" />
+    <Compile Include="ServiceControl\ServiceControlRootUrls.cs" />
     <Compile Include="Settings\MessageListSettings.cs" />
     <Compile Include="Settings\SequenceDiagramSettings.cs" />
     <Compile Include="Shell\IPersistPartLayout.cs" />

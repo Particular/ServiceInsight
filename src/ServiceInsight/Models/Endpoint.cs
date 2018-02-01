@@ -2,23 +2,31 @@
 {
     public class Endpoint
     {
-        string host;
-
-        public string Name { get; set; }
+        public string Name
+        {
+            get => EndpointDetails.Name;
+            set => EndpointDetails.Name = value;
+        }
 
         public string Host
         {
-            get { return host ?? HostDisplayName; }
-            set { host = value; }
+            get => EndpointDetails.Host ?? HostDisplayName;
+            set => EndpointDetails.Host = value;
         }
 
-        public string HostId { get; set; }
+        public string HostId
+        {
+            get => EndpointDetails.HostId;
+            set => EndpointDetails.HostId = value;
+        }
 
         public string HostDisplayName { get; set; }
 
-        public string Address => string.Format("{0}{1}", Name, AtMachine());
+        public string Address => $"{Name}{AtMachine()}";
 
-        string AtMachine() => string.IsNullOrEmpty(Host) ? string.Empty : string.Format("@{0}", Host);
+        public EndpointDetails EndpointDetails { get; set; } = new EndpointDetails();
+
+        string AtMachine() => string.IsNullOrEmpty(Host) ? string.Empty : $"@{Host}";
 
         protected bool Equals(Endpoint other) => other != null && string.Equals(Address, other.Address);
 
@@ -49,5 +57,14 @@
         public static bool operator !=(Endpoint left, Endpoint right) => !Equals(left, right);
 
         public override string ToString() => Address;
+    }
+
+    public class EndpointDetails
+    {
+        public string Name { get; set; }
+
+        public string HostId { get; set; }
+
+        public string Host { get; set; }
     }
 }
