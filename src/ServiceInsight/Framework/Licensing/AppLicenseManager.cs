@@ -17,9 +17,7 @@
         {
             try
             {
-                Exception verificationException;
-
-                if (!LicenseVerifier.TryVerify(licenseText, out verificationException))
+                if (!LicenseVerifier.TryVerify(licenseText, out _))
                 {
                     return false;
                 }

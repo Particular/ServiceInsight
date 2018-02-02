@@ -50,15 +50,13 @@
 
                 try
                 {
-                    int entriesRead;
                     int totalEntries;
-                    int resHandle;
                     var result = NetServerEnum(null, 100, ref buffer, mAX_PREFERRED_LENGTH,
-                                            out entriesRead,
+                                            out _,
                                             out totalEntries,
                                             sV_TYPE_WORKSTATION | sV_TYPE_SERVER,
                                             null,
-                                            out resHandle);
+                                            out _);
                     if (result == 0)
                     {
                         for (var i = 0; i < totalEntries; i++)

@@ -1,9 +1,6 @@
 ﻿namespace ServiceInsight.Shell
 {
-    using System;
-    using System.IO;
     using System.Windows;
-    using Anotar.Serilog;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Core.Serialization;

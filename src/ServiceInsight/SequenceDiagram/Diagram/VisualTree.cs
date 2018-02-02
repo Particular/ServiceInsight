@@ -17,7 +17,7 @@
             {
                 var child = VisualTreeHelper.GetChild(parentElement, i);
 
-                if (child != null && child is T)
+                if (child is T)
                 {
                     return (T)child;
                 }

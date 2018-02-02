@@ -2,7 +2,6 @@ namespace ServiceInsight.Framework.Commands
 {
     using System;
     using System.Reactive.Disposables;
-    using System.Reactive.Linq;
     using System.Windows.Input;
 
     class ObservableCommand : ICommand
