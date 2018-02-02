@@ -275,7 +275,7 @@
                     pageSize = int.Parse(pageSizeText);
                 }
 
-                var currentPage = 0;
+                var currentPage = 1;
                 var page = requestQueryParameters["page"];
                 if (page != null)
                 {
