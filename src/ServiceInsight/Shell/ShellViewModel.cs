@@ -4,6 +4,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
@@ -106,9 +107,9 @@
             ShutDownCommand = Command.Create(() => this.appCommander.ShutdownImmediately());
             AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
             HelpCommand = Command.Create(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
-            ConnectToServiceControlCommand = Command.Create(this, ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+            ConnectToServiceControlCommand = Command.CreateAsync(this, ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
 
-            RefreshAllCommand = Command.Create(RefreshAll);
+            RefreshAllCommand = Command.CreateAsync(RefreshAll);
 
             RegisterCommand = Command.Create(() =>
             {
@@ -205,7 +206,7 @@
 
         public ICommand OptionsCommand { get; }
 
-        public void ConnectToServiceControl()
+        public async Task ConnectToServiceControl()
         {
             var connectionViewModel = serviceControlConnection();
             var result = windowManager.ShowDialog(connectionViewModel);
@@ -214,16 +215,16 @@
             {
                 using (workNotifier.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}"))
                 {
-                    EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                    await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
                 }
             }
         }
 
-        void RefreshAll()
+        async Task RefreshAll()
         {
-            EndpointExplorer.RefreshData();
-            Messages.RefreshMessages();
-            SagaWindow.RefreshSaga();
+            await EndpointExplorer.RefreshData();
+            await Messages.RefreshMessages();
+            await SagaWindow.RefreshSaga();
         }
 
         public void OnAutoRefreshChanged()
@@ -248,7 +249,7 @@
             var startupTime = comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
             refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
-            refreshTimer.Tick += (s, e) => OnAutoRefreshing();
+            refreshTimer.Tick += async (s, e) => await OnAutoRefreshing();
 
             AutoRefresh = comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
@@ -264,14 +265,14 @@
             ValidateLicense();
         }
 
-        internal void OnAutoRefreshing()
+        internal async Task OnAutoRefreshing()
         {
             if (!AutoRefresh || WorkInProgress)
             {
                 return;
             }
 
-            RefreshAll();
+            await RefreshAll();
         }
 
         public void OnBodyTabSelectedChanged()

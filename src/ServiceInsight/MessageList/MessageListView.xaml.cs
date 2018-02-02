@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using DevExpress.Xpf.Core;
@@ -58,12 +59,12 @@
             e.Cancel = grid.ShowLoadingPanel;
         }
 
-        void SortData(ColumnBase column, ListSortDirection order)
+        async Task SortData(ColumnBase column, ListSortDirection order)
         {
             var orderBy = column.Tag as string;
             var ascending = order == ListSortDirection.Ascending;
 
-            Model.RefreshMessages(orderBy, ascending);
+            await Model.RefreshMessages(orderBy, ascending);
         }
 
         void Grid_OnCustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
@@ -78,7 +79,7 @@
             }
         }
 
-        void Grid_OnStartSorting(object sender, RoutedEventArgs e)
+        async void Grid_OnStartSorting(object sender, RoutedEventArgs e)
         {
             var grid = e.Source as GridControl;
 
@@ -96,7 +97,7 @@
 
             var column = grid.Columns.First(c => c.FieldName == sortInfo.FieldName);
 
-            SortData(column, sortInfo.SortOrder);
+            await SortData(column, sortInfo.SortOrder);
 
             e.Handled = true;
         }

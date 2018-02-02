@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
+    using System.Windows.Threading;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Explorer.EndpointExplorer;
@@ -21,11 +22,15 @@
             var argParser = Substitute.For<CommandLineArgParser>();
             var settingProvider = Substitute.For<ISettingsProvider>();
 
+            // ReSharper disable once UnusedVariable
+            // required for async command
+            var dispatcher = Dispatcher.CurrentDispatcher;
             viewModel = new SearchBarViewModel(argParser, settingProvider);
         }
 
         public void Dispose()
         {
+            Dispatcher.ExitAllFrames();
             viewModel.Dispose();
         }
 

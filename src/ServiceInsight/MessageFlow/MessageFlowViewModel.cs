@@ -4,6 +4,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Autofac;
     using Caliburn.Micro;
@@ -19,7 +20,7 @@
     using Settings;
 
     public class MessageFlowViewModel : Screen,
-        IHandle<SelectedMessageChanged>
+        IHandleWithTask<SelectedMessageChanged>
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
@@ -136,7 +137,7 @@
 
         public ICommand RetryMessageCommand { get; }
 
-        public void Handle(SelectedMessageChanged @event)
+        public async Task Handle(SelectedMessageChanged @event)
         {
             var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)
@@ -162,7 +163,7 @@
 
             loadedConversationId = conversationId;
 
-            var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
+            var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
             var nodes = relatedMessagesTask
                 .Select(x => new MessageNode(this, x)
                 {

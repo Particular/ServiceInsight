@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
@@ -41,64 +42,64 @@
         }
 
         [Test]
-        public void Should_load_body_content_when_body_tab_is_already_selected()
+        public async Task Should_load_body_content_when_body_tab_is_already_selected()
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
-            messageBody.Handle(new BodyTabSelectionChanged(true));
+            await messageBody.Handle(new BodyTabSelectionChanged(true));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
-            messageBody.Handle(new SelectedMessageChanged());
+            await messageBody.Handle(new SelectedMessageChanged());
 
-            serviceControl.Received(1).LoadBody(selection.SelectedMessage);
+            await serviceControl.Received(1).LoadBody(selection.SelectedMessage);
         }
 
         [Test]
-        public void Should_load_body_content_when_body_tab_is_focused()
+        public async Task Should_load_body_content_when_body_tab_is_focused()
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
-            messageBody.Handle(new SelectedMessageChanged());
+            await messageBody.Handle(new SelectedMessageChanged());
 
-            messageBody.Handle(new BodyTabSelectionChanged(true));
+            await messageBody.Handle(new BodyTabSelectionChanged(true));
 
-            serviceControl.Received(1).LoadBody(selection.SelectedMessage);
+            await serviceControl.Received(1).LoadBody(selection.SelectedMessage);
         }
 
         [Test]
-        public void Should_not_load_body_content_when_body_tab_is_not_focused()
+        public async Task Should_not_load_body_content_when_body_tab_is_not_focused()
         {
             const string uri = "http://localhost:3333/api/somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
-            messageBody.Handle(new BodyTabSelectionChanged(false));
+            await messageBody.Handle(new BodyTabSelectionChanged(false));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
-            messageBody.Handle(new SelectedMessageChanged());
+            await messageBody.Handle(new SelectedMessageChanged());
 
-            serviceControl.Received(0).LoadBody(selection.SelectedMessage);
+            await serviceControl.Received(0).LoadBody(selection.SelectedMessage);
         }
 
         [Test]
-        public void Should_not_load_body_content_when_selected_message_has_no_body_url()
+        public async Task Should_not_load_body_content_when_selected_message_has_no_body_url()
         {
             var messageBody = messageBodyFunc();
 
-            messageBody.Handle(new BodyTabSelectionChanged(true));
+            await messageBody.Handle(new BodyTabSelectionChanged(true));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = null };
 
-            messageBody.Handle(new SelectedMessageChanged());
+            await messageBody.Handle(new SelectedMessageChanged());
 
-            serviceControl.Received(0).LoadBody(selection.SelectedMessage);
+            await serviceControl.Received(0).LoadBody(selection.SelectedMessage);
         }
     }
 }

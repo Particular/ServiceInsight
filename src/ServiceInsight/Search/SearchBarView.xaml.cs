@@ -9,11 +9,11 @@
             InitializeComponent();
         }
 
-        void OnSearchKeyDown(object sender, KeyEventArgs e)
+        async void OnSearchKeyDown(object sender, KeyEventArgs e)
         {
             if ((e.Key == Key.Return || e.Key == Key.Enter) && Model != null)
             {
-                Model.Search();
+                await Model.Search();
             }
         }
 

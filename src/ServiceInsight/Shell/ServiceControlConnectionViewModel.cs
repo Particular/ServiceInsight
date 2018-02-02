@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Autofac;
     using Caliburn.Micro;
     using ServiceControl;
@@ -56,11 +57,11 @@
 
         public string Version { get; private set; }
 
-        public virtual void Accept()
+        public virtual async Task Accept()
         {
             StartWorkInProgress();
             ServiceUrl = ServiceUrl.Trim();
-            IsAddressValid = IsValidUrl(ServiceUrl);
+            IsAddressValid = await IsValidUrl(ServiceUrl);
             if (IsAddressValid)
             {
                 StoreConnectionAddress();
@@ -101,7 +102,7 @@
             settingsProvider.SaveSettings(appSettings);
         }
 
-        bool IsValidUrl(string serviceUrl)
+        async Task<bool> IsValidUrl(string serviceUrl)
         {
             if (serviceUrl.IsValidUrl())
             {
@@ -111,7 +112,7 @@
                     var service = scope.Resolve<IServiceControl>();
 
                     connection.ConnectTo(serviceUrl);
-                    Version = service.GetVersion();
+                    Version = await service.GetVersion();
 
                     return Version != null;
                 }

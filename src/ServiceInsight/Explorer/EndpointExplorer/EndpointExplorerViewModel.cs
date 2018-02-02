@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
@@ -54,7 +55,7 @@
 
         bool IsConnected => ServiceUrl != null;
 
-        protected override void OnActivate()
+        protected override async void OnActivate()
         {
             base.OnActivate();
 
@@ -65,12 +66,12 @@
 
             var configuredConnection = GetConfiguredAddress();
             var existingConnection = connectionProvider.Url;
-            var available = ServiceAvailable(configuredConnection);
+            var available = await ServiceAvailable(configuredConnection);
             var connectTo = available ? configuredConnection : existingConnection;
 
             using (workNotifier.NotifyOfWork($"Trying to connect to ServiceControl at {connectTo}"))
             {
-                ConnectToService(connectTo);
+                await ConnectToService(connectTo);
 
                 SelectDefaultEndpoint();
             }
@@ -93,7 +94,7 @@
             return commandLineParser.ParsedOptions.EndpointUri.ToString();
         }
 
-        bool ServiceAvailable(string serviceUrl)
+        async Task<bool> ServiceAvailable(string serviceUrl)
         {
             if (!serviceUrl.IsValidUrl())
             {
@@ -102,7 +103,7 @@
 
             connectionProvider.ConnectTo(serviceUrl);
 
-            var connected = serviceControl.IsAlive();
+            var connected = await serviceControl.IsAlive();
 
             return connected;
         }
@@ -143,7 +144,7 @@
             }
         }
 
-        public void ConnectToService(string url)
+        public async Task ConnectToService(string url)
         {
             if (!url.IsValidUrl())
             {
@@ -153,22 +154,22 @@
             connectionProvider.ConnectTo(url);
             ServiceUrl = url;
             AddServiceNode();
-            RefreshData();
+            await RefreshData();
             ExpandServiceNode();
         }
 
-        public void RefreshData()
+        public async Task RefreshData()
         {
             if (ServiceControlRoot == null)
             {
-                TryReconnectToServiceControl();
+                await TryReconnectToServiceControl();
             }
             if (ServiceControlRoot == null)
             {
                 return;
             }
 
-            var endpoints = serviceControl.GetEndpoints();
+            var endpoints = await serviceControl.GetEndpoints();
             if (endpoints == null)
             {
                 return;
@@ -186,9 +187,9 @@
             }
         }
 
-        void TryReconnectToServiceControl()
+        Task TryReconnectToServiceControl()
         {
-            ConnectToService(GetConfiguredAddress());
+            return ConnectToService(GetConfiguredAddress());
         }
 
         public void Navigate(string navigateUri)

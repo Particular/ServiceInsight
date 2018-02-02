@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
     using ExtensionMethods;
     using Framework;
@@ -12,8 +13,8 @@
     using XmlViewer;
 
     public class MessageBodyViewModel : Screen,
-        IHandle<SelectedMessageChanged>,
-        IHandle<BodyTabSelectionChanged>,
+        IHandleWithTask<SelectedMessageChanged>,
+        IHandleWithTask<BodyTabSelectionChanged>,
         IHandle<ServiceControlConnectionChanged>
     {
         readonly IServiceControl serviceControl;
@@ -85,10 +86,10 @@
 
         public bool NoContentHelpVisible => PresentationHint == PresentationHint.NoContent;
 
-        public void Handle(SelectedMessageChanged @event)
+        public async Task Handle(SelectedMessageChanged @event)
         {
             ClearMessageDisplays();
-            LoadMessageBody();
+            await LoadMessageBody();
 
             if (selection.SelectedMessage != null)
             {
@@ -113,12 +114,12 @@
             }
         }
 
-        public void Handle(BodyTabSelectionChanged @event)
+        public async Task Handle(BodyTabSelectionChanged @event)
         {
             ShouldLoadMessageBody = @event.IsSelected;
             if (ShouldLoadMessageBody)
             {
-                LoadMessageBody();
+                await LoadMessageBody();
             }
         }
 
@@ -135,7 +136,7 @@
             }
         }
 
-        void LoadMessageBody()
+        async Task LoadMessageBody()
         {
             if (selection.SelectedMessage == null || !ShouldLoadMessageBody || selection.SelectedMessage.BodyUrl.IsEmpty())
             {
@@ -144,7 +145,7 @@
 
             using (workNotifier.NotifyOfWork("Loading message body..."))
             {
-                serviceControl.LoadBody(selection.SelectedMessage);
+                await serviceControl.LoadBody(selection.SelectedMessage);
 
                 RefreshChildren();
             }

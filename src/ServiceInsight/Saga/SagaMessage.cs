@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
     using Framework;
     using Models;
@@ -82,14 +83,14 @@
 
         public IEnumerable<SagaMessageDataItem> Data { get; private set; }
 
-        internal void RefreshData(IServiceControl serviceControl)
+        internal async Task RefreshData(IServiceControl serviceControl)
         {
             if (Data != null)
             {
                 return;
             }
 
-            Data = serviceControl.GetMessageData(this).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
+            Data = (await serviceControl.GetMessageData(this)).Select(kvp => new SagaMessageDataItem { Key = kvp.Key, Value = kvp.Value }).ToList();
         }
     }
 

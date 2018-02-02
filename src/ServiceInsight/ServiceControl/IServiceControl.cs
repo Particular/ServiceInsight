@@ -2,32 +2,33 @@ namespace ServiceInsight.ServiceControl
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Models;
     using Saga;
 
     public interface IServiceControl
     {
-        bool IsAlive();
+        Task<bool> IsAlive();
 
-        string GetVersion();
+        Task<string> GetVersion();
 
-        void RetryMessage(string messageId, string instanceId);
+        Task RetryMessage(string messageId, string instanceId);
 
         Uri CreateServiceInsightUri(StoredMessage message);
 
-        SagaData GetSagaById(Guid sagaId);
+        Task<SagaData> GetSagaById(Guid sagaId);
 
-        PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false);
+        Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false);
 
-        PagedResult<StoredMessage> GetAuditMessages(string link);
+        Task<PagedResult<StoredMessage>> GetAuditMessages(string link);
 
-        IEnumerable<StoredMessage> GetConversationById(string conversationId);
+        Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId);
 
-        IEnumerable<Endpoint> GetEndpoints();
+        Task<IEnumerable<Endpoint>> GetEndpoints();
 
-        IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage messageId);
+        Task<IEnumerable<KeyValuePair<string, string>>> GetMessageData(SagaMessage messageId);
 
-        void LoadBody(StoredMessage message);
+        Task LoadBody(StoredMessage message);
     }
 
     public class ServiceControlHeaders

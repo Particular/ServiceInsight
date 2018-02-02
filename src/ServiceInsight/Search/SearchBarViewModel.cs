@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Explorer.EndpointExplorer;
@@ -33,11 +34,11 @@
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
 
-            SearchCommand = Command.Create(this, Search, vm => vm.CanSearch);
-            CancelSearchCommand = Command.Create(this, CancelSearch, vm => vm.CanCancelSearch);
+            SearchCommand = Command.CreateAsync(this, Search, vm => vm.CanSearch);
+            CancelSearchCommand = Command.CreateAsync(this, CancelSearch, vm => vm.CanCancelSearch);
         }
 
-        protected override void OnActivate()
+        protected override async void OnActivate()
         {
             base.OnActivate();
 
@@ -45,35 +46,35 @@
 
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
             {
-                Search(commandLineArgParser.ParsedOptions.SearchQuery);
+                await Search(commandLineArgParser.ParsedOptions.SearchQuery);
             }
         }
 
-        public void GoToFirstPage()
+        public async Task GoToFirstPage()
         {
-            Parent.RefreshMessages(FirstLink);
+            await Parent.RefreshMessages(FirstLink);
         }
 
-        public void GoToPreviousPage()
+        public async Task GoToPreviousPage()
         {
-            Parent.RefreshMessages(PrevLink);
+            await Parent.RefreshMessages(PrevLink);
         }
 
-        public void GoToNextPage()
+        public async Task GoToNextPage()
         {
-            Parent.RefreshMessages(NextLink);
+            await Parent.RefreshMessages(NextLink);
         }
 
-        public void GoToLastPage()
+        public async Task GoToLastPage()
         {
-            Parent.RefreshMessages(LastLink);
+            await Parent.RefreshMessages(LastLink);
         }
 
         public ICommand SearchCommand { get; }
 
         public ICommand CancelSearchCommand { get; }
 
-        public void Search(string searchQuery, bool performSearch = true)
+        public async Task Search(string searchQuery, bool performSearch = true)
         {
             SearchQuery = searchQuery;
             SearchInProgress = !SearchQuery.IsEmpty();
@@ -82,22 +83,22 @@
 
             if (performSearch)
             {
-                Search();
+                await Search();
             }
         }
 
-        public void Search()
+        public async Task Search()
         {
             SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
-            Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
         }
 
-        public void CancelSearch()
+        public async Task CancelSearch()
         {
             SearchQuery = null;
             SearchInProgress = false;
-            Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
+            await Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
         }
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
@@ -124,9 +125,9 @@
         }
 
         // Required for binding convention with CanRefreshResult
-        public void RefreshResult()
+        public async Task RefreshResult()
         {
-            Search();
+            await Search();
         }
 
         public bool CanGoToLastPage => LastLink != null && !WorkInProgress;

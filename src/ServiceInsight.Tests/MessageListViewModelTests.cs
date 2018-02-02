@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
@@ -48,7 +49,7 @@
         }
 
         [Test]
-        public void Should_load_the_messages_from_the_endpoint()
+        public async Task Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
             serviceControl.GetAuditMessages(Arg.Is(endpoint), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())
@@ -65,7 +66,7 @@
 
             var messageList = messageListFunc();
 
-            messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
+            await messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
 
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);

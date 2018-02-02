@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Anotar.Serilog;
     using Caliburn.Micro;
@@ -18,7 +19,7 @@
     using ServiceInsight.Settings;
 
     public class SequenceDiagramViewModel : Screen,
-        IHandle<SelectedMessageChanged>,
+        IHandleWithTask<SelectedMessageChanged>,
         IHandle<ScrollDiagramItemIntoView>,
         IMessageCommandContainer
     {
@@ -120,7 +121,7 @@
             DiagramLegend.DeactivateWith(this);
         }
 
-        public void Handle(SelectedMessageChanged message)
+        public async Task Handle(SelectedMessageChanged message)
         {
             try
             {
@@ -137,7 +138,7 @@
                     return;
                 }
 
-                var messages = serviceControl.GetConversationById(conversationId).ToList();
+                var messages = (await serviceControl.GetConversationById(conversationId)).ToList();
                 if (messages.Count == 0)
                 {
                     LogTo.Warning("No messages found for conversation id {0}", conversationId);

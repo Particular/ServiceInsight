@@ -8,14 +8,16 @@
     using System.Runtime.Caching;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Framework;
     using RestSharp;
-    using RestSharp.Contrib;
+    using RestSharp.Authenticators;
     using RestSharp.Deserializers;
+    using RestSharp.Extensions.MonoHttp;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Events;
@@ -60,9 +62,9 @@
             cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", settings.CacheSize.ToString() } });
         }
 
-        public bool IsAlive()
+        public async Task<bool> IsAlive()
         {
-            var version = GetVersion();
+            var version = await GetVersion().ConfigureAwait(false);
 
             if (version != null)
             {
@@ -72,22 +74,22 @@
             return version != null;
         }
 
-        public string GetVersion()
+        public async Task<string> GetVersion()
         {
             var request = new RestRequestWithCache(RestRequestWithCache.CacheStyle.Immutable);
 
-            var header = Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion));
+            var header = await Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion)).ConfigureAwait(false);
 
             return header == null ? null : header.Value.ToString();
         }
 
-        public void RetryMessage(string messageId, string instanceId)
+        public Task RetryMessage(string messageId, string instanceId)
         {
             var url = instanceId != null ?
                 string.Format(RetryEndpoint + "?instance_id={1}", messageId, instanceId) :
                 string.Format(RetryEndpoint, messageId);
             var request = new RestRequestWithCache(url, Method.POST);
-            Execute(request, _ => true);
+            return Execute(request, _ => true);
         }
 
         public Uri CreateServiceInsightUri(StoredMessage message)
@@ -96,9 +98,9 @@
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public SagaData GetSagaById(Guid sagaId) => GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)) ?? new SagaData();
+        public async Task<SagaData> GetSagaById(Guid sagaId) => await GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)).ConfigureAwait(false) ?? new SagaData();
 
-        public PagedResult<StoredMessage> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             var request = CreateMessagesRequest(endpoint?.Name);
 
@@ -110,7 +112,7 @@
             return GetPagedResult<StoredMessage>(request);
         }
 
-        public PagedResult<StoredMessage> GetAuditMessages(string link)
+        public Task<PagedResult<StoredMessage>> GetAuditMessages(string link)
         {
             if (IsAbsoluteUrl(link))
             {
@@ -124,27 +126,26 @@
             }
         }
 
-        public IEnumerable<StoredMessage> GetConversationById(string conversationId)
+        public async Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId)
         {
             var request = new RestRequestWithCache(string.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = GetModel<List<StoredMessage>>(request) ?? new List<StoredMessage>();
-
+            var messages = await GetModel<List<StoredMessage>>(request).ConfigureAwait(false) ?? new List<StoredMessage>();
             return messages;
         }
 
-        public IEnumerable<Endpoint> GetEndpoints()
+        public async Task<IEnumerable<Endpoint>> GetEndpoints()
         {
             var request = new RestRequestWithCache(EndpointsEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = GetModel<List<Endpoint>>(request);
+            var messages = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
 
             return messages ?? new List<Endpoint>();
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageData(SagaMessage message)
+        public async Task<IEnumerable<KeyValuePair<string, string>>> GetMessageData(SagaMessage message)
         {
             var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
-            var body = Execute(request, response => response.Content);
+            var body = await Execute(request, response => response.Content).ConfigureAwait(false);
 
             if (body == null)
             {
@@ -154,7 +155,7 @@
             return body.StartsWith("<?xml") ? GetXmlData(body) : JsonPropertiesHelper.ProcessValues(body);
         }
 
-        public void LoadBody(StoredMessage message)
+        public async Task LoadBody(StoredMessage message)
         {
             var request = new RestRequestWithCache(message.BodyUrl, RestRequestWithCache.CacheStyle.Immutable);
 
@@ -164,7 +165,7 @@
                 baseUrl = null; // We use the default
             }
 
-            message.Body = Execute(request, response =>
+            message.Body = await Execute(request, response =>
             {
                 var presentationBody = new PresentationBody();
 
@@ -180,7 +181,7 @@
                 }
 
                 return presentationBody;
-            }, baseUrl);
+            }, baseUrl).ConfigureAwait(false);
         }
 
         void AppendSystemMessages(IRestRequest request)
@@ -242,7 +243,7 @@
     ? new RestRequestWithCache(string.Format(EndpointMessagesEndpoint, endpointName), RestRequestWithCache.CacheStyle.IfNotModified)
     : new RestRequestWithCache(MessagesEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
 
-        PagedResult<T> GetPagedResult<T>(RestRequestWithCache request, string url = null) where T : class, new()
+        Task<PagedResult<T>> GetPagedResult<T>(RestRequestWithCache request, string url = null) where T : class, new()
         {
             var result = Execute<PagedResult<T>, List<T>>(request, response =>
             {
@@ -299,10 +300,10 @@
             return result;
         }
 
-        T GetModel<T>(RestRequestWithCache request)
+        Task<T> GetModel<T>(RestRequestWithCache request)
 where T : class, new() => Execute<T, T>(request, response => response.Data);
 
-        T Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
+        async Task<T> Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
         {
             var cacheStyle = request.CacheSyle;
             var restClient = CreateClient(baseUrl);
@@ -334,7 +335,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
             LogRequest(request);
 
-            var response = restClient.Execute(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             CleanResponse(response);
 
@@ -389,7 +390,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return data;
         }
 
-        T Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector, string url = null)
+        async Task<T> Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector, string url = null)
             where T : class, new()
             where T2 : class, new()
         {
@@ -423,7 +424,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
 
             LogRequest(request);
 
-            var response = restClient.Execute<T2>(request);
+            var response = await restClient.ExecuteTaskAsync<T2>(request).ConfigureAwait(false);
 
             CleanResponse(response);
 
@@ -563,14 +564,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             var code = response.StatusCode;
             var uri = response.ResponseUri;
 
-            LogTo.Debug("HTTP Status {code} ({uri})", code, uri);
-
-            foreach (var header in response.Headers)
-            {
-                LogTo.Debug("Response Header: {Name} : {Value}",
-                                                     header.Name,
-                                                     header.Value);
-            }
+            LogTo.Debug("HTTP Status {code} ({uri}) Headers: {headers}", code, uri, response.Headers);
         }
 
         void LogError(IRestResponse response)

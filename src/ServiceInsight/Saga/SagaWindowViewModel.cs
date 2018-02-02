@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Framework;
@@ -14,7 +15,7 @@
     using ServiceInsight.MessagePayloadViewer;
 
     public class SagaWindowViewModel : Screen,
-        IHandle<SelectedMessageChanged>,
+        IHandleWithTask<SelectedMessageChanged>,
         IHandle<ServiceControlConnectionChanged>
     {
         SagaData data;
@@ -50,7 +51,7 @@
 
         public ICommand ShowEntireContentCommand { get; set; }
 
-        public void OnShowMessageDataChanged()
+        public async void OnShowMessageDataChanged()
         {
             if (Data == null || Data.Changes == null)
             {
@@ -61,7 +62,7 @@
 
             if (ShowMessageData)
             {
-                RefreshMessageProperties();
+                await RefreshMessageProperties();
             }
         }
 
@@ -79,17 +80,17 @@
             NotifyOfPropertyChange(nameof(Data));
         }
 
-        void RefreshMessageProperties()
+        async Task RefreshMessageProperties()
         {
             foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)))
             {
-                message.RefreshData(serviceControl);
+                await message.RefreshData(serviceControl);
             }
 
             NotifyOfPropertyChange(nameof(Data));
         }
 
-        public void Handle(SelectedMessageChanged @event)
+        public async Task Handle(SelectedMessageChanged @event)
         {
             var message = selection.SelectedMessage;
             if (message == null)
@@ -98,7 +99,7 @@
                 return;
             }
 
-            RefreshSaga(message);
+            await RefreshSaga(message);
 
             SelectedMessageId = message.MessageId;
         }
@@ -121,7 +122,7 @@
             Data = null;
         }
 
-        void RefreshSaga(StoredMessage message)
+        async Task RefreshSaga(StoredMessage message)
         {
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
@@ -136,12 +137,12 @@
 
                 if (originatingSaga != null)
                 {
-                    RefreshSaga(originatingSaga);
+                    await RefreshSaga(originatingSaga);
                 }
             }
         }
 
-        void RefreshSaga(SagaInfo originatingSaga)
+        async Task RefreshSaga(SagaInfo originatingSaga)
         {
             using (workNotifier.NotifyOfWork("Loading message body..."))
             {
@@ -154,7 +155,7 @@
                         previousSagaId = Data.SagaId;
                     }
 
-                    Data = FetchOrderedSagaData(originatingSaga.SagaId);
+                    Data = await FetchOrderedSagaData(originatingSaga.SagaId);
 
                     if (Data != null)
                     {
@@ -189,14 +190,14 @@
 
                 if (ShowMessageData)
                 {
-                    RefreshMessageProperties();
+                    await RefreshMessageProperties();
                 }
             }
         }
 
-        private SagaData FetchOrderedSagaData(Guid sagaId)
+        private async Task<SagaData> FetchOrderedSagaData(Guid sagaId)
         {
-            var sagaData = serviceControl.GetSagaById(sagaId);
+            var sagaData = await serviceControl.GetSagaById(sagaId);
             if (sagaData?.Changes != null)
             {
                 sagaData.Changes = sagaData.Changes.OrderBy(x => x.StartTime)
@@ -261,9 +262,9 @@
             eventAggregator.PublishOnUIThread(SwitchToFlowWindow.Instance);
         }
 
-        public void RefreshSaga()
+        public Task RefreshSaga()
         {
-            RefreshSaga(currentMessage);
+            return RefreshSaga(currentMessage);
         }
 
         public string SelectedMessageId
