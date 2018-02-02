@@ -12,6 +12,7 @@
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
     using ServiceControl;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
@@ -31,6 +32,7 @@
         ConcurrentDictionary<string, MessageNode> nodeMap;
         MessageFlowView view;
         string loadedConversationId;
+        private IWorkNotifier workNotifier;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -39,8 +41,10 @@
             IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
-            MessageSelectionContext selectionContext)
+            MessageSelectionContext selectionContext,
+            IWorkNotifier workNotifier)
         {
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
@@ -163,18 +167,21 @@
 
             loadedConversationId = conversationId;
 
-            var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
-            var nodes = relatedMessagesTask
-                .Select(x => new MessageNode(this, x)
-                {
-                    ShowEndpoints = ShowEndpoints,
-                    IsFocused = x.Id == storedMessage.Id
-                })
-                .ToList();
+            using (workNotifier.NotifyOfWork("Loading flow..."))
+            {
+                var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
+                var nodes = relatedMessagesTask
+                    .Select(x => new MessageNode(this, x)
+                    {
+                        ShowEndpoints = ShowEndpoints,
+                        IsFocused = x.Id == storedMessage.Id
+                    })
+                    .ToList();
 
-            CreateConversationNodes(storedMessage.Id, nodes);
-            LinkConversationNodes(nodes);
-            UpdateLayout();
+                CreateConversationNodes(storedMessage.Id, nodes);
+                LinkConversationNodes(nodes);
+                UpdateLayout();
+            }
         }
 
         void RefreshSelection(string selectedId)
