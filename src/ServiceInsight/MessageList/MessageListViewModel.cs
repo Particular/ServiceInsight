@@ -131,7 +131,7 @@
 
         public void RefreshMessages()
         {
-            if (selectedExplorerItem is ServiceControlExplorerItem serviceControlExplorerItem)
+            if (selectedExplorerItem is ServiceControlExplorerItem)
             {
                 RefreshMessages(null, SearchBar.SearchQuery);
             }

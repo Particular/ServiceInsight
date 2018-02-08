@@ -8,7 +8,6 @@
     using Caliburn.Micro;
     using Diagram;
     using ServiceInsight.DiagramLegend;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;

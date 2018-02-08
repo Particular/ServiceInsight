@@ -16,7 +16,7 @@
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
                 var child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is T)
+                if (child is T)
                 {
                     yield return (T)child;
                 }
