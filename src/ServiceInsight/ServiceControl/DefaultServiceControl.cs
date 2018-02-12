@@ -148,8 +148,8 @@ namespace ServiceInsight.ServiceControl
             endpointsUrl = endpointsUrl.Replace(connection.Url, string.Empty);
 
             var request = new RestRequestWithCache(endpointsUrl, RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
-            return messages ?? new List<Endpoint>();
+            var endpoints = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
+            return endpoints ?? new List<Endpoint>();
         }
 
         public async Task<IEnumerable<KeyValuePair<string, string>>> GetMessageData(SagaMessage message)
