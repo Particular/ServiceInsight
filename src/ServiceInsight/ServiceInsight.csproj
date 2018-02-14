@@ -863,11 +863,11 @@
     <Error Condition="!Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.3\build\dotnet\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.CodeRules.0.1.1\build\Particular.CodeRules.props'))" />
-    <Error Condition="!Exists('..\packages\Particular.Licensing.Sources.1.0.0-alpha0007\build\Particular.Licensing.Sources.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.Licensing.Sources.1.0.0-alpha0007\build\Particular.Licensing.Sources.targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.4.0.0-beta0012\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.4.0.0-beta0012\build\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\Particular.Licensing.Sources.1.0.0\build\Particular.Licensing.Sources.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.Licensing.Sources.1.0.0\build\Particular.Licensing.Sources.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.1.29.3\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" />
   <Import Project="..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets" Condition="Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" />
-  <Import Project="..\packages\Particular.Licensing.Sources.1.0.0-alpha0007\build\Particular.Licensing.Sources.targets" Condition="Exists('..\packages\Particular.Licensing.Sources.1.0.0-alpha0007\build\Particular.Licensing.Sources.targets')" />
   <Import Project="..\packages\GitVersionTask.4.0.0-beta0012\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.4.0.0-beta0012\build\GitVersionTask.targets')" />
+  <Import Project="..\packages\Particular.Licensing.Sources.1.0.0\build\Particular.Licensing.Sources.targets" Condition="Exists('..\packages\Particular.Licensing.Sources.1.0.0\build\Particular.Licensing.Sources.targets')" />
 </Project>
