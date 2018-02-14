@@ -31,7 +31,7 @@ namespace ServiceInsight.Framework.Commands
                    message.Status == MessageStatus.ArchivedFailure;
         }
 
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             var message = parameter as StoredMessage;
             if (message == null)
@@ -41,7 +41,7 @@ namespace ServiceInsight.Framework.Commands
 
             using (workNotifier.NotifyOfWork($"Retrying to send selected error message {message.SendingEndpoint}"))
             {
-                serviceControl.RetryMessage(message.Id, message.InstanceId);
+                await serviceControl.RetryMessage(message.Id, message.InstanceId);
                 eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
             }
 

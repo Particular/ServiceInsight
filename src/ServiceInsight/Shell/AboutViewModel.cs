@@ -4,6 +4,7 @@ namespace ServiceInsight.Shell
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using ServiceInsight.ExtensionMethods;
@@ -74,12 +75,12 @@ namespace ServiceInsight.Shell
             Activated(this, new ActivationEventArgs());
         }
 
-        void OnActivate()
+        async void OnActivate()
         {
             ActivateLicense();
             LoadAppVersion();
             SetCopyrightText();
-            LoadVersions();
+            await LoadVersions();
         }
 
         void ActivateLicense()
@@ -115,7 +116,7 @@ namespace ServiceInsight.Shell
             CopyrightText = string.Format("Copyright 2013-{0} NServiceBus Ltd. All rights reserved.", DateTime.Now.Year);
         }
 
-        void LoadVersions()
+        async Task LoadVersions()
         {
             if (serviceControl == null)
             {
@@ -124,7 +125,7 @@ namespace ServiceInsight.Shell
 
             ServiceControlVersion = DetectingServiceControlVersion;
 
-            var version = serviceControl.GetVersion();
+            var version = await serviceControl.GetVersion();
             ServiceControlVersion = version ?? NotConnectedToServiceControl;
         }
     }

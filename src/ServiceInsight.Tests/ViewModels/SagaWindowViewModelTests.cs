@@ -48,7 +48,7 @@
             serviceControl.GetSagaById(Arg.Is(sagaId)).Returns(sagaData);
             var selectedMessageChanged = new SelectedMessageChanged();
 
-            Assert.DoesNotThrow(() => viewModel.Handle(selectedMessageChanged));
+            Assert.DoesNotThrowAsync(() => viewModel.Handle(selectedMessageChanged));
         }
     }
 }

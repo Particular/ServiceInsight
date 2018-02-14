@@ -22,7 +22,7 @@ namespace ServiceInsight.Framework.Commands
             return message != null;
         }
 
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             var message = parameter as StoredMessage;
             if (message == null)
@@ -30,7 +30,7 @@ namespace ServiceInsight.Framework.Commands
                 return;
             }
 
-            searchBar.Search(performSearch: true, searchQuery: message.MessageId);
+            await searchBar.Search(performSearch: true, searchQuery: message.MessageId);
             eventAggregator.PublishOnUIThread(new RequestSelectingEndpoint(message.ReceivingEndpoint));
         }
     }

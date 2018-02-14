@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Reactive.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using Comparers;
@@ -22,7 +23,7 @@
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
         IWorkTracker,
-        IHandle<SelectedExplorerItemChanged>,
+        IHandleWithTask<SelectedExplorerItemChanged>,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>,
@@ -104,11 +105,11 @@
             clipboard.CopyTo(generalHeaderDisplay.HeaderContent);
         }
 
-        public void RefreshMessages(string link)
+        public async Task RefreshMessages(string link)
         {
             using (workNotifier.NotifyOfWork("Loading messages..."))
             {
-                var pagedResult = serviceControl.GetAuditMessages(link);
+                var pagedResult = await serviceControl.GetAuditMessages(link);
 
                 if (pagedResult == null)
                 {
@@ -122,31 +123,31 @@
             }
         }
 
-        public void RefreshMessages(string orderBy, bool ascending)
+        public async Task RefreshMessages(string orderBy, bool ascending)
         {
             lastSortColumn = orderBy;
             lastSortOrderAscending = ascending;
-            RefreshMessages();
+            await RefreshMessages();
         }
 
-        public void RefreshMessages()
+        public async Task RefreshMessages()
         {
             if (selectedExplorerItem is ServiceControlExplorerItem)
             {
-                RefreshMessages(null, SearchBar.SearchQuery);
+                await RefreshMessages(null, SearchBar.SearchQuery);
             }
 
             if (selectedExplorerItem is AuditEndpointExplorerItem endpointNode)
             {
-                RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery);
+                await RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery);
             }
         }
 
-        public void RefreshMessages(Endpoint endpoint, string searchQuery)
+        public async Task RefreshMessages(Endpoint endpoint, string searchQuery)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                var pagedResult = serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
+                var pagedResult = await serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
                 if (pagedResult == null)
                 {
                     return;
@@ -174,10 +175,10 @@
             }
         }
 
-        public void Handle(SelectedExplorerItemChanged @event)
+        public async Task Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
-            RefreshMessages();
+            await RefreshMessages();
             SearchBar.NotifyPropertiesChanged();
         }
 

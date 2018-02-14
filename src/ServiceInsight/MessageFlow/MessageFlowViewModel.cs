@@ -4,6 +4,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Autofac;
     using Caliburn.Micro;
@@ -11,6 +12,7 @@
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
     using ServiceControl;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
@@ -19,7 +21,7 @@
     using Settings;
 
     public class MessageFlowViewModel : Screen,
-        IHandle<SelectedMessageChanged>
+        IHandleWithTask<SelectedMessageChanged>
     {
         Func<ExceptionDetailViewModel> exceptionDetail;
         IServiceControl serviceControl;
@@ -30,6 +32,7 @@
         ConcurrentDictionary<string, MessageNode> nodeMap;
         MessageFlowView view;
         string loadedConversationId;
+        private IWorkNotifier workNotifier;
 
         public MessageFlowViewModel(
             IServiceControl serviceControl,
@@ -38,8 +41,10 @@
             IContainer container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
-            MessageSelectionContext selectionContext)
+            MessageSelectionContext selectionContext,
+            IWorkNotifier workNotifier)
         {
+            this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
@@ -136,7 +141,7 @@
 
         public ICommand RetryMessageCommand { get; }
 
-        public void Handle(SelectedMessageChanged @event)
+        public async Task Handle(SelectedMessageChanged @event)
         {
             var storedMessage = selection.SelectedMessage;
             if (storedMessage == null)
@@ -162,18 +167,21 @@
 
             loadedConversationId = conversationId;
 
-            var relatedMessagesTask = serviceControl.GetConversationById(conversationId);
-            var nodes = relatedMessagesTask
-                .Select(x => new MessageNode(this, x)
-                {
-                    ShowEndpoints = ShowEndpoints,
-                    IsFocused = x.Id == storedMessage.Id
-                })
-                .ToList();
+            using (workNotifier.NotifyOfWork("Loading flow..."))
+            {
+                var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
+                var nodes = relatedMessagesTask
+                    .Select(x => new MessageNode(this, x)
+                    {
+                        ShowEndpoints = ShowEndpoints,
+                        IsFocused = x.Id == storedMessage.Id
+                    })
+                    .ToList();
 
-            CreateConversationNodes(storedMessage.Id, nodes);
-            LinkConversationNodes(nodes);
-            UpdateLayout();
+                CreateConversationNodes(storedMessage.Id, nodes);
+                LinkConversationNodes(nodes);
+                UpdateLayout();
+            }
         }
 
         void RefreshSelection(string selectedId)

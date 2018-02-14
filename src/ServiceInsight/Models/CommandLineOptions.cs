@@ -2,7 +2,7 @@
 {
     using System;
     using System.Text.RegularExpressions;
-    using RestSharp.Contrib;
+    using RestSharp.Extensions.MonoHttp;
 
     public class CommandLineOptions
     {
