@@ -1,4 +1,4 @@
-﻿namespace ServiceInsight.ServiceControl
+namespace ServiceInsight.ServiceControl
 {
     using System;
     using System.Collections.Generic;
@@ -33,7 +33,7 @@
         static byte[] byteOrderMarkUtf8 = Encoding.UTF8.GetPreamble();
 
         const string ConversationEndpoint = "conversations/{0}";
-        const string EndpointsEndpoint = "endpoints";
+        const string DefaultEndpointsEndpoint = "endpoints";
         const string EndpointMessagesEndpoint = "endpoints/{0}/messages/";
         const string RetryEndpoint = "errors/{0}/retry";
         const string MessagesEndpoint = "messages/";
@@ -81,6 +81,13 @@
             var header = await Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion)).ConfigureAwait(false);
 
             return header == null ? null : header.Value.ToString();
+        }
+
+        Task<ServiceControlRootUrls> GetRootUrls()
+        {
+            var request = new RestRequestWithCache("/", RestRequestWithCache.CacheStyle.Immutable);
+
+            return GetModel<ServiceControlRootUrls>(request);
         }
 
         public Task RetryMessage(string messageId, string instanceId)
@@ -135,10 +142,14 @@
 
         public async Task<IEnumerable<Endpoint>> GetEndpoints()
         {
-            var request = new RestRequestWithCache(EndpointsEndpoint, RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
+            var rootUrls = await GetRootUrls().ConfigureAwait(false);
 
-            return messages ?? new List<Endpoint>();
+            var endpointsUrl = rootUrls?.KnownEndpointsUrl ?? rootUrls?.EndpointsUrl ?? DefaultEndpointsEndpoint;
+            endpointsUrl = endpointsUrl.Replace(connection.Url, string.Empty);
+
+            var request = new RestRequestWithCache(endpointsUrl, RestRequestWithCache.CacheStyle.IfNotModified);
+            var endpoints = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
+            return endpoints ?? new List<Endpoint>();
         }
 
         public async Task<IEnumerable<KeyValuePair<string, string>>> GetMessageData(SagaMessage message)
