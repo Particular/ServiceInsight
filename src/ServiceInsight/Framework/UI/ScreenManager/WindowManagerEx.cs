@@ -81,7 +81,10 @@
         {
             var window = base.CreateWindow(rootModel, isDialog, context, settings);
 
-            window.InputBindings.Add(new KeyBinding(new CloseWindowCommand(window), new KeyGesture(Key.Escape)));
+            if (isDialog)
+            {
+                window.InputBindings.Add(new KeyBinding(new CloseWindowCommand(window), new KeyGesture(Key.Escape)));
+            }
 
             return window;
         }
