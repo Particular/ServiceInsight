@@ -145,7 +145,11 @@ namespace ServiceInsight.ServiceControl
             var rootUrls = await GetRootUrls().ConfigureAwait(false);
 
             var endpointsUrl = rootUrls?.KnownEndpointsUrl ?? rootUrls?.EndpointsUrl ?? DefaultEndpointsEndpoint;
-            endpointsUrl = endpointsUrl.Replace(connection.Url, string.Empty);
+            if (Uri.TryCreate(endpointsUrl, UriKind.RelativeOrAbsolute, out var endpointsUri) &&
+                Uri.TryCreate(connection.Url, UriKind.RelativeOrAbsolute, out var connectionUri))
+            {
+                endpointsUrl = endpointsUri.PathAndQuery.Replace(connectionUri.PathAndQuery, string.Empty);
+            }
 
             var request = new RestRequestWithCache(endpointsUrl, RestRequestWithCache.CacheStyle.IfNotModified);
             var endpoints = await GetModel<List<Endpoint>>(request).ConfigureAwait(false);
