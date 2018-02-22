@@ -145,8 +145,8 @@ namespace ServiceInsight.ServiceControl
             var rootUrls = await GetRootUrls().ConfigureAwait(false);
 
             var endpointsUrl = rootUrls?.KnownEndpointsUrl ?? rootUrls?.EndpointsUrl ?? DefaultEndpointsEndpoint;
-            if (Uri.TryCreate(endpointsUrl, UriKind.RelativeOrAbsolute, out var endpointsUri) &&
-                Uri.TryCreate(connection.Url, UriKind.RelativeOrAbsolute, out var connectionUri))
+            if (Uri.TryCreate(endpointsUrl, UriKind.Absolute, out var endpointsUri) &&
+                Uri.TryCreate(connection.Url, UriKind.Absolute, out var connectionUri))
             {
                 endpointsUrl = endpointsUri.PathAndQuery.Replace(connectionUri.PathAndQuery, string.Empty);
             }
