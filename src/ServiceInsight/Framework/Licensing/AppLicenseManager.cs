@@ -24,6 +24,11 @@
 
                 CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
 
+                if (!CurrentLicense.ValidForApplication("ServiceInsight"))
+                {
+                    return false;
+                }
+
                 new RegistryLicenseStore().StoreLicense(licenseText);
                 new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
 
