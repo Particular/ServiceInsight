@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System.Threading.Tasks;
     using Autofac;
     using Caliburn.Micro;
     using NSubstitute;
@@ -35,22 +36,22 @@
         }
 
         [Test]
-        public void Should_be_able_to_connect_to_a_valid_service()
+        public async Task Should_be_able_to_connect_to_a_valid_service()
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            connectTo.Accept();
+            await connectTo.Accept();
 
             connectTo.CanAccept().ShouldBe(true);
-            connectTo.IsAddressValid.ShouldBe(true);
+            connectTo.ShowError.ShouldBe(false);
         }
 
         [Test]
-        public void Should_store_connection_address_and_add_it_to_recent_entries()
+        public async Task Should_store_connection_address_and_add_it_to_recent_entries()
         {
             ((IActivate)connectTo).Activate();
             connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
-            connectTo.Accept();
+            await connectTo.Accept();
 
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
             storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);
