@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Mindscape.WpfDiagramming;
@@ -83,6 +84,19 @@
         void OnDiagramSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ApplyLayout();
+        }
+
+        void OnPopupOpened(object sender, RoutedEventArgs e)
+        {
+            var checkbox = (CheckBox)sender;
+
+            if (checkbox.IsChecked.GetValueOrDefault(false))
+            {
+                var parent = (FrameworkElement)e.Source;
+                var node = parent.DataContext as MessageNode;
+
+                ShowMessage(sender, new SearchMessageEventArgs(node));
+            }
         }
     }
 }

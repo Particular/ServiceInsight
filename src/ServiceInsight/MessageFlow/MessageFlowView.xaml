@@ -345,7 +345,8 @@
 
                                                     <CheckBox x:Name="MenuContainer"
                                                               Grid.Row="0"
-                                                              Style="{StaticResource MessageMenuIndicator}" />
+                                                              Style="{StaticResource MessageMenuIndicator}"
+                                                              Checked="OnPopupOpened"/>
 
                                                     <local:MessagePopupControl x:Name="MenuPopup"
                                                                                Grid.Row="1"
