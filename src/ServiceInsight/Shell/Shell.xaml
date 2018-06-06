@@ -140,6 +140,22 @@
                                CategoryName="View"
                                Command="{Binding ResetLayoutCommand}"
                                Content="Restore default layout" />
+            <dxb:BarButtonItem x:Name="ProvideFeedback"
+                               AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
+                               CategoryName="Help"
+                               Command="{Binding ProvideFeedbackCommand}"
+                               Content="Feedback">
+                <dxb:BarButtonItem.ContentTemplate>
+                    <DataTemplate>
+                        <Border Background="#0072c6" BorderBrush="#005da0" BorderThickness="2" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Images/Feedback.png" Width="16" Height="16" Margin="4" />
+                                <TextBlock Text="{Binding}" Foreground="White" Margin="0,5,5,5" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </dxb:BarButtonItem.ContentTemplate>
+            </dxb:BarButtonItem>
             <dxb:BarCheckItem Name="DataAutoRefresh"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               CategoryName="View"
@@ -333,6 +349,7 @@
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
+                <dxb:BarButtonItemLink BarItemName="ProvideFeedback" Alignment="Far" />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar"
                      AllowCollapse="True"
