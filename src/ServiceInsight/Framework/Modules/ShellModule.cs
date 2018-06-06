@@ -10,6 +10,7 @@
     using Options;
     using Search;
     using ServiceInsight.MessageList;
+    using ServiceInsight.MessagePayloadViewer;
     using Shell;
 
     public class ShellModule : Module
@@ -43,6 +44,7 @@
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
+            builder.RegisterType<MessagePayloadView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
         }
 
         protected static IEnumerable<Type> ExemptTypes
@@ -56,6 +58,7 @@
                 yield return typeof(ShellView);
                 yield return typeof(AboutView);
                 yield return typeof(ExceptionDetailView);
+                yield return typeof(MessagePayloadView);
             }
         }
     }

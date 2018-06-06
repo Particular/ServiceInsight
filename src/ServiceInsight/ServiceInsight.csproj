@@ -290,6 +290,7 @@
     <Compile Include="Framework\Commands\DelegateCommand.cs" />
     <Compile Include="Framework\Commands\ObservableCommand.cs" />
     <Compile Include="Framework\Settings\ApplicationConfiguration.cs" />
+    <Compile Include="Framework\Settings\WindowStateSetting.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />

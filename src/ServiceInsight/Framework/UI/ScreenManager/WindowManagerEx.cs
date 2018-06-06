@@ -95,11 +95,11 @@
             return ShowDialog(screen);
         }
 
-        public bool? ShowModalDialog<T>(T model) where T : class
+        public bool? ShowModalDialog<T>(T model, bool resizable) where T : class
         {
             var settings = new Dictionary<string, object>
             {
-                { "ResizeMode", ResizeMode.NoResize }
+                { "ResizeMode", resizable ? ResizeMode.CanResizeWithGrip : ResizeMode.NoResize }
             };
 
             return ShowDialog(model, null, settings);

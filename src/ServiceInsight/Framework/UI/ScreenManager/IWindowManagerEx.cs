@@ -11,6 +11,6 @@ namespace ServiceInsight.Framework.UI.ScreenManager
 
         bool? ShowDialog<T>() where T : class;
 
-        bool? ShowModalDialog<T>(T model) where T : class;
+        bool? ShowModalDialog<T>(T model, bool resizable) where T : class;
     }
 }

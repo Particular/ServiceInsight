@@ -21,7 +21,7 @@
             var selectedMessage = (StoredMessage)parameter;
             var model = new ExceptionDetailViewModel(settingsProvider, new ExceptionDetails(selectedMessage));
 
-            windowManager.ShowDialog(model);
+            windowManager.ShowModalDialog(model, true);
         }
     }
 }

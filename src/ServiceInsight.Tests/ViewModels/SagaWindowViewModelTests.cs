@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.MessageList;
     using ServiceInsight.Models;
@@ -27,10 +28,11 @@
             var workNotifier = Substitute.For<IWorkNotifier>();
             var clipboard = Substitute.For<IClipboard>();
             var windowManager = Substitute.For<IWindowManagerEx>();
+            var settingsProvider = Substitute.For<ISettingsProvider>();
 
             serviceControl = Substitute.For<IServiceControl>();
             messageSelectionContext = new MessageSelectionContext(eventAggregator);
-            viewModel = new SagaWindowViewModel(eventAggregator, workNotifier, serviceControl, clipboard, windowManager, messageSelectionContext);
+            viewModel = new SagaWindowViewModel(eventAggregator, workNotifier, serviceControl, clipboard, windowManager, settingsProvider, messageSelectionContext);
         }
 
         [Test]

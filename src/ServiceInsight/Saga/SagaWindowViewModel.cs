@@ -11,6 +11,7 @@
     using MessageList;
     using Models;
     using ServiceControl;
+    using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.MessagePayloadViewer;
 
@@ -25,6 +26,7 @@
         IWorkNotifier workNotifier;
         IServiceControl serviceControl;
         IWindowManagerEx windowManager;
+        ISettingsProvider settingsProvider;
         readonly MessageSelectionContext selection;
 
         public SagaWindowViewModel(
@@ -33,12 +35,14 @@
             IServiceControl serviceControl,
             IClipboard clipboard,
             IWindowManagerEx windowManager,
+            ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.serviceControl = serviceControl;
             this.windowManager = windowManager;
+            this.settingsProvider = settingsProvider;
             selection = selectionContext;
             ShowSagaNotFoundWarning = false;
             CopyCommand = Command.Create(arg => clipboard.CopyTo(InstallScriptText));
@@ -106,10 +110,10 @@
 
         void ShowEntireContent(SagaUpdatedValue value)
         {
-            windowManager.ShowModalDialog(new MessagePayloadViewModel(value.EffectiveValue)
+            windowManager.ShowModalDialog(new MessagePayloadViewModel(settingsProvider, value.EffectiveValue)
             {
                 DisplayName = value.SagaName
-            });
+            }, resizable: true);
         }
 
         public void Handle(ServiceControlConnectionChanged message)
