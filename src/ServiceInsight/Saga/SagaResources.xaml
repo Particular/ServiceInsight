@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:saga="clr-namespace:ServiceInsight.Saga">
 
     <SolidColorBrush x:Key="SagaBackground" Color="#F2F2F2" />
     <SolidColorBrush x:Key="SagaForeground" Color="#000000" />
@@ -26,8 +27,9 @@
     <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
     <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
 
-    <Style x:Key="PropertyValueTextStyle" TargetType="{x:Type TextBlock}">
+    <Style x:Key="PropertyValueTextStyle" TargetType="{x:Type saga:SagaValueDiffControl}">
         <Setter Property="Foreground" Value="{StaticResource SagaForeground}" />
+        <Setter Property="WhitespaceBrush" Value="{StaticResource SagaSymbolForeground}" />
         <Style.Triggers>
             <Trigger Property="Tag" Value="{x:Null}">
                 <Setter Property="FontStyle" Value="Italic" />
