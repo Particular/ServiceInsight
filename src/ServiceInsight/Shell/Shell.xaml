@@ -144,6 +144,11 @@
                                AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
                                CategoryName="Help"
                                Command="{Binding ProvideFeedbackCommand}"
+                               Content="Feedback" />
+            <dxb:BarButtonItem x:Name="ProvideFeedbackToolbar"
+                               AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
+                               CategoryName="Help"
+                               Command="{Binding ProvideFeedbackCommand}"
                                Content="Feedback">
                 <dxb:BarButtonItem.ContentTemplate>
                     <DataTemplate>
@@ -212,6 +217,7 @@
                 <dxb:BarButtonItemLink BarItemName="Help" />
                 <dxb:BarButtonItemLink BarItemName="About" />
                 <dxb:BarButtonItemLink BarItemName="Register" />
+                <dxb:BarButtonItemLink BarItemName="ProvideFeedback" />
             </dxb:BarSubItem>
 
             <dxb:BarStaticItem x:Name="LicenseStatusBar"
@@ -349,7 +355,7 @@
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
-                <dxb:BarButtonItemLink BarItemName="ProvideFeedback" Alignment="Far" />
+                <dxb:BarButtonItemLink BarItemName="ProvideFeedbackToolbar" Alignment="Far" />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar"
                      AllowCollapse="True"
