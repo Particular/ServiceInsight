@@ -52,19 +52,25 @@
         [Test]
         public void Should_display_application_version_number()
         {
+            const string ApplicationVersion = "0.8.0-Unstable379";
+            versionService.GetVersion().Returns(ApplicationVersion);
+
             ((IActivate)sut).Activate();
 
             sut.AppVersion.ShouldNotBe(null);
-            sut.AppVersion.ShouldNotBeEmpty();
+            sut.AppVersion.ShouldBe(ApplicationVersion);
         }
 
         [Test]
         public void Should_display_short_commit_hash()
         {
+            const string ApplicationVersion = "f1b04543"; //random hash
+            versionService.GetCommitHash().Returns(ApplicationVersion);
+
             ((IActivate)sut).Activate();
 
             sut.CommitHash.ShouldNotBe(null);
-            sut.CommitHash.Length.ShouldBe(7);
+            sut.CommitHash.ShouldBe(ApplicationVersion);
         }
     }
 }
