@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Saga
 {
+    using System;
     using System.Globalization;
     using System.Windows;
     using System.Windows.Controls;
@@ -7,6 +8,8 @@
 
     public class SagaValueDiffControl : Control
     {
+        const string SpaceMoniker = "˽";
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text",
             typeof(string),
             typeof(SagaValueDiffControl));
@@ -37,12 +40,17 @@
             }
 
             var currentPosition = 0d;
+            var firstChar = true;
+            var shouldPrintWhiteSpace = IsValueTypeString(Text);
 
             foreach (var character in Text)
             {
                 var whitespace = char.IsWhiteSpace(character);
+                var whitespaceChar = firstChar ? $"{SpaceMoniker} " : $" {SpaceMoniker} ";
+                var charToDraw = whitespace && shouldPrintWhiteSpace ? whitespaceChar : character.ToString();
+
                 var formattedText = new FormattedText(
-                    whitespace ? " ˽ " : character.ToString(),
+                    charToDraw,
                     CultureInfo.CurrentUICulture,
                     FlowDirection,
                     new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
@@ -50,8 +58,25 @@
                     whitespace ? WhitespaceBrush : Foreground);
 
                 drawingContext.DrawText(formattedText, new Point(currentPosition, 0));
-                currentPosition += formattedText.Width;
+                currentPosition += formattedText.WidthIncludingTrailingWhitespace;
+                firstChar = false;
             }
+        }
+
+        private bool IsValueTypeString(string value)
+        {
+            return !IsDateTime(value) &&
+                   !IsGuid(value);
+        }
+
+        private bool IsGuid(string value)
+        {
+            return Guid.TryParse(value, out _);
+        }
+
+        private bool IsDateTime(string value)
+        {
+            return DateTime.TryParse(value, out _);
         }
     }
 }
