@@ -361,6 +361,7 @@
     <Compile Include="Settings\MessageListSettings.cs" />
     <Compile Include="Settings\SequenceDiagramSettings.cs" />
     <Compile Include="Shell\IPersistPartLayout.cs" />
+    <Compile Include="Framework\Licensing\LicenseDialogSource.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
