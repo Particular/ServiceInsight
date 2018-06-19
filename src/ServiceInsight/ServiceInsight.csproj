@@ -282,6 +282,7 @@
     <Compile Include="ExtensionMethods\LayoutExtensions.cs" />
     <Compile Include="ExtensionMethods\ObservableExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
+    <Compile Include="ExtensionMethods\RestClientExtensions.cs" />
     <Compile Include="Framework\Behaviors\ComboBoxEditValuePatcherBehavior.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
     <Compile Include="Framework\Commands\AsyncDelegateCommand.cs" />

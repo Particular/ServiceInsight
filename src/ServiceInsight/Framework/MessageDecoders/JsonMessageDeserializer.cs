@@ -21,6 +21,8 @@
 
         public CultureInfo Culture { get; set; }
 
+        public bool TruncateLargeLists { get; set; }
+
         public JsonMessageDeserializer()
         {
             Culture = CultureInfo.InvariantCulture;
@@ -137,7 +139,7 @@
             var elements = parent as IList;
             if (elements != null)
             {
-                if (elements.Count > 200)
+                if (elements.Count > 200 && TruncateLargeLists)
                 {
                     var missingJObject = new JsonObject
                     {

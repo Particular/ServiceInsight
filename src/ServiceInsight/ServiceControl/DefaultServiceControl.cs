@@ -31,6 +31,8 @@ namespace ServiceInsight.ServiceControl
     {
         static ILogger anotarLogger = Log.ForContext<IServiceControl>();
         static byte[] byteOrderMarkUtf8 = Encoding.UTF8.GetPreamble();
+        static IDeserializer jsonTruncatingDeserializer = CreateJsonDeserializer(truncateLargeLists: true);
+        static IDeserializer jsonDeserializer = CreateJsonDeserializer(truncateLargeLists: false);
 
         const string ConversationEndpoint = "conversations/{0}";
         const string DefaultEndpointsEndpoint = "endpoints";
@@ -105,7 +107,7 @@ namespace ServiceInsight.ServiceControl
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public async Task<SagaData> GetSagaById(Guid sagaId) => await GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified)).ConfigureAwait(false) ?? new SagaData();
+        public async Task<SagaData> GetSagaById(Guid sagaId) => await GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true).ConfigureAwait(false) ?? new SagaData();
 
         public Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
@@ -160,7 +162,7 @@ namespace ServiceInsight.ServiceControl
         {
             var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
 
-            var body = await Execute(request, response => response.Content).ConfigureAwait(false);
+            var body = await Execute(request, response => response.Content, truncateLargeLists: true).ConfigureAwait(false);
 
             if (body == null)
             {
@@ -231,27 +233,28 @@ namespace ServiceInsight.ServiceControl
             request.AddParameter("q", searchQuery, ParameterType.GetOrPost);
         }
 
-        IRestClient CreateClient(string baseUrl = null)
+        IRestClient CreateClient(string baseUrl = null, bool truncateLargeLists = false)
         {
             var client = new RestClient(baseUrl ?? connection.Url)
             {
                 Authenticator = new NtlmAuthenticator()
             };
-            var deserializer = new JsonMessageDeserializer { DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" };
-            var xdeserializer = new XmlDeserializer();
+
             client.ClearHandlers();
-            client.AddHandler("application/json", deserializer);
-            client.AddHandler("text/json", deserializer);
-            client.AddHandler("text/x-json", deserializer);
-            client.AddHandler("text/javascript", deserializer);
-
-            client.AddHandler("application/xml", xdeserializer);
-            client.AddHandler("text/xml", xdeserializer);
-            client.AddHandler("*", xdeserializer);
-
+            client.AddJsonDeserializer(truncateLargeLists ? jsonTruncatingDeserializer : jsonDeserializer);
+            client.AddXmlDeserializer(new XmlDeserializer());
             client.AddDefaultHeader("Accept-Encoding", "gzip,deflate");
 
             return client;
+        }
+
+        static IDeserializer CreateJsonDeserializer(bool truncateLargeLists = false)
+        {
+            return new JsonMessageDeserializer
+            {
+                DateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                TruncateLargeLists = truncateLargeLists
+            };
         }
 
         static RestRequestWithCache CreateMessagesRequest(string endpointName = null) => endpointName != null
@@ -315,13 +318,13 @@ namespace ServiceInsight.ServiceControl
             return result;
         }
 
-        Task<T> GetModel<T>(RestRequestWithCache request)
-where T : class, new() => Execute<T, T>(request, response => response.Data);
+        Task<T> GetModel<T>(RestRequestWithCache request, bool truncateLargeLists = false)
+where T : class, new() => Execute<T, T>(request, response => response.Data, truncateLargeLists: truncateLargeLists);
 
-        async Task<T> Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null)
+        async Task<T> Execute<T>(RestRequestWithCache request, Func<IRestResponse, T> selector, string baseUrl = null, bool truncateLargeLists = false)
         {
             var cacheStyle = request.CacheSyle;
-            var restClient = CreateClient(baseUrl);
+            var restClient = CreateClient(baseUrl, truncateLargeLists);
 
             switch (cacheStyle)
             {
@@ -405,12 +408,12 @@ where T : class, new() => Execute<T, T>(request, response => response.Data);
             return data;
         }
 
-        async Task<T> Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector, string url = null)
+        async Task<T> Execute<T, T2>(RestRequestWithCache request, Func<IRestResponse<T2>, T> selector, string url = null, bool truncateLargeLists = false)
             where T : class, new()
             where T2 : class, new()
         {
             var cacheStyle = request.CacheSyle;
-            var restClient = CreateClient(url);
+            var restClient = CreateClient(url, truncateLargeLists);
 
             switch (cacheStyle)
             {
