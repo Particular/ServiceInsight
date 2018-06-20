@@ -13,11 +13,19 @@
 
     public class ServiceControlConnectionViewModel : Screen
     {
-        public const string ConnectingToServiceControl = "Connecting to ServiceControl...";
+        const string ConnectingToServiceControl = "Connecting to ServiceControl...";
+        const string ConnectionErrorMessage = "There was an error connecting to ServiceControl. Either the address is not valid or the service is down.";
+        const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
+        static bool certValidationFailed;
 
         ISettingsProvider settingsProvider;
         ProfilerSettings appSettings;
         IContainer container;
+
+        static ServiceControlConnectionViewModel()
+        {
+            DefaultServiceControl.CertificateValidationFailed = () => { certValidationFailed = true; };
+        }
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
@@ -31,7 +39,9 @@
 
         public string ServiceUrl { get; set; }
 
-        public bool IsAddressValid { get; set; }
+        public bool ShowError { get; set; }
+
+        public string ErrorMessage { get; set; }
 
         public bool WorkInProgress { get; private set; }
 
@@ -39,7 +49,7 @@
         {
             base.OnActivate();
 
-            IsAddressValid = true;
+            ShowError = false;
             ServiceUrl = appSettings.LastUsedServiceControl;
             RecentEntries = GetRecentServiceEntries();
         }
@@ -59,14 +69,22 @@
 
         public virtual async Task Accept()
         {
+            certValidationFailed = false;
             StartWorkInProgress();
             ServiceUrl = ServiceUrl.Trim();
-            IsAddressValid = await IsValidUrl(ServiceUrl);
-            if (IsAddressValid)
+            var isValidUrl = await IsValidUrl(ServiceUrl);
+            ShowError = !isValidUrl;
+
+            if (!ShowError)
             {
                 StoreConnectionAddress();
                 TryClose(true);
             }
+            else
+            {
+                ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
+            }
+
             StopWorkInProgress();
         }
 

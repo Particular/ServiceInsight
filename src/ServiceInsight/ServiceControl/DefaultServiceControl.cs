@@ -26,6 +26,7 @@ namespace ServiceInsight.ServiceControl
     using ServiceInsight.Models;
     using ServiceInsight.Saga;
     using ServiceInsight.Settings;
+    using Action = System.Action;
 
     public class DefaultServiceControl : IServiceControl
     {
@@ -33,6 +34,8 @@ namespace ServiceInsight.ServiceControl
         static byte[] byteOrderMarkUtf8 = Encoding.UTF8.GetPreamble();
         static IDeserializer jsonTruncatingDeserializer = CreateJsonDeserializer(truncateLargeLists: true);
         static IDeserializer jsonDeserializer = CreateJsonDeserializer(truncateLargeLists: false);
+
+        public static Action CertificateValidationFailed = () => { };
 
         const string ConversationEndpoint = "conversations/{0}";
         const string DefaultEndpointsEndpoint = "endpoints";
@@ -50,7 +53,13 @@ namespace ServiceInsight.ServiceControl
 
         static DefaultServiceControl()
         {
-            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => ApplicationConfiguration.SkipCertificateValidation;
+            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => OnCertificateValidationFailed();
+        }
+
+        private static bool OnCertificateValidationFailed()
+        {
+            CertificateValidationFailed();
+            return ApplicationConfiguration.SkipCertificateValidation;
         }
 
         public DefaultServiceControl(

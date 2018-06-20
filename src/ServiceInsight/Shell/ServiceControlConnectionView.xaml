@@ -63,8 +63,8 @@
               Grid.ColumnSpan="2"
               Margin="3"
               VerticalAlignment="Top"
-              Visibility="{Binding IsAddressValid,
-                                   Converter={StaticResource BoolToVisibilityConverterInverted}}">
+              Visibility="{Binding ShowError,
+                                   Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="*" />
@@ -82,7 +82,7 @@
 
             <TextBlock Grid.Column="1"
                        Margin="5"
-                       Text="There was an error connecting to ServiceControl. Either the address is not valid or the service is down."
+                       Text="{Binding ErrorMessage}"
                        TextAlignment="Left"
                        TextWrapping="Wrap" />
         </Grid>
