@@ -26,6 +26,7 @@
         protected override void OnActivate()
         {
             base.OnActivate();
+            ValidationResult = null;
             DisplayName = GetScreenTitle();
         }
 
@@ -72,11 +73,16 @@
 
         public bool MustPurchase => HasTrialLicense && !HasRemainingTrial && licenseManager.CurrentLicense.IsExtendedTrial;
 
+        public bool ShowValidationErrors => ValidationResult != null;
+
+        public string ValidationResult { get; set; }
+
         public void OnLicenseChanged()
         {
             NotifyOfPropertyChange(nameof(LicenseType));
             NotifyOfPropertyChange(nameof(RegisteredTo));
             NotifyOfPropertyChange(nameof(TrialDaysRemaining));
+            NotifyOfPropertyChange(nameof(ShowValidationErrors));
         }
 
         public void LoadLicense()
@@ -88,6 +94,7 @@
             });
 
             var validLicense = false;
+            ValidationResult = null;
 
             if (dialog.Result.GetValueOrDefault(false))
             {
@@ -99,9 +106,11 @@
             if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
             {
                 TryClose(true);
-                return;
             }
-            //todo: Display error saying that the license was invalid
+            else
+            {
+                ValidationResult = licenseManager.ValidationResult.Result;
+            }
         }
 
         public void Close()

@@ -62,6 +62,17 @@
                    Text="The trial period is now over."
                    Visibility="{Binding AllowedToUse,
                                         Converter={StaticResource BoolToVisibilityConverterInverted}}" />
+        
+        <TextBlock Grid.Row="3"
+                   Margin="40,5,40,15"
+                   FontSize="{StaticResource LargeFontSize}"
+                   FontWeight="SemiBold"
+                   Foreground="{StaticResource WarningBrush}"
+                   TextWrapping="Wrap"
+                   Text="{Binding ValidationResult}"
+                   Visibility="{Binding ShowValidationErrors,
+                                        Converter={StaticResource BoolToVisibilityConverter}}" />
+
         <TextBlock Grid.Row="4"
                    Height="40"
                    Margin="40,15,40,0"

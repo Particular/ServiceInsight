@@ -15,33 +15,22 @@
 
         public bool TryInstallLicense(string licenseText)
         {
-            try
+            ValidationResult = LicenseDialogSource.Validate(licenseText);
+            if (ValidationResult.License != null)
             {
-                if (!LicenseVerifier.TryVerify(licenseText, out _))
-                {
-                    return false;
-                }
-
-                CurrentLicense = LicenseDeserializer.Deserialize(licenseText);
-
-                if (!CurrentLicense.ValidForApplication("ServiceInsight"))
-                {
-                    return false;
-                }
-
                 new RegistryLicenseStore().StoreLicense(licenseText);
                 new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
 
                 return true;
             }
-            catch (Exception ex)
-            {
-                LogTo.Warning(ex, "Can't install license: {ex}", ex);
-                return false;
-            }
+
+            LogTo.Warning($"Can't install license: {ValidationResult.Result}");
+            return false;
         }
 
         internal License CurrentLicense { get; set; }
+
+        internal LicenseSourceResult ValidationResult { get; set; }
 
         public int GetRemainingTrialDays()
         {
