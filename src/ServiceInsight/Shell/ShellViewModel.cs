@@ -300,12 +300,44 @@
 
         void ValidateLicense()
         {
+            DisplayLicenseStatus();
+
             if (licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
 
             DisplayRegistrationStatus();
+        }
+
+        void DisplayLicenseStatus()
+        {
+            var license = licenseManager.CurrentLicense;
+
+            if (license == null)
+            {
+                return;
+            }
+
+            if (license.IsCommercialLicense)
+            {
+                var upgradeProtectionDays = licenseManager.GetUpgradeProtectionRemainingDays();
+                var expirationDays = licenseManager.GetExpirationRemainingDays();
+
+                if (upgradeProtectionDays.HasValue)
+                {
+                    StatusBarManager.SetLicenseUpgradeProtectionDays(upgradeProtectionDays.Value);
+                }
+
+                if (expirationDays.HasValue)
+                {
+                    StatusBarManager.SetLicenseRemainingDays(expirationDays.Value);
+                }
+            }
+            else
+            {
+                StatusBarManager.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
+            }
         }
 
         void DisplayRegistrationStatus()

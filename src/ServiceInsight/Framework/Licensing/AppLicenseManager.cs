@@ -34,15 +34,40 @@
 
         public int GetRemainingTrialDays()
         {
-            var now = DateTime.UtcNow.Date;
-            var expiration = (CurrentLicense == null || CurrentLicense.ExpirationDate == null) ?
-                TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
+            var isTrial = CurrentLicense == null || CurrentLicense.ExpirationDate == null;
+            var effectiveDate = isTrial ? TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
 
-            var remainingDays = (expiration - now).Days;
+            return CalcRemainingDays(effectiveDate);
+        }
 
-            return remainingDays > 0 ? remainingDays : 0;
+        public int? GetExpirationRemainingDays()
+        {
+            if (!CurrentLicense.ExpirationDate.HasValue)
+            {
+                return null;
+            }
+
+            return CalcRemainingDays(CurrentLicense.ExpirationDate.Value);
+        }
+
+        public int? GetUpgradeProtectionRemainingDays()
+        {
+            if (!CurrentLicense.UpgradeProtectionExpiration.HasValue)
+            {
+                return null;
+            }
+
+            return CalcRemainingDays(CurrentLicense.UpgradeProtectionExpiration.Value);
         }
 
         public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
+
+        private static int CalcRemainingDays(DateTimeOffset date)
+        {
+            var now = DateTime.UtcNow.Date;
+            var remainingDays = (date - now).Days;
+
+            return remainingDays > 0 ? remainingDays : 0;
+        }
     }
 }

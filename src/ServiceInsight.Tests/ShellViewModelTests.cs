@@ -174,21 +174,21 @@
         {
             const string RegisteredUser = "John Doe";
             const string LicenseType = "Trial";
-            const int NumberOfDaysRemainingFromTrial = 5;
+            const int RemainingDays = 5;
 
             var issuedLicense = new License
             {
                 LicenseType = LicenseType,
-                ExpirationDate = DateTime.Now.AddDays(NumberOfDaysRemainingFromTrial),
+                ExpirationDate = DateTime.Now.AddDays(RemainingDays),
                 RegisteredTo = RegisteredUser
             };
 
             licenseManager.CurrentLicense = issuedLicense;
-            licenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
+            licenseManager.GetRemainingTrialDays().Returns(RemainingDays);
 
             shell.OnApplicationIdle();
 
-            statusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
+            statusbarManager.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
         }
 
         [TearDown]
