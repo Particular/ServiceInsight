@@ -26,6 +26,8 @@
 
         public bool ShowLicenseWarn { get; private set; }
 
+        public bool ShowLicensePopup => ShowLicenseWarn || ShowLicenseError;
+
         public string LicenseStatusMessage { get; private set; }
 
         public void Handle(WorkStarted @event)

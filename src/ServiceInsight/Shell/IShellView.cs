@@ -5,5 +5,7 @@
         void ChangeTheme(string name);
 
         void SelectTab(string name);
+
+        object LicenseStatus { get; }
     }
 }

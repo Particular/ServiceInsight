@@ -53,6 +53,8 @@
             }
         }
 
+        public object LicenseStatus => LicenseStatusBar.Content;
+
         public void OnSaveLayout(ISettingsProvider settingProvider)
         {
             var layoutSetting = settingProvider.GetSettings<ShellLayoutSettings>();
