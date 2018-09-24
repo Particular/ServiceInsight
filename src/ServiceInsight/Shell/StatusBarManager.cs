@@ -18,6 +18,10 @@
         public const string UpgradeProtectionExpiredMessage = "Upgrade protection expired";
         public const string TrialExpiringMessage = "Trial expiring in {0} day(s)";
         public const string TrialExpiredMessage = "Trial expired";
+        public const string UpgradeProtectionExpiringText = "Once upgrade protection expires you'll no longer have access to new product versions.";
+        public const string UpgradeProtectionExpiredText = "You'll no longer have access to new product versions. Please import a new license or contact us.";
+        public const string LicenseExpiringText = "Once the license expires you'll no longer be able to continue using the application.";
+        public const string LicenseExpiredText = "You are no longer able to continue using the application. Please import a new license or contact us.";
 
         private readonly IWindowManagerEx windowManager;
         private readonly NetworkOperations network;
@@ -35,6 +39,8 @@
         public string StatusMessage { get; private set; }
 
         public string Registration { get; private set; }
+
+        public string LicensePopupText { get; private set; }
 
         public bool ErrorMessageVisible { get; private set; }
 
@@ -102,11 +108,13 @@
             if (remainingDays == 0)
             {
                 LicenseStatusMessage = UpgradeProtectionExpiredMessage;
+                LicensePopupText = UpgradeProtectionExpiredText;
             }
 
             if (remainingDays <= 10)
             {
                 LicenseStatusMessage = string.Format(UpgradeProtectionExpiringMessage, remainingDays);
+                LicensePopupText = UpgradeProtectionExpiringText;
             }
 
             ShowLicenseWarn = true;
@@ -124,11 +132,13 @@
             {
                 ShowLicenseError = true;
                 LicenseStatusMessage = LicenseExpiredMessage;
+                LicensePopupText = LicenseExpiredText;
             }
             else if (remainingDays <= 10)
             {
                 ShowLicenseWarn = true;
                 LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
+                LicensePopupText = LicenseExpiringText;
             }
 
             OpenLicensePopup = true;
@@ -145,11 +155,13 @@
             {
                 ShowLicenseError = true;
                 LicenseStatusMessage = LicenseExpiredMessage;
+                LicensePopupText = LicenseExpiredText;
             }
             else if (remainingDays <= 10)
             {
                 ShowLicenseWarn = true;
                 LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
+                LicensePopupText = LicenseExpiringText;
             }
 
             OpenLicensePopup = true;
