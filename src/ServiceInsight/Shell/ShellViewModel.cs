@@ -1,7 +1,6 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
@@ -339,11 +338,6 @@
             {
                 StatusBarManager.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
             }
-
-            //windowManager.ShowPopup(new LicensePopupViewModel(), View, new Dictionary<string, object>
-            //{
-            //    ["PlacementTarget"] = View.LicenseStatus
-            //});
         }
 
         void DisplayRegistrationStatus()

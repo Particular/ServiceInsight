@@ -368,7 +368,6 @@
     <Compile Include="Shell\LicensePopupView.xaml.cs">
       <DependentUpon>LicensePopupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\LicensePopupViewModel.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>

@@ -1,7 +1,11 @@
 ﻿namespace ServiceInsight.Shell
 {
+    using System;
+    using System.Windows.Input;
     using Caliburn.Micro;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.UI.ScreenManager;
 
     public class StatusBarManager : Screen,
         IHandle<WorkStarted>,
@@ -16,6 +20,18 @@
         public const string TrialExpiringMessage = "Trial expiring in {0} day(s)";
         public const string TrialExpiredMessage = "Trial expired";
 
+        private readonly IWindowManagerEx windowManager;
+        private readonly NetworkOperations network;
+
+        public StatusBarManager(IWindowManagerEx windowManager, NetworkOperations network)
+        {
+            this.windowManager = windowManager;
+            this.network = network;
+
+            ContactUs = Command.Create(OnContactUsClicked);
+            ManageLicense = Command.Create(OnManageLicense);
+        }
+
         public string StatusMessage { get; private set; }
 
         public string Registration { get; private set; }
@@ -29,6 +45,10 @@
         public bool ShowLicensePopup => ShowLicenseWarn || ShowLicenseError;
 
         public string LicenseStatusMessage { get; private set; }
+
+        public ICommand ManageLicense { get; set; }
+
+        public ICommand ContactUs { get; set; }
 
         public void Handle(WorkStarted @event)
         {
@@ -114,6 +134,16 @@
                 ShowLicenseWarn = true;
                 LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
             }
+        }
+
+        private void OnManageLicense()
+        {
+            windowManager.ShowDialog<LicenseRegistrationViewModel>();
+        }
+
+        private void OnContactUsClicked()
+        {
+            network.Browse("http://particular.net/contactus");
         }
     }
 }

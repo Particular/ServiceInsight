@@ -2,7 +2,6 @@
 {
     using System.Windows;
     using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
     using ServiceInsight.ExtensionMethods;
 
     /// <summary>
@@ -27,11 +26,6 @@
             {
                 popup.IsOpen = false;
             }
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TryClosePopup();
         }
     }
 }
