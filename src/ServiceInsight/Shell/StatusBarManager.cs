@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.Shell
 {
-    using System;
     using System.Windows.Input;
     using Caliburn.Micro;
     using ServiceInsight.Framework;
@@ -22,6 +21,7 @@
 
         private readonly IWindowManagerEx windowManager;
         private readonly NetworkOperations network;
+        private bool forceShowPopup;
 
         public StatusBarManager(IWindowManagerEx windowManager, NetworkOperations network)
         {
@@ -42,7 +42,11 @@
 
         public bool ShowLicenseWarn { get; private set; }
 
-        public bool ShowLicensePopup => ShowLicenseWarn || ShowLicenseError;
+        public bool OpenLicensePopup
+        {
+            get => (ShowLicenseWarn || ShowLicenseError) && forceShowPopup;
+            set => forceShowPopup = value;
+        }
 
         public string LicenseStatusMessage { get; private set; }
 
@@ -95,8 +99,6 @@
                 return;
             }
 
-            ShowLicenseWarn = true;
-
             if (remainingDays == 0)
             {
                 LicenseStatusMessage = UpgradeProtectionExpiredMessage;
@@ -106,10 +108,18 @@
             {
                 LicenseStatusMessage = string.Format(UpgradeProtectionExpiringMessage, remainingDays);
             }
+
+            ShowLicenseWarn = true;
+            OpenLicensePopup = true;
         }
 
         public void SetLicenseRemainingDays(int remainingDays)
         {
+            if (remainingDays > 10)
+            {
+                return;
+            }
+
             if (remainingDays == 0)
             {
                 ShowLicenseError = true;
@@ -120,10 +130,17 @@
                 ShowLicenseWarn = true;
                 LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
             }
+
+            OpenLicensePopup = true;
         }
 
         public void SetTrialRemainingDays(int remainingDays)
         {
+            if (remainingDays > 10)
+            {
+                return;
+            }
+
             if (remainingDays == 0)
             {
                 ShowLicenseError = true;
@@ -134,6 +151,8 @@
                 ShowLicenseWarn = true;
                 LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
             }
+
+            OpenLicensePopup = true;
         }
 
         private void OnManageLicense()

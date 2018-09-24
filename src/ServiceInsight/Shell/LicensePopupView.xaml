@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:ServiceInsight.Controls"
              xmlns:shell="clr-namespace:ServiceInsight.Shell"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance shell:LicensePopupViewModel}">
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance shell:StatusBarManager}">
     <UserControl.Resources>
         <Style TargetType="{x:Type controls:LinkedIcon}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />

@@ -19,6 +19,19 @@
         mc:Ignorable="d">
 
     <Window.Resources>
+
+        <Style TargetType="{x:Type ToggleButton}" x:Key="ImageButton">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="{x:Type dxd:DocumentPanel}">
             <Setter Property="AllowDrag" Value="False" />
             <Setter Property="AllowFloat" Value="False" />
@@ -183,29 +196,31 @@
                 <dxb:BarStaticItem.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" x:Name="StatusPanel">
-                            <Image Width="16"
-                                   Height="16"
-                                   Margin="0,0,5,0"
-                                   Source="/Images/Status-Error.png"
-                                   Stretch="Uniform"
-                                   Visibility="{Binding Path=StatusBarManager.ShowLicenseError,
+                            <ToggleButton Style="{StaticResource ImageButton}"
+                                          Margin="0,0,5,0"
+                                          IsChecked="{Binding Path=StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.ShowLicenseError,
                                                         Converter={StaticResource BoolToVisibilityConverter},
-                                                        Mode=OneWay}" />
-                            <Image Width="16"
-                                   Height="16"
-                                   Margin="0,0,5,0"
-                                   Source="/Images/Status-Warning.png"
-                                   Stretch="Uniform"
-                                   Visibility="{Binding Path=StatusBarManager.ShowLicenseWarn,
+                                                        Mode=OneWay}">
+                                <Image Source="/Images/Status-Error.png" Stretch="Uniform"/>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource ImageButton}"
+                                          Margin="0,0,5,0"
+                                          IsChecked="{Binding Path=StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.ShowLicenseWarn,
                                                         Converter={StaticResource BoolToVisibilityConverter},
-                                                        Mode=OneWay}" />
+                                                        Mode=OneWay}">
+                                <Image Source="/Images/Status-Warning.png" Stretch="Uniform"/>
+                            </ToggleButton>
 
                             <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.LicenseStatusMessage, Mode=OneWay}" />
 
-                            <Popup IsOpen="{Binding StatusBarManager.ShowLicensePopup, Mode=OneWay}"
+                            <Popup IsOpen="{Binding StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
                                    StaysOpen="False"
                                    AllowsTransparency="True"
-                                   HorizontalOffset="50" Placement="Top"
+                                   HorizontalOffset="50" 
+                                   Placement="Top"
                                    PlacementTarget="{Binding ElementName=StatusPanel}">
                                 <local:LicensePopupView cal:Bind.Model="{Binding StatusBarManager}" />
                             </Popup>
