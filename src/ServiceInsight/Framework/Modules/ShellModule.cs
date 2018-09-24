@@ -39,6 +39,7 @@
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
+            builder.RegisterType<LicenseStatusBar>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();

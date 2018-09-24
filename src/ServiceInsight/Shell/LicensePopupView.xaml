@@ -87,7 +87,7 @@
                            FontWeight="Bold" 
                            Foreground="{StaticResource TextColor}">
                     <Run Text="Warning: " />
-                    <Run Text="{Binding LicenseStatusMessage}" />
+                    <Run Text="{Binding LicenseStatus.LicenseStatusMessage}" />
                 </TextBlock>
 
                 <TextBlock Grid.Row="1" 
@@ -95,7 +95,7 @@
                            Margin="18,0,18,5" 
                            Foreground="{StaticResource TextColor}"
                            TextWrapping="WrapWithOverflow" 
-                           Text="{Binding LicensePopupText}" />
+                           Text="{Binding LicenseStatus.LicensePopupText}" />
 
                 <Button Click="OnCloseButtonClicked" 
                         Style="{StaticResource CloseButton}"
@@ -116,14 +116,14 @@
                     <controls:LinkedIcon HorizontalAlignment="Left" 
                                          Grid.Column="0" 
                                          Margin="18,0,0,10" 
-                                         Command="{Binding ContactUs}"
+                                         Command="{Binding LicenseStatus.ContactUs}"
                                          Text="Contact us" 
                                          ImageSource="/Images/Contact.png" />
 
                     <controls:LinkedIcon HorizontalAlignment="Right" 
                                          Grid.Column="1" 
                                          Margin="0,0,18,10" 
-                                         Command="{Binding ManageLicense}"
+                                         Command="{Binding LicenseStatus.ManageLicense}"
                                          Text="Manage license..." 
                                          ImageSource="/Images/License.png" />
                 </Grid>

@@ -188,7 +188,7 @@
 
             shell.OnApplicationIdle();
 
-            statusbarManager.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
+            statusbarManager.LicenseStatus.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
         }
 
         [TearDown]

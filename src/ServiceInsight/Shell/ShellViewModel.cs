@@ -301,13 +301,12 @@
         void ValidateLicense()
         {
             DisplayLicenseStatus();
+            DisplayRegistrationStatus();
 
             if (licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
-
-            DisplayRegistrationStatus();
         }
 
         void DisplayLicenseStatus()
@@ -326,17 +325,17 @@
 
                 if (upgradeProtectionDays.HasValue)
                 {
-                    StatusBarManager.SetLicenseUpgradeProtectionDays(upgradeProtectionDays.Value);
+                    StatusBarManager.LicenseStatus.SetLicenseUpgradeProtectionDays(upgradeProtectionDays.Value);
                 }
 
                 if (expirationDays.HasValue)
                 {
-                    StatusBarManager.SetLicenseRemainingDays(expirationDays.Value);
+                    StatusBarManager.LicenseStatus.SetLicenseRemainingDays(expirationDays.Value);
                 }
             }
             else
             {
-                StatusBarManager.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
+                StatusBarManager.LicenseStatus.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
             }
         }
 
@@ -350,11 +349,11 @@
             }
             if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
+                StatusBarManager.LicenseStatus.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, "day".PluralizeWord(licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.LicenseStatus.SetRegistrationInfo(UnlicensedStatusMessage, "day".PluralizeWord(licenseManager.GetRemainingTrialDays()));
             }
         }
 

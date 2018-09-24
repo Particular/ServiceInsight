@@ -198,8 +198,8 @@
                         <StackPanel Orientation="Horizontal" x:Name="StatusPanel">
                             <ToggleButton Style="{StaticResource ImageButton}"
                                           Margin="0,0,5,0"
-                                          IsChecked="{Binding Path=StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
-                                          Visibility="{Binding Path=StatusBarManager.ShowLicenseError,
+                                          IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseError,
                                                         Converter={StaticResource BoolToVisibilityConverter},
                                                         Mode=OneWay}">
                                 <Image Source="/Images/Status-Error.png" Stretch="Uniform"/>
@@ -207,16 +207,16 @@
 
                             <ToggleButton Style="{StaticResource ImageButton}"
                                           Margin="0,0,5,0"
-                                          IsChecked="{Binding Path=StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
-                                          Visibility="{Binding Path=StatusBarManager.ShowLicenseWarn,
+                                          IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseWarn,
                                                         Converter={StaticResource BoolToVisibilityConverter},
                                                         Mode=OneWay}">
                                 <Image Source="/Images/Status-Warning.png" Stretch="Uniform"/>
                             </ToggleButton>
 
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.LicenseStatusMessage, Mode=OneWay}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
 
-                            <Popup IsOpen="{Binding StatusBarManager.OpenLicensePopup, Mode=TwoWay}"
+                            <Popup IsOpen="{Binding StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
                                    StaysOpen="False"
                                    AllowsTransparency="True"
                                    HorizontalOffset="50" 
@@ -235,7 +235,7 @@
                                AutomationProperties.AutomationId="RegistrationStatus"
                                CategoryName="Status"
                                ShowBorder="False"
-                               Content="{Binding StatusBarManager.Registration,
+                               Content="{Binding StatusBarManager.LicenseStatus.Registration,
                                                  Mode=OneWay}" />
 
             <dxb:BarStaticItem x:Name="Status"
