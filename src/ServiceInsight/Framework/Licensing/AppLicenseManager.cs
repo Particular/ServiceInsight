@@ -65,7 +65,8 @@
         private static int CalcRemainingDays(DateTimeOffset date)
         {
             var now = DateTime.UtcNow.Date;
-            var remainingDays = (date - now).Days;
+            var dayAfterExpiration = date.AddDays(1);
+            var remainingDays = (dayAfterExpiration - now).Days;
 
             return remainingDays > 0 ? remainingDays : 0;
         }
