@@ -291,6 +291,7 @@
     <Compile Include="Framework\Commands\CloseWindowCommand.cs" />
     <Compile Include="Framework\Commands\DelegateCommand.cs" />
     <Compile Include="Framework\Commands\ObservableCommand.cs" />
+    <Compile Include="Framework\Events\LicenseUpdated.cs" />
     <Compile Include="Framework\Settings\ApplicationConfiguration.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
@@ -362,12 +363,18 @@
     <Compile Include="ServiceControl\ServiceControlRootUrls.cs" />
     <Compile Include="Settings\MessageListSettings.cs" />
     <Compile Include="Settings\SequenceDiagramSettings.cs" />
+    <Compile Include="Shell\DialogWindow.cs" />
     <Compile Include="Shell\IPersistPartLayout.cs" />
     <Compile Include="Framework\Licensing\LicenseDialogSource.cs" />
     <Compile Include="Shell\LicensePopup.cs" />
     <Compile Include="Shell\LicensePopupView.xaml.cs">
       <DependentUpon>LicensePopupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\LicenseStatusBar.cs" />
+    <Compile Include="Shell\ManageLicenseView.xaml.cs">
+      <DependentUpon>ManageLicenseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\ManageLicenseViewModel.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
@@ -589,6 +596,7 @@
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
     <Compile Include="ValueConverters\ByteToCharConverter.cs" />
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
+    <Compile Include="ValueConverters\CharacterCasingConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\EnumToVisibilityConverter.cs" />
@@ -621,6 +629,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\LicensePopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\ManageLicenseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

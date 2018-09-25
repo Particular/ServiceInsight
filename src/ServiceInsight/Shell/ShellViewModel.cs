@@ -37,6 +37,7 @@
         IHandle<SwitchToMessageBody>,
         IHandle<SwitchToSagaWindow>,
         IHandle<SwitchToFlowWindow>,
+        IHandle<LicenseUpdated>,
         IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
@@ -52,7 +53,7 @@
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
-        Func<LicenseRegistrationViewModel> licenceRegistration;
+        Func<ManageLicenseViewModel> manageLicenceViewModel;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -60,7 +61,7 @@
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
-            Func<LicenseRegistrationViewModel> licenceRegistration,
+            Func<ManageLicenseViewModel> manageLicenceViewModel,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
@@ -83,7 +84,7 @@
             this.settingsProvider = settingsProvider;
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
-            this.licenceRegistration = licenceRegistration;
+            this.manageLicenceViewModel = manageLicenceViewModel;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -111,11 +112,7 @@
 
             RefreshAllCommand = Command.CreateAsync(RefreshAll);
 
-            RegisterCommand = Command.Create(() =>
-            {
-                this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
-                DisplayRegistrationStatus();
-            });
+            RegisterCommand = Command.Create(() => windowManager.ShowDialog<ManageLicenseViewModel>());
 
             ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
@@ -359,7 +356,7 @@
 
         void RegisterLicense()
         {
-            var model = licenceRegistration();
+            var model = manageLicenceViewModel();
             var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))
@@ -415,6 +412,12 @@
         public virtual void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
+        }
+
+        public virtual void Handle(LicenseUpdated message)
+        {
+            DisplayLicenseStatus();
+            DisplayRegistrationStatus();
         }
     }
 }

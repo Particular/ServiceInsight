@@ -31,6 +31,7 @@
 
             builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
@@ -57,6 +58,7 @@
                 yield return typeof(ShellView);
                 yield return typeof(AboutView);
                 yield return typeof(ExceptionDetailView);
+                yield return typeof(ManageLicenseView);
             }
         }
     }

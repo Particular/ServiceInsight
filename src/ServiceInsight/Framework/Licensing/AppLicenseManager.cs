@@ -21,6 +21,8 @@
                 new RegistryLicenseStore().StoreLicense(licenseText);
                 new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
 
+                CurrentLicense = ValidationResult.License;
+
                 return true;
             }
 
@@ -64,9 +66,15 @@
 
         private static int CalcRemainingDays(DateTimeOffset date)
         {
+            var oneDayGrace = date;
+
+            if (date < DateTime.MaxValue.AddDays(-1))
+            {
+                oneDayGrace = date.AddDays(1);
+            }
+
             var now = DateTime.UtcNow.Date;
-            var dayAfterExpiration = date.AddDays(1);
-            var remainingDays = (dayAfterExpiration - now).Days;
+            var remainingDays = (oneDayGrace - now).Days;
 
             return remainingDays > 0 ? remainingDays : 0;
         }

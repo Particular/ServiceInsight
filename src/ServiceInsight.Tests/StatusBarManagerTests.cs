@@ -1,18 +1,23 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using NSubstitute;
     using NUnit.Framework;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.Shell;
     using Shouldly;
 
     [TestFixture]
     public class StatusBarManagerTests
     {
-        private StatusBarManager statusBarManager;
+        private LicenseStatusBar licenseStatusBar;
 
         [SetUp]
         public void TestInitialize()
         {
-            statusBarManager = new StatusBarManager();
+            licenseStatusBar = new LicenseStatusBar(
+                Substitute.For<IWindowManagerEx>(),
+                Substitute.For<NetworkOperations>());
         }
 
         [Test]
@@ -20,10 +25,10 @@
         {
             const int DaysRemaining = 10;
 
-            statusBarManager.LicenseStatus.SetTrialRemainingDays(DaysRemaining);
+            licenseStatusBar.SetTrialRemainingDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(true);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(false);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
+            licenseStatusBar.ShowLicenseError.ShouldBe(false);
         }
 
         [Test]
@@ -31,10 +36,10 @@
         {
             const int DaysRemaining = 0;
 
-            statusBarManager.LicenseStatus.SetTrialRemainingDays(DaysRemaining);
+            licenseStatusBar.SetTrialRemainingDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(false);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(true);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(false);
+            licenseStatusBar.ShowLicenseError.ShouldBe(true);
         }
 
         [Test]
@@ -42,10 +47,10 @@
         {
             const int DaysRemaining = 10;
 
-            statusBarManager.LicenseStatus.SetLicenseRemainingDays(DaysRemaining);
+            licenseStatusBar.SetLicenseRemainingDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(true);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(false);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
+            licenseStatusBar.ShowLicenseError.ShouldBe(false);
         }
 
         [Test]
@@ -53,10 +58,10 @@
         {
             const int DaysRemaining = 0;
 
-            statusBarManager.LicenseStatus.SetLicenseRemainingDays(DaysRemaining);
+            licenseStatusBar.SetLicenseRemainingDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(false);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(true);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(false);
+            licenseStatusBar.ShowLicenseError.ShouldBe(true);
         }
 
         [Test]
@@ -64,10 +69,10 @@
         {
             const int DaysRemaining = 10;
 
-            statusBarManager.LicenseStatus.SetLicenseUpgradeProtectionDays(DaysRemaining);
+            licenseStatusBar.SetLicenseUpgradeProtectionDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(true);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(false);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
+            licenseStatusBar.ShowLicenseError.ShouldBe(false);
         }
 
         [Test]
@@ -75,10 +80,10 @@
         {
             const int DaysRemaining = 0;
 
-            statusBarManager.LicenseStatus.SetLicenseUpgradeProtectionDays(DaysRemaining);
+            licenseStatusBar.SetLicenseUpgradeProtectionDays(DaysRemaining);
 
-            statusBarManager.LicenseStatus.ShowLicenseWarn.ShouldBe(true);
-            statusBarManager.LicenseStatus.ShowLicenseError.ShouldBe(false);
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
+            licenseStatusBar.ShowLicenseError.ShouldBe(false);
         }
     }
 }

@@ -39,6 +39,7 @@
                     <!--  Colors and Brushes  -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
                     <SolidColorBrush x:Key="WarningBrush" Color="#FFE52620" />
+                    <Color x:Key="DialogBackgroundColor">#FFBCC7D8</Color>
                     <Color x:Key="DiagramShadowColor">LightGray</Color>
                     <Color x:Key="DiagramSelectedShadowColor">Black</Color>
                     <SolidColorBrush x:Key="ZoomBoxBackgroundBrush" Color="#DDBCC7D8" />
@@ -54,7 +55,8 @@
                     </LinearGradientBrush>
                     <SolidColorBrush x:Key="ZoomBoxTicksBrush" Color="#FF000000" />
                     <SolidColorBrush x:Key="ZoomBoxButtonBorderBrush" Color="#FFAAACA5" />
-                    <SolidColorBrush x:Key="DialogBackgroundBrush" Color="#FFBCC7D8" />
+                    <SolidColorBrush x:Key="DialogButtonHoverBrush" Color="#FFBCC7D8" />
+                    <SolidColorBrush x:Key="DialogBackgroundBrush" Color="{StaticResource DialogBackgroundColor}" />
                     <SolidColorBrush x:Key="DialogForegroundBrush" Color="#FF000000" />
                     <SolidColorBrush x:Key="DiagramNodeForegroundBrush" Color="White" />
                     <SolidColorBrush x:Key="DiagramEdgeForegroundBrush" Color="#FF293955" />
@@ -161,9 +163,113 @@
                                       Opacity="1"
                                       ShadowDepth="0"
                                       Color="{StaticResource DiagramSelectedShadowColor}" />
+
+                    <SolidColorBrush x:Key="CallToActionHoverBackground" Color="#3889c5"/>
+                    <SolidColorBrush x:Key="CallToActionForeground" Color="White"/>
+                    <SolidColorBrush x:Key="CallToActionBackground" Color="#0072c5"/>
+                    <SolidColorBrush x:Key="CallToActionBorder" Color="#1771b2"/>
+
+                    <Style x:Key="CallToActionButton" TargetType="Button">
+                        <Setter Property="Foreground" Value="{StaticResource CallToActionForeground}" />
+                        <Setter Property="Background" Value="{StaticResource CallToActionBackground}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource CallToActionBorder}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Root" 
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            BorderBrush="{TemplateBinding BorderBrush}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" 
+                                                          VerticalAlignment="Center" 
+                                                          HorizontalAlignment="Center"
+                                                          TextBlock.Foreground="{TemplateBinding Foreground}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CallToActionHoverBackground}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White"/>
+                    <SolidColorBrush x:Key="WindowForegroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="WindowBorderBrush" Color="#d5d5d5" />
+                    <SolidColorBrush x:Key="WindowChromeButtonBrush" Color="#8b8b8b" />
+                    <SolidColorBrush x:Key="WindowChromeButtonHoverBrush" Color="#e8e8e8" />
+
+                    <Style x:Key="CloseButton" TargetType="Button">
+                        <Setter Property="Margin" Value="8" />
+                        <Setter Property="Padding" Value="4" />
+                        <Setter Property="Width" Value="20" />
+                        <Setter Property="Height" Value="20" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="HorizontalAlignment" Value="Right" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="IsCancel" Value="True" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid x:Name="Root" Background="Transparent">
+                                        <Path x:Name="Icon" Width="12" Height="12" Fill="Black" Stretch="Fill" Data="M 357,35.7 321.3,0 178.5,142.8 35.7,0 0,35.7 142.8,178.5 0,321.3 35.7,357 178.5,214.2 321.3,357 357,321.3 214.2,178.5"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Root" Property="Background" Value="#e8e8e8" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="DialogWindowStyle" TargetType="Window">
+                        <Setter Property="Foreground" Value="{StaticResource WindowForegroundBrush}" />
+                        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}" />
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="UseLayoutRounding" Value="True" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Window">
+                                    <Border x:Name="WindowBorder" BorderThickness="{TemplateBinding BorderThickness}" 
+                                            Margin="{Binding Source={x:Static SystemParameters.WindowNonClientFrameThickness}}"
+                                            BorderBrush="{StaticResource WindowBorderBrush}"
+                                            Background="{StaticResource WindowBackgroundBrush}">
+                                        <AdornerDecorator>
+                                            <Grid x:Name="LayoutRoot">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="15" />
+                                                </Grid.RowDefinitions>
+                                                <ContentPresenter Grid.Row="1" Grid.RowSpan="2" Margin="7"/>
+                                                <Rectangle x:Name="HeaderBackground" Height="25" Fill="{StaticResource WindowBackgroundBrush}" VerticalAlignment="Top" Grid.Row="0"/>
+                                                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButton}"
+                                                        Grid.Row="0"
+                                                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                                            </Grid>
+                                        </AdornerDecorator>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="WindowChrome.WindowChrome">
+                            <Setter.Value>
+                                <WindowChrome CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
                 </ResourceDictionary>
 
-                <ResourceDictionary Source="SequenceDiagram/SequenceDiagramResources.xaml" />
+                <ResourceDictionary Source="/SequenceDiagram/SequenceDiagramResources.xaml" />
 
                 <ResourceDictionary>
                     <startup:AppBootstrapper x:Key="Bootstrapper" />
