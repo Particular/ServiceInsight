@@ -71,7 +71,7 @@
 
         private void ContactUs()
         {
-            network.Browse("https://particular.net/contactus");
+            network.OpenContactUs();
         }
 
         public void ImportLicense()

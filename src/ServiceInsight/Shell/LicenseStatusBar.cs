@@ -147,7 +147,7 @@
 
         private void OnContactUsClicked()
         {
-            network.Browse("https://particular.net/contactus");
+            network.OpenContactUs();
         }
     }
 }
