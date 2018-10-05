@@ -83,19 +83,23 @@
             });
 
             var validLicense = false;
-            ValidationResult = null;
 
-            if (dialog.Result.GetValueOrDefault(false))
+            if (dialog.Result.HasValue && dialog.Result.Value)
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
-
                 validLicense = licenseManager.TryInstallLicense(licenseContent);
+
+                if (licenseManager.IsLicenseExpired())
+                {
+                    validLicense = false;
+                }
             }
 
             if (validLicense)
             {
                 ShowLicenseStatus();
                 eventAggregator.PublishOnUIThread(new LicenseUpdated());
+                ValidationResult = dialog.Result;
             }
         }
 
@@ -107,6 +111,6 @@
 
         public DateTime? UpgradeProtectionExpirationDate { get; set; }
 
-        public string ValidationResult { get; set; }
+        public bool? ValidationResult { get; set; }
     }
 }

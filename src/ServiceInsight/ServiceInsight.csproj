@@ -286,6 +286,7 @@
     <Compile Include="ExtensionMethods\RestClientExtensions.cs" />
     <Compile Include="Framework\Behaviors\ComboBoxEditValuePatcherBehavior.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
+    <Compile Include="Framework\Behaviors\DialogResultBehavior.cs" />
     <Compile Include="Framework\Commands\AsyncDelegateCommand.cs" />
     <Compile Include="Framework\Commands\AsyncObservableCommand.cs" />
     <Compile Include="Framework\Commands\CloseWindowCommand.cs" />

@@ -5,12 +5,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:controls="clr-namespace:ServiceInsight.Controls"
         xmlns:shell="clr-namespace:ServiceInsight.Shell"
+        xmlns:behaviors="clr-namespace:ServiceInsight.Framework.Behaviors"
         mc:Ignorable="d" 
         d:DesignHeight="340" d:DesignWidth="500" 
         MinHeight="340" MinWidth="500"
         ShowInTaskbar="False" 
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
+        behaviors:DialogResultBehavior.Result="{Binding ValidationResult, Mode=OneWay}"
         Style="{StaticResource DialogWindowStyle}" d:DataContext="{d:DesignInstance shell:ManageLicenseViewModel}">
 
     <Grid>
