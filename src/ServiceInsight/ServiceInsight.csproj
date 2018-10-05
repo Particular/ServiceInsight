@@ -252,6 +252,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppCommands.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FilePathLicenseStore.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FindActiveLicense\ActiveLicense.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FindActiveLicense\ActiveLicenseFindResult.cs" />

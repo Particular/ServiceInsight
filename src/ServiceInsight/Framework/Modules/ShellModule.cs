@@ -29,6 +29,7 @@
                 .AsSelf()
                 .InstancePerDependency();
 
+            builder.RegisterType<AppCommands>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<LicenseMessageBoxView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().ExternallyOwned();
