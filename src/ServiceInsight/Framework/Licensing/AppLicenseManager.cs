@@ -34,6 +34,16 @@
 
         internal LicenseSourceResult ValidationResult { get; set; }
 
+        public string LicenseType => CurrentLicense?.LicenseType;
+
+        public string RegisteredTo => CurrentLicense?.RegisteredTo;
+
+        public bool HasTrialLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
+
+        public bool HasFullLicense => CurrentLicense != null && CurrentLicense.IsCommercialLicense;
+
+        public bool CanExtendTrial => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
+
         public int GetRemainingTrialDays()
         {
             var isTrial = CurrentLicense == null || CurrentLicense.ExpirationDate == null;

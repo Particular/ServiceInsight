@@ -29,9 +29,9 @@
                 .AsSelf()
                 .InstancePerDependency();
 
-            builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
-            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().ExternallyOwned();
+            builder.RegisterType<LicenseMessageBoxView>().AsImplementedInterfaces().ExternallyOwned();
+            builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
@@ -51,6 +51,7 @@
         {
             get
             {
+                yield return typeof(LicenseMessageBoxView);
                 yield return typeof(LicenseRegistrationView);
                 yield return typeof(ServiceControlConnectionView);
                 yield return typeof(MessageSelectionContext);

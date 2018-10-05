@@ -366,6 +366,10 @@
     <Compile Include="Shell\DialogWindow.cs" />
     <Compile Include="Shell\IPersistPartLayout.cs" />
     <Compile Include="Framework\Licensing\LicenseDialogSource.cs" />
+    <Compile Include="Shell\LicenseMessageBoxView.xaml.cs">
+      <DependentUpon>LicenseMessageBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\LicenseMessageBoxViewModel.cs" />
     <Compile Include="Shell\LicensePopup.cs" />
     <Compile Include="Shell\LicensePopupView.xaml.cs">
       <DependentUpon>LicensePopupView.xaml</DependentUpon>
@@ -627,6 +631,10 @@
     <Page Include="SequenceDiagram\DarkMenus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\LicenseMessageBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shell\LicensePopupView.xaml">
       <SubType>Designer</SubType>

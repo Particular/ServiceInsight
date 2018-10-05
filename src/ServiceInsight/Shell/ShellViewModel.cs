@@ -53,7 +53,7 @@
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
-        Func<ManageLicenseViewModel> manageLicenceViewModel;
+        Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -61,7 +61,7 @@
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
-            Func<ManageLicenseViewModel> manageLicenceViewModel,
+            Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
@@ -84,7 +84,7 @@
             this.settingsProvider = settingsProvider;
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
-            this.manageLicenceViewModel = manageLicenceViewModel;
+            this.licenseMessageBoxViewModel = licenseMessageBoxViewModel;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -356,7 +356,8 @@
 
         void RegisterLicense()
         {
-            var model = manageLicenceViewModel();
+            var model = licenseMessageBoxViewModel();
+            model.DisplayName = StatusBarManager.LicenseStatus.LicenseStatusMessage;
             var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))

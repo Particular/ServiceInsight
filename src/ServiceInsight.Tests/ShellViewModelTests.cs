@@ -84,7 +84,7 @@
                         endpointExplorer,
                         messageList,
                         () => Substitute.For<ServiceControlConnectionViewModel>(),
-                        () => Substitute.For<ManageLicenseViewModel>(),
+                        () => Substitute.For<LicenseMessageBoxViewModel>(),
                         statusbarManager,
                         eventAggregator,
                         workNotifier,
