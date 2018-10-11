@@ -122,7 +122,7 @@
                                AutomationProperties.AutomationId="RegisterMenuItem"
                                CategoryName="Help"
                                Command="{Binding RegisterCommand}"
-                               Content="Register..." />
+                               Content="Manage license..." />
             <dxb:BarButtonItem x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
                                CategoryName="View"
