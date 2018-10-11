@@ -16,7 +16,7 @@
         public bool TryInstallLicense(string licenseText)
         {
             ValidationResult = LicenseDialogSource.Validate(licenseText);
-            if (ValidationResult.License != null)
+            if (ValidationResult.License != null && !IsLicenseExpired(ValidationResult.License))
             {
                 new RegistryLicenseStore().StoreLicense(licenseText);
                 new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
@@ -73,6 +73,8 @@
         }
 
         public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
+
+        private bool IsLicenseExpired(License license) => LicenseExpirationChecker.HasLicenseExpired(license);
 
         private static int CalcRemainingDays(DateTimeOffset date)
         {

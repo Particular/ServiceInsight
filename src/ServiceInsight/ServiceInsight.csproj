@@ -899,6 +899,10 @@
   <ItemGroup>
     <Resource Include="Images\Contact.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Check.png" />
+    <Resource Include="Images\Cross.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

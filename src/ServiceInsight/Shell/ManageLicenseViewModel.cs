@@ -34,7 +34,9 @@
         {
             base.OnActivate();
 
+            ImportMessage = null;
             ValidationResult = null;
+            ImportResult = null;
             ShowLicenseStatus();
         }
 
@@ -89,14 +91,13 @@
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
                 validLicense = licenseManager.TryInstallLicense(licenseContent);
 
-                if (licenseManager.IsLicenseExpired())
-                {
-                    validLicense = false;
-                }
+                ImportMessage = licenseManager.ValidationResult.Result;
+                ImportResult = validLicense;
             }
 
             if (validLicense)
             {
+                ImportResult = true;
                 ShowLicenseStatus();
                 eventAggregator.PublishOnUIThread(new LicenseUpdated());
                 ValidationResult = dialog.Result;
@@ -112,5 +113,9 @@
         public DateTime? UpgradeProtectionExpirationDate { get; set; }
 
         public bool? ValidationResult { get; set; }
+
+        public bool? ImportResult { get; set; }
+
+        public string ImportMessage { get; set; }
     }
 }
