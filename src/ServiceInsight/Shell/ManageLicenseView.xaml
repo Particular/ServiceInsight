@@ -9,7 +9,7 @@
         xmlns:ui="clr-namespace:ServiceInsight.Framework.UI"
         mc:Ignorable="d" 
         d:DesignHeight="340" d:DesignWidth="480" 
-        Height="340" Width="480"
+        Height="320" Width="480"
         ShowInTaskbar="False" 
         WindowStartupLocation="CenterScreen"
         behaviors:DialogResultBehavior.Result="{Binding ValidationResult, Mode=OneWay}"
@@ -86,7 +86,7 @@
                     Width="140" Height="30"
                     Style="{StaticResource CallToActionButton}"/>
 
-            <Grid Margin="20,0,20,10" Grid.Row="4">
+            <Grid Margin="20,5,20,10" Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -95,7 +95,7 @@
                 <Image Style="{StaticResource ValidationStatusImageStyle}" 
                        Height="16" Width="16" Margin="4"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
+                       VerticalAlignment="Center"
                        Grid.Column="0"/>
                 
                 <TextBlock Text="{Binding ImportMessage}" 
