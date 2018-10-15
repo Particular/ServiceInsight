@@ -6,6 +6,7 @@
         xmlns:controls="clr-namespace:ServiceInsight.Controls"
         xmlns:shell="clr-namespace:ServiceInsight.Shell"
         xmlns:behaviors="clr-namespace:ServiceInsight.Framework.Behaviors"
+        xmlns:ui="clr-namespace:ServiceInsight.Framework.UI"
         mc:Ignorable="d" 
         d:DesignHeight="340" d:DesignWidth="480" 
         Height="340" Width="480"
@@ -68,12 +69,12 @@
 
             <TextBlock Margin="20,20,20,0" Grid.Row="1" Visibility="{Binding ExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
                 <Run Text="Platform license expiry date:" FontWeight="Bold" FontSize="14" />
-                <Run Text="{Binding ExpirationDate, StringFormat=d}" />
+                <Run Text="{ui:CultureAwareBinding ExpirationDate, StringFormat=d}" />
             </TextBlock>
 
             <TextBlock Margin="20,20,20,0" Grid.Row="2" Visibility="{Binding UpgradeProtectionExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
                 <Run Text="Upgrade protection expiry date:" FontWeight="Bold" FontSize="14" />
-                <Run Text="{Binding UpgradeProtectionExpirationDate, StringFormat=d}" />
+                <Run Text="{ui:CultureAwareBinding UpgradeProtectionExpirationDate, StringFormat=d}" />
             </TextBlock>
 
             <Button x:Name="ImportLicense" 
