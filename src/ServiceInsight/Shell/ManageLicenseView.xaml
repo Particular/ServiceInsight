@@ -13,6 +13,7 @@
         ShowInTaskbar="False" 
         WindowStartupLocation="CenterScreen"
         behaviors:DialogResultBehavior.Result="{Binding ValidationResult, Mode=OneWay}"
+        behaviors:DialogResultBehavior.AutoClose="False"
         Style="{StaticResource DialogWindowStyle}" d:DataContext="{d:DesignInstance shell:ManageLicenseViewModel}">
 
     <Window.Resources>

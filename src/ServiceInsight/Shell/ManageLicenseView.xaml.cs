@@ -3,6 +3,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework.Behaviors;
 
     /// <summary>
     /// Interaction logic for ManageLicenseView.xaml
@@ -27,8 +28,7 @@
 
         private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
         {
-            DialogResult = null;
-            Close();
+            DialogResult = DialogResultBehavior.GetResult(this);
         }
     }
 }
