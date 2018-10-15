@@ -9,14 +9,17 @@
     {
         public const string LicenseExpiringMessage = "License expiring in {0} day(s)";
         public const string LicenseExpiredMessage = "License expired";
+        public const string LicenseExpiresTodayMessage = "License will expire today";
         public const string UpgradeProtectionExpiringMessage = "Upgrade protection expiring in {0} day(s)";
         public const string UpgradeProtectionExpiredMessage = "Upgrade protection expired";
+        public const string UpgradeProtectionExpiresTodayMessage = "Upgrade protection expires today";
         public const string TrialExpiringMessage = "Trial expiring in {0} day(s)";
         public const string TrialExpiredMessage = "Trial expired";
         public const string UpgradeProtectionExpiringText = "Once upgrade protection expires you'll no longer have access to new product versions.";
         public const string UpgradeProtectionExpiredText = "You'll no longer have access to new product versions. Please import a new license or contact us.";
         public const string LicenseExpiringText = "Once the license expires you'll no longer be able to continue using the application.";
         public const string LicenseExpiredText = "You are no longer able to continue using the application. Please import a new license or contact us.";
+        public const string LicenseExpiresTodayText = "You will no longer be able to continue using the application. Please import a new license or contact us.";
 
         private readonly IWindowManagerEx windowManager;
         private readonly NetworkOperations network;
@@ -65,13 +68,17 @@
                 return;
             }
 
-            if (remainingDays == 0)
+            if (remainingDays < 0)
             {
                 LicenseStatusMessage = UpgradeProtectionExpiredMessage;
                 LicensePopupText = UpgradeProtectionExpiredText;
             }
-
-            if (remainingDays <= 10)
+            else if (remainingDays == 0)
+            {
+                LicenseStatusMessage = UpgradeProtectionExpiresTodayMessage;
+                LicensePopupText = UpgradeProtectionExpiredText;
+            }
+            else if (remainingDays <= 10)
             {
                 LicenseStatusMessage = string.Format(UpgradeProtectionExpiringMessage, remainingDays);
                 LicensePopupText = UpgradeProtectionExpiringText;
@@ -91,6 +98,12 @@
             }
 
             if (remainingDays == 0)
+            {
+                ShowLicenseError = true;
+                LicenseStatusMessage = LicenseExpiresTodayMessage;
+                LicensePopupText = LicenseExpiresTodayText;
+            }
+            else if (remainingDays < 0)
             {
                 ShowLicenseError = true;
                 LicenseStatusMessage = LicenseExpiredMessage;

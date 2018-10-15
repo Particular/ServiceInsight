@@ -39,6 +39,8 @@
                     <!--  Colors and Brushes  -->
                     <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFCED4DF" />
                     <SolidColorBrush x:Key="WarningBrush" Color="#FFE52620" />
+                    <SolidColorBrush x:Key="WarningStatusBrush" Color="#f5bd46" />
+                    <SolidColorBrush x:Key="ErrorStatusBrush" Color="#FFE52620" />
                     <Color x:Key="DialogBackgroundColor">#FFBCC7D8</Color>
                     <Color x:Key="DiagramShadowColor">LightGray</Color>
                     <Color x:Key="DiagramSelectedShadowColor">Black</Color>

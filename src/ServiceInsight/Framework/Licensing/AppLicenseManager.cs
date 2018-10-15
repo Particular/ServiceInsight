@@ -49,7 +49,9 @@
             var isTrial = CurrentLicense == null || CurrentLicense.ExpirationDate == null;
             var effectiveDate = isTrial ? TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
 
-            return CalcRemainingDays(effectiveDate);
+            var remainingDays = CalcRemainingDays(effectiveDate);
+
+            return remainingDays > 0 ? remainingDays : 0;
         }
 
         public int? GetExpirationRemainingDays()
@@ -88,7 +90,7 @@
             var now = DateTime.UtcNow.Date;
             var remainingDays = (oneDayGrace - now).Days;
 
-            return remainingDays > 0 ? remainingDays : 0;
+            return remainingDays;
         }
     }
 }

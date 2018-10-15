@@ -21,8 +21,6 @@
     <Window.Resources>
 
         <Style TargetType="{x:Type ToggleButton}" x:Key="ImageButton">
-            <Setter Property="Width" Value="16"/>
-            <Setter Property="Height" Value="16" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -30,6 +28,14 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="UnderlinedText">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="{x:Type dxd:DocumentPanel}">
@@ -192,29 +198,48 @@
 	                           AutomationProperties.AutomationId="LicenseStatus"
 	                           CategoryName="Status"
                                Content="{Binding}" 
+                               Command="{Binding RegisterCommand}"
                                ShowBorder="False">
                 <dxb:BarStaticItem.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" x:Name="StatusPanel">
                             <ToggleButton Style="{StaticResource ImageButton}"
-                                          Margin="0,0,5,0"
+                                          Margin="0,0,0,0"
+                                          Command="{Binding RegisterCommand}"
                                           IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
                                           Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseError,
                                                         Converter={StaticResource BoolToVisibilityConverter},
                                                         Mode=OneWay}">
-                                <Image Source="/Images/Status-Error.png" Stretch="Uniform"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16" Margin="0,0,4,0"
+                                           Source="/Images/Status-Error.png" 
+                                           Stretch="Uniform"/>
+
+                                     <TextBlock VerticalAlignment="Center" 
+                                                Style="{StaticResource UnderlinedText}"
+                                                Foreground="{StaticResource ErrorStatusBrush}"
+                                                Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
+                                </StackPanel>
                             </ToggleButton>
 
                             <ToggleButton Style="{StaticResource ImageButton}"
-                                          Margin="0,0,5,0"
+                                          Margin="0,0,0,0"
+                                          Command="{Binding RegisterCommand}"
                                           IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
                                           Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseWarn,
                                                         Converter={StaticResource BoolToVisibilityConverter},
                                                         Mode=OneWay}">
-                                <Image Source="/Images/Status-Warning.png" Stretch="Uniform"/>
-                            </ToggleButton>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16" Margin="0,0,4,0"
+                                           Source="/Images/Status-Warning.png" 
+                                           Stretch="Uniform"/>
 
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Style="{StaticResource UnderlinedText}"
+                                               Foreground="{StaticResource WarningStatusBrush}"
+                                               Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
+                                </StackPanel>
+                            </ToggleButton>
 
                             <Popup IsOpen="{Binding StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
                                    StaysOpen="False"
