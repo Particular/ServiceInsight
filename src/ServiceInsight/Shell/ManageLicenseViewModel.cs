@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.Shell
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Windows.Input;
     using Caliburn.Micro;
@@ -15,6 +16,17 @@
         private readonly NetworkOperations network;
         private readonly IWindowManagerEx windowManager;
         private readonly IEventAggregator eventAggregator;
+        private static readonly IDictionary<LicenseInstallationResult, string> InstallationResultMessage;
+
+        static ManageLicenseViewModel()
+        {
+            InstallationResultMessage = new Dictionary<LicenseInstallationResult, string>
+            {
+                [LicenseInstallationResult.Succeeded] = "License imported successfully.",
+                [LicenseInstallationResult.Expired] = "License failed to import because the license has expired.",
+                [LicenseInstallationResult.Failed] = "License failed to import."
+            };
+        }
 
         public ManageLicenseViewModel(
             AppLicenseManager licenseManager,
@@ -85,20 +97,19 @@
                 FilterIndex = 1
             });
 
-            var validLicense = false;
+            var result = LicenseInstallationResult.Failed;
 
             if (dialog.Result.HasValue && dialog.Result.Value)
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
-                validLicense = licenseManager.TryInstallLicense(licenseContent);
+                result = licenseManager.TryInstallLicense(licenseContent);
 
-                ImportMessage = licenseManager.ValidationResult.Result;
-                ImportResult = validLicense;
+                ImportMessage = InstallationResultMessage[result];
+                ImportResult = result == LicenseInstallationResult.Succeeded;
             }
 
-            if (validLicense)
+            if (result == LicenseInstallationResult.Succeeded)
             {
-                ImportResult = true;
                 ShowLicenseStatus();
                 eventAggregator.PublishOnUIThread(new LicenseUpdated());
                 ValidationResult = dialog.Result;

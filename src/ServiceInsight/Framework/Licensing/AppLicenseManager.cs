@@ -13,21 +13,27 @@
             CurrentLicense = result.License;
         }
 
-        public bool TryInstallLicense(string licenseText)
+        public LicenseInstallationResult TryInstallLicense(string licenseText)
         {
             ValidationResult = LicenseDialogSource.Validate(licenseText);
-            if (ValidationResult.License != null && !IsLicenseExpired(ValidationResult.License))
+            if (ValidationResult.License != null)
             {
+                if (IsLicenseExpired(ValidationResult.License))
+                {
+                    return LicenseInstallationResult.Expired;
+                }
+
                 new RegistryLicenseStore().StoreLicense(licenseText);
                 new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
 
                 CurrentLicense = ValidationResult.License;
 
-                return true;
+                return LicenseInstallationResult.Succeeded;
             }
 
             LogTo.Warning($"Can't install license: {ValidationResult.Result}");
-            return false;
+
+            return LicenseInstallationResult.Failed;
         }
 
         internal License CurrentLicense { get; set; }
@@ -92,5 +98,12 @@
 
             return remainingDays;
         }
+    }
+
+    public enum LicenseInstallationResult
+    {
+        Expired,
+        Failed,
+        Succeeded
     }
 }

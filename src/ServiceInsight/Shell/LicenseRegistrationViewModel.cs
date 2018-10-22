@@ -100,7 +100,7 @@
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
 
-                validLicense = licenseManager.TryInstallLicense(licenseContent);
+                validLicense = licenseManager.TryInstallLicense(licenseContent) == LicenseInstallationResult.Succeeded;
             }
 
             if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
