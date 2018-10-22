@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <SolidColorBrush x:Key="PopupBackgroundBrush" Color="#d6d6d6" />
         <SolidColorBrush x:Key="TextColor" Color="Black" />
-        <SolidColorBrush x:Key="PopupBorderBrush" Color="#c9c9c9" />
+        <SolidColorBrush x:Key="PopupBorderBrush" Color="#b9b9b9" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.Effect>
@@ -58,7 +58,7 @@
                         Style="{StaticResource CloseButton}"
                         Grid.Row="0" />
 
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="2" Margin="0,6">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -68,6 +68,7 @@
                     <controls:LinkedIcon HorizontalAlignment="Left" 
                                          Grid.Column="0" 
                                          Margin="18,0,0,10" 
+                                         FontSize="14"
                                          Command="{Binding LicenseStatus.ContactUs}"
                                          Text="Contact us" 
                                          ImageSource="/Images/Contact.png" />
@@ -75,6 +76,7 @@
                     <controls:LinkedIcon HorizontalAlignment="Right" 
                                          Grid.Column="1" 
                                          Margin="0,0,18,10" 
+                                         FontSize="14"
                                          Command="{Binding LicenseStatus.ManageLicense}"
                                          Text="Manage license..." 
                                          ImageSource="/Images/License.png" />
@@ -84,9 +86,9 @@
 
         <Path x:Name="Container"
                       Grid.Row="1"
-                      Margin="280,-10,0,0"
+                      Margin="280,-9,0,0"
                       Data="M 0,0 L 10,20 20,0"
-                      Fill="{StaticResource PopupBackgroundBrush}">
+                      Fill="{StaticResource PopupBackgroundBrush}" Stroke="{StaticResource PopupBorderBrush}">
         </Path>
     </Grid>
 </UserControl>

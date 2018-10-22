@@ -27,6 +27,7 @@
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
 
+            DisplayName = "License Information";
             ContactUsCommand = Command.Create(ContactUs);
         }
 

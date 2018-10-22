@@ -904,6 +904,9 @@
     <Resource Include="Images\Check.png" />
     <Resource Include="Images\Cross.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\External-Link.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

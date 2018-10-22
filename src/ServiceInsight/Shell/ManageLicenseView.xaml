@@ -48,8 +48,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Vertical">
-            <TextBlock Text="LICENSE INFORMATION" Margin="20,10,10,10" FontSize="14"  FontWeight="Bold" />
+        <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0,-30">
+            <TextBlock Text="{Binding DisplayName, Converter={StaticResource CasingConverter}}" Margin="20,10,10,10" FontSize="14"  FontWeight="Bold" />
             <Rectangle Fill="{StaticResource WindowBorderBrush}" Height="1" Margin="-8" />
         </StackPanel>
 
@@ -64,17 +64,17 @@
             </Grid.RowDefinitions>
 
             <TextBlock Margin="20,20,20,0" Grid.Row="0">
-                <Run Text="Platform license type:" FontWeight="Bold" FontSize="14" />
+                <Run Text="Platform license type:" FontWeight="Bold" />
                 <Run Text="{Binding LicenseType}" />
             </TextBlock>
 
             <TextBlock Margin="20,20,20,0" Grid.Row="1" Visibility="{Binding ExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
-                <Run Text="Platform license expiry date:" FontWeight="Bold" FontSize="14" />
+                <Run Text="Platform license expiry date:" FontWeight="Bold" />
                 <Run Text="{ui:CultureAwareBinding ExpirationDate, StringFormat=d}" />
             </TextBlock>
 
             <TextBlock Margin="20,20,20,0" Grid.Row="2" Visibility="{Binding UpgradeProtectionExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
-                <Run Text="Upgrade protection expiry date:" FontWeight="Bold" FontSize="14" />
+                <Run Text="Upgrade protection expiry date:" FontWeight="Bold" />
                 <Run Text="{ui:CultureAwareBinding UpgradeProtectionExpirationDate, StringFormat=d}" />
             </TextBlock>
 
@@ -93,7 +93,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Image Style="{StaticResource ValidationStatusImageStyle}" 
-                       Height="16" Width="16" Margin="4"
+                       Height="16" Width="16" Margin="4,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Grid.Column="0"/>
@@ -101,7 +101,7 @@
                 <TextBlock Text="{Binding ImportMessage}" 
                            TextWrapping="Wrap" 
                            Grid.Column="1"
-                           FontSize="14"
+                           FontSize="12"
                            Style="{StaticResource ValidationStatusStyle}"/>
             </Grid>
 
@@ -109,9 +109,9 @@
 
         <Rectangle Fill="{StaticResource WindowBorderBrush}" Height="1" Margin="-8" Grid.Row="2" />
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,10,20,10">
-            <TextBlock Text="Need help?" Margin="2" />
-            <controls:LinkedIcon Text="Contact support" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,16,20,10">
+            <TextBlock Text="Need help?" FontSize="12" Margin="2" />
+            <controls:LinkedIcon Text="Contact support" FontSize="12" />
         </StackPanel>
 
     </Grid>

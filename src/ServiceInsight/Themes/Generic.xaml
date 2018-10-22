@@ -17,6 +17,8 @@
                         <Image Source="{TemplateBinding ImageSource}" Margin="0,0,2,0" />
                         <TextBlock x:Name="PART_Text"
                                    VerticalAlignment="Center" 
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="{TemplateBinding FontWeight}"
                                    Margin="2">
                             <Hyperlink x:Name="PART_Link" Foreground="{TemplateBinding Foreground}" Command="{TemplateBinding Command}">
                                 <Run Text="{TemplateBinding Text}"/>

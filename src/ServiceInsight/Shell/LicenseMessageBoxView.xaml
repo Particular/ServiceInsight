@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:shell="clr-namespace:ServiceInsight.Shell"
         xmlns:behaviors="clr-namespace:ServiceInsight.Framework.Behaviors"
+        xmlns:controls="clr-namespace:ServiceInsight.Controls"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance shell:LicenseMessageBoxViewModel}"
         Height="200" Width="430"
@@ -19,9 +20,9 @@
             <RowDefinition Height="38" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding DisplayName}" 
+        <TextBlock Text="{Binding DisplayName, Converter={StaticResource CasingConverter}}" 
                    Grid.Row="0" 
-                   Margin="20,-10,20,5" 
+                   Margin="20,-30,20,5" 
                    FontSize="14" 
                    FontWeight="Bold" />
 
@@ -34,7 +35,7 @@
             <Image Grid.Column="0" 
                    Source="/Images/Status-Error.png" 
                    Width="40" 
-                   Margin="5,0,5,0"
+                   Margin="5,-2,15,0"
                    VerticalAlignment="Top" />
 
             <TextBlock Grid.Column="1" 
@@ -50,19 +51,31 @@
                         Width="115" 
                         Margin="3" 
                         Style="{StaticResource CallToActionButton}" />
-                
+
                 <Button x:Name="ContactUs" 
-                        Content="Contact Us"
                         Width="115" 
                         Margin="3"
-                        Visibility="{Binding ShowContactUsOption, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                
+                        Visibility="{Binding ShowContactUsOption, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Contact Us" />
+                        <controls:IconControl Data="{StaticResource ExternalLink}" 
+                                              Margin="6,1,0,0" 
+                                              Width="10" Height="10"/>
+                    </StackPanel>
+                </Button>
+
                 <Button x:Name="ExtendTrial" 
-                        Content="Extend Trial" 
                         Width="115"
                         Margin="3" 
                         Style="{StaticResource CallToActionButton}"
-                        Visibility="{Binding ShowExtendTrialOption, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        Visibility="{Binding ShowExtendTrialOption, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Extend Trial" />
+                        <controls:IconControl Data="{StaticResource ExternalLink}" 
+                                              Margin="6,1,0,0" 
+                                              Width="10" Height="10" />
+                    </StackPanel>
+                </Button>
                 
                 <Button x:Name="Exit" 
                         Content="Exit" 

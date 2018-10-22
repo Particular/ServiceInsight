@@ -31,6 +31,7 @@
                     <cnv:TimeSpanHumanizedConverter x:Key="TimeSpanHumanizedConverter" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToInvertedVisibilityConverter" Inverted="True" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+                    <cnv:CharacterCasingConverter x:Key="CasingConverter" />
 
                     <!--  Fonts  -->
                     <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
@@ -176,6 +177,7 @@
                         <Setter Property="Background" Value="{StaticResource CallToActionBackground}"/>
                         <Setter Property="BorderBrush" Value="{StaticResource CallToActionBorder}" />
                         <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="FontSize" Value="12"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
