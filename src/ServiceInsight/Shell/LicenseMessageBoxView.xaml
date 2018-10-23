@@ -22,7 +22,7 @@
 
         <TextBlock Text="{Binding DisplayName, Converter={StaticResource CasingConverter}}" 
                    Grid.Row="0" 
-                   Margin="20,-30,20,5" 
+                   Margin="20,-10,20,5" 
                    FontSize="14" 
                    FontWeight="Bold" />
 
@@ -44,38 +44,35 @@
                        Text="Your license has expired. Please update your license to continue using the Particular Service Platform." />
         </Grid>
 
-        <Border Background="{StaticResource WindowBorderBrush}" Margin="-8" Grid.Row="2">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,10,20,10">
-                <Button x:Name="ManageLicense" 
+        <Border Background="#f2f2f2" Margin="-8" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="28,10,28,10">
+                <Button x:Name="ManageLicenseCTA" 
                         Content="Manage License..."
                         Width="115" 
                         Margin="3" 
+                        Visibility="{Binding ShowManageLicenseCTAOption, Converter={StaticResource BoolToVisibilityConverter}}"
                         Style="{StaticResource CallToActionButton}" />
 
                 <Button x:Name="ContactUs" 
                         Width="115" 
                         Margin="3"
+                        Content="Contact us"
                         Visibility="{Binding ShowContactUsOption, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Contact Us" />
-                        <controls:IconControl Data="{StaticResource ExternalLink}" 
-                                              Margin="6,1,0,0" 
-                                              Width="10" Height="10"/>
-                    </StackPanel>
                 </Button>
 
                 <Button x:Name="ExtendTrial" 
                         Width="115"
                         Margin="3" 
+                        Content="Extend Trial"
                         Style="{StaticResource CallToActionButton}"
                         Visibility="{Binding ShowExtendTrialOption, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Extend Trial" />
-                        <controls:IconControl Data="{StaticResource ExternalLink}" 
-                                              Margin="6,1,0,0" 
-                                              Width="10" Height="10" />
-                    </StackPanel>
                 </Button>
+
+                <Button x:Name="ManageLicense" 
+                        Content="Manage License..."
+                        Width="115" 
+                        Margin="3" 
+                        Visibility="{Binding ShowManageLicenseOption, Converter={StaticResource BoolToVisibilityConverter}}" />
                 
                 <Button x:Name="Exit" 
                         Content="Exit" 

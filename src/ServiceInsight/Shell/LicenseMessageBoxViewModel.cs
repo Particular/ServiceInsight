@@ -32,23 +32,24 @@
 
             if (licenseManager.HasTrialLicense)
             {
+                ShowManageLicenseOption = true;
                 ShowExtendTrialOption = true;
-                ShowExitOption = true;
             }
             else
             {
+                ShowManageLicenseCTAOption = true;
                 ShowContactUsOption = true;
             }
 
-            ShowManageLicenseOption = true;
             ShowExitOption = true;
         }
 
         private void ResetLicenseOptions()
         {
             Result = null;
-            ShowExtendTrialOption = false;
             ShowManageLicenseOption = false;
+            ShowExtendTrialOption = false;
+            ShowManageLicenseCTAOption = false;
             ShowExitOption = false;
             ShowContactUsOption = false;
         }
@@ -61,6 +62,11 @@
         public void ExtendTrial()
         {
             networkOperations.OpenExtendTrial();
+        }
+
+        public void ManageLicenseCTA()
+        {
+            ManageLicense();
         }
 
         public void ManageLicense()
@@ -83,11 +89,13 @@
 
         public bool? Result { get; set; }
 
-        public bool ShowManageLicenseOption { get; set; }
+        public bool ShowManageLicenseCTAOption { get; set; }
 
         public bool ShowContactUsOption { get; set; }
 
         public bool ShowExtendTrialOption { get; set; }
+
+        public bool ShowManageLicenseOption { get; set; }
 
         public bool ShowExitOption { get; set; }
     }

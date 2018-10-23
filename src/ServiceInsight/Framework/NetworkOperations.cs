@@ -24,7 +24,7 @@
 
         public void OpenExtendTrial()
         {
-            Browse("http://particular.net/extend-your-trial-14");
+            Browse("http://particular.net/extend-your-trial-14?p=serviceinsight");
         }
 
         class NetworkBrowser

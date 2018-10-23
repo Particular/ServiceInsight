@@ -22,9 +22,9 @@
         {
             InstallationResultMessage = new Dictionary<LicenseInstallationResult, string>
             {
-                [LicenseInstallationResult.Succeeded] = "License imported successfully.",
-                [LicenseInstallationResult.Expired] = "License failed to import because the license has expired.",
-                [LicenseInstallationResult.Failed] = "License failed to import."
+                [LicenseInstallationResult.Succeeded] = "License imported successfully",
+                [LicenseInstallationResult.Expired] = "License failed to import because the license has expired",
+                [LicenseInstallationResult.Failed] = "License failed to import"
             };
         }
 
