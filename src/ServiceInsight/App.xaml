@@ -32,6 +32,7 @@
                     <cnv:EnumToVisibilityConverter x:Key="EnumToInvertedVisibilityConverter" Inverted="True" />
                     <cnv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
                     <cnv:CharacterCasingConverter x:Key="CasingConverter" />
+                    <cnv:DateStatusToBrushConverter x:Key="DateStatusToBrushConverter" />
 
                     <!--  Fonts  -->
                     <FontFamily x:Key="MessageBodyFontFamily">Consolas</FontFamily>
@@ -45,6 +46,7 @@
                     <Color x:Key="DialogBackgroundColor">#FFBCC7D8</Color>
                     <Color x:Key="DiagramShadowColor">LightGray</Color>
                     <Color x:Key="DiagramSelectedShadowColor">Black</Color>
+                    <SolidColorBrush x:Key="GrayText">#6c6c6c</SolidColorBrush>
                     <SolidColorBrush x:Key="ZoomBoxBackgroundBrush" Color="#DDBCC7D8" />
                     <SolidColorBrush x:Key="ZoomBoxBorderBrush" Color="#DDAEB7C9" />
                     <SolidColorBrush x:Key="ZoomBoxButtonBackgroundBrush" Color="#FFBCC7D8" />

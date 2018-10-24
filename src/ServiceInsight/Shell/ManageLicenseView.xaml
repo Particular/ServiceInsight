@@ -61,6 +61,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Margin="20,20,20,0" Grid.Row="0">
@@ -68,25 +69,60 @@
                 <Run Text="{Binding LicenseType}" />
             </TextBlock>
 
-            <TextBlock Margin="20,20,20,0" Grid.Row="1" Visibility="{Binding ExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
-                <Run Text="Platform license expiry date:" FontWeight="Bold" />
-                <Run Text="{ui:CultureAwareBinding ExpirationDate, StringFormat=d}" />
-            </TextBlock>
+            <StackPanel Orientation="Horizontal" 
+                        Margin="20,20,20,0" Grid.Row="1" 
+                        Visibility="{Binding ExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
+                <TextBlock>
+                    <Run Text="Platform license expiry date:" FontWeight="Bold" />
+                    <Run Text="{ui:CultureAwareBinding ExpirationDate, StringFormat=d}" Foreground="{Binding Path=ExpirationDateStatus, Converter={StaticResource DateStatusToBrushConverter}}" />
+                </TextBlock>
+                <TextBlock Visibility="{Binding ShowExpirationWarning, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Foreground="{StaticResource ErrorStatusBrush}">
+                    <Run Text=" - " />
+                    <Run Text="{Binding ExpirationRemainingDays}" />
+                    <Run Text=" day(s) left" />
+                </TextBlock>
+                <Image Visibility="{Binding ShowExpirationWarning, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Width="14" Height="14" Margin="4,0,0,0"
+                       Source="/Images/Status-Error.png" 
+                       Stretch="Uniform"/>
+            </StackPanel>
 
-            <TextBlock Margin="20,20,20,0" Grid.Row="2" Visibility="{Binding UpgradeProtectionExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
-                <Run Text="Upgrade protection expiry date:" FontWeight="Bold" />
-                <Run Text="{ui:CultureAwareBinding UpgradeProtectionExpirationDate, StringFormat=d}" />
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,20,20,0" Grid.Row="2" 
+                        Visibility="{Binding UpgradeProtectionExpirationDate, Converter={StaticResource NullToVisibilityConverter}}">
+                <TextBlock >
+                    <Run Text="Upgrade protection expiry date:" FontWeight="Bold" />
+                    <Run Text="{ui:CultureAwareBinding UpgradeProtectionExpirationDate, StringFormat=d}" />
+                </TextBlock>
+                <TextBlock Visibility="{Binding ShowUpgradeProtectionWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Run Text=" - " />
+                    <Run Text="{Binding UpgradeProtectionRemainingDays}" />
+                    <Run Text=" day(s) left" />
+                </TextBlock>
+                <Image Visibility="{Binding ShowUpgradeProtectionWarning, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Width="14" Height="14" Margin="4,0,0,0"
+                       Source="/Images/Status-Warning.png" 
+                       Stretch="Uniform"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="3" Margin="40,5,40,5" 
+                       TextWrapping="Wrap" 
+                       Foreground="{StaticResource GrayText}"
+                       Visibility="{Binding ShowUpgradeProtectionWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Run Text="Warning:" FontWeight="Bold" />
+                <Run Text="{x:Static shell:LicenseStatusBar.LicenseExpiringText}" />
             </TextBlock>
 
             <Button x:Name="ImportLicense" 
                     HorizontalAlignment="Left"
-                    Grid.Row="3" 
+                    Grid.Row="4" 
                     Margin="20,20,20,10"
                     Content="Import license file..." 
                     Width="140" Height="30"
                     Style="{StaticResource CallToActionButton}"/>
 
-            <Grid Margin="20,5,20,10" Grid.Row="4">
+            <Grid Margin="20,5,20,10" Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />

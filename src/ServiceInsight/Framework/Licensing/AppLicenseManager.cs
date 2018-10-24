@@ -3,6 +3,7 @@
     using System;
     using Anotar.Serilog;
     using Particular.Licensing;
+    using ServiceInsight.Shell;
 
     public class AppLicenseManager
     {
@@ -60,6 +61,43 @@
             return remainingDays > 0 ? remainingDays : 0;
         }
 
+        private DateExpirationStatus GetDateStatus(int? remainingDays)
+        {
+            if (!remainingDays.HasValue)
+            {
+                return DateExpirationStatus.NotSet;
+            }
+
+            if (remainingDays == 0)
+            {
+                return DateExpirationStatus.ExpiringToday;
+            }
+
+            if (remainingDays < 0)
+            {
+                return DateExpirationStatus.Expired;
+            }
+
+            if (remainingDays <= 10)
+            {
+                return DateExpirationStatus.Expiring;
+            }
+
+            return DateExpirationStatus.NotExpired;
+        }
+
+        public DateExpirationStatus GetExpirationStatus()
+        {
+            var remainingDays = GetExpirationRemainingDays();
+            return GetDateStatus(remainingDays);
+        }
+
+        public DateExpirationStatus GetUpgradeProtectionStatus()
+        {
+            var remainingDays = GetUpgradeProtectionRemainingDays();
+            return GetDateStatus(remainingDays);
+        }
+
         public int? GetExpirationRemainingDays()
         {
             if (!CurrentLicense.ExpirationDate.HasValue)
@@ -98,12 +136,5 @@
 
             return remainingDays;
         }
-    }
-
-    public enum LicenseInstallationResult
-    {
-        Expired,
-        Failed,
-        Succeeded
     }
 }

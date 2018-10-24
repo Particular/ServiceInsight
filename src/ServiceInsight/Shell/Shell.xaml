@@ -207,7 +207,7 @@
                                ShowBorder="False">
                 <dxb:BarStaticItem.ContentTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" x:Name="StatusPanel" Margin="20,0,0,0" Visibility="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" x:Name="StatusPanel" Margin="20,0,0,0" Visibility="{Binding Path=StatusBarManager.LicenseStatus.HasLicenseMessage, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ToggleButton Style="{StaticResource ImageButton}"
                                           Margin="0,0,0,0"
                                           Command="{Binding RegisterCommand}"

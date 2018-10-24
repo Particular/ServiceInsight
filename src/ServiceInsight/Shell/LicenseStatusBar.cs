@@ -42,9 +42,11 @@
 
         public bool ShowLicenseWarn { get; private set; }
 
+        public bool HasLicenseMessage => ShowLicenseError || ShowLicenseWarn;
+
         public bool OpenLicensePopup
         {
-            get => (ShowLicenseWarn || ShowLicenseError) && forceShowPopup;
+            get => HasLicenseMessage && forceShowPopup;
             set => forceShowPopup = value;
         }
 

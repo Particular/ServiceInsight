@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
@@ -70,7 +72,7 @@
                 return;
             }
 
-            LicenseType = currentLicense.LicenseType;
+            LicenseType = string.Format($"{currentLicense.LicenseType} {currentLicense.Edition}");
 
             if (currentLicense.IsCommercialLicense)
             {
@@ -82,6 +84,11 @@
                 UpgradeProtectionExpirationDate = null;
                 ExpirationDate = currentLicense.ExpirationDate;
             }
+
+            ExpirationRemainingDays = licenseManager.GetExpirationRemainingDays();
+            ExpirationDateStatus = licenseManager.GetExpirationStatus();
+            UpgradeProtectionRemainingDays = licenseManager.GetUpgradeProtectionRemainingDays();
+            UpgradeProtectionDateStatus = licenseManager.GetUpgradeProtectionStatus();
         }
 
         private void ContactUs()
@@ -121,6 +128,18 @@
         public string LicenseType { get; set; }
 
         public DateTime? ExpirationDate { get; set; }
+
+        public int? ExpirationRemainingDays { get; set; }
+
+        public int? UpgradeProtectionRemainingDays { get; set; }
+
+        public bool ShowExpirationWarning => ExpirationDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
+
+        public bool ShowUpgradeProtectionWarning => UpgradeProtectionDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
+
+        public DateExpirationStatus ExpirationDateStatus { get; set; }
+
+        public DateExpirationStatus UpgradeProtectionDateStatus { get; set; }
 
         public DateTime? UpgradeProtectionExpirationDate { get; set; }
 
