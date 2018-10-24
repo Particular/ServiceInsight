@@ -85,10 +85,13 @@
                 ExpirationDate = currentLicense.ExpirationDate;
             }
 
-            ExpirationRemainingDays = licenseManager.GetExpirationRemainingDays();
+            var expirationDaysLeft = licenseManager.GetExpirationRemainingDays();
             ExpirationDateStatus = licenseManager.GetExpirationStatus();
-            UpgradeProtectionRemainingDays = licenseManager.GetUpgradeProtectionRemainingDays();
+            ExpirationRemainingDays = expirationDaysLeft.HasValue && expirationDaysLeft.Value > 0 ? expirationDaysLeft.Value : 0;
+
+            var upgradeDaysLeft = licenseManager.GetUpgradeProtectionRemainingDays();
             UpgradeProtectionDateStatus = licenseManager.GetUpgradeProtectionStatus();
+            UpgradeProtectionRemainingDays = upgradeDaysLeft.HasValue && upgradeDaysLeft.Value > 0 ? upgradeDaysLeft.Value : 0;
         }
 
         private void ContactUs()
