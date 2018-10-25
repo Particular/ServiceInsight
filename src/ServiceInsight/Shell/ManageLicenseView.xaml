@@ -114,13 +114,22 @@
                 <Run Text="{x:Static shell:LicenseStatusBar.LicenseExpiringText}" />
             </TextBlock>
 
-            <Button x:Name="ImportLicense" 
-                    HorizontalAlignment="Left"
-                    Grid.Row="4" 
-                    Margin="20,20,20,10"
-                    Content="Import license file..." 
-                    Width="140" Height="30"
-                    Style="{StaticResource CallToActionButton}"/>
+            <StackPanel Grid.Row="4" 
+                        Margin="20,20,20,10"
+                        Orientation="Horizontal">
+                <Button x:Name="ImportLicense" 
+                        HorizontalAlignment="Left"
+                        Content="Import license file..." 
+                        Width="140" Height="30"
+                        Style="{StaticResource CallToActionButton}"/>
+
+                <Button x:Name="ExtendTrial"
+                        HorizontalAlignment="Left"
+                        Content="Extend trial"
+                        Width="140" Height="30"
+                        Margin="20,0,0,0"
+                        Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StackPanel>
 
             <Grid Margin="20,5,20,10" Grid.Row="5">
                 <Grid.ColumnDefinitions>

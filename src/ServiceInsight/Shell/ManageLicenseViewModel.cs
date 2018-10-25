@@ -99,6 +99,11 @@
             network.OpenContactUs();
         }
 
+        public void ExtendTrial()
+        {
+            network.OpenExtendTrial();
+        }
+
         public void ImportLicense()
         {
             var dialog = windowManager.OpenFileDialog(new FileDialogModel
@@ -129,6 +134,8 @@
         public ICommand ContactUsCommand { get; }
 
         public string LicenseType { get; set; }
+
+        public bool CanExtendTrial => licenseManager.CanExtendTrial;
 
         public DateTime? ExpirationDate { get; set; }
 

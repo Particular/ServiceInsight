@@ -3,7 +3,6 @@
     using System;
     using Anotar.Serilog;
     using Particular.Licensing;
-    using ServiceInsight.Shell;
 
     public class AppLicenseManager
     {
