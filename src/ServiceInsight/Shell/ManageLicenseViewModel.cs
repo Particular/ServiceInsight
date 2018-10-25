@@ -72,7 +72,7 @@
                 return;
             }
 
-            LicenseType = string.Format($"{currentLicense.LicenseType} {currentLicense.Edition}");
+            LicenseType = string.Format($"{currentLicense.LicenseType}, {currentLicense.Edition}");
 
             if (currentLicense.IsCommercialLicense)
             {
