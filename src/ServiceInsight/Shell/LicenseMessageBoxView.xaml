@@ -5,7 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:shell="clr-namespace:ServiceInsight.Shell"
         xmlns:behaviors="clr-namespace:ServiceInsight.Framework.Behaviors"
-        xmlns:controls="clr-namespace:ServiceInsight.Controls"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance shell:LicenseMessageBoxViewModel}"
         Height="200" Width="430"

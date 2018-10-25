@@ -41,7 +41,6 @@
         MessageListViewModel messageList;
         MessageFlowViewModel messageFlow;
         SagaWindowViewModel sagaWindow;
-        NetworkOperations networkOperations;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         StatusBarManager statusbarManager;
@@ -61,7 +60,6 @@
         public void TestInitialize()
         {
             windowManager = Substitute.For<WindowManagerEx>();
-            networkOperations = Substitute.For<NetworkOperations>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
             licenseStatusBar = Substitute.For<LicenseStatusBar>();

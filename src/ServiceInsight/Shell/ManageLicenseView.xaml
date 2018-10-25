@@ -120,14 +120,14 @@
                 <Button x:Name="ImportLicense" 
                         HorizontalAlignment="Left"
                         Content="Import license file..." 
-                        Width="140" Height="30"
-                        Style="{StaticResource CallToActionButton}"/>
+                        Width="140" Height="30" />
 
                 <Button x:Name="ExtendTrial"
                         HorizontalAlignment="Left"
-                        Content="Extend trial"
+                        Content="Extend trial..."
                         Width="140" Height="30"
                         Margin="20,0,0,0"
+                        Style="{StaticResource CallToActionButton}"
                         Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
 
