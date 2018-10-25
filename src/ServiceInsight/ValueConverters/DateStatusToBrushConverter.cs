@@ -5,14 +5,15 @@
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Media;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Licensing;
 
     public class DateStatusToBrushConverter : IValueConverter
     {
-        private static SolidColorBrush red = (SolidColorBrush)new BrushConverter().ConvertFrom("#E52620");
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var app = Application.Current;
+
             if (value is DateExpirationStatus)
             {
                 var status = (DateExpirationStatus)value;
@@ -20,7 +21,7 @@
                     status == DateExpirationStatus.Expiring ||
                     status == DateExpirationStatus.ExpiringToday)
                 {
-                    return red;
+                    return app?.TryFindResource("ErrorStatusBrush");
                 }
             }
 
