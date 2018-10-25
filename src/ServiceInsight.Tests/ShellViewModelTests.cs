@@ -41,6 +41,7 @@
         MessageListViewModel messageList;
         MessageFlowViewModel messageFlow;
         SagaWindowViewModel sagaWindow;
+        NetworkOperations networkOperations;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         StatusBarManager statusbarManager;
@@ -54,14 +55,17 @@
         LogWindowViewModel logWindow;
         IAppCommands app;
         CommandLineArgParser commandLineArgParser;
+        LicenseStatusBar licenseStatusBar;
 
         [SetUp]
         public void TestInitialize()
         {
             windowManager = Substitute.For<WindowManagerEx>();
+            networkOperations = Substitute.For<NetworkOperations>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
-            statusbarManager = Substitute.For<StatusBarManager>();
+            licenseStatusBar = Substitute.For<LicenseStatusBar>();
+            statusbarManager = new StatusBarManager(licenseStatusBar);
             eventAggregator = Substitute.For<IEventAggregator>();
             workNotifier = Substitute.For<IWorkNotifier>();
             messageFlow = Substitute.For<MessageFlowViewModel>();
@@ -188,7 +192,7 @@
 
             shell.OnApplicationIdle();
 
-            statusbarManager.LicenseStatus.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
+            licenseStatusBar.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
         }
 
         [TearDown]
