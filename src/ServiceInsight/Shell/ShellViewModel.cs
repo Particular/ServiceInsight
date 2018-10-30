@@ -297,7 +297,7 @@
 
         void ValidateLicense()
         {
-            DisplayLicenseStatus();
+            DisplayLicenseStatus(true);
             DisplayRegistrationStatus();
 
             if (licenseManager.IsLicenseExpired())
@@ -306,7 +306,7 @@
             }
         }
 
-        void DisplayLicenseStatus()
+        void DisplayLicenseStatus(bool appStartCheck)
         {
             var license = licenseManager.CurrentLicense;
 
@@ -314,6 +314,8 @@
             {
                 return;
             }
+
+            StatusBarManager.LicenseStatus.AppStartCheck = appStartCheck;
 
             if (license.IsCommercialLicense)
             {
@@ -417,7 +419,7 @@
 
         public virtual void Handle(LicenseUpdated message)
         {
-            DisplayLicenseStatus();
+            DisplayLicenseStatus(false);
             DisplayRegistrationStatus();
         }
     }

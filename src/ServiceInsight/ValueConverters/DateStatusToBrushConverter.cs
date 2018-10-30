@@ -4,8 +4,6 @@
     using System.Globalization;
     using System.Windows;
     using System.Windows.Data;
-    using System.Windows.Media;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Licensing;
 
     public class DateStatusToBrushConverter : IValueConverter
@@ -17,9 +15,7 @@
             if (value is DateExpirationStatus)
             {
                 var status = (DateExpirationStatus)value;
-                if (status == DateExpirationStatus.Expired ||
-                    status == DateExpirationStatus.Expiring ||
-                    status == DateExpirationStatus.ExpiringToday)
+                if (status == DateExpirationStatus.Expired)
                 {
                     return app?.TryFindResource("ErrorStatusBrush");
                 }

@@ -40,7 +40,7 @@
             <TextBlock Grid.Column="1" 
                        FontSize="14"
                        TextWrapping="Wrap"
-                       Text="Your license has expired. Please update your license to continue using the Particular Service Platform." />
+                       Text="{Binding Message}" />
         </Grid>
 
         <Border Background="#f2f2f2" Margin="-8" Grid.Row="2">

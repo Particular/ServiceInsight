@@ -14,7 +14,9 @@
         public const string UpgradeProtectionExpiredMessage = "Upgrade protection expired";
         public const string UpgradeProtectionExpiresTodayMessage = "Upgrade protection expires today";
         public const string TrialExpiringMessage = "Trial expiring in {0} day(s)";
+        public const string TrialExpiringText = "Your trial will expire soon. To continue using the Particular Service Platform you'll need to extend your trial or purchase a license.";
         public const string TrialExpiredMessage = "Trial expired";
+        public const string TrialExpiredText = "Your trial has expired. To continue using the Particular Service Platform you'll need to extend your trial or purchase a license.";
         public const string UpgradeProtectionExpiringText = "Once upgrade protection expires you'll no longer have access to new product versions.";
         public const string UpgradeProtectionExpiredText = "You'll no longer have access to new product versions. Please import a new license or contact us.";
         public const string LicenseExpiringText = "Once the license expires you'll no longer be able to continue using the application.";
@@ -56,6 +58,8 @@
 
         public ICommand ContactUs { get; set; }
 
+        public bool AppStartCheck { get; set; }
+
         public void SetRegistrationInfo(string message, params object[] args)
         {
             Registration = string.Format(message, args);
@@ -87,7 +91,7 @@
             }
 
             ShowLicenseWarn = true;
-            OpenLicensePopup = true;
+            OpenLicensePopup = AppStartCheck; //Show the license popup only at app start
         }
 
         public void SetLicenseRemainingDays(int remainingDays)
@@ -101,7 +105,7 @@
 
             if (remainingDays == 0)
             {
-                ShowLicenseError = true;
+                ShowLicenseWarn = true;
                 LicenseStatusMessage = LicenseExpiresTodayMessage;
                 LicensePopupText = LicenseExpiresTodayText;
             }
@@ -118,7 +122,7 @@
                 LicensePopupText = LicenseExpiringText;
             }
 
-            OpenLicensePopup = true;
+            OpenLicensePopup = AppStartCheck;
         }
 
         public void SetTrialRemainingDays(int remainingDays)
@@ -130,20 +134,20 @@
                 return;
             }
 
-            if (remainingDays == 0)
+            if (remainingDays <= 0)
             {
                 ShowLicenseError = true;
-                LicenseStatusMessage = LicenseExpiredMessage;
-                LicensePopupText = LicenseExpiredText;
+                LicenseStatusMessage = TrialExpiredMessage;
+                LicensePopupText = TrialExpiredText;
             }
             else if (remainingDays <= 10)
             {
                 ShowLicenseWarn = true;
-                LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
-                LicensePopupText = LicenseExpiringText;
+                LicenseStatusMessage = string.Format(TrialExpiringMessage, remainingDays);
+                LicensePopupText = TrialExpiringText;
             }
 
-            OpenLicensePopup = true;
+            OpenLicensePopup = AppStartCheck;
         }
 
         private void ResetStatusBar()

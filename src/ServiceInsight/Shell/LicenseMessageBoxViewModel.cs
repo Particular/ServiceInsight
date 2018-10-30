@@ -34,11 +34,13 @@
             {
                 ShowManageLicenseOption = true;
                 ShowExtendTrialOption = true;
+                Message = LicenseStatusBar.TrialExpiredText;
             }
             else
             {
                 ShowManageLicenseCTAOption = true;
                 ShowContactUsOption = true;
+                Message = LicenseStatusBar.LicenseExpiredText;
             }
 
             ShowExitOption = true;
@@ -76,7 +78,7 @@
             {
                 if (!licenseManager.IsLicenseExpired())
                 {
-                    Result = result;
+                    Result = true;
                     TryClose(Result);
                 }
             }
@@ -86,6 +88,8 @@
         {
             networkOperations.OpenContactUs();
         }
+
+        public string Message { get; set; }
 
         public bool? Result { get; set; }
 

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Windows.Input;
     using Caliburn.Micro;
     using ServiceInsight.ExtensionMethods;
@@ -72,7 +71,7 @@
                 return;
             }
 
-            LicenseType = string.Format($"{currentLicense.LicenseType}, {currentLicense.Edition}");
+            LicenseType = currentLicense.IsTrialLicense ? currentLicense.LicenseType : string.Format($"{currentLicense.LicenseType}, {currentLicense.Edition}");
 
             if (currentLicense.IsCommercialLicense)
             {
@@ -85,13 +84,21 @@
                 ExpirationDate = currentLicense.ExpirationDate;
             }
 
-            var expirationDaysLeft = licenseManager.GetExpirationRemainingDays();
-            ExpirationDateStatus = licenseManager.GetExpirationStatus();
-            ExpirationRemainingDays = expirationDaysLeft.HasValue && expirationDaysLeft.Value > 0 ? expirationDaysLeft.Value : 0;
+            if (currentLicense.IsCommercialLicense)
+            {
+                var expirationDaysLeft = licenseManager.GetExpirationRemainingDays();
+                ExpirationDateStatus = licenseManager.GetExpirationStatus();
+                ExpirationRemainingDays = expirationDaysLeft.HasValue && expirationDaysLeft.Value > 0 ? expirationDaysLeft.Value : 0;
 
-            var upgradeDaysLeft = licenseManager.GetUpgradeProtectionRemainingDays();
-            UpgradeProtectionDateStatus = licenseManager.GetUpgradeProtectionStatus();
-            UpgradeProtectionRemainingDays = upgradeDaysLeft.HasValue && upgradeDaysLeft.Value > 0 ? upgradeDaysLeft.Value : 0;
+                var upgradeDaysLeft = licenseManager.GetUpgradeProtectionRemainingDays();
+                UpgradeProtectionDateStatus = licenseManager.GetUpgradeProtectionStatus();
+                UpgradeProtectionRemainingDays = upgradeDaysLeft.HasValue && upgradeDaysLeft.Value > 0 ? upgradeDaysLeft.Value : 0;
+            }
+            else
+            {
+                ExpirationRemainingDays = licenseManager.GetRemainingTrialDays();
+                ExpirationDateStatus = licenseManager.GetTrialExpirationStatus();
+            }
         }
 
         private void ContactUs()
@@ -126,6 +133,7 @@
             if (result == LicenseInstallationResult.Succeeded)
             {
                 ShowLicenseStatus();
+                NotifyOfPropertyChange(nameof(CanExtendTrial));
                 eventAggregator.PublishOnUIThread(new LicenseUpdated());
                 ValidationResult = dialog.Result;
             }
@@ -135,7 +143,7 @@
 
         public string LicenseType { get; set; }
 
-        public bool CanExtendTrial => licenseManager.CanExtendTrial;
+        public bool CanExtendTrial => licenseManager.HasTrialLicense;
 
         public DateTime? ExpirationDate { get; set; }
 
@@ -143,7 +151,11 @@
 
         public int? UpgradeProtectionRemainingDays { get; set; }
 
-        public bool ShowExpirationWarning => ExpirationDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
+        public bool ShowExpirationMessage => ShowExpirationWarning || ShowExpirationError;
+
+        public bool ShowExpirationError => ExpirationDateStatus.In(DateExpirationStatus.Expired);
+
+        public bool ShowExpirationWarning => ExpirationDateStatus.In(DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
 
         public bool ShowUpgradeProtectionWarning => UpgradeProtectionDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
 

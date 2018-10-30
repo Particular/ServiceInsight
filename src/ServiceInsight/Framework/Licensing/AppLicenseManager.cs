@@ -60,7 +60,7 @@
             return remainingDays > 0 ? remainingDays : 0;
         }
 
-        private DateExpirationStatus GetDateStatus(int? remainingDays)
+        private DateExpirationStatus GetDateStatus(int? remainingDays, bool trial)
         {
             if (!remainingDays.HasValue)
             {
@@ -69,7 +69,7 @@
 
             if (remainingDays == 0)
             {
-                return DateExpirationStatus.ExpiringToday;
+                return trial ? DateExpirationStatus.Expired : DateExpirationStatus.ExpiringToday;
             }
 
             if (remainingDays < 0)
@@ -88,13 +88,19 @@
         public DateExpirationStatus GetExpirationStatus()
         {
             var remainingDays = GetExpirationRemainingDays();
-            return GetDateStatus(remainingDays);
+            return GetDateStatus(remainingDays, trial: false);
         }
 
         public DateExpirationStatus GetUpgradeProtectionStatus()
         {
             var remainingDays = GetUpgradeProtectionRemainingDays();
-            return GetDateStatus(remainingDays);
+            return GetDateStatus(remainingDays, trial: false);
+        }
+
+        public DateExpirationStatus GetTrialExpirationStatus()
+        {
+            var remainingDays = GetRemainingTrialDays();
+            return GetDateStatus(remainingDays, trial: true);
         }
 
         public int? GetExpirationRemainingDays()
