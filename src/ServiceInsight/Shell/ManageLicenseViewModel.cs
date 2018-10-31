@@ -50,7 +50,7 @@
 
             ImportMessage = null;
             ValidationResult = null;
-            ImportResult = null;
+            ImportWasSuccessful = null;
             ShowLicenseStatus();
         }
 
@@ -127,7 +127,7 @@
                 result = licenseManager.TryInstallLicense(licenseContent);
 
                 ImportMessage = InstallationResultMessage[result];
-                ImportResult = result == LicenseInstallationResult.Succeeded;
+                ImportWasSuccessful = result == LicenseInstallationResult.Succeeded;
             }
 
             if (result == LicenseInstallationResult.Succeeded)
@@ -167,7 +167,7 @@
 
         public bool? ValidationResult { get; set; }
 
-        public bool? ImportResult { get; set; }
+        public bool? ImportWasSuccessful { get; set; }
 
         public string ImportMessage { get; set; }
     }

@@ -19,10 +19,10 @@
     <Window.Resources>
         <Style x:Key="ValidationStatusStyle" TargetType="TextBlock">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ImportResult}" Value="True">
+                <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="True">
                     <Setter Property="Foreground" Value="Green" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ImportResult}" Value="False">
+                <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="False">
                     <Setter Property="Foreground" Value="Red" />
                 </DataTrigger>
             </Style.Triggers>
@@ -30,10 +30,10 @@
 
         <Style x:Key="ValidationStatusImageStyle" TargetType="Image">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ImportResult}" Value="True">
+                <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="True">
                     <Setter Property="Source" Value="/Images/Check.png" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ImportResult}" Value="False">
+                <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="False">
                     <Setter Property="Source" Value="/Images/Cross.png" />
                 </DataTrigger>
             </Style.Triggers>
