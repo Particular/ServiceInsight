@@ -352,7 +352,7 @@
             }
             else
             {
-                StatusBarManager.LicenseStatus.SetRegistrationInfo(UnlicensedStatusMessage, "day".PluralizeWord(licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.LicenseStatus.SetRegistrationInfo(UnlicensedStatusMessage, $"{licenseManager.GetRemainingTrialDays()} day(s)");
             }
         }
 
