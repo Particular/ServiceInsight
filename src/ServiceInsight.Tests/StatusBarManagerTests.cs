@@ -54,9 +54,20 @@
         }
 
         [Test]
-        public void Should_show_error_after_license_gets_expired()
+        public void Should_a_warn_when_the_license_expires_today()
         {
             const int DaysRemaining = 0;
+
+            licenseStatusBar.SetLicenseRemainingDays(DaysRemaining);
+
+            licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
+            licenseStatusBar.ShowLicenseError.ShouldBe(false);
+        }
+
+        [Test]
+        public void Should_show_error_after_license_gets_expired()
+        {
+            const int DaysRemaining = -1;
 
             licenseStatusBar.SetLicenseRemainingDays(DaysRemaining);
 
