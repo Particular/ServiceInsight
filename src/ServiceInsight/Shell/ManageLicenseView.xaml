@@ -9,7 +9,7 @@
         xmlns:ui="clr-namespace:ServiceInsight.Framework.UI"
         mc:Ignorable="d" 
         d:DesignHeight="340" d:DesignWidth="480" 
-        Height="338" Width="480"
+        Height="355" Width="480"
         ShowInTaskbar="False" 
         WindowStartupLocation="CenterScreen"
         behaviors:DialogResultBehavior.Result="{Binding ValidationResult, Mode=OneWay}"
@@ -115,7 +115,7 @@
                        Foreground="{StaticResource GrayText}"
                        Visibility="{Binding ShowUpgradeProtectionWarning, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Run Text="Warning:" FontWeight="Bold" />
-                <Run Text="{x:Static shell:LicenseStatusBar.LicenseExpiringText}" />
+                <Run Text="{x:Static shell:LicenseStatusBar.UpgradeProtectionLicenseText}" />
             </TextBlock>
 
             <StackPanel Grid.Row="4" 
@@ -160,7 +160,7 @@
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,16,20,10">
             <TextBlock Text="Need help?" FontSize="12" Margin="2" />
-            <controls:LinkedIcon Text="Contact support" FontSize="12" />
+            <controls:LinkedIcon Text="Contact us" FontSize="12" Command="{Binding ContactUsCommand}" />
         </StackPanel>
 
     </Grid>
