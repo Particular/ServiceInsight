@@ -15,7 +15,14 @@
         public static LicenseSourceResult Validate(string licenseText)
         {
             var source = new LicenseDialogSource(licenseText);
-            return source.Find("ServiceInsight");
+            var sourceResult = source.Find("ServiceInsight");
+
+            if (sourceResult.License != null && LicenseExpirationChecker.HasLicenseExpired(sourceResult.License))
+            {
+                sourceResult.Result = "The selected license is expired";
+            }
+
+            return sourceResult;
         }
 
         public override LicenseSourceResult Find(string applicationName)

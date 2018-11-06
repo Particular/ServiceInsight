@@ -37,6 +37,7 @@
         IHandle<SwitchToMessageBody>,
         IHandle<SwitchToSagaWindow>,
         IHandle<SwitchToFlowWindow>,
+        IHandle<LicenseUpdated>,
         IWorkTracker
     {
         internal const string UnlicensedStatusMessage = "Trial license: {0} left";
@@ -52,7 +53,7 @@
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
         Func<ServiceControlConnectionViewModel> serviceControlConnection;
-        Func<LicenseRegistrationViewModel> licenceRegistration;
+        Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -60,7 +61,7 @@
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
-            Func<LicenseRegistrationViewModel> licenceRegistration,
+            Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel,
             StatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
@@ -83,7 +84,7 @@
             this.settingsProvider = settingsProvider;
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
-            this.licenceRegistration = licenceRegistration;
+            this.licenseMessageBoxViewModel = licenseMessageBoxViewModel;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -111,11 +112,7 @@
 
             RefreshAllCommand = Command.CreateAsync(RefreshAll);
 
-            RegisterCommand = Command.Create(() =>
-            {
-                this.windowManager.ShowDialog<LicenseRegistrationViewModel>();
-                DisplayRegistrationStatus();
-            });
+            RegisterCommand = Command.Create(() => windowManager.ShowDialog<ManageLicenseViewModel>());
 
             ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
@@ -300,12 +297,45 @@
 
         void ValidateLicense()
         {
+            DisplayLicenseStatus(true);
+            DisplayRegistrationStatus();
+
             if (licenseManager.IsLicenseExpired())
             {
                 RegisterLicense();
             }
+        }
 
-            DisplayRegistrationStatus();
+        void DisplayLicenseStatus(bool appStartCheck)
+        {
+            var license = licenseManager.CurrentLicense;
+
+            if (license == null)
+            {
+                return;
+            }
+
+            StatusBarManager.LicenseStatus.AppStartCheck = appStartCheck;
+
+            if (license.IsCommercialLicense)
+            {
+                var upgradeProtectionDays = licenseManager.GetUpgradeProtectionRemainingDays();
+                var expirationDays = licenseManager.GetExpirationRemainingDays();
+
+                if (upgradeProtectionDays.HasValue)
+                {
+                    StatusBarManager.LicenseStatus.SetLicenseUpgradeProtectionDays(upgradeProtectionDays.Value);
+                }
+
+                if (expirationDays.HasValue)
+                {
+                    StatusBarManager.LicenseStatus.SetLicenseRemainingDays(expirationDays.Value);
+                }
+            }
+            else
+            {
+                StatusBarManager.LicenseStatus.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
+            }
         }
 
         void DisplayRegistrationStatus()
@@ -318,17 +348,18 @@
             }
             if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
+                StatusBarManager.LicenseStatus.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, "day".PluralizeWord(licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.LicenseStatus.SetRegistrationInfo(UnlicensedStatusMessage, $"{licenseManager.GetRemainingTrialDays()} day(s)");
             }
         }
 
         void RegisterLicense()
         {
-            var model = licenceRegistration();
+            var model = licenseMessageBoxViewModel();
+            model.DisplayName = StatusBarManager.LicenseStatus.LicenseStatusMessage;
             var result = windowManager.ShowDialog(model);
 
             if (!result.GetValueOrDefault(false))
@@ -384,6 +415,12 @@
         public virtual void Handle(SwitchToFlowWindow @event)
         {
             View.SelectTab("MessageFlow");
+        }
+
+        public virtual void Handle(LicenseUpdated message)
+        {
+            DisplayLicenseStatus(false);
+            DisplayRegistrationStatus();
         }
     }
 }

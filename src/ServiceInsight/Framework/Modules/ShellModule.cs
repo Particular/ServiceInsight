@@ -29,8 +29,10 @@
                 .AsSelf()
                 .InstancePerDependency();
 
-            builder.RegisterInstance(new AppCommandsWrapper()).As<IAppCommands>();
-            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<AppCommands>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().ExternallyOwned();
+            builder.RegisterType<LicenseMessageBoxView>().AsImplementedInterfaces().ExternallyOwned();
+            builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerView>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<EndpointExplorerViewModel>().SingleInstance();
@@ -39,6 +41,7 @@
             builder.RegisterType<ShellView>().As<IShellView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<SearchBarView>().SingleInstance();
             builder.RegisterType<StatusBarManager>().SingleInstance();
+            builder.RegisterType<LicenseStatusBar>().SingleInstance();
             builder.RegisterType<AboutView>().InstancePerDependency().PropertiesAutowired();
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
@@ -49,6 +52,7 @@
         {
             get
             {
+                yield return typeof(LicenseMessageBoxView);
                 yield return typeof(LicenseRegistrationView);
                 yield return typeof(ServiceControlConnectionView);
                 yield return typeof(MessageSelectionContext);
@@ -56,6 +60,7 @@
                 yield return typeof(ShellView);
                 yield return typeof(AboutView);
                 yield return typeof(ExceptionDetailView);
+                yield return typeof(ManageLicenseView);
             }
         }
     }

@@ -8,6 +8,7 @@
         xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
         xmlns:local="clr-namespace:ServiceInsight.Shell"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:themes="http://schemas.devexpress.com/winfx/2008/xaml/bars/themekeys"
         Title="{Binding DisplayName}"
         MinWidth="500"
         MinHeight="300"
@@ -18,6 +19,30 @@
         mc:Ignorable="d">
 
     <Window.Resources>
+
+        <Style TargetType="{x:Type ToggleButton}" x:Key="ImageButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="UnderlinedText">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="{x:Type dxd:DocumentPanel}">
             <Setter Property="AllowDrag" Value="False" />
             <Setter Property="AllowFloat" Value="False" />
@@ -31,13 +56,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <ControlTemplate x:Key="{themes:BarControlThemeKey ResourceKey=StatusBarTemplate, IsThemeIndependent=True}" TargetType="{x:Type ContentControl}">
+            <Border x:Name="Background" Background="Black">
+                <ContentPresenter Content="{TemplateBinding Content}"/>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="{themes:BarItemSeparatorThemeKey ResourceKey=InStatusBarTemplate, IsThemeIndependent=True}" TargetType="{x:Type dxb:BarItemLinkSeparatorControl}">
+            <dxc:PixelSnapper>
+                <Grid Margin="1,4,0,4" SnapsToDevicePixels="True" Width="20">
+                    <Rectangle HorizontalAlignment="Left" Stretch="Fill" Fill="Black" Width="1" />
+                </Grid>
+            </dxc:PixelSnapper>
+        </ControlTemplate>
     </Window.Resources>
 
     <dxb:BarManager x:Name="BarManager"
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
                     AutomationProperties.AutomationId="BarManager"
-                    dxc:DXSerializer.LayoutVersion="2"
+                    dxc:DXSerializer.LayoutVersion="4"
                     dxc:DXSerializer.SerializationID="BarManager">
         <!--  Categories  -->
         <dxb:BarManager.Categories>
@@ -94,7 +133,7 @@
                                AutomationProperties.AutomationId="RegisterMenuItem"
                                CategoryName="Help"
                                Command="{Binding RegisterCommand}"
-                               Content="Register..." />
+                               Content="Manage license..." />
             <dxb:BarButtonItem x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
                                CategoryName="View"
@@ -158,12 +197,75 @@
                 <dxb:BarButtonItemLink BarItemName="Register" />
             </dxb:BarSubItem>
 
+            <dxb:BarStaticItem x:Name="LicenseStatusBar"
+	                           Alignment="Far"
+	                           AutoSizeMode="Content"
+	                           AutomationProperties.AutomationId="LicenseStatus"
+	                           CategoryName="Status"
+                               Content="{Binding}" 
+                               Command="{Binding RegisterCommand}"
+                               ShowBorder="False">
+                <dxb:BarStaticItem.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" x:Name="StatusPanel" Margin="20,0,0,0" Visibility="{Binding Path=StatusBarManager.LicenseStatus.HasLicenseMessage, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ToggleButton Style="{StaticResource ImageButton}"
+                                          Margin="0,0,0,0"
+                                          Command="{Binding RegisterCommand}"
+                                          IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseError,
+                                                        Converter={StaticResource BoolToVisibilityConverter},
+                                                        Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16" Margin="0,0,4,0"
+                                           Source="/Images/Status-Error.png" 
+                                           Stretch="Uniform"/>
+
+                                     <TextBlock VerticalAlignment="Center" 
+                                                Style="{StaticResource UnderlinedText}"
+                                                Foreground="{StaticResource ErrorStatusBrush}"
+                                                Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource ImageButton}"
+                                          Margin="0,0,0,0"
+                                          Command="{Binding RegisterCommand}"
+                                          IsChecked="{Binding Path=StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
+                                          Visibility="{Binding Path=StatusBarManager.LicenseStatus.ShowLicenseWarn,
+                                                        Converter={StaticResource BoolToVisibilityConverter},
+                                                        Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16" Margin="0,0,4,0"
+                                           Source="/Images/Status-Warning.png" 
+                                           Stretch="Uniform"/>
+
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Style="{StaticResource UnderlinedText}"
+                                               Foreground="{StaticResource WarningStatusBrush}"
+                                               Text="{Binding Path=StatusBarManager.LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <Popup IsOpen="{Binding StatusBarManager.LicenseStatus.OpenLicensePopup, Mode=TwoWay}"
+                                   StaysOpen="False"
+                                   AllowsTransparency="True"
+                                   HorizontalOffset="50" 
+                                   Placement="Top"
+                                   PlacementTarget="{Binding ElementName=StatusPanel}">
+                                <local:LicensePopupView cal:Bind.Model="{Binding StatusBarManager}" />
+                            </Popup>
+                        </StackPanel>
+                    </DataTemplate>
+                </dxb:BarStaticItem.ContentTemplate>
+            </dxb:BarStaticItem>
+
             <dxb:BarStaticItem x:Name="Registration"
                                Alignment="Far"
                                AutoSizeMode="Content"
                                AutomationProperties.AutomationId="RegistrationStatus"
                                CategoryName="Status"
-                               Content="{Binding StatusBarManager.Registration,
+                               ShowBorder="False"
+                               Content="{Binding StatusBarManager.LicenseStatus.Registration,
                                                  Mode=OneWay}" />
 
             <dxb:BarStaticItem x:Name="Status"
@@ -217,14 +319,16 @@
                      AllowHide="True"
                      AutomationProperties.AutomationId="StatusBar"
                      Caption="Statusbar"
-                     IsStatusBar="True">
+                     IsStatusBar="True" >
                 <dxb:Bar.DockInfo>
                     <dxb:BarDockInfo ContainerType="Bottom" />
                 </dxb:Bar.DockInfo>
                 <dxb:Bar.ItemLinks>
-                    <dxb:BarStaticItemLink BarItemName="Status" />
+                    <dxb:BarStaticItemLink BarItemName="Status"  />
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarStaticItemLink BarItemName="Registration" />
+                    <dxb:BarItemLinkSeparator />
+                    <dxb:BarStaticItemLink BarItemName="LicenseStatusBar" />
                 </dxb:Bar.ItemLinks>
             </dxb:Bar>
         </dxb:BarManager.Bars>

@@ -54,6 +54,7 @@
         LogWindowViewModel logWindow;
         IAppCommands app;
         CommandLineArgParser commandLineArgParser;
+        LicenseStatusBar licenseStatusBar;
 
         [SetUp]
         public void TestInitialize()
@@ -61,7 +62,8 @@
             windowManager = Substitute.For<WindowManagerEx>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
-            statusbarManager = Substitute.For<StatusBarManager>();
+            licenseStatusBar = Substitute.For<LicenseStatusBar>();
+            statusbarManager = new StatusBarManager(licenseStatusBar);
             eventAggregator = Substitute.For<IEventAggregator>();
             workNotifier = Substitute.For<IWorkNotifier>();
             messageFlow = Substitute.For<MessageFlowViewModel>();
@@ -84,7 +86,7 @@
                         endpointExplorer,
                         messageList,
                         () => Substitute.For<ServiceControlConnectionViewModel>(),
-                        () => Substitute.For<LicenseRegistrationViewModel>(),
+                        () => Substitute.For<LicenseMessageBoxViewModel>(),
                         statusbarManager,
                         eventAggregator,
                         workNotifier,
@@ -174,21 +176,21 @@
         {
             const string RegisteredUser = "John Doe";
             const string LicenseType = "Trial";
-            const int NumberOfDaysRemainingFromTrial = 5;
+            const int RemainingDays = 5;
 
             var issuedLicense = new License
             {
                 LicenseType = LicenseType,
-                ExpirationDate = DateTime.Now.AddDays(NumberOfDaysRemainingFromTrial),
+                ExpirationDate = DateTime.Now.AddDays(RemainingDays),
                 RegisteredTo = RegisteredUser
             };
 
             licenseManager.CurrentLicense = issuedLicense;
-            licenseManager.GetRemainingTrialDays().Returns(NumberOfDaysRemainingFromTrial);
+            licenseManager.GetRemainingTrialDays().Returns(RemainingDays);
 
             shell.OnApplicationIdle();
 
-            statusbarManager.Received().SetRegistrationInfo(Arg.Is(ShellViewModel.UnlicensedStatusMessage), Arg.Is("5 days"));
+            licenseStatusBar.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
         }
 
         [TearDown]

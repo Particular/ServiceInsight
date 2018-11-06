@@ -3,18 +3,23 @@
     using Caliburn.Micro;
     using ServiceInsight.Framework.Events;
 
-    public class StatusBarManager : PropertyChangedBase,
+    public class StatusBarManager : Screen,
         IHandle<WorkStarted>,
         IHandle<WorkFinished>,
         IHandle<AsyncOperationFailed>
     {
         public const string DoneStatusMessage = "Done";
 
+        public StatusBarManager(LicenseStatusBar licenseStatusBar)
+        {
+            LicenseStatus = licenseStatusBar;
+        }
+
         public string StatusMessage { get; private set; }
 
-        public string Registration { get; private set; }
-
         public bool ErrorMessageVisible { get; private set; }
+
+        public LicenseStatusBar LicenseStatus { get; }
 
         public void Handle(WorkStarted @event)
         {
@@ -33,11 +38,6 @@
         {
             StatusMessage = @event.Message;
             ErrorMessageVisible = true;
-        }
-
-        public void SetRegistrationInfo(string message, params object[] args)
-        {
-            Registration = string.Format(message, args);
         }
 
         public void SetSuccessStatusMessage(string message, params object[] args)

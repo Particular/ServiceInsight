@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight
 {
-    using System;
     using System.Diagnostics;
     using System.Windows;
     using Anotar.Serilog;
@@ -9,35 +8,7 @@
     using ServiceInsight.Framework.Settings;
     using Shell;
 
-    public interface IAppCommands
-    {
-        void ShutdownImmediately();
-    }
-
-    public class AppCommandsWrapper : IAppCommands
-    {
-        IAppCommands current;
-
-        public AppCommandsWrapper()
-            : this((IAppCommands)Application.Current)
-        {
-        }
-
-        public AppCommandsWrapper(IAppCommands app)
-        {
-            current = app;
-        }
-
-        public void ShutdownImmediately()
-        {
-            if (current != null)
-            {
-                current.ShutdownImmediately();
-            }
-        }
-    }
-
-    public partial class App : IAppCommands
+    public partial class App
     {
         public App()
         {
@@ -57,11 +28,6 @@
             ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
-        }
-
-        public void ShutdownImmediately()
-        {
-            Environment.Exit(0);
         }
     }
 }

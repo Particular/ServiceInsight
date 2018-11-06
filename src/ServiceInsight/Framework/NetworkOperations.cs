@@ -17,6 +17,16 @@
             process.Start();
         }
 
+        public void OpenContactUs()
+        {
+            Browse("https://particular.net/contactus");
+        }
+
+        public void OpenExtendTrial()
+        {
+            Browse("http://particular.net/extend-your-trial-14?p=serviceinsight");
+        }
+
         class NetworkBrowser
         {
             [DllImport("Netapi32", CharSet = CharSet.Auto, SetLastError = true)]

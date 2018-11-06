@@ -155,6 +155,7 @@
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
     <Compile Include="MessageListViewModelTests.cs" />
     <Compile Include="ShellViewModelTests.cs" />
+    <Compile Include="StatusBarManagerTests.cs" />
     <Compile Include="StreamExtensionMethodTests.cs" />
     <Compile Include="StringDecoderTests.cs" />
     <Compile Include="ViewModels\LogWindowViewModelTests.cs" />

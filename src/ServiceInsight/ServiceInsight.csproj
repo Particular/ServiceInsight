@@ -215,7 +215,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
@@ -252,6 +251,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppCommands.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FilePathLicenseStore.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FindActiveLicense\ActiveLicense.cs" />
     <Compile Include="App_Packages\Particular.Licensing\FindActiveLicense\ActiveLicenseFindResult.cs" />
@@ -273,24 +273,30 @@
     <Compile Include="App_Packages\Particular.Licensing\ReleaseDateReader.cs" />
     <Compile Include="App_Packages\Particular.Licensing\TrialStartDateStore.cs" />
     <Compile Include="App_Packages\Particular.Licensing\UniversalDateParser.cs" />
+    <Compile Include="Controls\LinkedIcon.cs" />
     <Compile Include="Controls\MvvmTextEditor.cs" />
     <Compile Include="DiagramLegend\DiagramLegendView.xaml.cs">
       <DependentUpon>DiagramLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DiagramLegend\DiagramLegendViewModel.cs" />
     <Compile Include="ExtensionMethods\BytesExtensions.cs" />
+    <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="ExtensionMethods\LayoutExtensions.cs" />
     <Compile Include="ExtensionMethods\ObservableExtensions.cs" />
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="ExtensionMethods\RestClientExtensions.cs" />
     <Compile Include="Framework\Behaviors\ComboBoxEditValuePatcherBehavior.cs" />
     <Compile Include="Framework\Behaviors\CommandParameterHelper.cs" />
+    <Compile Include="Framework\Behaviors\DialogResultBehavior.cs" />
     <Compile Include="Framework\Commands\AsyncDelegateCommand.cs" />
     <Compile Include="Framework\Commands\AsyncObservableCommand.cs" />
     <Compile Include="Framework\Commands\CloseWindowCommand.cs" />
     <Compile Include="Framework\Commands\DelegateCommand.cs" />
     <Compile Include="Framework\Commands\ObservableCommand.cs" />
+    <Compile Include="Framework\Events\LicenseUpdated.cs" />
+    <Compile Include="Framework\Licensing\LicenseInstallationResult.cs" />
     <Compile Include="Framework\Settings\ApplicationConfiguration.cs" />
+    <Compile Include="Framework\UI\CultureAwareBinding.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
@@ -361,8 +367,23 @@
     <Compile Include="ServiceControl\ServiceControlRootUrls.cs" />
     <Compile Include="Settings\MessageListSettings.cs" />
     <Compile Include="Settings\SequenceDiagramSettings.cs" />
+    <Compile Include="Framework\Licensing\DateExpirationStatus.cs" />
+    <Compile Include="Shell\DialogWindow.cs" />
     <Compile Include="Shell\IPersistPartLayout.cs" />
     <Compile Include="Framework\Licensing\LicenseDialogSource.cs" />
+    <Compile Include="Shell\LicenseMessageBoxView.xaml.cs">
+      <DependentUpon>LicenseMessageBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\LicenseMessageBoxViewModel.cs" />
+    <Compile Include="Shell\LicensePopup.cs" />
+    <Compile Include="Shell\LicensePopupView.xaml.cs">
+      <DependentUpon>LicensePopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\LicenseStatusBar.cs" />
+    <Compile Include="Shell\ManageLicenseView.xaml.cs">
+      <DependentUpon>ManageLicenseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\ManageLicenseViewModel.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>
@@ -584,7 +605,9 @@
     <Compile Include="ValueConverters\BoolToBrushConverter.cs" />
     <Compile Include="ValueConverters\ByteToCharConverter.cs" />
     <Compile Include="ValueConverters\ByteToHexConverter.cs" />
+    <Compile Include="ValueConverters\CharacterCasingConverter.cs" />
     <Compile Include="ValueConverters\CompositeCollectionConverter.cs" />
+    <Compile Include="ValueConverters\DateStatusToBrushConverter.cs" />
     <Compile Include="ValueConverters\EndSegmentValueConverter.cs" />
     <Compile Include="ValueConverters\EnumToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\MathConverter.cs" />
@@ -614,6 +637,18 @@
     <Page Include="SequenceDiagram\DarkMenus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\LicenseMessageBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\LicensePopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\ManageLicenseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="XAML\Geometry.xaml">
       <SubType>Designer</SubType>
@@ -857,6 +892,23 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Status-Error.png" />
+    <Resource Include="Images\Status-Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\License.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Contact.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Check.png" />
+    <Resource Include="Images\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\External-Link.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

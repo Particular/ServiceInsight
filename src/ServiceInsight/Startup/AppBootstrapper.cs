@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
     using System.Windows;
@@ -22,7 +23,10 @@
 
         public AppBootstrapper()
         {
-            Initialize();
+            if (!InDesignMode())
+            {
+                Initialize();
+            }
         }
 
         protected override void Configure()
@@ -37,6 +41,11 @@
             var newHandler = container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
             var defaultHandler = ExceptionHandler.HandleException;
             ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
+        }
+
+        static bool InDesignMode()
+        {
+            return DesignerProperties.GetIsInDesignMode(new DependencyObject());
         }
 
         [Conditional("DEBUG")]
