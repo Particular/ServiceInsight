@@ -175,11 +175,6 @@
     <None Include="ServiceInsight.Tests.ruleset" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj">
       <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
       <Name>ServiceInsight</Name>
