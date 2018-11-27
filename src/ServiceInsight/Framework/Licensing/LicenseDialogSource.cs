@@ -17,7 +17,7 @@
             var source = new LicenseDialogSource(licenseText);
             var sourceResult = source.Find("ServiceInsight");
 
-            if (sourceResult.License != null && LicenseExpirationChecker.HasLicenseExpired(sourceResult.License))
+            if (sourceResult.License != null && sourceResult.License.HasExpired())
             {
                 sourceResult.Result = "The selected license is expired";
             }

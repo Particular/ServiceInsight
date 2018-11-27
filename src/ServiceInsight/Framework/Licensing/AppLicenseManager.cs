@@ -24,7 +24,7 @@
                 }
 
                 new RegistryLicenseStore().StoreLicense(licenseText);
-                new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
+                new FilePathLicenseStore().StoreLicense(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.LocalApplicationData), licenseText);
 
                 CurrentLicense = ValidationResult.License;
 
@@ -123,9 +123,9 @@
             return CalcRemainingDays(CurrentLicense.UpgradeProtectionExpiration.Value);
         }
 
-        public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
+        public bool IsLicenseExpired() => CurrentLicense.HasExpired();
 
-        private bool IsLicenseExpired(License license) => LicenseExpirationChecker.HasLicenseExpired(license);
+        private bool IsLicenseExpired(License license) => license.HasExpired();
 
         private static int CalcRemainingDays(DateTimeOffset date)
         {

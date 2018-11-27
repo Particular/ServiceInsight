@@ -6,8 +6,6 @@
     {
         internal License License { get; set; }
 
-        internal bool HasExpired { get; set; }
-
         internal string Location { get; set; }
 
         internal List<string> Report = new List<string>();

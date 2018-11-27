@@ -8,7 +8,7 @@
 
     static class TrialStartDateStore
     {
-        public static string StorageFolder { get; } = Path.Combine(GetFolderPath(SpecialFolder.LocalApplicationData, SpecialFolderOption.DoNotVerify), "ParticularSoftware");
+        public static string StorageFolder { get; } = LicenseFileLocationResolver.GetPathFor(SpecialFolder.LocalApplicationData, string.Empty);
 
         public static string StorageLocation { get; } = Path.Combine(StorageFolder, "trialstart");
 

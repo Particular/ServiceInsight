@@ -25,19 +25,21 @@ namespace Particular.Licensing
                 activeLicense.SelectedLicenseReport.Add(selectedLicenseReportItem);
 
                 var details = licenseSourceResultToUse.License;
+
                 if (details.ExpirationDate.HasValue)
                 {
                     var licenseExpirationReportItem = $"License Expiration: {details.ExpirationDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
                     activeLicense.Report.Add(licenseExpirationReportItem);
                     activeLicense.SelectedLicenseReport.Add(licenseExpirationReportItem);
-
-                    if (details.UpgradeProtectionExpiration.HasValue)
-                    {
-                        var upgradeProtectionReportItem = $"Upgrade Protection Expiration: {details.UpgradeProtectionExpiration.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
-                        activeLicense.Report.Add(upgradeProtectionReportItem);
-                        activeLicense.SelectedLicenseReport.Add(upgradeProtectionReportItem);
-                    }
                 }
+
+                if (details.UpgradeProtectionExpiration.HasValue)
+                {
+                    var upgradeProtectionReportItem = $"Upgrade Protection Expiration: {details.UpgradeProtectionExpiration.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
+                    activeLicense.Report.Add(upgradeProtectionReportItem);
+                    activeLicense.SelectedLicenseReport.Add(upgradeProtectionReportItem);
+                }
+
                 activeLicense.License = details;
                 activeLicense.Location = licenseSourceResultToUse.Location;
 
@@ -61,7 +63,6 @@ namespace Particular.Licensing
                 activeLicense.Location = "Trial License";
             }
 
-            activeLicense.HasExpired = LicenseExpirationChecker.HasLicenseExpired(activeLicense.License);
             return activeLicense;
         }
     }
