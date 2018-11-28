@@ -4,7 +4,6 @@
     {
         NotSet,
         NotExpired,
-        ExpiringToday,
         Expiring,
         Expired
     }

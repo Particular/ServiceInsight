@@ -155,9 +155,9 @@
 
         public bool ShowExpirationError => ExpirationDateStatus.In(DateExpirationStatus.Expired);
 
-        public bool ShowExpirationWarning => ExpirationDateStatus.In(DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
+        public bool ShowExpirationWarning => ExpirationDateStatus.In(DateExpirationStatus.Expiring);
 
-        public bool ShowUpgradeProtectionWarning => UpgradeProtectionDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring, DateExpirationStatus.ExpiringToday);
+        public bool ShowUpgradeProtectionWarning => UpgradeProtectionDateStatus.In(DateExpirationStatus.Expired, DateExpirationStatus.Expiring);
 
         public DateExpirationStatus ExpirationDateStatus { get; set; }
 
