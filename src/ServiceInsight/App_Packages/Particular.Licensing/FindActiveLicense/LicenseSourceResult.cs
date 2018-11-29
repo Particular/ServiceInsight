@@ -19,7 +19,7 @@
             var sourcesResultsWithLicenseOrderedByDate = sourceResults.Where(p => p.License != null).OrderByDescending(p => p.License.ExpirationDate).ToList();
 
             // Can't rely on just expiry date as running on a build that was produced after the upgrade protection expiration is the same as unlicensed.
-            var unexpiredResult = sourcesResultsWithLicenseOrderedByDate.FirstOrDefault(p => !LicenseExpirationChecker.HasLicenseExpired(p.License));
+            var unexpiredResult = sourcesResultsWithLicenseOrderedByDate.FirstOrDefault(p => !p.License.HasExpired());
 
             return unexpiredResult ?? sourcesResultsWithLicenseOrderedByDate.First();
         }

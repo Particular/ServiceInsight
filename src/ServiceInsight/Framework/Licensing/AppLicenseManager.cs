@@ -18,13 +18,13 @@
             ValidationResult = LicenseDialogSource.Validate(licenseText);
             if (ValidationResult.License != null)
             {
-                if (IsLicenseExpired(ValidationResult.License))
+                if (ValidationResult.License.HasExpired())
                 {
                     return LicenseInstallationResult.Expired;
                 }
 
                 new RegistryLicenseStore().StoreLicense(licenseText);
-                new FilePathLicenseStore().StoreLicense(FilePathLicenseStore.UserLevelLicenseLocation, licenseText);
+                new FilePathLicenseStore().StoreLicense(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.LocalApplicationData), licenseText);
 
                 CurrentLicense = ValidationResult.License;
 
@@ -52,94 +52,70 @@
 
         public int GetRemainingTrialDays()
         {
-            var isTrial = CurrentLicense == null || CurrentLicense.ExpirationDate == null;
-            var effectiveDate = isTrial ? TrialStartDateStore.GetTrialStartDate().AddDays(14) : CurrentLicense.ExpirationDate.Value;
-
-            var remainingDays = CalcRemainingDays(effectiveDate);
-
-            return remainingDays > 0 ? remainingDays : 0;
-        }
-
-        private DateExpirationStatus GetDateStatus(int? remainingDays, bool trial)
-        {
-            if (!remainingDays.HasValue)
-            {
-                return DateExpirationStatus.NotSet;
-            }
-
-            if (remainingDays == 0)
-            {
-                return trial ? DateExpirationStatus.Expired : DateExpirationStatus.ExpiringToday;
-            }
-
-            if (remainingDays < 0)
-            {
-                return DateExpirationStatus.Expired;
-            }
-
-            if (remainingDays <= 10)
-            {
-                return DateExpirationStatus.Expiring;
-            }
-
-            return DateExpirationStatus.NotExpired;
+            var remaining = CurrentLicense.GetDaysUntilLicenseExpires().GetValueOrDefault(0);
+            return Math.Max(remaining, 0);
         }
 
         public DateExpirationStatus GetExpirationStatus()
         {
-            var remainingDays = GetExpirationRemainingDays();
-            return GetDateStatus(remainingDays, trial: false);
+            var status = CurrentLicense.GetLicenseStatus();
+            switch (status)
+            {
+                case LicenseStatus.Valid:
+                    return DateExpirationStatus.NotExpired;
+                case LicenseStatus.ValidWithExpiringSubscription:
+                    return DateExpirationStatus.Expiring;
+                case LicenseStatus.InvalidDueToExpiredSubscription:
+                    return DateExpirationStatus.Expired;
+            }
+
+            return DateExpirationStatus.NotSet;
         }
 
         public DateExpirationStatus GetUpgradeProtectionStatus()
         {
-            var remainingDays = GetUpgradeProtectionRemainingDays();
-            return GetDateStatus(remainingDays, trial: false);
+            var status = CurrentLicense.GetLicenseStatus();
+            switch (status)
+            {
+                case LicenseStatus.Valid:
+                    return DateExpirationStatus.NotExpired;
+                case LicenseStatus.ValidWithExpiredUpgradeProtection:
+                    return DateExpirationStatus.Expired;
+                case LicenseStatus.ValidWithExpiringUpgradeProtection:
+                    return DateExpirationStatus.Expiring;
+                case LicenseStatus.InvalidDueToExpiredUpgradeProtection:
+                    return DateExpirationStatus.Expired;
+            }
+
+            return DateExpirationStatus.NotSet;
         }
 
         public DateExpirationStatus GetTrialExpirationStatus()
         {
-            var remainingDays = GetRemainingTrialDays();
-            return GetDateStatus(remainingDays, trial: true);
+            var status = CurrentLicense.GetLicenseStatus();
+            switch (status)
+            {
+                case LicenseStatus.Valid:
+                    return DateExpirationStatus.NotExpired;
+                case LicenseStatus.ValidWithExpiringTrial:
+                    return DateExpirationStatus.Expiring;
+                case LicenseStatus.InvalidDueToExpiredTrial:
+                    return DateExpirationStatus.Expired;
+            }
+
+            return DateExpirationStatus.NotSet;
         }
 
         public int? GetExpirationRemainingDays()
         {
-            if (!CurrentLicense.ExpirationDate.HasValue)
-            {
-                return null;
-            }
-
-            return CalcRemainingDays(CurrentLicense.ExpirationDate.Value);
+            return CurrentLicense.GetDaysUntilLicenseExpires();
         }
 
         public int? GetUpgradeProtectionRemainingDays()
         {
-            if (!CurrentLicense.UpgradeProtectionExpiration.HasValue)
-            {
-                return null;
-            }
-
-            return CalcRemainingDays(CurrentLicense.UpgradeProtectionExpiration.Value);
+            return CurrentLicense.GetDaysUntilUpgradeProtectionExpires();
         }
 
-        public bool IsLicenseExpired() => LicenseExpirationChecker.HasLicenseExpired(CurrentLicense);
-
-        private bool IsLicenseExpired(License license) => LicenseExpirationChecker.HasLicenseExpired(license);
-
-        private static int CalcRemainingDays(DateTimeOffset date)
-        {
-            var oneDayGrace = date;
-
-            if (date < DateTime.MaxValue.AddDays(-1))
-            {
-                oneDayGrace = date.AddDays(1);
-            }
-
-            var now = DateTime.UtcNow.Date;
-            var remainingDays = (oneDayGrace - now).Days;
-
-            return remainingDays;
-        }
+        public bool IsLicenseExpired() => CurrentLicense.HasExpired();
     }
 }

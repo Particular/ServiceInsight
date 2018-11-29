@@ -23,10 +23,9 @@
 
             var result = new LicenseSourceResult { Location = location };
 
-            Exception validationFailure;
-            if (!LicenseVerifier.TryVerify(licenseText, out validationFailure))
+            if (!LicenseVerifier.TryVerify(licenseText, out var failureMessage))
             {
-                result.Result = $"License found in {location} is not valid - {validationFailure.Message}";
+                result.Result = $"License found in {location} is not valid - {failureMessage}";
                 return result;
             }
 
@@ -57,9 +56,9 @@
         {
             var sources = new List<LicenseSource>();
 
-            sources.Add(new LicenseSourceFilePath(FilePathLicenseStore.ApplicationLevelLicenseLocation));
-            sources.Add(new LicenseSourceFilePath(FilePathLicenseStore.UserLevelLicenseLocation));
-            sources.Add(new LicenseSourceFilePath(FilePathLicenseStore.MachineLevelLicenseLocation));
+            sources.Add(new LicenseSourceFilePath(LicenseFileLocationResolver.ApplicationFolderLicenseFile));
+            sources.Add(new LicenseSourceFilePath(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.LocalApplicationData)));
+            sources.Add(new LicenseSourceFilePath(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.CommonApplicationData)));
 
 #if REGISTRYLICENSESOURCE
             sources.Add(new LicenseSourceHKCURegKey(@"SOFTWARE\ParticularSoftware"));

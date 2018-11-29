@@ -2,7 +2,6 @@
 {
     using System.IO;
     using Caliburn.Micro;
-    using Particular.Licensing;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.UI.ScreenManager;
@@ -32,7 +31,7 @@
 
         string GetScreenTitle()
         {
-            var expired = LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense);
+            var expired = licenseManager.CurrentLicense.HasExpired();
 
             if (licenseManager.CurrentLicense.IsCommercialLicense)
             {
@@ -103,7 +102,7 @@
                 validLicense = licenseManager.TryInstallLicense(licenseContent) == LicenseInstallationResult.Succeeded;
             }
 
-            if (validLicense && !LicenseExpirationChecker.HasLicenseExpired(licenseManager.CurrentLicense))
+            if (validLicense && !licenseManager.CurrentLicense.HasExpired())
             {
                 TryClose(true);
             }
