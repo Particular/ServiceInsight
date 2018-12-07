@@ -1,4 +1,4 @@
-The current maintainers of this repo are [@adamralph](https://github.com/adamralph), [@HEskandari](https://github.com/HEskandari), and [@WilliamBZA](https://github.com/WilliamBZA)
+The current maintainers of this repo are @mike(https://github.com/mikeminutillo) [@HEskandari](https://github.com/HEskandari), and [@WilliamBZA](https://github.com/WilliamBZA)
 
 The maintainers [watch](https://github.com/Particular/ServiceInsight/watchers) this repo and undertake the following responsibilities:
 
