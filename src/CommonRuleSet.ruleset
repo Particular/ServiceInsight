@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Common ServiceInsight Rules" Description="Extra rules for ServiceInsight" ToolsVersion="14.0">
-  <Include Path="packages\particular.coderules.0.1.1\build\particular.ruleset" Action="Default" />
+  <Include Path="packages\particular.coderules.0.2.1\build\particular.ruleset" Action="Default" />
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1005" Action="None" />
     <Rule Id="SA1101" Action="None" />
