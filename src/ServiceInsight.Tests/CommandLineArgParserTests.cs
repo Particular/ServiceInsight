@@ -43,6 +43,8 @@
         [TestCase("servicecontrol.myserver.com/")]
         [TestCase("servicecontrol.myserver.com/api")]
         [TestCase("servicecontrol.myserver.com:33333/api")]
+        [TestCase("anyknownserver:33333/api")]
+        [TestCase("anyknownserver/api")]
         public void Can_parse_valid_uri_from_command_line_args(string validUri)
         {
             var invocationParameters = string.Format("{0}{1}", SchemaPrefix, validUri);
@@ -53,6 +55,23 @@
 
             sut.ParsedOptions.EndpointUri.ShouldNotBe(null);
             sut.ParsedOptions.EndpointUri.ToString().ShouldContain(validUri);
+        }
+
+        [Test]
+        [TestCase(".")]
+        [TestCase("./api")]
+        [TestCase("::1")]
+        [TestCase("::1/api")]
+        [TestCase("192.168.1/api")]
+        [TestCase("tcp://192.168.0.1/api")]
+        [TestCase("ucp://localhost/api")]
+        public void Should_not_parse_invalid_uri_from_command_line_args(string invalidUri)
+        {
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invalidUri });
+
+            var sut = CreateSut();
+
+            sut.ParsedOptions.EndpointUri.ShouldBe(null);
         }
 
         [Test]
@@ -95,20 +114,6 @@
             var sut = CreateSut();
 
             sut.ParsedOptions.AutoRefreshRate.ShouldBe(100);
-        }
-
-        [Test]
-        [TestCase("thisiswrong")]
-        [TestCase("somerandomname")]
-        public void Leaves_service_uri_empty_if_passed_in_argument_is_not_valid(string wrongUri)
-        {
-            var invocationParameters = string.Format("{0}{1}", SchemaPrefix, wrongUri);
-
-            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
-
-            var sut = CreateSut();
-
-            sut.ParsedOptions.EndpointUri.ShouldBe(null);
         }
 
         [Test]
