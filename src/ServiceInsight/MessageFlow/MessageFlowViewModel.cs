@@ -118,6 +118,7 @@
             {
                 selection.SelectedMessage = SelectedMessage.Message;
             }
+
             eventAggregator.PublishOnUIThread(SwitchToSagaWindow.Instance);
         }
 

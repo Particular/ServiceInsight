@@ -364,32 +364,68 @@
                                                         <local:MessageActionPopup />
                                                     </local:MessagePopupControl>
 
-                                                    <Grid Grid.Row="2"
-                                                          Margin="0 -5"
-                                                          Visibility="{Binding HasSaga,
-                                                                               Converter={StaticResource BoolToVisibilityConverter}}"
-                                                          cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="20" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <ContentControl x:Name="SagaStatusIcon"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center"
-                                                                        Template="{StaticResource SagaInitiatedIcon}" />
-                                                        <Border Grid.Column="1"
-                                                                Margin="2 0 0 0"
-                                                                Background="#333333">
-                                                            <TextBlock VerticalAlignment="Center"
-                                                                       FontSize="11px"
-                                                                       FontWeight="Bold"
-                                                                       Foreground="{StaticResource MessageBackground}"
-                                                                       Padding="3 0"
-                                                                       Text="{Binding SagaType}"
-                                                                       TextTrimming="CharacterEllipsis"
-                                                                       TextWrapping="NoWrap" />
-                                                        </Border>
-                                                    </Grid>
+                                                    <ItemsControl ItemsSource="{Binding SagaInvocations}"
+                                                                 Grid.Row="2"
+                                                                 Margin="0 -5 2 0"
+                                                                 Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                                 cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <UniformGrid Columns="1" IsItemsHost="True" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="20" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <ContentControl x:Name="SagaStatusIcon"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            Template="{StaticResource SagaInitiatedIcon}" />
+                                                                    <Border Grid.Column="1"
+                                                                            Margin="2 0 0 0"
+                                                                            Background="#333333">
+                                                                        <TextBlock VerticalAlignment="Center"
+                                                                           FontSize="11px"
+                                                                           FontWeight="Bold"
+                                                                           Foreground="{StaticResource MessageBackground}"
+                                                                           Padding="3 0"
+                                                                           Text="{Binding SagaType}"
+                                                                           TextTrimming="CharacterEllipsis"
+                                                                           TextWrapping="NoWrap" />
+                                                                    </Border>
+                                                                </Grid>
+                                                                <DataTemplate.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSagaInitiated}"
+                                                                                 d:DataContext="{d:DesignInstance local:SagaInvocation}"
+                                                                                 Value="True">
+                                                                        <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}" />
+                                                                        <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
+                                                                    </DataTrigger>
+                                                                    <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaInvocation}">
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                                                            <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}" />
+                                                                        <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated / Updated" />
+                                                                    </MultiDataTrigger>
+                                                                    <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaInvocation}">
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
+                                                                            <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}" />
+                                                                        <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Completed" />
+                                                                    </MultiDataTrigger>
+                                                                </DataTemplate.Triggers>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+
                                                 </Grid>
 
                                                 <ContentControl Grid.Row="1"
@@ -412,29 +448,6 @@
                                         </Border>
                                     </StackPanel>
                                     <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding IsSagaInitiated}"
-                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
-                                                     Value="True">
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}" />
-                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
-                                        </DataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
-                                                <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}" />
-                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated / Updated" />
-                                        </MultiDataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
-                                                <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaCompletedIcon}" />
-                                            <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Completed" />
-                                        </MultiDataTrigger>
-
                                         <DataTrigger Binding="{Binding HasFailed}"
                                                      d:DataContext="{d:DesignInstance local:MessageNode}"
                                                      Value="True">
