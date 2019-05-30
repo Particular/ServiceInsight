@@ -21,6 +21,8 @@
 
         public bool ResetLayout { get; private set; }
 
+        public bool SecuredConnection { get; private set; }
+
         public void SetEndpointUri(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -32,7 +34,7 @@
 
             if (value.StartsWith(ApplicationScheme, StringComparison.OrdinalIgnoreCase))
             {
-                address = value.Replace(ApplicationScheme,  "http://");
+                address = value.Replace(ApplicationScheme,  GetConnectionScheme());
             }
 
             var regex = new Regex(UriRegexPattern);
@@ -40,6 +42,11 @@
             {
                 EndpointUri = new Uri(address);
             }
+        }
+
+        private string GetConnectionScheme()
+        {
+            return SecuredConnection ? "https://" : "http://";
         }
 
         public void SetEndpointName(string value)
@@ -61,6 +68,11 @@
         public void SetResetLayout(bool value)
         {
             ResetLayout = value;
+        }
+
+        public void SetSecuredConnection(bool value)
+        {
+            SecuredConnection = value;
         }
 
         string Decode(string encodedString) => HttpUtility.UrlDecode(encodedString);

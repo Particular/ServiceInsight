@@ -36,6 +36,21 @@
         }
 
         [Test]
+        public void Can_switch_to_secured_connection()
+        {
+            const string Options = "SecuredConnection=True";
+            const string Uri = "localhost:12345";
+            var invocationParameters = $"{SchemaPrefix}{Uri}?{Options}";
+
+            environment.GetCommandLineArgs().Returns(new[] { AppPath, invocationParameters });
+
+            var sut = CreateSut();
+
+            sut.ParsedOptions.SecuredConnection.ShouldBe(true);
+            sut.ParsedOptions.EndpointUri.Scheme.ShouldBe("https", Case.Insensitive);
+        }
+
+        [Test]
         [TestCase("localhost")]
         [TestCase("127.0.0.1")]
         [TestCase("192.168.0.100")]

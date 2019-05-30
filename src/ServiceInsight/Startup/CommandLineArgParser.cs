@@ -42,11 +42,6 @@
                 return;
             }
 
-            if (uri.Length > 0)
-            {
-                ParsedOptions.SetEndpointUri(uri[0]);
-            }
-
             if (uri.Length > 1)
             {
                 var parameters = uri[1];
@@ -61,6 +56,11 @@
                     }
                 }
             }
+
+            if (uri.Length > 0) //should be done last
+            {
+                ParsedOptions.SetEndpointUri(uri[0]);
+            }
         }
 
         void PopulateKeyValue(string key, string value)
@@ -69,6 +69,10 @@
 
             switch (parameter)
             {
+                case "securedconnection":
+                    ParsedOptions.SetSecuredConnection(bool.Parse(value));
+                    break;
+
                 case "search":
                     ParsedOptions.SetSearchQuery(value);
                     break;
