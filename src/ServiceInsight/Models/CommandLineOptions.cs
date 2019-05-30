@@ -1,13 +1,22 @@
 ﻿namespace ServiceInsight.Models
 {
     using System;
-    using System.Text.RegularExpressions;
+    using System.Collections.Generic;
+    using System.Linq;
     using RestSharp.Extensions.MonoHttp;
 
     public class CommandLineOptions
     {
         public const string ApplicationScheme = "si://";
-        public const string UriRegexPattern = @"^(http|https)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$";
+
+        private IEnumerable<string> AllowedSchemas
+        {
+            get
+            {
+                yield return "http";
+                yield return "https";
+            }
+        }
 
         public Uri EndpointUri { get; private set; }
 
@@ -37,10 +46,10 @@
                 address = value.Replace(ApplicationScheme,  GetConnectionScheme());
             }
 
-            var regex = new Regex(UriRegexPattern);
-            if (regex.IsMatch(address))
+            if (Uri.TryCreate(address, UriKind.Absolute, out var parsedEndpointUri) &&
+                AllowedSchemas.Any(schema => schema.Equals(parsedEndpointUri.Scheme, StringComparison.InvariantCultureIgnoreCase)))
             {
-                EndpointUri = new Uri(address);
+                 EndpointUri = parsedEndpointUri;
             }
         }
 
