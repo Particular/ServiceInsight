@@ -1,6 +1,7 @@
 ﻿namespace ServiceInsight.MessageFlow
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Windows;
@@ -10,11 +11,28 @@
     using Mindscape.WpfDiagramming;
     using Models;
 
+    public class SagaInvocation
+    {
+        public SagaInvocation(SagaInfo saga, StoredMessage triggeringMessage)
+        {
+            ID = saga.SagaId;
+            SagaType = TypeHumanizer.ToName(saga.SagaType);
+            IsSagaCompleted = saga.ChangeStatus == "Completed";
+            IsSagaInitiated = string.IsNullOrEmpty(triggeringMessage.GetHeaderByKey(MessageHeaderKeys.SagaId)) && 
+                              !string.IsNullOrEmpty(triggeringMessage.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
+        }
+
+        public Guid ID { get; }
+        public string SagaType { get; }
+        public bool IsSagaCompleted { get; }
+        public bool IsSagaInitiated { get; }
+    }
+
     [DebuggerDisplay("Type={Message.FriendlyMessageType}, Id={Message.Id}")]
     public class MessageNode : DiagramNode
     {
-        int heightNoEndpoints = 56;
-        int endpointsHeight = 25;
+        int BaseNodeHeight = 36;
+        int EndpointsPartHeight = 25;
 
         public MessageNode(MessageFlowViewModel owner, StoredMessage message)
         {
@@ -22,10 +40,10 @@
             Owner = owner;
             Data = message;
             ExceptionMessage = message.GetHeaderByKey(MessageHeaderKeys.ExceptionType);
-            SagaType = ProcessSagaType(message);
+            SagaInvocations = new List<SagaInvocation>(ProcessSagaInvocations(message));
 
-            heightNoEndpoints += HasSaga ? 10 : 0;
-            Bounds = new Rect(0, 0, 100, heightNoEndpoints);
+            BaseNodeHeight += HasSaga ? 10 : 0;
+            Bounds = new Rect(0, 0, 100, CalculateNodeHeight());
 
             CopyConversationIDCommand = owner.CopyConversationIDCommand;
             CopyMessageURICommand = owner.CopyMessageURICommand;
@@ -39,20 +57,20 @@
             });
         }
 
-        string ProcessSagaType(StoredMessage message)
+        IEnumerable<SagaInvocation> ProcessSagaInvocations(StoredMessage message)
         {
             if (message.Sagas == null)
             {
-                return string.Empty;
+                yield break;
             }
 
-            var originatingSaga = message.Sagas.FirstOrDefault();
-            if (originatingSaga == null)
+            foreach (var saga in message.Sagas)
             {
-                return string.Empty;
+                if (saga != null)
+                {
+                    yield return new SagaInvocation(saga, message);
+                }
             }
-
-            return TypeHumanizer.ToName(originatingSaga.SagaType);
         }
 
         public StoredMessage Message => Data as StoredMessage;
@@ -81,7 +99,12 @@
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(new Point(), new Size(Bounds.Width, heightNoEndpoints + (ShowEndpoints ? endpointsHeight : 0)));
+            Bounds = new Rect(new Point(), new Size(Bounds.Width, CalculateNodeHeight()));
+        }
+
+        private double CalculateNodeHeight()
+        {
+            return BaseNodeHeight + (SagaInvocations.Count * 20) + (ShowEndpoints ? EndpointsPartHeight : 0);
         }
 
         public bool ShowExceptionInfo => !string.IsNullOrEmpty(ExceptionMessage);
@@ -95,17 +118,6 @@
         public bool IsCommandMessage => !IsPublished && !IsTimeout;
 
         public bool IsTimeoutMessage => IsTimeout;
-
-        public bool IsSagaInitiated => string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.SagaId)) && !string.IsNullOrEmpty(Message.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
-
-        public bool IsSagaCompleted
-        {
-            get
-            {
-                var status = Message.InvokedSagas == null ? null : Message.InvokedSagas.FirstOrDefault();
-                return status != null && status.ChangeStatus == "Completed";
-            }
-        }
 
         public bool IsTimeout
         {
@@ -131,13 +143,14 @@
         }
 
         public bool HasFailed => Message.Status == MessageStatus.Failed ||
-       Message.Status == MessageStatus.RepeatedFailure || Message.Status == MessageStatus.ArchivedFailure;
+                                 Message.Status == MessageStatus.RepeatedFailure || 
+                                 Message.Status == MessageStatus.ArchivedFailure;
 
         public bool HasRetried => Message.Status == MessageStatus.RetryIssued;
 
-        public string SagaType { get; }
+        public IList<SagaInvocation> SagaInvocations { get; }
 
-        public bool HasSaga => !string.IsNullOrEmpty(SagaType);
+        public bool HasSaga => SagaInvocations.Any();
 
         public string ExceptionMessage { get; set; }
 
