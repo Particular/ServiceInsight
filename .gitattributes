@@ -10,8 +10,8 @@
 *.DOT	diff=astextplain
 *.pdf	diff=astextplain
 *.PDF	diff=astextplain
-*.rtf	-text diff=astextplain
-*.RTF	-text diff=astextplain
+*.rtf	diff=astextplain
+*.RTF	diff=astextplain
 
 *.exe	-text -diff
 *.jpg  	-text -diff
@@ -55,18 +55,15 @@
 *.fs text
 *.fsx text
 *.hs text
-
+*.targets text
 *.psm1 text
 *.ps1 text
+*.md text
+*.DotSettings text
 *.txt text eol=crlf
 *.bat text eol=crlf
 
 # Custom for Visual Studio
-*.csproj merge=union
-*.vbproj merge=union
-*.fsproj merge=union
-*.dbproj merge=union 
-*.sln text eol=crlf merge=union
 *.suo 	-text -diff
 *.snk 	-text -diff
 *.cub 	-text -diff

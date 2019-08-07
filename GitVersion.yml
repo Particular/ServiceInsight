@@ -1,2 +1,4 @@
 assembly-versioning-scheme: MajorMinorPatch
-next-version: 1.13.0
+branches:
+  releases?[/-]:
+    tag: ''
