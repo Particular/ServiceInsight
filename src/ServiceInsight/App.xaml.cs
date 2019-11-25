@@ -1,6 +1,8 @@
 ﻿namespace ServiceInsight
 {
+    using System;
     using System.Diagnostics;
+    using System.Linq;
     using System.Windows;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
@@ -24,7 +26,14 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             LogTo.Information("Starting the application...");
-            DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
+
+            var doNotShowSplashScreen = e.Args.Length > 0 && e.Args.Contains ("--silent", StringComparer.OrdinalIgnoreCase);
+
+            if (!doNotShowSplashScreen)
+            {
+                DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
+            }
+
             ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
