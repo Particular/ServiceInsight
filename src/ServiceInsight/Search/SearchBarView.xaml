@@ -73,27 +73,25 @@
             <Button Content=":" cal:Message.Attach="[Event Click]=[Action GoToLastPage]" />
         </StackPanel>
 
-        <dxe:ComboBoxEdit Grid.Column="3"
-                          Width="350"
-                          Margin="5"
-                          AllowDefaultButton="False"
-                          AutoComplete="True"
-                          EditValue="{Binding SearchQuery,
-                                              Mode=TwoWay,
-                                              UpdateSourceTrigger=PropertyChanged}"
-                          IsEnabled="{Binding SearchEnabled}"
-                          ItemsSource="{Binding RecentSearchQueries}"
-                          NullText="Search Messages"
-                          PreviewKeyDown="OnSearchKeyDown"
-                          ShowNullTextForEmptyValue="True"
-                          Visibility="{Binding IsVisible,
-                                               Converter={StaticResource BoolToVisibilityConverter}}">
+        <dxe:ButtonEdit Grid.Column="3"
+                        Width="350"
+                        Margin="5"
+                        AllowDefaultButton="false"
+                        EditValue="{Binding SearchQuery,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding SearchEnabled}"
+                        NullText="Search Messages"
+                        PreviewKeyDown="OnSearchKeyDown"
+                        ShowNullTextForEmptyValue="True"
+                        Visibility="{Binding IsVisible,
+                                             Converter={StaticResource BoolToVisibilityConverter}}">
             <dxe:ButtonEdit.Buttons>
                 <dxe:ButtonInfo Command="{Binding SearchCommand}"
                                 GlyphKind="Search"
                                 IsLeft="True" />
                 <dxe:ButtonInfo Command="{Binding CancelSearchCommand}" GlyphKind="Cancel" />
             </dxe:ButtonEdit.Buttons>
-        </dxe:ComboBoxEdit>
+        </dxe:ButtonEdit>
     </Grid>
 </UserControl>
