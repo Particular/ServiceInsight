@@ -116,6 +116,24 @@
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
+                    <dxg:GridColumn Name="CriticalTime"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="CriticalTime"
+                                    Header="Critical Time"
+                                    HeaderToolTip="The time between when a message is sent and when it is fully processed"
+                                    Tag="critical_time"
+                                    ShowInColumnChooser="True"
+                                    Visible="False" />
+                    <dxg:GridColumn Name="DeliveryTime"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="DeliveryTime"
+                                    Header="Delivery Time"
+                                    HeaderToolTip="Delivery time for the message"
+                                    Tag="delivery_time"
+                                    ShowInColumnChooser="True"
+                                    Visible="False" />
                     <dxg:GridColumn Name="ProcessingStarted"
                                     AllowColumnFiltering="False"
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
@@ -129,8 +147,30 @@
                           <dxe:DateEditSettings DisplayFormat="G" />
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>
-        </dxg:GridControl.Columns>
-
+                    <dxg:GridColumn Name="ProcessingEnded"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="ProcessingEnded"
+                                    Header="Processing Ended"
+                                    HeaderToolTip="When the processing ended"
+                                    Tag="processing_ended"
+                                    ShowInColumnChooser="True"
+                                    Visible="False">
+                      <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="G" />
+                      </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Name="CorrelationID"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="CorrelationId"
+                                    Header="CorrelationID"
+                                    HeaderToolTip="Message correlation identifier"
+                                    Tag="correlation_id"
+                                    ShowInColumnChooser="True"
+                                    Visible="False">
+                    </dxg:GridColumn>
+                </dxg:GridControl.Columns>
                 <dxg:GridControl.View>
                     <dxg:TableView x:Name="gridView"
                                    AllowCascadeUpdate="True"

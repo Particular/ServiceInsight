@@ -25,12 +25,18 @@
         public TimeSpan ProcessingTime { get; set; }
 
         public DateTime? ProcessingStarted => TryParse(GetHeaderByKey(MessageHeaderKeys.ProcessingStarted));
+        public DateTime? ProcessingEnded => TryParse(GetHeaderByKey(MessageHeaderKeys.ProcessingEnded));
 
         public DateTime ProcessedAt { get; set; }
 
         public string ConversationId { get; set; }
 
+        public TimeSpan CriticalTime { get; set; }
+        public TimeSpan DeliveryTime { get; set; }
+
         public string RelatedToMessageId => GetHeaderByKey(MessageHeaderKeys.RelatedTo);
+
+        public string CorrelationId => GetHeaderByKey(MessageHeaderKeys.CorrelationId);
 
         public string ContentType => GetHeaderByKey(MessageHeaderKeys.ContentType);
 
@@ -124,8 +130,10 @@
         public const string RelatedTo = "RelatedTo";
         public const string ContentType = "ContentType";
         public const string IsDeferedMessage = "IsDeferedMessage";
+        public const string ProcessingEnded = "ProcessingEnded";
         public const string ProcessingStarted = "ProcessingStarted";
         public const string ConversationId = "ConversationId";
+        public const string CorrelationId = "CorrelationId";
         public const string MessageId = "MessageId";
         public const string ExceptionType = "ExceptionInfo.ExceptionType";
         public const string ExceptionMessage = "ExceptionInfo.Message";
