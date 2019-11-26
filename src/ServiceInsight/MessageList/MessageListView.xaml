@@ -116,7 +116,20 @@
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
-                </dxg:GridControl.Columns>
+                    <dxg:GridColumn Name="ProcessingStarted"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="ProcessingStarted"
+                                    Header="Processing Started"
+                                    HeaderToolTip="When the processing started"
+                                    Tag="processing_started"
+                                    ShowInColumnChooser="True"
+                                    Visible="False">
+                        <dxg:GridColumn.EditSettings>
+                          <dxe:DateEditSettings DisplayFormat="G" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+        </dxg:GridControl.Columns>
 
                 <dxg:GridControl.View>
                     <dxg:TableView x:Name="gridView"
