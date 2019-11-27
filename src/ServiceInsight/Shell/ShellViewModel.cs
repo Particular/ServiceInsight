@@ -260,6 +260,7 @@
 
             ValidateCommandLineArgs();
             ValidateLicense();
+            CheckForUpdates();
         }
 
         internal async Task OnAutoRefreshing()
@@ -284,6 +285,21 @@
                 var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
+        }
+
+        
+        void CheckForUpdates()
+        {
+            var u = new UpdateStatusCheck();
+
+            var latestTag = u.CheckTheLatestVersion();
+
+            DisplayAvailableUpdateStatus(latestTag);
+        }
+
+        void DisplayAvailableUpdateStatus(string tag)
+        {
+            StatusBarManager.LicenseStatus.SetRegistrationInfo("Available version is: " + tag);
         }
 
         void ValidateCommandLineArgs()
