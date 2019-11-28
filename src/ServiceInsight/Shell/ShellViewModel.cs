@@ -286,20 +286,39 @@
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
         }
-
         
         void CheckForUpdates()
         {
-            var u = new UpdateStatusCheck();
+            try
+            {
+                var latestVersionStr = UpdateStatusCheck.GetLatestVersion();
 
-            var latestTag = u.CheckTheLatestVersion();
+                var currentVersionStr = GetAppCurrentVersion();
 
-            DisplayAvailableUpdateStatus(latestTag);
+                var latestVersion = new Version(latestVersionStr);
+                var currentVersion = new Version(currentVersionStr);
+
+                if (latestVersion.CompareTo(currentVersion) > 0)
+                {
+                    DisplayAvailableUpdateStatus(latestVersionStr);
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        private static string GetAppCurrentVersion()
+        {
+            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
+            var versionParts = assemblyInfo.InformationalVersion.Split('+');
+            return versionParts[0];
         }
 
         void DisplayAvailableUpdateStatus(string tag)
         {
-            StatusBarManager.LicenseStatus.SetRegistrationInfo("Available version is: " + tag);
+            StatusBarManager.LicenseStatus.SetRegistrationInfo($"Newer version: {tag} is available");
         }
 
         void ValidateCommandLineArgs()

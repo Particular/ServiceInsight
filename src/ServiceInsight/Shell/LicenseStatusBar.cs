@@ -44,7 +44,7 @@
 
         public bool OpenLicensePopup
         {
-            get => HasLicenseMessage && forceShowPopup;
+            get { return HasLicenseMessage && forceShowPopup; }
             set => forceShowPopup = value;
         }
 

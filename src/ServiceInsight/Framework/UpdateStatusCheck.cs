@@ -8,9 +8,9 @@
     using RestSharp.Deserializers;
     using ServiceInsight.ExtensionMethods;
 
-    public class UpdateStatusCheck
+    public static class UpdateStatusCheck
     {
-        public string CheckTheLatestVersion()
+        public static string GetLatestVersion()
         //public async Task<string> CheckTheLatestVersion()
         {
             var client = new RestClient("https://s3.us-east-1.amazonaws.com");
@@ -29,7 +29,6 @@
             return rs.Data.OrderByDescending(r=>r.Published).First().Tag;
             //return rs.Data.First().Tag;
         }
-
 
         class Release
         {
