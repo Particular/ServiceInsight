@@ -17,14 +17,20 @@
 
         public bool HasUnsupportedKeys => unsupportedKeys.Count > 0;
 
+        public CommandLineArgParser() : this(new EnvironmentWrapper())
+        {
+        }
+
         public CommandLineArgParser(EnvironmentWrapper environment)
         {
             this.environment = environment;
             unsupportedKeys = new List<string>();
             ParsedOptions = new CommandLineOptions();
+
+            Parse();
         }
 
-        public void Parse()
+        private void Parse()
         {
             var args = environment.GetCommandLineArgs();
 
@@ -88,7 +94,9 @@
                 case "resetlayout":
                     ParsedOptions.SetResetLayout(bool.Parse(value));
                     break;
-
+                case "silentstartup":
+                    ParsedOptions.SetSilentStartup(bool.Parse(value));
+                    break;
                 default:
                     AddUnsupportedKey(key);
                     break;

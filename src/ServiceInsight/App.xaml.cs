@@ -8,6 +8,7 @@
     using DevExpress.Xpf.Core;
     using Framework.Logging;
     using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Startup;
     using Shell;
 
     public partial class App
@@ -27,9 +28,9 @@
         {
             LogTo.Information("Starting the application...");
 
-            var doNotShowSplashScreen = e.Args.Length > 0 && e.Args.Contains ("--silent", StringComparer.OrdinalIgnoreCase);
+            var args = new CommandLineArgParser();
 
-            if (!doNotShowSplashScreen)
+            if (!args.ParsedOptions.SilentStartup)
             {
                 DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             }
