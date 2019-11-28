@@ -1,8 +1,6 @@
 ﻿namespace ServiceInsight
 {
-    using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Windows;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
