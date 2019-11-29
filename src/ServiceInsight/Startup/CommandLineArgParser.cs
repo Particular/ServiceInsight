@@ -30,7 +30,7 @@
             Parse();
         }
 
-        public void Parse()
+        void Parse()
         {
             var args = environment.GetCommandLineArgs();
 
