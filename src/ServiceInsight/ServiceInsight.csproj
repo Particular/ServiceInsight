@@ -298,7 +298,6 @@
     <Compile Include="Framework\Licensing\LicenseInstallationResult.cs" />
     <Compile Include="Framework\Settings\ApplicationConfiguration.cs" />
     <Compile Include="Framework\UI\CultureAwareBinding.cs" />
-    <Compile Include="Framework\UpdateStatusCheck.cs" />
     <Compile Include="Framework\WorkNotifier.cs" />
     <Compile Include="Framework\Commands\BaseCommand.cs" />
     <Compile Include="Framework\Commands\ChangeSelectedMessageCommand.cs" />
@@ -386,6 +385,7 @@
       <DependentUpon>ManageLicenseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\ManageLicenseViewModel.cs" />
+    <Compile Include="Shell\UpdateManager.cs" />
     <Compile Include="ValueConverters\BoolToStrokeDashArrayConverter.cs" />
     <Compile Include="SequenceDiagram\SequenceDiagramView.xaml.cs">
       <DependentUpon>SequenceDiagramView.xaml</DependentUpon>

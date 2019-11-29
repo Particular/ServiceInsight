@@ -9,6 +9,7 @@
         xmlns:local="clr-namespace:ServiceInsight.Shell"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:themes="http://schemas.devexpress.com/winfx/2008/xaml/bars/themekeys"
+        xmlns:controls="clr-namespace:ServiceInsight.Controls"
         Title="{Binding DisplayName}"
         MinWidth="500"
         MinHeight="300"
@@ -284,6 +285,7 @@
                                    Stretch="Uniform"
                                    Visibility="{Binding Path=StatusBarManager.ErrorMessageVisible,
                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <controls:LinkedIcon Text="Newer version is available" FontSize="12" Command="{Binding NewVersionIsAvailableCommand}" Margin="0,0,5,0" Visibility="{Binding Path=NewVersionIsAvailable, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.StatusMessage, Mode=OneWay}" />
                         </StackPanel>
                     </DataTemplate>

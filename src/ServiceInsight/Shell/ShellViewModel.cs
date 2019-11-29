@@ -117,6 +117,8 @@
             ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
             OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
+
+            NewVersionIsAvailableCommand = Command.Create(() => Process.Start(@"https://github.com/Particular/ServiceInsight/releases"));
         }
 
         protected override void OnViewAttached(object view, object context)
@@ -187,6 +189,8 @@
 
         public bool WorkInProgress => workCounter > 0;
 
+        public bool NewVersionIsAvailable { get; private set; }
+
         public ICommand ShutDownCommand { get; }
 
         public ICommand AboutCommand { get; }
@@ -202,6 +206,8 @@
         public ICommand ResetLayoutCommand { get; }
 
         public ICommand OptionsCommand { get; }
+
+        public ICommand NewVersionIsAvailableCommand { get; }
 
         public async Task ConnectToServiceControl()
         {
@@ -289,36 +295,7 @@
         
         void CheckForUpdates()
         {
-            try
-            {
-                var latestVersionStr = UpdateStatusCheck.GetLatestVersion();
-
-                var currentVersionStr = GetAppCurrentVersion();
-
-                var latestVersion = new Version(latestVersionStr);
-                var currentVersion = new Version(currentVersionStr);
-
-                if (latestVersion.CompareTo(currentVersion) > 0)
-                {
-                    DisplayAvailableUpdateStatus(latestVersionStr);
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        private static string GetAppCurrentVersion()
-        {
-            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
-            var versionParts = assemblyInfo.InformationalVersion.Split('+');
-            return versionParts[0];
-        }
-
-        void DisplayAvailableUpdateStatus(string tag)
-        {
-            StatusBarManager.LicenseStatus.SetRegistrationInfo($"Newer version: {tag} is available");
+            NewVersionIsAvailable = new UpdateManager().NewUpdateIsAvailable();
         }
 
         void ValidateCommandLineArgs()
