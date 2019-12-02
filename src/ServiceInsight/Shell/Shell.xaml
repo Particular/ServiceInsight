@@ -76,7 +76,7 @@
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
                     AutomationProperties.AutomationId="BarManager"
-                    dxc:DXSerializer.LayoutVersion="4"
+                    dxc:DXSerializer.LayoutVersion="5"
                     dxc:DXSerializer.SerializationID="BarManager">
         <!--  Categories  -->
         <dxb:BarManager.Categories>

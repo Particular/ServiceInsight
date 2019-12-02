@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
 
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
@@ -23,11 +24,19 @@
 
         public TimeSpan ProcessingTime { get; set; }
 
+        public DateTime? ProcessingStarted => TryParse(GetHeaderByKey(MessageHeaderKeys.ProcessingStarted));
+        public DateTime? ProcessingEnded => TryParse(GetHeaderByKey(MessageHeaderKeys.ProcessingEnded));
+
         public DateTime ProcessedAt { get; set; }
 
         public string ConversationId { get; set; }
 
+        public TimeSpan CriticalTime { get; set; }
+        public TimeSpan DeliveryTime { get; set; }
+
         public string RelatedToMessageId => GetHeaderByKey(MessageHeaderKeys.RelatedTo);
+
+        public string CorrelationId => GetHeaderByKey(MessageHeaderKeys.CorrelationId);
 
         public string ContentType => GetHeaderByKey(MessageHeaderKeys.ContentType);
 
@@ -82,7 +91,12 @@
             return pair == null ? defaultValue : pair.Value;
         }
 
-        public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||
+        private static DateTime? TryParse(string value)
+        {
+          return DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var date) ? date : (DateTime?)null;
+        }
+
+    public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||
        (Status != focusedMessage.Status) ||
        (TimeSent != focusedMessage.TimeSent) ||
        (ProcessingTime != focusedMessage.ProcessingTime) ||
@@ -116,7 +130,10 @@
         public const string RelatedTo = "RelatedTo";
         public const string ContentType = "ContentType";
         public const string IsDeferedMessage = "IsDeferedMessage";
+        public const string ProcessingEnded = "ProcessingEnded";
+        public const string ProcessingStarted = "ProcessingStarted";
         public const string ConversationId = "ConversationId";
+        public const string CorrelationId = "CorrelationId";
         public const string MessageId = "MessageId";
         public const string ExceptionType = "ExceptionInfo.ExceptionType";
         public const string ExceptionMessage = "ExceptionInfo.Message";
