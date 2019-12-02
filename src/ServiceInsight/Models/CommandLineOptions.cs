@@ -28,6 +28,8 @@
 
         public bool ShouldAutoRefresh { get; private set; }
 
+        public bool SilentStartup { get; private set; }
+
         public bool ResetLayout { get; private set; }
 
         public bool SecuredConnection { get; private set; }
@@ -82,6 +84,11 @@
         public void SetSecuredConnection(bool value)
         {
             SecuredConnection = value;
+        }
+
+        public void SetSilentStartup(bool value)
+        {
+          SilentStartup = value;
         }
 
         string Decode(string encodedString) => HttpUtility.UrlDecode(encodedString);

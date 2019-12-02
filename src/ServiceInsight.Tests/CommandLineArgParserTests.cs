@@ -148,7 +148,6 @@
         CommandLineArgParser CreateSut()
         {
             var parser = new CommandLineArgParser(environment);
-            parser.Parse();
             return parser;
         }
     }

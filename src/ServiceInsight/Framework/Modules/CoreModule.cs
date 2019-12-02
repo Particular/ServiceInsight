@@ -20,7 +20,7 @@
             builder.RegisterType<AppLicenseManager>().SingleInstance();
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerLifetimeScope();
-            builder.RegisterType<CommandLineArgParser>().SingleInstance().OnActivating(e => e.Instance.Parse());
+            builder.RegisterType<CommandLineArgParser>().SingleInstance();
             builder.RegisterType<WorkNotifier>().As<IWorkNotifier>().InstancePerLifetimeScope();
         }
     }
