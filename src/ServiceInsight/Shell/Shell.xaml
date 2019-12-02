@@ -285,8 +285,26 @@
                                    Stretch="Uniform"
                                    Visibility="{Binding Path=StatusBarManager.ErrorMessageVisible,
                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
-                            <controls:LinkedIcon Text="Newer version is available" FontSize="12" Command="{Binding NewVersionIsAvailableCommand}" Margin="0,0,5,0" Visibility="{Binding Path=NewVersionIsAvailable, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock VerticalAlignment="Center" Text="{Binding Path=StatusBarManager.StatusMessage, Mode=OneWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxb:BarStaticItem.ContentTemplate>
+            </dxb:BarStaticItem>
+
+            <dxb:BarStaticItem x:Name="UpdateCheck" 
+                               AutoSizeMode="Content"
+                               CategoryName="Status"
+                               Alignment="Far"
+                               Content="{Binding}"
+                               ShowBorder="False">
+                <dxb:BarStaticItem.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <controls:LinkedIcon Text="A new version is available."
+                                                 ImageSource="/Images/NewUpdate.png"
+                                                 FontSize="12" Margin="0,0,5,0" 
+                                                 Command="{Binding NewVersionIsAvailableCommand}" 
+                                                 Visibility="{Binding Path=NewVersionIsAvailable, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         </StackPanel>
                     </DataTemplate>
                 </dxb:BarStaticItem.ContentTemplate>
@@ -328,6 +346,7 @@
                 <dxb:Bar.ItemLinks>
                     <dxb:BarStaticItemLink BarItemName="Status"  />
                     <dxb:BarItemLinkSeparator />
+                    <dxb:BarStaticItemLink BarItemName="UpdateCheck" />
                     <dxb:BarStaticItemLink BarItemName="Registration" />
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarStaticItemLink BarItemName="LicenseStatusBar" />

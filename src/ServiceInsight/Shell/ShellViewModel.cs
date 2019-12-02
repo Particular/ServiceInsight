@@ -46,6 +46,7 @@
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
+        IVersionUpdateChecker versionUpdateChecker;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -72,6 +73,7 @@
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
+            IVersionUpdateChecker versionUpdateChecker,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
@@ -85,6 +87,7 @@
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenseMessageBoxViewModel = licenseMessageBoxViewModel;
+            this.versionUpdateChecker = versionUpdateChecker;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -295,7 +298,7 @@
         
         void CheckForUpdates()
         {
-            NewVersionIsAvailable = new UpdateManager().NewUpdateIsAvailable();
+            NewVersionIsAvailable = versionUpdateChecker.IsNewVersionAvailable();
         }
 
         void ValidateCommandLineArgs()

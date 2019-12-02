@@ -10,9 +10,14 @@ namespace ServiceInsight.Shell
     using RestSharp.Deserializers;
     using ServiceInsight.ExtensionMethods;
 
-    public class UpdateManager
+    public interface IVersionUpdateChecker
     {
-        public bool NewUpdateIsAvailable()
+        bool IsNewVersionAvailable();
+    }
+
+    public class VersionUpdateChecker : IVersionUpdateChecker
+    {
+        public bool IsNewVersionAvailable()
         {
             try
             {
@@ -22,20 +27,13 @@ namespace ServiceInsight.Shell
                 var latestVersion = new Version(latestVersionStr);
                 var currentVersion = new Version(currentVersionStr);
 
-                if (latestVersion.CompareTo(currentVersion) > 0)
-                {
-                    return true;
-                }
+                return latestVersion > currentVersion;
             }
             catch(Exception ex)
             {
-                LogTo.Error(ex, "Check for a new version");
-
-                //TODO: remove before merging to Master. Leaved it for tests
+                LogTo.Warning(ex, "Could not check for a new version.");
                 return true;
             }
-
-            return false;
         }
 
         string CheckTheLatestVersion()
@@ -59,7 +57,9 @@ namespace ServiceInsight.Shell
         {
             var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             var versionParts = assemblyInfo.InformationalVersion.Split('+');
-            return versionParts[0];
+            var version = versionParts[0];
+
+            return version;
         }
 
         class Release
