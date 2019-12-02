@@ -46,6 +46,7 @@
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
+        IVersionUpdateChecker versionUpdateChecker;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
         CommandLineArgParser comandLineArgParser;
@@ -72,6 +73,7 @@
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
+            IVersionUpdateChecker versionUpdateChecker,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
             CommandLineArgParser comandLineArgParser)
@@ -85,6 +87,7 @@
             this.comandLineArgParser = comandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenseMessageBoxViewModel = licenseMessageBoxViewModel;
+            this.versionUpdateChecker = versionUpdateChecker;
             MessageProperties = messageProperties;
             MessageFlow = messageFlow;
             SagaWindow = sagaWindow;
@@ -117,6 +120,8 @@
             ResetLayoutCommand = Command.Create(() => View.OnResetLayout(settingsProvider));
 
             OptionsCommand = Command.Create(() => windowManager.ShowDialog<OptionsViewModel>());
+
+            NewVersionIsAvailableCommand = Command.Create(() => Process.Start(@"https://github.com/Particular/ServiceInsight/releases"));
         }
 
         protected override void OnViewAttached(object view, object context)
@@ -187,6 +192,8 @@
 
         public bool WorkInProgress => workCounter > 0;
 
+        public bool NewVersionIsAvailable { get; private set; }
+
         public ICommand ShutDownCommand { get; }
 
         public ICommand AboutCommand { get; }
@@ -202,6 +209,8 @@
         public ICommand ResetLayoutCommand { get; }
 
         public ICommand OptionsCommand { get; }
+
+        public ICommand NewVersionIsAvailableCommand { get; }
 
         public async Task ConnectToServiceControl()
         {
@@ -260,6 +269,7 @@
 
             ValidateCommandLineArgs();
             ValidateLicense();
+            CheckForUpdates();
         }
 
         internal async Task OnAutoRefreshing()
@@ -284,6 +294,11 @@
                 var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
+        }
+        
+        void CheckForUpdates()
+        {
+            NewVersionIsAvailable = versionUpdateChecker.IsNewVersionAvailable();
         }
 
         void ValidateCommandLineArgs()

@@ -5,6 +5,7 @@ namespace ServiceInsight.ServiceControl
     using System.Collections.Specialized;
     using System.Linq;
     using System.Net;
+    using System.Net.Security;
     using System.Runtime.Caching;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -53,7 +54,15 @@ namespace ServiceInsight.ServiceControl
 
         static DefaultServiceControl()
         {
-            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => OnCertificateValidationFailed();
+            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
+            {
+              if (errors != SslPolicyErrors.None)
+              {
+                return OnCertificateValidationFailed();
+              }
+
+              return true;
+            };
         }
 
         private static bool OnCertificateValidationFailed()

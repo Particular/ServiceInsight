@@ -41,6 +41,7 @@
         MessageListViewModel messageList;
         MessageFlowViewModel messageFlow;
         SagaWindowViewModel sagaWindow;
+        IVersionUpdateChecker versionUpdateChecker;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         StatusBarManager statusbarManager;
@@ -75,6 +76,7 @@
             sequenceDiagramView = Substitute.For<SequenceDiagramViewModel>();
             settingsProvider = Substitute.For<ISettingsProvider>();
             licenseManager = Substitute.For<AppLicenseManager>();
+            versionUpdateChecker = Substitute.For<IVersionUpdateChecker>();
             logWindow = Substitute.For<LogWindowViewModel>();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());
             app = Substitute.For<IAppCommands>();
@@ -97,6 +99,7 @@
                         headerView,
                         sequenceDiagramView,
                         settingsProvider,
+                        versionUpdateChecker,
                         messageProperties,
                         logWindow,
                         commandLineArgParser);

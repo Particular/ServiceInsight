@@ -46,6 +46,7 @@
             builder.RegisterType<AppExceptionHandler>().SingleInstance();
             builder.RegisterType<OptionsView>().As<IOptionsView>().InstancePerDependency();
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
+            builder.RegisterType<VersionUpdateChecker>().AsImplementedInterfaces().SingleInstance();
         }
 
         protected static IEnumerable<Type> ExemptTypes
