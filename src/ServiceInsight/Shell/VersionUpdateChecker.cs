@@ -32,7 +32,7 @@ namespace ServiceInsight.Shell
             catch(Exception ex)
             {
                 LogTo.Warning(ex, "Could not check for a new version.");
-                return true;
+                return false;
             }
         }
 
@@ -58,6 +58,12 @@ namespace ServiceInsight.Shell
             var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             var versionParts = assemblyInfo.InformationalVersion.Split('+');
             var version = versionParts[0];
+            var suffixIndex = version?.IndexOf("-");
+
+            if (suffixIndex > 0)
+            {
+              return version.Substring(0, suffixIndex.Value);
+            }
 
             return version;
         }
