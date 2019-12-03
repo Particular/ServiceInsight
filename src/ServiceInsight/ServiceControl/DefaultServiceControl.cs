@@ -373,6 +373,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
+            RaiseConnectivityIssue(response);
+
             CleanResponse(response);
 
             var data = default(T);
@@ -462,6 +464,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             var response = await restClient.ExecuteTaskAsync<T2>(request).ConfigureAwait(false);
 
+            RaiseConnectivityIssue(response);
+
             CleanResponse(response);
 
             var data = default(T);
@@ -506,6 +510,15 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             }
 
             return data;
+        }
+
+        private void RaiseConnectivityIssue(IRestResponse response)
+        {
+           if (response?.ErrorException is WebException webException && 
+               webException.Status == WebExceptionStatus.ConnectFailure)
+           {
+               LogError(response);
+           }
         }
 
         void CacheData(RestRequestWithCache request, IRestClient restClient, object data)
