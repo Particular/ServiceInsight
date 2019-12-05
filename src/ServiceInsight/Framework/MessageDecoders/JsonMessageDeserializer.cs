@@ -30,6 +30,9 @@
 
         public T Deserialize<T>(IRestResponse response)
         {
+            if (string.IsNullOrEmpty(response.Content))
+              return default(T);
+
             var target = Activator.CreateInstance<T>();
 
             if (target is IList)
