@@ -1,1 +1,4 @@
-
+exclusions:
+- src/Directory.Build.props
+- src/NServiceBus.snk
+- GitVersion.yml
