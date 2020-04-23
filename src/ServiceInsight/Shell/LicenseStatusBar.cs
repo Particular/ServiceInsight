@@ -13,9 +13,6 @@
         public const string UpgradeProtectionExpiringMessage = "Upgrade protection expiring in {0} day(s)";
         public const string UpgradeProtectionExpiredMessage = "Upgrade protection expired";
         public const string UpgradeProtectionExpiresTodayMessage = "Upgrade protection expires today";
-        public const string TrialExpiringMessage = "Trial expiring in {0} day(s)";
-        public const string TrialExpiredMessage = "Trial expired";
-        public const string TrialLicenseText = "Please extend your trial or purchase a license to continue using the Particular Service Platform.";
         public const string UpgradeProtectionLicenseText = "Please extend your upgrade protection so that we can continue to provide you with support and new versions of the Particular Service Platform.";
         public const string SubscriptionLicenseText = "Please extend your license to continue using the Particular Service Platform.";
 
@@ -129,14 +126,14 @@
             if (remainingDays <= 0)
             {
                 ShowLicenseError = true;
-                LicenseStatusMessage = TrialExpiredMessage;
-                LicensePopupText = TrialLicenseText;
+                LicenseStatusMessage = LicenseExpiredMessage;
+                LicensePopupText = SubscriptionLicenseText;
             }
             else if (remainingDays <= 10)
             {
                 ShowLicenseWarn = true;
-                LicenseStatusMessage = string.Format(TrialExpiringMessage, remainingDays);
-                LicensePopupText = TrialLicenseText;
+                LicenseStatusMessage = string.Format(LicenseExpiringMessage, remainingDays);
+                LicensePopupText = SubscriptionLicenseText;
             }
 
             OpenLicensePopup = AppStartCheck;

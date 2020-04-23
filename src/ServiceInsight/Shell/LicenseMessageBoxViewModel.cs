@@ -34,15 +34,14 @@
             {
                 ShowManageLicenseOption = true;
                 ShowExtendTrialOption = true;
-                Message = LicenseStatusBar.TrialLicenseText;
             }
             else
             {
                 ShowManageLicenseCTAOption = true;
                 ShowContactUsOption = true;
-                Message = LicenseStatusBar.SubscriptionLicenseText;
             }
 
+            Message = LicenseStatusBar.SubscriptionLicenseText;
             ShowExitOption = true;
         }
 
