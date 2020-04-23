@@ -18,7 +18,7 @@
                 specialFolderPath = AppDomain.CurrentDomain.BaseDirectory;
             }
 
-            return Path.Combine(specialFolderPath, CompanyFolder, licenseFileName ?? string.Empty);
+            return Path.Combine(specialFolderPath, companyFolder, licenseFileName ?? string.Empty);
         }
 
         static string GetSpecialFolderPath(SpecialFolder specialFolder)
@@ -40,6 +40,6 @@
             return path ?? string.Empty;
         }
 
-        const string CompanyFolder = "ParticularSoftware";
+        const string companyFolder = "ParticularSoftware";
     }
 }
