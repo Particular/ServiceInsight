@@ -35,11 +35,11 @@
             <TextBlock Canvas.Left="38"
                        Canvas.Top="38"
                        Style="{StaticResource InfoText}"
-                       Visibility="{Binding HasFullLicense,
+                       Visibility="{Binding ShowRegisteredTo,
                                             Converter={StaticResource BoolToVisibilityConverter},
                                             Mode=OneWay}">
                 <Run FontWeight="Bold" Text="Registered to: " />
-                <Run Text="{Binding License.RegisteredTo, Mode=OneWay}" />
+                <Run Text="{Binding RegisteredTo, Mode=OneWay}" />
             </TextBlock>
 
             <StackPanel Canvas.Left="38"

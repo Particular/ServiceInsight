@@ -24,9 +24,11 @@ namespace ServiceInsight.Shell
 
         public bool IsSplash { get; }
 
-        public bool HasFullLicense => License != null && !License.HasTrialLicense;
+        public bool ShowRegisteredTo => RegisteredTo != null;
 
-        public LicenseRegistrationViewModel License { get; }
+        private LicenseRegistrationViewModel License { get; }
+
+        public string RegisteredTo => License?.RegisteredTo;
 
         public string AppVersion { get; private set; }
 
