@@ -44,13 +44,13 @@
 
         public string RegisteredTo => CurrentLicense?.RegisteredTo;
 
-        public bool HasTrialLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
+        public bool HasNonProductionLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
 
         public bool HasFullLicense => CurrentLicense != null && CurrentLicense.IsCommercialLicense;
 
-        public bool CanExtendTrial => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
+        public bool CanExtendLicense => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
 
-        public int GetRemainingTrialDays()
+        public int GetRemainingNonProductionDays()
         {
             var remaining = CurrentLicense.GetDaysUntilLicenseExpires().GetValueOrDefault(0);
             return Math.Max(remaining, 0);
@@ -90,7 +90,7 @@
             return DateExpirationStatus.NotSet;
         }
 
-        public DateExpirationStatus GetTrialExpirationStatus()
+        public DateExpirationStatus GetNonProductionExpirationStatus()
         {
             var status = CurrentLicense.GetLicenseStatus();
             switch (status)

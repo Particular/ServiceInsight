@@ -347,7 +347,7 @@
             }
             else
             {
-                StatusBarManager.LicenseStatus.SetTrialRemainingDays(licenseManager.GetRemainingTrialDays());
+                StatusBarManager.LicenseStatus.SetNonProductionRemainingDays(licenseManager.GetRemainingNonProductionDays());
             }
         }
 

@@ -30,10 +30,10 @@
         {
             ResetLicenseOptions();
 
-            if (licenseManager.HasTrialLicense)
+            if (licenseManager.HasNonProductionLicense)
             {
                 ShowManageLicenseOption = true;
-                ShowExtendTrialOption = true;
+                ShowExtendLicenseOption = true;
             }
             else
             {
@@ -49,7 +49,7 @@
         {
             Result = null;
             ShowManageLicenseOption = false;
-            ShowExtendTrialOption = false;
+            ShowExtendLicenseOption = false;
             ShowManageLicenseCTAOption = false;
             ShowExitOption = false;
             ShowContactUsOption = false;
@@ -60,9 +60,9 @@
             appCommands.ShutdownImmediately();
         }
 
-        public void ExtendTrial()
+        public void ExtendLicense()
         {
-            networkOperations.OpenExtendTrial();
+            networkOperations.OpenExtendLicense();
         }
 
         public void ManageLicenseCTA()
@@ -96,7 +96,7 @@
 
         public bool ShowContactUsOption { get; set; }
 
-        public bool ShowExtendTrialOption { get; set; }
+        public bool ShowExtendLicenseOption { get; set; }
 
         public bool ShowManageLicenseOption { get; set; }
 

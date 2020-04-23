@@ -114,7 +114,7 @@
             OpenLicensePopup = AppStartCheck;
         }
 
-        public void SetTrialRemainingDays(int remainingDays)
+        public void SetNonProductionRemainingDays(int remainingDays)
         {
             ResetStatusBar();
 

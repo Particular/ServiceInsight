@@ -59,12 +59,12 @@
                         Visibility="{Binding ShowContactUsOption, Converter={StaticResource BoolToVisibilityConverter}}">
                 </Button>
 
-                <Button x:Name="ExtendTrial" 
+                <Button x:Name="ExtendLicense" 
                         Width="115"
                         Margin="3" 
                         Content="Extend License"
                         Style="{StaticResource CallToActionButton}"
-                        Visibility="{Binding ShowExtendTrialOption, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ShowExtendLicenseOption, Converter={StaticResource BoolToVisibilityConverter}}">
                 </Button>
 
                 <Button x:Name="ManageLicense" 

@@ -22,7 +22,7 @@
             Browse("https://particular.net/contactus");
         }
 
-        public void OpenExtendTrial()
+        public void OpenExtendLicense()
         {
             Browse("http://particular.net/extend-your-trial-14?p=serviceinsight");
         }

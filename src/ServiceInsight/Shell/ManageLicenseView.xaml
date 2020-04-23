@@ -126,13 +126,13 @@
                         Content="Import license file..." 
                         Width="140" Height="30" />
 
-                <Button x:Name="ExtendTrial"
+                <Button x:Name="ExtendLicense"
                         HorizontalAlignment="Left"
                         Content="Extend license..."
                         Width="140" Height="30"
                         Margin="20,0,0,0"
                         Style="{StaticResource CallToActionButton}"
-                        Visibility="{Binding CanExtendTrial, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        Visibility="{Binding CanExtendLicense, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
 
             <Grid Margin="20,5,20,10" Grid.Row="5">
