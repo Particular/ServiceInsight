@@ -62,7 +62,7 @@
                 <Button x:Name="ExtendTrial" 
                         Width="115"
                         Margin="3" 
-                        Content="Extend Trial"
+                        Content="Extend License"
                         Style="{StaticResource CallToActionButton}"
                         Visibility="{Binding ShowExtendTrialOption, Converter={StaticResource BoolToVisibilityConverter}}">
                 </Button>

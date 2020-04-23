@@ -40,8 +40,6 @@
         IHandle<LicenseUpdated>,
         IWorkTracker
     {
-        internal const string UnlicensedStatusMessage = "Trial license: {0} left";
-
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
         IEventAggregator eventAggregator;
@@ -361,13 +359,14 @@
             {
                 return;
             }
-            if (license.IsCommercialLicense)
+
+            if(string.IsNullOrWhiteSpace(license.RegisteredTo) == false)
             {
                 StatusBarManager.LicenseStatus.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.LicenseStatus.SetRegistrationInfo(UnlicensedStatusMessage, $"{licenseManager.GetRemainingTrialDays()} day(s)");
+                StatusBarManager.LicenseStatus.SetRegistrationInfo("{0} license", license.LicenseType);
             }
         }
 
