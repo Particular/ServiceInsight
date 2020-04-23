@@ -535,10 +535,6 @@
     <Compile Include="Shell\AboutViewModel.cs" />
     <Compile Include="Shell\BusyAutomationBehaviour.cs" />
     <Compile Include="Shell\AppExceptionHandler.cs" />
-    <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
-      <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
     <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
       <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>
@@ -725,10 +721,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\About.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\LicenseRegistrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
