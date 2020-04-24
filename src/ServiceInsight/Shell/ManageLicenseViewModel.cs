@@ -108,7 +108,7 @@
 
         public void ExtendLicense()
         {
-            network.OpenExtendLicense();
+            network.OpenExtendLicense(licenseManager.HasEvaluationLicense);
         }
 
         public void ImportLicense()

@@ -11,6 +11,7 @@
             var sources = LicenseSource.GetStandardLicenseSources().ToArray();
             var result = ActiveLicense.Find("ServiceInsight", sources);
             CurrentLicense = result.License;
+            HasEvaluationLicense = string.Equals(result.Location, "Trial License", StringComparison.OrdinalIgnoreCase);
         }
 
         public LicenseInstallationResult TryInstallLicense(string licenseText)
@@ -47,6 +48,8 @@
         public bool HasNonProductionLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
 
         public bool HasFullLicense => CurrentLicense != null && CurrentLicense.IsCommercialLicense;
+
+        public bool HasEvaluationLicense { get; set; }
 
         public bool CanExtendLicense => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
 

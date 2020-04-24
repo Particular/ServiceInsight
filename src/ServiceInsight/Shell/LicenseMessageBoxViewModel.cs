@@ -62,7 +62,7 @@
 
         public void ExtendLicense()
         {
-            networkOperations.OpenExtendLicense();
+            networkOperations.OpenExtendLicense(licenseManager.HasEvaluationLicense);
         }
 
         public void ManageLicenseCTA()
