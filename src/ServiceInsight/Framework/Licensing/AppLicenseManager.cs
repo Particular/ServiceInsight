@@ -11,6 +11,7 @@
             var sources = LicenseSource.GetStandardLicenseSources().ToArray();
             var result = ActiveLicense.Find("ServiceInsight", sources);
             CurrentLicense = result.License;
+            HasEvaluationLicense = string.Equals(result.Location, "Trial License", StringComparison.OrdinalIgnoreCase);
         }
 
         public LicenseInstallationResult TryInstallLicense(string licenseText)
@@ -44,13 +45,15 @@
 
         public string RegisteredTo => CurrentLicense?.RegisteredTo;
 
-        public bool HasTrialLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
+        public bool HasNonProductionLicense => CurrentLicense == null || CurrentLicense.IsTrialLicense;
 
         public bool HasFullLicense => CurrentLicense != null && CurrentLicense.IsCommercialLicense;
 
-        public bool CanExtendTrial => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
+        public bool HasEvaluationLicense { get; set; }
 
-        public int GetRemainingTrialDays()
+        public bool CanExtendLicense => CurrentLicense == null || (CurrentLicense.IsTrialLicense && !CurrentLicense.IsExtendedTrial);
+
+        public int GetRemainingNonProductionDays()
         {
             var remaining = CurrentLicense.GetDaysUntilLicenseExpires().GetValueOrDefault(0);
             return Math.Max(remaining, 0);
@@ -90,7 +93,7 @@
             return DateExpirationStatus.NotSet;
         }
 
-        public DateExpirationStatus GetTrialExpirationStatus()
+        public DateExpirationStatus GetNonProductionExpirationStatus()
         {
             var status = CurrentLicense.GetLicenseStatus();
             switch (status)

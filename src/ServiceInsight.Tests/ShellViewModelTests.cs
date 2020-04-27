@@ -189,11 +189,11 @@
             };
 
             licenseManager.CurrentLicense = issuedLicense;
-            licenseManager.GetRemainingTrialDays().Returns(RemainingDays);
+            licenseManager.GetRemainingNonProductionDays().Returns(RemainingDays);
 
             shell.OnApplicationIdle();
 
-            licenseStatusBar.Received().SetTrialRemainingDays(Arg.Is(RemainingDays));
+            licenseStatusBar.Received().SetNonProductionRemainingDays(Arg.Is(RemainingDays));
         }
 
         [TearDown]

@@ -25,7 +25,7 @@
         {
             const int DaysRemaining = 10;
 
-            licenseStatusBar.SetTrialRemainingDays(DaysRemaining);
+            licenseStatusBar.SetNonProductionRemainingDays(DaysRemaining);
 
             licenseStatusBar.ShowLicenseWarn.ShouldBe(true);
             licenseStatusBar.ShowLicenseError.ShouldBe(false);
@@ -36,7 +36,7 @@
         {
             const int DaysRemaining = 0;
 
-            licenseStatusBar.SetTrialRemainingDays(DaysRemaining);
+            licenseStatusBar.SetNonProductionRemainingDays(DaysRemaining);
 
             licenseStatusBar.ShowLicenseWarn.ShouldBe(false);
             licenseStatusBar.ShowLicenseError.ShouldBe(true);

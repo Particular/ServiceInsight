@@ -9,6 +9,7 @@ namespace ServiceInsight.Shell
     using Caliburn.Micro;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Licensing;
     using ServiceInsight.ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
@@ -17,6 +18,7 @@ namespace ServiceInsight.Shell
         const string NotConnectedToServiceControl = "(Not Connected)";
 
         IServiceControl serviceControl;
+        private AppLicenseManager licenseManager;
 
         public event EventHandler<ActivationEventArgs> Activated = (s, e) => { };
 
@@ -24,9 +26,9 @@ namespace ServiceInsight.Shell
 
         public bool IsSplash { get; }
 
-        public bool HasFullLicense => License != null && !License.HasTrialLicense;
+        public bool ShowRegisteredTo => RegisteredTo != null;
 
-        public LicenseRegistrationViewModel License { get; }
+        public string RegisteredTo => licenseManager?.RegisteredTo;
 
         public string AppVersion { get; private set; }
 
@@ -45,11 +47,11 @@ namespace ServiceInsight.Shell
         public AboutViewModel(
             NetworkOperations networkOperations,
             IServiceControl serviceControl,
-            LicenseRegistrationViewModel licenseInfo)
+            AppLicenseManager licenseManager)
         {
             this.serviceControl = serviceControl;
 
-            License = licenseInfo;
+            this.licenseManager = licenseManager;
             IsSplash = false;
             DisplayName = "About";
 
@@ -77,18 +79,9 @@ namespace ServiceInsight.Shell
 
         async void OnActivate()
         {
-            ActivateLicense();
             LoadAppVersion();
             SetCopyrightText();
             await LoadVersions();
-        }
-
-        void ActivateLicense()
-        {
-            if (License != null)
-            {
-                ((IActivate)License).Activate();
-            }
         }
 
         void LoadAppVersion()

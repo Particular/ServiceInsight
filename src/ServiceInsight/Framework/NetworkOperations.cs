@@ -22,9 +22,9 @@
             Browse("https://particular.net/contactus");
         }
 
-        public void OpenExtendTrial()
+        public void OpenExtendLicense(bool firstTime = false)
         {
-            Browse("http://particular.net/extend-your-trial-14?p=serviceinsight");
+            Browse($"https://particular.net/license/nservicebus?t={(firstTime ? 0 : 1)}&p=serviceinsight");
         }
 
         class NetworkBrowser

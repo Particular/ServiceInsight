@@ -30,7 +30,6 @@
                 .InstancePerDependency();
 
             builder.RegisterType<AppCommands>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<LicenseRegistrationView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<LicenseMessageBoxView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<ManageLicenseView>().AsImplementedInterfaces().ExternallyOwned();
             builder.RegisterType<ServiceControlConnectionView>().AsImplementedInterfaces().InstancePerDependency();
@@ -54,7 +53,6 @@
             get
             {
                 yield return typeof(LicenseMessageBoxView);
-                yield return typeof(LicenseRegistrationView);
                 yield return typeof(ServiceControlConnectionView);
                 yield return typeof(MessageSelectionContext);
                 yield return typeof(OptionsView);

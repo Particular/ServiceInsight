@@ -96,8 +96,8 @@
             }
             else
             {
-                ExpirationRemainingDays = licenseManager.GetRemainingTrialDays();
-                ExpirationDateStatus = licenseManager.GetTrialExpirationStatus();
+                ExpirationRemainingDays = licenseManager.GetRemainingNonProductionDays();
+                ExpirationDateStatus = licenseManager.GetNonProductionExpirationStatus();
             }
         }
 
@@ -106,9 +106,9 @@
             network.OpenContactUs();
         }
 
-        public void ExtendTrial()
+        public void ExtendLicense()
         {
-            network.OpenExtendTrial();
+            network.OpenExtendLicense(licenseManager.HasEvaluationLicense);
         }
 
         public void ImportLicense()
@@ -133,7 +133,7 @@
             if (result == LicenseInstallationResult.Succeeded)
             {
                 ShowLicenseStatus();
-                NotifyOfPropertyChange(nameof(CanExtendTrial));
+                NotifyOfPropertyChange(nameof(CanExtendLicense));
                 eventAggregator.PublishOnUIThread(new LicenseUpdated());
                 ValidationResult = dialog.Result;
             }
@@ -143,7 +143,7 @@
 
         public string LicenseType { get; set; }
 
-        public bool CanExtendTrial => licenseManager.HasTrialLicense;
+        public bool CanExtendLicense => licenseManager.HasNonProductionLicense;
 
         public DateTime? ExpirationDate { get; set; }
 

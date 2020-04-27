@@ -535,10 +535,6 @@
     <Compile Include="Shell\AboutViewModel.cs" />
     <Compile Include="Shell\BusyAutomationBehaviour.cs" />
     <Compile Include="Shell\AppExceptionHandler.cs" />
-    <Compile Include="Shell\LicenseRegistrationView.xaml.cs">
-      <DependentUpon>LicenseRegistrationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\LicenseRegistrationViewModel.cs" />
     <Compile Include="Shell\ServiceControlConnectionView.xaml.cs">
       <DependentUpon>ServiceControlConnectionView.xaml</DependentUpon>
     </Compile>
@@ -725,10 +721,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\About.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\LicenseRegistrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -920,11 +912,11 @@
     <Error Condition="!Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.3\build\dotnet\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Particular.CodeRules.0.2.1\build\Particular.CodeRules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.CodeRules.0.2.1\build\Particular.CodeRules.props'))" />
-    <Error Condition="!Exists('..\packages\Particular.Licensing.Sources.3.0.0\build\Particular.Licensing.Sources.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.Licensing.Sources.3.0.0\build\Particular.Licensing.Sources.targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\Particular.Licensing.Sources.3.3.1\build\Particular.Licensing.Sources.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Particular.Licensing.Sources.3.3.1\build\Particular.Licensing.Sources.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.1.29.3\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" />
   <Import Project="..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets" Condition="Exists('..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" />
-  <Import Project="..\packages\Particular.Licensing.Sources.3.0.0\build\Particular.Licensing.Sources.targets" Condition="Exists('..\packages\Particular.Licensing.Sources.3.0.0\build\Particular.Licensing.Sources.targets')" />
   <Import Project="..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" />
+  <Import Project="..\packages\Particular.Licensing.Sources.3.3.1\build\Particular.Licensing.Sources.targets" Condition="Exists('..\packages\Particular.Licensing.Sources.3.3.1\build\Particular.Licensing.Sources.targets')" />
 </Project>

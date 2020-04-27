@@ -4,6 +4,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Licensing;
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Shell;
     using Shouldly;
@@ -13,7 +14,7 @@
     {
         NetworkOperations networkOperations;
         IServiceControl serviceControl;
-        LicenseRegistrationViewModel licenseRegistration;
+        AppLicenseManager licenseManager;
         AboutViewModel sut;
 
         [SetUp]
@@ -21,9 +22,9 @@
         {
             networkOperations = Substitute.For<NetworkOperations>();
             serviceControl = Substitute.For<IServiceControl>();
-            licenseRegistration = Substitute.For<LicenseRegistrationViewModel>();
+            licenseManager = Substitute.For<AppLicenseManager>();
 
-            sut = new AboutViewModel(networkOperations, serviceControl, licenseRegistration);
+            sut = new AboutViewModel(networkOperations, serviceControl, licenseManager);
         }
 
         [Test]

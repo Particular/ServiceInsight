@@ -16,7 +16,32 @@
 
         public bool IsExtendedTrial { get; set; }
 
-        public bool IsCommercialLicense => LicenseType?.ToLower() != "trial";
+        public bool IsCommercialLicense
+        {
+            get
+            {
+                // i.e. No license file
+                if (LicenseType == null)
+                {
+                    return false;
+                }
+
+                // Pre-2020 trial licenses were "Trial"
+                if (LicenseType.Equals("trial", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+
+                // Development licenses are currently "Non-Production Development"
+                if (LicenseType.IndexOf("non-production", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return false;
+                }
+
+                // All other license types are commercial licenses
+                return true;
+            }
+        }
 
         public string LicenseType { get; set; }
 
