@@ -8,4 +8,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1516:Elements must be separated by blank line", Justification = "Generated File", Scope = "member", Target = "~P:ReleaseDateAttribute.Date")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1517:CodeMustNotContainBlankLinesAtStartOfFile", Justification = "Generated File. Bring back when updated to GitVersionTask v3.x")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1518:CodeMustNotContainBlankLinesAtEndOfFile", Justification = "Generated File. Bring back when updated to GitVersionTask v3.x")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Code", "PCR0001:Await used without specifying ConfigureAwait", Justification = "Default in WPF is fine.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "Default in WPF is fine.")]
