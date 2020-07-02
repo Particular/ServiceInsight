@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>Setup</RootNamespace>
     <AssemblyName>Setup</AssemblyName>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
   </PropertyGroup>
   

@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using PropertyChanged;
 
     public sealed class DiagramItemCollection : ObservableCollection<DiagramItem>
     {
         bool suppressNotification;
 
+        [SuppressPropertyChangedWarnings]
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (!suppressNotification)

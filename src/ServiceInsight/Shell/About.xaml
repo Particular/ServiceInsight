@@ -30,7 +30,7 @@
     </Window.BorderBrush>
     <Window.SizeToContent>WidthAndHeight</Window.SizeToContent>
     <Grid>
-        <Image Source="/ServiceInsight-About.png" Stretch="None" />
+        <Image Source="pack://application:,,,/ServiceInsight;component/ServiceInsight-About.png" Stretch="None" />
         <Canvas>
             <TextBlock Canvas.Left="38"
                        Canvas.Top="38"

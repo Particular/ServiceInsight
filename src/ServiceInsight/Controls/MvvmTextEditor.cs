@@ -4,6 +4,7 @@ namespace ServiceInsight.Controls
     using System.ComponentModel;
     using System.Windows;
     using ICSharpCode.AvalonEdit;
+    using PropertyChanged;
 
     public class MvvmTextEditor : TextEditor, INotifyPropertyChanged
     {
@@ -29,6 +30,7 @@ namespace ServiceInsight.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [SuppressPropertyChangedWarnings]
         protected override void OnTextChanged(EventArgs e)
         {
             RaisePropertyChanged("Text");

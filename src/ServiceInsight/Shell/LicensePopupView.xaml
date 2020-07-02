@@ -44,7 +44,7 @@
                            FontWeight="Bold" 
                            Foreground="{StaticResource TextColor}">
                     <Run Text="Warning: " />
-                    <Run Text="{Binding LicenseStatus.LicenseStatusMessage}" />
+                    <Run Text="{Binding Path=LicenseStatus.LicenseStatusMessage, Mode=OneWay}" />
                 </TextBlock>
 
                 <TextBlock Grid.Row="1" 
