@@ -71,7 +71,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; compile</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Reference Include="DevExpress.Data.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Data.v15.1.dll" />
     <Reference Include="DevExpress.Mvvm.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Mvvm.v15.1.dll" />
@@ -109,7 +109,7 @@
     <Resource Include="Images\**\*.png" />
     <Resource Include="*.png" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Remove="ServiceInsight.ico" />
     <Resource Include="ServiceInsight.ico" />

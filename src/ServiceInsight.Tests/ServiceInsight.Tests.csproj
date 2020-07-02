@@ -1,31 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <RootNamespace>ServiceInsight.Tests</RootNamespace>
-    <AssemblyName>ServiceInsight.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.Runtime.Caching" />
+    <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="ApprovalTests" Version="3.0.13" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="NSubstitute" Version="1.10.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Shouldly" Version="2.1.1" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
-  </ItemGroup>
+
 </Project>
