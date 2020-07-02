@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Windows.Data;
-    //using Anotar.Serilog;
+    using Anotar.Serilog;
 
     public class PropertyValueConverter : IValueConverter
     {

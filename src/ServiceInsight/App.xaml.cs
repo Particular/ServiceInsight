@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
     using System.Windows;
-    //using Anotar.Serilog;
+    using Anotar.Serilog;
     using DevExpress.Xpf.Core;
     using Framework.Logging;
     using ServiceInsight.Framework.Settings;
