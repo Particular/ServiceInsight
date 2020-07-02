@@ -1,27 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight", "ServiceInsight\ServiceInsight.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight", "ServiceInsight\ServiceInsight.csproj", "{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{5338FEE7-FEE1-49AC-839B-A6D9988F9841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setup", "Setup\Setup.csproj", "{AA3D4052-9083-4A3F-B151-C2E1E909D00F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B9BC3BC0-E1F1-4579-B3EC-58BC954B30A6}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Setup", "Setup\Setup.csproj", "{AA3D4052-9083-4A3F-B151-C2E1E909D00F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC045476-ED54-426A-AF10-BC3AAA841175}"
 	ProjectSection(SolutionItems) = preProject
 		CommonRuleSet.ruleset = CommonRuleSet.ruleset
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInsight.Licensing", "ServiceInsight.Licensing\ServiceInsight.Licensing.csproj", "{5162668F-2FB4-453B-9D2F-88D68A9286E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Licensing", "ServiceInsight.Licensing\ServiceInsight.Licensing.csproj", "{5162668F-2FB4-453B-9D2F-88D68A9286E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AA3D4052-9083-4A3F-B151-C2E1E909D00F} = {5338FEE7-FEE1-49AC-839B-A6D9988F9841}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91C923F6-F4BA-4431-A76D-A5D18A45E918}
 	EndGlobalSection
 EndGlobal
