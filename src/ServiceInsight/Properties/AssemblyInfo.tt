@@ -13,11 +13,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("ServiceInsight")]
 [assembly: AssemblyDescription("ServiceInsight")]
 [assembly: AssemblyCopyright("Copyright 2013-<#=DateTime.Now.Year#> NServiceBus Ltd. All rights reserved.")]
-[assembly: AssemblyProduct("ServiceInsight")]
-[assembly: AssemblyCompany("NServiceBus Ltd.")]
+//[assembly: AssemblyCompany("NServiceBus Ltd.")]
 [assembly: InternalsVisibleTo("ServiceInsight.Tests")]
 
 [assembly:ThemeInfo(
