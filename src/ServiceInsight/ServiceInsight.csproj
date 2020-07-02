@@ -4,11 +4,10 @@
     <TargetFramework>net48</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyName>ServiceInsight</AssemblyName>
+    <Company>NServiceBus Ltd.</Company>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <UseWpf>true</UseWpf>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DefineConstants>$(DefineConstants);REGISTRYLICENSESOURCE</DefineConstants>
   </PropertyGroup>
 
@@ -47,7 +46,6 @@
     <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.0" />
 
 <!--    <PackageReference Include="Particular.CodeRules" Version="0.2.1" PrivateAssets="All" />-->
-    
     <PackageReference Include="GitVersionTask" Version="5.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; compile</IncludeAssets>
@@ -100,7 +98,7 @@
     <None Update="FodyWeavers.xml" />
     <None Update="Properties\licenses.licx" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="Highlighting\StackTrace.xshd" />
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -111,7 +109,7 @@
     <Resource Include="Images\**\*.png" />
     <Resource Include="*.png" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <None Remove="ServiceInsight.ico" />
     <Resource Include="ServiceInsight.ico" />

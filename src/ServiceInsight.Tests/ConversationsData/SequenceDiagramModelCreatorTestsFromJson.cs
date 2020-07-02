@@ -16,7 +16,7 @@ namespace ServiceInsight.Tests.ConversationsData
 
         protected SequenceDiagramModelCreatorTestsFromJson(string fileName)
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\ConversationsData\" + fileName);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\ConversationsData\" + fileName);
             var content = File.ReadAllText(path);
             var deserializer = new JsonMessageDeserializer
             {
