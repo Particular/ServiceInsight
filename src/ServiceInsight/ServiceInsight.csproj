@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <OutputType>WinExe</OutputType>
+    <TargetFramework>net461</TargetFramework>
+    <OutputType>exe</OutputType>
     <AssemblyName>ServiceInsight</AssemblyName>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <UseWpf>true</UseWpf>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+<!--    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -47,7 +47,6 @@
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Serilog.Sinks.Trace" Version="2.1.0" />
 
-    <PackageReference Include="Particular.Licensing.Sources" Version="3.0.0" PrivateAssets="All" />
 <!--    <PackageReference Include="Particular.CodeRules" Version="0.2.1" PrivateAssets="All" />-->
     
     <PackageReference Include="Anotar.Serilog.Fody" Version="5.1.3">
@@ -91,21 +90,20 @@
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll" />
     <Reference Include="Mindscape.WpfDiagramming.Foundation" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Particular.Licensing.Sources" Version="3.3.1" />
+  </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-    <Compile Update="Properties\Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
-    <Compile Update="Settings.Designer.cs" AutoGen="True" DependentUpon="Settings.settings" />
-    <None Update="Settings.settings" LastGenOutput="Settings.Designer.cs" Generator="SettingsSingleFileGenerator" />
+<!--    <Compile Remove="$(NugetPackageRoot)\particular.licensing.sources\3.0.0\contentFiles\cs\any\Particular.Licensing\FindActiveLicense\*.cs" />-->
+<!--    <Compile Remove="$(NugetPackageRoot)\particular.licensing.sources\3.0.0\contentFiles\cs\any\Particular.Licensing\*.cs" />-->
 
-<!--    <Page Include="**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" Exclude="App.xaml" />-->
-<!--    <Compile Update="**\*.xaml.cs" SubType="Designer" DependentUpon="%(Filename)" />-->
-
-<!--    <ApplicationDefinition Include="App.xaml">-->
-<!--      <Generator>MSBuild:Compile</Generator>-->
-<!--      <SubType>Designer</SubType>-->
-<!--    </ApplicationDefinition>-->
-    
+<!--    <Compile Include="$(NugetPackageRoot)\particular.licensing.sources\3.0.0\contentFiles\cs\any\Particular.Licensing\FindActiveLicense\*.cs"  />-->
+<!--    <Compile Include="$(NugetPackageRoot)\particular.licensing.sources\3.0.0\contentFiles\cs\any\Particular.Licensing\*.cs"  />-->
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Update="app.config" />
     <None Update="FodyWeavers.xml" />
     <None Update="Properties\license.licx" />
