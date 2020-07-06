@@ -6,7 +6,6 @@
     <Company>NServiceBus Ltd.</Company>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <UseWpf>true</UseWpf>
-    <DefineConstants>$(DefineConstants);REGISTRYLICENSESOURCE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
