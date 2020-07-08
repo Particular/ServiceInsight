@@ -1,4 +1,11 @@
-assembly-versioning-scheme: MajorMinorPatch
+assembly-versioning-scheme: Major
+next-version: 2.0
 branches:
-  releases?[/-]:
+  master:
+    mode: ContinuousDeployment
+    tag: alpha
+    increment: Minor
+    tracks-release-branches: true
+  release:
+    increment: Patch
     tag: ''

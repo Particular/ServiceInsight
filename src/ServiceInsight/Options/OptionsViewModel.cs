@@ -32,10 +32,10 @@
             var managementConfig = settingsProvider.GetSettings<ServiceControlSettings>();
             Application.DefaultLastUsedServiceControl = string.Format("http://localhost:{0}/api", managementConfig.Port);
 
-            Application.PropertyChanged += OnSettingChanged;
+            Application.PropertyChanged += SettingChanged;
         }
 
-        void OnSettingChanged(object sender, PropertyChangedEventArgs e)
+        void SettingChanged(object sender, PropertyChangedEventArgs e)
         {
             IsModified = true;
         }

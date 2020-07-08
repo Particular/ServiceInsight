@@ -16,7 +16,6 @@
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
                     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
-                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#000" />
                     <SolidColorBrush x:Key="SelectedNodeBackgroundBrush" Color="#007AC7" />
 
                     <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">

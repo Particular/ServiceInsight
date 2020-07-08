@@ -277,7 +277,7 @@
 
                 </ResourceDictionary>
 
-                <ResourceDictionary Source="/SequenceDiagram/SequenceDiagramResources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ServiceInsight;component/SequenceDiagram/SequenceDiagramResources.xaml" />
 
                 <ResourceDictionary>
                     <startup:AppBootstrapper x:Key="Bootstrapper" />
@@ -453,7 +453,7 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">
-                        <dxe:DateEdit Name="PART_Editor" IsReadOnly="True" DisplayFormatString="G" />
+                        <dxe:DateEdit x:Name="PART_Editor" IsReadOnly="True" DisplayFormatString="G" />
                     </DataTemplate>
 
                     <Style x:Key="ItemsControlVirtualisedStyle" TargetType="ItemsControl">
