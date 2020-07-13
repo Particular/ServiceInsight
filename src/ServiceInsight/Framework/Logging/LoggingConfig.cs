@@ -30,7 +30,7 @@
                 .WriteTo.Trace(outputTemplate: "[{Level}] ({SourceContext}) {Message}{NewLine}{Exception}")
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
-                    .Filter.ByIncludingOnly(Matching.FromSource<IServiceControl>())
+                    .Filter.ByIncludingOnly(Matching.FromSource<DefaultServiceControl>())
                     .WriteTo.Observers(logEvents => logEvents
                         .ObserveOn(TaskPoolScheduler.Default)
                         .Do(LogWindowViewModel.LogObserver)
