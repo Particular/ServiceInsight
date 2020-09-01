@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Saga
 {
+    using System;
     using Caliburn.Micro;
     using Humanizer;
 
@@ -30,9 +31,18 @@
 
         public string NewValueLink => $"({"byte".ToQuantity(NewValue?.Length ?? 0)})";
 
-        public bool ShouldDisplayOldValueLink => !string.IsNullOrWhiteSpace(OldValue) && OldValue.Length > MaxValueLength;
+        public bool ShouldDisplayOldValueLink => ShouldDisplayAsLink(OldValue);
 
-        public bool ShouldDisplayNewValueLink => !string.IsNullOrWhiteSpace(NewValue) && NewValue.Length > MaxValueLength;
+        private bool ShouldDisplayAsLink(string value)
+        {
+            if (value != null)
+            {
+                if (Guid.TryParse(value, out _)) return false;
+            }
+            return !string.IsNullOrWhiteSpace(value) && value.Length > MaxValueLength;
+        }
+
+        public bool ShouldDisplayNewValueLink => ShouldDisplayAsLink(NewValue);
 
         public bool IsValueChanged => !string.IsNullOrEmpty(OldValue) && NewValue != OldValue;
 
