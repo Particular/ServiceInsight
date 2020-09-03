@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Windows;
     using Anotar.Serilog;
@@ -25,6 +26,9 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             LogTo.Information("Starting the application...");
+                    
+            if (SingleInstance.AlreadyRunning())
+                App.Current.Shutdown(); // Just shutdown the current application,if any instance found.  
 
             var args = new CommandLineArgParser();
 
