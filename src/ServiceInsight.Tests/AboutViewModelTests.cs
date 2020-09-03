@@ -16,7 +16,6 @@
         IServiceControl serviceControl;
         AppLicenseManager licenseManager;
         IApplicationVersionService versionService;
-        LicenseRegistrationViewModel licenseRegistration;
         AboutViewModel sut;
 
         [SetUp]
@@ -24,10 +23,10 @@
         {
             networkOperations = Substitute.For<NetworkOperations>();
             serviceControl = Substitute.For<IServiceControl>();
-            licenseRegistration = Substitute.For<LicenseRegistrationViewModel>();
             versionService = Substitute.For<IApplicationVersionService>();
-
-            sut = new AboutViewModel(networkOperations, versionService, serviceControl, licenseRegistration);
+            licenseManager = Substitute.For<AppLicenseManager>();
+            
+            sut = new AboutViewModel(networkOperations, versionService, serviceControl, licenseManager);
         }
 
         [Test]

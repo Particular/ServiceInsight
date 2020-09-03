@@ -109,7 +109,7 @@
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
                                CategoryName="Tools"
                                Command="{Binding ConnectToServiceControlCommand}"
-                               Content="Connect To ServiceControl"
+                               Content="Connect"
                                Glyph="/Images/ConnectService.png">
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
@@ -152,9 +152,9 @@
                                Content="Feedback">
                 <dxb:BarButtonItem.ContentTemplate>
                     <DataTemplate>
-                        <Border Background="#0072c6" BorderBrush="#005da0" BorderThickness="2" Padding="5">
+                        <Border Background="#0072c6" BorderBrush="#005da0" BorderThickness="1" Padding="4,0,4,0">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Feedback.png" Width="16" Height="16" Margin="4" />
+                                <Image Source="/Images/Feedback.png" Width="14" Height="14" Margin="4,0,4,0" />
                                 <TextBlock Text="{Binding}" Foreground="White" Margin="0,5,5,5" />
                             </StackPanel>
                         </Border>
@@ -349,7 +349,7 @@
                      AllowCollapse="True"
                      AllowHide="True"
                      AutomationProperties.AutomationId="MainToolbar"
-                     Caption="Toolbar"
+                     Caption="Toolbar" BarItemDisplayMode="ContentAndGlyph"
                      UseWholeRow="True">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
