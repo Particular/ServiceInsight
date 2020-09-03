@@ -42,7 +42,6 @@
     {
         IAppCommands appCommander;
         IWindowManagerEx windowManager;
-        IApplicationVersionService applicationVersionService;
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
         IVersionUpdateChecker versionUpdateChecker;
@@ -80,7 +79,6 @@
         {
             this.appCommander = appCommander;
             this.windowManager = windowManager;
-            this.applicationVersionService = applicationVersionService;
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.licenseManager = licenseManager;
@@ -113,7 +111,7 @@
             AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
             HelpCommand = Command.Create(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
             ConnectToServiceControlCommand = Command.CreateAsync(this, ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
-            ProvideFeedbackCommand = Command.Create(() => Process.Start($"https://github.com/Particular/ServiceInsight/issues/new?title=Feedback&body=Feedback for ServiceInsight {applicationVersionService.GetVersion()} ({applicationVersionService.GetCommitHash()})"));
+            ProvideFeedbackCommand = Command.Create(() => Process.Start($"https://github.com/Particular/ServiceInsight/issues/new?title=Feedback%20for%20ServiceInsight%20{applicationVersionService.GetVersion()}%20({applicationVersionService.GetCommitHash()})&body=Your%20feedback..."));
             RefreshAllCommand = Command.CreateAsync(RefreshAll);
 
             RegisterCommand = Command.Create(() => windowManager.ShowDialog<ManageLicenseViewModel>());
