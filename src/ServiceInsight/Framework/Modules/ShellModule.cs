@@ -48,6 +48,7 @@
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
             builder.RegisterType<MessagePayloadView>().AsImplementedInterfaces().AsSelf().InstancePerDependency();
             builder.RegisterType<VersionUpdateChecker>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<ApplicationVersionService>().As<IApplicationVersionService>().SingleInstance();
         }
 
         protected static IEnumerable<Type> ExemptTypes

@@ -109,7 +109,7 @@
                                AutomationProperties.AutomationId="ConnectToServiceControlMenuItem"
                                CategoryName="Tools"
                                Command="{Binding ConnectToServiceControlCommand}"
-                               Content="Connect To ServiceControl"
+                               Content="Connect"
                                Glyph="/Images/ConnectService.png">
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
@@ -140,6 +140,32 @@
                                CategoryName="View"
                                Command="{Binding ResetLayoutCommand}"
                                Content="Restore default layout" />
+            <dxb:BarButtonItem x:Name="ProvideFeedback"
+                               AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
+                               CategoryName="Help"
+                               Command="{Binding ProvideFeedbackCommand}"
+                               Content="Feedback" />
+            <dxb:BarButtonItem x:Name="ProvideFeedbackToolbar"
+                               AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
+                               CategoryName="Help"
+                               Command="{Binding ProvideFeedbackCommand}"
+                               Content="Feedback">
+                <dxb:BarButtonItem.ContentTemplate>
+                    <DataTemplate>
+                        <Border Background="#0072c6" BorderBrush="#005da0" BorderThickness="1" Padding="4,0,4,0">
+                            <StackPanel Orientation="Horizontal">
+                                <controls:IconControl x:Name="ErrorIcon"
+                                                      Width="16"
+                                                      Height="16"
+                                                      Margin="4,0,4,0"
+                                                      Data="{StaticResource FeedbackIcon}"
+                                                      Foreground="White" />
+                                <TextBlock Text="{Binding}" Foreground="White" Margin="0,5,5,5" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </dxb:BarButtonItem.ContentTemplate>
+            </dxb:BarButtonItem>
             <dxb:BarCheckItem Name="DataAutoRefresh"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               CategoryName="View"
@@ -196,6 +222,7 @@
                 <dxb:BarButtonItemLink BarItemName="Help" />
                 <dxb:BarButtonItemLink BarItemName="About" />
                 <dxb:BarButtonItemLink BarItemName="Register" />
+                <dxb:BarButtonItemLink BarItemName="ProvideFeedback" />
             </dxb:BarSubItem>
 
             <dxb:BarStaticItem x:Name="LicenseStatusBar"
@@ -327,12 +354,13 @@
                      AllowCollapse="True"
                      AllowHide="True"
                      AutomationProperties.AutomationId="MainToolbar"
-                     Caption="Toolbar"
+                     Caption="Toolbar" BarItemDisplayMode="ContentAndGlyph"
                      UseWholeRow="True">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
+                <dxb:BarButtonItemLink BarItemName="ProvideFeedbackToolbar" Alignment="Far" />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar"
                      AllowCollapse="True"

@@ -2,12 +2,9 @@ namespace ServiceInsight.Shell
 {
     using System;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.ServiceControl;
@@ -17,6 +14,7 @@ namespace ServiceInsight.Shell
         const string DetectingServiceControlVersion = "(Detecting...)";
         const string NotConnectedToServiceControl = "(Not Connected)";
 
+        IApplicationVersionService applicationVersionService;
         IServiceControl serviceControl;
         private AppLicenseManager licenseManager;
 
@@ -46,9 +44,11 @@ namespace ServiceInsight.Shell
 
         public AboutViewModel(
             NetworkOperations networkOperations,
+            IApplicationVersionService applicationVersionService,
             IServiceControl serviceControl,
             AppLicenseManager licenseManager)
         {
+            this.applicationVersionService = applicationVersionService;
             this.serviceControl = serviceControl;
 
             this.licenseManager = licenseManager;
@@ -58,14 +58,15 @@ namespace ServiceInsight.Shell
             NavigateToSiteCommand = Command.Create(() => networkOperations.Browse("http://www.particular.net"));
         }
 
-        AboutViewModel()
+        AboutViewModel(IApplicationVersionService applicationVersionService)
         {
             IsSplash = true;
+            this.applicationVersionService = applicationVersionService;
         }
 
         public static AboutViewModel AsSplashScreenModel()
         {
-            var vm = new AboutViewModel();
+            var vm = new AboutViewModel(new ApplicationVersionService());
             vm.Activate();
             return vm;
         }
@@ -86,22 +87,8 @@ namespace ServiceInsight.Shell
 
         void LoadAppVersion()
         {
-            var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
-            var version = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version";
-            var versionParts = version.Split('+');
-            var appVersion = versionParts[0];
-
-            AppVersion = appVersion;
-
-            var metadata = versionParts.Last();
-            var parts = metadata.Split('.');
-            var shaIndex = parts.IndexOf("Sha", StringComparer.InvariantCultureIgnoreCase);
-            if (shaIndex != -1 && parts.Length > shaIndex + 1)
-            {
-                var shaValue = parts[shaIndex + 1];
-                var shortCommitHash = shaValue.Substring(0, 7);
-                CommitHash = shortCommitHash;
-            }
+            AppVersion = applicationVersionService.GetVersion();
+            CommitHash = applicationVersionService.GetCommitHash();
         }
 
         void SetCopyrightText()
