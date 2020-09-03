@@ -44,6 +44,8 @@
 
         public string ExceptionType => GetHeaderByKey(MessageHeaderKeys.ExceptionType);
 
+        public int? RetryCount => TryParseInt(GetHeaderByKey(MessageHeaderKeys.Retries), 0);
+
         public string MessageId { get; set; }
 
         public string InstanceId { get; set; }
@@ -93,7 +95,12 @@
 
         private static DateTime? TryParse(string value)
         {
-          return DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var date) ? date : (DateTime?)null;
+            return DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var date) ? date : (DateTime?)null;
+        }
+
+        private static int? TryParseInt(string value, int? defaultValue = null)
+        {
+            return int.TryParse(value, out var number) ? number : defaultValue;
         }
 
     public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||

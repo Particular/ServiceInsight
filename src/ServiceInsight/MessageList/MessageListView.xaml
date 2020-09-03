@@ -184,6 +184,16 @@
                                     ShowInColumnChooser="True"
                                     Visible="False">
                     </dxg:GridColumn>
+                    <dxg:GridColumn Name="RetryCount"
+                                    AllowColumnFiltering="False"
+                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    FieldName="RetryCount"
+                                    Header="Retries"
+                                    HeaderToolTip="Number of retries the message had"
+                                    Tag="retry_count"
+                                    ShowInColumnChooser="True"
+                                    Visible="False">
+                    </dxg:GridColumn>
                 </dxg:GridControl.Columns>
                 <dxg:GridControl.View>
                     <dxg:TableView x:Name="gridView"
