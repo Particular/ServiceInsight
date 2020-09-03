@@ -154,7 +154,12 @@
                     <DataTemplate>
                         <Border Background="#0072c6" BorderBrush="#005da0" BorderThickness="1" Padding="4,0,4,0">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Feedback.png" Width="14" Height="14" Margin="4,0,4,0" />
+                                <controls:IconControl x:Name="ErrorIcon"
+                                                      Width="16"
+                                                      Height="16"
+                                                      Margin="4,0,4,0"
+                                                      Data="{StaticResource FeedbackIcon}"
+                                                      Foreground="White" />
                                 <TextBlock Text="{Binding}" Foreground="White" Margin="0,5,5,5" />
                             </StackPanel>
                         </Border>
