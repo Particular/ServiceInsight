@@ -1,19 +1,26 @@
-﻿<UserControl x:Class="ServiceInsight.MessagePayloadViewer.MessagePayloadView"
+﻿<dx:DXWindow x:Class="ServiceInsight.MessagePayloadViewer.MessagePayloadView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ServiceInsight.MessagePayloadViewer"
              xmlns:controls="clr-namespace:ServiceInsight.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:messageFlow="clr-namespace:ServiceInsight.MessagePayloadViewer"
+             Title="Message Payload Details"
              Width="800"
-             Height="400"
-             Background="#FF252526"
-             mc:Ignorable="d" 
-             d:DesignHeight="500"
-             d:DesignWidth="900"
-             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadViewModel}}">
-    <Grid>
-        <controls:MvvmTextEditor x:Name="document"
+             Height="400"             
+             ResizeMode="CanResizeWithGrip"
+             WindowStartupLocation="CenterOwner"
+             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadViewModel}}"
+             mc:Ignorable="d"
+             MinHeight="200"
+             MinWidth="400">
+    <Grid  x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <controls:MvvmTextEditor x:Name="document" Grid.Row="0"
                                  FontFamily="{StaticResource MessageBodyFontFamily}"
                                  FontSize="{StaticResource MessageBodyFontSize}"
                                  IsReadOnly="True"
@@ -33,5 +40,13 @@
                 </ContextMenu>
             </controls:MvvmTextEditor.ContextMenu>
         </controls:MvvmTextEditor>
+        <Button x:Name="CloseButton"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="5,5,5,5"
+                Content="Close"
+                IsCancel="True"
+                HorizontalAlignment="Right"
+                Style="{StaticResource DialogButton}" />
     </Grid>
-</UserControl>
+</dx:DXWindow>

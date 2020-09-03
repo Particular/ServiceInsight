@@ -99,7 +99,7 @@
         {
             var settings = new Dictionary<string, object>
             {
-                { "ResizeMode", ResizeMode.CanResizeWithGrip }
+                { "ResizeMode", ResizeMode.NoResize }
             };
 
             return ShowDialog(model, null, settings);
