@@ -308,7 +308,8 @@
                                    TextTrimming="CharacterEllipsis"
                                    ToolTip="{Binding Name}" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
+                        <local:SagaValueDiffControl 
+                                   Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding OldValue, TargetNullValue='Null'}"
                                    Tag="{Binding OldValue}"
                                    Visibility="{Binding ShouldDisplayOldValueLink,
@@ -324,7 +325,8 @@
                         <TextBlock FontFamily="Symbol"
                                    Foreground="{StaticResource SagaSymbolForeground}"
                                    Text=" ® " />
-                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
+                        <local:SagaValueDiffControl 
+                                   Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
@@ -348,7 +350,8 @@
                                    ToolTip="{Binding Label}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
+                        <local:SagaValueDiffControl 
+                                   Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
@@ -380,7 +383,8 @@
                                    ToolTip="{Binding Name}"
                                    TextTrimming="CharacterEllipsis" />
                         <TextBlock Foreground="{StaticResource SagaSymbolForeground}" Text=" =    " />
-                        <TextBlock Style="{StaticResource PropertyValueTextStyle}"
+                        <local:SagaValueDiffControl 
+                                   Style="{StaticResource PropertyValueTextStyle}"
                                    Text="{Binding NewValue, TargetNullValue='Null'}"
                                    Tag="{Binding NewValue}"
                                    Visibility="{Binding ShouldDisplayNewValueLink,
