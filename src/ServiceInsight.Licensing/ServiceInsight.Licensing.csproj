@@ -4,7 +4,6 @@
     <TargetFramework>net48</TargetFramework>
     <OutputType>library</OutputType>
     <DefineConstants>$(DefineConstants);REGISTRYLICENSESOURCE</DefineConstants>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
