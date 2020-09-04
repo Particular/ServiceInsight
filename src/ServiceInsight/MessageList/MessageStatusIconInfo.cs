@@ -1,34 +1,50 @@
 ﻿namespace ServiceInsight.MessageList
 {
     using System;
-    using System.Windows.Media.Imaging;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
     using ExtensionMethods;
-    using global::ServiceInsight.Properties;
     using Models;
 
-    public class MessageErrorInfo : IComparable
+    public class MessageStatusIconInfo : IComparable
     {
+        static Dictionary<MessageStatus, string> statusToIconNameMap;
+        Func<string, ImageSource> resourceFinder;
         MessageStatus status;
         bool statusSpecified;
 
-        public MessageErrorInfo()
+        static MessageStatusIconInfo()
         {
-            Image = GetImage();
+            statusToIconNameMap = new Dictionary<MessageStatus, string>
+            {
+                [MessageStatus.Successful] = "Successful",
+                [MessageStatus.Failed] = "Failed",
+                [MessageStatus.ArchivedFailure] = "Archived",
+                [MessageStatus.RepeatedFailure] = "RepeatedFailed",
+                [MessageStatus.ResolvedSuccessfully] = "ResolvedSuccess",
+                [MessageStatus.RetryIssued] = "RetryIssued",
+            };
+        }
+        
+        private ImageSource DefaultApplicationResourceFinder(string imageName)
+        {
+            return Application.Current.TryFindResource(imageName) as DrawingImage;
         }
 
-        public MessageErrorInfo(MessageStatus status)
+        public MessageStatusIconInfo(MessageStatus status, Func<string, ImageSource> resourceFinder = null)
         {
+            this.resourceFinder = resourceFinder ?? DefaultApplicationResourceFinder;
             Status = status;
             Image = GetImage();
             Description = status.GetDescription();
         }
 
-        public BitmapImage Image { get; }
+        public ImageSource Image { get; }
 
         public MessageStatus Status
         {
-            get { return status; }
-
+            get => status;
             private set
             {
                 status = value;
@@ -38,41 +54,18 @@
 
         public string Description { get; }
 
-        BitmapImage GetImage()
+        ImageSource GetImage()
         {
-            if (!statusSpecified)
-            {
-                return Resources.BulletWhite.ToBitmapImage();
-            }
+            var currentStatus = statusSpecified ? Status : MessageStatus.Successful;
+            var imageName = $"MessageStatus_{statusToIconNameMap[currentStatus]}";
+            var image = resourceFinder(imageName); 
 
-            switch (Status)
-            {
-                case MessageStatus.Failed:
-                    return Resources.BulletYellow.ToBitmapImage();
-
-                case MessageStatus.ArchivedFailure:
-                    return Resources.BulletArchived.ToBitmapImage();
-
-                case MessageStatus.RepeatedFailure:
-                    return Resources.BulletRed.ToBitmapImage();
-
-                case MessageStatus.Successful:
-                    return Resources.BulletGreen.ToBitmapImage();
-
-                case MessageStatus.ResolvedSuccessfully:
-                    return Resources.BulletGreen.ToBitmapImage();
-
-                case MessageStatus.RetryIssued:
-                    return Resources.BulletWhite.ToBitmapImage();
-
-                default:
-                    throw new ArgumentOutOfRangeException(string.Format("Status {0} is not implemented", Status));
-            }
+            return image;
         }
 
         public int CompareTo(object obj)
         {
-            var that = obj as MessageErrorInfo;
+            var that = obj as MessageStatusIconInfo;
             if (that == null)
             {
                 return -1;

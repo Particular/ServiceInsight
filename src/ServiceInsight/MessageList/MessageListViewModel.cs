@@ -160,7 +160,7 @@
             }
         }
 
-        public MessageErrorInfo GetMessageErrorInfo(StoredMessage msg) => new MessageErrorInfo(msg.Status);
+        public MessageStatusIconInfo GetMessageErrorInfo(StoredMessage msg) => new MessageStatusIconInfo(msg.Status);
 
         public void Handle(WorkStarted @event)
         {
