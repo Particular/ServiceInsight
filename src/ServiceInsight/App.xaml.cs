@@ -1,7 +1,7 @@
 ﻿namespace ServiceInsight
 {
-    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
     using System.Windows;
     using Anotar.Serilog;
     using DevExpress.Xpf.Core;
@@ -12,23 +12,35 @@
 
     public partial class App
     {
+        private static Mutex mutex;
+        private bool createdNew;
+
         public App()
         {
-            LoggingConfig.SetupLogging();
-            if (!Debugger.IsAttached)
-            {
-                Framework.ExceptionHandler.Attach();
-            }
+            mutex = new Mutex(true, "ServiceInsight", out createdNew);
 
-            Highlighting.Resources.RegisterHighlightings();
+            if (createdNew)
+            {
+                LoggingConfig.SetupLogging();
+                if (!Debugger.IsAttached)
+                {
+                    Framework.ExceptionHandler.Attach();
+                }
+
+                Highlighting.Resources.RegisterHighlightings();
+            }
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (!createdNew)
+            {
+                App.Current.Shutdown();
+                FocusWindow.ShowWindow();
+                return;
+            }
+
             LogTo.Information("Starting the application...");
-                    
-            if (SingleInstance.AlreadyRunning())
-                App.Current.Shutdown(); // Just shutdown the current application,if any instance found.  
 
             var args = new CommandLineArgParser();
 
