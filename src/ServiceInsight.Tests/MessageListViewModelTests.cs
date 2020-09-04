@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Windows.Media;
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
@@ -70,6 +71,21 @@
 
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);
+        }
+
+        [Test]
+        public void All_MessageStatuses_Should_Translate_To_Image_Name([Values]MessageStatus status)
+        {
+            ImageSource TestResourceFinder(string name)
+            {
+                return new DrawingImage();
+            }
+
+            var icon = new MessageStatusIconInfo(status, TestResourceFinder);
+            
+            icon.Image.ShouldNotBe(null);
+            icon.Description.ShouldNotBeNullOrEmpty();
+            icon.Status.ShouldBe(status);
         }
     }
 }

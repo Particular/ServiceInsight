@@ -741,6 +741,118 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_Successful">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF6CC63F">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="8" RadiusY="8" Center="8,8" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M16,16z M0,0z M11.249,4.277L6.714,8.81 4.751,6.846 3.294,8.303 6.714,11.723 12.706,5.733 11.249,4.277z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_Failed">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="#FFC63F3F">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="8" RadiusY="8" Center="8,8" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M16,16z M0,0z M8,6.586L10.475,4.111 11.889,5.525 9.414,8 11.889,10.475 10.475,11.889 8,9.414 5.525,11.889 4.111,10.475 6.586,8 4.111,5.525 5.525,4.111 8,6.586z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_RepeatedFailed">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FFC63F3F">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="8" RadiusY="8" Center="8,8" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M16,16z M0,0z M5.055,6.929L6.929,5.055 8,6.126 6.126,8 8,9.874 6.929,10.945 5.055,9.071 3.182,10.945 2.111,9.874 3.985,8 2.111,6.126 3.182,5.055 5.055,6.929z" />
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M16,16z M0,0z M10.945,6.929L12.818,5.055 13.889,6.126 12.015,8 13.889,9.874 12.818,10.945 10.945,9.071 9.071,10.945 8,9.874 9.874,8 8,6.126 9.071,5.055 10.945,6.929z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_Archived">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H17 V0 H0 Z">
+                <GeometryDrawing Brush="#FF000000">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry RadiusX="8" RadiusY="8" Center="8.11,8" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M17,16z M0,0z M4.11,4L4.11,12 12.11,12 12.11,4 4.11,4z M11.11,10L5.11,10 5.11,8 7.11,8 7.11,9 9.11,9 9.11,8 11.11,8 11.11,10z M11.11,7L5.11,7 5.11,5 7.11,5 7.11,6 9.11,6 9.11,5 11.11,5 11.11,7z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_ResolvedSuccessfully">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H17 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.806,0,16,16" />
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF3F881B">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="8" RadiusY="8" Center="8.806,8" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M17,16z M0,0z M6.481,12.181C8.057,13.213 10.151,13.306 11.858,12.248 14.205,10.793 14.927,7.711 13.472,5.365 12.016,3.019 8.934,2.296 6.588,3.751 5.139,4.65 4.31,6.165 4.229,7.747L2.918,7.747 5.02,10.693 7.132,7.747 5.834,7.747C5.911,6.699 6.471,5.708 7.432,5.112 9.027,4.123 11.121,4.614 12.11,6.209 13.099,7.804 12.608,9.898 11.013,10.887 9.918,11.566 8.589,11.547 7.542,10.953L6.481,12.181z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="MessageStatus_RetryIssued">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H17 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.758,0,16,16" />
+                    </DrawingGroup.ClipGeometry>
+                    <GeometryDrawing Brush="#FFCCCCCC">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="8" RadiusY="8" Center="8.758,8" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M17,16z M0,0z M6.433,12.181C8.009,13.213 10.103,13.306 11.81,12.248 14.157,10.793 14.879,7.711 13.424,5.365 11.968,3.019 8.886,2.296 6.54,3.751 5.091,4.65 4.262,6.165 4.181,7.747L2.87,7.747 4.972,10.693 7.084,7.747 5.786,7.747C5.863,6.699 6.423,5.708 7.384,5.112 8.979,4.123 11.073,4.614 12.062,6.209 13.051,7.804 12.56,9.898 10.965,10.887 9.87,11.566 8.541,11.547 7.494,10.953L6.433,12.181z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
 
     <Geometry x:Key="ChevronRight">
         M409.133,109.203c-19.608-33.592-46.205-60.189-79.798-79.796C295.736,9.801,259.058,0,219.273,0
