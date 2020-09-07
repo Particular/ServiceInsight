@@ -175,6 +175,14 @@
                               IsChecked="{Binding AutoRefresh,
                                                   Mode=TwoWay}"
                               ShowScreenTip="True" />
+            
+            <dxb:BarButtonItem Name="RetryMessage"
+                               Command="{Binding Messages.RetryMessageCommand}"
+                               CommandParameter="{Binding Messages.Selection.SelectedMessage}"
+                               CustomizationContent="Retry Message"
+                               CategoryName="Tools"
+                               Content="Retry Message"
+                               Glyph="pack://application:,,,/Images/retryMsg.png" />
 
             <dxb:ToolbarListItem x:Name="ToolbarList"
                                  AutomationProperties.AutomationId="ToolbarListMenuItem"
