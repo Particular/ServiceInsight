@@ -15,10 +15,12 @@
     <UserControl.Resources>
         <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
             <Style.Triggers>
+                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
                 </DataTrigger>
+                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                 <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />

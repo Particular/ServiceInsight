@@ -95,11 +95,11 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="TextTemplate">
-            <TextBlock Text="{Binding Value}" d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersKeyValueList}" />
+            <TextBlock Text="{Binding Value}" d:DataContext="{d:DesignInstance messageHeaders:MessageHeaderKeyValue}" />
         </DataTemplate>
         
         <DataTemplate x:Key="ExceptionTemplate">
-            <controls:MvvmTextEditor d:DataContext="{d:DesignInstance messageHeaders:MessageHeadersKeyValueList}"
+            <controls:MvvmTextEditor d:DataContext="{d:DesignInstance messageHeaders:MessageHeaderKeyValue}"
                                      FontFamily="Consolas"
                                      FontSize="10pt"
                                      IsReadOnly="true"

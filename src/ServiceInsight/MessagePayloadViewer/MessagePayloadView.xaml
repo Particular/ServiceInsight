@@ -11,7 +11,7 @@
              Height="400"             
              ResizeMode="CanResizeWithGrip"
              WindowStartupLocation="CenterOwner"
-             d:DataContext="{d:DesignInstance {x:Type local:MessagePayloadViewModel}}"
+             d:DataContext="{d:DesignInstance {x:Type messageFlow:MessagePayloadViewModel}}"
              mc:Ignorable="d"
              MinHeight="200"
              MinWidth="400">
