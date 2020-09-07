@@ -30,6 +30,7 @@
         SequenceDiagramView view;
 
         const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
+        const string SequenceDiagramLegendUrl = "https://docs.particular.net/serviceinsight/sequence-diagram/#what-is-on-the-diagram";
 
         public SequenceDiagramViewModel(
             IServiceControl serviceControl,
@@ -56,6 +57,7 @@
             ShowExceptionCommand = showExceptionCommand;
             ReportMessageCommand = reportMessageCommand;
             OpenLink = Command.Create(arg => new NetworkOperations().Browse(SequenceDiagramDocumentationUrl));
+            OpenLegendUrl = Command.Create(arg => new NetworkOperations().Browse(SequenceDiagramLegendUrl));
             DiagramLegend = diagramLegend;
             DiagramItems = new DiagramItemCollection();
             HeaderItems = new DiagramItemCollection();
@@ -72,6 +74,8 @@
         }
 
         public ICommand OpenLink { get; }
+
+        public ICommand OpenLegendUrl { get; }
 
         public ICommand CopyConversationIDCommand { get; }
 
