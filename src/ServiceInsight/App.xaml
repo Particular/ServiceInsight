@@ -449,7 +449,21 @@
                         <DataTemplate.Resources>
                             <SolidColorBrush x:Key="{dxet:TextEditThemeKey ResourceKey=NullTextForeground, IsThemeIndependent=True}" Color="#3c3c3c" />
                         </DataTemplate.Resources>
-                        <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
+                        <StackPanel Orientation="Horizontal">
+                            <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="TextEditWithWarnGridColumnCellTemplate">
+                        <DataTemplate.Resources>
+                            <SolidColorBrush x:Key="{dxet:TextEditThemeKey ResourceKey=NullTextForeground, IsThemeIndependent=True}" Color="#3c3c3c" />
+                        </DataTemplate.Resources>
+                        <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource Warning}" Width="16" Height="16" Margin="2,0,2,0" Visibility="{Binding RowData.Row.MessageStatusInfo.HasWarn, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <dxe:TextEdit x:Name="PART_Editor" NullText="Unknown" />
+                        </StackPanel>
+                        <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                     </DataTemplate>
 
                     <DataTemplate x:Key="PropertyGridDateTextTemplate">

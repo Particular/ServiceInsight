@@ -160,8 +160,6 @@
             }
         }
 
-        public MessageStatusIconInfo GetMessageErrorInfo(StoredMessage msg) => new MessageStatusIconInfo(msg);
-
         public void Handle(WorkStarted @event)
         {
             WorkCount++;

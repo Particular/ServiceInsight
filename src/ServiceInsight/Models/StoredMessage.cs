@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
+    using ServiceInsight.MessageList;
 
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody
@@ -49,6 +50,8 @@
         public string MessageId { get; set; }
 
         public string InstanceId { get; set; }
+        
+        public MessageStatusIconInfo MessageStatusInfo => new MessageStatusIconInfo(this);
 
         public List<StoredMessageHeader> Headers
         {

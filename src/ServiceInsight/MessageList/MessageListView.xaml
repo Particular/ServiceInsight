@@ -130,14 +130,14 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn Name="ProcessingTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
                     <dxg:GridColumn Name="CriticalTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="CriticalTime"
                                     Header="Critical Time"
                                     HeaderToolTip="The time between when a message is sent and when it is fully processed"
@@ -146,7 +146,7 @@
                                     Visible="False" />
                     <dxg:GridColumn Name="DeliveryTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="DeliveryTime"
                                     Header="Delivery Time"
                                     HeaderToolTip="Delivery time for the message"
