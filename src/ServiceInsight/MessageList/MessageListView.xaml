@@ -15,10 +15,12 @@
     <UserControl.Resources>
         <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
             <Style.Triggers>
+                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
                 </DataTrigger>
+                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                 <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
@@ -128,14 +130,14 @@
                     </dxg:GridColumn>
                     <dxg:GridColumn Name="ProcessingTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="ProcessingTime"
                                     Header="Processing Time"
                                     HeaderToolTip="Calculated duration of processing"
                                     Tag="processing_time" />
                     <dxg:GridColumn Name="CriticalTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="CriticalTime"
                                     Header="Critical Time"
                                     HeaderToolTip="The time between when a message is sent and when it is fully processed"
@@ -144,7 +146,7 @@
                                     Visible="False" />
                     <dxg:GridColumn Name="DeliveryTime"
                                     AllowColumnFiltering="False"
-                                    CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
+                                    CellTemplate="{StaticResource TextEditWithWarnGridColumnCellTemplate}"
                                     FieldName="DeliveryTime"
                                     Header="Delivery Time"
                                     HeaderToolTip="Delivery time for the message"

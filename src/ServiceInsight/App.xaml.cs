@@ -12,12 +12,11 @@
 
     public partial class App
     {
-        private static Mutex mutex;
         private bool createdNew;
 
         public App()
         {
-            mutex = new Mutex(true, "ServiceInsight", out createdNew);
+            var _ = new Mutex(true, "ServiceInsight", out createdNew);
 
             if (createdNew)
             {

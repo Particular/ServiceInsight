@@ -60,7 +60,7 @@
 
             if (IsSet(choices, MessageChoice.Help))
             {
-                Choices.Add(new ChoiceCommand(HelpCommand, choices == MessageChoice.Help || defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
+                Choices.Add(new ChoiceCommand(HelpCommand, defaultChoice == MessageChoice.Help, false, "Help", MessageChoice.Help));
             }
 
             view.ShowDialog();

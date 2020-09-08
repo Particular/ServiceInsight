@@ -50,7 +50,7 @@
 
             if (e.IsGetData && e.Column.FieldName == UnboundColumns.IsFaulted)
             {
-                e.Value = Model.GetMessageErrorInfo(msg);
+                e.Value = msg.MessageStatusInfo;
             }
         }
 

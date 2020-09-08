@@ -32,12 +32,21 @@
             return Application.Current.TryFindResource(imageName) as DrawingImage;
         }
 
-        public MessageStatusIconInfo(MessageStatus status, Func<string, ImageSource> resourceFinder = null)
+        public MessageStatusIconInfo(StoredMessage message, Func<string, ImageSource> resourceFinder = null)
         {
             this.resourceFinder = resourceFinder ?? DefaultApplicationResourceFinder;
-            Status = status;
-            Image = GetImage();
+            
+            HasWarn = Warn(message);
+            Status = message.Status;
             Description = status.GetDescription();
+            Image = GetImage();
+        }
+
+        private bool Warn(StoredMessage message)
+        {
+            return message.ProcessingTime < TimeSpan.Zero ||
+                   message.CriticalTime < TimeSpan.Zero ||
+                   message.DeliveryTime < TimeSpan.Zero;
         }
 
         public ImageSource Image { get; }
@@ -51,6 +60,8 @@
                 statusSpecified = true;
             }
         }
+        
+        public bool HasWarn { get; }
 
         public string Description { get; }
 
@@ -58,6 +69,12 @@
         {
             var currentStatus = statusSpecified ? Status : MessageStatus.Successful;
             var imageName = $"MessageStatus_{statusToIconNameMap[currentStatus]}";
+            
+            if (HasWarn)
+            {
+                imageName += "_Warn";
+            }
+            
             var image = resourceFinder(imageName); 
 
             return image;
