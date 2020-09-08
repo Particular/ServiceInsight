@@ -27,6 +27,7 @@
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
             <StackPanel Margin="5" Orientation="Horizontal">
                 <Button Margin="2" Command="{Binding OpenLegendUrl}">
@@ -39,6 +40,7 @@
                 </Button>
             </StackPanel>
         </Border>
+
         <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>

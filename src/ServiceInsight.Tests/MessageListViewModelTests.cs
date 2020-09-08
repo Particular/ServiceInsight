@@ -81,7 +81,8 @@
                 return new DrawingImage();
             }
 
-            var icon = new MessageStatusIconInfo(status, TestResourceFinder);
+            var message = new StoredMessage { Status = status };
+            var icon = new MessageStatusIconInfo(message, TestResourceFinder);
             
             icon.Image.ShouldNotBe(null);
             icon.Description.ShouldNotBeNullOrEmpty();
