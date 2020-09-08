@@ -92,16 +92,19 @@
         <dxb:BarManager.Items>
             <dxb:BarButtonItem x:Name="ShutDown"
                                AutomationProperties.AutomationId="ShutdownMenuItem"
+                               CustomizationContent="Shutdown"
                                CategoryName="File"
                                Command="{Binding ShutDownCommand}"
                                Content="Exit Application" />
             <dxb:BarButtonItem x:Name="About"
                                AutomationProperties.AutomationId="AboutMenuItem"
+                               CustomizationContent="About menu"
                                CategoryName="Help"
                                Command="{Binding AboutCommand}"
                                Content="About" />
             <dxb:BarButtonItem x:Name="Help"
                                AutomationProperties.AutomationId="HelpMenuItem"
+                               CustomizationContent="Help menu"
                                CategoryName="Help"
                                Command="{Binding HelpCommand}"
                                Content="Help" />
@@ -127,26 +130,31 @@
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
                                CategoryName="Tools"
                                Command="{Binding RefreshAllCommand}"
+                               CustomizationContent="Refresh messages"
                                Content="Refresh"
                                Glyph="/Images/SearchRefresh.png"
                                KeyGesture="F5" />
             <dxb:BarButtonItem x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
                                CategoryName="Help"
+                               CustomizationContent="Manager license"
                                Command="{Binding RegisterCommand}"
                                Content="Manage license..." />
             <dxb:BarButtonItem x:Name="ResetLayout"
                                AutomationProperties.AutomationId="ResetLayoutMenuItem"
                                CategoryName="View"
                                Command="{Binding ResetLayoutCommand}"
+                               CustomizationContent="Reset Layout"
                                Content="Restore default layout" />
             <dxb:BarButtonItem x:Name="ProvideFeedback"
                                AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
                                CategoryName="Help"
+                               CustomizationContent="Provide Feedback Menu"
                                Command="{Binding ProvideFeedbackCommand}"
                                Content="Feedback" />
             <dxb:BarButtonItem x:Name="ProvideFeedbackToolbar"
                                AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
+                               CustomizationContent="Provide Feedback Toolbar"
                                CategoryName="Help"
                                Command="{Binding ProvideFeedbackCommand}"
                                Content="Feedback">
@@ -168,13 +176,21 @@
             </dxb:BarButtonItem>
             <dxb:BarCheckItem Name="DataAutoRefresh"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
+                              CustomizationContent="Auto Data Refresh"
                               CategoryName="View"
                               Content="Auto Refresh"
                               Glyph="/Images/autoRefresh.png"
                               Hint="{Binding AutoRefreshTooltip}"
-                              IsChecked="{Binding AutoRefresh,
-                                                  Mode=TwoWay}"
+                              IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
                               ShowScreenTip="True" />
+            
+            <dxb:BarButtonItem Name="RetryMessage"
+                               Command="{Binding Messages.RetryMessageCommand}"
+                               CommandParameter="{Binding Messages.Selection.SelectedMessage}"
+                               CustomizationContent="Retry Message"
+                               CategoryName="Tools"
+                               Content="Retry Message"
+                               Glyph="pack://application:,,,/Images/retryMsg.png" />
 
             <dxb:ToolbarListItem x:Name="ToolbarList"
                                  AutomationProperties.AutomationId="ToolbarListMenuItem"
@@ -183,6 +199,7 @@
 
             <dxb:BarButtonItem x:Name="Options"
                                AutomationProperties.AutomationId="OptionsMenuItem"
+                               CustomizationContent="Options"
                                CategoryName="View"
                                Command="{Binding OptionsCommand}"
                                Content="Options..."
@@ -190,6 +207,7 @@
 
             <dxb:BarSubItem x:Name="FileMenu"
                             AutomationProperties.AutomationId="FileMenu"
+                            CustomizationContent="File Menu"
                             CategoryName="File"
                             Content="File">
                 <dxb:BarButtonItemLink BarItemName="ShutDown" />
@@ -197,6 +215,7 @@
 
             <dxb:BarSubItem x:Name="ToolsMenu"
                             AutomationProperties.AutomationId="ToolsMenu"
+                            CustomizationContent="Tools Menu"
                             CategoryName="Tools"
                             Content="Tools">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
@@ -226,10 +245,11 @@
             </dxb:BarSubItem>
 
             <dxb:BarStaticItem x:Name="LicenseStatusBar"
-	                           Alignment="Far"
-	                           AutoSizeMode="Content"
-	                           AutomationProperties.AutomationId="LicenseStatus"
-	                           CategoryName="Status"
+                               Alignment="Far"
+                               CustomizationContent="License Status Bar"
+                               AutoSizeMode="Content"
+                               AutomationProperties.AutomationId="LicenseStatus"
+                               CategoryName="Status"
                                Content="{Binding}" 
                                Command="{Binding RegisterCommand}"
                                ShowBorder="False">
@@ -288,6 +308,7 @@
             </dxb:BarStaticItem>
 
             <dxb:BarStaticItem x:Name="Registration"
+                               CustomizationContent="License Registration"
                                Alignment="Far"
                                AutoSizeMode="Content"
                                AutomationProperties.AutomationId="RegistrationStatus"
@@ -300,6 +321,7 @@
                                AutoSizeMode="Fill"
                                AutomationProperties.AutomationId="StatusMessage"
                                CategoryName="Status"
+                               CustomizationContent="Application Status"
                                Content="{Binding}"
                                ShowBorder="False">
                 <dxb:BarStaticItem.ContentTemplate>
@@ -320,6 +342,7 @@
 
             <dxb:BarStaticItem x:Name="UpdateCheck" 
                                AutoSizeMode="Content"
+                               CustomizationContent="Version Update"
                                CategoryName="Status"
                                Alignment="Far"
                                Content="{Binding}"
@@ -360,6 +383,7 @@
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
+                <dxb:BarCheckItemLink BarItemName="RetryMessage" />
                 <dxb:BarButtonItemLink BarItemName="ProvideFeedbackToolbar" Alignment="Far" />
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar"
@@ -372,7 +396,7 @@
                     <dxb:BarDockInfo ContainerType="Bottom" />
                 </dxb:Bar.DockInfo>
                 <dxb:Bar.ItemLinks>
-                    <dxb:BarStaticItemLink BarItemName="Status"  />
+                    <dxb:BarStaticItemLink BarItemName="Status" />
                     <dxb:BarItemLinkSeparator />
                     <dxb:BarStaticItemLink BarItemName="UpdateCheck" />
                     <dxb:BarStaticItemLink BarItemName="Registration" />
