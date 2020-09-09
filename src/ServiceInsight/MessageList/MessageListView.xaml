@@ -143,6 +143,7 @@
                                     HeaderToolTip="The time between when a message is sent and when it is fully processed"
                                     Tag="critical_time"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False" />
                     <dxg:GridColumn Name="DeliveryTime"
                                     AllowColumnFiltering="False"
@@ -152,6 +153,7 @@
                                     HeaderToolTip="Delivery time for the message"
                                     Tag="delivery_time"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False" />
                     <dxg:GridColumn Name="ProcessingStarted"
                                     AllowColumnFiltering="False"
@@ -161,6 +163,7 @@
                                     HeaderToolTip="When the processing started"
                                     Tag="processing_started"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False">
                         <dxg:GridColumn.EditSettings>
                           <dxe:DateEditSettings DisplayFormat="G" />
@@ -174,6 +177,7 @@
                                     HeaderToolTip="When the processing ended"
                                     Tag="processing_ended"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False">
                       <dxg:GridColumn.EditSettings>
                         <dxe:DateEditSettings DisplayFormat="G" />
@@ -187,6 +191,7 @@
                                     HeaderToolTip="Message correlation identifier"
                                     Tag="correlation_id"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False">
                     </dxg:GridColumn>
                     <dxg:GridColumn Name="RetryCount"
@@ -197,6 +202,7 @@
                                     HeaderToolTip="Number of retries the message had"
                                     Tag="retry_count"
                                     ShowInColumnChooser="True"
+                                    AllowSorting="false"
                                     Visible="False">
                     </dxg:GridColumn>
                 </dxg:GridControl.Columns>
