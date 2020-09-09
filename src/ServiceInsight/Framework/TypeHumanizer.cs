@@ -13,7 +13,7 @@
 
             var clazz = type.Split(',').First();
             var objectName = clazz.Split('.').Last();
-            objectName = objectName.Split('+').Last();
+            objectName = objectName.Replace('+', '.');
 
             return objectName;
         }
