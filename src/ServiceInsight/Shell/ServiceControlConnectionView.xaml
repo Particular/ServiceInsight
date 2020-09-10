@@ -11,7 +11,7 @@
               Height="180"
               AutomationProperties.AutomationId="ServiceControlConnectionDialog"
               FocusManager.FocusedElement="{Binding ElementName=name}"
-              Icon="/Images/ConnectService.png"
+              Icon="{StaticResource Shell_ToolbarConnect}"
               Loaded="SelectText"
               ResizeMode="NoResize"
               ShowInTaskbar="False"
@@ -37,7 +37,7 @@
                    Height="16"
                    Margin="5"
                    VerticalAlignment="Center"
-                   Source="/Images/Information.png">
+                   Source="{StaticResource Shell_Information}">
                 <Image.ToolTip>
                     <TextBlock Text="Please enter ServiceControl URI." />
                 </Image.ToolTip>
@@ -74,7 +74,7 @@
                    Height="16"
                    Margin="5"
                    VerticalAlignment="Center"
-                   Source="/Images/Error.png">
+                   Source="{StaticResource Shell_StatusError}">
                 <Image.ToolTip>
                     <TextBlock Text="Error" />
                 </Image.ToolTip>

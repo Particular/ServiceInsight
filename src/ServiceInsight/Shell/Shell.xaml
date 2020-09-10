@@ -113,7 +113,8 @@
                                CategoryName="Tools"
                                Command="{Binding ConnectToServiceControlCommand}"
                                Content="Connect"
-                               Glyph="/Images/ConnectService.png">
+                               Glyph="{StaticResource Shell_ToolbarConnect}" 
+                               RenderOptions.BitmapScalingMode="HighQuality">
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
                         <dxc:SuperTipItem Content="Connect Endpoint Explorer to ServiceControl instance">
@@ -132,7 +133,8 @@
                                Command="{Binding RefreshAllCommand}"
                                CustomizationContent="Refresh messages"
                                Content="Refresh"
-                               Glyph="/Images/SearchRefresh.png"
+                               Glyph="{StaticResource Shell_RefreshMessageList}"
+                               RenderOptions.BitmapScalingMode="HighQuality"
                                KeyGesture="F5" />
             <dxb:BarButtonItem x:Name="Register"
                                AutomationProperties.AutomationId="RegisterMenuItem"
@@ -179,7 +181,7 @@
                               CustomizationContent="Auto Data Refresh"
                               CategoryName="View"
                               Content="Auto Refresh"
-                              Glyph="/Images/autoRefresh.png"
+                              Glyph="{StaticResource Shell_AutoRefresh}"
                               Hint="{Binding AutoRefreshTooltip}"
                               IsChecked="{Binding AutoRefresh, Mode=TwoWay}"
                               ShowScreenTip="True" />
@@ -190,7 +192,8 @@
                                CustomizationContent="Retry Message"
                                CategoryName="Tools"
                                Content="Retry Message"
-                               Glyph="pack://application:,,,/Images/retryMsg.png" />
+                               Glyph="{StaticResource Shell_RetryMessage}"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
 
             <dxb:ToolbarListItem x:Name="ToolbarList"
                                  AutomationProperties.AutomationId="ToolbarListMenuItem"
@@ -265,7 +268,7 @@
                                                         Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="16" Height="16" Margin="0,0,4,0"
-                                           Source="/Images/Status-Error.png" 
+                                           Source="{StaticResource Shell_StatusError}" 
                                            Stretch="Uniform"/>
 
                                      <TextBlock VerticalAlignment="Center" 
@@ -284,7 +287,7 @@
                                                         Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="16" Height="16" Margin="0,0,4,0"
-                                           Source="/Images/Status-Warning.png" 
+                                           Source="{StaticResource Shell_StatusWarning}" 
                                            Stretch="Uniform"/>
 
                                     <TextBlock VerticalAlignment="Center" 
@@ -330,7 +333,7 @@
                             <Image Width="16"
                                    Height="16"
                                    Margin="0,0,5,0"
-                                   Source="/Images/ErrorStatus.png"
+                                   Source="{StaticResource Shell_StatusError}"
                                    Stretch="Uniform"
                                    Visibility="{Binding Path=StatusBarManager.ErrorMessageVisible,
                                                         Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -351,7 +354,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <controls:LinkedIcon Text="A new version is available."
-                                                 ImageSource="/Images/NewUpdate.png"
+                                                 ImageSource="{StaticResource Shell_Upgrade}"
                                                  FontSize="12" Margin="0,0,5,0" 
                                                  Command="{Binding NewVersionIsAvailableCommand}" 
                                                  Visibility="{Binding Path=NewVersionIsAvailable, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -419,7 +422,7 @@
                                          AllowFloat="False"
                                          AutomationProperties.AutomationId="EndpointExplorer"
                                          Caption="Endpoint Explorer"
-                                         CaptionImage="/Images/ServerExplorer.png"
+                                         CaptionImage="{StaticResource Shell_EndpointExplorer}"
                                          ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding EndpointExplorer}" />
                         </dxd:LayoutPanel>
@@ -435,7 +438,7 @@
                                          AllowFloat="False"
                                          AutomationProperties.AutomationId="MessageList"
                                          Caption="Messages"
-                                         CaptionImage="/Images/Folder-Table.png"
+                                         CaptionImage="{StaticResource Shell_MessagesList}"
                                          ShowBorder="False">
                             <ContentControl cal:View.Model="{Binding Messages}" />
                         </dxd:LayoutPanel>
@@ -453,7 +456,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="MessageFlow"
                                                  Caption="Flow Diagram"
-                                                 CaptionImage="/Images/Diagram.png"
+                                                 CaptionImage="{StaticResource Shell_FlowDiagram}"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageFlow}" />
                                 </dxd:LayoutPanel>
@@ -462,7 +465,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="SagaWindow"
                                                  Caption="Saga"
-                                                 CaptionImage="/Images/Saga.png"
+                                                 CaptionImage="{StaticResource Shell_SagaView}"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding SagaWindow}" />
                                 </dxd:LayoutPanel>
@@ -471,7 +474,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="SequenceDiagram"
                                                  Caption="Sequence Diagram"
-                                                 CaptionImage="/Images/SequenceDiagram.png"
+                                                 CaptionImage="{StaticResource Shell_SequenceDiagram}"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding SequenceDiagram}" />
                                 </dxd:LayoutPanel>
@@ -480,7 +483,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="MessageHeaders"
                                                  Caption="Headers"
-                                                 CaptionImage="/Images/Headers.png"
+                                                 CaptionImage="{StaticResource Shell_HeadersView}"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageHeaders}" />
                                 </dxd:LayoutPanel>
@@ -489,7 +492,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="MessageBody"
                                                  Caption="Body"
-                                                 CaptionImage="/Images/Document.png"
+                                                 CaptionImage="{StaticResource Shell_MessageBodyView}"
                                                  IsVisibleChanged="MessageBody_OnIsVisibleChanged"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding MessageBody}" />
@@ -500,7 +503,7 @@
                                                  AllowFloat="False"
                                                  AutomationProperties.AutomationId="LogWindow"
                                                  Caption="Logs"
-                                                 CaptionImage="/Images/Log.png"
+                                                 CaptionImage="{StaticResource Shell_LogsView}"
                                                  ShowBorder="False">
                                     <ContentControl cal:View.Model="{Binding LogWindow}" />
                                 </dxd:LayoutPanel>
@@ -511,7 +514,7 @@
                                              AllowFloat="False"
                                              AutomationProperties.AutomationId="MessageProperties"
                                              Caption="Message Properties"
-                                             CaptionImage="/Images/Properties.png"
+                                             CaptionImage="{StaticResource Shell_MessageProperties}"
                                              ItemWidth="1*"
                                              ShowBorder="False">
 

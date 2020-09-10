@@ -8,9 +8,10 @@
              xmlns:messageFlow="clr-namespace:ServiceInsight.MessagePayloadViewer"
              Title="Message Payload Details"
              Width="800"
-             Height="400"             
+             Height="400"
              ResizeMode="CanResizeWithGrip"
              WindowStartupLocation="CenterOwner"
+             ShowIcon="False"
              d:DataContext="{d:DesignInstance {x:Type messageFlow:MessagePayloadViewModel}}"
              mc:Ignorable="d"
              MinHeight="200"
@@ -34,7 +35,7 @@
                 <ContextMenu>
                     <MenuItem Command="Copy">
                         <MenuItem.Icon>
-                            <Image Source="/Images/Copy.png" />
+                            <Image Source="{StaticResource Shell_CopyClipboard}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
