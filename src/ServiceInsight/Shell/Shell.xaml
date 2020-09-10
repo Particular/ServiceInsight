@@ -206,7 +206,8 @@
                                CategoryName="View"
                                Command="{Binding OptionsCommand}"
                                Content="Options..."
-                               Glyph="/Images/Options.png" />
+                               Glyph="{StaticResource Shell_Options}"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
 
             <dxb:BarSubItem x:Name="FileMenu"
                             AutomationProperties.AutomationId="FileMenu"

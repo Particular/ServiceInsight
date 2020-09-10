@@ -1521,6 +1521,30 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    
+    <DrawingImage x:Key="Shell_Options">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                <GeometryDrawing Brush="#FF0066CC" Geometry="F1 M24,24z M0,0z M19,2C20.654,2,22,3.346,22,5L22,19C22,20.654,20.654,22,19,22L5,22C3.346,22,2,20.654,2,19L2,5C2,3.346,3.346,2,5,2L19,2z M24,5C24,2.239,21.762,0,19,0L5,0C2.238,0,0,2.239,0,5L0,19C0,21.761,2.238,24,5,24L19,24C21.762,24,24,21.761,24,19L24,5z M11,17L9,17 9,20 7,20 7,17 5,17 5,14 11,14 11,17z M9,4L7,4 7,12 9,12 9,4z M19,9L13,9 13,12 15,12 15,20 17,20 17,12 19,12 19,9z M17,4L15,4 15,7 17,7 17,4z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="Shell_Add">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                <GeometryDrawing Brush="#FF82BB59" Geometry="F1 M24,24z M0,0z M12,2C17.514,2 22,6.486 22,12 22,17.514 17.514,22 12,22 6.486,22 2,17.514 2,12 2,6.486 6.486,2 12,2z M12,0C5.373,0 0,5.373 0,12 0,18.627 5.373,24 12,24 18.627,24 24,18.627 24,12 24,5.373 18.627,0 12,0z M18,13L13,13 13,18 11,18 11,13 6,13 6,11 11,11 11,6 13,6 13,11 18,11 18,13z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    
+    <DrawingImage x:Key="Shell_Remove">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                <GeometryDrawing Brush="#FFE90111" Geometry="F1 M24,24z M0,0z M12,2C17.514,2 22,6.486 22,12 22,17.514 17.514,22 12,22 6.486,22 2,17.514 2,12 2,6.486 6.486,2 12,2z M12,0C5.373,0 0,5.373 0,12 0,18.627 5.373,24 12,24 18.627,24 24,18.627 24,12 24,5.373 18.627,0 12,0z M18,13L6,13 6,11 18,11 18,13z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
     <!--End of Shell Vector Icons-->
 
     <DrawingImage x:Key="Warning">
