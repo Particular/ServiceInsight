@@ -1,0 +1,323 @@
+﻿[
+  {
+    "id": "e9a8e4ef-b6f6-18c9-e56f-79601bf72172",
+    "message_id": "e01d1be5-774c-4255-ac30-ac3100f88628",
+    "message_type": "Messages.FinishSaga",
+    "sending_endpoint": {
+      "name": "ExternalHandler",
+      "host_id": "937c78c0-a7eb-ed24-381b-27b3b9442bed",
+      "host": "MacBook-Pro-3"
+    },
+    "receiving_endpoint": {
+      "name": "SagaEndpoint",
+      "host_id": "bf3ce718-e4de-db0e-f873-e96a97ca8dcc",
+      "host": "MacBook-Pro-3"
+    },
+    "time_sent": "2020-09-09T15:04:50.965443Z",
+    "processed_at": "2020-09-09T15:04:51.495973Z",
+    "critical_time": "00:00:00.5305300",
+    "processing_time": "00:00:00.0768660",
+    "delivery_time": "00:00:00.4536640",
+    "is_system_message": false,
+    "conversation_id": "7f6150f3-621e-41bc-af9d-ac3100f88342",
+    "headers": [
+      {
+        "key": "MyCustomHeader",
+        "value": "some header value"
+      },
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "e01d1be5-774c-4255-ac30-ac3100f88628"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "1d4dd319-9372-405b-9721-ac3100f883be"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "7f6150f3-621e-41bc-af9d-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "e9895caf-8b5f-488f-a092-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "ExternalHandler@[dbo]@[ServiceControlSql]"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "MacBook-Pro-3"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "ExternalHandler"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "Messages.FinishSaga, Messages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "7.4.2"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2020-09-09 15:04:50:965443 Z"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "SagaEndpoint.MyTestSaga:b13f4e85-fb15-473f-8539-ac3100f883be"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "b13f4e85-fb15-473f-8539-ac3100f883be:Completed"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2020-09-09 15:04:51:419107 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2020-09-09 15:04:51:495973 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MacBook-Pro-3"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "SagaEndpoint"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/e01d1be5-774c-4255-ac30-ac3100f88628/body?instance_id=aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv",
+    "body_size": 67,
+    "invoked_sagas": [
+      {
+        "change_status": "Completed",
+        "saga_type": "SagaEndpoint.MyTestSaga",
+        "saga_id": "b13f4e85-fb15-473f-8539-ac3100f883be"
+      }
+    ],
+    "instance_id": "aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv"
+  },
+  {
+    "id": "3ff04479-d44e-ed80-7092-141fdab74ac9",
+    "message_id": "1d4dd319-9372-405b-9721-ac3100f883be",
+    "message_type": "Messages.TestCommand+DoWorkCommand",
+    "sending_endpoint": {
+      "name": "SagaEndpoint",
+      "host_id": "dcd4b790-dd7b-54f0-67ad-2f32d6b441e4",
+      "host": "SF-SURFACEPRO"
+    },
+    "receiving_endpoint": {
+      "name": "ExternalHandler",
+      "host_id": "937c78c0-a7eb-ed24-381b-27b3b9442bed",
+      "host": "MacBook-Pro-3"
+    },
+    "time_sent": "2020-09-09T15:04:48.845001Z",
+    "processed_at": "2020-09-09T15:04:50.968938Z",
+    "critical_time": "00:00:02.1239370",
+    "processing_time": "00:00:01.0969990",
+    "delivery_time": "00:00:01.0269380",
+    "is_system_message": false,
+    "conversation_id": "7f6150f3-621e-41bc-af9d-ac3100f88342",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "1d4dd319-9372-405b-9721-ac3100f883be"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.RelatedTo",
+        "value": "e9895caf-8b5f-488f-a092-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "7f6150f3-621e-41bc-af9d-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "e9895caf-8b5f-488f-a092-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaId",
+        "value": "b13f4e85-fb15-473f-8539-ac3100f883be"
+      },
+      {
+        "key": "NServiceBus.OriginatingSagaType",
+        "value": "SagaEndpoint.MyTestSaga, SagaEndpoint, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "SagaEndpoint@[dbo]@[ServiceControlSql]"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SF-SURFACEPRO"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "SagaEndpoint"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "Messages.TestCommand+DoWorkCommand, Messages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "7.4.2"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2020-09-09 15:04:48:845001 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2020-09-09 15:04:49:871939 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2020-09-09 15:04:50:968938 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "MacBook-Pro-3"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "ExternalHandler"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/1d4dd319-9372-405b-9721-ac3100f883be/body?instance_id=aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv",
+    "body_size": 48,
+    "originates_from_saga": {
+      "saga_type": "SagaEndpoint.MyTestSaga",
+      "saga_id": "b13f4e85-fb15-473f-8539-ac3100f883be"
+    },
+    "instance_id": "aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv"
+  },
+  {
+    "id": "9550d56c-f274-273f-cded-4202a4402cfe",
+    "message_id": "e9895caf-8b5f-488f-a092-ac3100f88342",
+    "message_type": "Messages.TestCommand",
+    "sending_endpoint": {
+      "name": "Sender",
+      "host_id": "9b5af12e-6c8e-06e4-e715-c92b06025184",
+      "host": "SF-SURFACEPRO"
+    },
+    "receiving_endpoint": {
+      "name": "SagaEndpoint",
+      "host_id": "dcd4b790-dd7b-54f0-67ad-2f32d6b441e4",
+      "host": "SF-SURFACEPRO"
+    },
+    "time_sent": "2020-09-09T15:04:48.428963Z",
+    "processed_at": "2020-09-09T15:04:48.849822Z",
+    "critical_time": "00:00:00.4208590",
+    "processing_time": "00:00:00.1576680",
+    "delivery_time": "00:00:00.2631910",
+    "is_system_message": false,
+    "conversation_id": "7f6150f3-621e-41bc-af9d-ac3100f88342",
+    "headers": [
+      {
+        "key": "NServiceBus.MessageId",
+        "value": "e9895caf-8b5f-488f-a092-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.MessageIntent",
+        "value": "Send"
+      },
+      {
+        "key": "NServiceBus.ConversationId",
+        "value": "7f6150f3-621e-41bc-af9d-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.CorrelationId",
+        "value": "e9895caf-8b5f-488f-a092-ac3100f88342"
+      },
+      {
+        "key": "NServiceBus.ReplyToAddress",
+        "value": "Sender@[dbo]@[ServiceControlSql]"
+      },
+      {
+        "key": "NServiceBus.OriginatingMachine",
+        "value": "SF-SURFACEPRO"
+      },
+      {
+        "key": "NServiceBus.OriginatingEndpoint",
+        "value": "Sender"
+      },
+      {
+        "key": "NServiceBus.ContentType",
+        "value": "application/json"
+      },
+      {
+        "key": "NServiceBus.EnclosedMessageTypes",
+        "value": "Messages.TestCommand, Messages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+      },
+      {
+        "key": "NServiceBus.Version",
+        "value": "7.4.2"
+      },
+      {
+        "key": "NServiceBus.TimeSent",
+        "value": "2020-09-09 15:04:48:428963 Z"
+      },
+      {
+        "key": "NServiceBus.InvokedSagas",
+        "value": "SagaEndpoint.MyTestSaga:b13f4e85-fb15-473f-8539-ac3100f883be"
+      },
+      {
+        "key": "ServiceControl.SagaStateChange",
+        "value": "b13f4e85-fb15-473f-8539-ac3100f883be:New"
+      },
+      {
+        "key": "NServiceBus.ProcessingStarted",
+        "value": "2020-09-09 15:04:48:692154 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingEnded",
+        "value": "2020-09-09 15:04:48:849822 Z"
+      },
+      {
+        "key": "NServiceBus.ProcessingMachine",
+        "value": "SF-SURFACEPRO"
+      },
+      {
+        "key": "NServiceBus.ProcessingEndpoint",
+        "value": "SagaEndpoint"
+      }
+    ],
+    "status": "successful",
+    "message_intent": "send",
+    "body_url": "/messages/e9895caf-8b5f-488f-a092-ac3100f88342/body?instance_id=aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv",
+    "body_size": 197,
+    "invoked_sagas": [
+      {
+        "change_status": "New",
+        "saga_type": "SagaEndpoint.MyTestSaga",
+        "saga_id": "b13f4e85-fb15-473f-8539-ac3100f883be"
+      }
+    ],
+    "instance_id": "aHR0cDovL2xvY2FsaG9zdDo0NDQ0NC9hcGkv"
+  }
+]

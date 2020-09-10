@@ -45,11 +45,13 @@ namespace ServiceInsight.SequenceDiagram
             // NOTE: All sending endpoints are created first to ensure version info is retained
             foreach (var message in messagesInOrder)
             {
+                // check for endpoint hots
                 endpointRegistry.Register(CreateSendingEndpoint(message));
             }
 
             foreach (var message in messagesInOrder)
             {
+                // check for endpoint hots
                 endpointRegistry.Register(CreateProcessingEndpoint(message));
             }
 
@@ -60,12 +62,14 @@ namespace ServiceInsight.SequenceDiagram
                 {
                     endpoints.Add(sendingEndpoint);
                 }
+                // add else if we have the endpoint we need to add to host list
 
                 var processingEndpoint = endpointRegistry.Get(CreateProcessingEndpoint(message));
                 if (!endpoints.Contains(processingEndpoint))
                 {
                     endpoints.Add(processingEndpoint);
                 }
+                // add else if we have the endpoint we need to add to host list
 
                 Handler sendingHandler;
                 Handler processingHandler;
@@ -250,7 +254,7 @@ namespace ServiceInsight.SequenceDiagram
                        ?? store[key].FirstOrDefault();
             }
 
-            Tuple<string, string, string> MakeKey(EndpointItem item) => Tuple.Create(item.FullName, item.Host, item.HostId);
+            Tuple<string, string, string> MakeKey(EndpointItem item) => Tuple.Create(item.FullName, item.Hostlist, item.HostIdList);
         }
 
         class HandlerRegistry
