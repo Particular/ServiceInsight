@@ -1,8 +1,6 @@
 ﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
-    using System.Drawing;
     using System.Linq;
-    using global::ServiceInsight.Properties;
     using Models;
 
     public class ServiceControlExplorerItem : ExplorerItem
@@ -12,7 +10,7 @@
         {
         }
 
-        public override Bitmap Image => Resources.TreeMonitoring;
+        public override string Image => "Shell_EndpointRootNode";
 
         public bool EndpointExists(Endpoint endpoint) => Children.Any(item => item.Endpoint == endpoint);
 

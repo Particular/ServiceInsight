@@ -1,7 +1,5 @@
 ﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
-    using System.Drawing;
-    using global::ServiceInsight.Properties;
     using ServiceInsight.Models;
 
     public class AuditEndpointExplorerItem : EndpointExplorerItem
@@ -14,6 +12,6 @@
 
         public string HostNames { get; set; }
 
-        public override Bitmap Image => Resources.TreeAuditQueue;
+        public override string Image => "Shell_EndpointTreeNode";
     }
 }

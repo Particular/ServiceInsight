@@ -24,6 +24,7 @@
                     <cnv:MathConverter x:Key="MathConverter" />
                     <cnv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
                     <cnv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+                    <cnv:DrawingNameToImageSourceConverter x:Key="DrawingNameToImageSourceConverter" />
                     <cnv:BitmapToGlyphConverter x:Key="BitmapToGlyphConverter" />
                     <cnv:ZoomToCancelScaleConverter x:Key="ZoomToCancelScaleConverter" />
                     <cnv:PopupMenuItemCountVisibleConverter x:Key="PopupMenuItemCountVisibleConverter" />

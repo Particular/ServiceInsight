@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.Explorer
 {
-    using System.Drawing;
     using Caliburn.Micro;
     using EndpointExplorer;
 
@@ -16,7 +15,7 @@
 
         public int TreeRowHandle { get; set; }
 
-        public abstract Bitmap Image { get; }
+        public abstract string Image { get; }
 
         public string Name { get; }
 
