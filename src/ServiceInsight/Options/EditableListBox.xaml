@@ -17,14 +17,14 @@
                     DockPanel.Dock="Left">
                 <Image Width="16"
                        Height="16"
-                       Source="/Images/Add-Small.png" />
+                       Source="{StaticResource Shell_Add}" />
             </Button>
             <Button Margin="2, 2, 0, 2"
                     Click="OnRemoveSelectedItem"
                     DockPanel.Dock="Left">
                 <Image Width="16"
                        Height="16"
-                       Source="/Images/Delete-Small.png" />
+                       Source="{StaticResource Shell_Remove}" />
             </Button>
             <dxe:TextEdit x:Name="NewItem"
                           Margin="2, 2, 0, 2"

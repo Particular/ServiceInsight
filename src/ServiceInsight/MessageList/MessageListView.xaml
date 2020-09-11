@@ -34,7 +34,7 @@
                                Command="{Binding RetryMessageCommand}"
                                CommandParameter="{Binding Selection.SelectedMessage}"
                                Content="Retry Message"
-                               Glyph="pack://application:,,,/Images/retryMsg.png"
+                               Glyph="{StaticResource Shell_RetryMessage}"
                                IsVisible="{Binding IsEnabled,
                                                    RelativeSource={RelativeSource Self}}" />
             <dxb:BarButtonItem Name="copyHeaders"

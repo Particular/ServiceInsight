@@ -24,7 +24,7 @@
     <Grid x:Name="Root">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -32,9 +32,10 @@
             <StackPanel Margin="5" Orientation="Horizontal">
                 <Button Margin="2" Command="{Binding OpenLegendUrl}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="0,0,5,0"
+                        <Image Margin="0,0,2,0"
+                               Width="12"
                                VerticalAlignment="Center"
-                               Source="/Images/Help.png" />
+                               Source="{StaticResource Shell_Help}" />
                         <TextBlock VerticalAlignment="Center" Text="Sequence Diagram Help" />
                     </StackPanel>
                 </Button>

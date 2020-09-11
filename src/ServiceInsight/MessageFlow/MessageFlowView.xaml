@@ -9,12 +9,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:ServiceInsight.Models"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
+             xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
              IsHitTestVisible="True"
              d:DataContext="{d:DesignInstance local:MessageFlowViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-
+    <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -41,25 +42,21 @@
                         <Setter Property="Margin" Value="10,5,5,5" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Message.Status}"
-                                         d:DataContext="{d:DesignInstance local:MessageNode}"
                                          Value="{x:Static models:MessageStatus.Failed}">
                                 <Setter Property="Template" Value="{StaticResource msgFailureIcon}" />
                                 <Setter Property="ToolTip" Value="Failed" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}"
-                                         d:DataContext="{d:DesignInstance local:MessageNode}"
                                          Value="{x:Static models:MessageStatus.RepeatedFailure}">
                                 <Setter Property="Template" Value="{StaticResource msgRepeatedFailureIcon}" />
                                 <Setter Property="ToolTip" Value="Repeated Failures" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}"
-                                         d:DataContext="{d:DesignInstance local:MessageNode}"
                                          Value="{x:Static models:MessageStatus.RetryIssued}">
                                 <Setter Property="Template" Value="{StaticResource msgRetriedIcon}" />
                                 <Setter Property="ToolTip" Value="Retry Requested" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Message.Status}"
-                                         d:DataContext="{d:DesignInstance local:MessageNode}"
                                          Value="{x:Static models:MessageStatus.ArchivedFailure}">
                                 <Setter Property="Template" Value="{StaticResource msgArchiveIcon}" />
                                 <Setter Property="ToolTip" Value="Archived Failure" />
@@ -264,12 +261,11 @@
                         <Setter Property="Data" Value="{StaticResource CommandGeometry}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsTimeout}"
-                                         d:DataContext="{d:DesignInstance local:MessageNode}"
                                          Value="True">
                                 <Setter Property="Data" Value="{StaticResource TimeoutGeometry}" />
                                 <Setter Property="ToolTip" Value="Timeout" />
                             </DataTrigger>
-                            <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IsTimeout}" Value="False" />
                                     <Condition Binding="{Binding IsPublished}" Value="True" />
@@ -277,7 +273,7 @@
                                 <Setter Property="Data" Value="{StaticResource EventGeometry}" />
                                 <Setter Property="ToolTip" Value="Event" />
                             </MultiDataTrigger>
-                            <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                            <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IsTimeout}" Value="False" />
                                     <Condition Binding="{Binding IsPublished}" Value="False" />
@@ -293,7 +289,7 @@
                         <Setter Property="Cursor" Value="Arrow" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
-                                <DataTemplate>
+                                <DataTemplate DataType="diagram:DiagramItem">
                                     <StackPanel Orientation="Horizontal">
                                         <Border x:Name="MessageRectangle"
                                                 HorizontalAlignment="Stretch"
@@ -400,12 +396,11 @@
                                                                 </Grid>
                                                                 <DataTemplate.Triggers>
                                                                     <DataTrigger Binding="{Binding IsSagaInitiated}"
-                                                                                 d:DataContext="{d:DesignInstance local:SagaInvocation}"
                                                                                  Value="True">
                                                                         <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaTriggerIcon}" />
                                                                         <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Message originated from Saga" />
                                                                     </DataTrigger>
-                                                                    <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaInvocation}">
+                                                                    <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
                                                                             <Condition Binding="{Binding IsSagaCompleted}" Value="False" />
@@ -413,7 +408,7 @@
                                                                         <Setter TargetName="SagaStatusIcon" Property="Template" Value="{StaticResource SagaInitiatedIcon}" />
                                                                         <Setter TargetName="SagaStatusIcon" Property="ToolTip" Value="Saga Initiated / Updated" />
                                                                     </MultiDataTrigger>
-                                                                    <MultiDataTrigger d:DataContext="{d:DesignInstance local:SagaInvocation}">
+                                                                    <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding IsSagaInitiated}" Value="False" />
                                                                             <Condition Binding="{Binding IsSagaCompleted}" Value="True" />
@@ -449,34 +444,32 @@
                                     </StackPanel>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding HasFailed}"
-                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
                                                      Value="True">
                                             <DataTrigger.Setters>
                                                 <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource FailedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding HasRetried}"
-                                                     d:DataContext="{d:DesignInstance local:MessageNode}"
                                                      Value="True">
                                             <DataTrigger.Setters>
                                                 <Setter TargetName="MessageRectangle" Property="Background" Value="{StaticResource RetriedMessageBackground}" />
                                             </DataTrigger.Setters>
                                         </DataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedFailedMessageBorder}" />
                                         </MultiDataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasRetried}" Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="MessageRectangle" Property="BorderBrush" Value="{StaticResource SelectedMessageBorder}" />
                                         </MultiDataTrigger>
-                                        <MultiDataTrigger d:DataContext="{d:DesignInstance local:MessageNode}">
+                                        <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding IsFocused}" Value="True" />
                                                 <Condition Binding="{Binding HasFailed}" Value="False" />
@@ -547,6 +540,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
     <Grid x:Name="Root" KeyUp="Root_KeyUp">
 
@@ -558,34 +552,19 @@
         <Border BorderBrush="#EFEFF2" BorderThickness="0 0 0 2">
             <StackPanel Margin="5" Orientation="Horizontal">
                 <RepeatButton x:Name="ZoomIn" Interval="10">
-                    <ContentControl Width="12" Template="{StaticResource ZoomInIcon}" />
+                    <Image Width="12" Source="{StaticResource Shell_ToolbarZoomIn}" />
                 </RepeatButton>
                 <RepeatButton x:Name="ZoomOut"
                               Margin="2,0"
                               Interval="10">
-                    <ContentControl Width="12" Template="{StaticResource ZoomOutIcon}" />
+                    <Image Width="12" Source="{StaticResource Shell_ToolbarZoomOut}" />
                 </RepeatButton>
                 <ToggleButton Margin="2,0" IsChecked="{Binding ShowEndpoints}">
                     <StackPanel Orientation="Horizontal">
-                        <Path Width="12"
-                              Margin="0, 0, 2, 0"
-                              HorizontalAlignment="Center"
-                              Data="{StaticResource EndpointGeometry}"
-                              Fill="#FF007BC6"
-                              Stretch="Uniform" />
+                        <Image Source="{StaticResource Shell_ToolbarEndpoint}" Width="12" Margin="0,0,2,0" />
                         <TextBlock VerticalAlignment="Center" Text="Show Endpoints" />
                     </StackPanel>
                 </ToggleButton>
-                <Button x:Name="ToggleTimelineData"
-                        Margin="2,0"
-                        Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Margin="0,0,5,0"
-                               VerticalAlignment="Center"
-                               Source="/Images/DiagramTimeView.png" />
-                        <TextBlock VerticalAlignment="Center" Text="Toggle Timeline Stretch" />
-                    </StackPanel>
-                </Button>
             </StackPanel>
         </Border>
 

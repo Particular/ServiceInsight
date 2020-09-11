@@ -39,7 +39,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" 
-                           FontSize="14"
+                           FontSize="13"
                            Margin="18,18,32,5" 
                            FontWeight="Bold" 
                            Foreground="{StaticResource TextColor}">
@@ -71,7 +71,7 @@
                                          FontSize="14"
                                          Command="{Binding LicenseStatus.ContactUs}"
                                          Text="Contact us" 
-                                         ImageSource="/Images/Contact.png" />
+                                         ImageSource="{StaticResource Shell_Chat}" />
 
                     <controls:LinkedIcon HorizontalAlignment="Right" 
                                          Grid.Column="1" 
@@ -79,7 +79,7 @@
                                          FontSize="14"
                                          Command="{Binding LicenseStatus.ManageLicense}"
                                          Text="Manage license..." 
-                                         ImageSource="/Images/License.png" />
+                                         ImageSource="{StaticResource Shell_License}" />
                 </Grid>
             </Grid>
         </Border>

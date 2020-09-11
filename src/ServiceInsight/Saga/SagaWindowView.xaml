@@ -116,7 +116,7 @@
     <Grid x:Name="Root">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -127,9 +127,10 @@
             <StackPanel Margin="5" Orientation="Horizontal">
                 <ToggleButton Margin="2" IsChecked="{Binding ShowMessageData}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="0,0,5,0"
+                        <Image Margin="0,0,2,0"
+                               Width="12"
                                VerticalAlignment="Center"
-                               Source="/Images/DiagramEndpointIcon.png" />
+                               Source="{StaticResource Shell_ToolbarEndpoint}" />
                         <TextBlock VerticalAlignment="Center" Text="Show Message Data" />
                     </StackPanel>
                 </ToggleButton>
@@ -179,7 +180,7 @@
                                     Command="{Binding CopyCommand}"
                                     Style="{StaticResource BlankButtonStyle}"
                                     ToolTip="Copy nuget command to clipboard">
-                                <Image VerticalAlignment="Center" Source="/Images/Copy.png" />
+                                <Image VerticalAlignment="Center" Source="{StaticResource Shell_CopyClipboard}" />
 
                             </Button>
                         </StackPanel>

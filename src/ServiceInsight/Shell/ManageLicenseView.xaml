@@ -31,10 +31,10 @@
         <Style x:Key="ValidationStatusImageStyle" TargetType="Image">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="True">
-                    <Setter Property="Source" Value="/Images/Check.png" />
+                    <Setter Property="Source" Value="{StaticResource Shell_CheckMark}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding ImportWasSuccessful}" Value="False">
-                    <Setter Property="Source" Value="/Images/Cross.png" />
+                    <Setter Property="Source" Value="{StaticResource Shell_CrossMark}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -84,11 +84,11 @@
                 </TextBlock>
                 <Image Visibility="{Binding ShowExpirationError, Converter={StaticResource BoolToVisibilityConverter}}"
                        Width="14" Height="14" Margin="4,0,0,0"
-                       Source="/Images/Status-Error.png" 
+                       Source="{StaticResource Shell_StatusError}" 
                        Stretch="Uniform"/>
                 <Image Visibility="{Binding ShowExpirationWarning, Converter={StaticResource BoolToVisibilityConverter}}"
                        Width="14" Height="14" Margin="4,0,0,0"
-                       Source="/Images/Status-Warning.png" 
+                       Source="{StaticResource Shell_StatusWarning}" 
                        Stretch="Uniform"/>
             </StackPanel>
 
@@ -106,7 +106,7 @@
                 </TextBlock>
                 <Image Visibility="{Binding ShowUpgradeProtectionWarning, Converter={StaticResource BoolToVisibilityConverter}}"
                        Width="14" Height="14" Margin="4,0,0,0"
-                       Source="/Images/Status-Warning.png" 
+                       Source="{StaticResource Shell_StatusWarning}" 
                        Stretch="Uniform"/>
             </StackPanel>
 

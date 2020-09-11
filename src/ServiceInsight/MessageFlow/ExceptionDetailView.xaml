@@ -9,6 +9,7 @@
              Title="Exception Details"
              Width="450"
              Height="400"
+             ShowIcon="False"
              ResizeMode="CanResizeWithGrip"
              WindowStartupLocation="CenterOwner"
              d:DataContext="{d:DesignInstance messageFlow:ExceptionDetailViewModel}"
@@ -32,8 +33,8 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Path=Exception.Message}" />
             <TextBlock Grid.Row="1" Text="{Binding Path=FormattedSource}" />
-            <ScrollViewer Grid.Row="2">
-                <Border BorderBrush="Black" BorderThickness="1">
+            <ScrollViewer Grid.Row="2" Margin="0,4">
+                <Border>
 
                     <controls:MvvmTextEditor 
                         DockPanel.Dock="Top" Style="{StaticResource MvvmTextEditorScrollFixStyle}"

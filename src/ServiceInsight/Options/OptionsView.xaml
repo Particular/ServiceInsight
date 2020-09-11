@@ -8,8 +8,10 @@
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               Width="570"
               Height="400"
+              ShowIcon="False"
               ResizeMode="NoResize"
               ShowInTaskbar="False"
+              WindowStartupLocation="CenterOwner"
               d:DataContext="{d:DesignInstance local:OptionsViewModel}"
               d:DesignHeight="300"
               d:DesignWidth="300"
@@ -55,7 +57,7 @@
                 <Image Grid.Column="2"
                        Width="16"
                        Height="16"
-                       Source="/Images/Information.png"
+                       Source="{StaticResource Shell_Information}"
                        ToolTip="{Binding Description}"
                        Visibility="{Binding Description,
                                             Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
@@ -84,7 +86,7 @@
                        Height="16"
                        Margin="{StaticResource SmallMargin}"
                        VerticalAlignment="Center"
-                       Source="/Images/Alert.png" />
+                       Source="{StaticResource Shell_StatusWarning}" />
                 <TextBlock VerticalAlignment="Center" Text="Changes will take effect when you restart" />
             </StackPanel>
             <Button x:Name="Save"

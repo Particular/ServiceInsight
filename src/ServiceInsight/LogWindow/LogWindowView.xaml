@@ -22,7 +22,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="0,0,5,0"
                                VerticalAlignment="Center"
-                               Source="/Images/Clear.png" />
+                               Source="{StaticResource Shell_ClearLog}" />
                         <TextBlock VerticalAlignment="Center" Text="Clear All" />
                     </StackPanel>
                 </Button>
@@ -30,7 +30,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="0,0,5,0"
                                VerticalAlignment="Center"
-                               Source="/Images/Copy.png" />
+                               Source="{StaticResource Shell_CopyClipboard}" />
                         <TextBlock VerticalAlignment="Center" Text="Copy All" />
                     </StackPanel>
                 </Button>

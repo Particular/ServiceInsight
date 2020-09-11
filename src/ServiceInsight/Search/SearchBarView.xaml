@@ -20,15 +20,16 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0"
+                Width="30"
                 Margin="4"
-                Padding="5"
+                Padding="0"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 cal:Message.Attach="[Event Click]=[Action RefreshResult]">
-            <Image Width="14"
-                   Height="14"
-                   Source="/Images/SearchRefresh.png"
-                   Stretch="UniformToFill" />
+            <Image Width="15"
+                   Height="15"
+                   Source="{StaticResource Shell_RefreshMessageList}"
+                   Stretch="Uniform" />
         </Button>
 
         <StackPanel Grid.Column="1"
