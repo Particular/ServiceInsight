@@ -73,6 +73,8 @@
         [Test]
         public void SameLogicalEndpointsWithDifferentVersions()
         {
+            var testHost = Guid.NewGuid().ToString();
+            
             var messages = new List<StoredMessage>
             {
                 new StoredMessage
@@ -81,17 +83,21 @@
                     SendingEndpoint = new Endpoint()
                     {
                         Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     ReceivingEndpoint = new Endpoint
                     {
-                        Name = "A"
+                        Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     Headers = new List<StoredMessageHeader>
                     {
                         new StoredMessageHeader
                         {
                             Key = MessageHeaderKeys.Version,
-                            Value = "1"
+                            Value = "1.0.0"
                         },
                         new StoredMessageHeader
                         {
@@ -106,17 +112,21 @@
                     SendingEndpoint = new Endpoint
                     {
                         Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     ReceivingEndpoint = new Endpoint
                     {
-                        Name = "A"
+                        Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     Headers = new List<StoredMessageHeader>
                     {
                         new StoredMessageHeader
                         {
                             Key = MessageHeaderKeys.Version,
-                            Value = "2"
+                            Value = "2.0.0"
                         },
                         new StoredMessageHeader
                         {
@@ -131,17 +141,21 @@
                     SendingEndpoint = new Endpoint
                     {
                         Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     ReceivingEndpoint = new Endpoint
                     {
-                        Name = "A"
+                        Name = "A",
+                        Host = nameof(testHost),
+                        HostId = testHost
                     },
                     Headers = new List<StoredMessageHeader>
                     {
                         new StoredMessageHeader
                         {
                             Key = MessageHeaderKeys.Version,
-                            Value = "3"
+                            Value = "3.0.0"
                         },
                         new StoredMessageHeader
                         {
@@ -153,12 +167,17 @@
             };
 
             var creator = GetModelCreator(messages);
-            var result = creator.Endpoints;
-
-            Assert.AreEqual(3, result.Count);
-            Assert.AreEqual("A", result[0].Name);
-            Assert.AreEqual("A", result[1].Name);
-            Assert.AreEqual("A", result[2].Name);
+            var endpoints = creator.Endpoints;
+            
+            Assert.AreEqual(1, endpoints.Count);
+            Assert.AreEqual("A", endpoints[0].Name);
+            Assert.AreEqual(nameof(testHost), endpoints[0].Host);
+            Assert.AreEqual(testHost, endpoints[0].HostId);
+            Assert.AreEqual(1, endpoints[0].Hosts.Count);
+            Assert.AreEqual(3, endpoints[0].Hosts[0].HostVersions.Count);
+            Assert.AreEqual("1.0.0", endpoints[0].Hosts[0].HostVersions[0]);
+            Assert.AreEqual("2.0.0", endpoints[0].Hosts[0].HostVersions[1]);
+            Assert.AreEqual("3.0.0", endpoints[0].Hosts[0].HostVersions[2]);
         }
 
         [Test]
