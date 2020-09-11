@@ -174,7 +174,7 @@
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="ProcessingEnded"
                                     Header="Processing Ended"
-                                    HeaderToolTip="When the processing ende - Sorting not supportedd"
+                                    HeaderToolTip="When the processing end - Sorting not supportedd"
                                     Tag="processing_ended"
                                     ShowInColumnChooser="True"
                                     AllowSorting="false"
