@@ -45,13 +45,11 @@ namespace ServiceInsight.SequenceDiagram
             // NOTE: All sending endpoints are created first to ensure version info is retained
             foreach (var message in messagesInOrder)
             {
-                // check for endpoint hots
                 endpointRegistry.Register(CreateSendingEndpoint(message));
             }
 
             foreach (var message in messagesInOrder)
             {
-                // check for endpoint hots
                 endpointRegistry.Register(CreateProcessingEndpoint(message));
             }
 
@@ -62,14 +60,12 @@ namespace ServiceInsight.SequenceDiagram
                 {
                     endpoints.Add(sendingEndpoint);
                 }
-                // add else if we have the endpoint we need to add to host list
 
                 var processingEndpoint = endpointRegistry.Get(CreateProcessingEndpoint(message));
                 if (!endpoints.Contains(processingEndpoint))
                 {
                     endpoints.Add(processingEndpoint);
                 }
-                // add else if we have the endpoint we need to add to host list
 
                 Handler sendingHandler;
                 Handler processingHandler;
@@ -216,45 +212,31 @@ namespace ServiceInsight.SequenceDiagram
 
         class EndpointRegistry
         {
-            IDictionary<Tuple<string, string, string>, List<EndpointItem>> store = new Dictionary<Tuple<string, string, string>, List<EndpointItem>>();
+            IDictionary<string, EndpointItem> store = new Dictionary<string, EndpointItem>();
 
             public void Register(EndpointItem item)
             {
-                List<EndpointItem> items;
-                var key = MakeKey(item);
-                if (!store.TryGetValue(key, out items))
+                var key = item.FullName;
+                EndpointItem endpoint; 
+                if (!store.TryGetValue(key, out endpoint))
                 {
-                    items = new List<EndpointItem>();
-                    store[key] = items;
+                    store[key] = item;
+                    endpoint = item;
                 }
 
-                var existing = items.FirstOrDefault(x => x.Version == item.Version);
-                if (existing == null)
+                foreach (var host in item.Hosts)
                 {
-                    // Only add null if we haven't seen anything else
-                    if (item.Version != null || !items.Any())
-                    {
-                        items.Add(item);
-                    }
+                    endpoint.AddHost(host);
                 }
             }
 
-            public EndpointItem Get(EndpointItem prototype)
+            public EndpointItem Get(EndpointItem item)
             {
-                var key = MakeKey(prototype);
+                var key = item.FullName;
+                var candidate = store[key];
 
-                var candidate = store[key].Where(x => x.Version != null).FirstOrDefault(x => x.Version == prototype.Version);
-
-                if (candidate != null)
-                {
-                    return candidate;
-                }
-
-                return store[key].FirstOrDefault(x => x.Version == prototype.Version)
-                       ?? store[key].FirstOrDefault();
+                return candidate;
             }
-
-            Tuple<string, string, string> MakeKey(EndpointItem item) => Tuple.Create(item.FullName, item.Hostlist, item.HostIdList);
         }
 
         class HandlerRegistry

@@ -13,11 +13,20 @@
         }
 
         [Test]
-        public void DuplicateHostsShuldResultInOneLogicalEndpoint()
+        public void DuplicateHostsShouldResultInOneLogicalEndpoint()
         {
-            var sagaEndpoint = ModelCreator.Endpoints.Count(e => e.Name == "SagaEndpoint");
+            var sagaEndpointCount = ModelCreator.Endpoints.Count(e => e.Name == "SagaEndpoint");
 
-            Assert.IsTrue(sagaEndpoint == 1);
+            Assert.AreEqual(1, sagaEndpointCount);
+        }
+        
+        [Test]
+        public void LogicalEndpointShouldHaveAllHostInformation()
+        {
+            var sagaEndpoint = ModelCreator.Endpoints.First(e => e.Name == "SagaEndpoint");
+            var hosts = sagaEndpoint.Hosts;
+            
+            Assert.AreEqual(2, hosts.Count);
         }
     }
 }

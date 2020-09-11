@@ -1,6 +1,5 @@
 ﻿namespace ServiceInsight.SequenceDiagram.Diagram
 {
-    using Comparers.Linq;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -9,28 +8,22 @@
     [DebuggerDisplay("{Name}")]
     public class EndpointItem : DiagramItem, IEquatable<EndpointItem>
     {
+        HashSet<EndpointHost> hosts;
+        
         public EndpointItem(string name, string host, string id, string version = null)
         {
             FullName = Name = name;
-            // add to a list of hosts
-            // TODO: extract to a method
-            var newhost = new EndpointHost(host, id, version);
 
-            if (Hosts == null)
+            hosts = new HashSet<EndpointHost>
             {
-                Hosts = new List<EndpointHost>();
-                Hosts.Append(newhost);
-            }
+                new EndpointHost(host, id, version)
+            };
             
-            if (!Hosts.Contains<EndpointHost>(newhost))
-            {
-                Hosts.Append(newhost);
-            }
-
             Timeline = new EndpointTimeline
             {
-                Endpoint = this,
+                Endpoint = this
             };
+
             Handlers = new List<Handler>();
         }
 
@@ -38,71 +31,118 @@
 
         public string FullName { get; }
 
-        public IEnumerable<EndpointHost> Hosts { get; }
+        public IReadOnlyList<EndpointHost> Hosts => hosts.ToList();
 
-        // TODO: toString and add commas to the id list
-        public string HostIdList => string.Join(",", Hosts.Select(a => a.Host));
-        // TODO: toString and add commas to the host names list
-        public string Hostlist =>  string.Join(",", Hosts.Select(a => a.HostId));
+        public string HostId => string.Join(",", Hosts.Select(h => h.HostId));
+        
+        public string Host =>  string.Join(",", Hosts.Select(h => h.Host));
+
+        public string Version => GetVersions();
+
+        private string GetVersions()
+        {
+            var versions = string.Join(",", Hosts.Select(h => h.Versions));
+            return string.IsNullOrEmpty(versions) ? null : versions;
+        }
 
         public List<Handler> Handlers { get; }
-        public string Version { get; set; }
 
-        public override int GetHashCode() => FullName.GetHashCode() ^ (HostIdList ?? string.Empty).GetHashCode() ^ (Hostlist ?? string.Empty).GetHashCode() ^ (Version ?? string.Empty).GetHashCode();
+        public void AddHost(EndpointHost host)
+        {
+            if (!Hosts.Contains(host))
+            {
+                hosts.Add(host);
+            }
+            else
+            {
+                var existingHost = FindHost(host.HostId, host.Host);
+                existingHost.AddHostVersions(host.HostVersions);
+            }
+        }
+
+        public EndpointHost FindHost(string hostId, string hostName)
+        {
+            return hosts.SingleOrDefault(h => h.HostId == hostId && h.Host == hostName);
+        }
 
         public bool Equals(EndpointItem other)
         {
-            var firstPart = string.Equals(FullName, other.FullName, StringComparison.OrdinalIgnoreCase);
-
-            if (Version == null || other.Version == null)
-            {
-                return firstPart;
-            }
-
-            return firstPart && string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            
+            return FullName == other.FullName;
         }
 
         public override bool Equals(object obj)
         {
-            var other = obj as EndpointItem;
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((EndpointItem) obj);
+        }
 
-            if (other == null)
-            {
-                return false;
-            }
-
-            return Equals(other);
+        public override int GetHashCode()
+        {
+            return (FullName != null ? FullName.GetHashCode() : 0);
         }
     }
 
+    [DebuggerDisplay("{Host}")]
     public class EndpointHost : IEquatable<EndpointHost>
     {
+        private HashSet<string> hostVersions;
+        
         public EndpointHost(string host, string hostId, string version = null)
         {
             Host = host;
             HostId = hostId;
-            Version = version;
+            hostVersions = new HashSet<string>();
+            if (!string.IsNullOrEmpty(version))
+            {
+                hostVersions.Add(version);
+            }
         }
 
         public string Host { get; }
 
         public string HostId { get; }
 
-        public string Version { get; }
+        public string Versions => HostVersions.Count == 0 ? null : string.Join(", ", HostVersions);
+
+        public IReadOnlyList<string> HostVersions => hostVersions.ToList();
 
         public bool Equals(EndpointHost other)
         {
-            var firstPart = string.Equals(Host, other.Host, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(HostId, other.HostId, StringComparison.OrdinalIgnoreCase);
-
-            if (Version == null || other.Version == null)
-            {
-                return firstPart;
-            }
-
-            return firstPart && string.Equals(Version, other.Version, StringComparison.OrdinalIgnoreCase);
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return HostId == other.HostId && Host == other.Host;
         }
 
-        public override int GetHashCode() => Host.GetHashCode() ^ (HostId ?? string.Empty).GetHashCode() ^ (Host ?? string.Empty).GetHashCode() ^ (Version ?? string.Empty).GetHashCode();
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((EndpointHost) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Host != null ? Host.GetHashCode() : 0) * 397) ^ (HostId != null ? HostId.GetHashCode() : 0);
+            }
+        }
+
+        public void AddHostVersions(IEnumerable<string> versions)
+        {
+            foreach (var version in versions)
+            {
+                if (!string.IsNullOrEmpty(version) && !hostVersions.Contains(version, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    hostVersions.Add(version);
+                }
+            }
+        }
     }
 }
