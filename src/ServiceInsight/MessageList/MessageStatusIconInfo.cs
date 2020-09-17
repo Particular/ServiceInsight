@@ -22,7 +22,7 @@
                 [MessageStatus.Failed] = "Failed",
                 [MessageStatus.ArchivedFailure] = "Archived",
                 [MessageStatus.RepeatedFailure] = "RepeatedFailed",
-                [MessageStatus.ResolvedSuccessfully] = "ResolvedSuccess",
+                [MessageStatus.ResolvedSuccessfully] = "Successful",
                 [MessageStatus.RetryIssued] = "RetryIssued",
             };
         }
@@ -42,7 +42,7 @@
             Image = GetImage();
         }
 
-        private bool Warn(StoredMessage message)
+        private static bool Warn(StoredMessage message)
         {
             return message.ProcessingTime < TimeSpan.Zero ||
                    message.CriticalTime < TimeSpan.Zero ||
@@ -70,11 +70,11 @@
             var currentStatus = statusSpecified ? Status : MessageStatus.Successful;
             var imageName = $"MessageStatus_{statusToIconNameMap[currentStatus]}";
             
-            if (HasWarn)
+            if (HasWarn || Status == MessageStatus.ResolvedSuccessfully)
             {
                 imageName += "_Warn";
             }
-            
+
             var image = resourceFinder(imageName); 
 
             return image;
