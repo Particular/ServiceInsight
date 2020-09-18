@@ -15,12 +15,10 @@
     <UserControl.Resources>
         <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
             <Style.Triggers>
-                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
                 </DataTrigger>
-                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                 <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
@@ -92,14 +90,12 @@
                                     UnboundType="Object">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type dxg:GridColumnDataEventArgs}">
-                                <!--  ReSharper disable Xaml.BindingWithContextNotResolved  -->
                                 <Image Width="16"
                                        Height="16"
                                        Stretch="Uniform"
                                        Source="{Binding Value.Image}"
                                        ToolTip="{Binding Value.Description}"
                                        Margin="0" />
-                                <!--  ReSharper restore Xaml.BindingWithContextNotResolved  -->
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
                     </dxg:GridColumn>

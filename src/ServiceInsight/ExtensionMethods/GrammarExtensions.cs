@@ -1,5 +1,4 @@
-﻿// ReSharper disable once CheckNamespace
-namespace ServiceInsight
+﻿namespace ServiceInsight
 {
     using System;
     using Humanizer;

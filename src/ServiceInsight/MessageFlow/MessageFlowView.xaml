@@ -15,7 +15,6 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -540,7 +539,6 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
     <Grid x:Name="Root" KeyUp="Root_KeyUp">
 
