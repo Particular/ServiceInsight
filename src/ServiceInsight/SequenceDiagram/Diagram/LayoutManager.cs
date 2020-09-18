@@ -15,7 +15,7 @@
                 return;
             }
 
-            diagram.Padding = new Thickness();
+            diagram.Padding = default(Thickness);
 
             var endpointLayout = new EndpointItemLayout(diagram);
             var handlerLayout = new HandlerLayout(diagram);
@@ -225,7 +225,7 @@
                     return;
                 }
 
-                timelineVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2;
+                timelineVisual.X = endpointVisual.X + (endpointVisual.ActualWidth / 2);
                 timelineVisual.Y = endpointVisual.Y + endpointVisual.ActualHeight;
                 timelineVisual.Height = maxHeight;
             }
@@ -270,7 +270,7 @@
                     return;
                 }
 
-                handlerVisual.X = endpointVisual.X + endpointVisual.ActualWidth / 2 - 7;
+                handlerVisual.X = endpointVisual.X + (endpointVisual.ActualWidth / 2) - 7;
 
                 var count = handler.Out.Count();
                 var height = (count == 0 ? 1 : count) * 40;

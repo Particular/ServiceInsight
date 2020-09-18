@@ -9,15 +9,16 @@
         protected override Size MeasureOverride(Size constraint)
         {
             base.MeasureOverride(constraint);
-            var desiredSize = new Size();
+            var desiredSize = default(Size);
 
             foreach (UIElement child in Children)
             {
                 var width = Math.Max(desiredSize.Width, GetLeft(child) + child.DesiredSize.Width);
                 var height = Math.Max(desiredSize.Height, GetTop(child) + child.DesiredSize.Height);
 
-                desiredSize = new Size(double.IsNaN(width) ? 0 : width,
-                                       double.IsNaN(height) ? 0 : height);
+                desiredSize = new Size(
+                    double.IsNaN(width) ? 0 : width,
+                    double.IsNaN(height) ? 0 : height);
             }
 
             return desiredSize;

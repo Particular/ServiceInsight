@@ -13,12 +13,14 @@
             // Check with other process already running
             foreach (var p in Process.GetProcesses())
             {
-                if (p.Id != currentProcess.Id) // Check running process
+                // Check running process
+                if (p.Id != currentProcess.Id) 
                 {
                     if (p.ProcessName.Equals(currentProcess.ProcessName))
                     {
                         IntPtr hFound = p.MainWindowHandle;
-                        User32API.SetForegroundWindow(hFound); // Activate the window, if process is already running
+                        // Activate the window, if process is already running
+                        User32API.SetForegroundWindow(hFound); 
                         break;
                     }
                 }

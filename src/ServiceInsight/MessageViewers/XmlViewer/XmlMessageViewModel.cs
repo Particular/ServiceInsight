@@ -45,7 +45,8 @@
 
         public void Display(StoredMessage selectedMessage)
         {
-            if (SelectedMessage == selectedMessage) //Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
+            // Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
+            if (SelectedMessage == selectedMessage) 
             {
                 OnSelectedMessageChanged();
             }

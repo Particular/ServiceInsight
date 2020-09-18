@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ServiceInsight.Shell
+﻿namespace ServiceInsight.Shell
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Anotar.Serilog;
     using RestSharp;
@@ -29,7 +28,7 @@ namespace ServiceInsight.Shell
 
                 return latestVersion > currentVersion;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogTo.Warning(ex, "Could not check for a new version.");
                 return false;

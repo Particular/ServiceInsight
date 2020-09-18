@@ -239,7 +239,7 @@
 
         public SagaData Data
         {
-            get { return data; }
+            get => data;
 
             private set
             {
@@ -269,7 +269,7 @@
 
         public string SelectedMessageId
         {
-            get { return selectedMessageId; }
+            get => selectedMessageId;
 
             set
             {

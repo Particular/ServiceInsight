@@ -99,7 +99,7 @@
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(new Point(), new Size(Bounds.Width, CalculateNodeHeight()));
+            Bounds = new Rect(default(Point), new Size(Bounds.Width, CalculateNodeHeight()));
         }
 
         private double CalculateNodeHeight()

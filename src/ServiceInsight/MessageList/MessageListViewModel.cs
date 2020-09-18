@@ -67,10 +67,11 @@
 
             RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
             CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
-            CopyHeadersCommand = Command.Create(CopyHeaders,
+            CopyHeadersCommand = Command.Create(
+                CopyHeaders,
                 generalHeaderDisplay.Changed
-                .Where(pc => pc.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
-                .Select(s => !((string)s.Value).IsEmpty()));
+                    .Where(pc => pc.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
+                    .Select(s => !((string)s.Value).IsEmpty()));
             Rows = new BindableCollection<StoredMessage>();
         }
 

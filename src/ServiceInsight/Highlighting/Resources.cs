@@ -33,10 +33,10 @@
                 }
             }
             // and register it in the HighlightingManager
-            HighlightingManager.Instance.RegisterHighlighting("StackTrace", new[]
-            {
-                ".trace"
-            }, stackTraceHighlighting);
+            HighlightingManager.Instance.RegisterHighlighting(
+                "StackTrace", 
+                new[] { ".trace" }, 
+                stackTraceHighlighting);
         }
     }
 }

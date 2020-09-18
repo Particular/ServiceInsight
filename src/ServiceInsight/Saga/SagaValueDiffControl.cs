@@ -11,11 +11,13 @@
     {
         const string SpaceMoniker = "•";
         
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text",
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text",
             typeof(string),
             typeof(SagaValueDiffControl));
 
-        public static readonly DependencyProperty WhitespaceBrushProperty = DependencyProperty.Register("WhitespaceBrush",
+        public static readonly DependencyProperty WhitespaceBrushProperty = DependencyProperty.Register(
+            "WhitespaceBrush",
             typeof(Brush),
             typeof(SagaValueDiffControl));
 
@@ -35,7 +37,7 @@
         {
             base.OnRender(drawingContext);
 
-            if (Text == null)  return;
+            if (Text == null) return;
             
             var shouldPrintWhiteSpace = IsValueTypeString(Text);
             var renderString = GetRenderString();

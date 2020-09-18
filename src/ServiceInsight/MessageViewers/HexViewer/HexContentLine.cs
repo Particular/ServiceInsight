@@ -17,7 +17,7 @@ namespace ServiceInsight.MessageViewers.HexViewer
         {
             get
             {
-                var index = Line * 16 + i;
+                var index = (Line * 16) + i;
                 if (index >= data.Length)
                 {
                     return null;

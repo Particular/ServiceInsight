@@ -24,7 +24,7 @@
         IHandle<WorkFinished>,
         IWorkTracker
     {
-        const int MAX_SAVED_SEARCHES = 10;
+        const int MaxSavedSearches = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
@@ -255,12 +255,12 @@
                 RecentSearchQueries.Insert(0, searchQuery);
                 setting.RecentSearchEntries.Insert(0, searchQuery);
 
-                while (RecentSearchQueries.Count > MAX_SAVED_SEARCHES)
+                while (RecentSearchQueries.Count > MaxSavedSearches)
                 {
                     RecentSearchQueries.RemoveAt(RecentSearchQueries.Count - 1);
                 }
 
-                while (setting.RecentSearchEntries.Count > MAX_SAVED_SEARCHES)
+                while (setting.RecentSearchEntries.Count > MaxSavedSearches)
                 {
                     setting.RecentSearchEntries.RemoveAt(setting.RecentSearchEntries.Count - 1);
                 }

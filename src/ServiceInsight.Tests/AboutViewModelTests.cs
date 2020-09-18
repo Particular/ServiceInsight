@@ -8,6 +8,7 @@
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Shell;
     using Shouldly;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class AboutViewModelTests
@@ -30,11 +31,11 @@
         }
 
         [Test]
-        public void Should_fetch_service_control_version()
+        public async Task Should_fetch_service_control_version()
         {
             ((IActivate)sut).Activate();
 
-            serviceControl.Received(1).GetVersion();
+            await serviceControl.Received(1).GetVersion();
         }
 
         [Test]
