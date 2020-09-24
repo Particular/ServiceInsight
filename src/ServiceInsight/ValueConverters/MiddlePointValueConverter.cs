@@ -6,7 +6,10 @@
 
     public class MiddlePointValueConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter,
+        public object Convert(
+            object[] values, 
+            Type targetType, 
+            object parameter,
             System.Globalization.CultureInfo culture)
         {
             if (values.Length != 2)
@@ -23,8 +26,7 @@
             var fromPoint = (double)values[0];
             var toPoint = (double)values[1];
 
-            return fromPoint +
-                   (toPoint - fromPoint) / 2;
+            return fromPoint + ((toPoint - fromPoint) / 2);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture) => null;

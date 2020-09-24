@@ -22,7 +22,6 @@
             var argParser = Substitute.For<CommandLineArgParser>();
             var settingProvider = Substitute.For<ISettingsProvider>();
 
-            // ReSharper disable once UnusedVariable
             // required for async command
             var dispatcher = Dispatcher.CurrentDispatcher;
             viewModel = new SearchBarViewModel(argParser, settingProvider);

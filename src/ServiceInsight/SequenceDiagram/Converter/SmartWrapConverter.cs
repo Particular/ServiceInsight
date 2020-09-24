@@ -11,7 +11,8 @@ namespace ServiceInsight.SequenceDiagram.Converter
 
         static SmartWrapConverter()
         {
-            PascalCaseWordPartsRegex = new Regex(@"[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?=[A-Z][a-z]|[0-9]|\b)",
+            PascalCaseWordPartsRegex = new Regex(
+                @"[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?=[A-Z][a-z]|[0-9]|\b)",
                 RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
         }
 

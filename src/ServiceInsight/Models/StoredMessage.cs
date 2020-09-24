@@ -106,12 +106,12 @@
             return int.TryParse(value, out var number) ? number : defaultValue;
         }
 
-    public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||
-       (Status != focusedMessage.Status) ||
-       (TimeSent != focusedMessage.TimeSent) ||
-       (ProcessingTime != focusedMessage.ProcessingTime) ||
-       (ReceivingEndpoint != focusedMessage.ReceivingEndpoint) ||
-       (SendingEndpoint != focusedMessage.SendingEndpoint);
+        public bool DisplayPropertiesChanged(StoredMessage focusedMessage) => (focusedMessage == null) ||
+           (Status != focusedMessage.Status) ||
+           (TimeSent != focusedMessage.TimeSent) ||
+           (ProcessingTime != focusedMessage.ProcessingTime) ||
+           (ReceivingEndpoint != focusedMessage.ReceivingEndpoint) ||
+           (SendingEndpoint != focusedMessage.SendingEndpoint);
     }
 
     [DebuggerDisplay("Key={Key},Value={Value}")]

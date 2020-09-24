@@ -63,7 +63,8 @@
                 }
             }
 
-            if (uri.Length > 0) //should be done last
+            // should be done last
+            if (uri.Length > 0) 
             {
                 ParsedOptions.SetEndpointUri(uri[0]);
             }

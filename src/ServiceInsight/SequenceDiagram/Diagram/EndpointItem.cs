@@ -35,7 +35,7 @@
 
         public string HostId => string.Join(",", Hosts.Select(h => h.HostId));
         
-        public string Host =>  string.Join(",", Hosts.Select(h => h.Host));
+        public string Host => string.Join(",", Hosts.Select(h => h.Host));
 
         public string Version => GetVersions();
 
@@ -78,12 +78,12 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((EndpointItem) obj);
+            return Equals((EndpointItem)obj);
         }
 
         public override int GetHashCode()
         {
-            return (FullName != null ? FullName.GetHashCode() : 0);
+            return FullName != null ? FullName.GetHashCode() : 0;
         }
     }
 
@@ -123,7 +123,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((EndpointHost) obj);
+            return Equals((EndpointHost)obj);
         }
 
         public override int GetHashCode()

@@ -136,7 +136,8 @@
                     return;
                 }
 
-                if (loadedConversationId == conversationId && DiagramItems.Any()) //If we've already displayed this diagram
+                // If we've already displayed this diagram
+                if (loadedConversationId == conversationId && DiagramItems.Any()) 
                 {
                     RefreshSelection();
                     return;

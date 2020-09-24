@@ -148,7 +148,6 @@
         <Setter Property="HorizontalOffset">
             <Setter.Value>
                 <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
-                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
                     <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
                     <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
                 </MultiBinding>
@@ -184,7 +183,6 @@
         <Setter Property="HorizontalOffset">
             <Setter.Value>
                 <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
-                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
                     <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
                     <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
                 </MultiBinding>
@@ -218,7 +216,6 @@
         <Setter Property="HorizontalOffset">
             <Setter.Value>
                 <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
-                    <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
                     <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
                     <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
                 </MultiBinding>
@@ -952,7 +949,6 @@
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" />
                     <Setter diag:PresentationTraceSources.TraceLevel="High" Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" />
                     <Setter Property="Panel.ZIndex" Value="{Binding ZIndex, RelativeSource={RelativeSource Self}}" />
-                    <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
                     <Setter Property="IsSelected" Value="{Binding IsFocused}" />
                     <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}" />
                     <Setter Property="Template">
@@ -961,7 +957,6 @@
                                 <ContentPresenter x:Name="Content" />
 
                                 <ControlTemplate.Triggers>
-                                    <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
                                     <DataTrigger Binding="{Binding IsFocused}" Value="True">
                                         <Setter Property="ZIndex" Value="10" />
                                     </DataTrigger>

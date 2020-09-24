@@ -363,7 +363,7 @@
                 return;
             }
 
-            if(string.IsNullOrWhiteSpace(license.RegisteredTo) == false)
+            if (string.IsNullOrWhiteSpace(license.RegisteredTo) == false)
             {
                 StatusBarManager.LicenseStatus.SetRegistrationInfo("{0} license, registered to '{1}'", license.LicenseType, license.RegisteredTo);
             }

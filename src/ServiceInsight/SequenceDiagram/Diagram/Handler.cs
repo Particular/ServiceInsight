@@ -30,7 +30,7 @@
 
         public Arrow In
         {
-            get { return arrowIn; }
+            get => arrowIn;
 
             set
             {

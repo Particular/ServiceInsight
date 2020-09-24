@@ -16,7 +16,7 @@
 
         public App()
         {
-            var _ = new Mutex(true, "ServiceInsight", out createdNew);
+            new Mutex(true, "ServiceInsight", out createdNew);
 
             if (createdNew)
             {

@@ -44,7 +44,7 @@
 
         public DateTime? TimeSent
         {
-            get { return timeSent; }
+            get => timeSent;
 
             set
             {

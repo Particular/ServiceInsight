@@ -26,16 +26,18 @@
                 return;
             }
 
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm());
-                Surface.SizeToFit();
-
-                if (ds.Diagram.Nodes.Count <= 5)
+            Dispatcher.BeginInvoke(
+                new Action(() =>
                 {
-                    Surface.Zoom = 1;
-                }
-            }), DispatcherPriority.Loaded);
+                    Surface.ApplyLayoutAlgorithm(new TreeLayoutAlgorithm());
+                    Surface.SizeToFit();
+
+                    if (ds.Diagram.Nodes.Count <= 5)
+                    {
+                        Surface.Zoom = 1;
+                    }
+                }), 
+                DispatcherPriority.Loaded);
         }
 
         public DiagramSurface Surface => ds;

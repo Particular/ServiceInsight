@@ -7,6 +7,7 @@
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class RetryMessageCommandTests
@@ -26,19 +27,19 @@
         }
 
         [Test]
-        public void Should_use_instance_id_if_present()
+        public async Task Should_use_instance_id_if_present()
         {
             command.Execute(new StoredMessage { InstanceId = "instanceId", Id = "messageId" });
 
-            serviceControl.Received().RetryMessage("messageId", "instanceId");
+            await serviceControl.Received().RetryMessage("messageId", "instanceId");
         }
 
         [Test]
-        public void Should_pass_null_instance_id()
+        public async Task Should_pass_null_instance_id()
         {
             command.Execute(new StoredMessage { Id = "messageId" });
 
-            serviceControl.Received().RetryMessage("messageId", null);
+            await serviceControl.Received().RetryMessage("messageId", null);
         }
     }
 }
