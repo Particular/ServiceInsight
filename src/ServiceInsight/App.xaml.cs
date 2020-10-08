@@ -49,6 +49,7 @@
             }
 
             ApplicationConfiguration.Initialize();
+            AppBootstrapper.CreateContainer();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
         }

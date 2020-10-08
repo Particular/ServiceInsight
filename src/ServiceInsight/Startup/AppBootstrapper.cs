@@ -19,7 +19,7 @@
 
     public class AppBootstrapper : BootstrapperBase
     {
-        protected IContainer container;
+        public static IContainer Container { get; private set; }
 
         public AppBootstrapper()
         {
@@ -31,14 +31,13 @@
 
         protected override void Configure()
         {
-            CreateContainer();
             ExtendConventions();
             ApplyBindingCulture();
             SetupUIAutomation();
 
             LoggingConfig.SetupCaliburnMicroLogging();
 
-            var newHandler = container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
+            var newHandler = Container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
             var defaultHandler = ExceptionHandler.HandleException;
             ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
@@ -54,18 +53,18 @@
             ClearAutomationEventsHelper.IsEnabled = false;
         }
 
-        void CreateContainer()
+        public static void CreateContainer()
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
             containerBuilder.RegisterExternalModules();
-            container = containerBuilder.Build();
+            Container = containerBuilder.Build();
 
             // We reregister the container within itself.
             // This is bad and we should feel bad about it.
             containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance(container).SingleInstance();
-            containerBuilder.Update(container);
+            containerBuilder.RegisterInstance(Container).SingleInstance();
+            containerBuilder.Update(Container);
         }
 
         void ApplyBindingCulture()
@@ -84,14 +83,14 @@
             Application.Exit += OnExit;
         }
 
-        protected override IEnumerable<object> GetAllInstances(Type service) => container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
+        protected override IEnumerable<object> GetAllInstances(Type service) => Container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
 
         protected override object GetInstance(Type service, string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 object result;
-                if (container.TryResolve(service, out result))
+                if (Container.TryResolve(service, out result))
                 {
                     return result;
                 }
@@ -99,7 +98,7 @@
             else
             {
                 object result;
-                if (container.TryResolveNamed(key, service, out result))
+                if (Container.TryResolveNamed(key, service, out result))
                 {
                     return result;
                 }
@@ -109,7 +108,7 @@
 
         protected override void BuildUp(object instance)
         {
-            container.InjectProperties(instance);
+            Container.InjectProperties(instance);
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
