@@ -36,10 +36,6 @@
             SetupUIAutomation();
 
             LoggingConfig.SetupCaliburnMicroLogging();
-
-            var newHandler = Container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
-            var defaultHandler = ExceptionHandler.HandleException;
-            ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
 
         static bool InDesignMode()
@@ -75,6 +71,13 @@
         void ExtendConventions()
         {
             ConventionManager.AddElementConvention<BarButtonItem>(BarButtonItem.IsVisibleProperty, "DataContext", "ItemClick");
+        }
+
+        void ResolveExceptionHandler()
+        {
+            var newHandler = Container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
+            var defaultHandler = ExceptionHandler.HandleException;
+            ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
 
         protected override void PrepareApplication()
@@ -113,6 +116,7 @@
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            ResolveExceptionHandler();
             DisplayRootViewFor<ShellViewModel>();
         }
     }
