@@ -80,12 +80,6 @@
             ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
 
-        protected override void PrepareApplication()
-        {
-            Application.Startup += OnStartup;
-            Application.Exit += OnExit;
-        }
-
         protected override IEnumerable<object> GetAllInstances(Type service) => Container.Resolve(typeof(IEnumerable<>).MakeGenericType(new[] { service })) as IEnumerable<object>;
 
         protected override object GetInstance(Type service, string key)
