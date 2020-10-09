@@ -7,7 +7,7 @@
         [Description("Failed")]
         Failed = 1,
 
-        [Description("Repeated Failures")]
+        [Description("Repeated failures")]
         RepeatedFailure = 2,
 
         [Description("Successful")]
@@ -19,7 +19,7 @@
         [Description("Failure message archived")]
         ArchivedFailure = 5,
 
-        [Description("Retry Requested")]
+        [Description("Retry requested")]
         RetryIssued = 6
     }
 }
