@@ -13,7 +13,7 @@
         [Description("Successful")]
         Successful = 3,
 
-        [Description("Successfully resolved")]
+        [Description("Successful after retries")]
         ResolvedSuccessfully = 4,
 
         [Description("Failure message archived")]
