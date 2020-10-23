@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.3.0" PrivateAssets="All" />
+    <PackageReference Include="GitVersionTask" Version="5.3.7" PrivateAssets="All" />
   </ItemGroup>
 
   <Target Name="CreateInstaller" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
