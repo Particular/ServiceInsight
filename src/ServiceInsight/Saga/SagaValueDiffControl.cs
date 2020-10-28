@@ -88,7 +88,7 @@
 
         private FormattedText CreateFormattedText(string text, Brush foreground = null)
         {
-            var pixelPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+            //var pixelPerDip = VisualTreeHelper..GetDpi(this).PixelsPerDip;
             var typeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal);
             return new FormattedText(
                 text,
@@ -96,8 +96,7 @@
                 FlowDirection,
                 typeface,
                 FontSize,
-                foreground ?? Foreground,
-                pixelPerDip);
+                foreground ?? Foreground);
         }
 
         protected override Size MeasureOverride(Size availableSize)

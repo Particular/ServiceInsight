@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight
 {
+    using System;
     using System.Diagnostics;
     using System.Threading;
     using System.Windows;
@@ -10,13 +11,14 @@
     using ServiceInsight.Startup;
     using Shell;
 
-    public partial class App
+    public partial class App : IDisposable
     {
         private bool createdNew;
+        private Mutex mutex;
 
         public App()
         {
-            new Mutex(true, "ServiceInsight", out createdNew);
+            mutex = new Mutex(true, "ServiceInsight", out createdNew);
 
             if (createdNew)
             {
@@ -51,6 +53,18 @@
             ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
+        }
+
+        public void Dispose()
+        {
+            mutex.ReleaseMutex();
+            mutex?.Dispose();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Dispose();
+            base.OnExit(e);
         }
     }
 }

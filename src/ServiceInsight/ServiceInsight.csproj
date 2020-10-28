@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>ServiceInsight.ico</ApplicationIcon>
     <UseWpf>true</UseWpf>
