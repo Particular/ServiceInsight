@@ -1,6 +1,9 @@
 ﻿namespace ServiceInsight.Startup
 {
     using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
     using Anotar.Serilog;
     using Models;
 
@@ -9,6 +12,8 @@
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
+
+        public const int ListenerPort = 1593;
 
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
@@ -30,9 +35,36 @@
             Parse();
         }
 
-        void Parse()
+        public void SendToOtherInstance()
         {
             var args = environment.GetCommandLineArgs();
+            
+            if (args.Length != 2) return;
+                
+            var endpoint = new IPEndPoint(IPAddress.Loopback, ListenerPort);
+            var client = default(TcpClient);
+            
+            try
+            {
+                using (client = new TcpClient())
+                {
+                    client.Connect(endpoint);
+                    using (var stream = client.GetStream())
+                    using (var writer = new StreamWriter(stream))
+                    {
+                        writer.Write(args[1]); //Second element contains all the args
+                    }
+                }
+            }
+            finally
+            {
+                client?.Close();
+            }
+        }
+
+        public void Parse(string[] passedArgs = null)
+        {
+            var args = passedArgs ?? environment.GetCommandLineArgs();
 
             LogTo.Debug("Application invoked with following arguments: {args}", args);
 

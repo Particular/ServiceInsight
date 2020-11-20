@@ -47,7 +47,7 @@
         IVersionUpdateChecker versionUpdateChecker;
         AppLicenseManager licenseManager;
         ISettingsProvider settingsProvider;
-        CommandLineArgParser comandLineArgParser;
+        CommandLineArgParser commandLineArgParser;
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
@@ -75,7 +75,7 @@
             IVersionUpdateChecker versionUpdateChecker,
             MessagePropertiesViewModel messageProperties,
             LogWindowViewModel logWindow,
-            CommandLineArgParser comandLineArgParser)
+            CommandLineArgParser commandLineArgParser)
         {
             this.appCommander = appCommander;
             this.windowManager = windowManager;
@@ -83,7 +83,7 @@
             this.workNotifier = workNotifier;
             this.licenseManager = licenseManager;
             this.settingsProvider = settingsProvider;
-            this.comandLineArgParser = comandLineArgParser;
+            this.commandLineArgParser = commandLineArgParser;
             this.serviceControlConnection = serviceControlConnection;
             this.licenseMessageBoxViewModel = licenseMessageBoxViewModel;
             this.versionUpdateChecker = versionUpdateChecker;
@@ -142,7 +142,7 @@
 
         void SaveLayout()
         {
-            if (!comandLineArgParser.ParsedOptions.ResetLayout)
+            if (!commandLineArgParser.ParsedOptions.ResetLayout)
             {
                 foreach (var screen in Items.OfType<IPersistPartLayout>())
                 {
@@ -155,7 +155,7 @@
 
         void RestoreLayout()
         {
-            if (!comandLineArgParser.ParsedOptions.ResetLayout)
+            if (!commandLineArgParser.ParsedOptions.ResetLayout)
             {
                 View.OnRestoreLayout(settingsProvider);
             }
@@ -246,31 +246,37 @@
         void InitializeIdleTimer()
         {
             idleTimer = new DispatcherTimer(DispatcherPriority.Loaded) { Interval = TimeSpan.FromSeconds(10) };
-            idleTimer.Tick += (s, e) => OnApplicationIdle();
+            idleTimer.Tick += async (s, e) => await OnApplicationIdle();
             idleTimer.Start();
         }
 
         void InitializeAutoRefreshTimer()
         {
             var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
-            var startupTime = comandLineArgParser.ParsedOptions.ShouldAutoRefresh ? comandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
+            var startupTime = commandLineArgParser.ParsedOptions.ShouldAutoRefresh ? commandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
             refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
             refreshTimer.Tick += async (s, e) => await OnAutoRefreshing();
 
-            AutoRefresh = comandLineArgParser.ParsedOptions.ShouldAutoRefresh;
+            AutoRefresh = commandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
 
-        internal void OnApplicationIdle()
+        internal async Task OnApplicationIdle()
         {
             if (idleTimer != null)
             {
                 idleTimer.Stop();
             }
 
+            await StartupConfigChangeListener();
             ValidateCommandLineArgs();
             ValidateLicense();
             CheckForUpdates();
+        }
+
+        Task StartupConfigChangeListener()
+        {
+            return Task.Factory.StartNew(() => StartupConfigListener.Start(eventAggregator, commandLineArgParser));
         }
 
         internal async Task OnAutoRefreshing()
@@ -304,7 +310,7 @@
 
         void ValidateCommandLineArgs()
         {
-            if (comandLineArgParser.HasUnsupportedKeys)
+            if (commandLineArgParser.HasUnsupportedKeys)
             {
                 windowManager.ShowMessageBox("Application was invoked with unsupported arguments.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 appCommander.ShutdownImmediately();

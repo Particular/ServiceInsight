@@ -12,13 +12,13 @@
 
     public partial class App
     {
-        private bool createdNew;
-
+        bool createNew;
+        Mutex mutex;
+        
         public App()
         {
-            new Mutex(true, "ServiceInsight", out createdNew);
-
-            if (createdNew)
+            mutex = new Mutex(true, "ServiceInsight", out createNew);
+            if (createNew)
             {
                 LoggingConfig.SetupLogging();
                 if (!Debugger.IsAttached)
@@ -32,16 +32,17 @@
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            if (!createdNew)
+            var args = new CommandLineArgParser();
+            
+            if (!createNew)
             {
+                args.SendToOtherInstance();
                 App.Current.Shutdown();
                 FocusWindow.ShowWindow();
                 return;
             }
 
             LogTo.Information("Starting the application...");
-
-            var args = new CommandLineArgParser();
 
             if (!args.ParsedOptions.SilentStartup)
             {
@@ -51,6 +52,12 @@
             ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            mutex.Dispose();
         }
     }
 }
