@@ -10,12 +10,15 @@
     public class MessageStatusIconInfo : IComparable
     {
         static Dictionary<MessageStatus, string> statusToIconNameMap;
+        static Dictionary<string, ImageSource> imageCache;
+        
         Func<string, ImageSource> resourceFinder;
         MessageStatus status;
         bool statusSpecified;
 
         static MessageStatusIconInfo()
         {
+            imageCache = new Dictionary<string, ImageSource>();
             statusToIconNameMap = new Dictionary<MessageStatus, string>
             {
                 [MessageStatus.Successful] = "Successful",
@@ -75,7 +78,13 @@
                 imageName += "_Warn";
             }
 
-            var image = resourceFinder(imageName); 
+            if (imageCache.ContainsKey(imageName))
+            {
+                return imageCache[imageName];
+            }
+            
+            var image = resourceFinder(imageName);
+            imageCache.Add(imageName, image);
 
             return image;
         }
