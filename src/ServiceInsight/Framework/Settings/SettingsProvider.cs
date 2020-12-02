@@ -12,7 +12,7 @@ namespace ServiceInsight.Framework.Settings
 
         public SettingsProvider(ISettingsStorage settingsRepository = null)
         {
-            this.settingsRepository = settingsRepository ?? new IsolatedStorageSettingsStore();
+            this.settingsRepository = settingsRepository ?? new AppDataSettingsStore();
         }
 
         public T GetSettings<T>() where T : new()

@@ -3,7 +3,7 @@
     using System.ComponentModel;
     using System.Configuration;
 
-    [SettingsProvider("IsolatedStore")]
+    [SettingsProvider("AppDataStore")]
     public class SequenceDiagramSettings
     {
         [DefaultValue(true)]

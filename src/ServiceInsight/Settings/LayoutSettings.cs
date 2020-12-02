@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.Windows;
 
-    [SettingsProvider("IsolatedStore")]
+    [SettingsProvider("AppDataStore")]
     public class ShellLayoutSettings
     {
         [DefaultValue(null)]
