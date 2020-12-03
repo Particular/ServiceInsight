@@ -28,6 +28,7 @@
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
         int workCount;
+        bool isSettingUpPaging;
 
         public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
@@ -103,14 +104,20 @@
 
         public void SetupPaging(PagedResult<StoredMessage> pagedResult)
         {
+            isSettingUpPaging = true;
+
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
             TotalItemCount = pagedResult.TotalCount;
+            TotalPagesCount = ( pagedResult.TotalCount / pagedResult.PageSize ) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 0 ? 0 : 1);
             NextLink = pagedResult.NextLink;
             PrevLink = pagedResult.PrevLink;
             FirstLink = pagedResult.FirstLink;
             LastLink = pagedResult.LastLink;
             PageSize = pagedResult.PageSize;
+            
+            isSettingUpPaging = false;
+            
             NotifyPropertiesChanged();
         }
 
@@ -160,7 +167,7 @@
 
         public IObservableCollection<string> RecentSearchQueries { get; private set; }
 
-        public int CurrentPage { get; private set; }
+        public int CurrentPage { get; set; }
 
         public int PageSize { get; private set; }
 
@@ -173,6 +180,8 @@
         public string LastLink { get; private set; }
 
         public int TotalItemCount { get; private set; }
+
+        public int TotalPagesCount { get; private set; }
 
         public bool SearchInProgress { get; private set; }
 
@@ -201,6 +210,15 @@
             {
                 SearchEnabled = true;
             }
+        }
+
+        public async void OnCurrentPageChanged()
+        {
+            if (!isSettingUpPaging && CurrentPage >=0 && CurrentPage <= TotalPagesCount)
+            {
+                var pageLink = $"messages/?include_system_messages=False&per_page=50&page={CurrentPage}";
+                await Parent.RefreshMessages(pageLink);
+            }            
         }
 
         public virtual void Handle(SelectedExplorerItemChanged @event)

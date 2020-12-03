@@ -6,6 +6,7 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:search="clr-namespace:ServiceInsight.Search"
+             xmlns:framework="clr-namespace:ServiceInsight.Framework"
              x:Name="searchbar"
              d:DesignHeight="35"
              d:DesignWidth="600"
@@ -69,7 +70,10 @@
             <Button Content="9" cal:Message.Attach="[Event Click]=[Action GoToFirstPage]" />
             <Button Content="3" cal:Message.Attach="[Event Click]=[Action GoToPreviousPage]" />
             <TextBlock Text="Page" />
-            <TextBlock Text="{Binding CurrentPage}" />
+            <TextBox Text="{Binding CurrentPage, UpdateSourceTrigger=Explicit}" MinWidth="30" TextAlignment="Center"
+                     framework:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
+            <TextBlock Text="of" />
+            <TextBlock Text="{Binding TotalPagesCount}" />
             <Button Content="4" cal:Message.Attach="[Event Click]=[Action GoToNextPage]" />
             <Button Content=":" cal:Message.Attach="[Event Click]=[Action GoToLastPage]" />
         </StackPanel>
