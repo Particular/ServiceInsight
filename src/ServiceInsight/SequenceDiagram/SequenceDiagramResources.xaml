@@ -859,6 +859,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -882,17 +883,26 @@
             <TextBlock Grid.Row="2"
                        Grid.Column="0"
                        Style="{StaticResource TooltipStyleForHeader}"
-                       Text="Sent From:" />
+                       Text="Message Id:" />
             <TextBlock Grid.Row="2"
                        Grid.Column="1"
                        Style="{StaticResource TooltipStyleForValue}"
-                       Text="{Binding Sending}" />
+                       Text="{Binding MessageId}" />
 
             <TextBlock Grid.Row="3"
                        Grid.Column="0"
                        Style="{StaticResource TooltipStyleForHeader}"
-                       Text="Sent To:" />
+                       Text="Sent From:" />
             <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Style="{StaticResource TooltipStyleForValue}"
+                       Text="{Binding Sending}" />
+
+            <TextBlock Grid.Row="4"
+                       Grid.Column="0"
+                       Style="{StaticResource TooltipStyleForHeader}"
+                       Text="Sent To:" />
+            <TextBlock Grid.Row="4"
                        Grid.Column="1"
                        Style="{StaticResource TooltipStyleForValue}"
                        Text="{Binding Receiving}" />
