@@ -70,8 +70,16 @@
             <Button Content="9" cal:Message.Attach="[Event Click]=[Action GoToFirstPage]" />
             <Button Content="3" cal:Message.Attach="[Event Click]=[Action GoToPreviousPage]" />
             <TextBlock Text="Page" />
-            <TextBox Text="{Binding CurrentPage, UpdateSourceTrigger=Explicit}" MinWidth="30" TextAlignment="Center"
-                     framework:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
+            <TextBox Width="50" MaxWidth="100" TextAlignment="Center"
+                     framework:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">
+                <TextBox.Text>
+                    <Binding Path="CurrentPage" UpdateSourceTrigger="Explicit">
+                        <Binding.ValidationRules>
+                            <search:OnlyDigitsValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>    
             <TextBlock Text="of" />
             <TextBlock Text="{Binding TotalPagesCount}" />
             <Button Content="4" cal:Message.Attach="[Event Click]=[Action GoToNextPage]" />
