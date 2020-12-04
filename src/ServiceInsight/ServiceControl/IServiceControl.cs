@@ -18,7 +18,7 @@ namespace ServiceInsight.ServiceControl
 
         Task<SagaData> GetSagaById(Guid sagaId);
 
-        Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false);
+        Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, int? pageNo = null, string searchQuery = null, string orderBy = null, bool ascending = false);
 
         Task<PagedResult<StoredMessage>> GetAuditMessages(string link);
 

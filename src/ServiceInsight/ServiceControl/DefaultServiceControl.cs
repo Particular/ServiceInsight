@@ -127,16 +127,25 @@ namespace ServiceInsight.ServiceControl
 
         public async Task<SagaData> GetSagaById(Guid sagaId) => await GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true).ConfigureAwait(false) ?? new SagaData();
 
-        public Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, string searchQuery = null, string orderBy = null, bool ascending = false)
+        public Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, int? pageNo = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {
             var request = CreateMessagesRequest(endpoint?.Name);
 
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
             AppendPaging(request);
+            AppendPageNo(request, pageNo);
             AppendOrdering(request, orderBy, ascending);
 
             return GetPagedResult<StoredMessage>(request);
+        }
+
+        private void AppendPageNo(RestRequestWithCache request, int? pageNo)
+        {
+            if (pageNo != null)
+            {
+                request.AddParameter("page", pageNo.Value, ParameterType.GetOrPost);
+            }
         }
 
         public Task<PagedResult<StoredMessage>> GetAuditMessages(string link)
@@ -318,10 +327,22 @@ namespace ServiceInsight.ServiceControl
                     }
 
                     var currentPage = 1;
-                    var page = requestQueryParameters["page"];
-                    if (page != null)
+                    var queryPage = requestQueryParameters["page"];
+                    if (queryPage != null) //Clicking a next/prev link
                     {
-                        currentPage = int.Parse(page);
+                        currentPage = int.Parse(queryPage);
+                    }
+                    else
+                    {
+                        var pageParam = request.Parameters.Find(p => p.Name == "page");
+                        if (pageParam != null)
+                        {
+                            var parsedPage = int.Parse(pageParam.Value.ToString());
+                            if (parsedPage > 0)
+                            {
+                                currentPage = parsedPage;
+                            }
+                        }
                     }
 
                     return new PagedResult<T>

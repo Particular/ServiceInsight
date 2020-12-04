@@ -109,7 +109,7 @@
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
             TotalItemCount = pagedResult.TotalCount;
-            TotalPagesCount = ( pagedResult.TotalCount / pagedResult.PageSize ) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 0 ? 0 : 1);
+            TotalPagesCount = (pagedResult.TotalCount / pagedResult.PageSize) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 0 ? 0 : 1);
             NextLink = pagedResult.NextLink;
             PrevLink = pagedResult.PrevLink;
             FirstLink = pagedResult.FirstLink;
@@ -216,8 +216,7 @@
         {
             if (!isSettingUpPaging && CurrentPage >=0 && CurrentPage <= TotalPagesCount)
             {
-                var pageLink = $"messages/?include_system_messages=False&per_page=50&page={CurrentPage}";
-                await Parent.RefreshMessages(pageLink);
+                await Parent.RefreshMessages();
             }            
         }
 
