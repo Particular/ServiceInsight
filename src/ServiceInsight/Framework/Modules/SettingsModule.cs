@@ -12,7 +12,7 @@
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<RegistrySettingsStore>().Named<ISettingsStorage>("Registry").WithParameter("registryKey", @"Software\ParticularSoftware\").SingleInstance();
-            builder.RegisterType<IsolatedStorageSettingsStore>().Named<ISettingsStorage>("IsolatedStore").SingleInstance();
+            builder.RegisterType<AppDataSettingsStore>().Named<ISettingsStorage>("AppDataStore").SingleInstance();
             builder.RegisterType<SettingProviderProxy>().As<ISettingsProvider>().SingleInstance();
 
             base.Load(builder);

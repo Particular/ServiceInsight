@@ -3,7 +3,7 @@
     using System.ComponentModel;
     using System.Configuration;
 
-    [SettingsProvider("Registry")]
+    [SettingsProvider("AppDataStore")]
     public class ServiceControlSettings
     {
         [DefaultValue(33333)]
