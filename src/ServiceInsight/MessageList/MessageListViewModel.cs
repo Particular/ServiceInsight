@@ -135,20 +135,20 @@
         {
             if (selectedExplorerItem is ServiceControlExplorerItem)
             {
-                await RefreshMessages(null, SearchBar.SearchQuery);
+                await RefreshMessages(null, SearchBar.SearchQuery, pageNo: SearchBar.CurrentPage);
             }
 
             if (selectedExplorerItem is AuditEndpointExplorerItem endpointNode)
             {
-                await RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery);
+                await RefreshMessages(endpointNode.Endpoint, SearchBar.SearchQuery, pageNo: SearchBar.CurrentPage);
             }
         }
 
-        public async Task RefreshMessages(Endpoint endpoint, string searchQuery)
+        public async Task RefreshMessages(Endpoint endpoint, string searchQuery, int? pageNo = null)
         {
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                var pagedResult = await serviceControl.GetAuditMessages(endpoint, searchQuery, lastSortColumn, lastSortOrderAscending);
+                var pagedResult = await serviceControl.GetAuditMessages(endpoint, pageNo: pageNo, searchQuery, lastSortColumn, lastSortOrderAscending);
                 if (pagedResult == null)
                 {
                     return;
