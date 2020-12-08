@@ -1,3 +1,5 @@
+using System.Web;
+
 namespace ServiceInsight.ServiceControl
 {
     using System;
@@ -18,7 +20,6 @@ namespace ServiceInsight.ServiceControl
     using RestSharp;
     using RestSharp.Authenticators;
     using RestSharp.Deserializers;
-    using RestSharp.Extensions.MonoHttp;
     using Serilog;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework.Events;
@@ -397,7 +398,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             LogRequest(request);
 
-            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
+            var response = await restClient.ExecuteAsync(request).ConfigureAwait(false);
 
             RaiseConnectivityIssue(response);
 
@@ -488,7 +489,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             LogRequest(request);
 
-            var response = await restClient.ExecuteTaskAsync<T2>(request).ConfigureAwait(false);
+            var response = await restClient.ExecuteAsync<T2>(request).ConfigureAwait(false);
 
             RaiseConnectivityIssue(response);
 

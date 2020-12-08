@@ -1,4 +1,7 @@
-﻿namespace ServiceInsight.Shell
+﻿using RestSharp.Serialization.Json;
+using ServiceInsight.ServiceControl;
+
+namespace ServiceInsight.Shell
 {
     using System;
     using System.Collections.Generic;
@@ -45,7 +48,7 @@
             };
 
             client.ClearHandlers();
-            client.AddJsonDeserializer(new JsonDeserializer());
+            client.AddJsonDeserializer(new JsonDeserializer { DateFormat = RestRequestWithCache.CacheDateFormat });
 
             var rs = client.Execute<List<Release>>(request);
 

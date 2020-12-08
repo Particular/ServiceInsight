@@ -24,6 +24,7 @@ namespace ServiceInsight.Tests.ConversationsData
 
         public HttpStatusCode StatusCode { get; set; }
 
+        public bool IsSuccessful { get; }
         public string StatusDescription { get; set; }
 
         public byte[] RawBytes { get; set; }
@@ -31,15 +32,18 @@ namespace ServiceInsight.Tests.ConversationsData
         public Uri ResponseUri { get; set; }
 
         public string Server { get; set; }
-
+        
+#pragma warning disable 618
         public IList<RestResponseCookie> Cookies { get; }
-
+        
         public IList<Parameter> Headers { get; }
+#pragma warning restore 618
 
         public ResponseStatus ResponseStatus { get; set; }
 
         public string ErrorMessage { get; set; }
 
         public Exception ErrorException { get; set; }
+        public Version ProtocolVersion { get; set; }
     }
 }
