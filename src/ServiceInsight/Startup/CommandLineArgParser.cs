@@ -6,14 +6,13 @@
     using System.Net.Sockets;
     using Anotar.Serilog;
     using Models;
+    using ServiceInsight.Framework.Settings;
 
     public class CommandLineArgParser
     {
         const char UriSeparator = '?';
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
-
-        public const int ListenerPort = 1593;
 
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
@@ -41,7 +40,7 @@
             
             if (args.Length != 2) return;
                 
-            var endpoint = new IPEndPoint(IPAddress.Loopback, ListenerPort);
+            var endpoint = new IPEndPoint(IPAddress.Loopback, ApplicationConfiguration.ConfigListenerPort);
             var client = default(TcpClient);
             
             try

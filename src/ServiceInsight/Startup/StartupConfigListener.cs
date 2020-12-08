@@ -7,8 +7,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Caliburn.Micro;
-    using ServiceInsight.Framework.Events;
-
+    using Framework.Events;
+    using Framework.Settings;
+    
     public class StartupConfigListener
     {
         public static async Task Start(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellation = default)
@@ -17,7 +18,7 @@
             
             try
             {
-                listener = new TcpListener(IPAddress.Loopback, CommandLineArgParser.ListenerPort);
+                listener = new TcpListener(IPAddress.Loopback, ApplicationConfiguration.ConfigListenerPort);
                 listener.Start();
 
                 while (true)

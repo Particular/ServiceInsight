@@ -32,6 +32,8 @@
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            ApplicationConfiguration.Initialize();
+            
             var args = new CommandLineArgParser();
             
             if (!createNew)
@@ -49,7 +51,6 @@
                 DXSplashScreen.Show(o => AboutView.AsSplashScreen(), null, null, null);
             }
 
-            ApplicationConfiguration.Initialize();
             base.OnStartup(e);
             LogTo.Information("Application startup finished.");
         }
