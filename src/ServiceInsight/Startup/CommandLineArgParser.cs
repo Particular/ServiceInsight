@@ -18,7 +18,7 @@
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
 
-        public CommandLineOptions ParsedOptions { get; }
+        public CommandLineOptions ParsedOptions { get; private set; }
 
         public bool HasUnsupportedKeys => unsupportedKeys.Count > 0;
 

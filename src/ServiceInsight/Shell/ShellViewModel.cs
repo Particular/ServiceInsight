@@ -255,8 +255,15 @@
             var appSetting = settingsProvider.GetSettings<ProfilerSettings>();
             var startupTime = commandLineArgParser.ParsedOptions.ShouldAutoRefresh ? commandLineArgParser.ParsedOptions.AutoRefreshRate : appSetting.AutoRefreshTimer;
 
-            refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
-            refreshTimer.Tick += async (s, e) => await OnAutoRefreshing();
+            if (refreshTimer == null)
+            {
+                refreshTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(startupTime)};
+                refreshTimer.Tick += async (s, e) => await OnAutoRefreshing();
+            }
+            else
+            {
+                refreshTimer.Interval = TimeSpan.FromSeconds(startupTime);
+            }
 
             AutoRefresh = commandLineArgParser.ParsedOptions.ShouldAutoRefresh;
         }
@@ -444,6 +451,12 @@
         {
             DisplayLicenseStatus(false);
             DisplayRegistrationStatus();
+        }
+
+        public async Task PostConfigurationUpdate()
+        {
+            await Messages.SearchBar.PerformCommandLineSearch();
+            InitializeAutoRefreshTimer();
         }
     }
 }

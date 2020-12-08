@@ -59,6 +59,7 @@
                 if (args != null)
                 {
                     parser.Parse(new[] {"", args});
+                    
                     await eventAggregator.PublishOnUIThreadAsync(new ConfigurationUpdated(parser.ParsedOptions));
                 }
 

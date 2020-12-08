@@ -144,14 +144,21 @@
 
             if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
+                bool found = false;
+                
                 foreach (var endpoint in ServiceControlRoot.Children)
                 {
                     if (endpoint.Name.Equals(commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                     {
-                        //SelectedNode = endpoint;
-                        SelectedNode = ServiceControlRoot;
+                        SelectedNode = endpoint;
+                        found = true;
                         break;
                     }
+                }
+
+                if (!found)
+                {
+                    SelectedNode = ServiceControlRoot;
                 }
             }
             else
@@ -230,7 +237,8 @@
 
         public async Task Handle(ConfigurationUpdated message)
         {
-            await ValidateAndConnect(message.Options.EndpointUri.ToString());
+            await ValidateAndConnect(commandLineParser.ParsedOptions.EndpointUri.ToString());
+            await Parent.PostConfigurationUpdate();
         }
     }
 }
