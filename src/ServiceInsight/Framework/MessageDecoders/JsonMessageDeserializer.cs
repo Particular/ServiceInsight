@@ -160,7 +160,7 @@
                     if (itemType.IsPrimitive)
                     {
                         var value = element.ToString();
-                        list.Add(value.ChangeType(itemType, Culture));
+                        list.Add(Convert.ChangeType(value, itemType, Culture));
                     }
                     else if (itemType == typeof(string))
                     {
@@ -215,7 +215,7 @@
 
             if (type.IsPrimitive)
             {
-                return value.ChangeType(type, Culture);
+                return Convert.ChangeType(value, type, Culture);
             }
             if (type.IsEnum)
             {

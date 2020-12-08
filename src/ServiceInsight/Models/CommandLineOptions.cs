@@ -1,9 +1,10 @@
-﻿namespace ServiceInsight.Models
+﻿using System.Web;
+
+namespace ServiceInsight.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using RestSharp.Extensions.MonoHttp;
 
     public class CommandLineOptions
     {
