@@ -47,7 +47,7 @@
             var sut = CreateSut();
 
             sut.ParsedOptions.SecuredConnection.ShouldBe(true);
-            sut.ParsedOptions.EndpointUri.Scheme.ShouldBe("https", Case.Insensitive);
+            sut.ParsedOptions.EndpointUri.Scheme.ShouldBe("https", StringCompareShould.IgnoreCase);
         }
 
         [Test]
