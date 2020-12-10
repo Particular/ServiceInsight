@@ -24,6 +24,7 @@
     using ServiceInsight.Shell;
     using ServiceInsight.Startup;
     using Shouldly;
+    using System.Threading.Tasks;
 
     public interface IShellViewStub : IShellView
     {
@@ -176,7 +177,7 @@
         }
 
         [Test]
-        public void Should_validate_trial_license()
+        public async Task Should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
             const string LicenseType = "Trial";
@@ -192,7 +193,7 @@
             licenseManager.CurrentLicense = issuedLicense;
             licenseManager.GetRemainingNonProductionDays().Returns(RemainingDays);
 
-            shell.OnApplicationIdle();
+            await shell.OnApplicationIdle();
 
             licenseStatusBar.Received().SetNonProductionRemainingDays(Arg.Is(RemainingDays));
         }

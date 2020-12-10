@@ -14,7 +14,8 @@
     using ServiceInsight.Startup;
 
     public class EndpointExplorerViewModel : Screen,
-        IHandle<RequestSelectingEndpoint>
+        IHandle<RequestSelectingEndpoint>,
+        IHandleWithTask<ConfigurationUpdated>
     {
         IEventAggregator eventAggregator;
         IWorkNotifier workNotifier;
@@ -65,10 +66,25 @@
             }
 
             var configuredConnection = GetConfiguredAddress();
-            var existingConnection = connectionProvider.Url;
-            var available = await ServiceAvailable(configuredConnection);
-            var connectTo = available ? configuredConnection : existingConnection;
+            await ValidateAndConnect(configuredConnection);
+        }
 
+        async Task ValidateAndConnect(string configuredConnection)
+        {
+            var available = false;
+            var existingConnection = connectionProvider.Url;
+            var wasConnected = IsConnected;
+           
+            using (workNotifier.NotifyOfWork($"Verifying ServiceControl availability at {configuredConnection}"))
+            {
+                available = await ServiceAvailable(configuredConnection);
+            }
+
+            if (!available && !wasConnected)
+                return;
+            
+            var connectTo = available ? configuredConnection : existingConnection;
+            
             using (workNotifier.NotifyOfWork($"Trying to connect to ServiceControl at {connectTo}"))
             {
                 await ConnectToService(connectTo);
@@ -128,14 +144,21 @@
 
             if (!commandLineParser.ParsedOptions.EndpointName.IsEmpty())
             {
+                bool found = false;
+                
                 foreach (var endpoint in ServiceControlRoot.Children)
                 {
                     if (endpoint.Name.Equals(commandLineParser.ParsedOptions.EndpointName, StringComparison.OrdinalIgnoreCase))
                     {
-                        //SelectedNode = endpoint;
-                        SelectedNode = ServiceControlRoot;
+                        SelectedNode = endpoint;
+                        found = true;
                         break;
                     }
+                }
+
+                if (!found)
+                {
+                    SelectedNode = ServiceControlRoot;
                 }
             }
             else
@@ -210,6 +233,12 @@
                 var node = ServiceControlRoot.GetEndpointNode(message.Endpoint);
                 SelectedNode = node;
             }
+        }
+
+        public async Task Handle(ConfigurationUpdated message)
+        {
+            await ValidateAndConnect(commandLineParser.ParsedOptions.EndpointUri.ToString());
+            await Parent.PostConfigurationUpdate();
         }
     }
 }

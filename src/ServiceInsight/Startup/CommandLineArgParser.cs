@@ -1,8 +1,14 @@
-﻿namespace ServiceInsight.Startup
+﻿using System.IO.Pipes;
+
+namespace ServiceInsight.Startup
 {
     using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
     using Anotar.Serilog;
     using Models;
+    using ServiceInsight.Framework.Settings;
 
     public class CommandLineArgParser
     {
@@ -13,7 +19,7 @@
         EnvironmentWrapper environment;
         IList<string> unsupportedKeys;
 
-        public CommandLineOptions ParsedOptions { get; }
+        public CommandLineOptions ParsedOptions { get; private set; }
 
         public bool HasUnsupportedKeys => unsupportedKeys.Count > 0;
 
@@ -30,9 +36,23 @@
             Parse();
         }
 
-        void Parse()
+        public void SendToOtherInstance()
         {
             var args = environment.GetCommandLineArgs();
+
+            if (args.Length != 2) return;
+
+            using (var pipe = new NamedPipeClientStream(".", "ServiceInsight", PipeDirection.Out))
+            using (var writer = new StreamWriter(pipe))
+            {
+                pipe.Connect(1000);
+                writer.Write(args[1]); //Second element contains all the args
+            }
+        }
+
+        public void Parse(string[] passedArgs = null)
+        {
+            var args = passedArgs ?? environment.GetCommandLineArgs();
 
             LogTo.Debug("Application invoked with following arguments: {args}", args);
 

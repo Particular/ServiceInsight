@@ -45,6 +45,11 @@
 
             RestoreRecentSearchEntries();
 
+            await PerformCommandLineSearch();
+        }
+
+        public async Task PerformCommandLineSearch()
+        {
             if (!string.IsNullOrEmpty(commandLineArgParser.ParsedOptions.SearchQuery))
             {
                 await Search(commandLineArgParser.ParsedOptions.SearchQuery);
