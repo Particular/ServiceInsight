@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.Startup
+﻿using System.IO.Pipes;
+
+namespace ServiceInsight.Startup
 {
     using System.Collections.Generic;
     using System.IO;
@@ -37,27 +39,14 @@
         public void SendToOtherInstance()
         {
             var args = environment.GetCommandLineArgs();
-            
+
             if (args.Length != 2) return;
-                
-            var endpoint = new IPEndPoint(IPAddress.Loopback, ApplicationConfiguration.ConfigListenerPort);
-            var client = default(TcpClient);
-            
-            try
+
+            using (var pipe = new NamedPipeClientStream(".", "ServiceInsight", PipeDirection.Out))
+            using (var writer = new StreamWriter(pipe))
             {
-                using (client = new TcpClient())
-                {
-                    client.Connect(endpoint);
-                    using (var stream = client.GetStream())
-                    using (var writer = new StreamWriter(stream))
-                    {
-                        writer.Write(args[1]); //Second element contains all the args
-                    }
-                }
-            }
-            finally
-            {
-                client?.Close();
+                pipe.Connect(1000);
+                writer.Write(args[1]); //Second element contains all the args
             }
         }
 
