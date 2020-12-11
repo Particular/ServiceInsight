@@ -20,7 +20,7 @@
 
         ISettingsProvider settingsProvider;
         ProfilerSettings appSettings;
-        IContainer container;
+        ILifetimeScope container;
 
         static ServiceControlConnectionViewModel()
         {
@@ -29,7 +29,7 @@
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
-            IContainer container)
+            ILifetimeScope container)
         {
             this.settingsProvider = settingsProvider;
             this.container = container;

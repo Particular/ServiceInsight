@@ -1,4 +1,7 @@
-﻿namespace ServiceInsight.Framework.Modules
+﻿using Autofac.Core.Registration;
+using Autofac.Core.Resolving.Pipeline;
+
+namespace ServiceInsight.Framework.Modules
 {
     using System;
     using Attachments;
@@ -8,33 +11,38 @@
     class AutoAttachmentModule : Module
     {
         protected override void AttachToComponentRegistration(
-            IComponentRegistry componentRegistry,
+            IComponentRegistryBuilder componentRegistry, 
             IComponentRegistration registration)
         {
-            registration.Activating += Activating;
-        }
-
-        void Activating(object sender, ActivatingEventArgs<object> e)
-        {
-            var vmType = e.Instance.GetType();
-
-            if (!vmType.FullName.EndsWith("ViewModel"))
+            registration.PipelineBuilding += (sender, pipeline) =>
             {
-                return;
-            }
+                pipeline.Use(PipelinePhase.Activation, MiddlewareInsertionMode.EndOfPhase, (c, next) =>
+                {
+                    next(c);
 
-            // Convention to find attachments from a ViewModel
-            // This can be done better.
-            var attachmentType = Type.GetType(vmType.FullName.Replace("ViewModel", "Attachment"));
+                    var instance = c.Instance;
+                    var vmType = instance?.GetType();
+                    var typeName = vmType?.FullName;
+                    
+                    if (typeName == null || !typeName.EndsWith("ViewModel"))
+                    {
+                        return;
+                    }
 
-            if (attachmentType == null || !e.Context.IsRegistered(attachmentType))
-            {
-                return;
-            }
+                    // Convention to find attachments from a ViewModel
+                    // This can be done better.
+                    var attachmentType = Type.GetType(typeName.Replace("ViewModel", "Attachment"));
 
-            var attachment = (IAttachment)e.Context.Resolve(attachmentType);
+                    if (attachmentType == null || !c.IsRegistered(attachmentType))
+                    {
+                        return;
+                    }
 
-            attachment.AttachTo(e.Instance);
+                    var attachment = (IAttachment)c.Resolve(attachmentType);
+
+                    attachment.AttachTo(instance);
+                });
+            };
         }
     }
 }

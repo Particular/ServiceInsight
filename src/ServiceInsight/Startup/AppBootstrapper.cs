@@ -11,16 +11,14 @@
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
-    using ExtensionMethods;
     using Framework;
     using Framework.Logging;
     using Shell;
-    using IContainer = Autofac.IContainer;
-
+    
     public class AppBootstrapper : BootstrapperBase
     {
-        protected IContainer container;
-
+        Autofac.IContainer container;
+        
         public AppBootstrapper()
         {
             if (!InDesignMode())
@@ -38,7 +36,7 @@
 
             LoggingConfig.SetupCaliburnMicroLogging();
 
-            var newHandler = container.Resolve<AppExceptionHandler>(); //TODO: Yuck! Fix the ExceptionHandler dependencies to get around this
+            var newHandler = container.Resolve<AppExceptionHandler>();
             var defaultHandler = ExceptionHandler.HandleException;
             ExceptionHandler.HandleException = ex => newHandler.Handle(ex, defaultHandler);
         }
@@ -58,14 +56,7 @@
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
-            containerBuilder.RegisterExternalModules();
             container = containerBuilder.Build();
-
-            // We reregister the container within itself.
-            // This is bad and we should feel bad about it.
-            containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance(container).SingleInstance();
-            containerBuilder.Update(container);
         }
 
         void ApplyBindingCulture()
