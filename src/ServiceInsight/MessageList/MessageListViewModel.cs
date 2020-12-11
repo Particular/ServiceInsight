@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.MessageList
+﻿using Nito.Comparers;
+
+namespace ServiceInsight.MessageList
 {
     using System;
     using System.Linq;
@@ -6,7 +8,6 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Comparers;
     using Explorer;
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
@@ -254,7 +255,8 @@
 
         bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
         {
-            var comparer = ComparerExtensions.ThenBy(Compare<Tuple<string, MessageStatus>>.OrderBy(t => t.Item1), t => t.Item2);
+            var messageStatusOrder = ComparerBuilder.For<Tuple<string, MessageStatus>>().OrderBy(t => t.Item1);
+            var comparer = messageStatusOrder.ThenBy(t => t.Item2);
 
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
 
