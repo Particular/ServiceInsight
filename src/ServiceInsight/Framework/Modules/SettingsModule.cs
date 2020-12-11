@@ -20,9 +20,9 @@
 
         class SettingProviderProxy : Settings.SettingsProvider
         {
-            IContainer container;
+            ILifetimeScope container;
 
-            public SettingProviderProxy(IContainer container)
+            public SettingProviderProxy(ILifetimeScope container)
             {
                 this.container = container;
             }

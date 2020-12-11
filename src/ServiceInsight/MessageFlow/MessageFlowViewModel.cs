@@ -38,7 +38,7 @@
             IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
-            IContainer container,
+            ILifetimeScope container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,

@@ -17,7 +17,7 @@
         IServiceControl serviceControl;
         ShellViewModel shell;
         ISettingsProvider settingsProvider;
-        IContainer container;
+        ILifetimeScope container;
         ServiceControlConnectionProvider connection;
         ProfilerSettings storedSetting;
         ServiceControlConnectionViewModel connectTo;
@@ -68,7 +68,7 @@
             return settings;
         }
 
-        IContainer RegisterContainer()
+        ILifetimeScope RegisterContainer()
         {
             var builder = new ContainerBuilder();
 
