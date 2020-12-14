@@ -17,7 +17,7 @@ namespace ServiceInsight.AssemblyScanning
         {
             if (additionalSearchDirectories != null && additionalSearchDirectories.Any())
             {
-                searchDirectories.AddRange(additionalSearchDirectories);
+                searchDirectories.AddRange(additionalSearchDirectories.Where(Directory.Exists));
             }
         }
 
@@ -32,6 +32,18 @@ namespace ServiceInsight.AssemblyScanning
 
                 foreach (var assemblyFullPath in assembliesFullPaths)
                 {
+                    var assemblyFileName = Path.GetFileNameWithoutExtension(assemblyFullPath);
+                    if (
+                        assemblyFileName.StartsWith("Autofac", StringComparison.InvariantCultureIgnoreCase)
+                        || assemblyFileName.StartsWith("Caliburn", StringComparison.InvariantCultureIgnoreCase)
+                        || assemblyFileName.StartsWith("DevExpress", StringComparison.InvariantCultureIgnoreCase)
+                        || assemblyFileName.StartsWith("Serilog", StringComparison.InvariantCultureIgnoreCase)
+                        || assemblyFileName.StartsWith("Mindscape", StringComparison.InvariantCultureIgnoreCase)
+                        )
+                    {
+                        continue;
+                    }
+
                     AssemblyValidator.ValidateAssemblyFile(assemblyFullPath, out var shouldLoad, out var reason);
                     if (shouldLoad)
                     {
