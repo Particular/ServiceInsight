@@ -100,6 +100,11 @@ namespace ServiceInsight.Shell
 
         async Task LoadVersions()
         {
+            if (clientRegistry == null)
+            {
+                return;
+            }
+            
             ServiceControlVersion = DetectingServiceControlVersion;
             var versions = (await clientRegistry.GetVersions()).ToList();
 

@@ -67,7 +67,7 @@ namespace ServiceInsight.MessageFlow
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
 
-        private IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         public FlowDiagramModel Diagram
         {

@@ -77,7 +77,7 @@ namespace ServiceInsight.SequenceDiagram
             this.view = (SequenceDiagramView)view;
         }
         
-        private IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         public ICommand OpenLink { get; }
 
