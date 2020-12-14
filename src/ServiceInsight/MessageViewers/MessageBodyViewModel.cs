@@ -17,7 +17,6 @@ namespace ServiceInsight.MessageViewers
     public class MessageBodyViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
         IHandleWithTask<BodyTabSelectionChanged>,
-        IHandle<ServiceControlConnectionChanged>,
         IHandle<SelectedExplorerItemChanged>
     {
         readonly IWorkNotifier workNotifier;
@@ -147,11 +146,6 @@ namespace ServiceInsight.MessageViewers
             {
                 await LoadMessageBody();
             }
-        }
-
-        public void Handle(ServiceControlConnectionChanged message)
-        {
-            //ClearMessageDisplays();
         }
 
         void ClearMessageDisplays()

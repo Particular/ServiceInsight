@@ -1,6 +1,4 @@
-﻿using Nito.Comparers;
-
-namespace ServiceInsight.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.Linq;
@@ -20,6 +18,7 @@ namespace ServiceInsight.MessageList
     using Framework.Commands;
     using Framework.Events;
     using Framework.Settings;
+    using Nito.Comparers;
     using Shell;
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
@@ -30,15 +29,15 @@ namespace ServiceInsight.MessageList
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
         IHandle<SelectedMessageChanged>,
-        IHandle<ServiceControlConnectionChanged>,
         IPersistPartLayout
     {
         readonly IClipboard clipboard;
-        ISettingsProvider settingsProvider;
-        private readonly ServiceControlClientRegistry clientRegistry;
-        IEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
-        GeneralHeaderViewModel generalHeaderDisplay;
+        readonly ISettingsProvider settingsProvider;
+        readonly ServiceControlClientRegistry clientRegistry;
+        readonly IEventAggregator eventAggregator;
+        readonly IWorkNotifier workNotifier;
+        readonly GeneralHeaderViewModel generalHeaderDisplay;
+        
         string lastSortColumn;
         bool lastSortOrderAscending;
         IMessageListView view;
@@ -228,11 +227,6 @@ namespace ServiceInsight.MessageList
             }
         }
 
-        public void Handle(ServiceControlConnectionChanged message)
-        {
-            //ClearResult();
-        }
-
         void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
         {
             if (ShouldUpdateMessages(pagedResult))
@@ -246,12 +240,11 @@ namespace ServiceInsight.MessageList
             }
         }
 
-        void ClearResult()
-        {
-            BindResult(new PagedResult<StoredMessage>());
-            SearchBar.ClearPaging();
-        }
-
+        // void ClearResult()
+        // {
+        //     BindResult(new PagedResult<StoredMessage>());
+        //     SearchBar.ClearPaging();
+        // }
         void BindResult(PagedResult<StoredMessage> pagedResult)
         {
             try
@@ -268,13 +261,12 @@ namespace ServiceInsight.MessageList
 
         bool ShouldUpdateMessages(PagedResult<StoredMessage> pagedResult)
         {
-            // var messageStatusOrder = ComparerBuilder.For<Tuple<string, MessageStatus>>().OrderBy(t => t.Item1);
-            // var comparer = messageStatusOrder.ThenBy(t => t.Item2);
-            //
-            // Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
-            //
-            // return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
-            return true;
+            var messageStatusOrder = ComparerBuilder.For<Tuple<string, MessageStatus>>().OrderBy(t => t.Item1);
+            var comparer = messageStatusOrder.ThenBy(t => t.Item2);
+            
+            Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
+            
+            return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
 
         void EndDataUpdate()

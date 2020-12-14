@@ -1,3 +1,6 @@
+using System.Linq;
+using ServiceInsight.ServiceControl;
+
 namespace ServiceInsight.Shell
 {
     using System;
@@ -5,18 +8,18 @@ namespace ServiceInsight.Shell
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Licensing;
-    using ServiceInsight.ServiceControl;
+    using Framework;
+    using Framework.Licensing;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
-        const string DetectingServiceControlVersion = "(Detecting...)";
-        const string NotConnectedToServiceControl = "(Not Connected)";
+        internal const string DetectingServiceControlVersion = "(Detecting...)";
+        internal const string NotConnectedToServiceControl = "(Not Connected)";
+        internal const string MultipleConnection = "(Multiple Connections)";
 
-        IApplicationVersionService applicationVersionService;
-        IServiceControl serviceControl;
-        private AppLicenseManager licenseManager;
+        readonly IApplicationVersionService applicationVersionService;
+        readonly AppLicenseManager licenseManager;
+        private readonly ServiceControlClientRegistry clientRegistry;
 
         public event EventHandler<ActivationEventArgs> Activated = (s, e) => { };
 
@@ -45,13 +48,12 @@ namespace ServiceInsight.Shell
         public AboutViewModel(
             NetworkOperations networkOperations,
             IApplicationVersionService applicationVersionService,
-            IServiceControl serviceControl,
-            AppLicenseManager licenseManager)
+            AppLicenseManager licenseManager,
+            ServiceControlClientRegistry clientRegistry)
         {
             this.applicationVersionService = applicationVersionService;
-            this.serviceControl = serviceControl;
-
             this.licenseManager = licenseManager;
+            this.clientRegistry = clientRegistry;
             IsSplash = false;
             DisplayName = "About";
 
@@ -98,15 +100,21 @@ namespace ServiceInsight.Shell
 
         async Task LoadVersions()
         {
-            if (serviceControl == null)
-            {
-                return;
-            }
-
             ServiceControlVersion = DetectingServiceControlVersion;
+            var versions = (await clientRegistry.GetVersions()).ToList();
 
-            var version = await serviceControl.GetVersion();
-            ServiceControlVersion = version ?? NotConnectedToServiceControl;
+            if (versions.Count == 0)
+            {
+                ServiceControlVersion = NotConnectedToServiceControl;
+            }
+            else if (versions.Count == 1)
+            {
+                ServiceControlVersion = versions[0];
+            }
+            else
+            {
+                ServiceControlVersion = MultipleConnection;
+            }
         }
     }
 }

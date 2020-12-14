@@ -19,7 +19,6 @@ namespace ServiceInsight.Saga
 
     public class SagaWindowViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
-        IHandle<ServiceControlConnectionChanged>,
         IHandle<SelectedExplorerItemChanged>
     {
         readonly IEventAggregator eventAggregator;
@@ -127,11 +126,6 @@ namespace ServiceInsight.Saga
         public void Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
-        }
-
-        public void Handle(ServiceControlConnectionChanged message)
-        {
-            //ClearSaga();
         }
 
         void ClearSaga()

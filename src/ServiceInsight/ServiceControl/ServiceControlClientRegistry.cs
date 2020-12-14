@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ServiceInsight.ExtensionMethods;
 
 namespace ServiceInsight.ServiceControl
@@ -27,6 +29,17 @@ namespace ServiceInsight.ServiceControl
                 var serviceControl = serviceControlFactory(serviceUrl);
                 serviceControlClientCache.TryAdd(serviceUrl, serviceControl);
             }
+        }
+
+        public virtual async Task<IEnumerable<string>> GetVersions()
+        {
+            var versions = new List<string>(); 
+            foreach (var entry in serviceControlClientCache)
+            {
+                var version = await entry.Value.GetVersion();
+                versions.Add(version);
+            }
+            return versions;
         }
 
         public virtual IServiceControl GetServiceControl(string url)
