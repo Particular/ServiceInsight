@@ -1,4 +1,9 @@
-﻿namespace ServiceInsight.Startup
+﻿using System.IO;
+using System.Linq;
+using System.Reflection;
+using ServiceInsight.AssemblyScanning;
+
+namespace ServiceInsight.Startup
 {
     using System;
     using System.Collections.Generic;
@@ -14,11 +19,11 @@
     using Framework;
     using Framework.Logging;
     using Shell;
-    
+
     public class AppBootstrapper : BootstrapperBase
     {
         Autofac.IContainer container;
-        
+
         public AppBootstrapper()
         {
             if (!InDesignMode())
@@ -54,8 +59,21 @@
 
         void CreateContainer()
         {
+            var assemblies = new List<Assembly>
+            {
+                typeof(AppBootstrapper).Assembly
+            };
+
+            var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight");
+            var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight");
+
+            var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
+            assemblies.AddRange(scanner.Scan());
+
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
+            containerBuilder.RegisterAssemblyModules(assemblies.ToArray());
             container = containerBuilder.Build();
         }
 
