@@ -1,4 +1,7 @@
-﻿using System.IO.Pipes;
+﻿using System;
+using System.IO.Pipes;
+using System.ServiceProcess;
+using Serilog;
 
 namespace ServiceInsight.Startup
 {
@@ -42,11 +45,18 @@ namespace ServiceInsight.Startup
 
             if (args.Length != 2) return;
 
-            using (var pipe = new NamedPipeClientStream(".", "ServiceInsight", PipeDirection.Out))
-            using (var writer = new StreamWriter(pipe))
+            try
             {
-                pipe.Connect(1000);
-                writer.Write(args[1]); //Second element contains all the args
+                using (var pipe = new NamedPipeClientStream(".", "ServiceInsight", PipeDirection.Out))
+                using (var writer = new StreamWriter(pipe))
+                {
+                    pipe.Connect(1000);
+                    writer.Write(args[1]); //Second element contains all the args
+                }
+            }
+            catch (Exception ex)
+            {
+                LogTo.Information(ex, "Could not send command line arguments another ServiceInsight instance.");
             }
         }
 
