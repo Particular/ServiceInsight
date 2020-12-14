@@ -65,9 +65,9 @@ namespace ServiceInsight.Startup
             };
 
             var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight");
+            var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight", "MessageViewers");
             var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight");
+            var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight","MessageViewers");
 
             var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
             assemblies.AddRange(scanner.Scan());
