@@ -8,7 +8,10 @@
         public ServiceControlExplorerItem(string name)
             : base(name)
         {
+            this.Url = name;
         }
+        
+        public string Url { get; }
 
         public override string Image => "Shell_EndpointRootNode";
 

@@ -1,4 +1,7 @@
-﻿namespace ServiceInsight.Saga
+﻿using ServiceInsight.Explorer;
+using ServiceInsight.ExtensionMethods;
+
+namespace ServiceInsight.Saga
 {
     using System;
     using System.Collections.Generic;
@@ -11,40 +14,45 @@
     using MessageList;
     using Models;
     using ServiceControl;
-    using ServiceInsight.Framework.UI.ScreenManager;
-    using ServiceInsight.MessagePayloadViewer;
+    using Framework.UI.ScreenManager;
+    using MessagePayloadViewer;
 
     public class SagaWindowViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
-        IHandle<ServiceControlConnectionChanged>
+        IHandle<ServiceControlConnectionChanged>,
+        IHandle<SelectedExplorerItemChanged>
     {
+        readonly IEventAggregator eventAggregator;
+        readonly IWorkNotifier workNotifier;
+        readonly IWindowManagerEx windowManager;
+        readonly MessageSelectionContext selection;
+        readonly ServiceControlClientRegistry clientRegistry;
+
         SagaData data;
         StoredMessage currentMessage;
         string selectedMessageId;
-        IEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
-        IServiceControl serviceControl;
-        IWindowManagerEx windowManager;
-        readonly MessageSelectionContext selection;
+        ExplorerItem selectedExplorerItem;
 
         public SagaWindowViewModel(
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
-            IServiceControl serviceControl,
             IClipboard clipboard,
             IWindowManagerEx windowManager,
-            MessageSelectionContext selectionContext)
+            MessageSelectionContext selectionContext,
+            ServiceControlClientRegistry clientRegistry)
         {
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
-            this.serviceControl = serviceControl;
             this.windowManager = windowManager;
             selection = selectionContext;
+            this.clientRegistry = clientRegistry;
             ShowSagaNotFoundWarning = false;
             CopyCommand = Command.Create(arg => clipboard.CopyTo(InstallScriptText));
             ShowEntireContentCommand = Command.Create(arg => ShowEntireContent((SagaUpdatedValue)arg));
         }
 
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
+        
         public string InstallScriptText { get; } = "install-package NServiceBus.SagaAudit";
 
         public ICommand CopyCommand { get; }
@@ -53,7 +61,7 @@
 
         public async void OnShowMessageDataChanged()
         {
-            if (Data == null || Data.Changes == null)
+            if (Data?.Changes == null)
             {
                 return;
             }
@@ -82,9 +90,13 @@
 
         async Task RefreshMessageProperties()
         {
-            foreach (var message in Data.Changes.Select(c => c.InitiatingMessage).Union(Data.Changes.SelectMany(c => c.OutgoingMessages)))
+            if (ServiceControl != null)
             {
-                await message.RefreshData(serviceControl);
+                foreach (var message in Data.Changes.Select(c => c.InitiatingMessage)
+                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages)))
+                {
+                    await message.RefreshData(ServiceControl);
+                }
             }
 
             NotifyOfPropertyChange(nameof(Data));
@@ -112,9 +124,14 @@
             });
         }
 
+        public void Handle(SelectedExplorerItemChanged @event)
+        {
+            selectedExplorerItem = @event.SelectedExplorerItem;
+        }
+
         public void Handle(ServiceControlConnectionChanged message)
         {
-            ClearSaga();
+            //ClearSaga();
         }
 
         void ClearSaga()
@@ -127,7 +144,7 @@
             currentMessage = message;
             ShowSagaNotFoundWarning = false;
 
-            if (message == null || message.Sagas == null || !message.Sagas.Any())
+            if (message?.Sagas == null || !message.Sagas.Any())
             {
                 Data = null;
             }
@@ -197,7 +214,13 @@
 
         private async Task<SagaData> FetchOrderedSagaData(Guid sagaId)
         {
-            var sagaData = await serviceControl.GetSagaById(sagaId);
+            var sagaData = default(SagaData);
+            
+            if (ServiceControl != null)
+            {
+                sagaData = await ServiceControl.GetSagaById(sagaId);
+            }
+            
             if (sagaData?.Changes != null)
             {
                 sagaData.Changes = sagaData.Changes.OrderBy(x => x.StartTime)

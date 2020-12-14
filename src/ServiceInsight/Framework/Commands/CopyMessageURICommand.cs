@@ -1,18 +1,19 @@
-﻿namespace ServiceInsight.Framework.Commands
+﻿using ServiceInsight.MessageList;
+
+namespace ServiceInsight.Framework.Commands
 {
     using Framework;
     using Models;
-    using ServiceControl;
 
     public class CopyMessageURICommand : BaseCommand
     {
         readonly IClipboard clipboard;
-        readonly IServiceControl serviceControl;
+        readonly MessageListViewModel parent;
 
-        public CopyMessageURICommand(IClipboard clipboard, IServiceControl serviceControl)
+        public CopyMessageURICommand(IClipboard clipboard, MessageListViewModel parent)
         {
             this.clipboard = clipboard;
-            this.serviceControl = serviceControl;
+            this.parent = parent;
         }
 
         public override bool CanExecute(object parameter)
@@ -29,7 +30,11 @@
                 return;
             }
 
-            clipboard.CopyTo(serviceControl.CreateServiceInsightUri(message).ToString());
+            if (parent.ServiceControl != null)
+            {
+                var uri = parent.ServiceControl.CreateServiceInsightUri(message).ToString();
+                clipboard.CopyTo(uri);
+            }
         }
     }
 }

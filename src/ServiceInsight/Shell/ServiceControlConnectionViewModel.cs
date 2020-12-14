@@ -4,11 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Autofac;
     using Caliburn.Micro;
     using ServiceControl;
-    using ServiceInsight.ExtensionMethods;
-    using ServiceInsight.Framework.Settings;
+    using ExtensionMethods;
+    using Framework.Settings;
     using Settings;
 
     public class ServiceControlConnectionViewModel : Screen
@@ -18,9 +17,9 @@
         const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
         static bool certValidationFailed;
 
-        ISettingsProvider settingsProvider;
-        ProfilerSettings appSettings;
-        ILifetimeScope container;
+        readonly ISettingsProvider settingsProvider;
+        readonly ServiceControlClientRegistry clientRegistry;
+        readonly ProfilerSettings appSettings;
 
         static ServiceControlConnectionViewModel()
         {
@@ -29,11 +28,11 @@
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
-            ILifetimeScope container)
+            ServiceControlClientRegistry clientRegistry)
         {
             this.settingsProvider = settingsProvider;
-            this.container = container;
-            appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.clientRegistry = clientRegistry;
+            this.appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
         }
 
@@ -124,16 +123,12 @@
         {
             if (serviceUrl.IsValidUrl())
             {
-                using (var scope = container.BeginLifetimeScope())
-                {
-                    var connection = scope.Resolve<ServiceControlConnectionProvider>();
-                    var service = scope.Resolve<IServiceControl>();
+                clientRegistry.EnsureServiceControlClient(serviceUrl);
+                var service = clientRegistry.GetServiceControl(serviceUrl);
 
-                    connection.ConnectTo(serviceUrl);
-                    Version = await service.GetVersion();
+                Version = await service.GetVersion();
 
-                    return Version != null;
-                }
+                return Version != null;
             }
 
             return false;

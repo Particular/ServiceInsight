@@ -1,5 +1,3 @@
-﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
-
 namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
@@ -9,20 +7,24 @@ namespace ServiceInsight.MessageViewers
     using Framework;
     using HexViewer;
     using JsonViewer;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.ServiceControl;
+    using Framework.Events;
+    using MessageList;
+    using ServiceControl;
     using XmlViewer;
+    using ServiceInsight.MessageViewers.CustomMessageViewer;
+    using ServiceInsight.Explorer;
 
     public class MessageBodyViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
         IHandleWithTask<BodyTabSelectionChanged>,
-        IHandle<ServiceControlConnectionChanged>
+        IHandle<ServiceControlConnectionChanged>,
+        IHandle<SelectedExplorerItemChanged>
     {
-        readonly IServiceControl serviceControl;
         readonly IWorkNotifier workNotifier;
         readonly MessageSelectionContext selection;
+        readonly ServiceControlClientRegistry clientRegistry;
         static Dictionary<string, MessageContentType> contentTypeMaps;
+        ExplorerItem selectedExplorerItem;
 
         static MessageBodyViewModel()
         {
@@ -43,10 +45,11 @@ namespace ServiceInsight.MessageViewers
             ICustomMessageViewerResolver customMessageViewerResolver,
             IServiceControl serviceControl,
             IWorkNotifier workNotifier,
-            MessageSelectionContext selectionContext)
+            MessageSelectionContext selectionContext,
+            ServiceControlClientRegistry clientRegistry)
         {
-            this.serviceControl = serviceControl;
             this.workNotifier = workNotifier;
+            this.clientRegistry = clientRegistry;
             selection = selectionContext;
 
             HexViewer = hexViewer;
@@ -64,6 +67,8 @@ namespace ServiceInsight.MessageViewers
         public ICustomMessageBodyViewer CustomViewer { get; }
 
         bool ShouldLoadMessageBody { get; set; }
+        
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         MessageContentType ContentType { get; set; }
 
@@ -96,6 +101,11 @@ namespace ServiceInsight.MessageViewers
         public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
 
         public bool NoContentHelpVisible => PresentationHint == PresentationHint.NoContent;
+
+        public void Handle(SelectedExplorerItemChanged @event)
+        {
+            selectedExplorerItem = @event.SelectedExplorerItem;
+        }
 
         public async Task Handle(SelectedMessageChanged @event)
         {
@@ -141,7 +151,7 @@ namespace ServiceInsight.MessageViewers
 
         public void Handle(ServiceControlConnectionChanged message)
         {
-            ClearMessageDisplays();
+            //ClearMessageDisplays();
         }
 
         void ClearMessageDisplays()
@@ -161,9 +171,12 @@ namespace ServiceInsight.MessageViewers
 
             using (workNotifier.NotifyOfWork("Loading message body..."))
             {
-                await serviceControl.LoadBody(selection.SelectedMessage);
+                if (ServiceControl != null)
+                {
+                    await ServiceControl.LoadBody(selection.SelectedMessage);
 
-                RefreshChildren();
+                    RefreshChildren();
+                }
             }
         }
     }

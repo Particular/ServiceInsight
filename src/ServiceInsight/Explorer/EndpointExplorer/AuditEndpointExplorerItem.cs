@@ -4,11 +4,14 @@
 
     public class AuditEndpointExplorerItem : EndpointExplorerItem
     {
-        public AuditEndpointExplorerItem(Endpoint endpoint, string hostNames = "")
+        public AuditEndpointExplorerItem(ServiceControlExplorerItem parent, Endpoint endpoint, string hostNames = "")
             : base(endpoint)
         {
+            ServiceControl = parent;
             HostNames = hostNames;
         }
+        
+        public ServiceControlExplorerItem ServiceControl { get; }
 
         public string HostNames { get; set; }
 

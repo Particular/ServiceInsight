@@ -127,6 +127,25 @@
                     </dxc:SuperTip>
                 </dxb:BarButtonItem.SuperTip>
             </dxb:BarButtonItem>
+            <dxb:BarButtonItem x:Name="DisconnectServiceControl"
+                               AutomationProperties.AutomationId="DisconnectServiceControlMenuItem"
+                               CategoryName="Tools"
+                               Command="{Binding DisconnectServiceControlCommand}"
+                               Content="Disconnect"
+                               Glyph="{StaticResource Shell_ToolbarDisconnect}" 
+                               RenderOptions.BitmapScalingMode="HighQuality">
+                <dxb:BarButtonItem.SuperTip>
+                    <dxc:SuperTip>
+                        <dxc:SuperTipItem Content="Disconnects Endpoint Explorer from a ServiceControl instance">
+                            <dxc:SuperTipItem.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Bold" Text="{Binding}" />
+                                </DataTemplate>
+                            </dxc:SuperTipItem.ContentTemplate>
+                        </dxc:SuperTipItem>
+                    </dxc:SuperTip>
+                </dxb:BarButtonItem.SuperTip>
+            </dxb:BarButtonItem>
             <dxb:BarButtonItem x:Name="RefreshAll"
                                AutomationProperties.AutomationId="RefreshAllMenuItem"
                                CategoryName="Tools"

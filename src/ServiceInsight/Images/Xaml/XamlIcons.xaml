@@ -1176,7 +1176,27 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
-    
+
+    <DrawingImage x:Key="Shell_ToolbarDisconnect">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF666666" Geometry="F1 M16,16z M0,0z M15,16L15,16 15,14 12,14 12,10 15,10 15,8 7,8 7,16z" />
+                        <GeometryDrawing Brush="#FF666666">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="13,11,3,2" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF333333" Geometry="F1 M16,16z M0,0z M1.495,12.168L1.495,12.168 3.642,6.031 0,6.851 6.244,0 4.799,5.303 8.012,4.575z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DrawingImage x:Key="Shell_EndpointExplorer">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
