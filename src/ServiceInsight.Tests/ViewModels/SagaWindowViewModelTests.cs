@@ -27,10 +27,11 @@
             var workNotifier = Substitute.For<IWorkNotifier>();
             var clipboard = Substitute.For<IClipboard>();
             var windowManager = Substitute.For<IWindowManagerEx>();
-
+            var clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+            
             serviceControl = Substitute.For<IServiceControl>();
             messageSelectionContext = new MessageSelectionContext(eventAggregator);
-            viewModel = new SagaWindowViewModel(eventAggregator, workNotifier, serviceControl, clipboard, windowManager, messageSelectionContext);
+            viewModel = new SagaWindowViewModel(eventAggregator, workNotifier, clipboard, windowManager, messageSelectionContext, clientRegistry);
         }
 
         [Test]

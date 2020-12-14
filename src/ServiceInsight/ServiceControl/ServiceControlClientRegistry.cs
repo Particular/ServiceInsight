@@ -29,7 +29,7 @@ namespace ServiceInsight.ServiceControl
             }
         }
 
-        public IServiceControl GetServiceControl(string url)
+        public virtual IServiceControl GetServiceControl(string url)
         {
             return serviceControlClientCache[url];
         }

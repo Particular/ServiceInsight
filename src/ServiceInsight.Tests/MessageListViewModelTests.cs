@@ -7,15 +7,15 @@
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
-    using ServiceInsight.Explorer.EndpointExplorer;
+    using Explorer.EndpointExplorer;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.MessageProperties;
-    using ServiceInsight.Models;
-    using ServiceInsight.Search;
-    using ServiceInsight.ServiceControl;
+    using MessageList;
+    using MessageProperties;
+    using Models;
+    using Search;
+    using ServiceControl;
     using Shouldly;
 
     [TestFixture]
@@ -28,6 +28,7 @@
         Func<MessageListViewModel> messageListFunc;
         IClipboard clipboard;
         ISettingsProvider settingsProvider;
+        ServiceControlClientRegistry clientRegistry;
 
         [SetUp]
         public void TestInitialize()
@@ -38,21 +39,26 @@
             searchBar = Substitute.For<SearchBarViewModel>();
             clipboard = Substitute.For<IClipboard>();
             settingsProvider = Substitute.For<ISettingsProvider>();
+            clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+
+            clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
+            
             messageListFunc = () => new MessageListViewModel(
                 eventAggregator,
                 workNotifier,
-                serviceControl,
                 searchBar,
                 Substitute.For<GeneralHeaderViewModel>(),
                 Substitute.For<MessageSelectionContext>(),
                 clipboard,
-                settingsProvider);
+                settingsProvider,
+                clientRegistry);
         }
 
         [Test]
         public async Task Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
+            
             serviceControl.GetAuditMessages(Arg.Is(endpoint), 0, Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())
                 .Returns(x => new PagedResult<StoredMessage>
                 {
@@ -67,7 +73,9 @@
 
             var messageList = messageListFunc();
 
-            await messageList.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(endpoint)));
+            var serviceControlNode = new ServiceControlExplorerItem("http://localhost:3333/api");
+            var auditNode = new AuditEndpointExplorerItem(serviceControlNode, endpoint);
+            await messageList.Handle(new SelectedExplorerItemChanged(auditNode));
 
             messageList.Rows.Count.ShouldBe(2);
             searchBar.IsVisible.ShouldBe(true);

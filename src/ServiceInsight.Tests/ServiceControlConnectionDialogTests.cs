@@ -14,11 +14,9 @@
     [TestFixture]
     public class ServiceControlConnectionDialogTests
     {
-        IServiceControl serviceControl;
         ShellViewModel shell;
         ISettingsProvider settingsProvider;
-        ILifetimeScope container;
-        ServiceControlConnectionProvider connection;
+        ServiceControlClientRegistry clientRegistry;
         ProfilerSettings storedSetting;
         ServiceControlConnectionViewModel connectTo;
 
@@ -26,13 +24,13 @@
         public void TestInitialize()
         {
             shell = Substitute.For<ShellViewModel>();
-            serviceControl = Substitute.For<IServiceControl>();
+            //serviceControl = Substitute.For<IServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            connection = Substitute.For<ServiceControlConnectionProvider>();
-            container = RegisterContainer();
+            //connection = Substitute.For<ServiceControlConnectionProvider>();
+            clientRegistry = Substitute.For<ServiceControlClientRegistry>();
             storedSetting = GetReloadedSettings();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(storedSetting);
-            connectTo = new ServiceControlConnectionViewModel(settingsProvider, container) { Parent = shell }; //TODO: Do we need to pass the full container here?
+            connectTo = new ServiceControlConnectionViewModel(settingsProvider, clientRegistry) { Parent = shell };
         }
 
         [Test]
@@ -68,14 +66,14 @@
             return settings;
         }
 
-        ILifetimeScope RegisterContainer()
-        {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterInstance(serviceControl);
-            builder.RegisterInstance(connection);
-
-            return builder.Build();
-        }
+        // ILifetimeScope RegisterContainer()
+        // {
+        //     var builder = new ContainerBuilder();
+        //
+        //     builder.RegisterInstance(serviceControl);
+        //     builder.RegisterInstance(connection);
+        //
+        //     return builder.Build();
+        // }
     }
 }
