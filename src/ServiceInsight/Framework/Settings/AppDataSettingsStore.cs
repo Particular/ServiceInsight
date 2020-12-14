@@ -17,6 +17,7 @@ namespace ServiceInsight.Framework.Settings
             {
                 writer.Write(fileContents);
                 writer.Flush();
+                stream.SetLength(stream.Position);
             }
         }
 
