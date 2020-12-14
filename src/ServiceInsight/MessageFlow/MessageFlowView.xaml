@@ -7,7 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ServiceInsight.MessageFlow"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:ServiceInsight.Models"
+             xmlns:models="clr-namespace:ServiceInsight.Models;assembly=ServiceInsight.Sdk"
              xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
              xmlns:diagram="clr-namespace:ServiceInsight.SequenceDiagram.Diagram"
              IsHitTestVisible="True"

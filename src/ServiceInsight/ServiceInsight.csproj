@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceInsight.Licensing\ServiceInsight.Licensing.csproj" />
+    <ProjectReference Include="..\ServiceInsight.Sdk\ServiceInsight.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

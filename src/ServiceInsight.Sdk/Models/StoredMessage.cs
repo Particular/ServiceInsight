@@ -5,7 +5,6 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
-    using ServiceInsight.MessageList;
 
     [DebuggerDisplay("Id={Id},MessageId={MessageId},RelatedToMessageId={RelatedToMessageId}")]
     public class StoredMessage : MessageBody

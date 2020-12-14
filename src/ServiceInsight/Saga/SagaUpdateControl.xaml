@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ServiceInsight.Saga"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:ServiceInsight.Models"
+             xmlns:models="clr-namespace:ServiceInsight.Models;assembly=ServiceInsight.Sdk"
              Background="White"
              d:DataContext="{d:DesignInstance {x:Type local:SagaUpdate}}"
              d:DesignHeight="900"

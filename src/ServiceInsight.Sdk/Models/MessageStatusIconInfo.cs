@@ -1,11 +1,10 @@
-﻿namespace ServiceInsight.MessageList
+﻿namespace ServiceInsight.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
     using ExtensionMethods;
-    using Models;
 
     public class MessageStatusIconInfo : IComparable
     {

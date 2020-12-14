@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServiceInsight.Sdk\ServiceInsight.Sdk.csproj" />
     <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
   </ItemGroup>
 
