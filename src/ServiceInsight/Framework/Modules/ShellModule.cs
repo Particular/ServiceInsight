@@ -11,6 +11,8 @@
     using Search;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessagePayloadViewer;
+    using ServiceInsight.MessageViewers;
+    using ServiceInsight.MessageViewers.NopCustomViewer;
     using Shell;
 
     public class ShellModule : Module
@@ -18,6 +20,7 @@
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DefaultClipboard>().As<IClipboard>().InstancePerDependency();
+            builder.RegisterType<NopViewer>().As<ICustomMessageBodyViewer>().SingleInstance();
 
             builder.RegisterAssemblyTypes(ThisAssembly)
                    .Where(t => t.IsViewOrViewModel() && !ExemptTypes.Contains(t))

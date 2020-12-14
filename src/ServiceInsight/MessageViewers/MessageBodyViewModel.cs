@@ -9,6 +9,7 @@
     using JsonViewer;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
+    using ServiceInsight.MessageViewers.NopCustomViewer;
     using ServiceInsight.ServiceControl;
     using XmlViewer;
 
@@ -38,6 +39,7 @@
             HexContentViewModel hexViewer,
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
+            ICustomMessageBodyViewer customViewer,
             IServiceControl serviceControl,
             IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
@@ -49,6 +51,7 @@
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
+            CustomViewer = customViewer;
         }
 
         public HexContentViewModel HexViewer { get; }
@@ -56,6 +59,8 @@
         public JsonMessageViewModel JsonViewer { get; }
 
         public XmlMessageViewModel XmlViewer { get; }
+
+        public ICustomMessageBodyViewer CustomViewer { get; }
 
         bool ShouldLoadMessageBody { get; set; }
 
@@ -70,6 +75,7 @@
                 yield return XmlViewer;
                 yield return HexViewer;
                 yield return JsonViewer;
+                yield return CustomViewer;
             }
         }
 
@@ -81,6 +87,8 @@
 
         public bool HexViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
             && PresentationHint == PresentationHint.Standard;
+
+        public bool CustomViewerVisible => CustomViewer.IsVisible(selection.SelectedMessage, PresentationHint);
 
         public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
 

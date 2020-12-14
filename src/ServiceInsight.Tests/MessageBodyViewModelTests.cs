@@ -11,6 +11,7 @@
     using ServiceInsight.MessageViewers;
     using ServiceInsight.MessageViewers.HexViewer;
     using ServiceInsight.MessageViewers.JsonViewer;
+    using ServiceInsight.MessageViewers.NopCustomViewer;
     using ServiceInsight.MessageViewers.XmlViewer;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
@@ -38,7 +39,7 @@
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, serviceControl, workNotifier, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, new NopViewer(), serviceControl, workNotifier, selection);
         }
 
         [Test]
