@@ -102,7 +102,13 @@
                     name = prop.Name;
                 }
 
-                var actualName = name.GetNameVariants(Culture).FirstOrDefault(data.ContainsKey);
+                if (data == null)
+                {
+                    continue;
+                }
+
+                var variants = name.GetNameVariants(Culture);
+                var actualName = variants.FirstOrDefault(data.ContainsKey);
                 var value = actualName != null ? data[actualName] : null;
 
                 if (value == null)
