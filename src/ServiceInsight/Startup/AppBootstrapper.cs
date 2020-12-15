@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using ServiceInsight.AssemblyScanning;
+using ServiceInsight.ExtensionMethods;
 
 namespace ServiceInsight.Startup
 {
@@ -23,9 +24,15 @@ namespace ServiceInsight.Startup
     public class AppBootstrapper : BootstrapperBase
     {
         Autofac.IContainer container;
+        IList<Assembly> assemblies;
 
         public AppBootstrapper()
         {
+            assemblies = new List<Assembly>
+            {
+                typeof(AppBootstrapper).Assembly
+            };
+            
             if (!InDesignMode())
             {
                 Initialize();
@@ -59,11 +66,13 @@ namespace ServiceInsight.Startup
 
         void CreateContainer()
         {
-            var assemblies = new List<Assembly>
-            {
-                typeof(AppBootstrapper).Assembly
-            };
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterAssemblyModules(assemblies.ToArray());
+            container = containerBuilder.Build();
+        }
 
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
             var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight", "MessageViewers");
             var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -72,9 +81,7 @@ namespace ServiceInsight.Startup
             var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
             assemblies.AddRange(scanner.Scan());
 
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyModules(assemblies.ToArray());
-            container = containerBuilder.Build();
+            return assemblies;
         }
 
         void ApplyBindingCulture()

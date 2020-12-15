@@ -90,6 +90,8 @@
 
         public bool CustomViewerVisible => CustomViewer.IsVisible(selection.SelectedMessage, PresentationHint);
 
+        public string CustomViewerName => (CustomViewer as IScreen)?.DisplayName;
+
         public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
 
         public bool NoContentHelpVisible => PresentationHint == PresentationHint.NoContent;
@@ -114,7 +116,9 @@
             }
             
             NotifyOfPropertyChange(nameof(CustomViewerVisible));
-            NotifyOfPropertyChange(nameof(CustomViewer));
+            NotifyOfPropertyChange(nameof(HexViewerVisible));
+            NotifyOfPropertyChange(nameof(JsonViewerVisible));
+            NotifyOfPropertyChange(nameof(XmlViewerVisible));
         }
 
         void RefreshChildren()
