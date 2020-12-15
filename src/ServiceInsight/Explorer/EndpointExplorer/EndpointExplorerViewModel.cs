@@ -247,6 +247,8 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                     Items.Remove(serviceControlNode);
                 }
                 
+                clientRegistry.RemoveServiceControlClient(serviceControlNode.Url);
+                
                 await eventAggregator.PublishOnUIThreadAsync(new ServiceControlDisconnected
                 {
                     ExplorerItem = serviceControlNode

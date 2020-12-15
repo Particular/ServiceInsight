@@ -1,4 +1,4 @@
-namespace ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using System.Threading.Tasks;
@@ -14,8 +14,8 @@ namespace ServiceInsight.Tests
     using MessageViewers.XmlViewer;
     using Models;
     using ServiceControl;
-    using ServiceInsight.MessageViewers.CustomMessageViewer;
-    using ServiceInsight.Explorer.EndpointExplorer;
+    using MessageViewers.CustomMessageViewer;
+    using Explorer.EndpointExplorer;
 
     class TestCustomMessageViewerResolver : ICustomMessageViewerResolver
     {
@@ -37,9 +37,10 @@ namespace ServiceInsight.Tests
         Func<MessageBodyViewModel> messageBodyFunc;
         MessageSelectionContext selection;
         ServiceControlClientRegistry clientRegistry;
-
+        TestCustomMessageViewerResolver resolver;
+        
         string baseUrl = "http://localhost:3333/api/";
-
+        
         [SetUp]
         public void TestInitialize()
         {
@@ -50,14 +51,11 @@ namespace ServiceInsight.Tests
             jsonContent = Substitute.For<JsonMessageViewModel>();
             xmlContent = Substitute.For<XmlMessageViewModel>();
             clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+            resolver = new TestCustomMessageViewerResolver();
             selection = new MessageSelectionContext(eventAggregator);
 
-<<<<<<< HEAD
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, new TestCustomMessageViewerResolver(), serviceControl, workNotifier, selection);
-=======
             clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, workNotifier, selection, clientRegistry);
->>>>>>> fix tests
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, resolver, serviceControl, workNotifier, selection, clientRegistry);
         }
 
         [Test]

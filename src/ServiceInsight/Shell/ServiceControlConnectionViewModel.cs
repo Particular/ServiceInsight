@@ -15,6 +15,9 @@
         const string ConnectingToServiceControl = "Connecting to ServiceControl...";
         const string ConnectionErrorMessage = "There was an error connecting to ServiceControl. Either the address is not valid or the service is down.";
         const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
+        const string AddressInvalid = "Entered address is invalid.";
+        const string ConnectionExists = "You have already connected to this address.";
+        
         static bool certValidationFailed;
 
         readonly ISettingsProvider settingsProvider;
@@ -71,17 +74,13 @@
             certValidationFailed = false;
             StartWorkInProgress();
             ServiceUrl = ServiceUrl.Trim();
-            var isValidUrl = await IsValidUrl(ServiceUrl);
+            var isValidUrl = await IsValid(ServiceUrl);
             ShowError = !isValidUrl;
 
             if (!ShowError)
             {
                 StoreConnectionAddress();
                 TryClose(true);
-            }
-            else
-            {
-                ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
             }
 
             StopWorkInProgress();
@@ -119,19 +118,38 @@
             settingsProvider.SaveSettings(appSettings);
         }
 
-        async Task<bool> IsValidUrl(string serviceUrl)
+        async Task<bool> IsValid(string serviceUrl)
         {
-            if (serviceUrl.IsValidUrl())
+            var valid = true;
+            
+            if (!serviceUrl.IsValidUrl())
+            {
+                ErrorMessage = AddressInvalid;
+                valid = false;
+            }
+
+            if (clientRegistry.IsRegistered(serviceUrl))
+            {
+                ErrorMessage = ConnectionExists;
+                valid = false;
+            }
+            
+            if (valid)
             {
                 clientRegistry.EnsureServiceControlClient(serviceUrl);
                 var service = clientRegistry.GetServiceControl(serviceUrl);
 
                 Version = await service.GetVersion();
 
-                return Version != null;
+                if (Version == null)
+                {
+                    clientRegistry.RemoveServiceControlClient(serviceUrl);
+                    ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
+                    valid = false;
+                }
             }
 
-            return false;
+            return valid;
         }
     }
 }
