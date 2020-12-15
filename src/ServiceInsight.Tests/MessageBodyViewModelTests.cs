@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.Tests
+﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
+
+namespace ServiceInsight.Tests
 {
     using System;
     using System.Threading.Tasks;
@@ -11,10 +13,17 @@
     using ServiceInsight.MessageViewers;
     using ServiceInsight.MessageViewers.HexViewer;
     using ServiceInsight.MessageViewers.JsonViewer;
-    using ServiceInsight.MessageViewers.NopCustomViewer;
     using ServiceInsight.MessageViewers.XmlViewer;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
+
+    class TestCustomMessageViewerResolver : ICustomMessageViewerResolver
+    {
+        public ICustomMessageBodyViewer GetCustomMessageBodyViewer()
+        {
+            return new NopViewer();
+        }
+    }
 
     [TestFixture]
     public class MessageBodyViewModelTests
@@ -39,7 +48,7 @@
             xmlContent = Substitute.For<XmlMessageViewModel>();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, new NopViewer(), serviceControl, workNotifier, selection);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, new TestCustomMessageViewerResolver(), serviceControl, workNotifier, selection);
         }
 
         [Test]

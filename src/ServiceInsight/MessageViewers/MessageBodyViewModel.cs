@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.MessageViewers
+﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
+
+namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,7 +11,6 @@
     using JsonViewer;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.MessageList;
-    using ServiceInsight.MessageViewers.NopCustomViewer;
     using ServiceInsight.ServiceControl;
     using XmlViewer;
 
@@ -39,7 +40,7 @@
             HexContentViewModel hexViewer,
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
-            ICustomMessageBodyViewer customViewer,
+            ICustomMessageViewerResolver customMessageViewerResolver,
             IServiceControl serviceControl,
             IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
@@ -51,7 +52,7 @@
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
-            CustomViewer = customViewer;
+            CustomViewer = customMessageViewerResolver.GetCustomMessageBodyViewer();
         }
 
         public HexContentViewModel HexViewer { get; }
@@ -114,7 +115,7 @@
             {
                 ContentType = MessageContentType.NotSpecified;
             }
-            
+
             NotifyOfPropertyChange(nameof(CustomViewerVisible));
             NotifyOfPropertyChange(nameof(HexViewerVisible));
             NotifyOfPropertyChange(nameof(JsonViewerVisible));
