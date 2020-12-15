@@ -112,6 +112,9 @@
             {
                 ContentType = MessageContentType.NotSpecified;
             }
+            
+            NotifyOfPropertyChange(nameof(CustomViewerVisible));
+            NotifyOfPropertyChange(nameof(CustomViewer));
         }
 
         void RefreshChildren()
