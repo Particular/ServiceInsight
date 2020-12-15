@@ -207,15 +207,6 @@ namespace ServiceInsight.Explorer.EndpointExplorer
 
         public async Task RefreshEndpoints(ServiceControlExplorerItem serviceControlNode)
         {
-            // if (!HasConnectedToAnyServiceControl)
-            // {
-            //     await ConnectToKnownInstance();
-            // }
-            //
-            // if (!HasConnectedToAnyServiceControl)
-            // {
-            //     return;
-            // }
             if (serviceControlNode == null)
             {
                 return;
@@ -246,7 +237,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
             await DisconnectServiceControl(serviceControl);
         }
         
-        public Task DisconnectServiceControl(ServiceControlExplorerItem serviceControlNode)
+        public async Task DisconnectServiceControl(ServiceControlExplorerItem serviceControlNode)
         {
             if (serviceControlNode != null)
             {
@@ -255,20 +246,14 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 {
                     Items.Remove(serviceControlNode);
                 }
+                
+                await eventAggregator.PublishOnUIThreadAsync(new ServiceControlDisconnected
+                {
+                    ExplorerItem = serviceControlNode
+                });
             }
-            
-            return Task.CompletedTask;
         }
 
-        // Task ConnectToKnownInstance()
-        // {
-        //     return ConnectToService(GetConfiguredAddress());
-        // }
-
-        // public void Navigate(string navigateUri)
-        // {
-        //     networkOperations.Browse(navigateUri);
-        // }
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
             serviceControlNode.IsExpanded = true;

@@ -19,7 +19,8 @@ namespace ServiceInsight.Saga
 
     public class SagaWindowViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
-        IHandle<SelectedExplorerItemChanged>
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<ServiceControlDisconnected>
     {
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
@@ -325,6 +326,15 @@ namespace ServiceInsight.Saga
         void SetSelected(SagaMessage message, string id)
         {
             message.IsSelected = message.MessageId == id;
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearSaga();
+            }
         }
     }
 }

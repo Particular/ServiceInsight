@@ -29,6 +29,7 @@
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
         IHandle<SelectedMessageChanged>,
+        IHandle<ServiceControlDisconnected>,
         IPersistPartLayout
     {
         readonly IClipboard clipboard;
@@ -42,6 +43,7 @@
         bool lastSortOrderAscending;
         IMessageListView view;
         ExplorerItem selectedExplorerItem;
+        IServiceControl selectedServiceControl;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -81,7 +83,7 @@
 
         public IObservableCollection<StoredMessage> Rows { get; }
 
-        public IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
+        public IServiceControl ServiceControl => selectedServiceControl;
         
         public MessageSelectionContext Selection { get; }
 
@@ -162,8 +164,9 @@
                     pagedResult = await ServiceControl.GetAuditMessages(endpoint, pageNo: pageNo, searchQuery, lastSortColumn, lastSortOrderAscending);
                 }
                 
-                if (pagedResult == null)
+                if (pagedResult?.Result == null || pagedResult.Result.Count == 0)
                 {
+                    ClearResult();
                     return;
                 }
 
@@ -190,8 +193,17 @@
         public async Task Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
-            await RefreshMessages();
-            SearchBar.NotifyPropertiesChanged();
+            selectedServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
+
+            if (selectedServiceControl != null)
+            {
+                await RefreshMessages();
+                SearchBar.NotifyPropertiesChanged();
+            }
+            else
+            {
+                ClearResult();
+            }
         }
 
         public void Handle(AsyncOperationFailed message)
@@ -240,11 +252,12 @@
             }
         }
 
-        // void ClearResult()
-        // {
-        //     BindResult(new PagedResult<StoredMessage>());
-        //     SearchBar.ClearPaging();
-        // }
+        void ClearResult()
+        {
+            BindResult(new PagedResult<StoredMessage>());
+            SearchBar.ClearPaging();
+        }
+        
         void BindResult(PagedResult<StoredMessage> pagedResult)
         {
             try
@@ -292,6 +305,15 @@
         void RestoreLayout()
         {
             view.OnRestoreLayout(settingsProvider);
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearResult();
+            }
         }
     }
 }

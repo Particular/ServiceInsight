@@ -17,7 +17,8 @@ namespace ServiceInsight.MessageViewers
     public class MessageBodyViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
         IHandleWithTask<BodyTabSelectionChanged>,
-        IHandle<SelectedExplorerItemChanged>
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<ServiceControlDisconnected>
     {
         readonly IWorkNotifier workNotifier;
         readonly MessageSelectionContext selection;
@@ -171,6 +172,15 @@ namespace ServiceInsight.MessageViewers
 
                     RefreshChildren();
                 }
+            }
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearMessageDisplays();
             }
         }
     }

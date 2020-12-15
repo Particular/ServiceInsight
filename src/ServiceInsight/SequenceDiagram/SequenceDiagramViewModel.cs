@@ -25,6 +25,7 @@ namespace ServiceInsight.SequenceDiagram
         IHandleWithTask<SelectedMessageChanged>,
         IHandle<ScrollDiagramItemIntoView>,
         IHandle<SelectedExplorerItemChanged>,
+        IHandle<ServiceControlDisconnected>,
         IMessageCommandContainer
     {
         readonly ServiceControlClientRegistry clientRegistry;
@@ -156,9 +157,8 @@ namespace ServiceInsight.SequenceDiagram
                     messages = (await ServiceControl.GetConversationById(conversationId)).ToList();
                 }
                 
-                if (messages?.Count == 0)
+                if (messages == null || messages.Count == 0)
                 {
-                        
                     LogTo.Warning("No messages found for conversation id {0}", conversationId);
                     ClearState();
                     return;
@@ -237,6 +237,15 @@ namespace ServiceInsight.SequenceDiagram
         public void Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearState();
+            }
         }
     }
 
