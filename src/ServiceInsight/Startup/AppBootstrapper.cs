@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Reflection;
+using Anotar.Serilog;
 using ServiceInsight.AssemblyScanning;
 using ServiceInsight.ExtensionMethods;
 
@@ -32,7 +33,7 @@ namespace ServiceInsight.Startup
             {
                 typeof(AppBootstrapper).Assembly
             };
-            
+
             if (!InDesignMode())
             {
                 Initialize();
@@ -73,13 +74,20 @@ namespace ServiceInsight.Startup
 
         protected override IEnumerable<Assembly> SelectAssemblies()
         {
-            var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight", "MessageViewers");
-            var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight","MessageViewers");
+            try
+            {
+                var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight", "MessageViewers");
+                var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight", "MessageViewers");
 
-            var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
-            assemblies.AddRange(scanner.Scan());
+                var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
+                assemblies.AddRange(scanner.Scan());
+            }
+            catch (Exception ex)
+            {
+                LogTo.Error(ex, "Failure while scanning assemblies looking for custom message viewers.");
+            }
 
             return assemblies;
         }
