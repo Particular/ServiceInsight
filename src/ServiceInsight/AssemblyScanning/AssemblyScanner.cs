@@ -33,13 +33,7 @@ namespace ServiceInsight.AssemblyScanning
                 foreach (var assemblyFullPath in assembliesFullPaths)
                 {
                     var assemblyFileName = Path.GetFileNameWithoutExtension(assemblyFullPath);
-                    if (
-                        assemblyFileName.StartsWith("Autofac", StringComparison.InvariantCultureIgnoreCase)
-                        || assemblyFileName.StartsWith("Caliburn", StringComparison.InvariantCultureIgnoreCase)
-                        || assemblyFileName.StartsWith("DevExpress", StringComparison.InvariantCultureIgnoreCase)
-                        || assemblyFileName.StartsWith("Serilog", StringComparison.InvariantCultureIgnoreCase)
-                        || assemblyFileName.StartsWith("Mindscape", StringComparison.InvariantCultureIgnoreCase)
-                        )
+                    if (ReservedAssemblyNames.Any(a => assemblyFileName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         continue;
                     }
@@ -53,6 +47,24 @@ namespace ServiceInsight.AssemblyScanning
             }
 
             return assemblies.Distinct();
+        }
+
+        private IEnumerable<string> ReservedAssemblyNames
+        {
+            get
+            {
+                yield return "Autofac";
+                yield return "Caliburn";
+                yield return "DevExpress";
+                yield return "Serilog";
+                yield return "Mindscape";
+                yield return "System";
+                yield return "Microsoft";
+                yield return "RestSharp";
+                yield return "GongSolutions";
+                yield return "ICSharpCode";
+                yield return "Nito";
+            }
         }
     }
 }
