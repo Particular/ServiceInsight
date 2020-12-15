@@ -115,7 +115,7 @@
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
             TotalItemCount = pagedResult.TotalCount;
-            TotalPagesCount = (pagedResult.TotalCount / pagedResult.PageSize) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 0 ? 0 : 1);
+            TotalPagesCount = (pagedResult.TotalCount / pagedResult.PageSize) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 1 ? 0 : 1);
             NextLink = pagedResult.NextLink;
             PrevLink = pagedResult.PrevLink;
             FirstLink = pagedResult.FirstLink;
