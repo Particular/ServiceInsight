@@ -2,7 +2,7 @@
 {
     using System.Linq;
 
-    class TypeHumanizer
+    public class TypeHumanizer
     {
         public static string ToName(string type)
         {

@@ -1,4 +1,11 @@
-﻿namespace ServiceInsight.Startup
+﻿using System.IO;
+using System.Linq;
+using System.Reflection;
+using Anotar.Serilog;
+using ServiceInsight.AssemblyScanning;
+using ServiceInsight.ExtensionMethods;
+
+namespace ServiceInsight.Startup
 {
     using System;
     using System.Collections.Generic;
@@ -14,13 +21,19 @@
     using Framework;
     using Framework.Logging;
     using Shell;
-    
+
     public class AppBootstrapper : BootstrapperBase
     {
         Autofac.IContainer container;
-        
+        IList<Assembly> assemblies;
+
         public AppBootstrapper()
         {
+            assemblies = new List<Assembly>
+            {
+                typeof(AppBootstrapper).Assembly
+            };
+
             if (!InDesignMode())
             {
                 Initialize();
@@ -55,8 +68,28 @@
         void CreateContainer()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyModules(typeof(AppBootstrapper).Assembly);
+            containerBuilder.RegisterAssemblyModules(assemblies.ToArray());
             container = containerBuilder.Build();
+        }
+
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
+            try
+            {
+                var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var serviceInsightApplicationData = Path.Combine(applicationData, "Particular Software", "ServiceInsight", "MessageViewers");
+                var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var serviceInsightProgramData = Path.Combine(programData, "Particular", "ServiceInsight", "MessageViewers");
+
+                var scanner = new AssemblyScanner(serviceInsightApplicationData, serviceInsightProgramData);
+                assemblies.AddRange(scanner.Scan());
+            }
+            catch (Exception ex)
+            {
+                LogTo.Error(ex, "Failure while scanning assemblies looking for custom message viewers.");
+            }
+
+            return assemblies;
         }
 
         void ApplyBindingCulture()

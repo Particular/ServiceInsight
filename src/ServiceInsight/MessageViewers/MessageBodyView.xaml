@@ -38,8 +38,11 @@
                 <dxlc:LayoutGroup Header="XML" Visibility="{Binding Path=XmlViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=XmlViewer}" />
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Header="Hex" Visibility="{Binding Path=HexViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <dxlc:LayoutGroup Header="Hex" Visibility="{Binding Path=CustomViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ContentControl cal:View.Model="{Binding Path=HexViewer}" />
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="{Binding Path=CustomViewerName}" Visibility="{Binding Path=CustomViewerVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ContentControl cal:View.Model="{Binding Path=CustomViewer}" />
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
         </dxlc:LayoutControl>

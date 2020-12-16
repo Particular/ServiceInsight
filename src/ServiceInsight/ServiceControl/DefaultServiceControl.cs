@@ -663,23 +663,4 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
         static IEnumerable<HttpStatusCode> successCodes = new[] { HttpStatusCode.OK, HttpStatusCode.Accepted, HttpStatusCode.NotModified, HttpStatusCode.NoContent };
         static Regex linkExpression = new Regex(@"<([^>]+)>;\s?rel=""(\w+)"",?\s?", RegexOptions.Compiled);
     }
-
-    public enum PresentationHint
-    {
-        Standard,
-        NoContent
-    }
-
-    public class PresentationBody
-    {
-        PresentationHint hint = PresentationHint.Standard;
-
-        public string Text { get; set; }
-
-        public PresentationHint Hint
-        {
-            get { return hint; }
-            set { hint = value; }
-        }
-    }
 }

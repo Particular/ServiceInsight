@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.Framework.Modules
+﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
+
+namespace ServiceInsight.Framework.Modules
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DefaultClipboard>().As<IClipboard>().InstancePerDependency();
+            builder.RegisterType<CustomMessageViewerResolver>().As<ICustomMessageViewerResolver>().SingleInstance();
 
             builder.RegisterAssemblyTypes(ThisAssembly)
                    .Where(t => t.IsViewOrViewModel() && !ExemptTypes.Contains(t))

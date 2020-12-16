@@ -1,4 +1,6 @@
-﻿namespace ServiceInsight.MessageViewers
+﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
+
+namespace ServiceInsight.MessageViewers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -38,6 +40,7 @@
             HexContentViewModel hexViewer,
             JsonMessageViewModel jsonViewer,
             XmlMessageViewModel xmlViewer,
+            ICustomMessageViewerResolver customMessageViewerResolver,
             IServiceControl serviceControl,
             IWorkNotifier workNotifier,
             MessageSelectionContext selectionContext)
@@ -49,6 +52,7 @@
             HexViewer = hexViewer;
             XmlViewer = xmlViewer;
             JsonViewer = jsonViewer;
+            CustomViewer = customMessageViewerResolver.GetCustomMessageBodyViewer();
         }
 
         public HexContentViewModel HexViewer { get; }
@@ -56,6 +60,8 @@
         public JsonMessageViewModel JsonViewer { get; }
 
         public XmlMessageViewModel XmlViewer { get; }
+
+        public ICustomMessageBodyViewer CustomViewer { get; }
 
         bool ShouldLoadMessageBody { get; set; }
 
@@ -70,6 +76,7 @@
                 yield return XmlViewer;
                 yield return HexViewer;
                 yield return JsonViewer;
+                yield return CustomViewer;
             }
         }
 
@@ -81,6 +88,10 @@
 
         public bool HexViewerVisible => (ContentType == MessageContentType.NotSpecified || ContentType == MessageContentType.Json || ContentType == MessageContentType.Xml)
             && PresentationHint == PresentationHint.Standard;
+
+        public bool CustomViewerVisible => CustomViewer.IsVisible(selection.SelectedMessage, PresentationHint);
+
+        public string CustomViewerName => (CustomViewer as IScreen)?.DisplayName;
 
         public bool NoContentHelpNotVisible => PresentationHint != PresentationHint.NoContent;
 
@@ -104,6 +115,11 @@
             {
                 ContentType = MessageContentType.NotSpecified;
             }
+
+            NotifyOfPropertyChange(nameof(CustomViewerVisible));
+            NotifyOfPropertyChange(nameof(HexViewerVisible));
+            NotifyOfPropertyChange(nameof(JsonViewerVisible));
+            NotifyOfPropertyChange(nameof(XmlViewerVisible));
         }
 
         void RefreshChildren()

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceInsight.Licensing\ServiceInsight.Licensing.csproj" />
+    <ProjectReference Include="..\ServiceInsight.Sdk\ServiceInsight.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +64,7 @@
     <PackageReference Include="Serilog.Sinks.Observable" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Serilog.Sinks.Trace" Version="2.1.0" />
+    <PackageReference Include="System.Reflection.Metadata" Version="5.0.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="5.0.0" />
   </ItemGroup>
 
