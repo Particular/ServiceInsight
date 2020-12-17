@@ -1,21 +1,25 @@
+using ServiceInsight.MessageList;
+
 namespace ServiceInsight.Framework.Commands
 {
     using Caliburn.Micro;
     using Events;
     using Models;
-    using ServiceControl;
 
     public class RetryMessageCommand : BaseCommand
     {
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
-        readonly IServiceControl serviceControl;
+        readonly MessageListViewModel parent;
 
-        public RetryMessageCommand(IEventAggregator eventAggregator, IWorkNotifier workNotifier, IServiceControl serviceControl)
+        public RetryMessageCommand(
+            IEventAggregator eventAggregator,
+            IWorkNotifier workNotifier, 
+            MessageListViewModel parent)
         {
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
-            this.serviceControl = serviceControl;
+            this.parent = parent;
         }
 
         public override bool CanExecute(object parameter)
@@ -41,11 +45,13 @@ namespace ServiceInsight.Framework.Commands
 
             using (workNotifier.NotifyOfWork($"Retrying to send selected error message {message.SendingEndpoint}"))
             {
-                await serviceControl.RetryMessage(message.Id, message.InstanceId);
-                eventAggregator.PublishOnUIThread(new RetryMessage { Id = message.Id });
+                if (parent.ServiceControl != null)
+                {
+                    await parent.ServiceControl.RetryMessage(message.Id, message.InstanceId);
+                    message.Status = MessageStatus.RetryIssued;
+                    await eventAggregator.PublishOnUIThreadAsync(new RetryMessage {Id = message.Id});
+                }
             }
-
-            message.Status = MessageStatus.RetryIssued;
 
             OnCanExecuteChanged();
         }

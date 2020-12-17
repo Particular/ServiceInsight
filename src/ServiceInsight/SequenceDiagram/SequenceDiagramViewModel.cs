@@ -1,4 +1,7 @@
-﻿namespace ServiceInsight.SequenceDiagram
+﻿using ServiceInsight.Explorer;
+using ServiceInsight.ExtensionMethods;
+
+namespace ServiceInsight.SequenceDiagram
 {
     using System;
     using System.Collections.Generic;
@@ -8,32 +11,34 @@
     using Anotar.Serilog;
     using Caliburn.Micro;
     using Diagram;
-    using ServiceInsight.DiagramLegend;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Commands;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Settings;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.Models;
-    using ServiceInsight.ServiceControl;
-    using ServiceInsight.Settings;
+    using DiagramLegend;
+    using Framework;
+    using Framework.Commands;
+    using Framework.Events;
+    using Framework.Settings;
+    using MessageList;
+    using Models;
+    using ServiceControl;
+    using Settings;
 
     public class SequenceDiagramViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
         IHandle<ScrollDiagramItemIntoView>,
+        IHandle<SelectedExplorerItemChanged>,
+        IHandle<ServiceControlDisconnected>,
         IMessageCommandContainer
     {
-        readonly IServiceControl serviceControl;
+        readonly ServiceControlClientRegistry clientRegistry;
         readonly ISettingsProvider settingsProvider;
+        readonly SequenceDiagramSettings settings;
         string loadedConversationId;
-        SequenceDiagramSettings settings;
         SequenceDiagramView view;
+        ExplorerItem selectedExplorerItem;
 
         const string SequenceDiagramDocumentationUrl = "http://docs.particular.net/serviceinsight/no-data-available";
         const string SequenceDiagramLegendUrl = "https://docs.particular.net/serviceinsight/sequence-diagram/#what-is-on-the-diagram";
 
         public SequenceDiagramViewModel(
-            IServiceControl serviceControl,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,
             DiagramLegendViewModel diagramLegend,
@@ -43,10 +48,11 @@
             SearchByMessageIDCommand searchByMessageIDCommand,
             ChangeSelectedMessageCommand changeSelectedMessageCommand,
             ShowExceptionCommand showExceptionCommand,
-            ReportMessageCommand reportMessageCommand)
+            ReportMessageCommand reportMessageCommand,
+            ServiceControlClientRegistry clientRegistry)
         {
-            this.serviceControl = serviceControl;
             this.settingsProvider = settingsProvider;
+            this.clientRegistry = clientRegistry;
 
             Selection = selectionContext;
             CopyConversationIDCommand = copyConversationIDCommand;
@@ -63,7 +69,6 @@
             HeaderItems = new DiagramItemCollection();
 
             settings = settingsProvider.GetSettings<SequenceDiagramSettings>();
-
             ShowLegend = settings.ShowLegend;
         }
 
@@ -72,6 +77,8 @@
             base.OnViewLoaded(view);
             this.view = (SequenceDiagramView)view;
         }
+        
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         public ICommand OpenLink { get; }
 
@@ -101,7 +108,7 @@
 
         public bool ShowLegend { get; set; }
 
-        void OnShowLegendChanged()
+        public void OnShowLegendChanged()
         {
             settings.ShowLegend = ShowLegend;
             settingsProvider.SaveSettings(settings);
@@ -143,8 +150,14 @@
                     return;
                 }
 
-                var messages = (await serviceControl.GetConversationById(conversationId)).ToList();
-                if (messages.Count == 0)
+                var messages = default(List<StoredMessage>);
+                
+                if (ServiceControl != null)
+                {
+                    messages = (await ServiceControl.GetConversationById(conversationId)).ToList();
+                }
+                
+                if (messages == null || messages.Count == 0)
                 {
                     LogTo.Warning("No messages found for conversation id {0}", conversationId);
                     ClearState();
@@ -218,6 +231,20 @@
             if (diagramItem != null)
             {
                 view?.diagram.BringIntoView(diagramItem);
+            }
+        }
+        
+        public void Handle(SelectedExplorerItemChanged @event)
+        {
+            selectedExplorerItem = @event.SelectedExplorerItem;
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearState();
             }
         }
     }

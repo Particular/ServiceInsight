@@ -1,4 +1,7 @@
-﻿namespace ServiceInsight.MessageFlow
+﻿using ServiceInsight.Explorer;
+using ServiceInsight.ExtensionMethods;
+
+namespace ServiceInsight.MessageFlow
 {
     using System;
     using System.Collections.Concurrent;
@@ -12,40 +15,43 @@
     using Mindscape.WpfDiagramming.FlowDiagrams;
     using Models;
     using ServiceControl;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Commands;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Settings;
-    using ServiceInsight.Framework.UI.ScreenManager;
-    using ServiceInsight.MessageList;
+    using Framework;
+    using Framework.Commands;
+    using Framework.Events;
+    using Framework.Settings;
+    using Framework.UI.ScreenManager;
+    using MessageList;
     using Settings;
 
     public class MessageFlowViewModel : Screen,
-        IHandleWithTask<SelectedMessageChanged>
+        IHandleWithTask<SelectedMessageChanged>,
+        IHandle<SelectedExplorerItemChanged>
     {
-        Func<ExceptionDetailViewModel> exceptionDetail;
-        IServiceControl serviceControl;
-        IEventAggregator eventAggregator;
-        IWindowManagerEx windowManager;
-        ISettingsProvider settingsProvider;
-        MessageSelectionContext selection;
-        ConcurrentDictionary<string, MessageNode> nodeMap;
+        readonly Func<ExceptionDetailViewModel> exceptionDetail;
+        readonly IEventAggregator eventAggregator;
+        readonly IWindowManagerEx windowManager;
+        readonly ISettingsProvider settingsProvider;
+        readonly MessageSelectionContext selection;
+        readonly ConcurrentDictionary<string, MessageNode> nodeMap;
+        readonly IWorkNotifier workNotifier;
+        readonly ServiceControlClientRegistry clientRegistry;
+
         MessageFlowView view;
         string loadedConversationId;
-        private IWorkNotifier workNotifier;
+        ExplorerItem selectedExplorerItem;
 
         public MessageFlowViewModel(
-            IServiceControl serviceControl,
             IEventAggregator eventAggregator,
             IWindowManagerEx windowManager,
             ILifetimeScope container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,
             MessageSelectionContext selectionContext,
-            IWorkNotifier workNotifier)
+            IWorkNotifier workNotifier,
+            ServiceControlClientRegistry clientRegistry)
         {
             this.workNotifier = workNotifier;
-            this.serviceControl = serviceControl;
+            this.clientRegistry = clientRegistry;
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;
@@ -60,6 +66,8 @@
             Diagram = new FlowDiagramModel();
             nodeMap = new ConcurrentDictionary<string, MessageNode>();
         }
+
+        IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         public FlowDiagramModel Diagram
         {
@@ -170,19 +178,27 @@
 
             using (workNotifier.NotifyOfWork("Loading flow..."))
             {
-                var relatedMessagesTask = await serviceControl.GetConversationById(conversationId);
-                var nodes = relatedMessagesTask
-                    .Select(x => new MessageNode(this, x)
-                    {
-                        ShowEndpoints = ShowEndpoints,
-                        IsFocused = x.Id == storedMessage.Id
-                    })
-                    .ToList();
+                if (ServiceControl != null)
+                {
+                    var relatedMessagesTask = await ServiceControl.GetConversationById(conversationId);
+                    var nodes = relatedMessagesTask
+                        .Select(x => new MessageNode(this, x)
+                        {
+                            ShowEndpoints = ShowEndpoints,
+                            IsFocused = x.Id == storedMessage.Id
+                        })
+                        .ToList();
 
-                CreateConversationNodes(storedMessage.Id, nodes);
-                LinkConversationNodes(nodes);
-                UpdateLayout();
+                    CreateConversationNodes(storedMessage.Id, nodes);
+                    LinkConversationNodes(nodes);
+                    UpdateLayout();
+                }
             }
+        }
+        
+        public void Handle(SelectedExplorerItemChanged @event)
+        {
+            selectedExplorerItem = @event.SelectedExplorerItem;
         }
 
         void RefreshSelection(string selectedId)

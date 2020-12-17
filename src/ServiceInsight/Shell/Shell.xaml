@@ -77,7 +77,7 @@
                     AllowCustomization="True"
                     AllowUIAutomationSupport="True"
                     AutomationProperties.AutomationId="BarManager"
-                    dxc:DXSerializer.LayoutVersion="6"
+                    dxc:DXSerializer.LayoutVersion="7"
                     dxc:DXSerializer.SerializationID="BarManager">
         <!--  Categories  -->
         <dxb:BarManager.Categories>
@@ -118,6 +118,25 @@
                 <dxb:BarButtonItem.SuperTip>
                     <dxc:SuperTip>
                         <dxc:SuperTipItem Content="Connect Endpoint Explorer to ServiceControl instance">
+                            <dxc:SuperTipItem.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Bold" Text="{Binding}" />
+                                </DataTemplate>
+                            </dxc:SuperTipItem.ContentTemplate>
+                        </dxc:SuperTipItem>
+                    </dxc:SuperTip>
+                </dxb:BarButtonItem.SuperTip>
+            </dxb:BarButtonItem>
+            <dxb:BarButtonItem x:Name="DisconnectServiceControl"
+                               AutomationProperties.AutomationId="DisconnectServiceControlMenuItem"
+                               CategoryName="Tools"
+                               Command="{Binding DisconnectServiceControlCommand}"
+                               Content="Disconnect"
+                               Glyph="{StaticResource Shell_ToolbarDisconnect}" 
+                               RenderOptions.BitmapScalingMode="HighQuality">
+                <dxb:BarButtonItem.SuperTip>
+                    <dxc:SuperTip>
+                        <dxc:SuperTipItem Content="Disconnects Endpoint Explorer from a ServiceControl instance">
                             <dxc:SuperTipItem.ContentTemplate>
                                 <DataTemplate>
                                     <TextBlock FontWeight="Bold" Text="{Binding}" />
@@ -223,6 +242,7 @@
                             CategoryName="Tools"
                             Content="Tools">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
+                <dxb:BarButtonItemLink BarItemName="DisconnectServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
             </dxb:BarSubItem>
 
@@ -384,6 +404,7 @@
                      Caption="Toolbar" BarItemDisplayMode="ContentAndGlyph"
                      UseWholeRow="True">
                 <dxb:BarButtonItemLink BarItemName="ConnectToServiceControl" />
+                <dxb:BarButtonItemLink BarItemName="DisconnectServiceControl" />
                 <dxb:BarButtonItemLink BarItemName="RefreshAll" />
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />

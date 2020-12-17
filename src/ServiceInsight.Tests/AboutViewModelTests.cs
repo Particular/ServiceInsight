@@ -5,8 +5,8 @@
     using NUnit.Framework;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
-    using ServiceInsight.ServiceControl;
-    using ServiceInsight.Shell;
+    using ServiceControl;
+    using Shell;
     using Shouldly;
     using System.Threading.Tasks;
 
@@ -18,6 +18,7 @@
         AppLicenseManager licenseManager;
         IApplicationVersionService versionService;
         AboutViewModel sut;
+        ServiceControlClientRegistry clientRegistry;
 
         [SetUp]
         public void Initialize()
@@ -26,8 +27,11 @@
             serviceControl = Substitute.For<IServiceControl>();
             versionService = Substitute.For<IApplicationVersionService>();
             licenseManager = Substitute.For<AppLicenseManager>();
+            clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+
+            clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
             
-            sut = new AboutViewModel(networkOperations, versionService, serviceControl, licenseManager);
+            sut = new AboutViewModel(networkOperations, versionService, licenseManager, clientRegistry);
         }
 
         [Test]
@@ -35,14 +39,25 @@
         {
             ((IActivate)sut).Activate();
 
-            await serviceControl.Received(1).GetVersion();
+            await clientRegistry.Received(1).GetVersions();
         }
 
+        [Test]
+        public void Should_display_multi_connection_when_more_than_one_service_control_version()
+        {
+            var versions = new[] {"3.0.0", "4.0.0"};
+            clientRegistry.GetVersions().Returns(versions);
+
+            ((IActivate)sut).Activate();
+
+            sut.ServiceControlVersion.ShouldBe(AboutViewModel.MultipleConnection);
+        }
+        
         [Test]
         public void Should_display_service_control_version()
         {
             const string ServiceControlVersion = "0.8.0-Unstable379";
-            serviceControl.GetVersion().Returns(ServiceControlVersion);
+            clientRegistry.GetVersions().Returns(new[] { ServiceControlVersion });
 
             ((IActivate)sut).Activate();
 

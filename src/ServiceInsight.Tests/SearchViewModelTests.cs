@@ -36,7 +36,9 @@
         [Test]
         public void Should_enable_search_textbox_when_an_endpoint_is_selected()
         {
-            viewModel.Handle(new SelectedExplorerItemChanged(new AuditEndpointExplorerItem(new Endpoint())));
+            var serviceControl = new ServiceControlExplorerItem("http://localhost:3333/api");
+            var auditNode = new AuditEndpointExplorerItem(serviceControl, new Endpoint());
+            viewModel.Handle(new SelectedExplorerItemChanged(auditNode));
 
             viewModel.SearchEnabled.ShouldBe(true);
         }

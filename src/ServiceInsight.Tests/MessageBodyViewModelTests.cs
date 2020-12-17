@@ -1,6 +1,4 @@
-﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
-
-namespace ServiceInsight.Tests
+﻿namespace ServiceInsight.Tests
 {
     using System;
     using System.Threading.Tasks;
@@ -9,13 +7,15 @@ namespace ServiceInsight.Tests
     using NUnit.Framework;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.MessageViewers;
-    using ServiceInsight.MessageViewers.HexViewer;
-    using ServiceInsight.MessageViewers.JsonViewer;
-    using ServiceInsight.MessageViewers.XmlViewer;
-    using ServiceInsight.Models;
-    using ServiceInsight.ServiceControl;
+    using MessageList;
+    using MessageViewers;
+    using MessageViewers.HexViewer;
+    using MessageViewers.JsonViewer;
+    using MessageViewers.XmlViewer;
+    using Models;
+    using ServiceControl;
+    using MessageViewers.CustomMessageViewer;
+    using Explorer.EndpointExplorer;
 
     class TestCustomMessageViewerResolver : ICustomMessageViewerResolver
     {
@@ -36,7 +36,11 @@ namespace ServiceInsight.Tests
         XmlMessageViewModel xmlContent;
         Func<MessageBodyViewModel> messageBodyFunc;
         MessageSelectionContext selection;
-
+        ServiceControlClientRegistry clientRegistry;
+        TestCustomMessageViewerResolver resolver;
+        
+        string baseUrl = "http://localhost:3333/api/";
+        
         [SetUp]
         public void TestInitialize()
         {
@@ -46,15 +50,18 @@ namespace ServiceInsight.Tests
             hexContent = Substitute.For<HexContentViewModel>();
             jsonContent = Substitute.For<JsonMessageViewModel>();
             xmlContent = Substitute.For<XmlMessageViewModel>();
+            clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+            resolver = new TestCustomMessageViewerResolver();
             selection = new MessageSelectionContext(eventAggregator);
 
-            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, new TestCustomMessageViewerResolver(), serviceControl, workNotifier, selection);
+            clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
+            messageBodyFunc = () => new MessageBodyViewModel(hexContent, jsonContent, xmlContent, resolver, serviceControl, workNotifier, selection, clientRegistry);
         }
 
         [Test]
         public async Task Should_load_body_content_when_body_tab_is_already_selected()
         {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
+            string uri = baseUrl + "somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
@@ -62,6 +69,8 @@ namespace ServiceInsight.Tests
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
+            messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
+            
             await messageBody.Handle(new SelectedMessageChanged());
 
             await serviceControl.Received(1).LoadBody(selection.SelectedMessage);
@@ -70,12 +79,14 @@ namespace ServiceInsight.Tests
         [Test]
         public async Task Should_load_body_content_when_body_tab_is_focused()
         {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
+            string uri = baseUrl + "somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
             await messageBody.Handle(new SelectedMessageChanged());
+            
+            messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             await messageBody.Handle(new BodyTabSelectionChanged(true));
 
@@ -84,14 +95,16 @@ namespace ServiceInsight.Tests
 
         [Test]
         public async Task Should_not_load_body_content_when_body_tab_is_not_focused()
-        {
-            const string uri = "http://localhost:3333/api/somemessageid/body";
+        { 
+            string uri = baseUrl + "somemessageid/body";
 
             var messageBody = messageBodyFunc();
 
             await messageBody.Handle(new BodyTabSelectionChanged(false));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
+            
+            messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             await messageBody.Handle(new SelectedMessageChanged());
 
@@ -104,6 +117,8 @@ namespace ServiceInsight.Tests
             var messageBody = messageBodyFunc();
 
             await messageBody.Handle(new BodyTabSelectionChanged(true));
+            
+            messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = null };
 

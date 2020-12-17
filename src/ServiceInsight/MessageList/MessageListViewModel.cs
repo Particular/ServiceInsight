@@ -1,6 +1,4 @@
-﻿using Nito.Comparers;
-
-namespace ServiceInsight.MessageList
+﻿namespace ServiceInsight.MessageList
 {
     using System;
     using System.Linq;
@@ -17,9 +15,10 @@ namespace ServiceInsight.MessageList
     using Models;
     using Search;
     using ServiceControl;
-    using ServiceInsight.Framework.Commands;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Settings;
+    using Framework.Commands;
+    using Framework.Events;
+    using Framework.Settings;
+    using Nito.Comparers;
     using Shell;
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
@@ -30,44 +29,46 @@ namespace ServiceInsight.MessageList
         IHandle<AsyncOperationFailed>,
         IHandle<RetryMessage>,
         IHandle<SelectedMessageChanged>,
-        IHandle<ServiceControlConnectionChanged>,
+        IHandle<ServiceControlDisconnected>,
         IPersistPartLayout
     {
         readonly IClipboard clipboard;
-        ISettingsProvider settingsProvider;
-        IEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
-        IServiceControl serviceControl;
-        GeneralHeaderViewModel generalHeaderDisplay;
+        readonly ISettingsProvider settingsProvider;
+        readonly ServiceControlClientRegistry clientRegistry;
+        readonly IEventAggregator eventAggregator;
+        readonly IWorkNotifier workNotifier;
+        readonly GeneralHeaderViewModel generalHeaderDisplay;
+        
         string lastSortColumn;
         bool lastSortOrderAscending;
         IMessageListView view;
         ExplorerItem selectedExplorerItem;
+        IServiceControl selectedServiceControl;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
-            IServiceControl serviceControl,
             SearchBarViewModel searchBarViewModel,
             GeneralHeaderViewModel generalHeaderDisplay,
             MessageSelectionContext selectionContext,
             IClipboard clipboard,
-            ISettingsProvider settingsProvider)
+            ISettingsProvider settingsProvider,
+            ServiceControlClientRegistry clientRegistry)
         {
             SearchBar = searchBarViewModel;
             Selection = selectionContext;
 
             this.clipboard = clipboard;
             this.settingsProvider = settingsProvider;
+            this.clientRegistry = clientRegistry;
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
-            this.serviceControl = serviceControl;
             this.generalHeaderDisplay = generalHeaderDisplay;
 
             Items.Add(SearchBar);
 
-            RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, serviceControl);
-            CopyMessageIdCommand = new CopyMessageURICommand(clipboard, serviceControl);
+            RetryMessageCommand = new RetryMessageCommand(eventAggregator, workNotifier, this);
+            CopyMessageIdCommand = new CopyMessageURICommand(clipboard, this);
             CopyHeadersCommand = Command.Create(
                 CopyHeaders,
                 generalHeaderDisplay.Changed
@@ -82,6 +83,8 @@ namespace ServiceInsight.MessageList
 
         public IObservableCollection<StoredMessage> Rows { get; }
 
+        public IServiceControl ServiceControl => selectedServiceControl;
+        
         public MessageSelectionContext Selection { get; }
 
         public int WorkCount { get; private set; }
@@ -111,8 +114,13 @@ namespace ServiceInsight.MessageList
         {
             using (workNotifier.NotifyOfWork("Loading messages..."))
             {
-                var pagedResult = await serviceControl.GetAuditMessages(link);
-
+                var pagedResult = default(PagedResult<StoredMessage>);
+                
+                if (ServiceControl != null)
+                {
+                    pagedResult = await ServiceControl.GetAuditMessages(link);
+                }
+                
                 if (pagedResult == null)
                 {
                     return;
@@ -147,11 +155,18 @@ namespace ServiceInsight.MessageList
 
         public async Task RefreshMessages(Endpoint endpoint, string searchQuery, int? pageNo = null)
         {
+            var pagedResult = default(PagedResult<StoredMessage>);
+                
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
-                var pagedResult = await serviceControl.GetAuditMessages(endpoint, pageNo: pageNo, searchQuery, lastSortColumn, lastSortOrderAscending);
-                if (pagedResult == null)
+                if (ServiceControl != null)
                 {
+                    pagedResult = await ServiceControl.GetAuditMessages(endpoint, pageNo: pageNo, searchQuery, lastSortColumn, lastSortOrderAscending);
+                }
+                
+                if (pagedResult?.Result == null || pagedResult.Result.Count == 0)
+                {
+                    ClearResult();
                     return;
                 }
 
@@ -178,8 +193,17 @@ namespace ServiceInsight.MessageList
         public async Task Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
-            await RefreshMessages();
-            SearchBar.NotifyPropertiesChanged();
+            selectedServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
+
+            if (selectedServiceControl != null)
+            {
+                await RefreshMessages();
+                SearchBar.NotifyPropertiesChanged();
+            }
+            else
+            {
+                ClearResult();
+            }
         }
 
         public void Handle(AsyncOperationFailed message)
@@ -215,11 +239,6 @@ namespace ServiceInsight.MessageList
             }
         }
 
-        public void Handle(ServiceControlConnectionChanged message)
-        {
-            ClearResult();
-        }
-
         void TryRebindMessageList(PagedResult<StoredMessage> pagedResult)
         {
             if (ShouldUpdateMessages(pagedResult))
@@ -238,7 +257,7 @@ namespace ServiceInsight.MessageList
             BindResult(new PagedResult<StoredMessage>());
             SearchBar.ClearPaging();
         }
-
+        
         void BindResult(PagedResult<StoredMessage> pagedResult)
         {
             try
@@ -257,9 +276,9 @@ namespace ServiceInsight.MessageList
         {
             var messageStatusOrder = ComparerBuilder.For<Tuple<string, MessageStatus>>().OrderBy(t => t.Item1);
             var comparer = messageStatusOrder.ThenBy(t => t.Item2);
-
+            
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
-
+            
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
 
@@ -286,6 +305,15 @@ namespace ServiceInsight.MessageList
         void RestoreLayout()
         {
             view.OnRestoreLayout(settingsProvider);
+        }
+
+        public void Handle(ServiceControlDisconnected message)
+        {
+            if (selectedExplorerItem == null || selectedExplorerItem == message.ExplorerItem)
+            {
+                selectedExplorerItem = null;
+                ClearResult();
+            }
         }
     }
 }

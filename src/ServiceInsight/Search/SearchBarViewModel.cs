@@ -29,6 +29,7 @@
         ISettingsProvider settingProvider;
         int workCount;
         bool isSettingUpPaging;
+        bool isResttingPaging;
 
         public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
         {
@@ -114,7 +115,7 @@
             Result = pagedResult.Result;
             CurrentPage = pagedResult.TotalCount > 0 ? pagedResult.CurrentPage : 0;
             TotalItemCount = pagedResult.TotalCount;
-            TotalPagesCount = (pagedResult.TotalCount / pagedResult.PageSize) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 0 ? 0 : 1);
+            TotalPagesCount = (pagedResult.TotalCount / pagedResult.PageSize) + (Math.DivRem(pagedResult.TotalCount, pagedResult.PageSize, out var _) == 1 ? 0 : 1);
             NextLink = pagedResult.NextLink;
             PrevLink = pagedResult.PrevLink;
             FirstLink = pagedResult.FirstLink;
@@ -128,12 +129,25 @@
 
         public void ClearPaging()
         {
-            Result = new List<StoredMessage>();
-            CurrentPage = 0;
-            TotalItemCount = 0;
-            SearchQuery = null;
-            SearchInProgress = false;
-            SelectedEndpoint = null;
+            try
+            {
+                isResttingPaging = true;
+                Result = new List<StoredMessage>();
+                CurrentPage = 0;
+                TotalItemCount = 0;
+                TotalPagesCount = 0;
+                SearchQuery = null;
+                SearchInProgress = false;
+                SelectedEndpoint = null;
+                NextLink = null;
+                PrevLink = null;
+                LastLink = null;
+                FirstLink = null;
+            }
+            finally
+            {
+                isResttingPaging = false;
+            }
         }
 
         // Required for binding convention with CanRefreshResult
@@ -219,7 +233,7 @@
 
         public async void OnCurrentPageChanged()
         {
-            if (!isSettingUpPaging && CurrentPage >=0 && CurrentPage <= TotalPagesCount)
+            if (!isResttingPaging && !isSettingUpPaging && CurrentPage >=0 && CurrentPage <= TotalPagesCount)
             {
                 await Parent.RefreshMessages();
             }            

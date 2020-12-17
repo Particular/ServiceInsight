@@ -2,27 +2,27 @@
 {
     using System;
     using Caliburn.Micro;
-    using global::ServiceInsight.SequenceDiagram;
+    using SequenceDiagram;
     using NSubstitute;
     using NUnit.Framework;
     using Particular.Licensing;
-    using ServiceInsight.Explorer.EndpointExplorer;
+    using Explorer.EndpointExplorer;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
-    using ServiceInsight.LogWindow;
-    using ServiceInsight.MessageFlow;
-    using ServiceInsight.MessageHeaders;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.MessageProperties;
-    using ServiceInsight.MessageViewers;
-    using ServiceInsight.Models;
-    using ServiceInsight.Saga;
-    using ServiceInsight.Settings;
-    using ServiceInsight.Shell;
-    using ServiceInsight.Startup;
+    using LogWindow;
+    using MessageFlow;
+    using MessageHeaders;
+    using MessageList;
+    using MessageProperties;
+    using MessageViewers;
+    using Models;
+    using Saga;
+    using Settings;
+    using Shell;
+    using Startup;
     using Shouldly;
     using System.Threading.Tasks;
 
@@ -166,9 +166,11 @@
             messageList.Received().OnSavePartLayout();
         }
 
+        [Test]
         public void Should_track_selected_explorer()
         {
-            var selected = new AuditEndpointExplorerItem(new Endpoint { Name = "Sales" });
+            var serviceControl = new ServiceControlExplorerItem("http://localhost:3333/api");
+            var selected = new AuditEndpointExplorerItem(serviceControl, new Endpoint { Name = "Sales" });
 
             shell.Handle(new SelectedExplorerItemChanged(selected));
 

@@ -9,26 +9,26 @@
     using System.Windows.Input;
     using System.Windows.Threading;
     using Caliburn.Micro;
-    using ServiceInsight.Explorer;
-    using ServiceInsight.Explorer.EndpointExplorer;
-    using ServiceInsight.ExtensionMethods;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Licensing;
-    using ServiceInsight.Framework.Rx;
-    using ServiceInsight.Framework.Settings;
-    using ServiceInsight.Framework.UI.ScreenManager;
-    using ServiceInsight.LogWindow;
-    using ServiceInsight.MessageFlow;
-    using ServiceInsight.MessageHeaders;
-    using ServiceInsight.MessageList;
-    using ServiceInsight.MessageProperties;
-    using ServiceInsight.MessageViewers;
-    using ServiceInsight.Options;
-    using ServiceInsight.Saga;
-    using ServiceInsight.SequenceDiagram;
-    using ServiceInsight.Settings;
-    using ServiceInsight.Startup;
+    using Explorer;
+    using Explorer.EndpointExplorer;
+    using ExtensionMethods;
+    using Framework;
+    using Framework.Events;
+    using Framework.Licensing;
+    using Framework.Rx;
+    using Framework.Settings;
+    using Framework.UI.ScreenManager;
+    using LogWindow;
+    using MessageFlow;
+    using MessageHeaders;
+    using MessageList;
+    using MessageProperties;
+    using MessageViewers;
+    using Options;
+    using Saga;
+    using SequenceDiagram;
+    using Settings;
+    using Startup;
 
     public class ShellViewModel : RxConductor<IScreen>.Collection.AllActive,
         IHandle<WorkStarted>,
@@ -40,19 +40,20 @@
         IHandle<LicenseUpdated>,
         IWorkTracker
     {
-        IAppCommands appCommander;
-        IWindowManagerEx windowManager;
-        IEventAggregator eventAggregator;
-        IWorkNotifier workNotifier;
-        IVersionUpdateChecker versionUpdateChecker;
-        AppLicenseManager licenseManager;
-        ISettingsProvider settingsProvider;
-        CommandLineArgParser commandLineArgParser;
+        readonly IAppCommands appCommander;
+        readonly IWindowManagerEx windowManager;
+        readonly IEventAggregator eventAggregator;
+        readonly IWorkNotifier workNotifier;
+        readonly IVersionUpdateChecker versionUpdateChecker;
+        readonly AppLicenseManager licenseManager;
+        readonly ISettingsProvider settingsProvider;
+        readonly CommandLineArgParser commandLineArgParser;
+        readonly Func<ServiceControlConnectionViewModel> serviceControlConnection;
+        readonly Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
+        
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
-        Func<ServiceControlConnectionViewModel> serviceControlConnection;
-        Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
 
         public ShellViewModel(
             IAppCommands appCommander,
@@ -110,7 +111,8 @@
             ShutDownCommand = Command.Create(() => this.appCommander.ShutdownImmediately());
             AboutCommand = Command.Create(() => this.windowManager.ShowDialog<AboutViewModel>());
             HelpCommand = Command.Create(() => Process.Start(@"http://docs.particular.net/serviceinsight"));
-            ConnectToServiceControlCommand = Command.CreateAsync(this, ConnectToServiceControl, vm => vm.CanConnectToServiceControl);
+            ConnectToServiceControlCommand = Command.CreateAsync(ConnectToServiceControl);
+            DisconnectServiceControlCommand = Command.CreateAsync(DisconnectServiceControl);
             ProvideFeedbackCommand = Command.Create(() => Process.Start($"https://github.com/Particular/ServiceInsight/issues/new?title=Feedback%20for%20ServiceInsight%20{applicationVersionService.GetVersion()}%20({applicationVersionService.GetCommitHash()})&body=Your%20feedback..."));
             RefreshAllCommand = Command.CreateAsync(RefreshAll);
 
@@ -200,6 +202,8 @@
         public ICommand HelpCommand { get; }
 
         public ICommand ConnectToServiceControlCommand { get; }
+        
+        public ICommand DisconnectServiceControlCommand { get; }
 
         public ICommand RefreshAllCommand { get; }
 
@@ -215,21 +219,39 @@
 
         public async Task ConnectToServiceControl()
         {
-            var connectionViewModel = serviceControlConnection();
-            var result = windowManager.ShowDialog(connectionViewModel);
-
-            if (result.GetValueOrDefault(false))
+            if (ShouldConnectToServiceControl)
             {
-                using (workNotifier.NotifyOfWork("", $"Connected to ServiceControl Version {connectionViewModel.Version}"))
+                var connectionViewModel = serviceControlConnection();
+                var result = windowManager.ShowDialog(connectionViewModel);
+
+                if (result.GetValueOrDefault(false))
                 {
-                    await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                    using (workNotifier.NotifyOfWork("Connecting...", $"Connected to ServiceControl Version {connectionViewModel.Version}"))
+                    {
+                        await EndpointExplorer.ConnectToService(connectionViewModel.ServiceUrl);
+                    }
                 }
             }
         }
 
+        public async Task DisconnectServiceControl()
+        {
+            if (ShouldDisconnectServiceControl)
+            {
+                await EndpointExplorer.DisconnectSelectedServiceControl();
+            }
+        }
+
+        async Task AutoRefreshAll()
+        {
+            await EndpointExplorer.RefreshAllEndpoints();
+            await Messages.RefreshMessages();
+            await SagaWindow.RefreshSaga();
+        }
+
         async Task RefreshAll()
         {
-            await EndpointExplorer.RefreshData();
+            await EndpointExplorer.RefreshSelectedEndpoint();
             await Messages.RefreshMessages();
             await SagaWindow.RefreshSaga();
         }
@@ -241,7 +263,10 @@
 
         public int SelectedMessageTabItem { get; set; }
 
-        public bool CanConnectToServiceControl => !WorkInProgress || AutoRefresh;
+        public bool ShouldConnectToServiceControl => !WorkInProgress || AutoRefresh;
+
+        public bool ShouldDisconnectServiceControl => !WorkInProgress && EndpointExplorer != null &&
+                                                   EndpointExplorer.HasSelectedServiceControl; 
 
         void InitializeIdleTimer()
         {
@@ -293,7 +318,7 @@
                 return;
             }
 
-            await RefreshAll();
+            await AutoRefreshAll();
         }
 
         public void OnBodyTabSelectedChanged()
@@ -401,7 +426,6 @@
         void NotifyPropertiesChanged()
         {
             NotifyOfPropertyChange(nameof(WorkInProgress));
-            NotifyOfPropertyChange(nameof(CanConnectToServiceControl));
         }
 
         string GetProductName()

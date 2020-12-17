@@ -4,11 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Autofac;
     using Caliburn.Micro;
     using ServiceControl;
-    using ServiceInsight.ExtensionMethods;
-    using ServiceInsight.Framework.Settings;
+    using ExtensionMethods;
+    using Framework.Settings;
     using Settings;
 
     public class ServiceControlConnectionViewModel : Screen
@@ -16,11 +15,14 @@
         const string ConnectingToServiceControl = "Connecting to ServiceControl...";
         const string ConnectionErrorMessage = "There was an error connecting to ServiceControl. Either the address is not valid or the service is down.";
         const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
+        const string AddressInvalid = "Entered address is invalid.";
+        const string ConnectionExists = "You have already connected to this address.";
+        
         static bool certValidationFailed;
 
-        ISettingsProvider settingsProvider;
-        ProfilerSettings appSettings;
-        ILifetimeScope container;
+        readonly ISettingsProvider settingsProvider;
+        readonly ServiceControlClientRegistry clientRegistry;
+        readonly ProfilerSettings appSettings;
 
         static ServiceControlConnectionViewModel()
         {
@@ -29,11 +31,11 @@
 
         public ServiceControlConnectionViewModel(
             ISettingsProvider settingsProvider,
-            ILifetimeScope container)
+            ServiceControlClientRegistry clientRegistry)
         {
             this.settingsProvider = settingsProvider;
-            this.container = container;
-            appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+            this.clientRegistry = clientRegistry;
+            this.appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
         }
 
@@ -72,17 +74,13 @@
             certValidationFailed = false;
             StartWorkInProgress();
             ServiceUrl = ServiceUrl.Trim();
-            var isValidUrl = await IsValidUrl(ServiceUrl);
+            var isValidUrl = await IsValid(ServiceUrl);
             ShowError = !isValidUrl;
 
             if (!ShowError)
             {
                 StoreConnectionAddress();
                 TryClose(true);
-            }
-            else
-            {
-                ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
             }
 
             StopWorkInProgress();
@@ -120,23 +118,38 @@
             settingsProvider.SaveSettings(appSettings);
         }
 
-        async Task<bool> IsValidUrl(string serviceUrl)
+        async Task<bool> IsValid(string serviceUrl)
         {
-            if (serviceUrl.IsValidUrl())
+            var valid = true;
+            
+            if (!serviceUrl.IsValidUrl())
             {
-                using (var scope = container.BeginLifetimeScope())
+                ErrorMessage = AddressInvalid;
+                valid = false;
+            }
+
+            if (clientRegistry.IsRegistered(serviceUrl))
+            {
+                ErrorMessage = ConnectionExists;
+                valid = false;
+            }
+            
+            if (valid)
+            {
+                clientRegistry.EnsureServiceControlClient(serviceUrl);
+                var service = clientRegistry.GetServiceControl(serviceUrl);
+
+                Version = await service.GetVersion();
+
+                if (Version == null)
                 {
-                    var connection = scope.Resolve<ServiceControlConnectionProvider>();
-                    var service = scope.Resolve<IServiceControl>();
-
-                    connection.ConnectTo(serviceUrl);
-                    Version = await service.GetVersion();
-
-                    return Version != null;
+                    clientRegistry.RemoveServiceControlClient(serviceUrl);
+                    ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
+                    valid = false;
                 }
             }
 
-            return false;
+            return valid;
         }
     }
 }
