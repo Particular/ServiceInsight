@@ -20,6 +20,8 @@
     {
         public string MessageId { get; set; }
 
+        public string BodyUrl { get; set; }
+
         public bool IsPublished { get; set; }
 
         public MessageIntent Intent { get; set; }
