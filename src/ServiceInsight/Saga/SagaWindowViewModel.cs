@@ -98,7 +98,7 @@
                     var auditMessages = await ServiceControl.GetAuditMessages(searchQuery: Data.SagaId.ToString())
                         .ConfigureAwait(false);
                     messages.ForEach(a =>
-                        a.BodyUrl = auditMessages.Result.FirstOrDefault(x => x.MessageId == a.MessageId).BodyUrl);
+                        a.BodyUrl = auditMessages.Result.FirstOrDefault(x => x.MessageId == a.MessageId)?.BodyUrl);
                 }
 
                 foreach (var message in messages)
