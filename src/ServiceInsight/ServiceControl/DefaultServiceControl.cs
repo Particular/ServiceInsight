@@ -126,7 +126,36 @@ namespace ServiceInsight.ServiceControl
             return new Uri(string.Format("si://{0}:{1}/api{2}", connectionUri.Host, connectionUri.Port, message.GetURIQuery()));
         }
 
-        public async Task<SagaData> GetSagaById(Guid sagaId) => await GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true).ConfigureAwait(false) ?? new SagaData();
+        public async Task<SagaData> GetSagaById(Guid sagaId)
+        {
+            var getSagaData =
+                GetModel<SagaData>(
+                    new RestRequestWithCache(string.Format(SagaEndpoint, sagaId),
+                        RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true);
+
+            var getMessageData = GetAuditMessages(searchQuery: sagaId.ToString());
+
+            await Task.WhenAll(getSagaData, getMessageData).ConfigureAwait(false);
+            
+            if (getSagaData.Result == null)
+            {
+                return new SagaData();
+            }
+
+            var sagaData = getSagaData.Result;
+            var messageData = getMessageData.Result;
+
+            if (sagaData.Changes != null && messageData?.Result != null)
+            {
+                var bodyUrls = messageData.Result.ToLookup(x => x.MessageId, x => x.BodyUrl);
+                foreach (var message in sagaData?.RelatedMessages)
+                {
+                    message.BodyUrl = bodyUrls[message.MessageId].FirstOrDefault();
+                }
+            }
+
+            return sagaData;
+        } 
 
         public Task<PagedResult<StoredMessage>> GetAuditMessages(Endpoint endpoint = null, int? pageNo = null, string searchQuery = null, string orderBy = null, bool ascending = false)
         {

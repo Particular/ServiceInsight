@@ -10,6 +10,11 @@
     {
         public List<SagaUpdate> Changes { get; set; }
 
+        public List<SagaMessage> RelatedMessages
+            => Changes.Select(x => x.InitiatingMessage)
+                .Union(Changes.SelectMany(x => x.OutgoingMessages))
+                .ToList();
+
         public Guid SagaId { get; set; }
 
         string sagaType;

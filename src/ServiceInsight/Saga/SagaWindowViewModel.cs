@@ -91,17 +91,7 @@
         {
             if (ServiceControl != null)
             {
-                var messages = Data.Changes.Select(c => c.InitiatingMessage)
-                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages));
-                if (messages.All(x => string.IsNullOrEmpty(x.BodyUrl)))
-                {
-                    var auditMessages = await ServiceControl.GetAuditMessages(searchQuery: Data.SagaId.ToString())
-                        .ConfigureAwait(false);
-                    messages.ForEach(a =>
-                        a.BodyUrl = auditMessages.Result.FirstOrDefault(x => x.MessageId == a.MessageId).BodyUrl);
-                }
-
-                foreach (var message in messages)
+                foreach (var message in Data.RelatedMessages)
                 {
                     await message.RefreshData(ServiceControl);
                 }
