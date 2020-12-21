@@ -128,21 +128,19 @@ namespace ServiceInsight.ServiceControl
 
         public async Task<SagaData> GetSagaById(Guid sagaId)
         {
-            var getSagaData =
-                GetModel<SagaData>(
-                    new RestRequestWithCache(string.Format(SagaEndpoint, sagaId),
-                        RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true);
+            var getSagaData = GetModel<SagaData>(new RestRequestWithCache(string.Format(SagaEndpoint, sagaId), RestRequestWithCache.CacheStyle.IfNotModified), truncateLargeLists: true);
 
             var getMessageData = GetAuditMessages(searchQuery: sagaId.ToString());
 
             await Task.WhenAll(getSagaData, getMessageData).ConfigureAwait(false);
             
-            if (getSagaData.Result == null)
+            var sagaData = getSagaData.Result;
+
+            if (sagaData == null)
             {
                 return new SagaData();
             }
 
-            var sagaData = getSagaData.Result;
             var messageData = getMessageData.Result;
 
             if (sagaData.Changes != null && messageData?.Result != null)
