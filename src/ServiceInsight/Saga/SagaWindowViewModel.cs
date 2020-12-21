@@ -92,7 +92,8 @@
             if (ServiceControl != null)
             {
                 var messages = Data.Changes.Select(c => c.InitiatingMessage)
-                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages));
+                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages))
+                    .ToList();
                 if (messages.All(x => string.IsNullOrEmpty(x.BodyUrl)))
                 {
                     var auditMessages = await ServiceControl.GetAuditMessages(searchQuery: Data.SagaId.ToString())
