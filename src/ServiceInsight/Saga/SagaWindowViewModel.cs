@@ -1,9 +1,8 @@
-﻿using ServiceInsight.Explorer;
-using ServiceInsight.ExtensionMethods;
-
-namespace ServiceInsight.Saga
+﻿namespace ServiceInsight.Saga
 {
     using System;
+    using Explorer;
+    using ExtensionMethods;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -52,7 +51,7 @@ namespace ServiceInsight.Saga
         }
 
         IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
-        
+
         public string InstallScriptText { get; } = "install-package NServiceBus.SagaAudit";
 
         public ICommand CopyCommand { get; }
@@ -92,14 +91,24 @@ namespace ServiceInsight.Saga
         {
             if (ServiceControl != null)
             {
-                foreach (var message in Data.Changes.Select(c => c.InitiatingMessage)
-                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages)))
+                var messages = Data.Changes.Select(c => c.InitiatingMessage)
+                    .Union(Data.Changes.SelectMany(c => c.OutgoingMessages))
+                    .ToList();
+                if (messages.All(x => string.IsNullOrEmpty(x.BodyUrl)))
+                {
+                    var auditMessages = await ServiceControl.GetAuditMessages(searchQuery: Data.SagaId.ToString())
+                        .ConfigureAwait(false);
+                    messages.ForEach(a =>
+                        a.BodyUrl = auditMessages.Result.FirstOrDefault(x => x.MessageId == a.MessageId)?.BodyUrl);
+                }
+
+                foreach (var message in messages)
                 {
                     await message.RefreshData(ServiceControl);
                 }
-            }
 
-            NotifyOfPropertyChange(nameof(Data));
+                NotifyOfPropertyChange(nameof(Data));
+            }
         }
 
         public async Task Handle(SelectedMessageChanged @event)
@@ -210,12 +219,12 @@ namespace ServiceInsight.Saga
         private async Task<SagaData> FetchOrderedSagaData(Guid sagaId)
         {
             var sagaData = default(SagaData);
-            
+
             if (ServiceControl != null)
             {
                 sagaData = await ServiceControl.GetSagaById(sagaId);
             }
-            
+
             if (sagaData?.Changes != null)
             {
                 sagaData.Changes = sagaData.Changes.OrderBy(x => x.StartTime)

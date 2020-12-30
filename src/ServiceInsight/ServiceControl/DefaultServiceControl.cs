@@ -188,7 +188,11 @@ namespace ServiceInsight.ServiceControl
 
         public async Task<IEnumerable<KeyValuePair<string, string>>> GetMessageData(SagaMessage message)
         {
-            var request = new RestRequestWithCache(string.Format(MessageBodyEndpoint, message.MessageId), message.Status == MessageStatus.Successful ? RestRequestWithCache.CacheStyle.Immutable : RestRequestWithCache.CacheStyle.IfNotModified);
+            var bodyUrl = message.BodyUrl ?? string.Format(MessageBodyEndpoint, message.MessageId);
+            var request = new RestRequestWithCache(bodyUrl,
+                message.Status == MessageStatus.Successful
+                    ? RestRequestWithCache.CacheStyle.IfNotModified
+                    : RestRequestWithCache.CacheStyle.IfNotModified);
 
             var body = await Execute(request, response => response.Content, truncateLargeLists: true).ConfigureAwait(false);
 
@@ -211,7 +215,7 @@ namespace ServiceInsight.ServiceControl
             }
 
             message.Body = await Execute(
-                request, 
+                request,
                 response =>
                 {
                     var presentationBody = new PresentationBody();
@@ -228,7 +232,7 @@ namespace ServiceInsight.ServiceControl
                     }
 
                     return presentationBody;
-                }, 
+                },
                 baseUrl).ConfigureAwait(false);
         }
 
@@ -295,7 +299,7 @@ namespace ServiceInsight.ServiceControl
         Task<PagedResult<T>> GetPagedResult<T>(RestRequestWithCache request, string url = null) where T : class, new()
         {
             var result = Execute<PagedResult<T>, List<T>>(
-                request, 
+                request,
                 response =>
                 {
                     string first = null, prev = null, next = null, last = null;
@@ -357,7 +361,7 @@ namespace ServiceInsight.ServiceControl
                         TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
                         PageSize = pageSize
                     };
-                }, 
+                },
                 url);
 
             return result;
@@ -541,7 +545,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
         private void RaiseConnectivityIssue(IRestResponse response)
         {
-           if (response?.ErrorException is WebException webException && 
+           if (response?.ErrorException is WebException webException &&
                webException.Status == WebExceptionStatus.ConnectFailure)
            {
                LogError(response);
@@ -630,7 +634,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             foreach (var parameter in request.Parameters)
             {
                 LogTo.Debug(
-                    "Request Parameter: {Name} : {Value}", 
+                    "Request Parameter: {Name} : {Value}",
                     parameter.Name,
                     parameter.Value);
             }
