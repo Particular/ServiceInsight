@@ -3,8 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <UseWpf>true</UseWpf>
-    <IsPackable>false</IsPackable>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
