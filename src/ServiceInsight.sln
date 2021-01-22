@@ -12,9 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Setup", "Setup\Setup.csproj", "{AA3D4052-9083-4A3F-B151-C2E1E909D00F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC045476-ED54-426A-AF10-BC3AAA841175}"
-	ProjectSection(SolutionItems) = preProject
-		CommonRuleSet.ruleset = CommonRuleSet.ruleset
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Sdk", "ServiceInsight.Sdk\ServiceInsight.Sdk.csproj", "{7EF919F1-B497-4478-8EB4-ECDB241F4A88}"
 EndProject
