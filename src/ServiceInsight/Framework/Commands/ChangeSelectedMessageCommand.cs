@@ -14,8 +14,7 @@
 
         public override bool CanExecute(object parameter)
         {
-            var msg = parameter as StoredMessage;
-            return msg != null;
+            return parameter is StoredMessage;
         }
 
         public override void Execute(object parameter)

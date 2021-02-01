@@ -16,9 +16,9 @@
     [TestFixture]
     public class SagaWindowViewModelTests
     {
-        private SagaWindowViewModel viewModel;
-        private MessageSelectionContext messageSelectionContext;
-        private IServiceControl serviceControl;
+        SagaWindowViewModel viewModel;
+        MessageSelectionContext messageSelectionContext;
+        IServiceControl serviceControl;
 
         [SetUp]
         public void TestInitialize()
@@ -28,7 +28,7 @@
             var clipboard = Substitute.For<IClipboard>();
             var windowManager = Substitute.For<IWindowManagerEx>();
             var clientRegistry = Substitute.For<ServiceControlClientRegistry>();
-            
+
             serviceControl = Substitute.For<IServiceControl>();
             messageSelectionContext = new MessageSelectionContext(eventAggregator);
             viewModel = new SagaWindowViewModel(eventAggregator, workNotifier, clipboard, windowManager, messageSelectionContext, clientRegistry);

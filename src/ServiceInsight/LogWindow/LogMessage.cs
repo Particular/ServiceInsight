@@ -5,21 +5,17 @@ namespace ServiceInsight.LogWindow
 
     public class LogMessage
     {
-        readonly string log;
-        readonly Brush brush;
-        readonly FontWeight weight;
-
         public LogMessage(string log, Color color, bool bold = false)
         {
-            this.log = log;
-            brush = new SolidColorBrush(color);
-            weight = bold ? FontWeights.Bold : FontWeights.Normal;
+            Log = log;
+            Brush = new SolidColorBrush(color);
+            Weight = bold ? FontWeights.Bold : FontWeights.Normal;
         }
 
-        public string Log => log;
+        public string Log { get; }
 
-        public Brush Brush => brush;
+        public Brush Brush { get; }
 
-        public FontWeight Weight => weight;
+        public FontWeight Weight { get; }
     }
 }

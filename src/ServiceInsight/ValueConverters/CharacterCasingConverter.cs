@@ -9,8 +9,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var s = value as string;
-            if (s == null)
+            if (!(value is string s))
             {
                 return value;
             }
@@ -28,6 +27,7 @@
                 case CharacterCasing.Upper:
                     return s.ToUpper(culture);
 
+                case CharacterCasing.Normal:
                 default:
                     return s;
             }

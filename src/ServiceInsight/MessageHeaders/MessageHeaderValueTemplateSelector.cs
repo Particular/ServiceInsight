@@ -13,9 +13,7 @@
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var obj = item as MessageHeaderKeyValue;
-
-            if (obj != null)
+            if (item is MessageHeaderKeyValue obj)
             {
                 if (obj.Key.Contains("StackTrace"))
                 {

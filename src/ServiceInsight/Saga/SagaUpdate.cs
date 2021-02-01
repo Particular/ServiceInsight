@@ -37,17 +37,23 @@
 
         public bool MissingData { get; set; }
 
+#pragma warning disable IDE0051 // Remove unused private members
         void OnStateAfterChangeChanged()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             UpdateValues();
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         void OnInitiatingMessageChanged()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             UpdateValues();
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         void OnMissingDataChanged()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             UpdateValues();
         }
@@ -77,9 +83,11 @@
                     case SagaStateChangeStatus.Completed:
                     case SagaStateChangeStatus.Updated:
                         return "Saga Updated";
-                }
 
-                return string.Empty;
+                    case SagaStateChangeStatus.Nothing:
+                    default:
+                        return string.Empty;
+                }
             }
         }
     }

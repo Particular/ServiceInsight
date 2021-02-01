@@ -1,7 +1,6 @@
-﻿using System.Web;
-
-namespace ServiceInsight.Models
+﻿namespace ServiceInsight.Models
 {
+    using System.Web;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +9,7 @@ namespace ServiceInsight.Models
     {
         public const string ApplicationScheme = "si://";
 
-        private IEnumerable<string> AllowedSchemas
+        IEnumerable<string> AllowedSchemas
         {
             get
             {
@@ -46,17 +45,17 @@ namespace ServiceInsight.Models
 
             if (value.StartsWith(ApplicationScheme, StringComparison.OrdinalIgnoreCase))
             {
-                address = value.Replace(ApplicationScheme,  GetConnectionScheme());
+                address = value.Replace(ApplicationScheme, GetConnectionScheme());
             }
 
             if (Uri.TryCreate(address, UriKind.Absolute, out var parsedEndpointUri) &&
                 AllowedSchemas.Any(schema => schema.Equals(parsedEndpointUri.Scheme, StringComparison.InvariantCultureIgnoreCase)))
             {
-                 EndpointUri = parsedEndpointUri;
+                EndpointUri = parsedEndpointUri;
             }
         }
 
-        private string GetConnectionScheme()
+        string GetConnectionScheme()
         {
             return SecuredConnection ? "https://" : "http://";
         }
@@ -89,7 +88,7 @@ namespace ServiceInsight.Models
 
         public void SetSilentStartup(bool value)
         {
-          SilentStartup = value;
+            SilentStartup = value;
         }
 
         string Decode(string encodedString) => HttpUtility.UrlDecode(encodedString);

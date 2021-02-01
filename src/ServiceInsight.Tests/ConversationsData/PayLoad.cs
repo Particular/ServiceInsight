@@ -32,10 +32,10 @@ namespace ServiceInsight.Tests.ConversationsData
         public Uri ResponseUri { get; set; }
 
         public string Server { get; set; }
-        
+
 #pragma warning disable 618
         public IList<RestResponseCookie> Cookies { get; }
-        
+
         public IList<Parameter> Headers { get; }
 #pragma warning restore 618
 

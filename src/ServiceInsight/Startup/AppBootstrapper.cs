@@ -1,26 +1,25 @@
-﻿using System.IO;
-using System.Linq;
-using System.Reflection;
-using Anotar.Serilog;
-using ServiceInsight.AssemblyScanning;
-using ServiceInsight.ExtensionMethods;
-
-namespace ServiceInsight.Startup
+﻿namespace ServiceInsight.Startup
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Markup;
+    using Anotar.Serilog;
     using Autofac;
     using Caliburn.Micro;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
-    using Framework;
-    using Framework.Logging;
-    using Shell;
+    using ServiceInsight.AssemblyScanning;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Logging;
+    using ServiceInsight.Shell;
 
     public class AppBootstrapper : BootstrapperBase
     {
@@ -99,7 +98,7 @@ namespace ServiceInsight.Startup
 
         void ExtendConventions()
         {
-            ConventionManager.AddElementConvention<BarButtonItem>(BarButtonItem.IsVisibleProperty, "DataContext", "ItemClick");
+            ConventionManager.AddElementConvention<BarButtonItem>(BarItem.IsVisibleProperty, "DataContext", "ItemClick");
         }
 
         protected override void PrepareApplication()
@@ -114,16 +113,14 @@ namespace ServiceInsight.Startup
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                object result;
-                if (container.TryResolve(service, out result))
+                if (container.TryResolve(service, out object result))
                 {
                     return result;
                 }
             }
             else
             {
-                object result;
-                if (container.TryResolveNamed(key, service, out result))
+                if (container.TryResolveNamed(key, service, out object result))
                 {
                     return result;
                 }

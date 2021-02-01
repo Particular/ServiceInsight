@@ -12,7 +12,7 @@
             SkipCertificateValidation = GetSkipCertificateValidation();
         }
 
-        private static bool GetSkipCertificateValidation()
+        static bool GetSkipCertificateValidation()
         {
             var skipCertificateValidationValue = ConfigurationManager.AppSettings["SkipCertificateValidation"];
 

@@ -74,7 +74,7 @@
         public void SameLogicalEndpointsWithDifferentVersions()
         {
             var testHost = Guid.NewGuid().ToString();
-            
+
             var messages = new List<StoredMessage>
             {
                 new StoredMessage
@@ -168,7 +168,7 @@
 
             var creator = GetModelCreator(messages);
             var endpoints = creator.Endpoints;
-            
+
             Assert.AreEqual(1, endpoints.Count);
             Assert.AreEqual("A", endpoints[0].Name);
             Assert.AreEqual(nameof(testHost), endpoints[0].Host);

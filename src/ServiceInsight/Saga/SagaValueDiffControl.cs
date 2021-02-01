@@ -10,7 +10,7 @@
     public class SagaValueDiffControl : Control
     {
         const string SpaceMoniker = "•";
-        
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text",
             typeof(string),
@@ -37,8 +37,11 @@
         {
             base.OnRender(drawingContext);
 
-            if (Text == null) return;
-            
+            if (Text == null)
+            {
+                return;
+            }
+
             var shouldPrintWhiteSpace = IsValueTypeString(Text);
             var renderString = GetRenderString();
 
@@ -50,7 +53,7 @@
             else
             {
                 var x = 0d;
-                
+
                 foreach (var character in Text)
                 {
                     var whitespace = char.IsWhiteSpace(character);
@@ -65,14 +68,14 @@
             }
         }
 
-        private string GetRenderString()
+        string GetRenderString()
         {
             var shouldPrintWhiteSpace = IsValueTypeString(Text);
             if (!shouldPrintWhiteSpace)
             {
                 return Text;
             }
-            
+
             var builder = new StringBuilder();
             foreach (var character in Text)
             {
@@ -86,7 +89,7 @@
             return builder.ToString();
         }
 
-        private FormattedText CreateFormattedText(string text, Brush foreground = null)
+        FormattedText CreateFormattedText(string text, Brush foreground = null)
         {
             var pixelPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
             var typeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal);
@@ -109,7 +112,7 @@
             return size;
         }
 
-        private bool IsValueTypeString(string value)
+        bool IsValueTypeString(string value)
         {
             var isDate = IsDateTime(value);
             var isGuid = IsGuid(value);
@@ -119,13 +122,13 @@
             return !isDate && !isGuid && !isNumber && !isBoolean;
         }
 
-        private bool IsBoolean(string value)
+        bool IsBoolean(string value)
         {
             var isBool = bool.TryParse(value, out _);
             return isBool;
         }
 
-        private bool IsNumber(string value)
+        bool IsNumber(string value)
         {
             var integer = int.TryParse(value, out _);
             var dec = decimal.TryParse(value, out _);
@@ -133,12 +136,12 @@
             return integer || dec;
         }
 
-        private bool IsGuid(string value)
+        bool IsGuid(string value)
         {
             return Guid.TryParse(value, out _);
         }
 
-        private bool IsDateTime(string value)
+        bool IsDateTime(string value)
         {
             var isDate = DateTime.TryParse(value, out _);
             var isDto = DateTimeOffset.TryParse(value, out _);

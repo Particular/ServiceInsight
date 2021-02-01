@@ -48,8 +48,7 @@ namespace ServiceInsight.MessageViewers.JsonViewer
 
         public void UpdateFoldings(FoldingManager manager, TextDocument document)
         {
-            int firstErrorOffset;
-            var newFoldings = CreateNewFoldings(document, out firstErrorOffset);
+            var newFoldings = CreateNewFoldings(document, out int firstErrorOffset);
             manager.UpdateFoldings(newFoldings, firstErrorOffset);
         }
 

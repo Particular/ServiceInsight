@@ -14,7 +14,7 @@
     {
         bool createNew;
         Mutex mutex;
-        
+
         public App()
         {
             mutex = new Mutex(true, "ServiceInsight", out createNew);
@@ -33,13 +33,13 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             ApplicationConfiguration.Initialize();
-            
+
             var args = new CommandLineArgParser();
-            
+
             if (!createNew)
             {
                 args.SendToOtherInstance();
-                App.Current.Shutdown();
+                Current.Shutdown();
                 FocusWindow.ShowWindow();
                 return;
             }

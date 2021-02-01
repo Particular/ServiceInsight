@@ -87,6 +87,7 @@
                     Logs.Add(new LogMessage(log, Colors.Green));
                     break;
 
+                case LogEventLevel.Verbose:
                 default:
                     Logs.Add(new LogMessage(log, Colors.Black));
                     break;

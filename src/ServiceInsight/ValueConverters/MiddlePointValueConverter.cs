@@ -7,8 +7,8 @@
     public class MiddlePointValueConverter : IMultiValueConverter
     {
         public object Convert(
-            object[] values, 
-            Type targetType, 
+            object[] values,
+            Type targetType,
             object parameter,
             System.Globalization.CultureInfo culture)
         {

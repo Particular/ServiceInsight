@@ -49,7 +49,7 @@
         public string MessageId { get; set; }
 
         public string InstanceId { get; set; }
-        
+
         public MessageStatusIconInfo MessageStatusInfo => new MessageStatusIconInfo(this);
 
         public List<StoredMessageHeader> Headers
@@ -95,12 +95,12 @@
             return pair == null ? defaultValue : pair.Value;
         }
 
-        private static DateTime? TryParse(string value)
+        static DateTime? TryParse(string value)
         {
             return DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var date) ? date : (DateTime?)null;
         }
 
-        private static int? TryParseInt(string value, int? defaultValue = null)
+        static int? TryParseInt(string value, int? defaultValue = null)
         {
             return int.TryParse(value, out var number) ? number : defaultValue;
         }

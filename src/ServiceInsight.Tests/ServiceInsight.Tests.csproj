@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ServiceInsight.Sdk\ServiceInsight.Sdk.csproj" />
     <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
   </ItemGroup>
@@ -26,7 +22,6 @@
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="NUnit" Version="3.13.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="Particular.CodeRules" Version="0.8.0" PrivateAssets="All" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
   </ItemGroup>
 

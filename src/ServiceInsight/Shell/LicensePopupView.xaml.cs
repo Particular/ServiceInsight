@@ -14,12 +14,12 @@
             InitializeComponent();
         }
 
-        private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
+        void OnCloseButtonClicked(object sender, RoutedEventArgs e)
         {
             TryClosePopup();
         }
 
-        private void TryClosePopup()
+        void TryClosePopup()
         {
             var popup = this.TryFindParent<Popup>();
             if (popup != null)

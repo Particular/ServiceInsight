@@ -17,7 +17,7 @@
         const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
         const string AddressInvalid = "Entered address is invalid.";
         const string ConnectionExists = "You have already connected to this address.";
-        
+
         static bool certValidationFailed;
 
         readonly ISettingsProvider settingsProvider;
@@ -35,7 +35,7 @@
         {
             this.settingsProvider = settingsProvider;
             this.clientRegistry = clientRegistry;
-            this.appSettings = settingsProvider.GetSettings<ProfilerSettings>();
+            appSettings = settingsProvider.GetSettings<ProfilerSettings>();
             DisplayName = "Connect To ServiceControl";
         }
 
@@ -121,7 +121,7 @@
         async Task<bool> IsValid(string serviceUrl)
         {
             var valid = true;
-            
+
             if (!serviceUrl.IsValidUrl())
             {
                 ErrorMessage = AddressInvalid;
@@ -133,7 +133,7 @@
                 ErrorMessage = ConnectionExists;
                 valid = false;
             }
-            
+
             if (valid)
             {
                 clientRegistry.EnsureServiceControlClient(serviceUrl);

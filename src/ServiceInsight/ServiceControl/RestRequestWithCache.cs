@@ -5,7 +5,7 @@ namespace ServiceInsight.ServiceControl
     public class RestRequestWithCache : RestRequest
     {
         public const string CacheDateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
-        
+
         public RestRequestWithCache(CacheStyle cacheStyle)
             : this(null, cacheStyle)
         {

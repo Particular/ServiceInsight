@@ -8,8 +8,7 @@
     {
         public static DateTime? ParseHeaderDate(this string date)
         {
-            DateTime result;
-            if (DateTime.TryParseExact(date, HeaderInfo.MessageDateFormat, null, DateTimeStyles.None, out result))
+            if (DateTime.TryParseExact(date, HeaderInfo.MessageDateFormat, null, DateTimeStyles.None, out var result))
             {
                 return result;
             }

@@ -6,9 +6,9 @@ namespace ServiceInsight.Framework.Commands
 
     class ObservableCommand : ICommand
     {
-        private Action<object> action;
-        private bool latest;
-        private bool isExecuting;
+        Action<object> action;
+        bool latest;
+        bool isExecuting;
 
         public ObservableCommand(IObservable<bool> canExecuteObservable, Action<object> action)
         {
@@ -34,12 +34,12 @@ namespace ServiceInsight.Framework.Commands
             }
         }
 
-        private void RaiseCanExecuteChanged()
+        void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private IDisposable StartExecuting()
+        IDisposable StartExecuting()
         {
             isExecuting = true;
             RaiseCanExecuteChanged();

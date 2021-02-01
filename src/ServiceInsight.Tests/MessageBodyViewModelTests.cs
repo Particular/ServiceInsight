@@ -38,9 +38,9 @@
         MessageSelectionContext selection;
         ServiceControlClientRegistry clientRegistry;
         TestCustomMessageViewerResolver resolver;
-        
+
         string baseUrl = "http://localhost:3333/api/";
-        
+
         [SetUp]
         public void TestInitialize()
         {
@@ -70,7 +70,7 @@
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
 
             messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
-            
+
             await messageBody.Handle(new SelectedMessageChanged());
 
             await serviceControl.Received(1).LoadBody(selection.SelectedMessage);
@@ -85,7 +85,7 @@
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
             await messageBody.Handle(new SelectedMessageChanged());
-            
+
             messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             await messageBody.Handle(new BodyTabSelectionChanged(true));
@@ -95,7 +95,7 @@
 
         [Test]
         public async Task Should_not_load_body_content_when_body_tab_is_not_focused()
-        { 
+        {
             string uri = baseUrl + "somemessageid/body";
 
             var messageBody = messageBodyFunc();
@@ -103,7 +103,7 @@
             await messageBody.Handle(new BodyTabSelectionChanged(false));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = uri };
-            
+
             messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             await messageBody.Handle(new SelectedMessageChanged());
@@ -117,7 +117,7 @@
             var messageBody = messageBodyFunc();
 
             await messageBody.Handle(new BodyTabSelectionChanged(true));
-            
+
             messageBody.Handle(new SelectedExplorerItemChanged(new ServiceControlExplorerItem(baseUrl)));
 
             selection.SelectedMessage = new StoredMessage { BodyUrl = null };

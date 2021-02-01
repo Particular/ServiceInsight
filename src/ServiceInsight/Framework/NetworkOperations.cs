@@ -40,12 +40,10 @@
             [StructLayout(LayoutKind.Sequential)]
             struct ServerInfo
             {
-#pragma warning disable SA1310 // Field names should not contain underscore
                 internal int sv100_platform_id;
 
                 [MarshalAs(UnmanagedType.LPWStr)]
                 internal string sv100_name;
-#pragma warning restore SA1310 // Field names should not contain underscore
             }
 
             public static IList<string> GetNetworkComputers()
@@ -59,14 +57,13 @@
 
                 try
                 {
-                    int totalEntries;
                     var result = NetServerEnum(
                         null,
                         100,
                         ref buffer,
                         mAX_PREFERRED_LENGTH,
                         out _,
-                        out totalEntries,
+                        out int totalEntries,
                         sV_TYPE_WORKSTATION | sV_TYPE_SERVER,
                         null,
                         out _);

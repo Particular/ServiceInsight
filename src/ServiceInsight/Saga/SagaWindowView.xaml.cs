@@ -15,14 +15,12 @@
         void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             //var model = DataContext as ISagaWindowViewModel;
-            var message = ((Hyperlink)e.OriginalSource).DataContext as SagaTimeoutMessage;
-            if (message != null)
+            if (((Hyperlink)e.OriginalSource).DataContext is SagaTimeoutMessage message)
             {
                 var steps = (ItemsControl)FindName("Steps");
                 for (var i = 0; i < steps.Items.Count; i++)
                 {
-                    var update = steps.Items[i] as SagaUpdate;
-                    if (update != null && update.InitiatingMessage.MessageId == message.MessageId)
+                    if (steps.Items[i] is SagaUpdate update && update.InitiatingMessage.MessageId == message.MessageId)
                     {
                         ScrollIntoView(steps, i);
                     }
@@ -40,10 +38,7 @@
             }
         }
 
-        public SagaWindowViewModel Model
-        {
-            get { return DataContext as SagaWindowViewModel; }
-        }
+        public SagaWindowViewModel Model => DataContext as SagaWindowViewModel;
     }
 
     public interface ISagaWindowView

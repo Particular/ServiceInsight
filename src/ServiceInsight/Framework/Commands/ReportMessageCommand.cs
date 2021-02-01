@@ -18,8 +18,7 @@
 
         public override void Execute(object parameter)
         {
-            var package = parameter as ReportMessagePackage;
-            if (package == null)
+            if (!(parameter is ReportMessagePackage package))
             {
                 return;
             }

@@ -14,8 +14,7 @@
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var option = item as OptionPropertyValue;
-            if (option == null)
+            if (!(item is OptionPropertyValue option))
             {
                 return base.SelectTemplate(item, container);
             }

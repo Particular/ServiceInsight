@@ -8,7 +8,7 @@
         {
             Options = options;
         }
-        
+
         public CommandLineOptions Options { get; }
     }
 }

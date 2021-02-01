@@ -20,8 +20,7 @@
 
         void AssociatedObject_Click(object sender, RoutedEventArgs e)
         {
-            var source = sender as ButtonBase;
-            if (source != null && source.ContextMenu != null)
+            if (sender is ButtonBase source && source.ContextMenu != null)
             {
                 // If there is a drop-down assigned to this button, then position and display it
                 source.ContextMenu.PlacementTarget = source;

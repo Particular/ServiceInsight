@@ -30,8 +30,7 @@
 
         void OnRemoveSelectedItem(object sender, RoutedEventArgs e)
         {
-            var selectedItem = List.SelectedItem as string;
-            if (selectedItem != null && ItemsSource.Contains(selectedItem))
+            if (List.SelectedItem is string selectedItem && ItemsSource.Contains(selectedItem))
             {
                 ItemsSource.Remove(selectedItem);
             }

@@ -14,15 +14,14 @@
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(
-                "SelectedItem", 
-                typeof(object), 
+                "SelectedItem",
+                typeof(object),
                 typeof(BindableSelectedItemBehavior),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedItemChanged));
 
-        private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var item = e.NewValue as TreeViewItem;
-            if (item != null)
+            if (e.NewValue is TreeViewItem item)
             {
                 item.SetValue(TreeViewItem.IsSelectedProperty, true);
             }

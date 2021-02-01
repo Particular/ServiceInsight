@@ -1,19 +1,18 @@
-﻿using ServiceInsight.MessageViewers.CustomMessageViewer;
-
-namespace ServiceInsight.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
+    using ServiceInsight.MessageViewers.CustomMessageViewer;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Autofac;
-    using Explorer.EndpointExplorer;
-    using ExtensionMethods;
-    using MessageFlow;
-    using Options;
-    using Search;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.MessageFlow;
+    using ServiceInsight.Options;
+    using ServiceInsight.Search;
     using ServiceInsight.MessageList;
     using ServiceInsight.MessagePayloadViewer;
-    using Shell;
+    using ServiceInsight.Shell;
 
     public class ShellModule : Module
     {

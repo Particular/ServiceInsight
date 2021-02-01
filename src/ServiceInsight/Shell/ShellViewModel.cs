@@ -50,7 +50,7 @@
         readonly CommandLineArgParser commandLineArgParser;
         readonly Func<ServiceControlConnectionViewModel> serviceControlConnection;
         readonly Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
-        
+
         int workCounter;
         DispatcherTimer refreshTimer;
         DispatcherTimer idleTimer;
@@ -202,7 +202,7 @@
         public ICommand HelpCommand { get; }
 
         public ICommand ConnectToServiceControlCommand { get; }
-        
+
         public ICommand DisconnectServiceControlCommand { get; }
 
         public ICommand RefreshAllCommand { get; }
@@ -266,7 +266,7 @@
         public bool ShouldConnectToServiceControl => !WorkInProgress || AutoRefresh;
 
         public bool ShouldDisconnectServiceControl => !WorkInProgress && EndpointExplorer != null &&
-                                                   EndpointExplorer.HasSelectedServiceControl; 
+                                                   EndpointExplorer.HasSelectedServiceControl;
 
         void InitializeIdleTimer()
         {
@@ -282,7 +282,7 @@
 
             if (refreshTimer == null)
             {
-                refreshTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(startupTime)};
+                refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(startupTime) };
                 refreshTimer.Tick += async (s, e) => await OnAutoRefreshing();
             }
             else
@@ -334,7 +334,7 @@
                 return string.Format("Automatically update the display every {0} seconds", appSetting.AutoRefreshTimer);
             }
         }
-        
+
         void CheckForUpdates()
         {
             NewVersionIsAvailable = versionUpdateChecker.IsNewVersionAvailable();

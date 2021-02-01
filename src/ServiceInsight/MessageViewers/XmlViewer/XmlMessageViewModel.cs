@@ -46,7 +46,7 @@
         public void Display(StoredMessage selectedMessage)
         {
             // Workaround, to force refresh the property. Should refactor to use the same approach as hex viewer.
-            if (SelectedMessage == selectedMessage) 
+            if (SelectedMessage == selectedMessage)
             {
                 OnSelectedMessageChanged();
             }
@@ -61,7 +61,7 @@
             messageView?.Clear();
         }
 
-        private string GetFormatted(string message)
+        string GetFormatted(string message)
         {
             try
             {

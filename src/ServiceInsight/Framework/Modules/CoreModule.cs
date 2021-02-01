@@ -1,17 +1,16 @@
-﻿using System;
-using Caliburn.Micro;
-using ServiceInsight.Framework.Settings;
-
-namespace ServiceInsight.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
+    using System;
+    using Caliburn.Micro;
+    using ServiceInsight.Framework.Settings;
     using System.Collections.Generic;
     using System.Xml;
     using Autofac;
-    using Models;
-    using ServiceControl;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.MessageDecoders;
-    using Startup;
+    using ServiceInsight.Startup;
 
     public class CoreModule : Module
     {
@@ -30,12 +29,12 @@ namespace ServiceInsight.Framework.Modules
             builder.Register<Func<string, IServiceControl>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
-               
+
                 return url =>
                 {
                     var connectionProvider = new ServiceControlConnectionProvider();
                     connectionProvider.ConnectTo(url);
-                    
+
                     return context.Resolve<IServiceControl>(new TypedParameter(typeof(ServiceControlConnectionProvider), connectionProvider));
                 };
             });

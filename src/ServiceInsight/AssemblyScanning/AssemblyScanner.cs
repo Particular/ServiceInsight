@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
-namespace ServiceInsight.AssemblyScanning
+﻿namespace ServiceInsight.AssemblyScanning
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
     class AssemblyScanner
     {
         readonly List<string> searchDirectories = new List<string>
@@ -49,7 +49,7 @@ namespace ServiceInsight.AssemblyScanning
             return assemblies.Distinct();
         }
 
-        private IEnumerable<string> ReservedAssemblyNames
+        IEnumerable<string> ReservedAssemblyNames
         {
             get
             {

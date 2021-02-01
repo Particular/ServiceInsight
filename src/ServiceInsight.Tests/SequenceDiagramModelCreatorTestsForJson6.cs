@@ -19,13 +19,13 @@
 
             Assert.AreEqual(1, sagaEndpointCount);
         }
-        
+
         [Test]
         public void LogicalEndpointShouldHaveAllHostInformation()
         {
             var sagaEndpoint = ModelCreator.Endpoints.First(e => e.Name == "SagaEndpoint");
             var hosts = sagaEndpoint.Hosts;
-            
+
             Assert.AreEqual(2, hosts.Count);
         }
     }

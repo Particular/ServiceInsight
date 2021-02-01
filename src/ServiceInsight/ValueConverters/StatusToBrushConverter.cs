@@ -13,9 +13,8 @@
         {
             var app = Application.Current;
 
-            if (value is MessageStatus)
+            if (value is MessageStatus status)
             {
-                var status = (MessageStatus)value;
                 switch (status)
                 {
                     case MessageStatus.Failed:
@@ -24,6 +23,9 @@
                         return app.TryFindResource("DiagramRepeatedFailedNodeBackground") as SolidColorBrush;
                     case MessageStatus.Successful:
                         return app.TryFindResource("DiagramSuccessNodeBackground") as SolidColorBrush;
+                    case MessageStatus.ResolvedSuccessfully:
+                    case MessageStatus.ArchivedFailure:
+                    case MessageStatus.RetryIssued:
                     default:
                         throw new ArgumentOutOfRangeException(string.Format("Found not find a brush for {0}", status));
                 }

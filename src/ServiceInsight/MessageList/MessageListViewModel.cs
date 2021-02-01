@@ -10,15 +10,15 @@
     using Explorer.EndpointExplorer;
     using ExtensionMethods;
     using Framework;
-    using Framework.Rx;
-    using MessageProperties;
-    using Models;
-    using Search;
-    using ServiceControl;
     using Framework.Commands;
     using Framework.Events;
+    using Framework.Rx;
     using Framework.Settings;
+    using MessageProperties;
+    using Models;
     using Nito.Comparers;
+    using Search;
+    using ServiceControl;
     using Shell;
 
     public class MessageListViewModel : RxConductor<RxScreen>.Collection.AllActive,
@@ -38,12 +38,11 @@
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
         readonly GeneralHeaderViewModel generalHeaderDisplay;
-        
+
         string lastSortColumn;
         bool lastSortOrderAscending;
         IMessageListView view;
         ExplorerItem selectedExplorerItem;
-        IServiceControl selectedServiceControl;
 
         public MessageListViewModel(
             IEventAggregator eventAggregator,
@@ -83,8 +82,8 @@
 
         public IObservableCollection<StoredMessage> Rows { get; }
 
-        public IServiceControl ServiceControl => selectedServiceControl;
-        
+        public IServiceControl ServiceControl { get; private set; }
+
         public MessageSelectionContext Selection { get; }
 
         public int WorkCount { get; private set; }
@@ -115,12 +114,12 @@
             using (workNotifier.NotifyOfWork("Loading messages..."))
             {
                 var pagedResult = default(PagedResult<StoredMessage>);
-                
+
                 if (ServiceControl != null)
                 {
                     pagedResult = await ServiceControl.GetAuditMessages(link);
                 }
-                
+
                 if (pagedResult == null)
                 {
                     return;
@@ -156,14 +155,14 @@
         public async Task RefreshMessages(Endpoint endpoint, string searchQuery, int? pageNo = null)
         {
             var pagedResult = default(PagedResult<StoredMessage>);
-                
+
             using (workNotifier.NotifyOfWork($"Loading {(endpoint == null ? "all" : endpoint.Address)} messages..."))
             {
                 if (ServiceControl != null)
                 {
                     pagedResult = await ServiceControl.GetAuditMessages(endpoint, pageNo: pageNo, searchQuery, lastSortColumn, lastSortOrderAscending);
                 }
-                
+
                 if (pagedResult?.Result == null || pagedResult.Result.Count == 0)
                 {
                     ClearResult();
@@ -193,9 +192,9 @@
         public async Task Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
-            selectedServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
+            ServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
 
-            if (selectedServiceControl != null)
+            if (ServiceControl != null)
             {
                 await RefreshMessages();
                 SearchBar.NotifyPropertiesChanged();
@@ -257,7 +256,7 @@
             BindResult(new PagedResult<StoredMessage>());
             SearchBar.ClearPaging();
         }
-        
+
         void BindResult(PagedResult<StoredMessage> pagedResult)
         {
             try
@@ -276,9 +275,9 @@
         {
             var messageStatusOrder = ComparerBuilder.For<Tuple<string, MessageStatus>>().OrderBy(t => t.Item1);
             var comparer = messageStatusOrder.ThenBy(t => t.Item2);
-            
+
             Func<StoredMessage, Tuple<string, MessageStatus>> selector = m => Tuple.Create(m.Id, m.Status);
-            
+
             return Rows.Select(selector).FullExcept(pagedResult.Result.Select(selector), comparer).Any();
         }
 

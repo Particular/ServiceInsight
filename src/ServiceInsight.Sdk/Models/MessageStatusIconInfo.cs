@@ -10,7 +10,7 @@
     {
         static Dictionary<MessageStatus, string> statusToIconNameMap;
         static Dictionary<string, ImageSource> imageCache;
-        
+
         Func<string, ImageSource> resourceFinder;
         MessageStatus status;
         bool statusSpecified;
@@ -28,8 +28,8 @@
                 [MessageStatus.RetryIssued] = "RetryIssued",
             };
         }
-        
-        private ImageSource DefaultApplicationResourceFinder(string imageName)
+
+        ImageSource DefaultApplicationResourceFinder(string imageName)
         {
             return Application.Current.TryFindResource(imageName) as DrawingImage;
         }
@@ -37,14 +37,14 @@
         public MessageStatusIconInfo(StoredMessage message, Func<string, ImageSource> resourceFinder = null)
         {
             this.resourceFinder = resourceFinder ?? DefaultApplicationResourceFinder;
-            
+
             HasWarn = Warn(message);
             Status = message.Status;
             Description = status.GetDescription();
             Image = GetImage();
         }
 
-        private static bool Warn(StoredMessage message)
+        static bool Warn(StoredMessage message)
         {
             return message.ProcessingTime < TimeSpan.Zero ||
                    message.CriticalTime < TimeSpan.Zero ||
@@ -62,7 +62,7 @@
                 statusSpecified = true;
             }
         }
-        
+
         public bool HasWarn { get; }
 
         public string Description { get; }
@@ -71,7 +71,7 @@
         {
             var currentStatus = statusSpecified ? Status : MessageStatus.Successful;
             var imageName = $"MessageStatus_{statusToIconNameMap[currentStatus]}";
-            
+
             if (HasWarn || Status == MessageStatus.ResolvedSuccessfully)
             {
                 imageName += "_Warn";
@@ -81,7 +81,7 @@
             {
                 return imageCache[imageName];
             }
-            
+
             var image = resourceFinder(imageName);
             imageCache.Add(imageName, image);
 
@@ -90,8 +90,7 @@
 
         public int CompareTo(object obj)
         {
-            var that = obj as MessageStatusIconInfo;
-            if (that == null)
+            if (!(obj is MessageStatusIconInfo that))
             {
                 return -1;
             }

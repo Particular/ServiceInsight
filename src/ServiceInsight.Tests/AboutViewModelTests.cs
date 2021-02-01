@@ -30,7 +30,7 @@
             clientRegistry = Substitute.For<ServiceControlClientRegistry>();
 
             clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
-            
+
             sut = new AboutViewModel(networkOperations, versionService, licenseManager, clientRegistry);
         }
 
@@ -45,14 +45,14 @@
         [Test]
         public void Should_display_multi_connection_when_more_than_one_service_control_version()
         {
-            var versions = new[] {"3.0.0", "4.0.0"};
+            var versions = new[] { "3.0.0", "4.0.0" };
             clientRegistry.GetVersions().Returns(versions);
 
             ((IActivate)sut).Activate();
 
             sut.ServiceControlVersion.ShouldBe(AboutViewModel.MultipleConnection);
         }
-        
+
         [Test]
         public void Should_display_service_control_version()
         {

@@ -1,5 +1,3 @@
-using System.Web;
-
 namespace ServiceInsight.ServiceControl
 {
     using System;
@@ -12,16 +10,16 @@ namespace ServiceInsight.ServiceControl
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using System.Web;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Framework;
     using RestSharp;
     using RestSharp.Authenticators;
     using RestSharp.Deserializers;
-    using Serilog;
     using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Framework.Settings;
@@ -32,7 +30,6 @@ namespace ServiceInsight.ServiceControl
 
     public class DefaultServiceControl : IServiceControl
     {
-        static ILogger anotarLogger = Log.ForContext<IServiceControl>();
         static byte[] byteOrderMarkUtf8 = Encoding.UTF8.GetPreamble();
         static IDeserializer jsonTruncatingDeserializer = CreateJsonDeserializer(truncateLargeLists: true);
         static IDeserializer jsonDeserializer = CreateJsonDeserializer(truncateLargeLists: false);
@@ -57,16 +54,16 @@ namespace ServiceInsight.ServiceControl
         {
             ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
             {
-              if (errors != SslPolicyErrors.None)
-              {
-                return OnCertificateValidationFailed();
-              }
+                if (errors != SslPolicyErrors.None)
+                {
+                    return OnCertificateValidationFailed();
+                }
 
-              return true;
+                return true;
             };
         }
 
-        private static bool OnCertificateValidationFailed()
+        static bool OnCertificateValidationFailed()
         {
             CertificateValidationFailed();
             return ApplicationConfiguration.SkipCertificateValidation;
@@ -101,7 +98,7 @@ namespace ServiceInsight.ServiceControl
 
             var header = await Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion)).ConfigureAwait(false);
 
-            return header == null ? null : header.Value.ToString();
+            return header?.Value.ToString();
         }
 
         Task<ServiceControlRootUrls> GetRootUrls()
@@ -141,7 +138,7 @@ namespace ServiceInsight.ServiceControl
             return GetPagedResult<StoredMessage>(request);
         }
 
-        private void AppendPageNo(RestRequestWithCache request, int? pageNo)
+        void AppendPageNo(RestRequestWithCache request, int? pageNo)
         {
             if (pageNo != null)
             {
@@ -220,7 +217,9 @@ namespace ServiceInsight.ServiceControl
                 {
                     var presentationBody = new PresentationBody();
 
+#pragma warning disable IDE0010 // Add missing cases
                     switch (response.StatusCode)
+#pragma warning restore IDE0010 // Add missing cases
                     {
                         case HttpStatusCode.OK:
                             presentationBody.Text = response.Content;
@@ -228,6 +227,8 @@ namespace ServiceInsight.ServiceControl
                         case HttpStatusCode.NoContent:
                             presentationBody.Hint = PresentationHint.NoContent;
                             presentationBody.Text = "Body was too large and not stored. Edit ServiceControl/MaxBodySizeToStore to be larger in the ServiceControl configuration.";
+                            break;
+                        default:
                             break;
                     }
 
@@ -398,6 +399,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                     }
 
                     break;
+                default:
+                    break;
             }
 
             LogRequest(request);
@@ -428,7 +431,9 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                     break;
 
                 case RestRequestWithCache.CacheStyle.IfNotModified:
+#pragma warning disable IDE0010 // Add missing cases
                     switch (response.StatusCode)
+#pragma warning restore IDE0010 // Add missing cases
                     {
                         case HttpStatusCode.OK:
                             data = ProcessResponse(selector, response);
@@ -449,8 +454,12 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                                 data = tuple.Item2;
                             }
                             break;
+                        default:
+                            break;
                     }
                     break;
+
+                case RestRequestWithCache.CacheStyle.None:
                 default:
                     data = ProcessResponse(selector, response);
                     break;
@@ -489,6 +498,8 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                     }
 
                     break;
+                default:
+                    break;
             }
 
             LogRequest(request);
@@ -512,7 +523,9 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                     break;
 
                 case RestRequestWithCache.CacheStyle.IfNotModified:
+#pragma warning disable IDE0010 // Add missing cases
                     switch (response.StatusCode)
+#pragma warning restore IDE0010 // Add missing cases
                     {
                         case HttpStatusCode.OK:
                             data = ProcessResponse(selector, response);
@@ -533,8 +546,11 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
                                 data = tuple.Item2;
                             }
                             break;
+                        default:
+                            break;
                     }
                     break;
+                case RestRequestWithCache.CacheStyle.None:
                 default:
                     data = ProcessResponse(selector, response);
                     break;
@@ -543,13 +559,13 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             return data;
         }
 
-        private void RaiseConnectivityIssue(IRestResponse response)
+        void RaiseConnectivityIssue(IRestResponse response)
         {
-           if (response?.ErrorException is WebException webException &&
-               webException.Status == WebExceptionStatus.ConnectFailure)
-           {
-               LogError(response);
-           }
+            if (response?.ErrorException is WebException webException &&
+                webException.Status == WebExceptionStatus.ConnectFailure)
+            {
+                LogError(response);
+            }
         }
 
         void CacheData(RestRequestWithCache request, IRestClient restClient, object data)
@@ -573,7 +589,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             }
 
             LogError(response);
-            return default(T);
+            return default;
         }
 
         T ProcessResponse<T, T2>(Func<IRestResponse<T2>, T> selector, IRestResponse<T2> response)
@@ -585,7 +601,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             }
 
             LogError(response);
-            return default(T);
+            return default;
         }
 
         IEnumerable<KeyValuePair<string, string>> GetXmlData(string bodyString)
@@ -650,7 +666,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
         void LogError(IRestResponse response)
         {
-            var exception = response != null ? response.ErrorException : null;
+            var exception = response?.ErrorException;
             var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}", response.ErrorMessage, response.StatusCode) : "No response was received.";
 
             eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));

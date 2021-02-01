@@ -35,7 +35,7 @@
         public async Task Should_use_instance_id_if_present()
         {
             command.Execute(new StoredMessage { InstanceId = "instanceId", Id = "messageId" });
-            
+
             await serviceControl.Received().RetryMessage("messageId", "instanceId");
         }
 

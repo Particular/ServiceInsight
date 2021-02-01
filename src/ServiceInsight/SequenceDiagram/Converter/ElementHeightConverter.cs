@@ -8,9 +8,8 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double)
+            if (value is double d)
             {
-                var d = (double)value;
                 return double.IsNaN(d) ? 0 : d;
             }
 

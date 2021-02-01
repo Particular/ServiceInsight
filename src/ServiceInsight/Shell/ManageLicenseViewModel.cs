@@ -13,11 +13,11 @@
 
     public class ManageLicenseViewModel : Screen
     {
-        private readonly AppLicenseManager licenseManager;
-        private readonly NetworkOperations network;
-        private readonly IWindowManagerEx windowManager;
-        private readonly IEventAggregator eventAggregator;
-        private static readonly IDictionary<LicenseInstallationResult, string> InstallationResultMessage;
+        readonly AppLicenseManager licenseManager;
+        readonly NetworkOperations network;
+        readonly IWindowManagerEx windowManager;
+        readonly IEventAggregator eventAggregator;
+        static readonly IDictionary<LicenseInstallationResult, string> InstallationResultMessage;
 
         static ManageLicenseViewModel()
         {
@@ -63,7 +63,7 @@
             }
         }
 
-        private void ShowLicenseStatus()
+        void ShowLicenseStatus()
         {
             var currentLicense = licenseManager.CurrentLicense;
             if (currentLicense == null)
@@ -101,7 +101,7 @@
             }
         }
 
-        private void ContactUs()
+        void ContactUs()
         {
             network.OpenContactUs();
         }

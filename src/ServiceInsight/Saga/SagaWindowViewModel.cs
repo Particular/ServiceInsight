@@ -216,7 +216,7 @@
             }
         }
 
-        private async Task<SagaData> FetchOrderedSagaData(Guid sagaId)
+        async Task<SagaData> FetchOrderedSagaData(Guid sagaId)
         {
             var sagaData = default(SagaData);
 

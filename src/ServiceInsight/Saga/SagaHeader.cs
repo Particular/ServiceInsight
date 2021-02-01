@@ -2,13 +2,11 @@ namespace ServiceInsight.Saga
 {
     public class SagaHeader
     {
-        readonly SagaData data;
-
         public SagaHeader(SagaData data)
         {
-            this.data = data;
+            Data = data;
         }
 
-        public SagaData Data => data;
+        public SagaData Data { get; }
     }
 }

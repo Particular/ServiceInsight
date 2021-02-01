@@ -11,8 +11,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var bitmap = value as Bitmap;
-            return bitmap != null ? bitmap.ToBitmapImage() : DependencyProperty.UnsetValue;
+            return value is Bitmap bitmap ? bitmap.ToBitmapImage() : DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

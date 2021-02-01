@@ -14,14 +14,12 @@ namespace ServiceInsight.Framework.Behaviors
 
         static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var menu = d as MenuItem;
-            if (menu != null)
+            if (d is MenuItem menu)
             {
                 SwapCommand(menu, e.NewValue);
             }
 
-            var btn = d as ButtonBase;
-            if (btn != null)
+            if (d is ButtonBase btn)
             {
                 SwapCommand(btn, e.NewValue);
             }

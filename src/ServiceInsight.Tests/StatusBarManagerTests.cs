@@ -10,7 +10,7 @@
     [TestFixture]
     public class StatusBarManagerTests
     {
-        private LicenseStatusBar licenseStatusBar;
+        LicenseStatusBar licenseStatusBar;
 
         [SetUp]
         public void TestInitialize()

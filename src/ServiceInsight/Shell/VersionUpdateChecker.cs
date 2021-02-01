@@ -1,8 +1,7 @@
-﻿using RestSharp.Serialization.Json;
-using ServiceInsight.ServiceControl;
-
-namespace ServiceInsight.Shell
+﻿namespace ServiceInsight.Shell
 {
+    using RestSharp.Serialization.Json;
+    using ServiceInsight.ServiceControl;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -55,7 +54,7 @@ namespace ServiceInsight.Shell
             return rs.Data.OrderByDescending(r => r.Published).First().Tag;
         }
 
-        private static string GetAppCurrentVersion()
+        static string GetAppCurrentVersion()
         {
             var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             var versionParts = assemblyInfo.InformationalVersion.Split('+');
@@ -64,7 +63,7 @@ namespace ServiceInsight.Shell
 
             if (suffixIndex > 0)
             {
-              return version.Substring(0, suffixIndex.Value);
+                return version.Substring(0, suffixIndex.Value);
             }
 
             return version;

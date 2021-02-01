@@ -10,7 +10,7 @@
             ServiceControl = parent;
             HostNames = hostNames;
         }
-        
+
         public ServiceControlExplorerItem ServiceControl { get; }
 
         public string HostNames { get; set; }

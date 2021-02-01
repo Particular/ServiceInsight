@@ -36,7 +36,7 @@
                     {
                         Surface.Zoom = 1;
                     }
-                }), 
+                }),
                 DispatcherPriority.Loaded);
         }
 
