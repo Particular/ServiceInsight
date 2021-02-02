@@ -7,10 +7,10 @@
 
     public class LicenseMessageBoxViewModel : Screen
     {
-        private readonly AppLicenseManager licenseManager;
-        private readonly NetworkOperations networkOperations;
-        private readonly IWindowManagerEx windowManager;
-        private readonly IAppCommands appCommands;
+        readonly AppLicenseManager licenseManager;
+        readonly NetworkOperations networkOperations;
+        readonly IWindowManagerEx windowManager;
+        readonly IAppCommands appCommands;
 
         public LicenseMessageBoxViewModel(
             AppLicenseManager licenseManager,
@@ -26,7 +26,7 @@
             SetupLicenseOptions();
         }
 
-        private void SetupLicenseOptions()
+        void SetupLicenseOptions()
         {
             ResetLicenseOptions();
 
@@ -45,7 +45,7 @@
             ShowExitOption = true;
         }
 
-        private void ResetLicenseOptions()
+        void ResetLicenseOptions()
         {
             Result = null;
             ShowManageLicenseOption = false;

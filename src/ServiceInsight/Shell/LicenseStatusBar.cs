@@ -16,9 +16,9 @@
         public const string UpgradeProtectionLicenseText = "Please extend your upgrade protection so that we can continue to provide you with support and new versions of the Particular Service Platform.";
         public const string SubscriptionLicenseText = "Please extend your license to continue using the Particular Service Platform.";
 
-        private readonly IWindowManagerEx windowManager;
-        private readonly NetworkOperations network;
-        private bool forceShowPopup;
+        readonly IWindowManagerEx windowManager;
+        readonly NetworkOperations network;
+        bool forceShowPopup;
 
         public LicenseStatusBar(IWindowManagerEx windowManager, NetworkOperations network)
         {
@@ -139,7 +139,7 @@
             OpenLicensePopup = AppStartCheck;
         }
 
-        private void ResetStatusBar()
+        void ResetStatusBar()
         {
             OpenLicensePopup = false;
             ShowLicenseWarn = false;
@@ -148,12 +148,12 @@
             LicensePopupText = string.Empty;
         }
 
-        private void OnManageLicense()
+        void OnManageLicense()
         {
             windowManager.ShowDialog<ManageLicenseViewModel>();
         }
 
-        private void OnContactUsClicked()
+        void OnContactUsClicked()
         {
             network.OpenContactUs();
         }

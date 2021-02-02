@@ -1,17 +1,16 @@
-﻿using Autofac.Core.Registration;
-using Autofac.Core.Resolving.Pipeline;
-
-namespace ServiceInsight.Framework.Modules
+﻿namespace ServiceInsight.Framework.Modules
 {
+    using Autofac.Core.Registration;
+    using Autofac.Core.Resolving.Pipeline;
     using System;
-    using Attachments;
+    using ServiceInsight.Framework.Attachments;
     using Autofac;
     using Autofac.Core;
 
     class AutoAttachmentModule : Module
     {
         protected override void AttachToComponentRegistration(
-            IComponentRegistryBuilder componentRegistry, 
+            IComponentRegistryBuilder componentRegistry,
             IComponentRegistration registration)
         {
             registration.PipelineBuilding += (sender, pipeline) =>
@@ -23,7 +22,7 @@ namespace ServiceInsight.Framework.Modules
                     var instance = c.Instance;
                     var vmType = instance?.GetType();
                     var typeName = vmType?.FullName;
-                    
+
                     if (typeName == null || !typeName.EndsWith("ViewModel"))
                     {
                         return;

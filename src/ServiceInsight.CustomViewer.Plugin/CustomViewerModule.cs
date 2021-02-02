@@ -1,7 +1,7 @@
-﻿using Autofac;
-
-namespace ServiceInsight.CustomViewer.Plugin
+﻿namespace ServiceInsight.CustomViewer.Plugin
 {
+    using Autofac;
+
     public class CustomViewerModule : Module
     {
         protected override void Load(ContainerBuilder builder)

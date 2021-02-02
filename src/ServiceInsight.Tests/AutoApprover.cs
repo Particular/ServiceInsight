@@ -7,8 +7,8 @@
     {
         public static readonly AutoApprover INSTANCE = new AutoApprover();
 
-        private string approved;
-        private string received;
+        string approved;
+        string received;
 
         public void Report(string approved, string received)
         {

@@ -42,7 +42,7 @@
         public override void OnApplyTemplate()
         {
             items = GetTemplateChild("PART_LINES") as ItemsControl;
-            DataChanged(this, default(DependencyPropertyChangedEventArgs));
+            DataChanged(this, default);
         }
 
         public string Body

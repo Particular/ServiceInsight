@@ -1,13 +1,13 @@
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Windows.Controls;
-
 namespace ServiceInsight.Search
 {
+    using System.Globalization;
+    using System.Text.RegularExpressions;
+    using System.Windows.Controls;
+
     public class OnlyDigitsValidationRule : ValidationRule
     {
         static readonly ValidationResult ValidResults = new ValidationResult(true, null);
-        
+
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (value != null)

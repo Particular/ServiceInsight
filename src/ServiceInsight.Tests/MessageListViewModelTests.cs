@@ -42,7 +42,7 @@
             clientRegistry = Substitute.For<ServiceControlClientRegistry>();
 
             clientRegistry.GetServiceControl(Arg.Any<string>()).Returns(serviceControl);
-            
+
             messageListFunc = () => new MessageListViewModel(
                 eventAggregator,
                 workNotifier,
@@ -58,7 +58,7 @@
         public async Task Should_load_the_messages_from_the_endpoint()
         {
             var endpoint = new Endpoint { Host = "localhost", Name = "Service" };
-            
+
             serviceControl.GetAuditMessages(Arg.Is(endpoint), 0, Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())
                 .Returns(x => new PagedResult<StoredMessage>
                 {
@@ -82,7 +82,7 @@
         }
 
         [Test]
-        public void All_MessageStatuses_Should_Translate_To_Image_Name([Values]MessageStatus status)
+        public void All_MessageStatuses_Should_Translate_To_Image_Name([Values] MessageStatus status)
         {
             ImageSource TestResourceFinder(string name)
             {
@@ -91,7 +91,7 @@
 
             var message = new StoredMessage { Status = status };
             var icon = new MessageStatusIconInfo(message, TestResourceFinder);
-            
+
             icon.Image.ShouldNotBe(null);
             icon.Description.ShouldNotBeNullOrEmpty();
             icon.Status.ShouldBe(status);

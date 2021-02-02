@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-
-namespace ServiceInsight.Framework
+﻿namespace ServiceInsight.Framework
 {
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Input;
+
     public static class InputBindingsManager
     {
 
@@ -25,11 +25,9 @@ namespace ServiceInsight.Framework
             return (DependencyProperty)dp.GetValue(UpdatePropertySourceWhenEnterPressedProperty);
         }
 
-        private static void OnUpdatePropertySourceWhenEnterPressedPropertyChanged(DependencyObject dp, DependencyPropertyChangedEventArgs e)
+        static void OnUpdatePropertySourceWhenEnterPressedPropertyChanged(DependencyObject dp, DependencyPropertyChangedEventArgs e)
         {
-            UIElement element = dp as UIElement;
-
-            if (element == null)
+            if (!(dp is UIElement element))
             {
                 return;
             }
@@ -63,9 +61,8 @@ namespace ServiceInsight.Framework
                 return;
             }
 
-            UIElement elt = source as UIElement;
 
-            if (elt == null)
+            if (!(source is UIElement elt))
             {
                 return;
             }

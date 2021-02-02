@@ -18,9 +18,7 @@ namespace ServiceInsight.SequenceDiagram.Converter
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var result = value as string;
-
-            if (result == null)
+            if (!(value is string result))
             {
                 return DependencyProperty.UnsetValue;
             }

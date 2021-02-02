@@ -1,24 +1,23 @@
-using ServiceInsight.Explorer;
-using ServiceInsight.Explorer.EndpointExplorer;
-using ServiceInsight.ServiceControl;
-
 namespace ServiceInsight.ExtensionMethods
 {
+    using ServiceInsight.Explorer;
+    using ServiceInsight.Explorer.EndpointExplorer;
+    using ServiceInsight.ServiceControl;
+
     public static class ExplorerItemExtensions
     {
         public static IServiceControl GetServiceControlClient(this ExplorerItem item, ServiceControlClientRegistry clientRegistry)
         {
-            if (item is AuditEndpointExplorerItem)
+            if (item is AuditEndpointExplorerItem auditEndpointExplorerItem)
             {
-                var parent = ((AuditEndpointExplorerItem) item).ServiceControl;
+                var parent = auditEndpointExplorerItem.ServiceControl;
                 var url = parent.Url;
 
                 return clientRegistry.GetServiceControl(url);
             }
 
-            if (item is ServiceControlExplorerItem)
+            if (item is ServiceControlExplorerItem serviceControlItem)
             {
-                var serviceControlItem = (ServiceControlExplorerItem) item;
                 return clientRegistry.GetServiceControl(serviceControlItem.Url);
             }
 

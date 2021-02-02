@@ -7,10 +7,9 @@
         public static readonly DependencyProperty ResultProperty = DependencyProperty.RegisterAttached("Result", typeof(bool?), typeof(DialogResultBehavior), new PropertyMetadata(OnResultChanged));
         public static readonly DependencyProperty AutoCloseProperty = DependencyProperty.RegisterAttached("AutoClose", typeof(bool), typeof(DialogResultBehavior), new PropertyMetadata(true));
 
-        private static void OnResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var window = d as Window;
-            if (window != null && GetAutoClose(window))
+            if (d is Window window && GetAutoClose(window))
             {
                 if (window.IsVisible)
                 {

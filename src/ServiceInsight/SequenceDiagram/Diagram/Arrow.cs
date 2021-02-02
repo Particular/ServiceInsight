@@ -8,11 +8,9 @@
     [DebuggerDisplay("{Type}->{Name}")]
     public class Arrow : DiagramItem, IComparable<Arrow>
     {
-        StoredMessage storedMessage;
-
         public Arrow(StoredMessage message, IMessageCommandContainer container)
         {
-            storedMessage = message;
+            SelectedMessage = message;
 
             CopyConversationIDCommand = container?.CopyConversationIDCommand;
             CopyMessageURICommand = container?.CopyMessageURICommand;
@@ -34,7 +32,7 @@
 
         public ICommand ChangeCurrentMessage { get; set; }
 
-        public StoredMessage SelectedMessage => storedMessage;
+        public StoredMessage SelectedMessage { get; }
 
         public Handler FromHandler { get; set; }
 
@@ -46,15 +44,15 @@
 
         public ArrowType Type { get; set; }
 
-        public Endpoint Receiving => storedMessage.ReceivingEndpoint;
+        public Endpoint Receiving => SelectedMessage.ReceivingEndpoint;
 
-        public Endpoint Sending => storedMessage.SendingEndpoint;
+        public Endpoint Sending => SelectedMessage.SendingEndpoint;
 
-        public DateTime? SentTime => storedMessage.TimeSent;
+        public DateTime? SentTime => SelectedMessage.TimeSent;
 
-        public string MessageId => storedMessage.MessageId;
+        public string MessageId => SelectedMessage.MessageId;
 
-        public MessageStatus Status => storedMessage.Status;
+        public MessageStatus Status => SelectedMessage.Status;
 
         public double Width { get; set; }
 

@@ -97,7 +97,7 @@
 
         public static IEnumerable GetGeometries => GetTestCases<Geometry>();
 
-        private static void InitWPFResourcesSystem()
+        static void InitWPFResourcesSystem()
         {
             // Hinky stuff to get the resource dictionary working
             PackUriHelper.Create(new Uri("reliable://0"));
@@ -105,10 +105,10 @@
             Application.ResourceAssembly = typeof(App).Assembly;
         }
 
-        private static ResourceDictionary GetXamlIconsResourceDictionary()
+        static ResourceDictionary GetXamlIconsResourceDictionary()
             => new ResourceDictionary { Source = new Uri("/ServiceInsight;component/Images/Xaml/XamlIcons.xaml", UriKind.Relative) };
 
-        private static ContentControl CreateDisplayFrame(string resourceName, UIElement displayElement)
+        static ContentControl CreateDisplayFrame(string resourceName, UIElement displayElement)
         {
             var control = new ContentControl();
             var dock = new DockPanel();
@@ -132,7 +132,7 @@
             return control;
         }
 
-        private static IEnumerable GetTestCases<TValue>()
+        static IEnumerable GetTestCases<TValue>()
         {
             IEnumerable<TestCaseData> results = null;
             var wait = new SemaphoreSlim(0);
@@ -156,7 +156,7 @@
             return results;
         }
 
-        private static void PrepareForRender(UIElement control)
+        static void PrepareForRender(UIElement control)
         {
             // From http://stackoverflow.com/a/2596035
             control.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -167,8 +167,8 @@
 
         class IconTestsNamer : IApprovalNamer
         {
-            private readonly StackTraceParser stackTraceParser;
-            private readonly string resourceName;
+            readonly StackTraceParser stackTraceParser;
+            readonly string resourceName;
 
             public IconTestsNamer(string resourceName)
             {

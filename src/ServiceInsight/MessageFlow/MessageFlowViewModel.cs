@@ -1,8 +1,7 @@
-﻿using ServiceInsight.Explorer;
-using ServiceInsight.ExtensionMethods;
-
-namespace ServiceInsight.MessageFlow
+﻿namespace ServiceInsight.MessageFlow
 {
+    using ServiceInsight.Explorer;
+    using ServiceInsight.ExtensionMethods;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
@@ -13,15 +12,15 @@ namespace ServiceInsight.MessageFlow
     using Caliburn.Micro;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
-    using Models;
-    using ServiceControl;
-    using Framework;
-    using Framework.Commands;
-    using Framework.Events;
-    using Framework.Settings;
-    using Framework.UI.ScreenManager;
-    using MessageList;
-    using Settings;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.Settings;
 
     public class MessageFlowViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
@@ -195,7 +194,7 @@ namespace ServiceInsight.MessageFlow
                 }
             }
         }
-        
+
         public void Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;

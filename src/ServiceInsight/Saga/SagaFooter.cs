@@ -2,15 +2,13 @@ namespace ServiceInsight.Saga
 {
     public class SagaFooter
     {
-        readonly SagaData data;
-
         public SagaFooter(SagaData data)
         {
-            this.data = data;
+            Data = data;
         }
 
-        public SagaData Data => data;
+        public SagaData Data { get; }
 
-        public bool IsCompleted => data != null ? data.IsCompleted : true;
+        public bool IsCompleted => Data?.IsCompleted ?? true;
     }
 }

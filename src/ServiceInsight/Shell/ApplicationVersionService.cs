@@ -38,7 +38,7 @@
             return null;
         }
 
-        private static string[] GetVerionParts()
+        static string[] GetVerionParts()
         {
             var assemblyInfo = typeof(App).Assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             var version = assemblyInfo != null ? assemblyInfo.InformationalVersion : "Unknown Version";

@@ -33,11 +33,14 @@
 
         public bool ShouldDisplayOldValueLink => ShouldDisplayAsLink(OldValue);
 
-        private bool ShouldDisplayAsLink(string value)
+        bool ShouldDisplayAsLink(string value)
         {
             if (value != null)
             {
-                if (Guid.TryParse(value, out _)) return false;
+                if (Guid.TryParse(value, out _))
+                {
+                    return false;
+                }
             }
             return !string.IsNullOrWhiteSpace(value) && value.Length > MaxValueLength;
         }

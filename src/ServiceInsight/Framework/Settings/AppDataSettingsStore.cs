@@ -32,7 +32,7 @@ namespace ServiceInsight.Framework.Settings
             return ReadFromIsolatedStorage(filename);
         }
 
-        private string ReadFromAppData(string settingFile)
+        string ReadFromAppData(string settingFile)
         {
             using (var stream = new FileStream(settingFile, FileMode.Open, FileAccess.Read))
             using (var reader = new StreamReader(stream))
@@ -41,14 +41,14 @@ namespace ServiceInsight.Framework.Settings
             }
         }
 
-        private string ReadFromIsolatedStorage(string filename)
+        string ReadFromIsolatedStorage(string filename)
         {
             using (var isoStore = IsolatedStorageFile.GetStore(Scope, null, null))
             {
                 if (isoStore.FileExists(filename))
                 {
                     using (var stream = new IsolatedStorageFileStream(filename, FileMode.Open, isoStore))
-                    using (var reader = new StreamReader(stream))    
+                    using (var reader = new StreamReader(stream))
                     {
                         return reader.ReadToEnd();
                     }
@@ -58,7 +58,7 @@ namespace ServiceInsight.Framework.Settings
             return null;
         }
 
-        private string GetFullPath(string settingFile)
+        string GetFullPath(string settingFile)
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var serviceInsight = Path.Combine(appData, "Particular Software", "ServiceInsight");
@@ -67,7 +67,7 @@ namespace ServiceInsight.Framework.Settings
             {
                 Directory.CreateDirectory(serviceInsight);
             }
-            
+
             var dataFilePath = Path.Combine(serviceInsight, settingFile);
 
             return dataFilePath;
@@ -79,7 +79,9 @@ namespace ServiceInsight.Framework.Settings
             var dataFile = GetFullPath(filename);
 
             if (File.Exists(dataFile))
+            {
                 return true;
+            }
 
             //For backward compatibility with Isolated Storage
             using (var isoStore = IsolatedStorageFile.GetStore(Scope, null, null))

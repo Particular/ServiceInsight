@@ -1,15 +1,14 @@
-using System.Linq;
-using ServiceInsight.ServiceControl;
-
 namespace ServiceInsight.Shell
 {
+    using System.Linq;
+    using ServiceInsight.ServiceControl;
     using System;
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
-    using Framework;
-    using Framework.Licensing;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Licensing;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
@@ -19,7 +18,7 @@ namespace ServiceInsight.Shell
 
         readonly IApplicationVersionService applicationVersionService;
         readonly AppLicenseManager licenseManager;
-        private readonly ServiceControlClientRegistry clientRegistry;
+        readonly ServiceControlClientRegistry clientRegistry;
 
         public event EventHandler<ActivationEventArgs> Activated = (s, e) => { };
 
@@ -104,7 +103,7 @@ namespace ServiceInsight.Shell
             {
                 return;
             }
-            
+
             ServiceControlVersion = DetectingServiceControlVersion;
             var versions = (await clientRegistry.GetVersions()).ToList();
 

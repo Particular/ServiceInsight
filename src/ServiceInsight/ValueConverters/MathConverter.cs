@@ -76,8 +76,7 @@
 
         IExpression Parse(string s)
         {
-            IExpression result;
-            if (!storedExpressions.TryGetValue(s, out result))
+            if (!storedExpressions.TryGetValue(s, out IExpression result))
             {
                 result = new Parser().Parse(s);
                 storedExpressions[s] = result;
@@ -147,16 +146,16 @@
                 switch (operation)
                 {
                     case '+':
-                        this.operation = (a, b) => (a + b);
+                        this.operation = (a, b) => a + b;
                         break;
                     case '-':
-                        this.operation = (a, b) => (a - b);
+                        this.operation = (a, b) => a - b;
                         break;
                     case '*':
-                        this.operation = (a, b) => (a * b);
+                        this.operation = (a, b) => a * b;
                         break;
                     case '/':
-                        this.operation = (a, b) => (a / b);
+                        this.operation = (a, b) => a / b;
                         break;
                     default:
                         throw new ArgumentException("Invalid operation " + operation);

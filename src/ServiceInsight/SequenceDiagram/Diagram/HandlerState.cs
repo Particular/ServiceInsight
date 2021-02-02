@@ -2,7 +2,7 @@
 {
     public enum HandlerState
     {
-        Fail, 
+        Fail,
         Success
     }
 }

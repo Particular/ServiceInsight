@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.Framework.Attachments
 {
-    internal interface IAttachment
+    interface IAttachment
     {
         void AttachTo(object obj);
     }

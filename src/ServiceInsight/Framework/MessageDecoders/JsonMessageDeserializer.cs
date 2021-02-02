@@ -31,7 +31,9 @@
         public T Deserialize<T>(IRestResponse response)
         {
             if (string.IsNullOrEmpty(response.Content))
-              return default(T);
+            {
+                return default;
+            }
 
             var target = Activator.CreateInstance<T>();
 
@@ -145,8 +147,7 @@
             var listType = type.GetInterfaces().First(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
             var itemType = listType.GetGenericArguments()[0];
 
-            var elements = parent as IList;
-            if (elements != null)
+            if (parent is IList elements)
             {
                 if (elements.Count > 200 && TruncateLargeLists)
                 {
@@ -259,9 +260,9 @@
             }
             else if (type == typeof(decimal))
             {
-                if (value is double)
+                if (value is double doubleValue)
                 {
-                    return (decimal)((double)value);
+                    return (decimal)doubleValue;
                 }
 
                 return decimal.Parse(stringValue, Culture);

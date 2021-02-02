@@ -67,7 +67,7 @@ namespace ServiceInsight.MessageViewers
         public ICustomMessageBodyViewer CustomViewer { get; }
 
         bool ShouldLoadMessageBody { get; set; }
-        
+
         IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         MessageContentType ContentType { get; set; }

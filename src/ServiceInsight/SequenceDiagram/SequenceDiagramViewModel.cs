@@ -1,8 +1,7 @@
-﻿using ServiceInsight.Explorer;
-using ServiceInsight.ExtensionMethods;
-
-namespace ServiceInsight.SequenceDiagram
+﻿namespace ServiceInsight.SequenceDiagram
 {
+    using ServiceInsight.Explorer;
+    using ServiceInsight.ExtensionMethods;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,16 +9,16 @@ namespace ServiceInsight.SequenceDiagram
     using System.Windows.Input;
     using Anotar.Serilog;
     using Caliburn.Micro;
-    using Diagram;
-    using DiagramLegend;
-    using Framework;
-    using Framework.Commands;
-    using Framework.Events;
-    using Framework.Settings;
-    using MessageList;
-    using Models;
-    using ServiceControl;
-    using Settings;
+    using ServiceInsight.SequenceDiagram.Diagram;
+    using ServiceInsight.DiagramLegend;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Commands;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
 
     public class SequenceDiagramViewModel : Screen,
         IHandleWithTask<SelectedMessageChanged>,
@@ -77,7 +76,7 @@ namespace ServiceInsight.SequenceDiagram
             base.OnViewLoaded(view);
             this.view = (SequenceDiagramView)view;
         }
-        
+
         IServiceControl ServiceControl => selectedExplorerItem.GetServiceControlClient(clientRegistry);
 
         public ICommand OpenLink { get; }
@@ -144,19 +143,19 @@ namespace ServiceInsight.SequenceDiagram
                 }
 
                 // If we've already displayed this diagram
-                if (loadedConversationId == conversationId && DiagramItems.Any()) 
+                if (loadedConversationId == conversationId && DiagramItems.Any())
                 {
                     RefreshSelection();
                     return;
                 }
 
                 var messages = default(List<StoredMessage>);
-                
+
                 if (ServiceControl != null)
                 {
                     messages = (await ServiceControl.GetConversationById(conversationId)).ToList();
                 }
-                
+
                 if (messages == null || messages.Count == 0)
                 {
                     LogTo.Warning("No messages found for conversation id {0}", conversationId);
@@ -233,7 +232,7 @@ namespace ServiceInsight.SequenceDiagram
                 view?.diagram.BringIntoView(diagramItem);
             }
         }
-        
+
         public void Handle(SelectedExplorerItemChanged @event)
         {
             selectedExplorerItem = @event.SelectedExplorerItem;

@@ -14,14 +14,14 @@ namespace ServiceInsight.LogWindow
     public class LoggingRichTextBoxBehavior : Behavior<RichTextBox>
     {
         public static readonly DependencyProperty LogDataProperty = DependencyProperty.Register(
-            "LogData", typeof(object), typeof(LoggingRichTextBoxBehavior), new FrameworkPropertyMetadata(default(object), LogDataChanged));
+            "LogData", typeof(object), typeof(LoggingRichTextBoxBehavior), new FrameworkPropertyMetadata(default, LogDataChanged));
 
         static void LogDataChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             ((LoggingRichTextBoxBehavior)dependencyObject).OnLogDataChanged(dependencyPropertyChangedEventArgs);
         }
 
-        private Paragraph paragraph;
+        Paragraph paragraph;
         IDisposable logSubscription;
 
         public object LogData
@@ -54,8 +54,7 @@ namespace ServiceInsight.LogWindow
 
         void OnLogDataChanged(DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var logs = dependencyPropertyChangedEventArgs.NewValue as ObservableCollection<LogMessage>;
-            if (logs == null)
+            if (!(dependencyPropertyChangedEventArgs.NewValue is ObservableCollection<LogMessage> logs))
             {
                 paragraph.Inlines.Clear();
                 return;

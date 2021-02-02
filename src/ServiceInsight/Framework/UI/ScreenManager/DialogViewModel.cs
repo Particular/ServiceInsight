@@ -91,8 +91,7 @@
 
         void CloseCommand(object target)
         {
-            var command = target as ChoiceCommand;
-            if (command != null)
+            if (target is ChoiceCommand command)
             {
                 Close(command.Result);
             }

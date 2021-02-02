@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ServiceInsight.ExtensionMethods;
-
 namespace ServiceInsight.ServiceControl
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using ServiceInsight.ExtensionMethods;
+
     public class ServiceControlClientRegistry
     {
         readonly Func<string, IServiceControl> serviceControlFactory;
@@ -15,9 +15,9 @@ namespace ServiceInsight.ServiceControl
         public ServiceControlClientRegistry(Func<string, IServiceControl> serviceControlFactory)
         {
             this.serviceControlFactory = serviceControlFactory;
-            this.serviceControlClientCache = new ConcurrentDictionary<string, IServiceControl>(StringComparer.InvariantCultureIgnoreCase);
+            serviceControlClientCache = new ConcurrentDictionary<string, IServiceControl>(StringComparer.InvariantCultureIgnoreCase);
         }
-        
+
         public void EnsureServiceControlClient(string serviceUrl)
         {
             if (!serviceUrl.IsValidUrl())
@@ -40,28 +40,30 @@ namespace ServiceInsight.ServiceControl
             {
                 return;
             }
-            
+
             var normalizeUrl = GetNormalizedUrl(serviceUrl);
 
             if (serviceControlClientCache.ContainsKey(normalizeUrl))
             {
                 serviceControlClientCache.TryRemove(normalizeUrl, out _);
-            }         
+            }
         }
 
-        private string GetNormalizedUrl(string serviceUrl)
+        string GetNormalizedUrl(string serviceUrl)
         {
             if (serviceUrl.EndsWith("/"))
+            {
                 serviceUrl = serviceUrl.Remove(serviceUrl.Length - 1);
-            
+            }
+
             var builder = new UriBuilder(serviceUrl);
-            
+
             return builder.Uri.ToString();
         }
 
         public virtual async Task<IEnumerable<string>> GetVersions()
         {
-            var versions = new List<string>(); 
+            var versions = new List<string>();
             foreach (var entry in serviceControlClientCache)
             {
                 var version = await entry.Value.GetVersion();

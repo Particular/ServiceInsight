@@ -1,10 +1,9 @@
-using ServiceInsight.MessageList;
-
 namespace ServiceInsight.Framework.Commands
 {
     using Caliburn.Micro;
-    using Events;
-    using Models;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
 
     public class RetryMessageCommand : BaseCommand
     {
@@ -14,7 +13,7 @@ namespace ServiceInsight.Framework.Commands
 
         public RetryMessageCommand(
             IEventAggregator eventAggregator,
-            IWorkNotifier workNotifier, 
+            IWorkNotifier workNotifier,
             MessageListViewModel parent)
         {
             this.eventAggregator = eventAggregator;
@@ -24,8 +23,7 @@ namespace ServiceInsight.Framework.Commands
 
         public override bool CanExecute(object parameter)
         {
-            var message = parameter as StoredMessage;
-            if (message == null)
+            if (!(parameter is StoredMessage message))
             {
                 return false;
             }
@@ -37,8 +35,7 @@ namespace ServiceInsight.Framework.Commands
 
         public override async void Execute(object parameter)
         {
-            var message = parameter as StoredMessage;
-            if (message == null)
+            if (!(parameter is StoredMessage message))
             {
                 return;
             }
@@ -49,7 +46,7 @@ namespace ServiceInsight.Framework.Commands
                 {
                     await parent.ServiceControl.RetryMessage(message.Id, message.InstanceId);
                     message.Status = MessageStatus.RetryIssued;
-                    await eventAggregator.PublishOnUIThreadAsync(new RetryMessage {Id = message.Id});
+                    await eventAggregator.PublishOnUIThreadAsync(new RetryMessage { Id = message.Id });
                 }
             }
 

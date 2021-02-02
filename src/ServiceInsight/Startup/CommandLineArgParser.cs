@@ -1,16 +1,15 @@
-﻿using System;
-using System.IO.Pipes;
-using System.ServiceProcess;
-using Serilog;
-
-namespace ServiceInsight.Startup
+﻿namespace ServiceInsight.Startup
 {
+    using System;
+    using System.IO.Pipes;
+    using System.ServiceProcess;
+    using Serilog;
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
     using Anotar.Serilog;
-    using Models;
+    using ServiceInsight.Models;
     using ServiceInsight.Framework.Settings;
 
     public class CommandLineArgParser
@@ -43,7 +42,10 @@ namespace ServiceInsight.Startup
         {
             var args = environment.GetCommandLineArgs();
 
-            if (args.Length != 2) return;
+            if (args.Length != 2)
+            {
+                return;
+            }
 
             try
             {
@@ -94,7 +96,7 @@ namespace ServiceInsight.Startup
             }
 
             // should be done last
-            if (uri.Length > 0) 
+            if (uri.Length > 0)
             {
                 ParsedOptions.SetEndpointUri(uri[0]);
             }

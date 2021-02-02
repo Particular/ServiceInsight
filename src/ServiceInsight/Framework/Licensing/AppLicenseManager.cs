@@ -70,9 +70,14 @@
                     return DateExpirationStatus.Expiring;
                 case LicenseStatus.InvalidDueToExpiredSubscription:
                     return DateExpirationStatus.Expired;
+                case LicenseStatus.ValidWithExpiredUpgradeProtection:
+                case LicenseStatus.ValidWithExpiringTrial:
+                case LicenseStatus.ValidWithExpiringUpgradeProtection:
+                case LicenseStatus.InvalidDueToExpiredTrial:
+                case LicenseStatus.InvalidDueToExpiredUpgradeProtection:
+                default:
+                    return DateExpirationStatus.NotSet;
             }
-
-            return DateExpirationStatus.NotSet;
         }
 
         public DateExpirationStatus GetUpgradeProtectionStatus()
@@ -88,9 +93,13 @@
                     return DateExpirationStatus.Expiring;
                 case LicenseStatus.InvalidDueToExpiredUpgradeProtection:
                     return DateExpirationStatus.Expired;
+                case LicenseStatus.ValidWithExpiringTrial:
+                case LicenseStatus.ValidWithExpiringSubscription:
+                case LicenseStatus.InvalidDueToExpiredTrial:
+                case LicenseStatus.InvalidDueToExpiredSubscription:
+                default:
+                    return DateExpirationStatus.NotSet;
             }
-
-            return DateExpirationStatus.NotSet;
         }
 
         public DateExpirationStatus GetNonProductionExpirationStatus()
@@ -104,9 +113,14 @@
                     return DateExpirationStatus.Expiring;
                 case LicenseStatus.InvalidDueToExpiredTrial:
                     return DateExpirationStatus.Expired;
+                case LicenseStatus.ValidWithExpiredUpgradeProtection:
+                case LicenseStatus.ValidWithExpiringSubscription:
+                case LicenseStatus.ValidWithExpiringUpgradeProtection:
+                case LicenseStatus.InvalidDueToExpiredSubscription:
+                case LicenseStatus.InvalidDueToExpiredUpgradeProtection:
+                default:
+                    return DateExpirationStatus.NotSet;
             }
-
-            return DateExpirationStatus.NotSet;
         }
 
         public int? GetExpirationRemainingDays()

@@ -121,9 +121,9 @@
             FirstLink = pagedResult.FirstLink;
             LastLink = pagedResult.LastLink;
             PageSize = pagedResult.PageSize;
-            
+
             isSettingUpPaging = false;
-            
+
             NotifyPropertiesChanged();
         }
 
@@ -233,22 +233,20 @@
 
         public async void OnCurrentPageChanged()
         {
-            if (!isResttingPaging && !isSettingUpPaging && CurrentPage >=0 && CurrentPage <= TotalPagesCount)
+            if (!isResttingPaging && !isSettingUpPaging && CurrentPage >= 0 && CurrentPage <= TotalPagesCount)
             {
                 await Parent.RefreshMessages();
-            }            
+            }
         }
 
         public virtual void Handle(SelectedExplorerItemChanged @event)
         {
-            var endpointNode = @event.SelectedExplorerItem as EndpointExplorerItem;
-            if (endpointNode != null)
+            if (@event.SelectedExplorerItem is EndpointExplorerItem endpointNode)
             {
                 SelectedEndpoint = endpointNode.Endpoint;
             }
 
-            var serviceNode = @event.SelectedExplorerItem as ServiceControlExplorerItem;
-            if (serviceNode != null)
+            if (@event.SelectedExplorerItem is ServiceControlExplorerItem)
             {
                 SelectedEndpoint = null;
                 SearchEnabled = true;

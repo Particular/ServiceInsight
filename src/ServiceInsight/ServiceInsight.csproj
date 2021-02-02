@@ -51,7 +51,6 @@
     <PackageReference Include="Mindscape.Raygun4Net" Version="5.12.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="ObservablePropertyChanged" Version="0.1.3" />
-    <PackageReference Include="Particular.CodeRules" Version="0.8.0" PrivateAssets="All" />
     <PackageReference Include="Particular.Licensing.Sources" Version="3.4.0" PrivateAssets="All" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Rx-Core" Version="2.2.5" />
@@ -90,7 +89,6 @@
     <Resource Include="Resources\**\*.*" />
     <Resource Include="Images\**\*.png" />
     <Resource Include="*.png" />
-    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
     <Resource Include="ServiceInsight.ico" />
   </ItemGroup>
 

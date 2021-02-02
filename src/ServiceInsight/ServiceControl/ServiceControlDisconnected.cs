@@ -1,7 +1,7 @@
-using ServiceInsight.Explorer.EndpointExplorer;
-
 namespace ServiceInsight.ServiceControl
 {
+    using ServiceInsight.Explorer.EndpointExplorer;
+
     public class ServiceControlDisconnected
     {
         public string ServiceUrl => ExplorerItem.Url;

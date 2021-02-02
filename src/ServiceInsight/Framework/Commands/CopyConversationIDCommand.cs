@@ -14,14 +14,12 @@ namespace ServiceInsight.Framework.Commands
 
         public override bool CanExecute(object parameter)
         {
-            var message = parameter as StoredMessage;
-            return message != null;
+            return parameter is StoredMessage;
         }
 
         public override void Execute(object parameter)
         {
-            var message = parameter as StoredMessage;
-            if (message == null)
+            if (!(parameter is StoredMessage message))
             {
                 return;
             }

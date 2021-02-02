@@ -3,12 +3,12 @@ namespace ServiceInsight.Tests.ConversationsData
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
-    using global::ServiceInsight.SequenceDiagram;
-    using global::ServiceInsight.SequenceDiagram.Diagram;
     using NSubstitute;
     using NUnit.Framework;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Models;
+    using ServiceInsight.SequenceDiagram;
+    using ServiceInsight.SequenceDiagram.Diagram;
 
     abstract class SequenceDiagramModelCreatorTestsFromJson
     {

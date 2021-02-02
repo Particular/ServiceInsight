@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace ServiceInsight.Explorer.EndpointExplorer
+﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
+    using System.Collections.Generic;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Caliburn.Micro;
-    using ExtensionMethods;
-    using Framework;
-    using Framework.Events;
-    using Framework.Settings;
-    using ServiceControl;
-    using Settings;
-    using Shell;
-    using Startup;
+    using ServiceInsight.ExtensionMethods;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Settings;
+    using ServiceInsight.Shell;
+    using ServiceInsight.Startup;
 
     public class EndpointExplorerViewModel : Screen,
         IHandle<RequestSelectingEndpoint>,
@@ -25,7 +24,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
         readonly CommandLineArgParser commandLineParser;
         readonly ServiceControlClientRegistry clientRegistry;
         bool isStartingUp;
-        
+
         public EndpointExplorerViewModel(
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
@@ -58,9 +57,9 @@ namespace ServiceInsight.Explorer.EndpointExplorer
             var selected = SelectedNode;
             if (selected != null)
             {
-                if (selected is ServiceControlExplorerItem)
+                if (selected is ServiceControlExplorerItem item)
                 {
-                    return (ServiceControlExplorerItem)selected;
+                    return item;
                 }
 
                 if (selected is EndpointExplorerItem)
@@ -75,8 +74,8 @@ namespace ServiceInsight.Explorer.EndpointExplorer
             }
 
             return null;
-        } 
-        
+        }
+
         public IList<ServiceControlExplorerItem> ServiceControls => Items.OfType<ServiceControlExplorerItem>().ToList();
 
         protected override async void OnActivate()
@@ -86,7 +85,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
             try
             {
                 isStartingUp = true;
-                
+
                 if (IsConnected)
                 {
                     return;
@@ -176,8 +175,10 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 available = await serviceControl.IsAlive();
             }
 
-            if (!available) 
+            if (!available)
+            {
                 return;
+            }
 
             using (workNotifier.NotifyOfWork($"Connecting to ServiceControl at {url}"))
             {
@@ -187,7 +188,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 SelectDefaultEndpoint(node);
             }
         }
-        
+
         public async Task RefreshAllEndpoints()
         {
             foreach (var serviceControlExplorerItem in ServiceControls)
@@ -211,7 +212,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
             {
                 return;
             }
-            
+
             serviceControlNode.Children.Clear();
 
             var serviceControl = clientRegistry.GetServiceControl(serviceControlNode.Url);
@@ -230,13 +231,13 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 serviceControlNode.Children.Add(new AuditEndpointExplorerItem(serviceControlNode, instances.First(), tooltip));
             }
         }
-        
+
         public async Task DisconnectSelectedServiceControl()
         {
             var serviceControl = GetSelectedServiceControl();
             await DisconnectServiceControl(serviceControl);
         }
-        
+
         public async Task DisconnectServiceControl(ServiceControlExplorerItem serviceControlNode)
         {
             if (serviceControlNode != null)
@@ -246,9 +247,9 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 {
                     Items.Remove(serviceControlNode);
                 }
-                
+
                 clientRegistry.RemoveServiceControlClient(serviceControlNode.Url);
-                
+
                 await eventAggregator.PublishOnUIThreadAsync(new ServiceControlDisconnected
                 {
                     ExplorerItem = serviceControlNode
@@ -264,7 +265,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
 
         public void Handle(RequestSelectingEndpoint message)
         {
-            var serviceControlNode = GetSelectedServiceControl(); 
+            var serviceControlNode = GetSelectedServiceControl();
             if (serviceControlNode?.EndpointExists(message.Endpoint) == true)
             {
                 var node = serviceControlNode.GetEndpointNode(message.Endpoint);

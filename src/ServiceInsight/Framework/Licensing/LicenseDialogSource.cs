@@ -2,11 +2,11 @@
 {
     using Particular.Licensing;
 
-    internal class LicenseDialogSource : LicenseSource
+    class LicenseDialogSource : LicenseSource
     {
-        private string licenseText;
+        string licenseText;
 
-        private LicenseDialogSource(string licenseText)
+        LicenseDialogSource(string licenseText)
             : base("license dialog")
         {
             this.licenseText = licenseText;

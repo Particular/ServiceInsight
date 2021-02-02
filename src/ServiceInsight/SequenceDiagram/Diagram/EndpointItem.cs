@@ -9,7 +9,7 @@
     public class EndpointItem : DiagramItem, IEquatable<EndpointItem>
     {
         HashSet<EndpointHost> hosts;
-        
+
         public EndpointItem(string name, string host, string id, string version = null)
         {
             FullName = Name = name;
@@ -18,7 +18,7 @@
             {
                 new EndpointHost(host, id, version)
             };
-            
+
             Timeline = new EndpointTimeline
             {
                 Endpoint = this
@@ -34,12 +34,12 @@
         public IReadOnlyList<EndpointHost> Hosts => hosts.ToList();
 
         public string HostId => string.Join(",", Hosts.Select(h => h.HostId));
-        
+
         public string Host => string.Join(",", Hosts.Select(h => h.Host));
 
         public string Version => GetVersions();
 
-        private string GetVersions()
+        string GetVersions()
         {
             var versions = string.Join(",", Hosts.Select(h => h.Versions));
             return string.IsNullOrEmpty(versions) ? null : versions;
@@ -67,17 +67,36 @@
 
         public bool Equals(EndpointItem other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            
+            if (other is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
             return FullName == other.FullName;
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
             return Equals((EndpointItem)obj);
         }
 
@@ -90,8 +109,8 @@
     [DebuggerDisplay("{Host}")]
     public class EndpointHost : IEquatable<EndpointHost>
     {
-        private HashSet<string> hostVersions;
-        
+        HashSet<string> hostVersions;
+
         public EndpointHost(string host, string hostId, string version = null)
         {
             Host = host;
@@ -113,16 +132,36 @@
 
         public bool Equals(EndpointHost other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (other is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
             return HostId == other.HostId && Host == other.Host;
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
             return Equals((EndpointHost)obj);
         }
 

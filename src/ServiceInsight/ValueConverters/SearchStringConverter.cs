@@ -14,8 +14,7 @@
                 return Binding.DoNothing;
             }
 
-            var stringValue = value as string;
-            if (stringValue == null)
+            if (!(value is string stringValue))
             {
                 return DependencyProperty.UnsetValue;
             }

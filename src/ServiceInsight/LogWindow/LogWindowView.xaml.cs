@@ -18,8 +18,7 @@
 
         void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var vm = DataContext as LogWindowViewModel;
-            if (vm == null)
+            if (!(DataContext is LogWindowViewModel vm))
             {
                 return;
             }

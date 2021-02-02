@@ -10,12 +10,11 @@
     [DebuggerDisplay("Handled '{Name}' and resulted in {State} at {HandledAt}")]
     public class Handler : DiagramItem, IComparable<Handler>
     {
-        readonly string id;
         Arrow arrowIn;
 
         public Handler(string id, IMessageCommandContainer container)
         {
-            this.id = id;
+            ID = id;
             ChangeCurrentMessage = container?.ChangeSelectedMessageCommand;
             Out = new List<Arrow>();
         }
@@ -68,7 +67,7 @@
 
         public Direction EffectiveArrowDirection => Out?.FirstOrDefault()?.Direction == Direction.Left ? Direction.Right : Direction.Left;
 
-        public string ID => id;
+        public string ID { get; }
 
         protected override void OnIsFocusedChanged()
         {

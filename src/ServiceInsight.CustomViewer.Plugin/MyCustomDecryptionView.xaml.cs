@@ -1,11 +1,11 @@
-﻿using System.Windows.Media;
-using ICSharpCode.AvalonEdit.Folding;
-using ICSharpCode.AvalonEdit.Indentation;
-using ServiceInsight.MessageViewers;
-using ServiceInsight.Models;
-
-namespace ServiceInsight.CustomViewer.Plugin
+﻿namespace ServiceInsight.CustomViewer.Plugin
 {
+    using System.Windows.Media;
+    using ICSharpCode.AvalonEdit.Folding;
+    using ICSharpCode.AvalonEdit.Indentation;
+    using ServiceInsight.MessageViewers;
+    using ServiceInsight.Models;
+
     public partial class MyCustomDecryptionView : IDisplayMessageBody
     {
         readonly FoldingManager foldingManager;
@@ -19,7 +19,7 @@ namespace ServiceInsight.CustomViewer.Plugin
             SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display);
             document.TextArea.IndentationStrategy = new DefaultIndentationStrategy();
         }
-        
+
         public virtual void Display(StoredMessage message)
         {
             document.Document.Text = message?.Body?.Text;

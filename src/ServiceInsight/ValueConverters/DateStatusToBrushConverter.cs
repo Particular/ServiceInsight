@@ -12,9 +12,8 @@
         {
             var app = Application.Current;
 
-            if (value is DateExpirationStatus)
+            if (value is DateExpirationStatus status)
             {
-                var status = (DateExpirationStatus)value;
                 if (status == DateExpirationStatus.Expired)
                 {
                     return app?.TryFindResource("ErrorStatusBrush");

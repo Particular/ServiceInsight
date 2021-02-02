@@ -23,7 +23,8 @@
             var settingProvider = Substitute.For<ISettingsProvider>();
 
             // required for async command
-            var dispatcher = Dispatcher.CurrentDispatcher;
+            _ = Dispatcher.CurrentDispatcher;
+
             viewModel = new SearchBarViewModel(argParser, settingProvider);
         }
 

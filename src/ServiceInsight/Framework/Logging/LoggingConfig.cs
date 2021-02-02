@@ -42,9 +42,5 @@
         {
             LogManager.GetLog = type => new CaliburnMicroLogAdapter(Log.ForContext(type));
         }
-
-        static void SetupReactiveUILogging()
-        {
-        }
     }
 }

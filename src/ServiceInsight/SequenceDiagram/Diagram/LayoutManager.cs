@@ -15,7 +15,7 @@
                 return;
             }
 
-            diagram.Padding = default(Thickness);
+            diagram.Padding = default;
 
             var endpointLayout = new EndpointItemLayout(diagram);
             var handlerLayout = new HandlerLayout(diagram);
@@ -25,35 +25,30 @@
 
             foreach (var item in diagram.DiagramItems)
             {
-                var endpoint = item as EndpointItem;
-                if (endpoint != null)
+                if (item is EndpointItem endpoint)
                 {
                     endpointLayout.Position(endpoint);
                     continue;
                 }
 
-                var handler = item as Handler;
-                if (handler != null)
+                if (item is Handler handler)
                 {
                     handlerLayout.Position(handler);
                     continue;
                 }
 
-                var timeline = item as EndpointTimeline;
-                if (timeline != null)
+                if (item is EndpointTimeline timeline)
                 {
                     endpointTimelineLayout.Position(timeline);
                     continue;
                 }
 
-                var arrow = item as Arrow;
-                if (arrow != null)
+                if (item is Arrow arrow)
                 {
                     arrowLayout.Position(arrow);
                 }
 
-                var route = item as MessageProcessingRoute;
-                if (route != null)
+                if (item is MessageProcessingRoute route)
                 {
                     processRouteLayout.Position(route);
                 }
@@ -166,7 +161,9 @@
 
                 arrowVisual.X = fromHandlerVisual.X;
                 var arrowIndex = fromHandler.Out.IndexOf(arrow) + 1;
+#pragma warning disable IDE0047 // Remove unnecessary parentheses (false positive)
                 arrowVisual.Y = fromHandlerVisual.Y + ((fromHandlerVisual.Height / (fromHandler.Out.Count() + 1)) * arrowIndex) - 15;
+#pragma warning restore IDE0047 // Remove unnecessary parentheses (false positive)
 
                 if (fromEndpointIndex == toEndpointIndex)
                 {
@@ -288,7 +285,6 @@
             double firstX;
             int index;
             DiagramVisualItem lastEndpoint;
-            double maxHeight;
             Dictionary<EndpointItem, int> position = new Dictionary<EndpointItem, int>();
 
             public EndpointItemLayout(IDiagram diagram)
@@ -297,7 +293,7 @@
                 SetMaxHeight();
             }
 
-            public double MaxHeight => maxHeight;
+            public double MaxHeight { get; private set; }
 
             public void Position(EndpointItem endpoint)
             {
@@ -340,7 +336,7 @@
                                      .Where(e => e != null)
                                      .ToList();
 
-                maxHeight = visualItems.Select(endpointVisual => endpointVisual.ActualHeight)
+                MaxHeight = visualItems.Select(endpointVisual => endpointVisual.ActualHeight)
                                        .DefaultIfEmpty()
                                        .Max();
             }

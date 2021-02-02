@@ -26,7 +26,7 @@
             }
         }
 
-        private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
+        void OnCloseButtonClicked(object sender, RoutedEventArgs e)
         {
             DialogResult = DialogResultBehavior.GetResult(this);
         }

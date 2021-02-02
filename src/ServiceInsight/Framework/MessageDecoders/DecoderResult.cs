@@ -11,7 +11,7 @@
     {
         public DecoderResult()
         {
-            Value = default(T);
+            Value = default;
             IsParsed = false;
         }
 

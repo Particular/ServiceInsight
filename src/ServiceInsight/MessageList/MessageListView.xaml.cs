@@ -69,9 +69,9 @@
 
         void Grid_OnCustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
         {
-            if (e.Value is TimeSpan)
+            if (e.Value is TimeSpan span)
             {
-                e.DisplayText = ((TimeSpan)e.Value).SubmillisecondHumanize();
+                e.DisplayText = span.SubmillisecondHumanize();
             }
             if (e.Value is DateTime? && (DateTime?)e.Value == DateTime.MinValue)
             {
@@ -81,9 +81,7 @@
 
         async void Grid_OnStartSorting(object sender, RoutedEventArgs e)
         {
-            var grid = e.Source as GridControl;
-
-            if (grid == null || Model == null || Model.WorkInProgress)
+            if (!(e.Source is GridControl grid) || Model == null || Model.WorkInProgress)
             {
                 return;
             }

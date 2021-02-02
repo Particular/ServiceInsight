@@ -1,8 +1,8 @@
-﻿using ServiceInsight.Models;
-using ServiceInsight.ServiceControl;
-
-namespace ServiceInsight.MessageViewers.CustomMessageViewer
+﻿namespace ServiceInsight.MessageViewers.CustomMessageViewer
 {
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
+
     class NopViewer : ICustomMessageBodyViewer
     {
         public void Display(StoredMessage selectedMessage)

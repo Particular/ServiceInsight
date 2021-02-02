@@ -18,7 +18,7 @@
             ID = saga.SagaId;
             SagaType = TypeHumanizer.ToName(saga.SagaType);
             IsSagaCompleted = saga.ChangeStatus == "Completed";
-            IsSagaInitiated = string.IsNullOrEmpty(triggeringMessage.GetHeaderByKey(MessageHeaderKeys.SagaId)) && 
+            IsSagaInitiated = string.IsNullOrEmpty(triggeringMessage.GetHeaderByKey(MessageHeaderKeys.SagaId)) &&
                               !string.IsNullOrEmpty(triggeringMessage.GetHeaderByKey(MessageHeaderKeys.OriginatedSagaId));
         }
 
@@ -99,10 +99,10 @@
 
         public void OnShowEndpointsChanged()
         {
-            Bounds = new Rect(default(Point), new Size(Bounds.Width, CalculateNodeHeight()));
+            Bounds = new Rect(default, new Size(Bounds.Width, CalculateNodeHeight()));
         }
 
-        private double CalculateNodeHeight()
+        double CalculateNodeHeight()
         {
             return BaseNodeHeight + (SagaInvocations.Count * 20) + (ShowEndpoints ? EndpointsPartHeight : 0);
         }
@@ -143,7 +143,7 @@
         }
 
         public bool HasFailed => Message.Status == MessageStatus.Failed ||
-                                 Message.Status == MessageStatus.RepeatedFailure || 
+                                 Message.Status == MessageStatus.RepeatedFailure ||
                                  Message.Status == MessageStatus.ArchivedFailure;
 
         public bool HasRetried => Message.Status == MessageStatus.RetryIssued;

@@ -1,10 +1,10 @@
-﻿using Autofac;
-
-namespace ServiceInsight.MessageViewers.CustomMessageViewer
+﻿namespace ServiceInsight.MessageViewers.CustomMessageViewer
 {
+    using Autofac;
+
     sealed class CustomMessageViewerResolver : ICustomMessageViewerResolver
     {
-        private readonly ILifetimeScope autofacContainer;
+        readonly ILifetimeScope autofacContainer;
 
         public CustomMessageViewerResolver(ILifetimeScope autofacContainer)
         {

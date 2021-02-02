@@ -1,7 +1,6 @@
-﻿using System.IO.Pipes;
-
-namespace ServiceInsight.Startup
+﻿namespace ServiceInsight.Startup
 {
+    using System.IO.Pipes;
     using System;
     using System.IO;
     using System.Net;
@@ -9,9 +8,9 @@ namespace ServiceInsight.Startup
     using System.Threading;
     using System.Threading.Tasks;
     using Caliburn.Micro;
-    using Framework.Events;
-    using Framework.Settings;
-    
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Settings;
+
     public class StartupConfigListener
     {
         public static async Task Start(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellation = default)
@@ -38,7 +37,7 @@ namespace ServiceInsight.Startup
                 }
             }
         }
-        
+
         static async Task Handle(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellation)
         {
             using (var pipe = new NamedPipeServerStream("ServiceInsight", PipeDirection.In, 1, PipeTransmissionMode.Byte))
@@ -51,7 +50,7 @@ namespace ServiceInsight.Startup
                     var args = await reader.ReadToEndAsync();
                     if (args != null)
                     {
-                        parser.Parse(new[] {"", args});
+                        parser.Parse(new[] { "", args });
 
                         await eventAggregator.PublishOnUIThreadAsync(new ConfigurationUpdated(parser.ParsedOptions));
                     }
@@ -61,9 +60,9 @@ namespace ServiceInsight.Startup
             }
         }
 
-        private static void Disconnect(NamedPipeServerStream pipe)
+        static void Disconnect(NamedPipeServerStream pipe)
         {
-            if (pipe?.IsConnected == true) 
+            if (pipe?.IsConnected == true)
             {
                 pipe.Disconnect();
             }

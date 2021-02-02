@@ -67,10 +67,8 @@ namespace ServiceInsight.SequenceDiagram
                     endpoints.Add(processingEndpoint);
                 }
 
-                Handler sendingHandler;
-                Handler processingHandler;
 
-                if (handlerRegistry.TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out sendingHandler))
+                if (handlerRegistry.TryRegisterHandler(CreateSendingHandler(message, sendingEndpoint), out Handler sendingHandler))
                 {
                     firstOrderHandlers.Add(sendingHandler);
                     sendingEndpoint.Handlers.Add(sendingHandler);
@@ -78,14 +76,14 @@ namespace ServiceInsight.SequenceDiagram
 
                 sendingHandler.UpdateProcessedAtGuess(message.TimeSent);
 
-                if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out processingHandler))
+                if (handlerRegistry.TryRegisterHandler(CreateProcessingHandler(message, processingEndpoint), out Handler processingHandler))
                 {
                     firstOrderHandlers.Add(processingHandler);
                     processingEndpoint.Handlers.Add(processingHandler);
                 }
                 else
                 {
-                    UpdateProcessingHandler(processingHandler, message, processingEndpoint);
+                    UpdateProcessingHandler(processingHandler, message);
                 }
 
                 var arrow = CreateArrow(message);
@@ -152,12 +150,12 @@ namespace ServiceInsight.SequenceDiagram
                 Endpoint = processingEndpoint
             };
 
-            UpdateProcessingHandler(handler, message, processingEndpoint);
+            UpdateProcessingHandler(handler, message);
 
             return handler;
         }
 
-        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message, EndpointItem processingEndpoint)
+        void UpdateProcessingHandler(Handler processingHandler, StoredMessage message)
         {
             processingHandler.ProcessedAt = message.ProcessedAt;
             processingHandler.ProcessingTime = message.ProcessingTime;
@@ -217,8 +215,7 @@ namespace ServiceInsight.SequenceDiagram
             public void Register(EndpointItem item)
             {
                 var key = item.FullName;
-                EndpointItem endpoint; 
-                if (!store.TryGetValue(key, out endpoint))
+                if (!store.TryGetValue(key, out EndpointItem endpoint))
                 {
                     store[key] = item;
                     endpoint = item;
@@ -245,9 +242,8 @@ namespace ServiceInsight.SequenceDiagram
 
             public bool TryRegisterHandler(Handler newHandler, out Handler handler)
             {
-                Handler existingHandler;
                 var key = Tuple.Create(newHandler.ID, newHandler.Endpoint);
-                if (handlersLookup.TryGetValue(key, out existingHandler))
+                if (handlersLookup.TryGetValue(key, out Handler existingHandler))
                 {
                     handler = existingHandler;
                     return false;
