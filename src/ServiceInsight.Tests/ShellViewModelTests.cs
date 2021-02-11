@@ -87,6 +87,7 @@
                         app,
                         windowManager,
                         Substitute.For<IApplicationVersionService>(),
+                        logWindow,
                         endpointExplorer,
                         messageList,
                         () => Substitute.For<ServiceControlConnectionViewModel>(),
@@ -97,14 +98,13 @@
                         licenseManager,
                         messageFlow,
                         sagaWindow,
-                        messageBodyView,
                         headerView,
                         sequenceDiagramView,
                         settingsProvider,
                         versionUpdateChecker,
                         messageProperties,
-                        logWindow,
-                        commandLineArgParser);
+                        commandLineArgParser,
+                        messageBodyView);
 
             ((IViewAware)shell).AttachView(view);
         }
