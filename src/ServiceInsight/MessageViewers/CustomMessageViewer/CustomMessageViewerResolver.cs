@@ -1,5 +1,7 @@
 ﻿namespace ServiceInsight.MessageViewers.CustomMessageViewer
 {
+    using System;
+    using Anotar.Serilog;
     using Autofac;
 
     sealed class CustomMessageViewerResolver : ICustomMessageViewerResolver
@@ -13,7 +15,22 @@
 
         public ICustomMessageBodyViewer GetCustomMessageBodyViewer()
         {
-            return autofacContainer.ResolveOptional<ICustomMessageBodyViewer>() ?? new NopViewer();
+            try
+            {
+                var viewer = autofacContainer.ResolveOptional<ICustomMessageBodyViewer>();
+
+                if (viewer != null)
+                {
+                    LogTo.Information("Loaded {0} custom message viewer from the plugin.", viewer.GetType());
+                }
+
+                return viewer ?? new NopViewer();
+            }
+            catch (Exception ex)
+            {
+                LogTo.Fatal(ex, "Failed to load the custom viewer plugin.");
+                return new NopViewer();
+            }
         }
     }
 }
