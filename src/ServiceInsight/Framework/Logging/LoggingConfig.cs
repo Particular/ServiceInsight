@@ -19,9 +19,7 @@
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-
-                // Turn off some of Caliburn.Micro's chattiness
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(Screen).FullName)(le) && le.Level <= LogEventLevel.Information)
+                .Filter.ByExcluding(le => Matching.FromSource(typeof(Screen).FullName)(le) && le.Level <= LogEventLevel.Information)  // Turn off some of Caliburn.Micro's chattiness
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(Caliburn.Micro.Action).FullName)(le) && le.Level <= LogEventLevel.Information)
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(ActionMessage).FullName)(le) && le.Level <= LogEventLevel.Information)
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(ViewModelBinder).FullName)(le) && le.Level <= LogEventLevel.Information)
