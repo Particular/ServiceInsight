@@ -2,15 +2,10 @@
 {
     using System;
     using System.IO.Pipes;
-    using System.ServiceProcess;
-    using Serilog;
     using System.Collections.Generic;
     using System.IO;
-    using System.Net;
-    using System.Net.Sockets;
     using Anotar.Serilog;
     using ServiceInsight.Models;
-    using ServiceInsight.Framework.Settings;
 
     public class CommandLineArgParser
     {

@@ -58,8 +58,6 @@
                 yield return "DevExpress";
                 yield return "Serilog";
                 yield return "Mindscape";
-                yield return "System";
-                yield return "Microsoft";
                 yield return "RestSharp";
                 yield return "GongSolutions";
                 yield return "ICSharpCode";

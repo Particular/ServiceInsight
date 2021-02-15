@@ -2,11 +2,14 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using Caliburn.Micro;
     using LogWindow;
+    using MessageViewers.CustomMessageViewer;
     using Serilog;
+    using Serilog.Core;
     using Serilog.Events;
     using Serilog.Filters;
     using ServiceControl;
@@ -19,9 +22,7 @@
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-
-                // Turn off some of Caliburn.Micro's chattiness
-                .Filter.ByExcluding(le => Matching.FromSource(typeof(Screen).FullName)(le) && le.Level <= LogEventLevel.Information)
+                .Filter.ByExcluding(le => Matching.FromSource(typeof(Screen).FullName)(le) && le.Level <= LogEventLevel.Information)  // Turn off some of Caliburn.Micro's chattiness
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(Caliburn.Micro.Action).FullName)(le) && le.Level <= LogEventLevel.Information)
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(ActionMessage).FullName)(le) && le.Level <= LogEventLevel.Information)
                 .Filter.ByExcluding(le => Matching.FromSource(typeof(ViewModelBinder).FullName)(le) && le.Level <= LogEventLevel.Information)
@@ -30,7 +31,7 @@
                 .WriteTo.Trace(outputTemplate: "[{Level}] ({SourceContext}) {Message}{NewLine}{Exception}")
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
-                    .Filter.ByIncludingOnly(Matching.FromSource<DefaultServiceControl>())
+                    .Filter.ByIncludingOnly(MatchingTypes(typeof(DefaultServiceControl), typeof(CustomMessageViewerResolver)))
                     .WriteTo.Observers(logEvents => logEvents
                         .ObserveOn(TaskPoolScheduler.Default)
                         .Do(LogWindowViewModel.LogObserver)
@@ -41,6 +42,16 @@
         public static void SetupCaliburnMicroLogging()
         {
             LogManager.GetLog = type => new CaliburnMicroLogAdapter(Log.ForContext(type));
+        }
+
+        static Func<LogEvent, bool> MatchingTypes(params Type[] type)
+        {
+            var scalars = type.Select(t => new ScalarValue(t.FullName));
+
+            return e =>
+            {
+                return scalars.Any(s => e.Properties.TryGetValue(Constants.SourceContextPropertyName, out var propertyValue) && s.Equals(propertyValue));
+            };
         }
     }
 }

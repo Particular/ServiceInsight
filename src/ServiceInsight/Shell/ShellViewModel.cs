@@ -59,6 +59,7 @@
             IAppCommands appCommander,
             IWindowManagerEx windowManager,
             IApplicationVersionService applicationVersionService,
+            LogWindowViewModel logWindow,
             EndpointExplorerViewModel endpointExplorer,
             MessageListViewModel messages,
             Func<ServiceControlConnectionViewModel> serviceControlConnection,
@@ -69,14 +70,13 @@
             AppLicenseManager licenseManager,
             MessageFlowViewModel messageFlow,
             SagaWindowViewModel sagaWindow,
-            MessageBodyViewModel messageBodyViewer,
             MessageHeadersViewModel messageHeadersViewer,
             SequenceDiagramViewModel sequenceDiagramViewer,
             ISettingsProvider settingsProvider,
             IVersionUpdateChecker versionUpdateChecker,
             MessagePropertiesViewModel messageProperties,
-            LogWindowViewModel logWindow,
-            CommandLineArgParser commandLineArgParser)
+            CommandLineArgParser commandLineArgParser,
+            MessageBodyViewModel messageBodyViewer)
         {
             this.appCommander = appCommander;
             this.windowManager = windowManager;
