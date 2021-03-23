@@ -49,7 +49,7 @@
     <PackageReference Include="Gong-wpf-dragdrop" Version="2.3.2" />
     <PackageReference Include="Humanizer" Version="2.8.26" />
     <PackageReference Include="Mindscape.Raygun4Net" Version="5.12.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="ObservablePropertyChanged" Version="0.1.3" />
     <PackageReference Include="Particular.Licensing.Sources" Version="3.5.0" PrivateAssets="All" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
