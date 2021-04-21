@@ -136,16 +136,20 @@
 
             if (valid)
             {
-                clientRegistry.EnsureServiceControlClient(serviceUrl);
-                var service = clientRegistry.GetServiceControl(serviceUrl);
+                var address = serviceUrl;
+                var service = clientRegistry.Create(address);
 
-                Version = await service.GetVersion();
+                (Version, address) = await service.GetVersion();
 
                 if (Version == null)
                 {
-                    clientRegistry.RemoveServiceControlClient(serviceUrl);
+                    clientRegistry.RemoveServiceControlClient(address);
                     ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
                     valid = false;
+                }
+                else
+                {
+                    clientRegistry.EnsureServiceControlClient(address);
                 }
             }
 

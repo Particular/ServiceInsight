@@ -29,9 +29,15 @@ namespace ServiceInsight.ServiceControl
 
             if (!serviceControlClientCache.ContainsKey(normalizeUrl))
             {
-                var serviceControl = serviceControlFactory(normalizeUrl);
+                var serviceControl = Create(normalizeUrl);
                 serviceControlClientCache.TryAdd(normalizeUrl, serviceControl);
             }
+        }
+
+        public IServiceControl Create(string url)
+        {
+            var serviceControl = serviceControlFactory(url);
+            return serviceControl;
         }
 
         public void RemoveServiceControlClient(string serviceUrl)
@@ -66,7 +72,7 @@ namespace ServiceInsight.ServiceControl
             var versions = new List<string>();
             foreach (var entry in serviceControlClientCache)
             {
-                var version = await entry.Value.GetVersion();
+                var (version, _) = await entry.Value.GetVersion();
                 versions.Add(version);
             }
             return versions;

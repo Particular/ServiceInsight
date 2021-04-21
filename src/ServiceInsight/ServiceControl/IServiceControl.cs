@@ -8,9 +8,9 @@ namespace ServiceInsight.ServiceControl
 
     public interface IServiceControl
     {
-        Task<bool> IsAlive();
+        Task<(bool, string)> IsAlive();
 
-        Task<string> GetVersion();
+        Task<(string, string)> GetVersion();
 
         Task RetryMessage(string messageId, string instanceId);
 

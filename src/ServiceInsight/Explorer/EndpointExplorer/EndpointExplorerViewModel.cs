@@ -168,11 +168,12 @@
             }
 
             var available = false;
-            using (workNotifier.NotifyOfWork($"Verifying ServiceControl availability at {url}"))
+            var address = url;
+
+            using (workNotifier.NotifyOfWork($"Verifying ServiceControl availability at {address}"))
             {
-                clientRegistry.EnsureServiceControlClient(url);
-                var serviceControl = clientRegistry.GetServiceControl(url);
-                available = await serviceControl.IsAlive();
+                var serviceControl = clientRegistry.Create(url);
+                (available, address) = await serviceControl.IsAlive();
             }
 
             if (!available)
@@ -180,9 +181,11 @@
                 return;
             }
 
-            using (workNotifier.NotifyOfWork($"Connecting to ServiceControl at {url}"))
+            clientRegistry.EnsureServiceControlClient(address);
+
+            using (workNotifier.NotifyOfWork($"Connecting to ServiceControl at {address}"))
             {
-                var node = AddServiceNode(url);
+                var node = AddServiceNode(address);
                 await RefreshEndpoints(node);
                 ExpandServiceControlNode(node);
                 SelectDefaultEndpoint(node);
