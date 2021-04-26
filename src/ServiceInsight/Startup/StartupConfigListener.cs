@@ -13,18 +13,18 @@
 
     public class StartupConfigListener
     {
-        public static async Task Start(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellation = default)
+        public static async Task Start(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellationToken = default)
         {
             while (true)
             {
-                if (cancellation.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested)
                 {
                     break;
                 }
 
                 try
                 {
-                    await Handle(eventAggregator, parser, cancellation);
+                    await Handle(eventAggregator, parser, cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {
@@ -38,12 +38,12 @@
             }
         }
 
-        static async Task Handle(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellation)
+        static async Task Handle(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellationToken)
         {
             using (var pipe = new NamedPipeServerStream("ServiceInsight", PipeDirection.In, 1, PipeTransmissionMode.Byte))
-            using (cancellation.Register(() => Disconnect(pipe)))
+            using (cancellationToken.Register(() => Disconnect(pipe)))
             {
-                await pipe.WaitForConnectionAsync(cancellation);
+                await pipe.WaitForConnectionAsync(cancellationToken);
 
                 using (var reader = new StreamReader(pipe))
                 {
