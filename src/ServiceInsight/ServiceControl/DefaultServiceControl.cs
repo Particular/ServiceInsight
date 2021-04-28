@@ -80,25 +80,48 @@ namespace ServiceInsight.ServiceControl
             cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", settings.CacheSize.ToString() } });
         }
 
-        public async Task<bool> IsAlive()
+        public async Task<(bool, string)> IsAlive()
         {
-            var version = await GetVersion().ConfigureAwait(false);
+            var (version, address) = await GetVersion().ConfigureAwait(false);
 
             if (version != null)
             {
                 RaygunUtility.LastServiceControlVersion = version;
             }
 
-            return version != null;
+            return (version != null, address);
         }
 
-        public async Task<string> GetVersion()
+        public async Task<(string, string)> GetVersion()
         {
             var request = new RestRequestWithCache(RestRequestWithCache.CacheStyle.Immutable);
+            var restClient = CreateClient();
+            restClient.FollowRedirects = false;
 
-            var header = await Execute(request, restResponse => restResponse.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion)).ConfigureAwait(false);
+            LogRequest(request);
 
-            return header?.Value.ToString();
+            var address = restClient.BaseUrl.ToString();
+            var response = await restClient.ExecuteAsync(request);
+
+            CleanResponse(response);
+
+            if (response.StatusCode == HttpStatusCode.Redirect ||
+                response.StatusCode == HttpStatusCode.TemporaryRedirect ||
+                response.StatusCode == HttpStatusCode.MovedPermanently ||
+                response.StatusCode == HttpStatusCode.Found)
+            {
+                var location = response.Headers.SingleOrDefault(h => string.Equals(h.Name, "Location", StringComparison.OrdinalIgnoreCase));
+                if (location?.Value != null)
+                {
+                    address = location.Value.ToString();
+                    var redirectedClient = CreateClient(address);
+                    response = await redirectedClient.ExecuteAsync(request);
+                }
+            }
+
+            var header = response.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion);
+
+            return (header?.Value?.ToString(), address);
         }
 
         Task<ServiceControlRootUrls> GetRootUrls()
@@ -359,7 +382,7 @@ namespace ServiceInsight.ServiceControl
                         PrevLink = prev,
                         LastLink = last,
                         FirstLink = first,
-                        TotalCount = int.Parse(response.Headers.First(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
+                        TotalCount = int.Parse(response.Headers.Single(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
                         PageSize = pageSize
                     };
                 },

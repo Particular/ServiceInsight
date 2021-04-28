@@ -19,15 +19,16 @@
         ServiceControlClientRegistry clientRegistry;
         ProfilerSettings storedSetting;
         ServiceControlConnectionViewModel connectTo;
+        IServiceControl serviceControl;
 
         [SetUp]
         public void TestInitialize()
         {
             shell = Substitute.For<ShellViewModel>();
-            //serviceControl = Substitute.For<IServiceControl>();
             settingsProvider = Substitute.For<ISettingsProvider>();
-            //connection = Substitute.For<ServiceControlConnectionProvider>();
+            serviceControl = Substitute.For<IServiceControl>();
             clientRegistry = Substitute.For<ServiceControlClientRegistry>();
+            clientRegistry.Create(Arg.Any<string>()).Returns(serviceControl);
             storedSetting = GetReloadedSettings();
             settingsProvider.GetSettings<ProfilerSettings>().Returns(storedSetting);
             connectTo = new ServiceControlConnectionViewModel(settingsProvider, clientRegistry) { Parent = shell };
@@ -36,8 +37,11 @@
         [Test]
         public async Task Should_be_able_to_connect_to_a_valid_service()
         {
+            var url = "http://localhost:8080/managementApi";
+            serviceControl.IsAlive().Returns((true, url));
+            serviceControl.GetVersion().Returns((url, url));
             ((IActivate)connectTo).Activate();
-            connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
+            connectTo.ServiceUrl = url;
             await connectTo.Accept();
 
             connectTo.CanAccept().ShouldBe(true);
@@ -47,13 +51,17 @@
         [Test]
         public async Task Should_store_connection_address_and_add_it_to_recent_entries()
         {
+            var url = "http://localhost:8080/managementApi";
+            serviceControl.IsAlive().Returns((true, url));
+            serviceControl.GetVersion().Returns((url, url));
+
             ((IActivate)connectTo).Activate();
-            connectTo.ServiceUrl = "http://localhost:8080/managemnetApi";
+            connectTo.ServiceUrl = url;
             await connectTo.Accept();
 
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
             storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);
-            storedSetting.RecentServiceControlEntries.ShouldContain("http://localhost:8080/managemnetApi");
+            storedSetting.RecentServiceControlEntries.ShouldContain(url);
         }
 
         ProfilerSettings GetReloadedSettings()
