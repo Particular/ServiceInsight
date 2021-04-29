@@ -47,7 +47,7 @@
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
     <PackageReference Include="Comparers" Version="6.2.0" />
     <PackageReference Include="Gong-wpf-dragdrop" Version="2.3.2" />
-    <PackageReference Include="Humanizer" Version="2.8.26" />
+    <PackageReference Include="Humanizer" Version="2.9.9" />
     <PackageReference Include="Mindscape.Raygun4Net" Version="5.13.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="ObservablePropertyChanged" Version="0.1.3" />
