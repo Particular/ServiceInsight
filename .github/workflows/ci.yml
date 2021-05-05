@@ -28,6 +28,10 @@ jobs:
           $version = 17.7
           choco install advanced-installer --version=$version
           & "C:\Program Files (x86)\Caphyon\Advanced Installer $version\bin\x86\AdvancedInstaller.com" /register ${{ secrets.ADVANCED_INSTALLER_LICENSE_KEY }}
+      - name: Get signing cert
+        run: |
+          [IO.File]::WriteAllBytes("signing-cert.pfx", [Convert]::FromBase64String("${{ secrets.NUGET_SIGNING_CERT_BASE64 }}"))
+        shell: pwsh
       - name: Build
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Upload assets
