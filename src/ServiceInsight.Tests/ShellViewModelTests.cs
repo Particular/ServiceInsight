@@ -1,17 +1,9 @@
 ﻿namespace ServiceInsight.Tests
 {
     using System;
+    using System.Threading.Tasks;
     using Caliburn.Micro;
-    using SequenceDiagram;
-    using NSubstitute;
-    using NUnit.Framework;
-    using Particular.Licensing;
     using Explorer.EndpointExplorer;
-    using ServiceInsight.Framework;
-    using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Licensing;
-    using ServiceInsight.Framework.Settings;
-    using ServiceInsight.Framework.UI.ScreenManager;
     using LogWindow;
     using MessageFlow;
     using MessageHeaders;
@@ -19,12 +11,20 @@
     using MessageProperties;
     using MessageViewers;
     using Models;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Particular.Licensing;
     using Saga;
+    using SequenceDiagram;
+    using ServiceInsight.Framework;
+    using ServiceInsight.Framework.Events;
+    using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.Framework.Settings;
+    using ServiceInsight.Framework.UI.ScreenManager;
     using Settings;
     using Shell;
-    using Startup;
     using Shouldly;
-    using System.Threading.Tasks;
+    using Startup;
 
     public interface IShellViewStub : IShellView
     {
@@ -179,6 +179,7 @@
         }
 
         [Test]
+        [Ignore("Test prevents NUnit AppDomain from unloading")]
         public async Task Should_validate_trial_license()
         {
             const string RegisteredUser = "John Doe";
