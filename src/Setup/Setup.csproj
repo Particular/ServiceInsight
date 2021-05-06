@@ -8,7 +8,7 @@
     <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
   </ItemGroup>
 
-  <Target Name="CreateInstaller" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="CreateInstaller" AfterTargets="Build" Condition="'$(CI)' == 'true' AND '$(RELEASE_WORKFLOW)' == 'true'">
     <PropertyGroup>
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
