@@ -12,12 +12,13 @@
 
     public partial class App
     {
-        bool createNew;
-        Mutex mutex;
+        readonly bool createNew;
+        readonly Mutex mutex;
 
         public App()
         {
-            mutex = new Mutex(true, "ServiceInsight", out createNew);
+            mutex = new Mutex(true, "Local\\ServiceInsight", out createNew);
+
             if (createNew)
             {
                 LoggingConfig.SetupLogging();
