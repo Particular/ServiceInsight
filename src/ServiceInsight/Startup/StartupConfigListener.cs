@@ -40,7 +40,7 @@
 
         static async Task Handle(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellationToken)
         {
-            using (var pipe = new NamedPipeServerStream("ServiceInsight", PipeDirection.In, 1, PipeTransmissionMode.Byte))
+            using (var pipe = new NamedPipeServerStream($"ServiceInsight-{Environment.UserName}", PipeDirection.In, 1, PipeTransmissionMode.Byte))
             using (cancellationToken.Register(() => Disconnect(pipe)))
             {
                 await pipe.WaitForConnectionAsync(cancellationToken);

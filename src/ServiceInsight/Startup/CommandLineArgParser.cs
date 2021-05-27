@@ -44,7 +44,7 @@
 
             try
             {
-                using (var pipe = new NamedPipeClientStream(".", "ServiceInsight", PipeDirection.Out))
+                using (var pipe = new NamedPipeClientStream(".", $"ServiceInsight-{Environment.UserName}", PipeDirection.Out))
                 using (var writer = new StreamWriter(pipe))
                 {
                     pipe.Connect(1000);
