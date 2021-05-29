@@ -1,15 +1,12 @@
 ﻿namespace ServiceInsight.Startup
 {
-    using System.IO.Pipes;
     using System;
     using System.IO;
-    using System.Net;
-    using System.Net.Sockets;
+    using System.IO.Pipes;
     using System.Threading;
     using System.Threading.Tasks;
     using Caliburn.Micro;
     using ServiceInsight.Framework.Events;
-    using ServiceInsight.Framework.Settings;
 
     public class StartupConfigListener
     {
@@ -40,7 +37,7 @@
 
         static async Task Handle(IEventAggregator eventAggregator, CommandLineArgParser parser, CancellationToken cancellationToken)
         {
-            using (var pipe = new NamedPipeServerStream($"ServiceInsight-{Environment.UserName}", PipeDirection.In, 1, PipeTransmissionMode.Byte))
+            using (var pipe = new NamedPipeServerStream(PipeName.Value, PipeDirection.In, 1, PipeTransmissionMode.Byte))
             using (cancellationToken.Register(() => Disconnect(pipe)))
             {
                 await pipe.WaitForConnectionAsync(cancellationToken);

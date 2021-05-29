@@ -1,9 +1,9 @@
 ﻿namespace ServiceInsight.Startup
 {
     using System;
-    using System.IO.Pipes;
     using System.Collections.Generic;
     using System.IO;
+    using System.IO.Pipes;
     using Anotar.Serilog;
     using ServiceInsight.Models;
 
@@ -13,8 +13,8 @@
         const char TokenSeparator = '&';
         const char KeyValueSeparator = '=';
 
-        EnvironmentWrapper environment;
-        IList<string> unsupportedKeys;
+        readonly EnvironmentWrapper environment;
+        readonly IList<string> unsupportedKeys;
 
         public CommandLineOptions ParsedOptions { get; private set; }
 
@@ -44,7 +44,7 @@
 
             try
             {
-                using (var pipe = new NamedPipeClientStream(".", $"ServiceInsight-{Environment.UserName}", PipeDirection.Out))
+                using (var pipe = new NamedPipeClientStream(".", PipeName.Value, PipeDirection.Out))
                 using (var writer = new StreamWriter(pipe))
                 {
                     pipe.Connect(1000);
