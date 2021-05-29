@@ -21,10 +21,10 @@
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
+    using ServiceInsight.Startup;
     using Settings;
     using Shell;
     using Shouldly;
-    using Startup;
 
     public interface IShellViewStub : IShellView
     {
