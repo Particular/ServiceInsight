@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
-    <PackageReference Include="AvalonEdit" Version="6.1.1" />
+    <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
   </ItemGroup>
 
