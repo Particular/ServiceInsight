@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ApprovalTests" Version="5.4.7" />
+    <PackageReference Include="ApprovalTests" Version="5.5.0" />
     <PackageReference Include="ApprovalTests.Wpf" Version="3.0.18" />
     <PackageReference Include="GitHubActionsTestLogger" Version="1.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
