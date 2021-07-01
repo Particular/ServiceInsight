@@ -216,6 +216,7 @@
             if (msg != null)
             {
                 msg.Status = MessageStatus.RetryIssued;
+                msg.NotifyOfPropertyChange(nameof(msg.Status));
             }
         }
 
