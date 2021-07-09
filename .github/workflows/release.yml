@@ -29,14 +29,17 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Setup Advanced Installer
         run: |
-          $version = 17.7
+          $version = 18.4
           choco install advanced-installer --version=$version
           & "C:\Program Files (x86)\Caphyon\Advanced Installer $version\bin\x86\AdvancedInstaller.com" /register ${{ secrets.ADVANCED_INSTALLER_LICENSE_KEY }}
-      - name: Get signing cert
+      - name: Prepare AIP file
         run: |
-          [IO.File]::WriteAllBytes("signing-cert.pfx", [Convert]::FromBase64String("${{ secrets.NUGET_SIGNING_CERT_BASE64 }}"))
-        shell: pwsh
+          $content = Get-Content -Raw -Path src/Setup/ServicePulse.aip
+          $content = $content -replace "replace-tenant-id", "${{ secrets.AZURE_KEY_VAULT_TENANT_ID }}" -replace "replace-app-id", "${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }}" -replace "replace-cert-name", "${{ secrets.AZURE_KEY_VAULT_CERTIFICATE_NAME }}"
+          Set-Content src/Setup/ServicePulse.aip $content
       - name: Build
+        env:
+          AZURE_KEY_VAULT_CLIENT_SECRET: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Publish artifacts
         uses: actions/upload-artifact@v2.2.2
