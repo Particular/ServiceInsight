@@ -13,6 +13,7 @@
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
       <AIPFile>ServiceInsight.aip</AIPFile>
+      <CommandFile>commands.aic</CommandFile>
     </PropertyGroup>
     <ItemGroup>
       <ResourceFiles Include="res\*.*" />
@@ -26,14 +27,15 @@
       <ExistingExes Include="$(SetupExeOutputFolder)*.exe" />
     </ItemGroup>
     <Delete Files="@(ExistingExes)" />
-    <Copy SourceFiles="ServiceInsight.aip" DestinationFolder="$(IntermediateOutputPath)" />
+    <Copy SourceFiles="$(AIPFile)" DestinationFolder="$(IntermediateOutputPath)" />
+    <Copy SourceFiles="$(CommandFile)" DestinationFolder="$(IntermediateOutputPath)" />
     <Copy SourceFiles="License.rtf" DestinationFolder="$(IntermediateOutputPath)" />
     <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)res\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name SI_PATH -value $(SolutionDir)ServiceInsight\bin\$(Configuration)\$(TargetFramework) -valuetype Folder" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetVersion $(GitVersion_MajorMinorPatch)" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetPackageName $(SetupExeOutputFolder)$(SetupExeName) -buildname DefaultBuild" />
-    <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)$(AIPFile)" />
+    <Exec Command="$(AdvancedInstallerExe) /execute $(IntermediateOutputPath)$(AIPFile) $(IntermediateOutputPath)$(CommandFile)" />
   </Target>
 
 </Project>
