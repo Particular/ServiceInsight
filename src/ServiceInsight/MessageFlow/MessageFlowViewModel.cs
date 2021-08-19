@@ -28,7 +28,7 @@
     {
         readonly Func<ExceptionDetailViewModel> exceptionDetail;
         readonly IEventAggregator eventAggregator;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly ISettingsProvider settingsProvider;
         readonly MessageSelectionContext selection;
         readonly ConcurrentDictionary<string, MessageNode> nodeMap;
@@ -41,7 +41,7 @@
 
         public MessageFlowViewModel(
             IEventAggregator eventAggregator,
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             ILifetimeScope container,
             Func<ExceptionDetailViewModel> exceptionDetail,
             ISettingsProvider settingsProvider,

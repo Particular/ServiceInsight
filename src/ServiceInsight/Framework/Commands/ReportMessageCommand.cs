@@ -8,9 +8,9 @@
     public class ReportMessageCommand : BaseCommand
     {
         readonly RaygunClient client;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
 
-        public ReportMessageCommand(IWindowManagerEx windowManager)
+        public ReportMessageCommand(IServiceInsightWindowManager windowManager)
         {
             this.windowManager = windowManager;
             client = RaygunUtility.GetClient();

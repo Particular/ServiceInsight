@@ -23,7 +23,7 @@
     {
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly MessageSelectionContext selection;
         readonly ServiceControlClientRegistry clientRegistry;
 
@@ -36,7 +36,7 @@
             IEventAggregator eventAggregator,
             IWorkNotifier workNotifier,
             IClipboard clipboard,
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             MessageSelectionContext selectionContext,
             ServiceControlClientRegistry clientRegistry)
         {

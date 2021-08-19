@@ -41,7 +41,7 @@
         IWorkTracker
     {
         readonly IAppCommands appCommander;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
         readonly IVersionUpdateChecker versionUpdateChecker;
@@ -57,7 +57,7 @@
 
         public ShellViewModel(
             IAppCommands appCommander,
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             IApplicationVersionService applicationVersionService,
             LogWindowViewModel logWindow,
             EndpointExplorerViewModel endpointExplorer,

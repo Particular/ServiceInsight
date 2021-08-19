@@ -37,7 +37,7 @@
     public class ShellViewModelTests
     {
         ShellViewModel shell;
-        WindowManagerEx windowManager;
+        ServiceInsightWindowManager windowManager;
         EndpointExplorerViewModel endpointExplorer;
         MessageListViewModel messageList;
         MessageFlowViewModel messageFlow;
@@ -61,7 +61,7 @@
         [SetUp]
         public void TestInitialize()
         {
-            windowManager = Substitute.For<WindowManagerEx>();
+            windowManager = Substitute.For<ServiceInsightWindowManager>();
             endpointExplorer = Substitute.For<EndpointExplorerViewModel>();
             messageList = Substitute.For<MessageListViewModel>();
             licenseStatusBar = Substitute.For<LicenseStatusBar>();
@@ -189,7 +189,9 @@
             var issuedLicense = new License
             {
                 LicenseType = LicenseType,
+#pragma warning disable PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
                 ExpirationDate = DateTime.Now.AddDays(RemainingDays),
+#pragma warning restore PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
                 RegisteredTo = RegisteredUser
             };
 

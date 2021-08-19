@@ -8,12 +8,12 @@
 
     public class AppExceptionHandler
     {
-        IWindowManagerEx windowManager;
+        IServiceInsightWindowManager windowManager;
         IEventAggregator eventAggregator;
         ShellViewModel shell;
 
         public AppExceptionHandler(
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             IEventAggregator eventAggregator,
             ShellViewModel shell)
         {

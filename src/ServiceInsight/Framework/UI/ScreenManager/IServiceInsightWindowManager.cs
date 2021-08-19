@@ -3,7 +3,7 @@ namespace ServiceInsight.Framework.UI.ScreenManager
     using System.Windows;
     using Caliburn.Micro;
 
-    public interface IWindowManagerEx : IWindowManager
+    public interface IServiceInsightWindowManager : IWindowManager
     {
         FileDialogResult OpenFileDialog(FileDialogModel model);
 

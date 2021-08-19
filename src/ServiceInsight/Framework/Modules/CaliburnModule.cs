@@ -8,7 +8,7 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WindowManagerEx>().As<IWindowManager>().As<IWindowManagerEx>().InstancePerLifetimeScope();
+            builder.RegisterType<ServiceInsightWindowManager>().As<IWindowManager>().As<IServiceInsightWindowManager>().InstancePerLifetimeScope();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().InstancePerLifetimeScope();
         }
     }

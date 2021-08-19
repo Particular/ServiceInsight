@@ -15,7 +15,7 @@
     {
         readonly AppLicenseManager licenseManager;
         readonly NetworkOperations network;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly IEventAggregator eventAggregator;
         static readonly IDictionary<LicenseInstallationResult, string> InstallationResultMessage;
 
@@ -32,7 +32,7 @@
         public ManageLicenseViewModel(
             AppLicenseManager licenseManager,
             NetworkOperations network,
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             IEventAggregator eventAggregator)
         {
             this.licenseManager = licenseManager;

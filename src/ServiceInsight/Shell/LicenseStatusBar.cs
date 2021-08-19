@@ -16,11 +16,11 @@
         public const string UpgradeProtectionLicenseText = "Please extend your upgrade protection so that we can continue to provide you with support and new versions of the Particular Service Platform.";
         public const string SubscriptionLicenseText = "Please extend your license to continue using the Particular Service Platform.";
 
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly NetworkOperations network;
         bool forceShowPopup;
 
-        public LicenseStatusBar(IWindowManagerEx windowManager, NetworkOperations network)
+        public LicenseStatusBar(IServiceInsightWindowManager windowManager, NetworkOperations network)
         {
             this.network = network;
             this.windowManager = windowManager;

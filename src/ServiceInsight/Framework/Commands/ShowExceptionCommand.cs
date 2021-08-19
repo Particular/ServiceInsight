@@ -7,10 +7,10 @@
 
     public class ShowExceptionCommand : BaseCommand
     {
-        IWindowManagerEx windowManager;
+        IServiceInsightWindowManager windowManager;
         readonly ISettingsProvider settingsProvider;
 
-        public ShowExceptionCommand(IWindowManagerEx windowManager, ISettingsProvider settingsProvider)
+        public ShowExceptionCommand(IServiceInsightWindowManager windowManager, ISettingsProvider settingsProvider)
         {
             this.windowManager = windowManager;
             this.settingsProvider = settingsProvider;

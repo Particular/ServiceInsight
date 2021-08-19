@@ -26,7 +26,7 @@
             var eventAggregator = Substitute.For<IEventAggregator>();
             var workNotifier = Substitute.For<IWorkNotifier>();
             var clipboard = Substitute.For<IClipboard>();
-            var windowManager = Substitute.For<IWindowManagerEx>();
+            var windowManager = Substitute.For<IServiceInsightWindowManager>();
             var clientRegistry = Substitute.For<ServiceControlClientRegistry>();
 
             serviceControl = Substitute.For<IServiceControl>();
@@ -38,7 +38,9 @@
         public void When_initiating_message_can_not_be_found_doesnot_throw()
         {
             var sagaId = Guid.NewGuid();
+#pragma warning disable PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
             var timeouts = new List<SagaTimeoutMessage> { new SagaTimeoutMessage { DeliverAt = DateTime.Now, Timeout = TimeSpan.FromMinutes(1) } };
+#pragma warning restore PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
             var update = new SagaUpdate { InitiatingMessage = null, OutgoingMessages = timeouts };
 
             var sagaChanges = new List<SagaUpdate> { update };
