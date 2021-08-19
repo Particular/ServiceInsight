@@ -9,13 +9,13 @@
     {
         readonly AppLicenseManager licenseManager;
         readonly NetworkOperations networkOperations;
-        readonly IWindowManagerEx windowManager;
+        readonly IServiceInsightWindowManager windowManager;
         readonly IAppCommands appCommands;
 
         public LicenseMessageBoxViewModel(
             AppLicenseManager licenseManager,
             NetworkOperations networkOperations,
-            IWindowManagerEx windowManager,
+            IServiceInsightWindowManager windowManager,
             IAppCommands appCommands)
         {
             this.licenseManager = licenseManager;

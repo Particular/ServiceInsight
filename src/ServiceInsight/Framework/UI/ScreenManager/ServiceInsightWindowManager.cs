@@ -7,13 +7,13 @@
     using Caliburn.Micro;
     using ServiceInsight.Framework.Commands;
 
-    public class WindowManagerEx : WindowManager, IWindowManagerEx
+    public class ServiceInsightWindowManager : WindowManager, IServiceInsightWindowManager
     {
         static IDictionary<MessageChoice, MessageBoxResult> messageOptionsMaps;
         static IDictionary<MessageBoxImage, MessageIcon> messageIconsMaps;
         static IDictionary<DialogResult, bool?> dialogResultMaps;
 
-        static WindowManagerEx()
+        static ServiceInsightWindowManager()
         {
             messageOptionsMaps = new Dictionary<MessageChoice, MessageBoxResult>
             {

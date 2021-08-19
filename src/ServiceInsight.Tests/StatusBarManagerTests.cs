@@ -16,7 +16,7 @@
         public void TestInitialize()
         {
             licenseStatusBar = new LicenseStatusBar(
-                Substitute.For<IWindowManagerEx>(),
+                Substitute.For<IServiceInsightWindowManager>(),
                 Substitute.For<NetworkOperations>());
         }
 
