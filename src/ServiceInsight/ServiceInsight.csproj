@@ -46,7 +46,7 @@
     <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
     <PackageReference Include="Comparers" Version="6.2.0" />
-    <PackageReference Include="Gong-wpf-dragdrop" Version="2.3.2" />
+    <PackageReference Include="Gong-wpf-dragdrop" Version="2.4.0" />
     <PackageReference Include="Humanizer" Version="2.11.10" />
     <PackageReference Include="Mindscape.Raygun4Net" Version="5.13.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
