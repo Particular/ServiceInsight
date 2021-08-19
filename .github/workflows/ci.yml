@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1.8.1
         with:
           dotnet-version: 5.0.203 # should be 5.0.x when the runner image is updated to VS 16.10 or higher
       - name: Add msbuild to PATH
