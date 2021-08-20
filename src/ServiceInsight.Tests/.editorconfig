@@ -2,3 +2,6 @@
 
 # Justification: Test project
 dotnet_diagnostic.CA2007.severity = none
+
+# Justification: release branch
+dotnet_diagnostic.PS0023.severity = none
