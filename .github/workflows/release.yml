@@ -34,9 +34,9 @@ jobs:
           & "C:\Program Files (x86)\Caphyon\Advanced Installer $version\bin\x86\AdvancedInstaller.com" /register ${{ secrets.ADVANCED_INSTALLER_LICENSE_KEY }}
       - name: Prepare AIP file
         run: |
-          $content = Get-Content -Raw -Path src/Setup/ServicePulse.aip
+          $content = Get-Content -Raw -Path src/Setup/ServiceInsight.aip
           $content = $content -replace "replace-tenant-id", "${{ secrets.AZURE_KEY_VAULT_TENANT_ID }}" -replace "replace-app-id", "${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }}" -replace "replace-cert-name", "${{ secrets.AZURE_KEY_VAULT_CERTIFICATE_NAME }}"
-          Set-Content src/Setup/ServicePulse.aip $content
+          Set-Content src/Setup/ServiceInsight.aip $content
       - name: Build
         env:
           AZURE_KEY_VAULT_CLIENT_SECRET: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
