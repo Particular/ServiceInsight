@@ -153,7 +153,7 @@
 
                 if (ServiceControl != null)
                 {
-                    messages = (await ServiceControl.GetConversationById(conversationId)).ToList();
+                    messages = (await ServiceControl.GetConversationById(conversationId, ApplicationConfiguration.ConversationPageSize)).ToList();
                 }
 
                 if (messages == null || messages.Count == 0)

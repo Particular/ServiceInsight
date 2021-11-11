@@ -22,7 +22,7 @@ namespace ServiceInsight.ServiceControl
 
         Task<PagedResult<StoredMessage>> GetAuditMessages(string link);
 
-        Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId);
+        Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId, int pageSize);
 
         Task<IEnumerable<Endpoint>> GetEndpoints();
 
