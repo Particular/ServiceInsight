@@ -179,7 +179,7 @@
             {
                 if (ServiceControl != null)
                 {
-                    var relatedMessagesTask = await ServiceControl.GetConversationById(conversationId);
+                    var relatedMessagesTask = await ServiceControl.GetConversationById(conversationId, ApplicationConfiguration.ConversationPageSize);
                     var nodes = relatedMessagesTask
                         .Select(x => new MessageNode(this, x)
                         {

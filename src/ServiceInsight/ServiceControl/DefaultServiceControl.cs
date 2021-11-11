@@ -154,7 +154,7 @@ namespace ServiceInsight.ServiceControl
 
             AppendSystemMessages(request);
             AppendSearchQuery(request, searchQuery);
-            AppendPaging(request);
+            AppendPaging(request, DefaultPageSize);
             AppendPageNo(request, pageNo);
             AppendOrdering(request, orderBy, ascending);
 
@@ -183,10 +183,15 @@ namespace ServiceInsight.ServiceControl
             }
         }
 
-        public async Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId)
+        public async Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId, int pageSize)
         {
             var request = new RestRequestWithCache(string.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
-            var messages = await GetModel<List<StoredMessage>>(request).ConfigureAwait(false) ?? new List<StoredMessage>();
+
+            AppendPaging(request, pageSize);
+            AppendPageNo(request, 0); //first page only
+
+            var messages = await GetModel<List<StoredMessage>>(request, truncateLargeLists: false).ConfigureAwait(false) ?? new List<StoredMessage>();
+
             return messages;
         }
 
@@ -276,9 +281,9 @@ namespace ServiceInsight.ServiceControl
             request.AddParameter("direction", ascending ? "asc" : "desc", ParameterType.GetOrPost);
         }
 
-        static void AppendPaging(IRestRequest request)
+        static void AppendPaging(IRestRequest request, int pageSize)
         {
-            request.AddParameter("per_page", DefaultPageSize, ParameterType.GetOrPost);
+            request.AddParameter("per_page", pageSize, ParameterType.GetOrPost);
         }
 
         void AppendSearchQuery(IRestRequest request, string searchQuery)
