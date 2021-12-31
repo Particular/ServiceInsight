@@ -740,23 +740,25 @@
     
     <DrawingImage x:Key="MessageStatus_Successful_Warn">
         <DrawingImage.Drawing>
-            <DrawingGroup ClipGeometry="M0,0 V16 H17 V0 H0 Z">
+            <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
                 <DrawingGroup Opacity="1">
-                    <DrawingGroup.ClipGeometry>
-                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.806,0,16,16" />
-                    </DrawingGroup.ClipGeometry>
                     <DrawingGroup Opacity="1">
-                        <GeometryDrawing Brush="#FF3F881B">
+                        <GeometryDrawing Brush="#FF6CC63F">
                             <GeometryDrawing.Geometry>
-                                <EllipseGeometry RadiusX="8" RadiusY="8" Center="8.806,8" />
+                                <EllipseGeometry RadiusX="8" RadiusY="8" Center="8,8" />
                             </GeometryDrawing.Geometry>
                         </GeometryDrawing>
-                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M17,16z M0,0z M6.481,12.181C8.057,13.213 10.151,13.306 11.858,12.248 14.205,10.793 14.927,7.711 13.472,5.365 12.016,3.019 8.934,2.296 6.588,3.751 5.139,4.65 4.31,6.165 4.229,7.747L2.918,7.747 5.02,10.693 7.132,7.747 5.834,7.747C5.911,6.699 6.471,5.708 7.432,5.112 9.027,4.123 11.121,4.614 12.11,6.209 13.099,7.804 12.608,9.898 11.013,10.887 9.918,11.566 8.589,11.547 7.542,10.953L6.481,12.181z" />
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M16,16z M0,0z M11.249,4.277L6.714,8.81 4.751,6.846 3.294,8.303 6.714,11.723 12.706,5.733 11.249,4.277z" />
                     </DrawingGroup>
+                </DrawingGroup>
+                <GeometryDrawing Brush="#FFEBBD06" Geometry="F0 M16,16z M0,0z M10.5,7.2L16,16 5,16 10.5,7.2z" />
+                <DrawingGroup Opacity="1">
+                    <GeometryDrawing Brush="#FF000000" Geometry="F0 M16,16z M0,0z M11,13L11,10 10,10 10,13 11,13z" />
+                    <GeometryDrawing Brush="#FF000000" Geometry="F0 M16,16z M0,0z M11,15L11,14 10,14 10,15 11,15z" />
                 </DrawingGroup>
             </DrawingGroup>
         </DrawingImage.Drawing>
-    </DrawingImage>
+     </DrawingImage>
     
     <DrawingImage x:Key="MessageStatus_Failed">
         <DrawingImage.Drawing>
