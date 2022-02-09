@@ -268,9 +268,25 @@
                 // [CM] I don't know how it's happening, but a user reported an
                 // error where multiple results were returned from this query.
                 var parentMessages = nodeMap.Values.Where(m =>
-                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
-                    m.Message.MessageId == msg.Message.RelatedToMessageId &&
-                    m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
+                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null
+                    && m.Message.MessageId == msg.Message.RelatedToMessageId
+                    && m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name // Needed with publishes as identical events can be consumed by multiple endpoints
+                    );
+
+                // Fallback, get "parent" when originating message is not an event (publish)
+                if (!parentMessages.Any())
+                {
+                    // TODO: Log INFO indicating no parent match on "endpoint", only on message identifier.
+                    parentMessages = nodeMap.Values.Where(m =>
+                        m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
+                        m.Message.MessageId == msg.Message.RelatedToMessageId && m.Message.MessageIntent != MessageIntent.Publish
+                        );
+                }
+
+                if (!parentMessages.Any())
+                {
+                    // TODO: Log WARNING to inform user
+                }
 
                 foreach (var parentMessage in parentMessages)
                 {
