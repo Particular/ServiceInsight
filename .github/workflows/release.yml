@@ -42,7 +42,7 @@ jobs:
           AZURE_KEY_VAULT_CLIENT_SECRET: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Publish artifacts
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: assets/*
@@ -71,7 +71,7 @@ jobs:
           octo pack --id="${{env.PARTICULAR_REPO_NAME}}.Deploy" --version="${{env.GitVersion_SemVer}}" --format="nupkg" --basePath="packaging" --outFolder="octopus-package"
         shell: pwsh
       - name: Publish Octopus Package Artifacts
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3
         with:
           name: octopus-package
           path: octopus-package/*
