@@ -12,6 +12,7 @@
     using Caliburn.Micro;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
+    using Anotar.Serilog;
     using ServiceInsight.Models;
     using ServiceInsight.ServiceControl;
     using ServiceInsight.Framework;
@@ -259,14 +260,11 @@
         {
             foreach (var msg in relatedMessagesTask)
             {
-                if (msg.Message.RelatedToMessageId == null &&
-                    msg.Message.RelatedToMessageId != msg.Message.MessageId)
+                if (string.IsNullOrEmpty(msg.Message.RelatedToMessageId) && msg.Message.RelatedToMessageId != msg.Message.MessageId)
                 {
                     continue;
                 }
 
-                // [CM] I don't know how it's happening, but a user reported an
-                // error where multiple results were returned from this query.
                 var parentMessages = nodeMap.Values.Where(m =>
                     m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null
                     && m.Message.MessageId == msg.Message.RelatedToMessageId
@@ -276,16 +274,24 @@
                 // Fallback, get "parent" when originating message is not an event (publish)
                 if (!parentMessages.Any())
                 {
-                    // TODO: Log INFO indicating no parent match on "endpoint", only on message identifier.
                     parentMessages = nodeMap.Values.Where(m =>
                         m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                         m.Message.MessageId == msg.Message.RelatedToMessageId && m.Message.MessageIntent != MessageIntent.Publish
                         );
+                    
+                    if (parentMessages.Any())
+                    {
+                        LogTo.Warning("Fall back to match only on RelatedToMessageId for message {0} matched but link could be invalid.", msg.Message.MessageId);
+                    }
                 }
 
                 if (!parentMessages.Any())
                 {
-                    // TODO: Log WARNING to inform user
+                    LogTo.Error("No parent could be resolved for message {0} which has RelatedToMessageId set. This can happen if the parent has been purged due to retention expiration, an ServiceControl node to be unavailable, or because the parent message not been stored (yet).", msg.Message.MessageId);
+                }
+                else if (parentMessages.Count() > 1)
+                {
+                    LogTo.Error("Multiple parents matched for {0} possibly due to more-than-once processing, linking to all as unknown which processing attemps generated the message.", msg.Message.MessageId);
                 }
 
                 foreach (var parentMessage in parentMessages)
