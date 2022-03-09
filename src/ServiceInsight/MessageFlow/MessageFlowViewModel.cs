@@ -278,7 +278,7 @@
                         m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                         m.Message.MessageId == msg.Message.RelatedToMessageId && m.Message.MessageIntent != MessageIntent.Publish
                         );
-                    
+
                     if (parentMessages.Any())
                     {
                         LogTo.Warning("Fall back to match only on RelatedToMessageId for message {0} matched but link could be invalid.", msg.Message.MessageId);
