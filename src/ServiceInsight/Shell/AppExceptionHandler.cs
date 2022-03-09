@@ -46,7 +46,7 @@
             }
         }
 
-        bool IsSoftError(Exception rootError) => rootError is NotImplementedException;
+        bool IsSoftError(Exception rootError) => rootError is NotSupportedException;
 
         void ShowWarning(Exception error)
         {

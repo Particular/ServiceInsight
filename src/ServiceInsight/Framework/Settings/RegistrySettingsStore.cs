@@ -23,7 +23,7 @@
 
         public void Save<T>(string key, T settings)
         {
-            throw new NotImplementedException(); //Do we even need this??
+            throw new NotSupportedException(); //Do we even need this??
         }
 
         public T Load<T>(string key, IList<SettingDescriptor> metadata) where T : new()
