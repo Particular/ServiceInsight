@@ -64,7 +64,7 @@
                              IsHitTestVisible="{Binding WorkInProgress,
                                                         Converter={StaticResource BooleanInverseConverter}}"
                              ItemsSource="{Binding Rows}"
-                             SelectionMode="Row"
+                             SelectionMode="None"
                              SelectedItem="{Binding Selection.SelectedMessage, Delay=50}"
                              ShowLoadingPanel="{Binding WorkInProgress}"
                              StartSorting="Grid_OnStartSorting">
