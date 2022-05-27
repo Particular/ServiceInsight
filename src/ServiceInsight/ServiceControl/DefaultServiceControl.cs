@@ -47,6 +47,7 @@ namespace ServiceInsight.ServiceControl
 
         ServiceControlConnectionProvider connection;
         MemoryCache cache;
+        Dictionary<string, Task<List<StoredMessage>>> ongoingRestRequests;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
 
@@ -78,6 +79,7 @@ namespace ServiceInsight.ServiceControl
             this.eventAggregator = eventAggregator;
             settings = settingsProvider.GetSettings<ProfilerSettings>();
             cache = new MemoryCache("ServiceControlReponses", new NameValueCollection(1) { { "cacheMemoryLimitMegabytes", settings.CacheSize.ToString() } });
+            ongoingRestRequests = new Dictionary<string, Task<List<StoredMessage>>>();
         }
 
         public async Task<(bool, string)> IsAlive()
@@ -185,12 +187,21 @@ namespace ServiceInsight.ServiceControl
 
         public async Task<IEnumerable<StoredMessage>> GetConversationById(string conversationId, int pageSize)
         {
+            if (ongoingRestRequests.ContainsKey(conversationId))
+            {
+                return await ongoingRestRequests[conversationId] ?? new List<StoredMessage>();
+            }
+
             var request = new RestRequestWithCache(string.Format(ConversationEndpoint, conversationId), RestRequestWithCache.CacheStyle.IfNotModified);
 
             AppendPaging(request, pageSize);
             AppendPageNo(request, 0); //first page only
 
-            var messages = await GetModel<List<StoredMessage>>(request, truncateLargeLists: false).ConfigureAwait(false) ?? new List<StoredMessage>();
+            var messageTask = GetModel<List<StoredMessage>>(request, truncateLargeLists: false);
+            ongoingRestRequests.Add(conversationId, messageTask);
+
+            await messageTask.ContinueWith(_ => ongoingRestRequests.Remove(conversationId));
+            var messages = await messageTask ?? new List<StoredMessage>();
 
             return messages;
         }
