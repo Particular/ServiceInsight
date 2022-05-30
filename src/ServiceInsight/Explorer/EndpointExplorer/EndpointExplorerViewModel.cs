@@ -160,9 +160,19 @@
             }
         }
 
+        bool IsConnectedToServiceControlNode(string url)
+        {
+            return Items.OfType<ServiceControlExplorerItem>().Any(ei => ei.Url == url);
+        }
+
         public async Task ConnectToService(string url)
         {
             if (!url.IsValidUrl())
+            {
+                return;
+            }
+
+            if (IsConnectedToServiceControlNode(url))
             {
                 return;
             }
