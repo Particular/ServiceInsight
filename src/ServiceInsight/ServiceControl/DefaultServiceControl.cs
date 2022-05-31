@@ -198,9 +198,10 @@ namespace ServiceInsight.ServiceControl
             AppendPageNo(request, 0); //first page only
 
             var messageTask = GetModel<List<StoredMessage>>(request, truncateLargeLists: false);
-            ongoingRestRequests.Add(conversationId, messageTask);
 
-            await messageTask.ContinueWith(_ => ongoingRestRequests.Remove(conversationId));
+            ongoingRestRequests.Add(conversationId, messageTask);
+            _ = messageTask.ContinueWith(_ => ongoingRestRequests.Remove(conversationId));
+
             var messages = await messageTask ?? new List<StoredMessage>();
 
             return messages;
