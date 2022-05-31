@@ -160,9 +160,9 @@
             }
         }
 
-        bool IsConnectedToServiceControlNode(string url)
+        ServiceControlExplorerItem SelectConnectedServiceControlNode(string url)
         {
-            return Items.OfType<ServiceControlExplorerItem>().Any(ei => ei.Url == url);
+            return Items.OfType<ServiceControlExplorerItem>().SingleOrDefault(ei => ei.Url == url);
         }
 
         public async Task ConnectToService(string url)
@@ -172,8 +172,11 @@
                 return;
             }
 
-            if (IsConnectedToServiceControlNode(url))
+            var connectedNode = SelectConnectedServiceControlNode(url);
+            if (connectedNode != null)
             {
+                ExpandServiceControlNode(connectedNode);
+                SelectDefaultEndpoint(connectedNode);
                 return;
             }
 
