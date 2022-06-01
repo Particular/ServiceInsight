@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWpf>true</UseWpf>
+    <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Data.v15.1.dll" />
+    <Reference Include="DevExpress.Mvvm.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Mvvm.v15.1.dll" />
+    <Reference Include="DevExpress.Printing.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Printing.v15.1.Core.dll" />
+    <Reference Include="DevExpress.RichEdit.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.RichEdit.v15.1.Core.dll" />
+    <Reference Include="DevExpress.Utils.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Utils.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Controls.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Controls.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Core.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Core.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Docking.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Docking.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Grid.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Grid.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.Core.dll" />
+    <Reference Include="DevExpress.Xpf.Layout.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Layout.v15.1.Core.dll" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.NavBar.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Printing.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Printing.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v15.1.dll" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v15.1.dll" />
+    <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll" />
+    <Reference Include="Mindscape.WpfDiagramming.Foundation" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+
+</Project>

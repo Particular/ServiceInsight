@@ -1,0 +1,92 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        x:Class="WpfApp1.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <dxb:BarManager>
+        <dxb:BarManager.Items>
+            <dxb:BarButtonItem Name="retryMessage"
+                               Command="{Binding RetryMessageCommand}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
+                               Content="Retry Message"
+                               IsVisible="{Binding IsEnabled,
+                                                   RelativeSource={RelativeSource Self}}" />
+            <dxb:BarButtonItem Name="copyHeaders"
+                               Command="{Binding CopyHeadersCommand}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
+                               Content="Copy Headers" />
+            <dxb:BarButtonItem Name="copyMessageId"
+                               Command="{Binding CopyMessageIdCommand}"
+                               CommandParameter="{Binding Selection.SelectedMessage}"
+                               Content="Copy Message URI" />
+            <dxb:BarButtonItem Name="columnChooser"
+                               Content="Column Chooser"
+                               Command="{Binding Commands.ShowColumnChooser, ElementName=gridView}"/>
+        </dxb:BarManager.Items>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ContentControl Grid.Row="0"/>
+            <!--cal:View.Model="{Binding SearchBar}"-->
+
+            <!--
+                            IsHitTestVisible="{Binding WorkInProgress, Converter={StaticResource BooleanInverseConverter}}"
+
+            MouseLeftButtonUp="OnGridClicked"
+                             CustomColumnDisplayText="Grid_OnCustomColumnDisplayText"
+                             CustomUnboundColumnData="OnRequestAdvancedMessageData"
+                             StartSorting="Grid_OnStartSorting"
+            -->
+            <dxg:GridControl x:Name="grid"
+                             Grid.Row="1"
+                             ItemsSource="{Binding Rows}"
+                             SelectionMode="Row"
+                             SelectedItem="{Binding Selection.SelectedMessage, Delay=50}"
+                             ShowLoadingPanel="{Binding WorkInProgress}"
+                             >
+                <dxb:BarManager.DXContextMenu>
+                    <dxb:PopupMenu>
+                        <dxb:PopupMenu.ItemLinks>
+                            <dxb:BarButtonItemLink BarItemName="retryMessage" />
+                            <dxb:BarButtonItemLink BarItemName="copyHeaders" />
+                            <dxb:BarButtonItemLink BarItemName="copyMessageId" />
+                            <dxb:BarButtonItemLink BarItemName="columnChooser" />
+                        </dxb:PopupMenu.ItemLinks>
+                    </dxb:PopupMenu>
+                </dxb:BarManager.DXContextMenu>
+                <dxg:GridControl.View>
+                    <!--
+                                   BeforeLayoutRefresh="OnBeforeLayoutRefresh"
+                                   RowStyle="{StaticResource FocusedRowStyle}"
+                    -->
+                    <dxg:TableView x:Name="gridView"
+                                   AllowCascadeUpdate="True"
+                                   AllowEditing="False"
+                                   AllowGrouping="True"
+                                   AllowMoveColumnToDropArea="False"
+                                   AllowPerPixelScrolling="True"
+                                   AllowSorting="True"
+                                   AutoWidth="True"
+                                   FadeSelectionOnLostFocus="False"
+                                   IsColumnMenuEnabled="False"
+                                   NavigationStyle="Row"
+                                   ShowGroupPanel="False"
+                                   ShowIndicator="False"
+                                   />
+                </dxg:GridControl.View>
+                <!-- <dxg:GridColumn Header="Test" dxg:DataContext="{Binding Path=Name}"/> -->
+            </dxg:GridControl>
+        </Grid>
+    </dxb:BarManager>
+</Window>

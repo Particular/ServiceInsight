@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30225.117
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32505.426
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Sdk", "ServiceInsight.Sdk\ServiceInsight.Sdk.csproj", "{7EF919F1-B497-4478-8EB4-ECDB241F4A88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.CustomViewer.Plugin", "ServiceInsight.CustomViewer.Plugin\ServiceInsight.CustomViewer.Plugin.csproj", "{B626BF87-E0D0-4A56-91E9-1D6ABEFE30F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{C56D6E0F-72C2-449E-9258-3936FF57F01C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{B626BF87-E0D0-4A56-91E9-1D6ABEFE30F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B626BF87-E0D0-4A56-91E9-1D6ABEFE30F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B626BF87-E0D0-4A56-91E9-1D6ABEFE30F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C56D6E0F-72C2-449E-9258-3936FF57F01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C56D6E0F-72C2-449E-9258-3936FF57F01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C56D6E0F-72C2-449E-9258-3936FF57F01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C56D6E0F-72C2-449E-9258-3936FF57F01C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
