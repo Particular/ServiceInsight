@@ -41,7 +41,7 @@
 
         public void ChangeTheme(string name)
         {
-            ThemeManager.ApplicationThemeName = name;
+            ApplicationThemeHelper.ApplicationThemeName = name;
         }
 
         public void SelectTab(string name)

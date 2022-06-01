@@ -11,7 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ServiceInsight.Sdk\ServiceInsight.Sdk.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Caching" />
@@ -19,23 +18,33 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
 
+  <ItemGroup Label="DevExpress WPF 21  https://www.devexpress.com/products/net/controls/wpf/">
+    <!-- Manually copied from C:\Program Files (x86)\DevExpress 21.2\Components\Bin\Framework -->
+    <Reference Include="DevExpress.Data.v21.2"                  HintPath="..\..\lib\DevExpress\DevExpress.Data.v21.2.dll"/>
+    <Reference Include="DevExpress.Mvvm.v21.2"                  HintPath="..\..\lib\DevExpress\DevExpress.Mvvm.v21.2.dll"/>
+    <Reference Include="DevExpress.Pdf.v21.2.Core"              HintPath="..\..\lib\DevExpress\DevExpress.Pdf.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.RichEdit.v21.2.Export"       HintPath="..\..\lib\DevExpress\DevExpress.RichEdit.v21.2.Export.dll"/>
+    <Reference Include="DevExpress.Printing.v21.2.Core"         HintPath="..\..\lib\DevExpress\DevExpress.Printing.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.Office.v21.2.Core"           HintPath="..\..\lib\DevExpress\DevExpress.Office.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.RichEdit.v21.2.Core"         HintPath="..\..\lib\DevExpress\DevExpress.RichEdit.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.Utils.v21.2"                 HintPath="..\..\lib\DevExpress\DevExpress.Utils.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Controls.v21.2"          HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Controls.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.CodeView.v21.2"          HintPath="..\..\lib\DevExpress\DevExpress.Xpf.CodeView.v21.2.dll"/>
+    <Reference Include="DevExpress.Data.Desktop.v21.2"          HintPath="..\..\lib\DevExpress\DevExpress.Data.Desktop.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Core.v21.2"              HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Core.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Docking.v21.2"           HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Docking.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Grid.v21.2"              HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Grid.v21.2.Core"         HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.Xpf.Grid.v21.2.Extensions"   HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v21.2.Extensions.dll"/>
+    <Reference Include="DevExpress.Xpf.Layout.v21.2.Core"       HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Layout.v21.2.Core.dll"/>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v21.2"     HintPath="..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.NavBar.v21.2"            HintPath="..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Printing.v21.2"          HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Printing.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v21.2"      HintPath="..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v21.2.dll"/>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v21.2" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v21.2.dll"/>
+  </ItemGroup>
+
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Data.v15.1.dll" />
-    <Reference Include="DevExpress.Mvvm.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Mvvm.v15.1.dll" />
-    <Reference Include="DevExpress.Printing.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Printing.v15.1.Core.dll" />
-    <Reference Include="DevExpress.RichEdit.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.RichEdit.v15.1.Core.dll" />
-    <Reference Include="DevExpress.Utils.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Utils.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Controls.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Controls.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Core.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Core.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Docking.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Docking.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Grid.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Grid.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Grid.v15.1.Core.dll" />
-    <Reference Include="DevExpress.Xpf.Layout.v15.1.Core" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Layout.v15.1.Core.dll" />
-    <Reference Include="DevExpress.Xpf.LayoutControl.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.LayoutControl.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.NavBar.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.NavBar.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Printing.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Printing.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.PropertyGrid.v15.1.dll" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v15.1" HintPath="..\..\lib\DevExpress\DevExpress.Xpf.Themes.Office2013.v15.1.dll" />
     <Reference Include="Mindscape.WpfDiagramming.FlowDiagrams" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.FlowDiagrams.dll" />
     <Reference Include="Mindscape.WpfDiagramming.Foundation" HintPath="..\..\lib\Mindscape.Diagrams\Mindscape.WpfDiagramming.Foundation.dll" />
   </ItemGroup>
