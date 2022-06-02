@@ -59,8 +59,6 @@
                         <GradientStop Offset="0" Color="#FFFFFAE9" />
                         <GradientStop Offset="1" Color="#FFFFE8A6" />
                     </LinearGradientBrush>
-                    <SolidColorBrush x:Key="FocusedRowBackgroundBrush" Color="#222222" />
-                    <SolidColorBrush x:Key="FocusedRowForegroundBrush" Color="White" />
                     <SolidColorBrush x:Key="ZoomBoxTicksBrush" Color="#FF000000" />
                     <SolidColorBrush x:Key="ZoomBoxButtonBorderBrush" Color="#FFAAACA5" />
                     <SolidColorBrush x:Key="DialogButtonHoverBrush" Color="#FFBCC7D8" />

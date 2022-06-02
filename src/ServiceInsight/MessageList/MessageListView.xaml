@@ -12,20 +12,6 @@
              d:DesignHeight="200"
              d:DesignWidth="500"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
-                    <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
-                </DataTrigger>
-                <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
-                    <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
-                    <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
     <dxb:BarManager>
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
@@ -217,7 +203,7 @@
                                    NavigationStyle="Row"
                                    ShowGroupPanel="False"
                                    ShowIndicator="False"
-                                   RowStyle="{StaticResource FocusedRowStyle}"/>
+                                   />
                 </dxg:GridControl.View>
             </dxg:GridControl>
         </Grid>
