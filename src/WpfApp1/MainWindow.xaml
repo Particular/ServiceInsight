@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
         xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         x:Class="WpfApp1.MainWindow"
         mc:Ignorable="d"
@@ -50,11 +48,9 @@
             -->
             <dxg:GridControl x:Name="grid"
                              Grid.Row="1"
-                             ItemsSource="{Binding Rows}"
+                             ItemsSource="{Binding Path=Persons}"
                              SelectionMode="Row"
-                             SelectedItem="{Binding Selection.SelectedMessage, Delay=50}"
-                             ShowLoadingPanel="{Binding WorkInProgress}"
-                             >
+                             SelectedItem="{Binding Path=Selection.SelectedPerson, Delay=50}">
                 <dxb:BarManager.DXContextMenu>
                     <dxb:PopupMenu>
                         <dxb:PopupMenu.ItemLinks>
@@ -82,10 +78,12 @@
                                    IsColumnMenuEnabled="False"
                                    NavigationStyle="Row"
                                    ShowGroupPanel="False"
-                                   ShowIndicator="False"
-                                   />
+                                   ShowIndicator="False">
+                    </dxg:TableView>
                 </dxg:GridControl.View>
-                <!-- <dxg:GridColumn Header="Test" dxg:DataContext="{Binding Path=Name}"/> -->
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn Header="Test" FieldName="Name" />
+                </dxg:GridControl.Columns>
             </dxg:GridControl>
         </Grid>
     </dxb:BarManager>
