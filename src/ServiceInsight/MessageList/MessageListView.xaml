@@ -195,7 +195,7 @@
                                     CellTemplate="{StaticResource TextEditGridColumnCellTemplate}"
                                     FieldName="RetryCount"
                                     Header="Retries"
-                                    HeaderToolTip="Number of retries the message had - Sorting not supported"
+                                    HeaderToolTip="Number of manual retries the message had - Sorting not supported"
                                     Tag="retry_count"
                                     ShowInColumnChooser="True"
                                     AllowSorting="false"
