@@ -8,6 +8,20 @@
         x:Class="WpfApp1.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Foreground" Value="White" />
+                </DataTrigger>
+                <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <dxb:BarManager>
         <dxb:BarManager.Items>
             <dxb:BarButtonItem Name="retryMessage"
@@ -78,7 +92,8 @@
                                    IsColumnMenuEnabled="False"
                                    NavigationStyle="Row"
                                    ShowGroupPanel="False"
-                                   ShowIndicator="False">
+                                   ShowIndicator="False"
+                                   RowStyle="{StaticResource FocusedRowStyle}">
                     </dxg:TableView>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
