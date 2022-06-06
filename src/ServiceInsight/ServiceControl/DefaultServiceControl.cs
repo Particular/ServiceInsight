@@ -711,7 +711,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
         void LogError(IRestResponse response)
         {
             var exception = response?.ErrorException;
-            var errorMessage = response != null ? string.Format("Error executing the request: {0}, Status code is {1}, content: {2}", response.ErrorMessage, response.StatusCode, response.Content) : "No response was received.";
+            var errorMessage = response != null ? $"Error executing the request: {response.ErrorMessage}, Status code is {response.StatusCode}, content: {response.Content}" : "No response was received.";
 
             eventAggregator.PublishOnUIThread(new AsyncOperationFailed(errorMessage));
             LogTo.Error(exception, errorMessage);
