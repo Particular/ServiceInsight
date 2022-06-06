@@ -160,10 +160,23 @@
             }
         }
 
+        ServiceControlExplorerItem SelectConnectedServiceControlNode(string url)
+        {
+            return Items.OfType<ServiceControlExplorerItem>().SingleOrDefault(ei => ei.Url == url);
+        }
+
         public async Task ConnectToService(string url)
         {
             if (!url.IsValidUrl())
             {
+                return;
+            }
+
+            var connectedNode = SelectConnectedServiceControlNode(url);
+            if (connectedNode != null)
+            {
+                ExpandServiceControlNode(connectedNode);
+                SelectDefaultEndpoint(connectedNode);
                 return;
             }
 
