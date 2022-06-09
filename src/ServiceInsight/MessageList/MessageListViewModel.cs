@@ -71,7 +71,7 @@
             CopyHeadersCommand = Command.Create(
                 CopyHeaders,
                 generalHeaderDisplay.Changed
-                    .Where(pc => pc.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
+                    .Where(pc => pc?.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
                     .Select(s => !((string)s.Value).IsEmpty()));
             Rows = new BindableCollection<StoredMessage>();
         }
