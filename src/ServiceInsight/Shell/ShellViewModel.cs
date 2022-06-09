@@ -477,10 +477,19 @@
             DisplayRegistrationStatus();
         }
 
-        public async Task PostConfigurationUpdate()
+        public async Task PerformSearchAndInitializeRefreshTimer()
         {
-            await Messages.SearchBar.PerformCommandLineSearch();
+            try
+            {
+                await Messages.SearchBar.PerformCommandLineSearch();
+            }
+            finally
+            {
+                SearchInProgress = false;
+            }
             InitializeAutoRefreshTimer();
         }
+
+        public bool SearchInProgress { get; set; }
     }
 }
