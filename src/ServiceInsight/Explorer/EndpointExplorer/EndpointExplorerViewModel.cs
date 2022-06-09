@@ -291,8 +291,9 @@
 
         public async Task Handle(ConfigurationUpdated message)
         {
+            Parent.SearchInProgress = true;
             await ConnectToService(commandLineParser.ParsedOptions.EndpointUri.ToString());
-            await Parent.PostConfigurationUpdate();
+            await Parent.PerformSearchAndInitializeRefreshTimer();
         }
     }
 }
