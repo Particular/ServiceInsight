@@ -194,6 +194,11 @@
             selectedExplorerItem = @event.SelectedExplorerItem;
             ServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
 
+            if (Parent.SearchInProgress)
+            {
+                return;
+            }
+
             if (ServiceControl != null)
             {
                 await RefreshMessages();
