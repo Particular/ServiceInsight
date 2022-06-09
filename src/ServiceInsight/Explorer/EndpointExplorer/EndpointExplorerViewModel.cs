@@ -162,7 +162,7 @@
 
         ServiceControlExplorerItem SelectConnectedServiceControlNode(string url)
         {
-            return Items.OfType<ServiceControlExplorerItem>().SingleOrDefault(ei => ei.Url == url);
+            return Items.OfType<ServiceControlExplorerItem>().SingleOrDefault(ei => ei.Url.TrimEnd('/') == url.TrimEnd('/'));
         }
 
         public async Task ConnectToService(string url)
