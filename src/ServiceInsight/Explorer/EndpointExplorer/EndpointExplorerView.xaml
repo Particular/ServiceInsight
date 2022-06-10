@@ -49,7 +49,7 @@
               ItemsSource="{Binding Items}"
               ScrollViewer.VerticalScrollBarVisibility="Visible">
         <i:Interaction.Behaviors>
-            <behaviors:BindableSelectedItemBehavior SelectedItem="{Binding SelectedNode}" />
+            <behaviors:BindableSelectedItemBehavior SelectedItem="{Binding SelectedNode, Mode=TwoWay}" />
         </i:Interaction.Behaviors>
     </TreeView>
 </UserControl>
