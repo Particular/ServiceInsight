@@ -19,10 +19,6 @@
                     <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
                 </DataTrigger>
-                <Trigger Property="dxg:DataViewBase.IsFocused" Value="True">
-                    <Setter Property="Background" Value="{StaticResource FocusedRowBackgroundBrush}" />
-                    <Setter Property="Foreground" Value="{StaticResource FocusedRowForegroundBrush}" />
-                </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
