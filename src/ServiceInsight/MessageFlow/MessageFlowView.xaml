@@ -289,7 +289,13 @@
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate DataType="diagram:DiagramItem">
-                                    <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
                                         <Border x:Name="MessageRectangle"
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource MessageBackground}"
@@ -302,12 +308,12 @@
                                             <Grid x:Name="RootGrid">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" MinWidth="130" />
+                                                    <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="20" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Row="0"
@@ -327,6 +333,7 @@
                                                                       Width="24"
                                                                       Height="24"
                                                                       Margin="10"
+                                                                      Padding="20"
                                                                       HorizontalAlignment="Center"
                                                                       VerticalAlignment="Center"
                                                                       Style="{StaticResource MessageIconStyle}" />
@@ -440,7 +447,7 @@
                                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
                                             </Grid>
                                         </Border>
-                                    </StackPanel>
+                                    </Grid>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding HasFailed}"
                                                      Value="True">
