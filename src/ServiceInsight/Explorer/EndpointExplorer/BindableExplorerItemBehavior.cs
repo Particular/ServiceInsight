@@ -56,7 +56,7 @@
         {
             if (container != null)
             {
-                if (container.DataContext is ExplorerItem dataContextExplorerItem && dataContextExplorerItem.Name.TrimEnd('/') == item.Name.TrimEnd('/'))
+                if (container.DataContext is ExplorerItem dataContextExplorerItem && dataContextExplorerItem.DisplayMemberPath == item.DisplayMemberPath)
                 {
                     return container as TreeViewItem;
                 }
