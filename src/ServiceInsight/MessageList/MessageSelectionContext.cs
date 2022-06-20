@@ -15,6 +15,8 @@
 
         public StoredMessage SelectedMessage { get; set; }
 
+        public bool SearchInProgress { get; set; } // Serializes UI search triggers that prevents UI message re-loading
+
 #pragma warning disable IDE0051 // Remove unused private members
         void OnSelectedMessageChanged()
 #pragma warning restore IDE0051 // Remove unused private members

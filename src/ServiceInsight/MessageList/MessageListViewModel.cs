@@ -35,6 +35,7 @@
         readonly IClipboard clipboard;
         readonly ISettingsProvider settingsProvider;
         readonly ServiceControlClientRegistry clientRegistry;
+        readonly MessageSelectionContext messageSelectionContext;
         readonly IEventAggregator eventAggregator;
         readonly IWorkNotifier workNotifier;
         readonly GeneralHeaderViewModel generalHeaderDisplay;
@@ -52,7 +53,8 @@
             MessageSelectionContext selectionContext,
             IClipboard clipboard,
             ISettingsProvider settingsProvider,
-            ServiceControlClientRegistry clientRegistry)
+            ServiceControlClientRegistry clientRegistry,
+            MessageSelectionContext messageSelectionContext)
         {
             SearchBar = searchBarViewModel;
             Selection = selectionContext;
@@ -60,6 +62,7 @@
             this.clipboard = clipboard;
             this.settingsProvider = settingsProvider;
             this.clientRegistry = clientRegistry;
+            this.messageSelectionContext = messageSelectionContext;
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.generalHeaderDisplay = generalHeaderDisplay;
@@ -71,7 +74,7 @@
             CopyHeadersCommand = Command.Create(
                 CopyHeaders,
                 generalHeaderDisplay.Changed
-                    .Where(pc => pc.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
+                    .Where(pc => pc?.PropertyName == nameof(GeneralHeaderViewModel.HeaderContent))
                     .Select(s => !((string)s.Value).IsEmpty()));
             Rows = new BindableCollection<StoredMessage>();
         }
@@ -193,6 +196,11 @@
         {
             selectedExplorerItem = @event.SelectedExplorerItem;
             ServiceControl = @event.SelectedExplorerItem.GetServiceControlClient(clientRegistry);
+
+            if (messageSelectionContext.SearchInProgress)
+            {
+                return;
+            }
 
             if (ServiceControl != null)
             {

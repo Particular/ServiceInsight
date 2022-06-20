@@ -7,6 +7,7 @@
     using ServiceInsight.Explorer.EndpointExplorer;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
+    using ServiceInsight.MessageList;
     using ServiceInsight.Models;
     using ServiceInsight.Search;
     using ServiceInsight.Startup;
@@ -25,7 +26,7 @@
             // required for async command
             _ = Dispatcher.CurrentDispatcher;
 
-            viewModel = new SearchBarViewModel(argParser, settingProvider);
+            viewModel = new SearchBarViewModel(argParser, settingProvider, Substitute.For<MessageSelectionContext>());
         }
 
         public void Dispose()

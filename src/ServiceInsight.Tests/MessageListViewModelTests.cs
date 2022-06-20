@@ -16,6 +16,8 @@
     using Models;
     using Search;
     using ServiceControl;
+    using ServiceInsight.Framework.Rx;
+    using Shell;
     using Shouldly;
 
     [TestFixture]
@@ -51,7 +53,8 @@
                 Substitute.For<MessageSelectionContext>(),
                 clipboard,
                 settingsProvider,
-                clientRegistry);
+                clientRegistry,
+                Substitute.For<MessageSelectionContext>());
         }
 
         [Test]
@@ -72,6 +75,7 @@
                 });
 
             var messageList = messageListFunc();
+            ((RxConductor<RxScreen>.Collection.AllActive)messageList).Parent = Substitute.For<ShellViewModel>();
 
             var serviceControlNode = new ServiceControlExplorerItem("http://localhost:3333/api");
             var auditNode = new AuditEndpointExplorerItem(serviceControlNode, endpoint);

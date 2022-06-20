@@ -48,6 +48,7 @@
         readonly AppLicenseManager licenseManager;
         readonly ISettingsProvider settingsProvider;
         readonly CommandLineArgParser commandLineArgParser;
+        readonly MessageSelectionContext messageSelectionContext;
         readonly Func<ServiceControlConnectionViewModel> serviceControlConnection;
         readonly Func<LicenseMessageBoxViewModel> licenseMessageBoxViewModel;
 
@@ -76,7 +77,8 @@
             IVersionUpdateChecker versionUpdateChecker,
             MessagePropertiesViewModel messageProperties,
             CommandLineArgParser commandLineArgParser,
-            MessageBodyViewModel messageBodyViewer)
+            MessageBodyViewModel messageBodyViewer,
+            MessageSelectionContext messageSelectionContext)
         {
             this.appCommander = appCommander;
             this.windowManager = windowManager;
@@ -95,6 +97,7 @@
             EndpointExplorer = endpointExplorer;
             MessageHeaders = messageHeadersViewer;
             MessageBody = messageBodyViewer;
+            this.messageSelectionContext = messageSelectionContext;
             SequenceDiagram = sequenceDiagramViewer;
             Messages = messages;
             LogWindow = logWindow;
@@ -477,9 +480,16 @@
             DisplayRegistrationStatus();
         }
 
-        public async Task PostConfigurationUpdate()
+        public async Task PerformSearchAndInitializeRefreshTimer()
         {
-            await Messages.SearchBar.PerformCommandLineSearch();
+            try
+            {
+                await Messages.SearchBar.PerformCommandLineSearch();
+            }
+            finally
+            {
+                messageSelectionContext.SearchInProgress = false;
+            }
             InitializeAutoRefreshTimer();
         }
     }
