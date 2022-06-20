@@ -203,8 +203,6 @@
 
         public int TotalPagesCount { get; private set; }
 
-        //public bool SearchInProgress { get; private set; }
-
         public bool SearchEnabled { get; private set; }
 
         public bool CanSearch => !WorkInProgress && !string.IsNullOrWhiteSpace(SearchQuery);
