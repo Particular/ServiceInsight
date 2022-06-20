@@ -1,4 +1,4 @@
-﻿namespace ServiceInsight.Framework.Behaviors
+﻿namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -6,24 +6,24 @@
     using System.Windows.Media;
     using Explorer;
 
-    public class BindableSelectedItemBehavior : Behavior<TreeView>
+    public class BindableExplorerItemBehavior : Behavior<TreeView>
     {
         bool isTreeViewLoaded;
 
         #region SelectedItem Property
 
-        public object SelectedItem
+        public ExplorerItem SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
+            get { return (ExplorerItem)GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(BindableSelectedItemBehavior), new UIPropertyMetadata(null, OnSelectedItemChanged));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(BindableExplorerItemBehavior), new UIPropertyMetadata(null, OnSelectedItemChanged));
 
         static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var behavior = (BindableSelectedItemBehavior)sender;
+            var behavior = (BindableExplorerItemBehavior)sender;
             if (!behavior.isTreeViewLoaded)
             {
                 return;
@@ -40,7 +40,6 @@
             if (tvi != null)
             {
                 tvi.IsSelected = true;
-                //tvi.Focus();   
             }
         }
 
@@ -50,7 +49,7 @@
 
         void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            SelectedItem = e.NewValue;
+            SelectedItem = e.NewValue as ExplorerItem;
         }
 
         static TreeViewItem GetTreeViewItem(ItemsControl container, ExplorerItem item)
@@ -63,7 +62,7 @@
                 }
 
                 // Expand the current container
-                if (container is TreeViewItem && !((TreeViewItem)container).IsExpanded)
+                if (container is TreeViewItem tvi && !tvi.IsExpanded)
                 {
                     container.SetValue(TreeViewItem.IsExpandedProperty, true);
                 }
@@ -95,9 +94,7 @@
                 var itemsHostPanel = (Panel)VisualTreeHelper.GetChild(itemsPresenter, 0);
 
                 // Ensure that the generator for this panel has been created.
-#pragma warning disable 168
                 _ = itemsHostPanel.Children;
-#pragma warning restore 168
 
                 for (int i = 0, count = container.Items.Count; i < count; i++)
                 {
@@ -119,7 +116,7 @@
                     {
                         // The object is not under this TreeViewItem
                         // so collapse it.
-                        //subContainer.IsExpanded = false;
+                        subContainer.IsExpanded = false;
                     }
                 }
             }
@@ -168,7 +165,7 @@
         void OnAssociatedObjectOnLoaded(object sender, RoutedEventArgs e)
         {
             isTreeViewLoaded = true;
-            SynchronizeSelectedTreeViewItem(AssociatedObject, (ExplorerItem)SelectedItem);
+            SynchronizeSelectedTreeViewItem(AssociatedObject, SelectedItem);
         }
 
         protected override void OnDetaching()
