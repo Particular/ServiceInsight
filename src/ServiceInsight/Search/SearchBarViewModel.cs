@@ -27,15 +27,16 @@
         const int MaxSavedSearches = 10;
         CommandLineArgParser commandLineArgParser;
         ISettingsProvider settingProvider;
+        MessageSelectionContext messageSelectionContext;
         int workCount;
         bool isSettingUpPaging;
         bool isResttingPaging;
 
-        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider)
+        public SearchBarViewModel(CommandLineArgParser commandLineArgParser, ISettingsProvider settingProvider, MessageSelectionContext messageSelectionContext)
         {
             this.commandLineArgParser = commandLineArgParser;
             this.settingProvider = settingProvider;
-
+            this.messageSelectionContext = messageSelectionContext;
             SearchCommand = Command.CreateAsync(this, Search, vm => vm.CanSearch);
             CancelSearchCommand = Command.CreateAsync(this, CancelSearch, vm => vm.CanCancelSearch);
         }
@@ -84,7 +85,7 @@
         public async Task Search(string searchQuery, bool performSearch = true)
         {
             SearchQuery = searchQuery;
-            SearchInProgress = !SearchQuery.IsEmpty();
+            messageSelectionContext.SearchInProgress = !SearchQuery.IsEmpty();
             SearchEnabled = !SearchQuery.IsEmpty();
             NotifyPropertiesChanged();
 
@@ -96,7 +97,7 @@
 
         public async Task Search()
         {
-            SearchInProgress = true;
+            messageSelectionContext.SearchInProgress = true;
             AddRecentSearchEntry(SearchQuery);
             await Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
         }
@@ -104,7 +105,7 @@
         public async Task CancelSearch()
         {
             SearchQuery = null;
-            SearchInProgress = false;
+            messageSelectionContext.SearchInProgress = false;
             await Parent.RefreshMessages(SelectedEndpoint, SearchQuery);
         }
 
@@ -137,7 +138,7 @@
                 TotalItemCount = 0;
                 TotalPagesCount = 0;
                 SearchQuery = null;
-                SearchInProgress = false;
+                messageSelectionContext.SearchInProgress = false;
                 SelectedEndpoint = null;
                 NextLink = null;
                 PrevLink = null;
@@ -158,7 +159,7 @@
 
         public bool CanGoToLastPage => LastLink != null && !WorkInProgress;
 
-        public bool CanCancelSearch => SearchInProgress;
+        public bool CanCancelSearch => messageSelectionContext.SearchInProgress;
 
         public new MessageListViewModel Parent => base.Parent as MessageListViewModel;
 
@@ -202,7 +203,7 @@
 
         public int TotalPagesCount { get; private set; }
 
-        public bool SearchInProgress { get; private set; }
+        //public bool SearchInProgress { get; private set; }
 
         public bool SearchEnabled { get; private set; }
 
@@ -307,7 +308,7 @@
 
         string GetSearchResultHeader()
         {
-            if (SearchInProgress)
+            if (messageSelectionContext.SearchInProgress)
             {
                 return "Search results:";
             }
@@ -318,7 +319,7 @@
 
         string GetSearchResultResults()
         {
-            if (SearchInProgress)
+            if (messageSelectionContext.SearchInProgress)
             {
                 return SelectedEndpoint != null ?
                         string.Format(" {0} Message(s) found in Endpoint '{1}'", TotalItemCount, SelectedEndpoint.Name) :

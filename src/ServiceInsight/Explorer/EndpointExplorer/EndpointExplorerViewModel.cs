@@ -13,6 +13,7 @@
     using ServiceInsight.Settings;
     using ServiceInsight.Shell;
     using ServiceInsight.Startup;
+    using ServiceInsight.MessageList;
 
     public class EndpointExplorerViewModel : Screen,
         IHandle<RequestSelectingEndpoint>,
@@ -23,6 +24,7 @@
         readonly ISettingsProvider settingsProvider;
         readonly CommandLineArgParser commandLineParser;
         readonly ServiceControlClientRegistry clientRegistry;
+        readonly MessageSelectionContext messageSelectionContext;
         bool isStartingUp;
 
         public EndpointExplorerViewModel(
@@ -30,12 +32,14 @@
             IWorkNotifier workNotifier,
             ISettingsProvider settingsProvider,
             CommandLineArgParser commandLineParser,
-            ServiceControlClientRegistry clientRegistry)
+            ServiceControlClientRegistry clientRegistry,
+            MessageSelectionContext messageSelectionContext)
         {
             this.eventAggregator = eventAggregator;
             this.workNotifier = workNotifier;
             this.settingsProvider = settingsProvider;
             this.clientRegistry = clientRegistry;
+            this.messageSelectionContext = messageSelectionContext;
             this.commandLineParser = commandLineParser;
             Items = new BindableCollection<ExplorerItem>();
         }
@@ -291,7 +295,7 @@
 
         public async Task Handle(ConfigurationUpdated message)
         {
-            Parent.SearchInProgress = true;
+            messageSelectionContext.SearchInProgress = true;
             await ConnectToService(commandLineParser.ParsedOptions.EndpointUri.ToString());
             await Parent.PerformSearchAndInitializeRefreshTimer();
         }
