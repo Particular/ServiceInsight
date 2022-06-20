@@ -31,6 +31,7 @@
                     <SolidColorBrush x:Key="MessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="FailedMessageBackground" Color="#F9916F" />
                     <SolidColorBrush x:Key="RetriedMessageBackground" Color="#F2F2F2" />
+                    <SolidColorBrush x:Key="InactiveMessageBorder">#AAAAAA</SolidColorBrush>
                     <SolidColorBrush x:Key="SelectedMessageBorder" Color="Black" />
                     <SolidColorBrush x:Key="SelectedMessageBackground" Color="#CCCCCC" />
                     <SolidColorBrush x:Key="SelectedFailedMessageBorder" Color="Black" />
@@ -286,20 +287,15 @@
                     <Style x:Key="MessageNodeStyle" TargetType="ms:DiagramNodeElement">
                         <Setter Property="Foreground" Value="Black" />
                         <Setter Property="Cursor" Value="Arrow" />
+                        <Setter Property="MinHeight" Value="77" />
                         <Setter Property="NodeTemplate">
                             <Setter.Value>
                                 <DataTemplate DataType="diagram:DiagramItem">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
                                         <Border x:Name="MessageRectangle"
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource MessageBackground}"
-                                                BorderBrush="Transparent"
+                                                BorderBrush="{StaticResource InactiveMessageBorder}"
                                                 BorderThickness="5"
                                                 MouseLeftButtonDown="MessageRectangle_MouseLeftButtonDown"
                                                 SnapsToDevicePixels="True"
@@ -311,14 +307,8 @@
                                                     <RowDefinition Height="*" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="20" />
-                                                </Grid.ColumnDefinitions>
+
                                                 <TextBlock Grid.Row="0"
-                                                           Grid.Column="0"
-                                                           Grid.ColumnSpan="3"
                                                            Background="{StaticResource EndpointBackground}"
                                                            FontSize="10px"
                                                            Padding="3,0,3,0"
@@ -327,30 +317,39 @@
                                                            ToolTip="Sending Endpoint"
                                                            Visibility="{Binding ShowEndpoints,
                                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                <controls:IconControl x:Name="MessageTypeIcon"
-                                                                      Grid.Row="1"
-                                                                      Grid.Column="0"
-                                                                      Width="24"
-                                                                      Height="24"
-                                                                      Margin="10"
-                                                                      Padding="20"
-                                                                      HorizontalAlignment="Center"
-                                                                      VerticalAlignment="Center"
-                                                                      Style="{StaticResource MessageIconStyle}" />
 
-                                                <Grid Grid.Row="1" Grid.Column="1">
+                                                <Grid Grid.Row="1">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <controls:IconControl x:Name="MessageTypeIcon"
+                                                                          Grid.Row="0"
+                                                                          Grid.Column="0"
+                                                                          Grid.RowSpan="3"
+                                                                          Width="24"
+                                                                          Height="24"
+                                                                          Margin="10"
+                                                                          Padding="20"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center"
+                                                                          Style="{StaticResource MessageIconStyle}" />
 
                                                     <CheckBox x:Name="MenuContainer"
                                                               Grid.Row="0"
+                                                              Grid.Column="1"
                                                               Style="{StaticResource MessageMenuIndicator}" />
 
                                                     <local:MessagePopupControl x:Name="MenuPopup"
                                                                                Grid.Row="1"
+                                                                               Grid.Column="1"
                                                                                HorizontalAlignment="Stretch"
                                                                                AllowsTransparency="True"
                                                                                DataContext="{Binding ElementName=RootGrid,
@@ -368,6 +367,7 @@
 
                                                     <ItemsControl ItemsSource="{Binding SagaInvocations}"
                                                                  Grid.Row="2"
+                                                                 Grid.Column="1"
                                                                  Margin="0 -5 2 0"
                                                                  Visibility="{Binding HasSaga, Converter={StaticResource BoolToVisibilityConverter}}"
                                                                  cal:Message.Attach="[Event MouseLeftButtonUp]=[Action ShowSagaWindow]">
@@ -427,16 +427,16 @@
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>
 
+                                                    <ContentControl Grid.Row="0"
+                                                                    Grid.Column="2"
+                                                                    Grid.RowSpan="3"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Style="{StaticResource FailedMessageMarker}" />
+
                                                 </Grid>
 
-                                                <ContentControl Grid.Row="1"
-                                                                Grid.Column="2"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"
-                                                                Style="{StaticResource FailedMessageMarker}" />
                                                 <TextBlock Grid.Row="2"
-                                                           Grid.Column="0"
-                                                           Grid.ColumnSpan="3"
                                                            Background="{StaticResource EndpointBackground}"
                                                            FontSize="10px"
                                                            Padding="3,0,3,0"
@@ -447,7 +447,7 @@
                                                                                 Converter={StaticResource BoolToVisibilityConverter}}" />
                                             </Grid>
                                         </Border>
-                                    </Grid>
+                                    </StackPanel>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding HasFailed}"
                                                      Value="True">
