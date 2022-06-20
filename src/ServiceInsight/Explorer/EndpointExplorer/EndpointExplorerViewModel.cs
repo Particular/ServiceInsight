@@ -46,7 +46,22 @@
 
         public IObservableCollection<ExplorerItem> Items { get; }
 
-        public ExplorerItem SelectedNode { get; set; }
+        ExplorerItem _selectedNode;
+        public ExplorerItem SelectedNode
+        {
+            get
+            {
+                return _selectedNode;
+            }
+            set
+            {
+                if (_selectedNode?.DisplayMemberPath != value?.DisplayMemberPath)
+                {
+                    _selectedNode = value;
+                    NotifyOfPropertyChange(() => SelectedNode);
+                }
+            }
+        }
 
         public new ShellViewModel Parent => (ShellViewModel)base.Parent;
 
