@@ -13,7 +13,7 @@
 
         public ServiceControlExplorerItem ServiceControl { get; }
 
-        public override string DisplayMemberPath => $"{ServiceControl.DisplayMemberPath}/{HostNames}";
+        public override string DisplayMemberPath => $"{ServiceControl.DisplayMemberPath}/{DisplayName}";
 
         public string HostNames { get; set; }
 
