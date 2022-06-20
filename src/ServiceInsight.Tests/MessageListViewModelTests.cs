@@ -53,7 +53,8 @@
                 Substitute.For<MessageSelectionContext>(),
                 clipboard,
                 settingsProvider,
-                clientRegistry);
+                clientRegistry,
+                Substitute.For<MessageSelectionContext>());
         }
 
         [Test]

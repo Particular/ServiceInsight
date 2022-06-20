@@ -104,7 +104,8 @@
                         versionUpdateChecker,
                         messageProperties,
                         commandLineArgParser,
-                        messageBodyView);
+                        messageBodyView,
+                        Substitute.For<MessageSelectionContext>());
 
             ((IViewAware)shell).AttachView(view);
         }
