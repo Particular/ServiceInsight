@@ -64,7 +64,7 @@
                 // Expand the current container
                 if (container is TreeViewItem tvi && !tvi.IsExpanded)
                 {
-                    container.SetValue(TreeViewItem.IsExpandedProperty, true);
+                    tvi.IsExpanded = true;
                 }
 
                 // Try to generate the ItemsPresenter and the ItemsPanel.
