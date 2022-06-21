@@ -5,10 +5,13 @@
     using System.Windows.Interactivity;
     using System.Windows.Media;
     using Explorer;
+    using Framework.UI;
 
     public class BindableExplorerItemBehavior : Behavior<TreeView>
     {
         bool isTreeViewLoaded;
+        bool syncInProgress;
+        TreeViewItem selectedTreeViewItem;
 
         #region SelectedItem Property
 
@@ -31,16 +34,26 @@
 
             var tree = behavior.AssociatedObject;
             var selectedExplorerItem = (ExplorerItem)e.NewValue;
-            SynchronizeSelectedTreeViewItem(tree, selectedExplorerItem);
+            SynchronizeSelectedTreeViewItem(tree, selectedExplorerItem, behavior);
         }
 
-        static void SynchronizeSelectedTreeViewItem(TreeView tree, ExplorerItem selectedExplorerItem)
+        static void SynchronizeSelectedTreeViewItem(TreeView tree, ExplorerItem selectedExplorerItem, BindableExplorerItemBehavior behavior)
         {
+            behavior.syncInProgress = true;
             var tvi = GetTreeViewItem(tree, selectedExplorerItem);
             if (tvi != null)
             {
+                if (behavior.selectedTreeViewItem != null)
+                {
+                    behavior.selectedTreeViewItem.IsSelected = false;
+                    Application.Current.DoEvents();
+                }
+
                 tvi.IsSelected = true;
+                behavior.selectedTreeViewItem = tvi;
             }
+
+            behavior.syncInProgress = false;
         }
 
         #endregion
@@ -49,6 +62,10 @@
 
         void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            if (syncInProgress)
+            {
+                return;
+            }
             SelectedItem = e.NewValue as ExplorerItem;
         }
 
@@ -165,7 +182,7 @@
         void OnAssociatedObjectOnLoaded(object sender, RoutedEventArgs e)
         {
             isTreeViewLoaded = true;
-            SynchronizeSelectedTreeViewItem(AssociatedObject, SelectedItem);
+            SynchronizeSelectedTreeViewItem(AssociatedObject, SelectedItem, this);
         }
 
         protected override void OnDetaching()

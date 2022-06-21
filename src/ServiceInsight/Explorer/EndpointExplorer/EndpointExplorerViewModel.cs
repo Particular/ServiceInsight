@@ -4,7 +4,9 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using Caliburn.Micro;
+    using Framework.UI;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
@@ -140,6 +142,7 @@
         {
             var serviceControlNode = new ServiceControlExplorerItem(url);
             Items.Add(serviceControlNode);
+            Application.Current.DoEvents();
             return serviceControlNode;
         }
 
@@ -295,6 +298,7 @@
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
             serviceControlNode.IsExpanded = true;
+            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 
