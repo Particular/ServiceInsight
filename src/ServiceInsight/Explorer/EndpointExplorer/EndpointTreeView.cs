@@ -5,6 +5,8 @@ namespace ServiceInsight.Explorer.EndpointExplorer
 
     public class EndpointTreeView : TreeView
     {
+        TreeViewItem selectedTreeViewItem;
+
         public EndpointTreeView()
         {
             SelectedItemChanged += TreeViewSelectedItemChanged;
@@ -30,7 +32,13 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                 TreeViewItem tvi = targetObject.FindItemNode(targetObject.SelectedItem);
                 if (tvi != null)
                 {
+                    if (targetObject.selectedTreeViewItem != null)
+                    {
+                        targetObject.selectedTreeViewItem.IsSelected = false;
+                    }
+
                     tvi.IsSelected = true;
+                    targetObject.selectedTreeViewItem = tvi;
                 }
             }
         }
