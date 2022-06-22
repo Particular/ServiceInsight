@@ -6,6 +6,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
     public class EndpointTreeView : TreeView
     {
         TreeViewItem selectedTreeViewItem;
+        bool syncInProgress;
 
         public EndpointTreeView()
         {
@@ -14,6 +15,11 @@ namespace ServiceInsight.Explorer.EndpointExplorer
 
         void TreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            if (syncInProgress)
+            {
+                return;
+            }
+
             SelectedItem = e.NewValue;
         }
 
@@ -29,6 +35,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
         {
             if (dependencyObject is EndpointTreeView targetObject)
             {
+                targetObject.syncInProgress = true;
                 TreeViewItem tvi = targetObject.FindItemNode(targetObject.SelectedItem);
                 if (tvi != null)
                 {
@@ -40,6 +47,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                     tvi.IsSelected = true;
                     targetObject.selectedTreeViewItem = tvi;
                 }
+                targetObject.syncInProgress = false;
             }
         }
 
