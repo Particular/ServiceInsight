@@ -297,6 +297,7 @@
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
             serviceControlNode.IsExpanded = true;
+            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 
