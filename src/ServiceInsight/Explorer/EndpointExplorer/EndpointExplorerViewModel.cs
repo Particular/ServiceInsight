@@ -142,7 +142,6 @@
         {
             var serviceControlNode = new ServiceControlExplorerItem(url);
             Items.Add(serviceControlNode);
-            Application.Current.DoEvents();
             return serviceControlNode;
         }
 
@@ -298,7 +297,6 @@
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
             serviceControlNode.IsExpanded = true;
-            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="ServiceInsight.Explorer.EndpointExplorer.EndpointExplorerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:behaviors="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
+             xmlns:ep="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,7 +27,7 @@
                         </TextBlock>
                     </ToolTip>
                 </Grid.ToolTip>
-                <Image Source="{Binding Image, Converter={StaticResource DrawingNameToImageSourceConverter}}" 
+                <Image Source="{Binding Image, Converter={StaticResource DrawingNameToImageSourceConverter}}"
                        RenderOptions.BitmapScalingMode="HighQuality" />
                 <TextBlock Grid.Column="1"
                            Margin="10,0,0,0"
@@ -42,13 +42,12 @@
         </Style>
     </UserControl.Resources>
 
-    <TreeView AutomationProperties.AutomationId="EndpointTree"
-              ItemContainerStyle="{StaticResource ExpandedStyle}"
-              ItemTemplate="{StaticResource TreeTemplate}"
-              ItemsSource="{Binding Items}"
-              ScrollViewer.VerticalScrollBarVisibility="Visible">
-        <i:Interaction.Behaviors>
-            <behaviors:BindableExplorerItemBehavior SelectedItem="{Binding SelectedNode, Mode=TwoWay}" />
-        </i:Interaction.Behaviors>
-    </TreeView>
+    <ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
+                         AutomationProperties.AutomationId="EndpointTree"
+                         ItemContainerStyle="{StaticResource ExpandedStyle}"
+                         ItemTemplate="{StaticResource TreeTemplate}"
+                         ItemsSource="{Binding Items}"
+                         SelectedItem="{Binding SelectedNode}"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible">
+    </ep:EndpointTreeView>
 </UserControl>
