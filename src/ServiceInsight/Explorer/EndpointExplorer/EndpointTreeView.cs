@@ -36,20 +36,26 @@ namespace ServiceInsight.Explorer.EndpointExplorer
         {
             if (dependencyObject is EndpointTreeView targetObject)
             {
-                targetObject.syncInProgress = true;
-                TreeViewItem tvi = targetObject.FindItemNode(targetObject.SelectedItem);
-                if (tvi != null)
+                try
                 {
-                    if (targetObject.selectedTreeViewItem != null)
+                    targetObject.syncInProgress = true;
+                    TreeViewItem tvi = targetObject.FindItemNode(targetObject.SelectedItem);
+                    if (tvi != null)
                     {
-                        targetObject.selectedTreeViewItem.IsSelected = false;
-                        Application.Current.DoEvents();
-                    }
+                        if (targetObject.selectedTreeViewItem != null)
+                        {
+                            targetObject.selectedTreeViewItem.IsSelected = false;
+                            Application.Current.DoEvents();
+                        }
 
-                    tvi.IsSelected = true;
-                    targetObject.selectedTreeViewItem = tvi;
+                        tvi.IsSelected = true;
+                        targetObject.selectedTreeViewItem = tvi;
+                    }
                 }
-                targetObject.syncInProgress = false;
+                finally
+                {
+                    targetObject.syncInProgress = false;
+                }
             }
         }
 
