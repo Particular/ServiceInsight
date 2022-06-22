@@ -2,6 +2,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
 {
     using System.Windows;
     using System.Windows.Controls;
+    using Framework.UI;
 
     public class EndpointTreeView : TreeView
     {
@@ -42,6 +43,7 @@ namespace ServiceInsight.Explorer.EndpointExplorer
                     if (targetObject.selectedTreeViewItem != null)
                     {
                         targetObject.selectedTreeViewItem.IsSelected = false;
+                        Application.Current.DoEvents();
                     }
 
                     tvi.IsSelected = true;
