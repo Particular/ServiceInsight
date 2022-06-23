@@ -4,7 +4,9 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using Caliburn.Micro;
+    using Framework.UI;
     using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Events;
@@ -46,7 +48,22 @@
 
         public IObservableCollection<ExplorerItem> Items { get; }
 
-        public ExplorerItem SelectedNode { get; set; }
+        ExplorerItem _selectedNode;
+        public ExplorerItem SelectedNode
+        {
+            get
+            {
+                return _selectedNode;
+            }
+            set
+            {
+                if (_selectedNode?.DisplayMemberPath != value?.DisplayMemberPath)
+                {
+                    _selectedNode = value;
+                    NotifyOfPropertyChange(() => SelectedNode);
+                }
+            }
+        }
 
         public new ShellViewModel Parent => (ShellViewModel)base.Parent;
 
@@ -280,6 +297,7 @@
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
             serviceControlNode.IsExpanded = true;
+            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 

@@ -21,6 +21,8 @@
 
         public virtual string DisplayName => Name;
 
+        public abstract string DisplayMemberPath { get; }
+
         public IObservableCollection<EndpointExplorerItem> Children { get; }
 
         public override string ToString() => DisplayName;

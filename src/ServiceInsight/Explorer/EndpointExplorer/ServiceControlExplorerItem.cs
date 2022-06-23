@@ -13,6 +13,8 @@
 
         public string Url { get; }
 
+        public override string DisplayMemberPath => Url.TrimEnd('/');
+
         public override string Image => "Shell_EndpointRootNode";
 
         public bool EndpointExists(Endpoint endpoint) => Children.Any(item => item.Endpoint == endpoint);

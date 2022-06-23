@@ -13,6 +13,8 @@
 
         public ServiceControlExplorerItem ServiceControl { get; }
 
+        public override string DisplayMemberPath => $"{ServiceControl.DisplayMemberPath}/{DisplayName}";
+
         public string HostNames { get; set; }
 
         public override string Image => "Shell_EndpointTreeNode";
