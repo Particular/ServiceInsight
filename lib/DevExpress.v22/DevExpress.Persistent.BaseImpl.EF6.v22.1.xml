@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Persistent.BaseImpl.EF6.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Persistent.BaseImpl.EF">
+      <summary>
+        <para>Contains ready-to-use Entity Framework classes that form the Business Class Library.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.DashboardData">
+      <summary>
+        <para>An entity class used by the Dashboards Module to store dashboards in the application database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.DashboardData.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.DashboardData"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.Content">
+      <summary>
+        <para>Specifies the dashboard configuration defined in the Dashboard Designer.</para>
+      </summary>
+      <value>An XML-formatted string which specifies the dashboard configuration.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.DashboardData"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.SynchronizeTitle">
+      <summary>
+        <para>Specifies if it is required to update the <see cref="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.Title"/> value with the dashboard title from the dashboard configuration (stored in the <see cref="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.Content"/> property).</para>
+      </summary>
+      <value>true, if it is required to update the dashboard title; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.DashboardData.Title">
+      <summary>
+        <para>Specifies the dashboard title.</para>
+      </summary>
+      <value>A string specifying the dashboard title.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject">
+      <summary>
+        <para>The entity used to store media data in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.Id">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.MediaData">
+      <summary>
+        <para>Specifies a byte array with media data that is loaded from a database on demand when required.</para>
+      </summary>
+      <value>A byte array object that is loaded from a database on demand when required.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.MediaDataKey">
+      <summary>
+        <para>Specifies a key value associated with the <see cref="P:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.MediaData"/> byte array.</para>
+      </summary>
+      <value>A string which is a key value.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.MediaResource">
+      <summary>
+        <para>Specifies the MediaResourceObject object which exposes the MediaData property of the byte array type.</para>
+      </summary>
+      <value>The MediaResourceObject object which exposes the MediaData property of the byte array type.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.OnCreated">
+      <summary>
+        <para>Called by the Object Space when the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject"/> is created.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.OnLoaded">
+      <summary>
+        <para>Called by the Object Space when the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject"/> is loaded.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.MediaDataObject.OnSaving">
+      <summary>
+        <para>Called by the Object Space when the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.MediaDataObject"/> is saved or deleted.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference">
+      <summary>
+        <para>The entity used to store model differences in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.ModelDifference.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.Aspects">
+      <summary>
+        <para>Gets a list of model difference aspects associated with the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object.</para>
+      </summary>
+      <value>An IList&lt;<see cref="T:DevExpress.ExpressApp.IModelDifferenceAspect"/>&gt; list of model difference aspects.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.ContextId">
+      <summary>
+        <para>Specifies the context identifier of the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object that allows distinguishing model differences designed for different applications using the same database.</para>
+      </summary>
+      <value>A string which is the context identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.UserId">
+      <summary>
+        <para>Specifies the identifier of a user who owns the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object.</para>
+      </summary>
+      <value>A string which is the identifier of a user who owns the current model differences.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.UserName">
+      <summary>
+        <para>Gets the name of a user who owns the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object.</para>
+      </summary>
+      <value>A string which is the name of a user who owns the current model differences.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifference.Version">
+      <summary>
+        <para>Specifies the version of the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object.</para>
+      </summary>
+      <value>An integer value which is the version number of the model differences object.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect">
+      <summary>
+        <para>The entity used to store model difference aspects in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.DisplayName">
+      <summary>
+        <para>Gets the language code of the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> object, or the “(Default language)” text.</para>
+      </summary>
+      <value>A string which specifies the name of the current model difference aspect, or “(Default language)” if the aspect name is empty (if the current aspect specifies culture-neutral model differences).</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> identifier</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.Name">
+      <summary>
+        <para>Specifies the language code of the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> object. The empty value means that the current aspect specifies culture-neutral model differences.</para>
+      </summary>
+      <value>A string which specifies the name of the current model difference aspect.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.Owner">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> belongs to.</para>
+      </summary>
+      <value>A the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifference"/> object specifying the model differences object that owns the current aspect.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect.Xml">
+      <summary>
+        <para>Specifies the XML code of the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.ModelDifferenceAspect"/> object.</para>
+      </summary>
+      <value>A string which is the XML code of the current model difference aspect.</value>
+    </member>
+    <member name="N:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy">
+      <summary>
+        <para>Contains Entity Framework classes that implement the Security System objects for the Allow/Deny Permission Policy.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole">
+      <summary>
+        <para>A security role that supports the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole.ActiveAdminExists">
+      <summary>
+        <para>This property is obsolete. The Validation Module no longer uses this property. The corresponding validation Rules were removed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole.Users">
+      <summary>
+        <para>A list of users associated with the current role.</para>
+      </summary>
+      <value>An IList&lt;<see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser"/>&gt; collection which is the list of users associated with the current role.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase">
+      <summary>
+        <para>The base class for a security role that supports the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.ActionPermissions">
+      <summary>
+        <para>Specifies the collection of objects that contain Action permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>A collection of objects that contain Action permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/>.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.CanEditModel">
+      <summary>
+        <para>Specifies whether users associated with the current role can use the Model Editor.</para>
+      </summary>
+      <value>true, if users associated with the current role can use the Model Editor; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.IsAdministrative">
+      <summary>
+        <para>Specifies whether users associated with the current role are administrators.</para>
+      </summary>
+      <value>true, if users associated with the current role are administrators; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.IsAllowPermissionPriority">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.Name">
+      <summary>
+        <para>Specifies the name of the security role.</para>
+      </summary>
+      <value>A string which is the name of the security role.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.NavigationPermissions">
+      <summary>
+        <para>Gets the list of objects which contain navigation permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>An IList&lt;PermissionPolicyNavigationPermissionObject&gt;, which is the list of the PermissionPolicyNavigationPermissionObject objects which are navigation permissions associated with the current role.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.PermissionPolicy">
+      <summary>
+        <para>Specifies the Security System behavior when there are no explicitly specified permissions for a specific type, object or member.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Persistent.Base.SecurityPermissionPolicy"/> enumeration value specifying the behavior when there are no explicitly specified permissions.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase.TypePermissions">
+      <summary>
+        <para>Gets the list of objects which contain type permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>An IList&lt;PermissionPolicyTypePermissionObject&gt;, which is the list of the PermissionPolicyTypePermissionObject objects which are type permissions associated with the current role.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser">
+      <summary>
+        <para>An XAF user who has a list of associated security roles that support the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ActiveAdminExists">
+      <summary>
+        <para>This property is obsolete. The Validation Module no longer uses this property. The corresponding validation Rules were removed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ChangePasswordOnFirstLogon">
+      <summary>
+        <para>Specifies whether the user must change their password the on the next logon.</para>
+      </summary>
+      <value>true, if the user must change password on the next logon; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.IsActive">
+      <summary>
+        <para>Specifies if a user is allowed to logon.</para>
+      </summary>
+      <value>true if a user is active; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.Roles">
+      <summary>
+        <para>A list of roles associated with the current user.</para>
+      </summary>
+      <value>An IList&lt;<see cref="T:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole"/>&gt; collection which is the list of roles associated with the current user.</value>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ruleId_RoleRequired">
+      <summary>
+        <para>Gets an identifier of the validation rule that requires the <see cref="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.Roles"/> property to have a value.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ruleId_UserNameIsUnique">
+      <summary>
+        <para>Gets an identifier of the validation rule that requires the <see cref="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.UserName"/> value to be unique.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.ruleId_UserNameRequired">
+      <summary>
+        <para>Gets an identifier of the validation rule that requires the <see cref="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.UserName"/> property to have a value.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.SetPassword(System.String)">
+      <summary>
+        <para>Changes the user password.</para>
+      </summary>
+      <param name="password">A string which is a new password.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.StoredPassword">
+      <summary>
+        <para>Specifies the encrypted password stored in the database.</para>
+      </summary>
+      <value>A string which is the encrypted password.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyUser.UserName">
+      <summary>
+        <para>Specifies the user’s login name.</para>
+      </summary>
+      <value>A string which is the user’s login name.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.EF.ReportDataV2">
+      <summary>
+        <para>The entity class used to store reports in the Reports V2 Module.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ReportDataV2"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.#ctor(System.Type)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ReportDataV2"/> class.</para>
+      </summary>
+      <param name="dataType">A <see cref="T:System.Type"/> object specifying the data type that the report data source is bound to.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.Content">
+      <summary>
+        <para>Specifies the report content.</para>
+      </summary>
+      <value>A byte array that is the report content.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.DataTypeCaption">
+      <summary>
+        <para>Gets the type caption of persistent objects that are displayed within the report.</para>
+      </summary>
+      <value>A string that specifies the type caption of persistent objects that are displayed within the report.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.DataTypeName">
+      <summary>
+        <para>Gets the name of the report’s data type.</para>
+      </summary>
+      <value>A string which is the name of the report’s data type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.DisplayName">
+      <summary>
+        <para>Specifies the report’s display name.</para>
+      </summary>
+      <value>A string which is the report’s display name.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.ID">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.EF.ReportDataV2"/> identifier.</para>
+      </summary>
+      <value>An integer which is the entity identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.IsInplaceReport">
+      <summary>
+        <para>Specifies whether or not the report is inplace.</para>
+      </summary>
+      <value>true, if the report is inplace; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.IsPredefined">
+      <summary>
+        <para>Gets a boolean value that indicates whether or not the report is predefined.</para>
+      </summary>
+      <value>true, if a report is predefined in code; false, if a report is created at runtime.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.ParametersObjectType">
+      <summary>
+        <para>Specifies the type of the reports parameter object.</para>
+      </summary>
+      <value>A System.Type of an object that specifies report parameters (typically, the <see cref="T:DevExpress.ExpressApp.ReportsV2.ReportParametersObjectBase"/> descendant).</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.ParametersObjectTypeName">
+      <summary>
+        <para>Specifies the name of the reports parameter object type.</para>
+      </summary>
+      <value>A string which is the name of the reports parameter object type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.PredefinedReportType">
+      <summary>
+        <para>Specifies the type of the predefined report.</para>
+      </summary>
+      <value>A System.Type object that specifies the type of the predefined report.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.EF.ReportDataV2.PredefinedReportTypeName">
+      <summary>
+        <para>Specifies the name of the reports parameter object type.</para>
+      </summary>
+      <value>A string which is the name of the reports parameter object type.</value>
+    </member>
+  </members>
+</doc>

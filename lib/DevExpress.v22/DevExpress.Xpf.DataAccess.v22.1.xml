@@ -1,0 +1,1914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.DataAccess.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.DataAccess">
+      <summary>
+        <para>Contains interfaces that provide functionality to access dialog services of the Data Source Wizard.</para>
+      </summary>
+    </member>
+    <member name="N:DevExpress.Xpf.DataAccess.DataSourceWizard">
+      <summary>
+        <para>Contains classes that provide functionality to the Report Wizard page views in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage">
+      <summary>
+        <para>Provides a view for the Select a Data Connection page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.#ctor(DevExpress.DataAccess.Wizard.SqlWizardOptions)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="options">One or more <see cref="T:DevExpress.DataAccess.Wizard.SqlWizardOptions"/> enumeration values.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.AllowCreateNewConnection">
+      <summary>
+        <para>Specifies whether new data connections can be created on the wizard page.</para>
+      </summary>
+      <value>true, to allow creating new data connections; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.AvailableConnections">
+      <summary>
+        <para>Returns the list of data connection names displayed on the wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:System.String"/> values.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available connections is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.SelectedConnection">
+      <summary>
+        <para>Specifies the name of the connection selected from the list of available connections.</para>
+      </summary>
+      <value>A string specifying the name of the selected connection.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseConnectionPage.ShouldCreateNewConnection">
+      <summary>
+        <para>Specifies whether to create a new data connection or use an existing one from the list.</para>
+      </summary>
+      <value>true, to create a new connection; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceNamePage">
+      <summary>
+        <para>Provides a view for the Enter the Data Source Name page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceNamePage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceNamePage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceNamePage.DataSourceName">
+      <summary>
+        <para>Specifies the data source name.</para>
+      </summary>
+      <value>A string that specifies the data source name.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceNamePage.ShowErrorMessage">
+      <summary>
+        <para>Displays an error message when a data source with the specified name already exists.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceTypePage">
+      <summary>
+        <para>Provides a view for the Select the Data Source Type page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceTypePage.DataSourceType">
+      <summary>
+        <para>Specifies the selected data source type.</para>
+      </summary>
+      <value>A value that specifies the data source type.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceTypePage.DataSourceTypes">
+      <summary>
+        <para>Returns the collection of data source types displayed on the wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Model.DataSourceType"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseDataSourceTypePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage">
+      <summary>
+        <para>Provides a view for the Select the Connection String page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.AvailableConnections">
+      <summary>
+        <para>Specifies available data connections.</para>
+      </summary>
+      <value>A collection of strings specifying connection names.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available connections is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.SelectedConnection">
+      <summary>
+        <para>Specifies the selected data connection.</para>
+      </summary>
+      <value>A string specifying the name of the selected connection.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFConnectionStringPage.ShouldCreateNewConnection">
+      <summary>
+        <para>Specifies whether to create a new data connection or use an existing one from the list.</para>
+      </summary>
+      <value>true, to create a new connection; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage">
+      <summary>
+        <para>Provides a view for the Select the Data Context page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.#ctor(DevExpress.DataAccess.Wizard.EFWizardOptions,System.IServiceProvider,DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="options">One or more <see cref="T:DevExpress.DataAccess.Wizard.EFWizardOptions"/> enumeration values.</param>
+      <param name="serviceProvider">An object implementing the <see cref="T:System.IServiceProvider"/> interface that is used to obtain the service object of a specific type.</param>
+      <param name="openFileAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor"/> interface.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.AvailableContexts">
+      <summary>
+        <para>Specifies the available data contexts.</para>
+      </summary>
+      <value>A collection of <see cref="T:System.String"/> values that specify context names.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.BrowseForAssembly">
+      <summary>
+        <para>Runs the Open File dialog (corresponds to clicking the Browse button on the Select the Data Context wizard page to select a custom assembly).</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.CanBrowseForAssembly">
+      <summary>
+        <para>Specifies whether the capability to load a custom assembly is provided in the Report Wizard.</para>
+      </summary>
+      <value>true, if the <see cref="P:DevExpress.DataAccess.UI.Wizard.EFWizardSettings.ShowBrowseButton"/> property is enabled; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.ContextName">
+      <summary>
+        <para>Specifies the item selected in the list of available data contexts.</para>
+      </summary>
+      <value>A string that specifies the selected data context.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFContextPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage">
+      <summary>
+        <para>Provides a view for the Select a Data Member page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage.DataMemberChanged">
+      <summary>
+        <para>Occurs when the selected item in the list of available members is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage.DataMembers">
+      <summary>
+        <para>Provides access to the collection of data members available on this wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseEFDataMemberPage.SelectedDataMember">
+      <summary>
+        <para>Specifies the View Model associated with the currently selected data member.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase"/> object.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage">
+      <summary>
+        <para>Provides a view for the Select a Worksheet, Table or Named Range page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage.AvailableItems">
+      <summary>
+        <para>Specifies the collection of available worksheets, tables and named regions.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Presenters.ListBoxItem"/> objects.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available worksheets, tables and named regions is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseExcelFileDataRangePage.SelectedItem">
+      <summary>
+        <para>Specifies the item selected in the list of available worksheets, tables and named regions.</para>
+      </summary>
+      <value>An object containing settings of the selected item.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage">
+      <summary>
+        <para>Provides a view for the Specify Import Settings page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.Cultures">
+      <summary>
+        <para>Indicates the document culture.</para>
+      </summary>
+      <value>An array of <see cref="T:System.Globalization.CultureInfo"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.DocumentFormat">
+      <summary>
+        <para>Specifies the format of the selected document.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Excel.ExcelDocumentFormat"/> enumeration value that specifies the format of the selected document.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.Encodings">
+      <summary>
+        <para>Indicates the document encoding.</para>
+      </summary>
+      <value>An array of System.Text.EncodingInfo objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.SourceOptionsViewModel">
+      <summary>
+        <para>Provides access to an object specifying the ViewModel options of a wizard page related to the Excel data source settings.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsBaseViewModel"/> descendant (typically, this is an <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel"/> object).</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFileOptionsPage.ValueSeparators">
+      <summary>
+        <para>Provides access to value separators available on a wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> objects.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage">
+      <summary>
+        <para>Provides a view for the Select an Excel Workbook or CSV file page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage.#ctor(DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor,DevExpress.Xpf.DataAccess.IPasswordDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage"/> class with the specified settings.</para>
+      </summary>
+      <param name="openFileDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor"/> interface.</param>
+      <param name="passwordDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IPasswordDialogAccessor"/> interface.</param>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage.Changed">
+      <summary>
+        <para>Occurs when the selected file is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage.FileName">
+      <summary>
+        <para>Specifies the name of the selected file.</para>
+      </summary>
+      <value>A string specifying the file name.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseFilePage.SelectFile">
+      <summary>
+        <para>Runs the Open dialog window to browse for an Excel or CSV file.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage">
+      <summary>
+        <para>Provides a view for the Select Data Fields page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage.Description">
+      <summary>
+        <para>Specifies the description of the Select Data Fields wizard page.</para>
+      </summary>
+      <value>The page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage.RootElement">
+      <summary>
+        <para>Gets the name of the selected root element.</para>
+      </summary>
+      <value>The name of the selected root element.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage.Roots">
+      <summary>
+        <para>Gets names of available root elements contained in the JSON data source.</para>
+      </summary>
+      <value>A collection of strings that specify names of root elements.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSchemaPage.Schema">
+      <summary>
+        <para>Gets the schema of the retrieved JSON data source.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Json.JsonSchemaNode"/> objects that specifies the schema of the retrieved JSON data source.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage">
+      <summary>
+        <para>Provides a view for the Specify JSON Data Location page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.#ctor(DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage"/> class with the specified settings.</para>
+      </summary>
+      <param name="openFileDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor"/> interface.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.ConnectionType">
+      <summary>
+        <para>Specifies the type of the connection to a JSON data source.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Wizard.Views.JsonConnectionType"/> enumeration value that specifies the type of connection to a JSON data source.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.FilePath">
+      <summary>
+        <para>Specifies the path to a JSON file.</para>
+      </summary>
+      <value>The path to a JSON file.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.Json">
+      <summary>
+        <para>Specifies the string with JSON content.</para>
+      </summary>
+      <value>A string that specifies the JSON data source.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.SelectFile">
+      <summary>
+        <para>Runs the Open dialog window to browse for a JSON file.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseJsonSourcePage.Uri">
+      <summary>
+        <para>Specifies the path to a JSON data source.</para>
+      </summary>
+      <value>The path to a JSON data source.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage">
+      <summary>
+        <para>Provides a view for the Select an Assembly page of the Data Source Wizard.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.AvailableItems">
+      <summary>
+        <para>Specifies the collection of available assemblies.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Views.AssemblyViewInfo"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.CanShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted assemblies check box is available on a wizard page.</para>
+      </summary>
+      <value>true, if the check box is available; otherwise, false.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available assemblies is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.SelectedItem">
+      <summary>
+        <para>Specifies the item selected in the list of available assemblies.</para>
+      </summary>
+      <value>An object containing settings of the selected assembly.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectAssemblyPage.ShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted assemblies check box is selected.</para>
+      </summary>
+      <value>true, if the check box is selected; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage">
+      <summary>
+        <para>Provides a view for the Select the Data Binding Mode page of the Data Source Wizard.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage.Changed">
+      <summary>
+        <para>Occurs when the object binding mode selected on a wizard page is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectBindingModePage.SchemaOnly">
+      <summary>
+        <para>Specifies whether the mode obtaining the data source schema or the mode retrieving actual data is selected on a wizard page.</para>
+      </summary>
+      <value>true, to select the mode obtaining only the data source schema; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage">
+      <summary>
+        <para>Provides a view for the Select a Data Source Constructor page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.AvailableItems">
+      <summary>
+        <para>Specifies the collection of available data source constructors.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Views.ConstructorViewInfo"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.CanShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted constructors check box is available on a wizard page.</para>
+      </summary>
+      <value>true, if the check box is available; otherwise, false.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available constructors is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.Result">
+      <summary>
+        <para>Specifies the item selected in the list of available data source constructors.</para>
+      </summary>
+      <value>An object containing settings of the selected data source constructor.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectConstructorPage.ShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted constructors check box is selected.</para>
+      </summary>
+      <value>true, if the check box is selected; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage">
+      <summary>
+        <para>Provides a view for the Select a Data Source Member page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.AvailableItems">
+      <summary>
+        <para>Specifies available public members.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.ObjectBinding.ObjectMember"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.BindToEntireObject">
+      <summary>
+        <para>Specifies whether to bind to the entire object or to its public member.</para>
+      </summary>
+      <value>true, to bind to an entire object; false, to bind to a selected public member.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.CanBindToEntireObject">
+      <summary>
+        <para>Specifies whether it is possible to bind to the entire object.</para>
+      </summary>
+      <value>true, if it is possible to bind to the entire object; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.CanShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted members check box is available on a wizard page.</para>
+      </summary>
+      <value>true, if the check box is available; otherwise, false.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available members is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.Result">
+      <summary>
+        <para>Specifies the item selected in the list of available members.</para>
+      </summary>
+      <value>An object containing settings of the selected member.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectMemberPage.ShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted members check box is selected.</para>
+      </summary>
+      <value>true, if the check box is selected; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage">
+      <summary>
+        <para>Provides a view for the Select a Data Source Type page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.AvailableItems">
+      <summary>
+        <para>Specifies the available data source types.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Views.TypeViewInfo"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.CanShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted types check box is available on a wizard page.</para>
+      </summary>
+      <value>true, if the check box is available; otherwise, false.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.Changed">
+      <summary>
+        <para>Occurs when the selected item in the list of available types is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.SelectedItem">
+      <summary>
+        <para>Specifies the item selected in the list of available types.</para>
+      </summary>
+      <value>An object containing settings of the selected type.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseObjectTypePage.ShowOnlyHighlighted">
+      <summary>
+        <para>Specifies whether the Show only highlighted types check box is selected.</para>
+      </summary>
+      <value>true, if the check box is selected; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage">
+      <summary>
+        <para>Provides a view for the Choose an Entity Type page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage.Description">
+      <summary>
+        <para>Specifies the description of the Choose an Entity Type wizard page.</para>
+      </summary>
+      <value>The page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage.EntityType">
+      <summary>
+        <para>Specifies the selected persistent object class.</para>
+      </summary>
+      <value>A value that specifies the selected persistent object class.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage.Initialize(System.Collections.IEnumerable)">
+      <summary>
+        <para>Initializes the Choose an Entity Type wizard page with the list of available data members.</para>
+      </summary>
+      <param name="entityTypes">A collection of available persistent object classes.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ChooseXPObjectSourceEntityTypePage.Types">
+      <summary>
+        <para>Specifies a collection of available persistent object classes.</para>
+      </summary>
+      <value>A collection of available persistent object classes.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage">
+      <summary>
+        <para>Provides a view for the Specify a Connection String page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.CanSaveConnectionString">
+      <summary>
+        <para>Specifies whether the connection string can be saved to the dedicated storage.</para>
+      </summary>
+      <value>true, if the connection string can be saved; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.ConnectionName">
+      <summary>
+        <para>Specifies the name of the created connection.</para>
+      </summary>
+      <value>A string specifying the name of the created connection.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.ConnectionParametersChanged">
+      <summary>
+        <para>Occurs when connection information on a wizard page is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.ConnectionString">
+      <summary>
+        <para>Specifies the connection string created on a wizard page.</para>
+      </summary>
+      <value>The connection string.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.ShouldSaveConnectionString">
+      <summary>
+        <para>Specifies whether to save the connection string to the dedicated storage.</para>
+      </summary>
+      <value>true, to save the connection string; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFConnectionStringPage.UseDefaultConnectionString">
+      <summary>
+        <para>Specifies whether to use the default connection string.</para>
+      </summary>
+      <value>true, to use the default connection string; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage">
+      <summary>
+        <para>Provides a view for the Configure Filters page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.#ctor(DevExpress.Xpf.DataAccess.IFilterStringEditorDialogAccessor,DevExpress.DataAccess.Wizard.Services.IParameterService)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="filterStringEditorDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IFilterStringEditorDialogAccessor"/> interface.</param>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface that provides a service functionality to manage query parameters.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.EditFilterCommand">
+      <summary>
+        <para>Returns a command that invokes the Filter Editor to edit the filter criteria.</para>
+      </summary>
+      <value>An object implementing the <see cref="T:System.Windows.Input.ICommand"/> interface that defines the command.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.FilterStringEditorDialogAccessor">
+      <summary>
+        <para>For internal use. Enables you to access a service used to display the Filter String editor.</para>
+      </summary>
+      <value>An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IFilterStringEditorDialogAccessor"/> interface.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.FiltersViewModel">
+      <summary>
+        <para>Specifies a View Model of Entity Framework data source filters.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.UI.EntityFramework.EFFiltersViewModel"/> object.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFFiltersPage.ParameterService">
+      <summary>
+        <para>Provides access to the service for managing report parameters.</para>
+      </summary>
+      <value>An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage">
+      <summary>
+        <para>Provides a view for the Bind to a Stored Procedure page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.#ctor(DevExpress.DataAccess.Wizard.Services.IParameterService,DevExpress.Xpf.DataAccess.IChooseEFStoredProceduresDialogAccessor,DevExpress.Xpf.DataAccess.IPreviewDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</param>
+      <param name="efStoredProceduresDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IChooseEFStoredProceduresDialogAccessor"/> interface.</param>
+      <param name="previewDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IPreviewDialogAccessor"/> interface.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.Add">
+      <summary>
+        <para>Creates a new stored procedure.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.AddClick">
+      <summary>
+        <para>Occurs when the Add button is clicked on a wizard page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.CanAdd">
+      <summary>
+        <para>Returns whether it is possible to create a new stored procedure.</para>
+      </summary>
+      <returns>true, if a new stored procedure can be added; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.Preview">
+      <summary>
+        <para>Executes a stored procedure with the specified parameter values and returns a subset of data as a result of this execution.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.Procedures">
+      <summary>
+        <para>Gets the stored procedures with the specified parameters from the list of procedures to be used.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Views.StoredProcedureViewInfo"/> objects, which provide the settings of stored procedures.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.Remove">
+      <summary>
+        <para>Removes the selected stored procedure.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.RemoveClick">
+      <summary>
+        <para>Occurs when the Remove button is clicked on a wizard page.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureEFStoredProceduresPage.SelectedItem">
+      <summary>
+        <para>Specifies the currently selected stored procedure.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Wizard.Views.StoredProcedureViewInfo"/> object containing the settings of the selected stored procedure.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage">
+      <summary>
+        <para>Provides a view for the Choose Columns page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage.#ctor(DevExpress.Xpf.DataAccess.IPreviewDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="previewDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IPreviewDialogAccessor"/> interface.</param>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage.Changed">
+      <summary>
+        <para>Occurs when a collection of selected columns from an Excel file is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage.Preview">
+      <summary>
+        <para>Executes a query with the specified parameter values and returns a subset of data as a result of this execution.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureExcelFileColumnsPage.Schema">
+      <summary>
+        <para>Gets a collection of fields selected on a wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.FieldInfoViewModel"/> objects containing the settings of Excel data fields.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage">
+      <summary>
+        <para>Provides a view for the Configure Query Parameters page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.#ctor(DevExpress.DataAccess.Wizard.Services.IParameterService,DevExpress.Xpf.DataAccess.IPreviewDialogAccessor,DevExpress.Xpf.DataAccess.IMessageBoxAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</param>
+      <param name="previewDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IPreviewDialogAccessor"/> interface.</param>
+      <param name="messageBoxAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IMessageBoxAccessor"/> interface.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.AddParameter">
+      <summary>
+        <para>Adds a new parameter to the query.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.CanAddParameter">
+      <summary>
+        <para>Returns whether it is possible to add a new query parameter.</para>
+      </summary>
+      <returns>true, if a new parameter can be added; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.CanRemoveParameter">
+      <summary>
+        <para>Returns whether it is possible to remove the selected parameter from a query.</para>
+      </summary>
+      <returns>true, if the query parameter can be removed; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.Preview">
+      <summary>
+        <para>Executes the query with the specified parameter values and displays the results.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.RemoveParameter">
+      <summary>
+        <para>Removes the selected parameter from a query.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureParametersPage.SelectedParameter">
+      <summary>
+        <para>Specifies the currently selected parameter.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> object.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage">
+      <summary>
+        <para>Provides a view for the Create a Query or Select a Stored Procedure (Single-Query Version) page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.AllowCustomSql">
+      <summary>
+        <para>Specifies whether custom SQL editing is enabled on a wizard page.</para>
+      </summary>
+      <value>true, if custom SQL editing is enabled; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.CanSelectStoredProcedures">
+      <summary>
+        <para>Specifies whether it is possible to select a stored procedure.</para>
+      </summary>
+      <value>true, if a stored procedure can be selected; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.QueryType">
+      <summary>
+        <para>Specifies the type of query selected on a wizard page.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Wizard.Presenters.QueryType"/> enumerator value.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.RunQueryBuilder">
+      <summary>
+        <para>Runs the Query Builder for adding a new query.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.SelectedStoredProcedureIndex">
+      <summary>
+        <para>Specifies the index of the selected item in the list of available stored procedures.</para>
+      </summary>
+      <value>The index of the selected stored procedure.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.SqlString">
+      <summary>
+        <para>Specifies the SQL string created on a wizard page.</para>
+      </summary>
+      <value>The SQL string.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConfigureQueryPage.StoredProcedures">
+      <summary>
+        <para>Specifies stored procedures available on a wizard page.</para>
+      </summary>
+      <value>A collection of strings that specify names of stored procedures.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage">
+      <summary>
+        <para>Provides a view for the Specify a Connection String page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.#ctor(System.Collections.Generic.List{DevExpress.DataAccess.UI.Wizard.ProviderLookupItem},DevExpress.DataAccess.Wizard.IWizardRunnerContext,DevExpress.Xpf.DataAccess.IMessageBoxAccessor,DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="providers">A collection of <see cref="T:DevExpress.DataAccess.UI.Wizard.ProviderLookupItem"/> objects.</param>
+      <param name="context">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.IWizardRunnerContext"/> interface.</param>
+      <param name="messageBoxAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IMessageBoxAccessor"/> interface.</param>
+      <param name="openFileDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor"/> interface.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.AuthTypeBigQuery">
+      <summary>
+        <para>Specifies the authorization type when connecting to a BigQuery data source.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.ConnectionParameters.BigQueryAuthorizationType"/> enumeration value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.AuthTypeMsSql">
+      <summary>
+        <para>Specifies the authorization type when connecting to a Microsoft SQL Server data source.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.ConnectionParameters.MsSqlAuthorizationType"/> enumeration value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.AvailableServers">
+      <summary>
+        <para>Provides access to the list of available Microsoft SQL Server instances.</para>
+      </summary>
+      <value>The collection of strings that specify names of Microsoft SQL Server instances.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.BrowseForDatabaseFile">
+      <summary>
+        <para>Runs the Open dialog for selecting a database file.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.CanSelectDatabase">
+      <summary>
+        <para>Specifies whether the GUI is blocked, indicating that the database list is being loaded.</para>
+      </summary>
+      <value>true, if the database list has been loaded; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.CanSelectServer">
+      <summary>
+        <para>Specifies whether the GUI is blocked, indicating that the list of Microsoft SQL Server instances is being loaded.</para>
+      </summary>
+      <value>true, if the list of server instances has been loaded; otherwise, false.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Changed">
+      <summary>
+        <para>Occurs when the item selected in the Provider drop-down list is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ConnectionEdits">
+      <summary>
+        <para>Indicates which of the connection parameters can be edited on the Specify a Connection String wizard page.</para>
+      </summary>
+      <value>One or more <see cref="T:DevExpress.DataAccess.UI.Wizard.ConnectionParameterEdits"/> enumeration values.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.CustomString">
+      <summary>
+        <para>Specifies a custom connection string.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the custom connection string.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Database">
+      <summary>
+        <para>Specifies the name of a database that contains the required data.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the database name.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Databases">
+      <summary>
+        <para>Provides access to the list of available databases.</para>
+      </summary>
+      <value>A collection of <see cref="T:System.String"/> values specifying the database names.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.DataSetID">
+      <summary>
+        <para>Specifies the ID of a dataset that contains required tables. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the dataset ID.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.DisabledConnectionEdits">
+      <summary>
+        <para>Indicates which of the connection parameters cannot be edited on the Specify a Connection String wizard page.</para>
+      </summary>
+      <value>One or more <see cref="T:DevExpress.DataAccess.UI.Wizard.ConnectionParameterEdits"/> enumeration values.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.FileName">
+      <summary>
+        <para>Specifies the path to a database file.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the path to a database.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.GetAvailableServers">
+      <summary>
+        <para>Requests the list of Microsoft SQL Server instances available on the network.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.GetDatabases">
+      <summary>
+        <para>Requests the database list from the server (when this is supported by the corresponding data provider, such as MySQL).</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Hostname">
+      <summary>
+        <para>Specifies the host name of the SAP SQL Anywhere server to which the connection should be established.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the SAP SQL Anywhere server host name.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.KeyFileName">
+      <summary>
+        <para>Specifies the path to the P12 private key file. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.OAuthClientID">
+      <summary>
+        <para>Specifies the client identifier. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the client ID.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.OAuthClientSecret">
+      <summary>
+        <para>Specifies the client secret. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the client secret.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.OAuthRefreshToken">
+      <summary>
+        <para>Specifies a refresh token. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value specifying the refresh token.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Password">
+      <summary>
+        <para>Specifies the password to access to a database.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the password.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Port">
+      <summary>
+        <para>Specifies the port number to connect to a database.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the port number.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ProjectID">
+      <summary>
+        <para>Specifies the ID of a project that contains the required data. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the project ID.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.Providers">
+      <summary>
+        <para>Provides access to the list of available data providers.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.UI.Wizard.ProviderLookupItem"/> values.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.SelectedProvider">
+      <summary>
+        <para>Specifies the selected data provider.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.UI.Wizard.ProviderLookupItem"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ServerBased">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ServerName">
+      <summary>
+        <para>Specifies the name of a server to which the connection should be established.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the server name.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ServerNameLookup">
+      <summary>
+        <para>Specifies the name of the Microsoft SQL Server to which the connection should be established.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the server name.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ServerTypeAdvantage">
+      <summary>
+        <para>Specifies the type of the Advantage server.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.DataAccess.ConnectionParameters.AdvantageServerType"/> enumeration value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.ServiceEmail">
+      <summary>
+        <para>Specifies the email address of a service account. This property is in effect for Google BigQuery databases.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value specifying the service email.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ConnectionPropertiesPage.UserName">
+      <summary>
+        <para>Specifies the user name that is used to access a database.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the user name.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel">
+      <summary>
+        <para>Enables you to customize the data source model before running the Report Wizard.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel.#ctor(DevExpress.DataAccess.Wizard.Model.IDataSourceModel,System.Type)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel"/> class with the specified settings.</para>
+      </summary>
+      <param name="model">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Model.IDataSourceModel"/> interface. This value is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel.Model"/> property.</param>
+      <param name="startPage">A <see cref="T:System.Type"/> value, specifying the first wizard page. This value is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel.StartPage"/> property.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel.Model">
+      <summary>
+        <para>Specifies the data source model.</para>
+      </summary>
+      <value>An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Model.IDataSourceModel"/> interface.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel.StartPage">
+      <summary>
+        <para>Specifies the first wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.Type"/> value, specifying the first wizard page.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType">
+      <summary>
+        <para>Lists the data member types available for Entity Framework data sources.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType.StoredProcedure">
+      <summary>
+        <para>The data member is a stored procedure.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType.Table">
+      <summary>
+        <para>The data member is a table.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType.View">
+      <summary>
+        <para>The data member is a view.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase">
+      <summary>
+        <para>The base for classes that provide ViewModels for displaying and managing Entity Framework data members in the application GUI.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase.DataMember">
+      <summary>
+        <para>Indicates the data member.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the data member.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase.DataMemberType">
+      <summary>
+        <para>Specifies whether the data member is a table, view or a stored procedure.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType"/> enumeration value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberViewModelBase.Name">
+      <summary>
+        <para>Indicates the data member name displayed in the application GUI.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBStoredProcedureViewModel">
+      <summary>
+        <para>Provides a ViewModel for displaying and managing Entity Framework stored procedures in the application GUI.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBStoredProcedureViewModel.#ctor(DevExpress.Xpo.DB.DBStoredProcedure)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBStoredProcedureViewModel"/> class with the specified stored procedure.</para>
+      </summary>
+      <param name="procedure">A <see cref="T:DevExpress.Xpo.DB.DBStoredProcedure"/> object.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBStoredProcedureViewModel.DataMember">
+      <summary>
+        <para>Indicates the data member.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the data member.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBStoredProcedureViewModel.DataMemberType">
+      <summary>
+        <para>Indicates the data member type.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType"/> enumeration value.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBTableViewModel">
+      <summary>
+        <para>Provides a ViewModel for displaying and managing Entity Framework database tables in the application GUI.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBTableViewModel.#ctor(DevExpress.Xpo.DB.DBTable)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBTableViewModel"/> class with the specified data table.</para>
+      </summary>
+      <param name="table">A <see cref="T:DevExpress.Xpo.DB.DBTable"/> object.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBTableViewModel.DataMember">
+      <summary>
+        <para>Indicates the data member from an Entity Framework data source.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value, specifying the data member.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDBTableViewModel.DataMemberType">
+      <summary>
+        <para>Indicates the type of a data member from an Entity Framework data source.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EFDataMemberType"/> enumeration value.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.EntryBase">
+      <summary>
+        <para>An End-User Report Designer service.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EntryBase.ServiceType">
+      <summary>
+        <para>Specifies the service type. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Type"/> object.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.DataAccess.DataSourceWizard.EntryBase.ServiceTypeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.EntryBase.ServiceType"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsBaseViewModel">
+      <summary>
+        <para>The base for classes that provide ViewModels defining the Excel Data Source settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsBaseViewModel.SkipEmptyRows">
+      <summary>
+        <para>Specifies whether to include empty rows into the resulting Excel data source.</para>
+      </summary>
+      <value>true, to exclude the empty rows from the resulting data source; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsBaseViewModel.UseFirstRowAsHeader">
+      <summary>
+        <para>Specifies whether to process the values of the first row as headers.</para>
+      </summary>
+      <value>true, to process the values of the first row as headers; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel">
+      <summary>
+        <para>A ViewModel that defines the settings of an Excel Data Source.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.Create(DevExpress.DataAccess.Excel.ExcelSourceOptions)">
+      <summary>
+        <para>Creates a new <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel"/> class descendant supporting the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.</para>
+      </summary>
+      <param name="excelOptions">An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel"/> object.</param>
+      <returns>An <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel"/> object.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.Culture">
+      <summary>
+        <para>Specifies the culture information used to parse the data being imported from a CSV file.</para>
+      </summary>
+      <value>A <see cref="T:System.Globalization.CultureInfo"/> object, containing culture-specific settings.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.DetectEncoding">
+      <summary>
+        <para>Specifies whether the character encoding is automatically determined for an imported CSV file.</para>
+      </summary>
+      <value>true, to determine the character encoding automatically; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.DetectNewlineType">
+      <summary>
+        <para>Specifies whether a character type used to identify a new line in a CSV document is determined automatically.</para>
+      </summary>
+      <value>true, to determine the character type automatically; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.DetectValueSeparator">
+      <summary>
+        <para>Specifies whether a character used to separate values in a CSV document is determined automatically.</para>
+      </summary>
+      <value>true, to determine a character used to separate values automatically; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.Encoding">
+      <summary>
+        <para>Specifies the character encoding of a CSV document.</para>
+      </summary>
+      <value>A <see cref="T:System.Text.Encoding"/> object, specifying the character encoding of a CSV document.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.NewlineType">
+      <summary>
+        <para>Specifies the character used to identify a new line in a CSV document.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Excel.CsvNewlineType"/> enumeration value, specifying the character used to identify a new line in a CSV document.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.SkipHiddenColumns">
+      <summary>
+        <para>Specifies whether to ignore hidden columns when importing data to an Excel data source.</para>
+      </summary>
+      <value>true, to ignore hidden columns when importing data; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.SkipHiddenRows">
+      <summary>
+        <para>Specifies whether to ignore hidden rows when importing data to an Excel data source.</para>
+      </summary>
+      <value>true, to ignore hidden rows when importing data; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.TextQualifier">
+      <summary>
+        <para>Specifies the character that encloses values in a CSV document.</para>
+      </summary>
+      <value>A <see cref="T:System.Char"/> value, specifying the character used as the text qualifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.TrimBlanks">
+      <summary>
+        <para>Specifies whether to remove all leading and trailing white-space characters from each value in a CSV document.</para>
+      </summary>
+      <value>true, to remove leading and trailing blanks; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ExcelSourceOptionsViewModel.ValueSeparator">
+      <summary>
+        <para>Specifies a character used to separate values in a CSV document.</para>
+      </summary>
+      <value>A <see cref="T:System.Char"/> value, specifying the character used to separate values in a CSV document.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.FieldInfoViewModel">
+      <summary>
+        <para>Provides information about data fields obtained from an Excel data source.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.FieldInfoViewModel.Name">
+      <summary>
+        <para>Specifies the column name.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.FieldInfoViewModel.Selected">
+      <summary>
+        <para>Specifies whether the column is selected.</para>
+      </summary>
+      <value>true, to include the column into the data source; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.FieldInfoViewModel.Type">
+      <summary>
+        <para>Specifies the column’s data type.</para>
+      </summary>
+      <value>A <see cref="T:System.Type"/> value.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.IDataSourceWizardCustomizationService">
+      <summary>
+        <para>The base for the <see cref="T:DevExpress.Xpf.Reports.UserDesigner.ReportWizard.IWizardCustomizationService"/> interface.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.IDataSourceWizardCustomizationService.CustomizeDataSourceWizard(DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel,DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer)">
+      <summary>
+        <para>Enables customization of the Data Source Wizard pages.</para>
+      </summary>
+      <param name="customization">A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.DataSourceWizardCustomizationModel"/> object.</param>
+      <param name="container">A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer"/> object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.IDataSourceWizardCustomizationService.TryCreateDataSource(DevExpress.DataAccess.Wizard.Model.IDataSourceModel,System.Object@,System.String@)">
+      <summary>
+        <para>Creates a new report data source with the specified settings.</para>
+      </summary>
+      <param name="model">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Model.IDataSourceModel"/> interface.</param>
+      <param name="dataSource">A <see cref="T:System.Object"/> value, specifying the data source.</param>
+      <param name="dataMember">A <see cref="T:System.String"/> value, specifying the data member.</param>
+      <returns>true, if the data source has been created; otherwise, false.</returns>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage">
+      <summary>
+        <para>Provides a view for the Create a Query or Select a Stored Procedure (Multi-Query Version) page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.AddQuery">
+      <summary>
+        <para>Runs the Query Builder for adding a new custom query.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.CanEditRelations">
+      <summary>
+        <para>Returns whether it is possible to specify master-detail data relationships.</para>
+      </summary>
+      <returns>true, if the Master-Detail Relation Editor can be invoked; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.ConfigureQuery(DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem)">
+      <summary>
+        <para>Runs the Query Builder to edit a selected custom query.</para>
+      </summary>
+      <param name="item">An object that provides information about an item selected on a wizard page.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.DeleteQuery(DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem)">
+      <summary>
+        <para>Deletes a specified custom query.</para>
+      </summary>
+      <param name="item">An object that provides information about an item selected on a wizard page.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.EditRelations">
+      <summary>
+        <para>Runs the Master-Detail Relation Editor for creating or editing data relationships.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.Items">
+      <summary>
+        <para>Specifies the collection of tree list elements.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem"/> objects.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.OnNodeCheckedChanged(DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem)">
+      <summary>
+        <para>Called when changing the check state of a tree list node.</para>
+      </summary>
+      <param name="item">An object that stores information about a tree list item.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.OnNodeExpanding(DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem)">
+      <summary>
+        <para>Called when expanding a tree list node.</para>
+      </summary>
+      <param name="item">An object that stores information about a tree list item.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigurePage.SelectedItem">
+      <summary>
+        <para>Specifies the selected tree list element.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.DataAccess.Wizard.Presenters.MultiQueryItem"/> object.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage">
+      <summary>
+        <para>Provides a view for the Configure Query Parameters page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.#ctor(DevExpress.DataAccess.Wizard.Services.IParameterService,DevExpress.Xpf.DataAccess.IPreviewDialogAccessor)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</param>
+      <param name="previewDialogAccessor">An object implementing the <see cref="T:DevExpress.Xpf.DataAccess.IPreviewDialogAccessor"/> interface.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.AddParameter(System.String)">
+      <summary>
+        <para>Adds a new parameter to the specified query.</para>
+      </summary>
+      <param name="queryName">A <see cref="T:System.String"/> value that specifies the query name.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.CanAddParameter(System.String)">
+      <summary>
+        <para>Returns whether it is possible to add a new parameter to the selected query.</para>
+      </summary>
+      <param name="queryName"><see cref="T:System.String"/> value that specifies the query name.</param>
+      <returns>true, if a new parameter can be added; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.CanPreview(System.String)">
+      <summary>
+        <para>Returns whether it is possible to preview the result of the specified query’s execution.</para>
+      </summary>
+      <param name="queryName">A <see cref="T:System.String"/> value that specifies the query name.</param>
+      <returns>true, if the query can be executed; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.CanRemoveParameter">
+      <summary>
+        <para>Returns whether it is possible to remove the selected parameter from a query.</para>
+      </summary>
+      <returns>true, if the query parameter can be removed; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.Parameters">
+      <summary>
+        <para>Provides access to the collection of query parameters available on a wizard page.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel"/> objects.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.Preview(System.String)">
+      <summary>
+        <para>Executes the specified query with the specified parameter values and displays results.</para>
+      </summary>
+      <param name="queryName">A <see cref="T:System.String"/> value that specifies the query name.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.QueriesToAdd">
+      <summary>
+        <para>Specifies the collection of queries to which parameters can be added.</para>
+      </summary>
+      <value>A collection of <see cref="T:System.String"/> values that specify query names.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.QueriesToPreview">
+      <summary>
+        <para>Specifies a collection of queries available to preview.</para>
+      </summary>
+      <value>A collection of <see cref="T:System.String"/> values that specify query names.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.RemoveParameter">
+      <summary>
+        <para>Removes the selected parameter from a query.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.MultiQueryConfigureParametersPage.SelectedParameter">
+      <summary>
+        <para>Specifies the currently selected parameter.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel"/> object.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectConstructorParametersPage">
+      <summary>
+        <para>Provides a view for the Specify Constructor Parameters page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectConstructorParametersPage.#ctor(DevExpress.DataAccess.Wizard.Services.IParameterService)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectConstructorParametersPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectConstructorParametersPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectMemberParametersPage">
+      <summary>
+        <para>Provides a view for the Specify Member Parameters page of the Data Source Wizard.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectMemberParametersPage.#ctor(DevExpress.DataAccess.Wizard.Services.IParameterService)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectMemberParametersPage"/> class with the specified settings.</para>
+      </summary>
+      <param name="parameterService">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ObjectMemberParametersPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase">
+      <summary>
+        <para>The base for classes that provide functionality to Report Wizard pages providing the UI for specifying parameters (such as query parameters, object member/constructor parameters and stored procedure parameters).</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase.CanFinish">
+      <summary>
+        <para>Indicates whether the Finish button is enabled on a wizard page.</para>
+      </summary>
+      <value>true, if the Finish button is enabled; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase.CanGoForward">
+      <summary>
+        <para>Indicates whether the Next button is enabled on a wizard page.</para>
+      </summary>
+      <value>true, if the Next button is enabled; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase.Parameters">
+      <summary>
+        <para>Provides access to the collection of parameters associated with the currently selected stored procedure.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> objects.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase.ParameterService">
+      <summary>
+        <para>Provides access to a service for managing report parameters created in the Report Wizard.</para>
+      </summary>
+      <value>An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.Services.IParameterService"/> interface.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParametersPageBase.ParameterServiceParameters">
+      <summary>
+        <para>Provides access to the collection of parameters associated with a current report.</para>
+      </summary>
+      <value>A collection of <see cref="T:DevExpress.Data.IParameter"/> objects.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel">
+      <summary>
+        <para>A ViewModel that enables displaying and customizing parameters in the application GUI.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.Create(DevExpress.Data.IParameter,System.Collections.Generic.IEnumerable{DevExpress.Data.IParameter},System.Boolean)">
+      <summary>
+        <para>Creates a new <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> class descendant supporting the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.</para>
+      </summary>
+      <param name="parameter">An object implementing the <see cref="T:DevExpress.Data.IParameter"/> interface.</param>
+      <param name="sourceParameters">A collection of objects implementing the <see cref="T:DevExpress.Data.IParameter"/> interface.</param>
+      <param name="fixedParameter">true, if only the parameter value can be edited; otherwise, false. This value is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.IsFixedParameter"/> property.</param>
+      <returns>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> object.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.Create(DevExpress.Data.IParameter,System.Collections.Generic.IEnumerable{DevExpress.Data.IParameter})">
+      <summary>
+        <para>Creates a new <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> class descendant supporting the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.</para>
+      </summary>
+      <param name="parameter">An object implementing the <see cref="T:DevExpress.Data.IParameter"/> interface.</param>
+      <param name="sourceParameters">A collection of objects implementing the <see cref="T:DevExpress.Data.IParameter"/> interface.</param>
+      <returns>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel"/> object.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.IsExpression">
+      <summary>
+        <para>Specifies whether the parameter is assigned a <see cref="T:DevExpress.DataAccess.Expression"/>.</para>
+      </summary>
+      <value>true, if the parameter is assigned an expression; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.IsFixedParameter">
+      <summary>
+        <para>Indicates whether editing the parameter name and type is enabled.</para>
+      </summary>
+      <value>true, if only the parameter value can be edited; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.Name">
+      <summary>
+        <para>Specifies the parameter name.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.ParameterResultType">
+      <summary>
+        <para>Specifies the type returned by an expression assigned to a parameter.</para>
+      </summary>
+      <value>A <see cref="T:System.Type"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.Type">
+      <summary>
+        <para>Specifies the parameter type.</para>
+      </summary>
+      <value>A <see cref="T:System.Type"/> value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.Value">
+      <summary>
+        <para>Specifies the parameter value or expression.</para>
+      </summary>
+      <value>A <see cref="T:System.Object"/> value.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel">
+      <summary>
+        <para>A ViewModel that provides information on query parameters in the Data Source Wizard.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel.Create(DevExpress.DataAccess.Wizard.IQueryParameter,System.Collections.Generic.IEnumerable{DevExpress.Data.IParameter},System.Boolean)">
+      <summary>
+        <para>Creates a new <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel"/> class descendant supporting the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.</para>
+      </summary>
+      <param name="queryParameter">An object implementing the <see cref="T:DevExpress.DataAccess.Wizard.IQueryParameter"/> interface.</param>
+      <param name="sourceParameters">A collection of objects implementing the <see cref="T:DevExpress.Data.IParameter"/> interface.</param>
+      <param name="fixedParameter">true, if only the parameter value can be edited; otherwise, false. This value is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ParameterViewModel.IsFixedParameter"/> property.</param>
+      <returns>A <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel"/> object.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.QueryParameterViewModel.QueryName">
+      <summary>
+        <para>Specifies the name of a query to which a current parameter belongs.</para>
+      </summary>
+      <value>A string that specifies the query name.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage">
+      <summary>
+        <para>Provides a view for the Save the Connection String page of the Data Source Wizard in WPF applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.CanSaveConnectionString">
+      <summary>
+        <para>Sets whether the connection string can be saved to the dedicated storage.</para>
+      </summary>
+      <value>true, if the connection string can be saved; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.CanSaveCredentials">
+      <summary>
+        <para>Sets whether the user credentials can be saved.</para>
+      </summary>
+      <value>true, if the data connection uses server authentication; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.ConnectionName">
+      <summary>
+        <para>Specifies the name of the created connection.</para>
+      </summary>
+      <value>A string specifying the name of the created connection.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.ShouldSaveConnectionString">
+      <summary>
+        <para>Specifies whether to save the connection string to the dedicated storage.</para>
+      </summary>
+      <value>true, to save the connection string; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.SaveConnectionPage.ShouldSaveCredentials">
+      <summary>
+        <para>Specifies whether to save the user credentials along with the connection string.</para>
+      </summary>
+      <value>true, to save the user credentials; otherwise, false.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator">
+      <summary>
+        <para>A ViewModel for elements of a look-up editor that enables selecting a value separator on the Specify Import Settings wizard page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.#ctor(System.Char,System.String)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> class with the specified settings.</para>
+      </summary>
+      <param name="value">A <see cref="T:System.Char"/> structure. This property is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.Value"/> property.</param>
+      <param name="displayName">A <see cref="T:System.String"/> value. This property is assigned to the <see cref="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.DisplayName"/> property.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.#ctor(System.Char)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> class with the specified value separator.</para>
+      </summary>
+      <param name="value">A <see cref="T:System.Char"/> structure.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.DisplayName">
+      <summary>
+        <para>Specifies the display name of a look-up item.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.Equals(System.Object)">
+      <summary>
+        <para>Determines whether the specified object is equal to the current <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> instance.</para>
+      </summary>
+      <param name="obj">The object to compare with the current object.</param>
+      <returns>true if the specified object is equal to the current <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> instance; otherwise false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.GetHashCode">
+      <summary>
+        <para>Gets the hash code that corresponds to the value of the current <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator"/> object.</para>
+      </summary>
+      <returns>An integer value representing the hash code for the current object.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.ToString">
+      <summary>
+        <para>Returns the textual representation of a value separator.</para>
+      </summary>
+      <returns>A <see cref="T:System.String"/> value.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.ValueSeparator.Value">
+      <summary>
+        <para>Specifies the character corresponding to a look-up item.</para>
+      </summary>
+      <value>A <see cref="T:System.Char"/> structure.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer">
+      <summary>
+        <para>A factory container for creating instances of ViewModels, report models, wizard page presenters and other objects.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer.RegisterViewModel``1">
+      <summary>
+        <para>Registers the specified TConcreteType as a dependency.</para>
+      </summary>
+      <returns>A <see cref="T:DevExpress.Utils.IoC.FactoryRegistration"/> object.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.DataSourceWizard.ViewModelSourceIntegrityContainer.RegisterViewModel``2">
+      <summary>
+        <para>Registers the specified TConcreteType with the specified TServiceType key.</para>
+      </summary>
+      <returns>A <see cref="T:DevExpress.Utils.IoC.FactoryRegistration"/> object.</returns>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.DataSourceWizard.WizardPageBase">
+      <summary>
+        <para>The base for classes providing functionality to Data Source Wizard page views.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.DataAccess.DataSourceWizard.WizardPageBase.Description">
+      <summary>
+        <para>Specifies the description of the current wizard page.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the page description.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IChooseEFStoredProceduresDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display a dialog with available stored procedures for an Entity Framework data source.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IFilterStringEditorDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display the Filter String editor.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IMasterDetailDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display the Master-Detail Relation Editor.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IMessageBoxAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display message boxes.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IOpenFileDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access the dialog service used to browse and open files in the File System using the standard dialog box.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IPasswordDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display a dialog for specifying a password.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IPreviewDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a service used to display a dialog with the preview result.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IQueryBuilderDialogAccessor">
+      <summary>
+        <para>If implemented, enables you to access a dialog service used to display a Query Builder.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.IServiceAccessor`1">
+      <summary>
+        <para>A base for interfaces used to access dialog services.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.DataAccess.IServiceAccessor`1.DoWithService(System.Action{`0})">
+      <summary>
+        <para>Performs the specified action with a service.</para>
+      </summary>
+      <param name="action">A <see cref="T:System.Action"/> delegate.</param>
+    </member>
+    <member name="T:DevExpress.Xpf.DataAccess.ISplashScreenAccessor">
+      <summary>
+        <para>If implemented, enables you to access a dialog service used to display a splash screen.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.Carousel.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.Carousel">
+      <summary>
+        <para>Contains classes which implement the main functionality of the DXCarousel for WPF suite. To use these classes in XAML code, add the xmlns:dxca=”“ namespace reference.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.CarouselItemsControl">
+      <summary>
+        <para>Represents an ItemsControl allowing you to easily represent any data using a Carousel.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselItemsControl.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Carousel.CarouselItemsControl"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselItemsControl.Carousel">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.CarouselPanel"/> object that represents the panel template of this ItemsControl.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselItemsControl.CarouselProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselItemsControl.Carousel"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.CarouselNavigator">
+      <summary>
+        <para>Represents a navigator control allowing end-users to scroll through carousel items.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselNavigator.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Carousel.CarouselNavigator"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselNavigator.Carousel">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Xpf.Carousel.CarouselPanel"/> controlled by this navigator.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.CarouselNavigator"/> object specifying the bound carousel control.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselNavigator.CarouselProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselNavigator.Carousel"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.CarouselPanel">
+      <summary>
+        <para>Represents the Carousel control.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Carousel.CarouselPanel"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ActivateItemOnClick">
+      <summary>
+        <para>Gets or sets whether clicking an item will activate it (move it to the Carousel’s attractor point).</para>
+      </summary>
+      <value>true to respond to item mouse clicks by selecting them; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ActivateItemOnClickProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ActivateItemOnClick"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItem">
+      <summary>
+        <para>Gets or sets the active item.</para>
+      </summary>
+      <value>A UIElement object representing the required item.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItemIndex">
+      <summary>
+        <para>Gets or sets the active item by its index.</para>
+      </summary>
+      <value>An integer value specifying the active item’s index in the source sequence.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItemIndexProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItemIndex"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItemProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ActiveItem"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.AnimationDisabled">
+      <summary>
+        <para>Specifies whether animation effects for item transitions are enabled.</para>
+      </summary>
+      <value>true, to disable animated transitions; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.AnimationDisabledProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.AnimationDisabled"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.AnimationTime">
+      <summary>
+        <para>Specifies the time taken by transition animations.</para>
+      </summary>
+      <value>An integer value specifying the time interval in milliseconds.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.AnimationTimeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.AnimationTime"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.AttractorPointIndex">
+      <summary>
+        <para>Specifies the active element’s position within the Carousel.</para>
+      </summary>
+      <value>An integer value specifying the position for the selected item among other items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.AttractorPointIndexProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.AttractorPointIndex"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.CarouselProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Carousel"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.Customize">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.FirstItem">
+      <summary>
+        <para>Activates the first item in the Carousel’s Children collection.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.FirstVisibleItemIndex">
+      <summary>
+        <para>Gets or sets the index of the first visible item.</para>
+      </summary>
+      <value>An integer value specifying the first visible item’s index.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.FirstVisibleItemIndexProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.FirstVisibleItemIndex"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.GetCarousel(System.Windows.Controls.ItemsControl)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Carousel"/> attached property for the specified object.</para>
+      </summary>
+      <param name="itemsControl">An ItemsControl object whose value of the CarouselPanel attached property is to be returned.</param>
+      <returns>A <see cref="T:DevExpress.Xpf.Carousel.CarouselPanel"/> object that is used to render items belonging to the specified itemsControl.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.GetItemsMovingPath">
+      <summary>
+        <para>Returns a PathGeometry object that represents the function specified by the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunction"/> property.</para>
+      </summary>
+      <returns>A PathGeometry object that represents the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunction"/> function.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.GetParameters(System.Windows.UIElement)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Parameters"/> attached property for the specified object.</para>
+      </summary>
+      <param name="element">The object whose value of the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Parameters"/> attached property is to be returned.</param>
+      <returns>The value of the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Parameters"/> attached property for the specified object.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.IsAutoSizeItem">
+      <summary>
+        <para>Gets or sets whether carousel items are automatically resized when changing the control’s size.</para>
+      </summary>
+      <value>true to automatically resize items with the parent control; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.IsAutoSizeItemProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.IsAutoSizeItem"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.IsInvertedDirection">
+      <summary>
+        <para>Gets or sets whether items move forward or backward along the specified path.</para>
+      </summary>
+      <value>true to force the control to move items backwards along the specified path; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.IsInvertedDirectionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.IsInvertedDirection"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.IsRepeat">
+      <summary>
+        <para>Gets or sets whether carousel scrolling is limited by the first and last item.</para>
+      </summary>
+      <value>true to disable scrolling limits; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.IsRepeatProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.IsRepeat"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ItemMovingPath">
+      <summary>
+        <para>Gets or sets the path along which the Carousel’s items are evenly arranged.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.PathGeometry"/> value that specifies the item path.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ItemMovingPathProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ItemMovingPath"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ItemSize">
+      <summary>
+        <para>Specifies the initial item size.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Size"/> structure defining the initial item size.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ItemSizeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ItemSize"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.LastItem">
+      <summary>
+        <para>Activates the last item in the Carousel’s Children collection.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.Move(System.Int32)">
+      <summary>
+        <para>Scrolls the view by the specified number of items.</para>
+      </summary>
+      <param name="offset">An integer value specifying scrolling direction and distance.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveFirstPage">
+      <summary>
+        <para>Scrolls the view to display the first page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveLastPage">
+      <summary>
+        <para>Scrolls the view to the last page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveNext">
+      <summary>
+        <para>Scrolls the view to activate the next element.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveNextPage">
+      <summary>
+        <para>Scrolls the view to the next page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MovePrev">
+      <summary>
+        <para>Scrolls the view to activate the previous element.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MovePrevPage">
+      <summary>
+        <para>Scrolls the view to the prevoius page.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveTo(System.Int32)">
+      <summary>
+        <para>Navigates to the item located at the specified index, without an animation effect.</para>
+      </summary>
+      <param name="index">The index of the required item.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.CarouselPanel.MoveTo(System.Windows.UIElement)">
+      <summary>
+        <para>Navigates to a specific item, without an animation effect.</para>
+      </summary>
+      <param name="item">A Carousel item to be activated.</param>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.Next">
+      <summary>
+        <para>Activates the next item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.NextPage">
+      <summary>
+        <para>Scrolls the Carousel’s items forward, making the next page of the items visible.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.OffsetAnimationAddFunction">
+      <summary>
+        <para>Gets or sets the function whose values are added to the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.OffsetDistributionFunction"/> function when calculating positions of an item during its animation (its movement from one position to another).</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant that represents a corresponding function.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.OffsetAnimationAddFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.OffsetAnimationAddFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.OffsetDistributionFunction">
+      <summary>
+        <para>Gets or sets the function that calculates the relative positions of the CarouselPanel’s items along the path.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant that represents a corresponding function.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.OffsetDistributionFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.OffsetDistributionFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.ParameterSet">
+      <summary>
+        <para>Gets or sets the collection of custom parameters that vary, according to a specific law.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.ParameterCollection"/> object that represents a collection of custom parameters.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ParameterSetProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.ParameterSet"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.ParametersProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.Parameters"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.PathPadding">
+      <summary>
+        <para>Specifies the path’s padding within the control’s boundaries.</para>
+      </summary>
+      <value>A Thickness object specifying padding distances.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.PathPaddingProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PathPadding"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.PathSizingMode">
+      <summary>
+        <para>Gets or sets how the specified path should be resized when resizing the control.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.PathSizingMode"/> enumeration value specifying how the path’s aspect ratio is changed when resizing the carousel.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.PathSizingModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PathSizingMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.PathVisible">
+      <summary>
+        <para>Gets or sets whether the control draws a line indicating the item path.</para>
+      </summary>
+      <value>true to draw a line indicating the item path; otherwise false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.PathVisibleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PathVisible"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunction">
+      <summary>
+        <para>Gets or sets a piece-linear function that specifies a path for the Carousel’s items.</para>
+      </summary>
+      <value>A DevExpress.Xpf.Carousel.PieceLinearFunction object that specifies the path.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.Previous">
+      <summary>
+        <para>Activates the previous item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.PreviousPage">
+      <summary>
+        <para>Scrolls the Carousel’s items backward, making the previous page of items visible.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.SmoothingTimeFraction">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <value>A Double value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.SmoothingTimeFractionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.SmoothingTimeFraction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.SnapItemsToDevicePixels">
+      <summary>
+        <para>Gets or sets whether items are rendered in accordance to device pixels.</para>
+      </summary>
+      <value>true if items are rendered in accordance to device pixels; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.SnapItemsToDevicePixelsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.SnapItemsToDevicePixels"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.CarouselPanel.VisibleItemCount">
+      <summary>
+        <para>Gets or sets the number of items that are visible to an end-user along a path at one time.</para>
+        <para>This proeprty is not in effect when a path is specified via the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.PointPathFunction"/> property.</para>
+      </summary>
+      <value>An integer value that specifies the number of items that are visible to an end-user along a path at one time.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.CarouselPanel.VisibleItemCountProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.CarouselPanel.VisibleItemCount"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.FunctionBase">
+      <summary>
+        <para>Represents a base class for functions.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.FunctionBase.GetValue(System.Double)">
+      <summary>
+        <para>Returns the function value for the specified argument.</para>
+      </summary>
+      <param name="x">A Double value specifying the argument.</param>
+      <returns>A Double value that represents the function value for the specified argument.</returns>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.Parameter">
+      <summary>
+        <para>Represents a parameter (function) in a carousel control.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.Parameter.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.Parameter.#ctor(System.String,DevExpress.Xpf.Carousel.FunctionBase,DevExpress.Xpf.Carousel.FunctionBase,DevExpress.Xpf.Carousel.FunctionBase)">
+      <summary>
+        <para>Creates a new instance of the <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> class and initializes its properties with parameter values.</para>
+      </summary>
+      <param name="name">A string value specifying the newly created parameter’s name. This parameter value is assigned to the <see cref="P:DevExpress.Xpf.Carousel.Parameter.Name"/> property.</param>
+      <param name="distributionFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction"/> property.</param>
+      <param name="animationMulFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.AnimationMulFunction"/> property.</param>
+      <param name="animationAddFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.AnimationAddFunction"/> property.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.Parameter.#ctor(System.String,DevExpress.Xpf.Carousel.FunctionBase,DevExpress.Xpf.Carousel.FunctionBase)">
+      <summary>
+        <para>Creates a new instance of the <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> class and initializes its properties with parameter values.</para>
+      </summary>
+      <param name="name">A string value specifying the newly created parameter’s name. This parameter value is assigned to the <see cref="P:DevExpress.Xpf.Carousel.Parameter.Name"/> property.</param>
+      <param name="distributionFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction"/> property.</param>
+      <param name="animationAddFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.AnimationAddFunction"/> property.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.Parameter.#ctor(System.String,DevExpress.Xpf.Carousel.FunctionBase)">
+      <summary>
+        <para>Creates a new instance of the <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> class and initializes its properties with parameter values.</para>
+      </summary>
+      <param name="name">A string value specifying the newly created parameter’s name. This parameter value is assigned to the <see cref="P:DevExpress.Xpf.Carousel.Parameter.Name"/> property.</param>
+      <param name="distributionFunction">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction"/> property.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.Parameter.AnimationAddFunction">
+      <summary>
+        <para>Specifies a function that affects the parameter value while items are moving from one static position to another.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the function.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.Parameter.AnimationAddFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.Parameter.AnimationAddFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.Parameter.AnimationMulFunction">
+      <summary>
+        <para>Specifies a function that affects the parameter value while items are moving from one static position to another.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the function.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.Parameter.AnimationMulFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.Parameter.AnimationMulFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction">
+      <summary>
+        <para>Specifies the function that affects the parameter value along the entire item movement path.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the function.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.Parameter.DistributionFunctionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.Parameter.InvertDistortionOnReverse">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <value>A Boolean value.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.Parameter.Name">
+      <summary>
+        <para>Gets or sets the parameter name.</para>
+      </summary>
+      <value>A string value specifying the parameter name.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Carousel.Parameter.ParameterChanged">
+      <summary>
+        <para>Fires when parameter settings change.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.ParameterCollection">
+      <summary>
+        <para>Stores a collection of parameters (functions) in a carousel control.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.ParameterCollection.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Carousel.ParameterCollection"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.ParameterCollection.Add(DevExpress.Xpf.Carousel.Parameter)">
+      <summary>
+        <para>Adds the specified parameter to the collection.</para>
+      </summary>
+      <param name="parameter">A <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> object specifying the parameter to add.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.ParameterCollection.Add(System.String,DevExpress.Xpf.Carousel.FunctionBase)">
+      <summary>
+        <para>Adds a new parameter to the collection.</para>
+      </summary>
+      <param name="name">A string value specifying the parameter name. This parameter’s value is assigned to the `<see cref="P:DevExpress.Xpf.Carousel.Parameter.Name"/> property.</param>
+      <param name="function">A <see cref="T:DevExpress.Xpf.Carousel.FunctionBase"/> descendant specifying the value for the <see cref="P:DevExpress.Xpf.Carousel.Parameter.DistributionFunction"/> property.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.ParameterCollection.Item(System.Int32)">
+      <summary>
+        <para>Gets a parameter by its index in the collection.</para>
+      </summary>
+      <param name="index">An integer value specifying the required parameter’s index in the collection.</param>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> object that represents the parameter at the specified index.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Carousel.ParameterCollection.Item(System.String)">
+      <summary>
+        <para>Get a parameter identified by its name.</para>
+      </summary>
+      <param name="parameterName">A string specifying the required parameter’s name.</param>
+      <value>A <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> object representing the specified parameter.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Carousel.ParameterCollection.Remove(DevExpress.Xpf.Carousel.Parameter)">
+      <summary>
+        <para>Removes the specified parameter from the collection.</para>
+      </summary>
+      <param name="parameter">A <see cref="T:DevExpress.Xpf.Carousel.Parameter"/> object specifying the parameter to be removed.</param>
+    </member>
+    <member name="T:DevExpress.Xpf.Carousel.PathSizingMode">
+      <summary>
+        <para>Lists values that specify how the carousel path is resized when the control’s size changes.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.PathSizingMode.Proportional">
+      <summary>
+        <para>The item path aspect ratio is preserved in its original state, when resizing the control.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Carousel.PathSizingMode.Stretch">
+      <summary>
+        <para>The item path aspect ratio is adjusted to match the carousel’s dimensions, when resizing the control.</para>
+      </summary>
+    </member>
+  </members>
+</doc>
