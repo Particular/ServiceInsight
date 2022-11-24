@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.ExpressionEditor.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.ExpressionEditor">
+      <summary>
+        <para>Contains the <see cref="T:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl"/> class that enables you to use the Expression Editor in your applications.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl">
+      <summary>
+        <para>The Expression Editor in the AutoComplete mode.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl"/> class with default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.AttachDocumentationControl(DevExpress.Xpf.ExpressionEditor.Native.DocumentationControl)">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.AutoCompleteListViewModel">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Context">
+      <summary>
+        <para>Gets or sets the context that allows you to customize the Expression Editor.</para>
+      </summary>
+      <value>The context that allows you to customize the Expression Editor.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.ContextProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Context"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.DocumentationControlTemplate">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code. This is a dependency property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.DocumentationControlTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.DocumentationControlTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.EditorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Editor"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.EditValue">
+      <summary>
+        <para>Gets or sets the current expression. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> that specifies the current expression.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.EditValueProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.EditValue"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Errors">
+      <summary>
+        <para>Gets expression errors. This is a dependency property.</para>
+      </summary>
+      <value>A collection of expression errors.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.ErrorsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Errors"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.GetEditor(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.Editor"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.MessageBoxServiceTemplate">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code. This is a dependency property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.MessageBoxServiceTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.MessageBoxServiceTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnApplyTemplate">
+      <summary>
+        <para>Called after the template is completely generated and attached to the visual tree.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnBeforePagePaintCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnContentChangedCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnErrorsPreviewMouseLeftButtonDown">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnLostFocusCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnMouseDownCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnMouseMoveCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnPopupMenuShowingCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnPreviewKeyDownCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnPreviewTextInputCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.OnSelectionChangedCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.ExpressionEditor.ExpressionEditorControl.SaveCommand">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

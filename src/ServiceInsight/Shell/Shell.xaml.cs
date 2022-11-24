@@ -5,6 +5,7 @@
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Core.Serialization;
     using DevExpress.Xpf.Docking;
+    using DevExpress.Xpf.Utils.Themes;
     using ExtensionMethods;
     using ServiceInsight.Framework.Settings;
     using Settings;
@@ -41,7 +42,7 @@
 
         public void ChangeTheme(string name)
         {
-            ThemeManager.ApplicationThemeName = name;
+            GlobalThemeHelper.Instance.ApplicationThemeName = name;
         }
 
         public void SelectTab(string name)
