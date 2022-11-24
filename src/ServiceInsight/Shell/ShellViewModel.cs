@@ -298,10 +298,7 @@
 
         internal async Task OnApplicationIdle()
         {
-            if (idleTimer != null)
-            {
-                idleTimer.Stop();
-            }
+            idleTimer?.Stop();
 
             await StartupConfigChangeListener();
             ValidateCommandLineArgs();

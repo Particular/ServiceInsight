@@ -69,10 +69,7 @@
 
             BindingExpression binding = BindingOperations.GetBindingExpression(elt, property);
 
-            if (binding != null)
-            {
-                binding.UpdateSource();
-            }
+            binding?.UpdateSource();
         }
     }
 }

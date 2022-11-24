@@ -321,10 +321,7 @@
 
         void UpdateLayout()
         {
-            if (view != null)
-            {
-                view.ApplyLayout();
-            }
+            view?.ApplyLayout();
         }
     }
 }
