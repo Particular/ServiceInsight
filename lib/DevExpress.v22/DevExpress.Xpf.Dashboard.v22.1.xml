@@ -1,0 +1,1774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.Dashboard.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.DashboardWpf">
+      <summary>
+        <para>Contains classes that implement the WPF Dashboard functionality.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.BoundImageDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.BoundImageDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.BoundImageDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.BoundImageDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.CardDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.CardDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.CardDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.CardDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.ChartDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.ChartDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.ChartDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AreaSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Area series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Area series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AreaSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AreaSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AxisXStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Chart control (AxisX2D object).</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the AxisX2D object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AxisXStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AxisXStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Bar series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Bar series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarStackedSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Stacked and Full-Stacked Bar series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Stacked and Full-Stacked Bar series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarStackedSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarStackedSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BubbleSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Bubble weighted series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Bubble weighted series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BubbleSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BubbleSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.CandleStickSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Open-High-Low-Close (Candle Stick) series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Open-High-Low-Close (Candle Stick) series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.CandleStickSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.CandleStickSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.DiagramStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Chart control (XYDiagram2D object).</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the XYDiagram2D object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.DiagramStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.DiagramStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetAreaSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetAxisXStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AxisXStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetBarSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetBarStackedSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarStackedSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetBubbleSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BubbleSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetCandleStickSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.CandleStickSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetDiagramStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.DiagramStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetLegendStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LegendStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetLineSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LineSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetPointSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.PointSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetRangeAreaSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeAreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetRangeBarSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeBarSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetSecondaryAxisYStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SecondaryAxisYStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetStackedAreaSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StackedAreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.GetStockSeriesStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StockSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LegendStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Chart control (Legend object).</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Legend object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LegendStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LegendStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LineSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Line series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Line series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LineSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LineSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.PointSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Point series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Point series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.PointSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.PointSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeAreaSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Range Area series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Range Area series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeAreaSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeAreaSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeBarSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Range Bar series in the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the Range Bar series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeBarSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeBarSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SecondaryAxisYStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Chart control (SecondaryAxisY2D object).</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the SecondaryAxisY2D object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SecondaryAxisYStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SecondaryAxisYStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetAreaSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetAxisXStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.AxisXStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetBarSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetBarStackedSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BarStackedSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetBubbleSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.BubbleSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetCandleStickSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.CandleStickSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetDiagramStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.DiagramStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetLegendStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LegendStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetLineSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.LineSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetPointSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.PointSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetRangeAreaSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeAreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetRangeBarSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.RangeBarSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetSecondaryAxisYStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SecondaryAxisYStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetStackedAreaSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StackedAreaSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ChartDashboardLayoutItem.SetStockSeriesStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StockSeriesStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StackedAreaSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the Range Bar series.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StackedAreaSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StackedAreaSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StockSeriesStyle">
+      <summary>
+        <para>An attached property that applies style settings to the High-Low-Close and Stock series.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the High-Low-Close and Stock series.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StockSeriesStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.ChartDashboardLayoutItem.StockSeriesStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.ComboBoxDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.ComboBoxDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ComboBoxDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.ComboBoxDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.CustomItemDashboardLayoutItem">
+      <summary>
+        <para>Provides a template to display instead of unsupported custom items.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.CustomItemDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.CustomItemDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.DashboardControlBase">
+      <summary>
+        <para>DashboardControl’s base class. Provides access to styles, print options and end-user restrictions.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardControlBase.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.DashboardControlBase"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ActualMaximizedDashboardItemVisibility">
+      <summary>
+        <para>Indicates whether a dashboard displays a maximized item.</para>
+      </summary>
+      <value>The <see cref="F:System.Windows.Visibility.Visible"/> value if the dashboard displays a maximized item.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ActualMaximizedDashboardItemVisibilityProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ActualMaximizedDashboardItemVisibility"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectAggregatedData">
+      <summary>
+        <para>Gets or sets whether to display aggregated data in the Data Inspector.</para>
+      </summary>
+      <value>true, to display aggregated data in the Data Inspector; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectAggregatedDataProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectAggregatedData"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectRawData">
+      <summary>
+        <para>Gets or sets whether to display raw data in the Data Inspector.</para>
+      </summary>
+      <value>true, to display raw data in the Data Inspector; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectRawDataProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.AllowInspectRawData"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.AllowMaximizeDashboardItems">
+      <summary>
+        <para>Gets or sets whether an end-user can maximize an item.</para>
+      </summary>
+      <value>True to show the Maximize button and allow the end-user to maximize an item; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.AllowMaximizeDashboardItemsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.AllowMaximizeDashboardItems"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboard">
+      <summary>
+        <para>Gets or sets whether the end-user can print or export a dashboard.</para>
+      </summary>
+      <value>True to show the Export To button and allow the end-user to print or export the dashboard; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboardItems">
+      <summary>
+        <para>Gets or sets whether the end-user can print or export a dashboard item.</para>
+      </summary>
+      <value>True to show the Export To button and allow the end-user to print or export a dashboard item; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboardItemsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboardItems"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboardProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.AllowPrintDashboard"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.BoundImageDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the BoundImageDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.BoundImageItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.CardDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the CardDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.CardItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.ChartDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the ChartDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ChartItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.ComboBoxDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the ComboBoxDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ComboBoxItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.CustomItemDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the CustomItemDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.CustomItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.DashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the DashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DashboardItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DashboardViewModelProperty">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorStyle">
+      <summary>
+        <para>Gets or sets the style applied to the Data Inspector window. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the Data Inspector window.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorTemplate">
+      <summary>
+        <para>Allows you to specify a custom Data Inspector dialog template.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the Data Inspector dialog.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DataInspectorTemplate"/>&gt; dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the <see cref="T:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem"/></value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.DateFilterItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ExportDialogStyle">
+      <summary>
+        <para>Gets or sets the style applied to the Export dialog window. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the Export dialog window.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ExportDialogStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ExportDialogStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ExportTemplate">
+      <summary>
+        <para>Allows you to specify a custom Export dialog template.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the Export dialog.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ExportTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ExportTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.GaugeDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the GaugeDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.GaugeItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardControlBase.GetDashboardViewModel(System.Windows.DependencyObject)">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <param name="dObj" />
+      <returns>For internal use.</returns>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.GridDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the GridDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.GridItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.ImageDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the ImageDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ImageItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.DashboardLayoutGroup"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the DashboardLayoutGroup.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ItemGroupStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.ListBoxDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the ListBoxDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ListBoxItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.MapDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the MapDashboardLayoutItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.MapItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ParametersDialogStyle">
+      <summary>
+        <para>Gets or sets the style applied to the Parameters dialog window. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the Parameters dialog window.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ParametersDialogStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ParametersDialogStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ParametersTemplate">
+      <summary>
+        <para>Allows you to specify a custom Dashboard Parameters dialog template.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the Dashboard Parameters dialog.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ParametersTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ParametersTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardCommon.PieDashboardItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the PieDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.PieItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardCommon.PivotDashboardItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the PivotDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.PivotItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.PrintPreviewOptionsTemplate">
+      <summary>
+        <para>Allows you to specify a custom Print Preview Options dialog template.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the Print Preview Options dialog.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.PrintPreviewOptionsTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.PrintPreviewOptionsTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardWpf.RangeDashboardLayoutItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the RangeDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.RangeItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ShowParametersButton">
+      <summary>
+        <para>Gets or sets whether to display the Parameters button in the dashboard title.</para>
+      </summary>
+      <value>True to display the Parameters button; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ShowParametersButtonProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ShowParametersButton"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.ShowTitle">
+      <summary>
+        <para>This property is obsolete. Use the <see cref="P:DevExpress.DashboardCommon.DashboardTitle.Visible"/> property instead.</para>
+      </summary>
+      <value>True to show the dashboard title; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.ShowTitleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.ShowTitle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardCommon.TextBoxDashboardItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the TextBoxDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TextBoxItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TitleCustomizationsTemplate">
+      <summary>
+        <para>Allows you to add, remove or modify command buttons and create drop-down menus in the dashboard title.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template containing bar actions.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TitleCustomizationsTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TitleCustomizationsTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TitleStyle">
+      <summary>
+        <para>Allows you to customize the dashboard title appearance. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style used to visualize the dashboard title.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TitleStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TitleStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardCommon.TreemapDashboardItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the TreemapDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TreemapItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyle">
+      <summary>
+        <para>Gets or sets the style applied to the <see cref="T:DevExpress.DashboardCommon.TreeViewDashboardItem"/>. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that is the style applied to the TreeViewDashboardItem.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyleSelector">
+      <summary>
+        <para>Gets or sets an object that returns a style based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that applies styles based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.TreeViewItemStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardControlBase.UseNeutralFilterMode">
+      <summary>
+        <para>Gets or sets whether to show all items in the filter elements deselected by default.</para>
+      </summary>
+      <value>true to activate Neutral Filter Mode; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardControlBase.UseNeutralFilterModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardControlBase.UseNeutralFilterMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.DashboardLayoutGroup">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.DashboardItemGroup"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardLayoutGroup.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.DashboardLayoutGroup"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardLayoutGroup.CaptionCustomizationsTemplate">
+      <summary>
+        <para>Allows you to specify a custom caption template for the <see cref="T:DevExpress.DashboardCommon.DashboardItemGroup"/> item.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the dashboard group item caption.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardLayoutGroup.CaptionCustomizationsTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutGroup.CaptionCustomizationsTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardLayoutGroup.ContextMenuTemplate">
+      <summary>
+        <para>Gets or sets a context menu template for the <see cref="T:DevExpress.DashboardWpf.DashboardLayoutGroup"/> elements.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the dashboard item context menu.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardLayoutGroup.ContextMenuTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutGroup.ContextMenuTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.DashboardLayoutItem">
+      <summary>
+        <para>Base class for objects which allow you to customize dashboard item style and templates.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.DashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardLayoutItem.CaptionCustomizationsTemplate">
+      <summary>
+        <para>Allows you to specify a custom caption template for the <see cref="T:DevExpress.DashboardCommon.DashboardLayoutItem"/> descendants.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the dashboard item caption.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardLayoutItem.CaptionCustomizationsTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutItem.CaptionCustomizationsTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardLayoutItem.ContextMenuTemplate">
+      <summary>
+        <para>Gets or sets a context menu template for the <see cref="T:DevExpress.DashboardCommon.DashboardLayoutItem"/> descendants.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the data template used to render the dashboard item context menu.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardLayoutItem.ContextMenuTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutItem.ContextMenuTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property.</value>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardLayoutItem.GetViewStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutItem.ViewStyle"/> attached property.</para>
+      </summary>
+      <param name="obj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DashboardLayoutItem.SetViewStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutItem.ViewStyle"/> attached property.</para>
+      </summary>
+      <param name="obj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DashboardLayoutItem.ViewStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DashboardLayoutItem.ViewStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DashboardLayoutItem.ViewStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.DateFilterDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DateNavigatorStyle">
+      <summary>
+        <para>An attached property that applies style settings to the DateNavigator control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the DateNavigator object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DateNavigatorStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DateNavigatorStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerPopupTemplate">
+      <summary>
+        <para>An attached property that specifies a template that defines the appearance of the DatePicker popup element in the DateFilter control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker popup element.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerPopupTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerPopupTemplate"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerTemplate">
+      <summary>
+        <para>An attached property that specifies a template that defines the appearance of the DatePicker visual element of the DateFilter control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker visual element.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DatePickerTemplate"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.GetDateNavigatorStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DateNavigatorStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is accessed.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.GetDatePickerPopupTemplate(System.Windows.DependencyObject)">
+      <summary>
+        <para>Returns the template that defines the appearance of the DatePicker popup element.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is obtained.</param>
+      <returns>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker popup element.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.GetDatePickerTemplate(System.Windows.DependencyObject)">
+      <summary>
+        <para>Returns the template that defines the appearance of the DatePicker visual element in the DateFilter control.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is obtained.</param>
+      <returns>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker visual element.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.GetQuickButtonTemplate(System.Windows.DependencyObject)">
+      <summary>
+        <para>Returns the template that defines the appearance of the QuickButton visual element in the DateFilter control.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is obtained.</param>
+      <returns>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the QuickButton visual element.</returns>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.QuickButtonTemplate">
+      <summary>
+        <para>An attached property that specifies a template that defines the appearance of the QuickButton visual element of the DateFilter control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the QuickButton visual element.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.QuickButtonTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.QuickButtonTemplate"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.SetDateNavigatorStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.DateNavigatorStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.SetDatePickerPopupTemplate(System.Windows.DependencyObject,System.Windows.DataTemplate)">
+      <summary>
+        <para>Specifies the template that defines the appearance of the DatePicker popup element.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is specified.</param>
+      <param name="value">A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker popup element.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.SetDatePickerTemplate(System.Windows.DependencyObject,System.Windows.DataTemplate)">
+      <summary>
+        <para>Specifies the template that defines the appearance of the DatePicker visual element in the DateFilter control.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is specified.</param>
+      <param name="value">A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker visual element.</param>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.DateFilterDashboardLayoutItem.SetQuickButtonTemplate(System.Windows.DependencyObject,System.Windows.DataTemplate)">
+      <summary>
+        <para>Specifies the template that defines the appearance of the QuickButton visual element in the DateFilter control.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is specified.</param>
+      <param name="value">A <see cref="T:System.Windows.DataTemplate"/> object that specifies the structure and behavior of the DatePicker visual element.</param>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.GaugeDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.GaugeDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GaugeDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.GaugeDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.GridDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.GridDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GridDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.GridDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.ColumnStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Grid control’s columns.</para>
+      </summary>
+      <value>Contains settings applied to the GridColumn object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.GridDashboardLayoutItem.ColumnStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.ColumnStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GridDashboardLayoutItem.GetColumnStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Get the value of the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.ColumnStyle"/> attached property to a specified <see cref="T:DevExpress.DashboardWpf.GridDashboardLayoutItem"/>.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GridDashboardLayoutItem.GetGridViewStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.GridViewStyle"/> attached property.’</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.GridViewStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Grid control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the TableView object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.GridDashboardLayoutItem.GridViewStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.GridViewStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GridDashboardLayoutItem.SetColumnStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Set the value of the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.ColumnStyle"/> attached property to a specified <see cref="T:DevExpress.DashboardWpf.GridDashboardLayoutItem"/>.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.GridDashboardLayoutItem.SetGridViewStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.GridDashboardLayoutItem.GridViewStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.ImageDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.ImageDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ImageDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.ImageDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.ListBoxDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.ListBoxDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.ListBoxDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.ListBoxDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.MapDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.MapDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.MapDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.MapDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.PieDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.PieDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.PieDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.PieDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.PieDashboardLayoutItem.ChartStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying Chart control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the ChartControl.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.PieDashboardLayoutItem.ChartStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.PieDashboardLayoutItem.ChartStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.PieDashboardLayoutItem.GetChartStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.PieDashboardLayoutItem.ChartStyle"/> attached property.’</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.PieDashboardLayoutItem.SetChartStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.PieDashboardLayoutItem.ChartStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.PivotDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.PivotDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.PivotDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.PivotDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.RangeDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.RangeFilterDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.RangeDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.RangeDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.RangeDashboardLayoutItem.GetRangeControlClientStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <param name="dObj" />
+      <returns />
+    </member>
+    <member name="P:DevExpress.DashboardWpf.RangeDashboardLayoutItem.RangeControlClientStyle">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <value />
+    </member>
+    <member name="F:DevExpress.DashboardWpf.RangeDashboardLayoutItem.RangeControlClientStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.RangeDashboardLayoutItem.RangeControlClientStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.RangeDashboardLayoutItem.SetRangeControlClientStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+      <param name="dObj" />
+      <param name="value" />
+    </member>
+    <member name="T:DevExpress.DashboardWpf.TextBoxDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.TextBoxDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.TextBoxDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.TextBoxDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.TreemapDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.TreemapDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.TreemapDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.TreemapDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem">
+      <summary>
+        <para>Allows you to specify the style and templates to customize the <see cref="T:DevExpress.DashboardCommon.TreeViewDashboardItem"/> appearance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.GetTreeListViewStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.TreeListViewStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <returns>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</returns>
+    </member>
+    <member name="M:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.SetTreeListViewStyle(System.Windows.DependencyObject,System.Windows.Style)">
+      <summary>
+        <para>Implements the <see cref="P:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.TreeListViewStyle"/> attached property.</para>
+      </summary>
+      <param name="dObj">A dependency object whose property is set.</param>
+      <param name="value">A <see cref="T:System.Windows.Style"/> object that contains settings applied to the target object.</param>
+    </member>
+    <member name="P:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.TreeListViewStyle">
+      <summary>
+        <para>An attached property that applies style settings to the underlying  TreeListView control.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that contains settings applied to the TreeListView object.</value>
+    </member>
+    <member name="F:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.TreeListViewStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.DashboardWpf.TreeViewDashboardLayoutItem.TreeListViewStyle"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="N:DevExpress.Xpf.Dashboard.Themes">
+      <summary>
+        <para>Contains a class with a collection of commands used in the Dashboard Control.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames">
+      <summary>
+        <para>A collection of commands used in the <see cref="T:DevExpress.DashboardWpf.DashboardControl"/>.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ClearMasterFilterButton">
+      <summary>
+        <para>The Clear Master Filter button in the dashboard item caption.</para>
+      </summary>
+      <value>DashboardItemCaption_ClearMasterFilterButtonl</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ContextMenu">
+      <summary>
+        <para>The dashboard item’s context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_ContextMenu</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_CustomRangePeriodButton">
+      <summary>
+        <para>The Custom Period… command in the item’s context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_CustomRangePeriodButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_DataInspectorBarItemButton">
+      <summary>
+        <para>The Inspect Data button in the dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_DataInspectorBarItemButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_DrillUpButton">
+      <summary>
+        <para>The Drill Up button in the dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_DrillUpButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_DropDownButton">
+      <summary>
+        <para>A button in the dashboard item caption that shows a list of tab pages.</para>
+      </summary>
+      <value>DashboardItemCaption_DropDownButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportDashboardButton">
+      <summary>
+        <para>The Export To command in the dashboard item’s context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportDashboardButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportDashboardPreviewButton">
+      <summary>
+        <para>The Print Preview command in the dashboard item’s context menu that opens a preview for the entire dashboard.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportDashboardPreviewButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportDashboardToExcelButton">
+      <summary>
+        <para>The Export To Excel command in the dashboard item’s context menu that exports data of the entire dashboard.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportDashboardToExcelButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportDashboardToImageButton">
+      <summary>
+        <para>The Export To Image command in the dashboard item’s context menu that exports data of the entire dashboard.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportDashboardToImageButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportDashboardToPdfButton">
+      <summary>
+        <para>The Export To PDF command in the dashboard item’s context menu that exports data of the entire dashboard.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportDashboardToPdfButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportPreviewButton">
+      <summary>
+        <para>The Print Preview button in the dashboard item’s caption and context menu that opens a preview for a specific dashboard item.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportPreviewButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportToButton">
+      <summary>
+        <para>The Export To button in the dashboard item caption that exports data of a specific dashboard item.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportToButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportToExcelButton">
+      <summary>
+        <para>The Export To Excel button in the dashboard item’s caption and context menu that exports data of a specific dashboard item.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportToExcelButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportToImageButton">
+      <summary>
+        <para>The Export To Image button in the dashboard item’s caption and context menu that exports data of a specific dashboard item.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportToImageButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ExportToPdfButton">
+      <summary>
+        <para>The Export To PDF button in the dashboard item’s caption and context menu that exports data of a specific dashboard item.</para>
+      </summary>
+      <value>DashboardItemCaption_ExportToPdfButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_InitialExtentButton">
+      <summary>
+        <para>the Initial Extent button in the dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_InitialExtentButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_MaximizeBarItemButton">
+      <summary>
+        <para>The Maximize button in the dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_MaximizeBarItemButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_MinimizeBarItemButton">
+      <summary>
+        <para>The Restore button in the dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_MinimizeBarItemButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_MultiSelectButton">
+      <summary>
+        <para>The Multi-Select button in the dashboard item caption.</para>
+      </summary>
+      <value>DashboardItemCaption_MultiSelectButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ScrollNextButton">
+      <summary>
+        <para>A scroll button in the dashboard item caption that scrolls tab headers to the last tab.</para>
+      </summary>
+      <value>DashboardItemCaption_ScrollNextButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_ScrollPrevButton">
+      <summary>
+        <para>A scroll button in the dashboard item caption that scrolls tab headers to the first tab.</para>
+      </summary>
+      <value>DashboardItemCaption_ScrollPrevButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_SelectDateTimePeriod">
+      <summary>
+        <para>the Select Date Time Periods button in the Range Filter dashboard item’s caption and context menu.</para>
+      </summary>
+      <value>DashboardItemCaption_SelectDateTimePeriod</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_SelectElementButton">
+      <summary>
+        <para>The Select Element button in the dashboard item caption.</para>
+      </summary>
+      <value>DashboardItemCaption_SelectElementButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardItemCaption_Toolbar">
+      <summary>
+        <para>A toolbar in the dashboard item caption that contains action buttons.</para>
+      </summary>
+      <value>DashboardItemCaption_Toolbar</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportPreviewButton">
+      <summary>
+        <para>The Print Preview button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ExportPreviewButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportToButton">
+      <summary>
+        <para>The Export To button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ExportToButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportToExcelButton">
+      <summary>
+        <para>The Export To Excel button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ExportToExcelButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportToImageButton">
+      <summary>
+        <para>The Export To Image button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ExportToImageButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportToPdfButton">
+      <summary>
+        <para>The Export To PDF button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ExportToPdfButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ExportToPopupMenu">
+      <summary>
+        <para>The Export to button in the dashboard title that displays the popup menu with export options.</para>
+      </summary>
+      <value>DashboardTitle_ExportToPopupMenu</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_ParametersButton">
+      <summary>
+        <para>The Parameters button in the dashboard title.</para>
+      </summary>
+      <value>DashboardTitle_ParametersButton</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Dashboard.Themes.DefaultBarItemNames.DashboardTitle_Toolbar">
+      <summary>
+        <para>A toolbar in the dashboard title that contains action buttons.</para>
+      </summary>
+      <value>DashboardTitle_Toolbar</value>
+    </member>
+  </members>
+</doc>

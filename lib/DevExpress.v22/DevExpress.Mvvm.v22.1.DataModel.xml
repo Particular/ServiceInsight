@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Mvvm.v22.1.DataModel</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Mvvm.DataModel">
+      <summary>
+        <para>Contains MVVM-aware classes.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.DbException">
+      <summary>
+        <para>The database-independent exception used in Data Layer and View Model Layer to handle database errors.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.DbException.#ctor(System.String,System.String,System.Exception)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Mvvm.DataModel.DbException"/> class.</para>
+      </summary>
+      <param name="errorMessage">An error message text.</param>
+      <param name="errorCaption">An error message caption text.</param>
+      <param name="innerException">An underlying exception.</param>
+    </member>
+    <member name="P:DevExpress.Mvvm.DataModel.DbException.ErrorCaption">
+      <summary>
+        <para>The error message caption text.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.DataModel.DbException.ErrorMessage">
+      <summary>
+        <para>The error message text.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.EntityState">
+      <summary>
+        <para>Represents the state of the entity relative to the unit of work.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.DataModel.EntityState.Added">
+      <summary>
+        <para>The object is new, has been added to the unit of work, and the <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> method has not been called. After the changes are saved, the object state changes to <see cref="F:DevExpress.Mvvm.DataModel.EntityState.Unchanged"/>.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.DataModel.EntityState.Deleted">
+      <summary>
+        <para>The object has been deleted from the unit of work. After the changes are saved, the object state changes to <see cref="F:DevExpress.Mvvm.DataModel.EntityState.Detached"/>.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.DataModel.EntityState.Detached">
+      <summary>
+        <para>The object exists but is not being tracked. An entity is in this state immediately after it has been created and before it is added to the unit of work. An entity is also in this state after it has been removed from the unit of work by calling the IUnitOfWork.Detach method.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.DataModel.EntityState.Modified">
+      <summary>
+        <para>One of the scalar properties on the object has been modified and the <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> method has not been called. After the changes are saved, the object state changes to <see cref="F:DevExpress.Mvvm.DataModel.EntityState.Unchanged"/>.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.DataModel.EntityState.Unchanged">
+      <summary>
+        <para>The object has not been modified since it was attached to the unit of work or since the last time that the <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> method was called.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IInstantFeedbackSource`1">
+      <summary>
+        <para>A data source suitable as an Instant Feedback source.</para>
+        <para>The GetList() method of the base IListSource interface is expected to return an instance of an internal type that happens to implement the IList interface. As such the IInstantFeedbackSource interface can only be implemented as a wrapper for an existing Instant Feedback source, e.g. <see cref="T:DevExpress.Data.Linq.EntityInstantFeedbackSource"/> or <see cref="T:DevExpress.Data.WcfLinq.WcfInstantFeedbackSource"/>.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IInstantFeedbackSource`1.GetPropertyValue``1(System.Object,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+      <summary>
+        <para>Get the value of a property.</para>
+      </summary>
+      <param name="threadSafeProxy">A proxy object.</param>
+      <param name="propertyExpression">An expression specifying the property which value is to be fetched.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IInstantFeedbackSource`1.IsLoadedProxy(System.Object)">
+      <summary>
+        <para>Check if a proxy object is in the Loaded state. If a proxy object is not in the Loaded state, its properties have not yet been initialized.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IInstantFeedbackSource`1.Refresh">
+      <summary>
+        <para>Invalidate all loaded entities. This method is used to make changes made to the data source visible to consumers if this Instant Feedback source.</para>
+        <para>Currently, in scaffolded implementations this method only works for WCF when the MergeOption set to NoTracking and for EntityFramework when a projection is used.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IReadOnlyRepository`1">
+      <summary>
+        <para>The IReadOnlyRepository interface represents the read-only implementation of the Repository pattern such that it can be used to query entities of a given type.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.DataModel.IReadOnlyRepository`1.UnitOfWork">
+      <summary>
+        <para>The owner unit of work.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IRepository`2">
+      <summary>
+        <para>The IRepository interface represents the read and write implementation of the Repository pattern such that it can be used to query entities of a given type.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Add(`0)">
+      <summary>
+        <para>Marks the given entity as Added such that it will be commited to the store when IUnitOfWork.SaveChanges is called.</para>
+      </summary>
+      <param name="entity">The entity to add.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Create(System.Boolean)">
+      <summary>
+        <para>Creates a new instance of the entity type.</para>
+      </summary>
+      <param name="add">A flag determining if the newly created entity is added to the repository.</param>
+      <returns>The created instance.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Find(`1)">
+      <summary>
+        <para>Finds an entity with the given primary key value.</para>
+      </summary>
+      <param name="primaryKey">The value of the primary key for the entity to be found.</param>
+      <returns>The entity with the given primary key value. null if no entity is found.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.GetPrimaryKey(`0)">
+      <summary>
+        <para>Returns the primary key value for the entity.</para>
+      </summary>
+      <param name="entity">An entity for which to obtain a primary key value.</param>
+      <returns>A primary key value for the entity.</returns>
+    </member>
+    <member name="P:DevExpress.Mvvm.DataModel.IRepository`2.GetPrimaryKeyExpression">
+      <summary>
+        <para>Gets the lambda-expression that returns the entity primary key.</para>
+      </summary>
+      <value>The lambda-expression that returns the entity primary key.</value>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.GetState(`0)">
+      <summary>
+        <para>Returns the state of the given entity.</para>
+      </summary>
+      <param name="entity">An entity to get the state from.</param>
+      <returns>The state of the given entity.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.HasPrimaryKey(`0)">
+      <summary>
+        <para>Determines whether the given entity has the primary key assigned (the primary key is not null).</para>
+      </summary>
+      <param name="entity">An entity to test.</param>
+      <returns>true if the given entity has the primary key assigned (the primary key is not null); otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Reload(`0)">
+      <summary>
+        <para>Reloads the entity from the store overwriting any property values with values from the store and returns a reloaded entity.</para>
+      </summary>
+      <param name="entity">An entity to reload.</param>
+      <returns>The reloaded entity.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Remove(`0)">
+      <summary>
+        <para>Marks the given entity as <see cref="F:DevExpress.Mvvm.DataModel.EntityState.Deleted"/> such that it will be deleted from the store when <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> is called.</para>
+      </summary>
+      <param name="entity">The entity to remove.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.SetPrimaryKey(`0,`1)">
+      <summary>
+        <para>Assigns the given primary key value to a given entity.</para>
+      </summary>
+      <param name="entity">An entity to which to assign the primary key value.</param>
+      <param name="primaryKey">A primary key value.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepository`2.Update(`0)">
+      <summary>
+        <para>Changes the state of the specified entity to <see cref="F:DevExpress.Mvvm.DataModel.EntityState.Modified"/> if changes are not automatically tracked by the implementation.</para>
+      </summary>
+      <param name="entity">An entity which state should be updated.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IRepositoryQuery`1">
+      <summary>
+        <para>The IRepositoryQuery interface represents an extension of IQueryable designed to provide an ability to specify the related objects to include in the query results.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepositoryQuery`1.Include``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+      <summary>
+        <para>Specifies the related objects to include in the query results.</para>
+      </summary>
+      <param name="path">A lambda expression that represents the path to include.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IRepositoryQuery`1.Where(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+      <summary>
+        <para>Filters a sequence of entities based on the given predicate.</para>
+      </summary>
+      <param name="predicate">A function to test each entity for a condition.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IUnitOfWork">
+      <summary>
+        <para>The IUnitOfWork interface represents the Unit Of Work pattern such that it can be used to query from a database and group together changes that will then be written back to the store as a unit.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IUnitOfWork.HasChanges">
+      <summary>
+        <para>Checks if the unit of work is tracking any new, deleted, or changed entities or relationships that will be sent to the store if <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> is called.</para>
+      </summary>
+      <returns>true if the unit of work is tracking any new, deleted, or changed entities or relationships; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges">
+      <summary>
+        <para>Saves all changes made in this unit of work to the underlying store.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.IUnitOfWorkFactory`1">
+      <summary>
+        <para>Provides the method to create a unit of work of a given type.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IUnitOfWorkFactory`1.CreateInstantFeedbackSource``3(System.Func{`0,DevExpress.Mvvm.DataModel.IRepository{``0,``2}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{``0},System.Linq.IQueryable{``1}})">
+      <summary>
+        <para>Creates a new IInstantFeedbackSource instance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.IUnitOfWorkFactory`1.CreateUnitOfWork">
+      <summary>
+        <para>Creates a new unit of work.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.ReadOnlyRepositoryExtensions">
+      <summary>
+        <para>Provides a set of extension methods to perform commonly used operations with <see cref="T:DevExpress.Mvvm.DataModel.IReadOnlyRepository`1"/>.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.ReadOnlyRepositoryExtensions.AppendToProjection``2(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{``0},System.Linq.IQueryable{``1}})">
+      <summary>
+        <para>Combines an initial projection and a predicate into a new projection with the effect of both.</para>
+      </summary>
+      <param name="predicate">A function to test each element for a condition.</param>
+      <param name="projection">A LINQ function used to transform entities from repository entity type to projection entity type.</param>
+      <returns>A new projection.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.ReadOnlyRepositoryExtensions.GetFilteredEntities``1(DevExpress.Mvvm.DataModel.IReadOnlyRepository{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+      <summary>
+        <para>Creates an IQueryable representing a sequence of entities from a repository filtered by a given predicate.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="predicate">A function to test each element for a condition.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.ReadOnlyRepositoryExtensions.GetFilteredEntities``2(DevExpress.Mvvm.DataModel.IReadOnlyRepository{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{``0},System.Linq.IQueryable{``1}})">
+      <summary>
+        <para>Creates an IQuerable representing a sequence of entities from a repository filtered by a given predicate and projected to a specified projection entity type by a given LINQ function.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="predicate">A LINQ function used to transform entities from repository entity type to projection entity type.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.RepositoryExtensions">
+      <summary>
+        <para>Provides a set of extension methods to perform commonly used operations with <see cref="T:DevExpress.Mvvm.DataModel.IRepository`2"/>.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.FindActualProjectionByKey``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{``0},System.Linq.IQueryable{``1}},``2)">
+      <summary>
+        <para>Loads from the store or updates an entity with the given primary key value. If no entity with the given primary key is found in the store, returns null.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projection">A LINQ function used to transform entities from the repository entity type to the projection entity type.</param>
+      <param name="primaryKey">A value to compare with the entity primary key.</param>
+      <returns>The entity with the given primary key value. null if no entity is found.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.FindExistingOrAddNewEntity``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``1,System.Action{``1,``0})">
+      <summary>
+        <para>Returns the entity that corresponds to the specified projection.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projectionEntity">A projection.</param>
+      <param name="applyProjectionPropertiesToEntity">An action which applies the projection properties to the newly created entity.</param>
+      <returns>The entity that corresponds to the specified projection.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.GetProjectionPrimaryKey``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``1)">
+      <summary>
+        <para>Returns a primary key of the given entity.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projectionEntity">An entity.</param>
+      <returns>The primary key of the given entity.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.GetProjectionPrimaryKeyEqualsExpression``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``2)">
+      <summary>
+        <para>Builds a lambda expression that compares an entity primary key with the given constant value.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="primaryKey">A value to compare with the entity primary key.</param>
+      <returns>The lambda expression.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.IsDetached``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``1)">
+      <summary>
+        <para>Gets whether the given entity is detached from the unit of work.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projectionEntity">An entity.</param>
+      <returns>true if the given entity is detached from the unit of work; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.ProjectionHasPrimaryKey``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``1)">
+      <summary>
+        <para>Determines whether the given entity has the primary key assigned (the primary key is not null).</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projectionEntity">An entity.</param>
+      <returns>true if the given entity has the primary key assigned; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.RepositoryExtensions.SetProjectionPrimaryKey``3(DevExpress.Mvvm.DataModel.IRepository{``0,``2},``1,``2)">
+      <summary>
+        <para>Sets the primary key of a given projection.</para>
+      </summary>
+      <param name="repository">A repository.</param>
+      <param name="projectionEntity">A projection.</param>
+      <param name="primaryKey">A new primary key value.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.RepositoryQueryBase`1">
+      <summary>
+        <para>The base class that helps to implement the <see cref="T:DevExpress.Mvvm.DataModel.IRepositoryQuery`1"/> interface as a wrapper over an existing IQueryable instance.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.DataModel.UnitOfWorkBase">
+      <summary>
+        <para>The base class for unit of works that provides the storage for repositories.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.DataModel.UnitOfWorkBase.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Mvvm.DataModel.UnitOfWorkBase"/> class.</para>
+      </summary>
+    </member>
+    <member name="N:DevExpress.Mvvm.Utils">
+      <summary>
+        <para>Contains MVVM-aware utility classes.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.Utils.DbExtensions">
+      <summary>
+        <para>Provides the extension method for implementations of the IQueryable interface.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.DbExtensions.Load(System.Linq.IQueryable)">
+      <summary>
+        <para>Forces entities to be loaded locally from the IQueryable instance.</para>
+      </summary>
+      <param name="source">An instance of the IQueryable interface from which to load entities.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.Utils.EntityTraits`2">
+      <summary>
+        <para>Incapsulates operations to obtain and set the primary key value of a given entity.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.EntityTraits`2.#ctor(System.Func{`0,`1},System.Action{`0,`1},System.Func{`0,System.Boolean})">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Mvvm.Utils.EntityTraits`2"/> class.</para>
+      </summary>
+      <param name="getPrimaryKeyFunction">A function that returns the primary key value of a given entity.</param>
+      <param name="setPrimaryKeyAction">An action that assigns the primary key value to a given entity.</param>
+      <param name="hasPrimaryKeyFunction">A function that determines whether given the entity has a primary key assigned.</param>
+    </member>
+    <member name="P:DevExpress.Mvvm.Utils.EntityTraits`2.GetPrimaryKey">
+      <summary>
+        <para>The function that returns the primary key value of a given entity.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.Utils.EntityTraits`2.HasPrimaryKey">
+      <summary>
+        <para>A function that determines whether the given entity has a primary key assigned (the primary key is not null). Always returns true if the primary key is a non-nullable value type.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.Utils.EntityTraits`2.SetPrimaryKey">
+      <summary>
+        <para>The action that assigns the primary key value to a given entity.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.Utils.ExpressionHelper">
+      <summary>
+        <para>Provides methods to perform operations with lambda expression trees.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.GetEntityTraits``3(``0,System.Linq.Expressions.Expression{System.Func{``1,``2}})">
+      <summary>
+        <para>Returns an instance of the EntityTraits class that encapsulates operations to obtain and set the primary key value of a given entity.</para>
+      </summary>
+      <param name="owner">An instance of the TOwner type which type is used as a key to cache compiled lambda expressions.A lambda expression that returns the primary key value for a given entity.</param>
+      <param name="getPropertyExpression">A lambda expression that returns the primary key value for a given entity.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.GetKeyProperties``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+      <summary>
+        <para>Gets an array of PropertyInfo objects that describe the properties that comprise the primary key of the TPropertyOwner type.</para>
+      </summary>
+      <param name="getPropertyExpression">An expression that when compiled and evaluated returns the value of the primary key of an TPropertyOwner object.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.GetKeyPropertyValues(System.Object)">
+      <summary>
+        <para>If value is a Tuple, this method collects its items into an array of objects. For other types it creates an array of objects with the value being its only element.</para>
+      </summary>
+      <param name="value">An object from which an array of objects is created. It it supposed to be a primary key value.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.GetPropertyExpression``2(System.String)">
+      <summary>
+        <para>Get an expression with incapsulating a lamda that given an object of type TOwner returns the value of property propertyName.</para>
+      </summary>
+      <param name="propertyName">The name of a property.</param>
+      <returns>The type of a property.</returns>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.GetPropertyName(System.Linq.Expressions.LambdaExpression)">
+      <summary>
+        <para>Converts a property reference represented as a lambda expression to a property name.</para>
+      </summary>
+      <param name="expression">A lambda expression that returns the property value.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.IsFitEntity``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+      <summary>
+        <para>Determines whether the given entity satisfies the condition represented by a lambda expression.</para>
+      </summary>
+      <param name="entity">An object to test.</param>
+      <param name="predicate">A function that determines whether the given object satisfies the condition.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.Utils.ExpressionHelper.MakeTuple``1(System.Object[])">
+      <summary>
+        <para>Creates an instance of a generic Tuple type from items.</para>
+      </summary>
+      <param name="items">Objects that will comprise the tuple.</param>
+    </member>
+  </members>
+</doc>
