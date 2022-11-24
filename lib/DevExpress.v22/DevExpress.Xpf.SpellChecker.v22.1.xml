@@ -1,0 +1,839 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.SpellChecker.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.SpellChecker">
+      <summary>
+        <para>Contains classes which implement the main functionality of the DXSpellChecker for WPF suite.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.DictionarySourceCollection">
+      <summary>
+        <para>A collection of source dictionaries that are used to check spelling in a document.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.DictionarySourceCollection.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.DictionarySourceCollection"/> class with default settings.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.DXSpellChecker">
+      <summary>
+        <para>Allows you to implement the spell checking functionality for the text controls in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.DXSpellChecker.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.DXSpellChecker"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.DXSpellChecker.Check">
+      <summary>
+        <para>Checks the control content for spelling mistakes.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.DXSpellChecker.CheckContainer">
+      <summary>
+        <para>Checks the spelling of the controls in the container for which the DXSpellChecker instance is defined.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension">
+      <summary>
+        <para>An extension instance implementing the <see cref="T:DevExpress.XtraSpellChecker.HunspellDictionary"/> functionality in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension.Culture">
+      <summary>
+        <para>Gets or sets the dictionary’s culture specific settings.</para>
+      </summary>
+      <value>A <see cref="T:System.Globalization.CultureInfo"/> object that specifies culture settings (the symbols encoding, language and phonetic specifics).</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension.DictionaryUri">
+      <summary>
+        <para>Gets or sets the dictionary (Base Words) file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, identifying a dictionary file.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.HunspellDictionaryExtension.GrammarUri">
+      <summary>
+        <para>Gets or sets the grammar file (.aff) URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, indicating the affix file.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.OptionsSpelling">
+      <summary>
+        <para>Contains options that affect text processing.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.OptionsSpelling.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.OptionsSpelling"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.CheckFromCursorPos">
+      <summary>
+        <para>Start spell check from the cursor position.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the spell checker should start checking from the cursor position.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.CheckSelectedTextFirst">
+      <summary>
+        <para>Spell check the selected text first.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the spell checker should start checking the selected text first.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreEmails">
+      <summary>
+        <para>Gets or sets whether e-mail addresses should be excluded from the check.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the words which are e-mail addresses should be checked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreMarkupTags">
+      <summary>
+        <para>Gets or sets whether the text enclosed with specific markup tags should be checked.</para>
+      </summary>
+      <value>true to exclude the text within tags from the check; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreMixedCaseWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words containing different case letters in positions other than the first.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the mixed case words should be checked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreRepeatedWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores repeated words.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the text should be checked for repeated words.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreUpperCaseWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words in which all letters are uppercase.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the words in which all letters are uppercase should be checked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreUri">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores strings which can be qualified as Uniform Resource Identifiers (URI).</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the strings which are URIs should be checked.  When the IgnoreUri property is set to <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> or <see cref="F:DevExpress.Utils.DefaultBoolean.Default"/>, the spell checker skips URI strings.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreUrls">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores the URLs in text.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the words which are URLs should be checked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.OptionsSpelling.IgnoreWordsWithNumbers">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words that contain numbers.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Utils.DefaultBoolean"/> enumeration value specifying whether the words which contain numbers should be checked.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.RichEditSpellChecker">
+      <summary>
+        <para>Allows you to implement the spell checking functionality for the <see cref="T:DevExpress.Xpf.RichEdit.RichEditControl"/> in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.RichEditSpellChecker.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.RichEditSpellChecker"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.RichEditSpellChecker.Check">
+      <summary>
+        <para>Checks the control content for spelling mistakes.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellChecker">
+      <summary>
+        <para>Represents the base component of the Spell Checker.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellChecker"/> class with default settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.CanCheck(System.Windows.Controls.Control)">
+      <summary>
+        <para>Checks whether the control is registered for use with the DXSpellChecker.</para>
+      </summary>
+      <param name="control">A <see cref="T:System.Windows.Forms.Control"/> descendant, representing a control to be checked for spelling mistakes.</param>
+      <returns>true if the control is already registered by the DXSpellChecker; otherwise false.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.Check(DevExpress.XtraSpellChecker.Native.ISpellCheckTextControlController)">
+      <summary>
+        <para>Checks the spelling of the text available through the controller interface.</para>
+      </summary>
+      <param name="controller">An object implementing the ISpellCheckTextController interface.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.Check(System.String)">
+      <summary>
+        <para>Checks the specified text for spelling mistakes.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value, specifying the text to be checked for spelling mistakes.</param>
+      <returns>An asynchronous operation result, containing a <see cref="T:System.String"/> value.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.Check(System.Windows.Controls.Control)">
+      <summary>
+        <para>Checks the specified control for spelling mistakes.</para>
+      </summary>
+      <param name="editControl">A <see cref="T:System.Windows.Controls.Control"/> object representing a control to be checked for spelling mistakes.</param>
+    </member>
+    <member name="E:DevExpress.Xpf.SpellChecker.SpellChecker.CheckCompleteFormShowing">
+      <summary>
+        <para>Occurs when the spell check is complete.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.CheckContainer">
+      <summary>
+        <para>Checks the spelling of the controls in the container specified for the DXSpellCkecker instance.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.CheckContainer(System.Windows.FrameworkElement)">
+      <summary>
+        <para>Checks the controls within the container for spelling mistakes.</para>
+      </summary>
+      <param name="container">A <see cref="T:System.Windows.FrameworkElement"/> object, representing a container which holds controls to be checked for spelling mistakes.</param>
+    </member>
+    <member name="E:DevExpress.Xpf.SpellChecker.SpellChecker.CultureChanged">
+      <summary>
+        <para>Occurs when the culture setting of the spell cheker is changed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.FormsManager">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+      <value>A SpellingFormsManager object.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.GetCommandsByError(DevExpress.XtraSpellChecker.Rules.SpellCheckErrorBase)">
+      <summary>
+        <para>Creates a list of commands available to an end-user, which depend on the type of misspelling and current spell checker operation mode.</para>
+      </summary>
+      <param name="error">A DevExpress.XtraSpellChecker.Rules.SpellCheckErrorBase object, representing a situation when a misspelled word is found.</param>
+      <returns>A generic list of <see cref="T:DevExpress.XtraSpellChecker.SpellCheckerCommand"/> objects.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellChecker.GetIgnoreList(System.Windows.Controls.Control)">
+      <summary>
+        <para>Returns the list of words ignored during spell check.</para>
+      </summary>
+      <param name="control">A <see cref="T:System.Windows.Controls.Control"/> object.</param>
+      <returns>An object implementing the <see cref="T:DevExpress.XtraSpellChecker.IIgnoreList"/> interface.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.IsChecking">
+      <summary>
+        <para>Indicates whether the current DXSpellChecker control performs a spelling check.</para>
+      </summary>
+      <value>true if a spelling check is performed; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.KeepFocusOnControl">
+      <summary>
+        <para>Specifies whether the input focus is set to the control that is being checked, to make the selected word visible.</para>
+      </summary>
+      <value>true to set the input focus to the control; false to leave the input focus to the application’s form.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.SpellChecker.SpellChecker.OptionsFormShowing">
+      <summary>
+        <para>Occurs when the Spelling Options form used to specify the <see cref="T:DevExpress.Xpf.SpellChecker.OptionsSpelling"/> is about to be shown.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.OptionsSpelling">
+      <summary>
+        <para>Provides access to the spelling options set for the spell checker instance.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.SpellChecker.OptionsSpelling"/> object containing the spell checking options.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.ParentContainer">
+      <summary>
+        <para>Gets or sets the control, representing the parent container for the DXSpellChecker instance.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Forms.Control"/> object, which is the parent container for the controls to be checked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellChecker.SpellCheckMode">
+      <summary>
+        <para>Gets or sets the DXSpellChecker’s operation mode.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.XtraSpellChecker.SpellCheckMode"/> enumeration member.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.SpellChecker.SpellChecker.SpellCheckModeChanged">
+      <summary>
+        <para>Occurs when the <see cref="P:DevExpress.Xpf.SpellChecker.SpellChecker.SpellCheckMode"/> property is changed.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Xpf.SpellChecker.SpellChecker.SpellingFormShowing">
+      <summary>
+        <para>Occurs when the Spelling form is about to be displayed or an end-user clicks the command button that changes the form’s contents.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1">
+      <summary>
+        <para>Serves as a base class to the <see cref="T:DevExpress.Xpf.SpellChecker.DXSpellChecker"/>  and <see cref="T:DevExpress.Xpf.SpellChecker.RichEditSpellChecker"/> behaviors.</para>
+      </summary>
+      <typeparam name="T" />
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.CheckAsYouType">
+      <summary>
+        <para>Gets or sets whether to enable the “check-as-you-type” mode. This is a dependency property.</para>
+      </summary>
+      <value>true, to allow detecting mistakes when you finish typing the word; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.CheckAsYouTypeProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.CheckAsYouTypeProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.Culture">
+      <summary>
+        <para>Gets or sets the spell checker’s culture-specific settings. This is a dependency property.</para>
+      </summary>
+      <value><see cref="T:System.Globalization.CultureInfo"/> object that specifies culture settings (the symbols encoding, language and phonetic specifics).</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.CultureProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.CultureProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.Dictionaries">
+      <summary>
+        <para>Provides access to the spell checker dictionaries collection. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.SpellChecker.SpellCheckerDictionaryCollection"/> object representing a collection of dictionaries.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreEmails">
+      <summary>
+        <para>Gets or sets whether e-mail addresses should be excluded from the check. This is a dependency property.</para>
+      </summary>
+      <value>true, to exclude e-mails from the check; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreEmailsProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreEmailsProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreMixedCaseWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words containing different case letters in positions other than the first. This is a dependency property.</para>
+      </summary>
+      <value>true, if the spell checker should not check words in mixed case; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreMixedCaseWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreMixedCaseWordsProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreRepeatedWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores repeated words. This is a dependency property.</para>
+      </summary>
+      <value>true, to signalize about repeated words; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreRepeatedWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreRepeatedWordsProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUpperCaseWords">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words in which all letters are uppercase. This is a dependency property.</para>
+      </summary>
+      <value>true, to ignore words in upper case; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUpperCaseWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUpperCaseWordsProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUri">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores strings which can be qualified as Uniform Resource Identifiers (URI). This is a dependency property.</para>
+      </summary>
+      <value>true, to skip URI strings; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUriProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreUriProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreWordsWithNumbers">
+      <summary>
+        <para>Gets or sets whether the spell checker ignores words that contain numbers. This is a dependency property.</para>
+      </summary>
+      <value>true, to skip words containing numbers; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreWordsWithNumbersProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.IgnoreWordsWithNumbersProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.SpellingFormType">
+      <summary>
+        <para>Gets or sets type of the form to be shown when a probable misspelled word is found. This is a dependency property.</para>
+      </summary>
+      <value>One of the <see cref="T:DevExpress.XtraSpellChecker.SpellingFormType"/> enumeration values indicating the form’s layout. The default is <see cref="F:DevExpress.XtraSpellChecker.SpellingFormType.Outlook"/></value>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.SpellingFormTypeProperty">
+      <summary>
+        <para>Identifies the <see cref="F:DevExpress.Xpf.SpellChecker.SpellCheckerBase`1.SpellingFormTypeProperty"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension">
+      <summary>
+        <para>An extension object implementing the <see cref="T:DevExpress.XtraSpellChecker.SpellCheckerCustomDictionary"/> functionality in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension.AlphabetUri">
+      <summary>
+        <para>Gets or sets the alphabet file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> object identifying a file with the language alphabet.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension.Culture">
+      <summary>
+        <para>Gets or sets the dictionary’s culture specific settings.</para>
+      </summary>
+      <value>A <see cref="T:System.Globalization.CultureInfo"/> object that specifies the culture settings (the symbols encoding, language and phonetic specifics).</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension.DictionaryUri">
+      <summary>
+        <para>Gets or sets the dictionary (Base Words) file URI.</para>
+      </summary>
+      <value>An <see cref="T:System.Uri"/> object, identifying the dictionary file.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerCustomDictionaryExtension.Encoding">
+      <summary>
+        <para>Gets or sets the dictionary text encoding.</para>
+      </summary>
+      <value>A <see cref="T:System.Text.Encoding"/> object that represents the character encoding.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellCheckerDictionaryCollection">
+      <summary>
+        <para>The collection of dictionaries provided for the <see cref="T:DevExpress.Xpf.SpellChecker.RichEditSpellChecker"/> or <see cref="T:DevExpress.Xpf.SpellChecker.DXSpellChecker"/> behaviors.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension">
+      <summary>
+        <para>An extension instance implementing the <see cref="T:DevExpress.XtraSpellChecker.SpellCheckerISpellDictionary"/> functionality in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.AlphabetUri">
+      <summary>
+        <para>Gets or sets the alphabet file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> object identifying a file with the language alphabet.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.Culture">
+      <summary>
+        <para>Gets or sets the dictionary’s culture specific settings.</para>
+      </summary>
+      <value>A <see cref="T:System.Globalization.CultureInfo"/> object that specifies culture settings (the symbols encoding, language and phonetic specifics).</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.DictionaryUri">
+      <summary>
+        <para>Gets or sets the dictionary (Base Words) file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, identifying a dictionary file.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.Encoding">
+      <summary>
+        <para>Gets or sets the dictionary text encoding.</para>
+      </summary>
+      <value>A <see cref="T:System.Text.Encoding"/> object that represents the character encoding.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerISpellDictionaryExtension.GrammarUri">
+      <summary>
+        <para>Gets or sets the grammar file (.aff) URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, indicating the affix file.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension">
+      <summary>
+        <para>An extension instance implementing the <see cref="T:DevExpress.XtraSpellChecker.SpellCheckerOpenOfficeDictionary"/> functionality in XAML.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.AlphabetUri">
+      <summary>
+        <para>Gets or sets the alphabet file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> object identifying a file with the language alphabet.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.Culture">
+      <summary>
+        <para>Gets or sets the dictionary’s culture-specific settings.</para>
+      </summary>
+      <value>A <see cref="T:System.Globalization.CultureInfo"/> object that specifies culture settings (the symbols encoding, language and phonetic specifics).</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.DictionaryUri">
+      <summary>
+        <para>Gets or sets the dictionary (Base Words) file URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, identifying a dictionary file.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.Encoding">
+      <summary>
+        <para>Gets or sets the dictionary text encoding.</para>
+      </summary>
+      <value>A <see cref="T:System.Text.Encoding"/> object that represents the character encoding.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.SpellChecker.SpellCheckerOpenOfficeDictionaryExtension.GrammarUri">
+      <summary>
+        <para>Gets or sets the grammar file (.aff) URI.</para>
+      </summary>
+      <value>A <see cref="T:System.Uri"/> value, indicating the affix file.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellingExtensions">
+      <summary>
+        <para>A base class for spell check extension methods.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingExtensions.GetErrorOperationCommands(System.Windows.DependencyObject,DevExpress.XtraSpellChecker.Parser.Position)">
+      <summary>
+        <para>Creates a list of commands available for the misspelled or repeated word at the specified position in the given editor.</para>
+      </summary>
+      <param name="editor">A target editor.</param>
+      <param name="position">A position in the editor the misspelled or repeated word occupies.</param>
+      <returns>A list of error commands available for the target word.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingExtensions.GetErrorOperationCommands(System.Windows.DependencyObject,System.Int32)">
+      <summary>
+        <para>Creates a list of commands available for the misspelled or repeated word at the specified position in the given editor.</para>
+      </summary>
+      <param name="editor">A target editor.</param>
+      <param name="position">A position in the editor the misspelled or repeated word occupies.</param>
+      <returns>A list of error commands available for the target word.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingExtensions.GetErrorOperationCommands(System.Windows.DependencyObject,System.Windows.Point)">
+      <summary>
+        <para>Creates a list of commands available for the misspelled or repeatedword at the specified point in the given editor.</para>
+      </summary>
+      <param name="editor">A target editor.</param>
+      <param name="point">A point in the editor the misspelled or repeated word occupies.</param>
+      <returns>A list of error commands available for the target word.</returns>
+    </member>
+    <member name="T:DevExpress.Xpf.SpellChecker.SpellingSettings">
+      <summary>
+        <para>Specifies spelling settings for a framework element.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.SpellChecker.SpellingSettings"/> class with the default settings.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouTypeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouType"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.CultureProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.Culture"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollectionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollection"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetCheckAsYouType(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouType"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouType"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetCulture(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.Culture"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.Culture"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetDictionarySourceCollection(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollection"/> attached property for a specified element.</para>
+      </summary>
+      <param name="obj">A <see cref="T:System.Windows.FrameworkElement"/> object whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollection"/> property’s value is to be returned.</param>
+      <returns>The value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollection"/> property for the specified element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreEmails(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmails"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmails"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreMixedCaseWords(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWords"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWords"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreRepeatedWords(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWords"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWords"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreUpperCaseWords(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWords"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWords"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreUri(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUri"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUri"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreUrls(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrls"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrls"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetIgnoreWordsWithNumbers(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbers"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbers"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetShowSpellCheckMenu(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenu"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenu"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetSpellChecker(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellChecker"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellChecker"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetUnderlineColor(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColor"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColor"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.GetUnderlineStyle(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyle"/> attached property for a specified dependency object.</para>
+      </summary>
+      <param name="obj">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyle"/> property value for the element.</returns>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmailsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmails"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWords"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWords"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWordsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWords"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUriProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUri"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrlsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrls"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbersProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbers"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.RegisterTextControl(System.Type)">
+      <summary>
+        <para>Enables spell checking for the descendants of the standard controls (TextBox, RichTextBox) and TextEdit.</para>
+      </summary>
+      <param name="controlType">The type of the control being registered.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetCheckAsYouType(System.Windows.DependencyObject,System.Boolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouType"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.CheckAsYouType"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetCulture(System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.Culture"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.Culture"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetDictionarySourceCollection(System.Windows.DependencyObject,DevExpress.Xpf.SpellChecker.DictionarySourceCollection)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.DictionarySourceCollection"/> attached property to a specified element.</para>
+      </summary>
+      <param name="obj">A <see cref="T:System.Windows.FrameworkElement"/> object, to which the dictionary source collection is assigned.</param>
+      <param name="value">A <see cref="T:System.String"/> value to assign.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreEmails(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmails"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreEmails"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreMixedCaseWords(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWords"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreMixedCaseWords"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreRepeatedWords(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWords"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreRepeatedWords"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreUpperCaseWords(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWords"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUpperCaseWords"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreUri(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUri"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">The DependencyObject whose <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUri"/> attached property is to be set.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreUrls(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrls"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreUrls"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetIgnoreWordsWithNumbers(System.Windows.DependencyObject,DevExpress.Utils.DefaultBoolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbers"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.IgnoreWordsWithNumbers"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetShowSpellCheckMenu(System.Windows.DependencyObject,System.Boolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenu"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenu"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetSpellChecker(System.Windows.DependencyObject,DevExpress.Xpf.SpellChecker.SpellChecker)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellChecker"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellChecker"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetUnderlineColor(System.Windows.DependencyObject,System.Windows.Media.Color)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColor"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColor"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.SetUnderlineStyle(System.Windows.DependencyObject,DevExpress.Xpf.SpellChecker.UnderlineStyle)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyle"/> attached property for a specific object.</para>
+      </summary>
+      <param name="obj">Sets the value of the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyle"/> attached property for a specific object.</param>
+      <param name="value">The new value of the attached property for the specified object.</param>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenuProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.ShowSpellCheckMenu"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellCheckerProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.SpellChecker"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineColor"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.SpellChecker.SpellingSettings.UnderlineStyle"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.SpellChecker.SpellingSettings.UnregisterTextControl(System.Type)">
+      <summary>
+        <para>Excludes controls of the specified type from the list of controls for which spell checking is enabled.</para>
+      </summary>
+      <param name="controlType">The <see cref="T:System.Type"/> of the custom control.</param>
+    </member>
+  </members>
+</doc>
