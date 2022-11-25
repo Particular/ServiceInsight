@@ -7,6 +7,7 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
+             xmlns:tree="clr-namespace:ServiceInsight.Explorer"
              d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -56,8 +57,7 @@
     <!--ChildNodesPath="Employees" a property from the downloaded demo of devex treeview control-->
     <!--Template="{StaticResource TreeTemplate}"-->
     <dxg:TreeViewControl ItemsSource="{Binding Items}"  
-                         SelectedItem="{Binding SelectedNode}" 
-                         
+                         SelectedItem="{Binding SelectedNode, Mode=TwoWay}" 
                          AutomationProperties.AutomationId="EndpointTree"  
                          ChildNodesPath="Children" 
                          TreeViewFieldName="Name"/>    
