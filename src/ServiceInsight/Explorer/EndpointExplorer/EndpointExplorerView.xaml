@@ -4,6 +4,7 @@
              xmlns:ep="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
              d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
@@ -32,6 +33,7 @@
                 <TextBlock Grid.Column="1"
                            Margin="10,0,0,0"
                            Text="{Binding Name}" />
+              
             </Grid>
         </HierarchicalDataTemplate>
 
@@ -42,12 +44,21 @@
         </Style>
     </UserControl.Resources>
 
-    <ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
+    <!--<ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
                          AutomationProperties.AutomationId="EndpointTree"
                          ItemContainerStyle="{StaticResource ExpandedStyle}"
                          ItemTemplate="{StaticResource TreeTemplate}"
                          ItemsSource="{Binding Items}"
                          SelectedItem="{Binding SelectedNode}"
                          ScrollViewer.VerticalScrollBarVisibility="Visible">
-    </ep:EndpointTreeView>
+    </ep:EndpointTreeView>-->
+    
+    <!--ChildNodesPath="Employees" a property from the downloaded demo of devex treeview control-->
+    <!--Template="{StaticResource TreeTemplate}"-->
+    <dxg:TreeViewControl ItemsSource="{Binding Items}"  
+                         SelectedItem="{Binding SelectedNode}" 
+                         
+                         AutomationProperties.AutomationId="EndpointTree"  
+                         ChildNodesPath="Children" 
+                         TreeViewFieldName="Name"/>    
 </UserControl>
