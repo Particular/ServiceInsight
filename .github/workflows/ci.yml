@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     name: Windows
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
@@ -20,7 +20,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3.0.3
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1.3
       - name: Build
@@ -28,7 +28,7 @@ jobs:
       - name: Upload assets
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: Assets
+          name: assets
           path: src/ServiceInsight/bin/Release/
           retention-days: 7
       - name: Run tests
