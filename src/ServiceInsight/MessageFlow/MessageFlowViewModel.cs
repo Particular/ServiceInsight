@@ -278,7 +278,7 @@
                     parentMessages = nodeMap.Values.Where(m =>
                         m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
                         m.Message.MessageId == msg.Message.RelatedToMessageId && m.Message.MessageIntent != MessageIntent.Publish
-                        );
+                        ).ToArray();
 
                     if (parentMessages.Any())
                     {
