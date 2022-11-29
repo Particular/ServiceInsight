@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Upload assets
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: assets
           path: src/ServiceInsight/bin/Release/
