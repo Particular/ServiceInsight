@@ -282,17 +282,17 @@
 
                     if (parentMessages.Any())
                     {
-                        LogTo.Warning("Fall back to match only on RelatedToMessageId for message {0} matched but link could be invalid.", msg.Message.MessageId);
+                        LogTo.Warning("Fall back to match only on RelatedToMessageId for message with Id '{MessageId}' matched but link could be invalid.", msg.Message.MessageId);
                     }
                 }
 
                 if (!parentMessages.Any())
                 {
-                    LogTo.Information("No parent could be resolved for the message with Id '{0}' which has RelatedToMessageId set. This can happen if the parent has been purged due to retention expiration, an ServiceControl node to be unavailable, or because the parent message not been stored (yet).", msg.Message.MessageId);
+                    LogTo.Information("No parent could be resolved for the message with Id '{MessageId}' which has RelatedToMessageId set. This can happen if the parent has been purged due to retention expiration, an ServiceControl node to be unavailable, or because the parent message not been stored (yet).", msg.Message.MessageId);
                 }
                 else if (parentMessages.Count() > 1)
                 {
-                    LogTo.Error("Multiple parents matched for message id '{0}' possibly due to more-than-once processing, linking to all as it is unknown which processing attempt generated the message.", msg.Message.MessageId);
+                    LogTo.Error("Multiple parents matched for message id '{MessageId}' possibly due to more-than-once processing, linking to all as it is unknown which processing attempt generated the message.", msg.Message.MessageId);
                 }
 
                 foreach (var parentMessage in parentMessages)
