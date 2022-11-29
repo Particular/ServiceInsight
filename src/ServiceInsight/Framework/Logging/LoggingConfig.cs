@@ -13,6 +13,7 @@
     using Serilog.Events;
     using Serilog.Filters;
     using ServiceControl;
+    using ServiceInsight.MessageFlow;
 
     public static class LoggingConfig
     {
@@ -31,7 +32,7 @@
                 .WriteTo.Trace(outputTemplate: "[{Level}] ({SourceContext}) {Message}{NewLine}{Exception}")
                 .WriteTo.Logger(lc => lc
                     .MinimumLevel.Verbose()
-                    .Filter.ByIncludingOnly(MatchingTypes(typeof(DefaultServiceControl), typeof(CustomMessageViewerResolver)))
+                    .Filter.ByIncludingOnly(MatchingTypes(typeof(DefaultServiceControl), typeof(CustomMessageViewerResolver), typeof(MessageFlowViewModel)))
                     .WriteTo.Observers(logEvents => logEvents
                         .ObserveOn(TaskPoolScheduler.Default)
                         .Do(LogWindowViewModel.LogObserver)
