@@ -269,7 +269,8 @@
                     m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null
                     && m.Message.MessageId == msg.Message.RelatedToMessageId
                     && m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name // Needed with publishes as identical events can be consumed by multiple endpoints
-                    );
+                    )
+                    .ToArray();
 
                 // Fallback, get "parent" when originating message is not an event (publish)
                 if (!parentMessages.Any())
