@@ -1,7 +1,5 @@
 ﻿namespace ServiceInsight.MessageFlow
 {
-    using ServiceInsight.Explorer;
-    using ServiceInsight.ExtensionMethods;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
@@ -12,14 +10,16 @@
     using Caliburn.Micro;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
-    using ServiceInsight.Models;
-    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Explorer;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
     public class MessageFlowViewModel : Screen,
@@ -321,10 +321,7 @@
 
         void UpdateLayout()
         {
-            if (view != null)
-            {
-                view.ApplyLayout();
-            }
+            view?.ApplyLayout();
         }
     }
 }
