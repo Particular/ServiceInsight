@@ -7,13 +7,16 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
-             xmlns:tree="clr-namespace:ServiceInsight.Explorer"
+             xmlns:tree="clr-namespace:ServiceInsight.Explorer" 
+             xmlns:dxg1="http://schemas.microsoft.com/netfx/2009/xaml/presentation" 
+             xmlns:dxg2="clr-namespace:System.Web.UI.WebControls;assembly=System.Web" 
+             xmlns:dxg3="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <HierarchicalDataTemplate x:Key="TreeTemplate"
+        <!--<HierarchicalDataTemplate x:Key="TreeTemplate"
                                   DataType="vm:AuditEndpointExplorerItem"
                                   ItemsSource="{Binding Path=Children}">
             <Grid>
@@ -42,9 +45,30 @@
                TargetType="{x:Type TreeViewItem}"
                d:DataContext="{d:DesignInstance tree:ExplorerItem}">
             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-        </Style>
-    </UserControl.Resources>
+        </Style>-->
 
+        <HierarchicalDataTemplate x:Key="TreeTemplate_Test">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.ToolTip>
+                    <ToolTip Visibility="Visible">
+                        <TextBlock>
+                     <Run Text="Installed On: " />
+                     <Run Text="{Binding HostNames}" />
+                        </TextBlock>
+                    </ToolTip>
+                </Grid.ToolTip>             
+                <TextBlock Grid.Column="1"
+                    Margin="10,0,0,0"
+                    Text="Name" />
+
+            </Grid>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+    
     <!--<ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
                          AutomationProperties.AutomationId="EndpointTree"
                          ItemContainerStyle="{StaticResource ExpandedStyle}"
@@ -59,6 +83,32 @@
     <dxg:TreeViewControl ItemsSource="{Binding Items}"  
                          SelectedItem="{Binding SelectedNode, Mode=TwoWay}" 
                          AutomationProperties.AutomationId="EndpointTree"  
-                         ChildNodesPath="Children" 
-                         TreeViewFieldName="Name"/>    
+                         ChildNodesPath="Children"  
+                         TreeViewFieldName="Name" >
+
+        <dxg:TreeViewControl.NodeContentTemplate>
+            <DataTemplate>
+                
+                <Border Name="border" BorderBrush="Green" BorderThickness="1"
+              Padding="5" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding Data.DisplayName}"/>
+                        <Grid.ToolTip>
+                            <ToolTip Visibility="Visible">
+                                <TextBlock>
+                                    <Run Text="{Binding  RowData.Row.Children.HostNames }" />
+                                    <Run Text="Installed On: " />
+                                </TextBlock>
+                            </ToolTip>
+                        </Grid.ToolTip>
+                    </Grid>
+                </Border>  
+            </DataTemplate>
+        </dxg:TreeViewControl.NodeContentTemplate>
+    </dxg:TreeViewControl>
+    
 </UserControl>
