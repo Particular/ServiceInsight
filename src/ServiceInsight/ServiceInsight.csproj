@@ -23,7 +23,6 @@
     <Reference Include="DevExpress.Data.v22.1" HintPath="..\..\lib\DevExpress.v22\DevExpress.Data.v22.1.dll" />
     <Reference Include="DevExpress.Mvvm.v22.1" HintPath="..\..\lib\DevExpress.v22\DevExpress.Mvvm.v22.1.dll" />
     <Reference Include="DevExpress.Printing.v22.1.Core" HintPath="..\..\lib\DevExpress.v22\DevExpress.Printing.v22.1.Core.dll" />
-    <Reference Include="DevExpress.RichEdit.v22.1.Core" HintPath="..\..\lib\DevExpress.v22\DevExpress.RichEdit.v22.1.Core.dll" />
     <Reference Include="DevExpress.Utils.v22.1" HintPath="..\..\lib\DevExpress.v22\DevExpress.Utils.v22.1.dll" />
     <Reference Include="DevExpress.Xpf.Controls.v22.1" HintPath="..\..\lib\DevExpress.v22\DevExpress.Xpf.Controls.v22.1.dll" />
     <Reference Include="DevExpress.Xpf.Core.v22.1" HintPath="..\..\lib\DevExpress.v22\DevExpress.Xpf.Core.v22.1.dll" />
