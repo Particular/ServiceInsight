@@ -27,6 +27,7 @@
         readonly CommandLineArgParser commandLineParser;
         readonly ServiceControlClientRegistry clientRegistry;
         readonly MessageSelectionContext messageSelectionContext;
+        IEndpointExplorerView view;
         bool isStartingUp;
 
         public EndpointExplorerViewModel(
@@ -121,6 +122,12 @@
             }
         }
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            this.view = (IEndpointExplorerView)view;
+        }
+
         string GetConfiguredAddress()
         {
             if (commandLineParser.ParsedOptions.EndpointUri == null)
@@ -147,6 +154,10 @@
 
         public void OnSelectedNodeChanged()
         {
+            if (SelectedNode != null)
+            {
+                SelectedNode.IsExpanded = true;
+            }
             eventAggregator.PublishOnUIThread(new SelectedExplorerItemChanged(SelectedNode));
         }
 
@@ -179,6 +190,8 @@
             {
                 SelectedNode = serviceControlNode;
             }
+
+            view?.ExpandSelectedNode();
         }
 
         ServiceControlExplorerItem SelectConnectedServiceControlNode(string url)
@@ -296,8 +309,6 @@
 
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
-            serviceControlNode.IsExpanded = true;
-            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 

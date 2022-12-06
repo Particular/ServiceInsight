@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Persistent.BaseImpl.Xpo.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Persistent.AuditTrail">
+      <summary>
+        <para>Contains classes used in the Audit Trail Module.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.AuditTrail.AuditTrailService">
+      <summary>
+        <para>The service that the Audit Trail Module uses to monitor object changes and log this information. You can use the static <see cref="P:DevExpress.Persistent.AuditTrail.AuditTrailService.Instance"/> property to access this service and customize its behavior.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailService.Application">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.CustomCreateObjectAuditProcessorsFactory">
+      <summary>
+        <para>Handle this event to replace a default ObjectAuditProcessor for a particular object auditing mode with a custom processor.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.CustomizeAuditOperationTypeFilter">
+      <summary>
+        <para>Occurs after a business object is changed and before the corresponding AuditDataItem object is saved.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.CustomizeAuditTrailSettings">
+      <summary>
+        <para>This event is raised when an application’s setup is complete. Handle this event to use the default settings for the Audit Trail Module.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.CustomizeSessionAuditingOptions">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailService.Instance">
+      <summary>
+        <para>Provides access to the instance of the <see cref="T:DevExpress.Persistent.AuditTrail.AuditTrailService"/>. Use this property to access AuditTrailService‘s settings.</para>
+      </summary>
+      <value>The instance of the <see cref="T:DevExpress.Persistent.AuditTrail.AuditTrailService"/>.</value>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.QueryCurrentUserName">
+      <summary>
+        <para>Occurs before AuditDataItem objects are saved. Handle this event to get the current user name in applications that do not use the Security System.</para>
+      </summary>
+    </member>
+    <member name="E:DevExpress.Persistent.AuditTrail.AuditTrailService.SaveAuditTrailData">
+      <summary>
+        <para>Occurs before new AuditDataItem objects are saved to the database. Handle this event to configure how the Audit Trail Module saves information.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailService.SaveInAsyncMode">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase">
+      <summary>
+        <para>The base service that the Audit Trail Module uses to monitor object changes and log this information. You can use the static <see cref="P:DevExpress.Persistent.AuditTrail.AuditTrailService.Instance"/> property to access this service and customize its behavior.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.#ctor(System.IServiceProvider)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase"/> class with specified settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.AddCustomAuditData(DevExpress.Xpo.Session,DevExpress.Persistent.AuditTrail.AuditDataItem)">
+      <summary>
+        <para>Adds custom data (information on events that are not audited) to the audit log.</para>
+      </summary>
+      <param name="session">A <see cref="T:DevExpress.Xpo.Session"/> object.</param>
+      <param name="auditDataItem">An AuditDataItem object that contains custom data that should be added to the audit log.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.AuditDataStore">
+      <summary>
+        <para>Stores AuditDataItem objects that contain information about object changes.</para>
+      </summary>
+      <value>Stores AuditDataItem objects that contain information about object changes.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.BeginObjectsAudit(DevExpress.Xpo.Session,DevExpress.Persistent.AuditTrail.ObjectAuditingMode,System.Object[])">
+      <summary>
+        <para>Starts auditing the specified objects according to auditingMode.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> object.</param>
+      <param name="auditingMode">The ObjectAuditingMode value that is the object auditing mode. The default value is Full.</param>
+      <param name="alreadyLoadedObjects">Objects to be audited.</param>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.BeginObjectsAudit(DevExpress.Xpo.Session,System.Object[])">
+      <summary>
+        <para>Starts auditing the specified objects in Full object auditing mode.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> to be audited.</param>
+      <param name="alreadyLoadedObjects">Objects to be audited.</param>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.BeginSessionAudit(DevExpress.Xpo.Session,DevExpress.Persistent.AuditTrail.AuditTrailStrategy,DevExpress.Persistent.AuditTrail.ObjectAuditingMode)">
+      <summary>
+        <para>Starts auditing changes made to the object within the specified session.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> to be audited.</param>
+      <param name="strategy">The AuditTrailStrategy value.</param>
+      <param name="auditingMode">The ObjectAuditingMode value that is the object auditing mode. The default value is Full.</param>
+      <returns>A processor that the Audit Trail Module uses for the specified auditingMode.</returns>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.BeginSessionAudit(DevExpress.Xpo.Session,DevExpress.Persistent.AuditTrail.AuditTrailStrategy)">
+      <summary>
+        <para>Starts auditing object changes made within the specified session.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> to be audited.</param>
+      <param name="strategy">The AuditTrailStrategy value.</param>
+      <returns>A processor that the Audit Trail Module uses for the specified auditingMode.</returns>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.EndSessionAudit(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Stops auditing object changes made within the specified session.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> whose audit to be stopped.</param>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.GetStrategy(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Gets the audit strategy for the specified session.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> object whose audit strategy this method returns.</param>
+      <returns>The session‘s audit strategy.</returns>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.IsSessionAudited(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Indicates whether the Audit Trail Module audits object changes within the specified session.</para>
+      </summary>
+      <param name="session">The <see cref="T:DevExpress.Xpo.Session"/> object this method checks.</param>
+      <returns>true if the Audit Trail Module audits object changes in the specified session; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.ObjectAuditingMode">
+      <summary>
+        <para>Specifies the object auditing mode.</para>
+      </summary>
+      <value>The ObjectAuditingMode value that specifies the object auditing mode.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.ObjectAuditProcessorsFactory">
+      <summary>
+        <para>Provides access to the factory that creates ObjectAuditProcessor for a particular object auditing mode.</para>
+      </summary>
+      <value>The factory that creates ObjectAuditProcessor for a particular object auditing mode.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.SaveAuditData(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Saves AuditDataItem objects to the database. Call this method when you add custom audit data to the log.</para>
+      </summary>
+      <param name="session">The current <see cref="T:DevExpress.Xpo.Session"/>.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.Settings">
+      <summary>
+        <para>Provides access to the service’s settings. These settings allow you to customize the list of objects and properties that should be audited.</para>
+      </summary>
+      <value>The the AuditTrailSettings object that contains service’s settings.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.SetXPDictionaries(System.Collections.Generic.IList{DevExpress.Xpo.Metadata.XPDictionary})">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.SetXPDictionary(DevExpress.Xpo.Metadata.XPDictionary)">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.AuditTrailServiceBase.TimestampStrategy">
+      <summary>
+        <para>Specifies the Audit Timestamp Strategy.</para>
+      </summary>
+      <value>An IAuditTimestampStrategy object that specifies the Audit Timestamp Strategy.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs">
+      <summary>
+        <para>Contains data for the <see cref="E:DevExpress.Persistent.AuditTrail.AuditTrailService.CustomizeAuditOperationTypeFilter"/> event.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.#ctor(DevExpress.Persistent.AuditTrail.AuditOperationType,System.Object)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs"/> class with specified settings.</para>
+      </summary>
+      <param name="auditOperationType">An AuditOperationType value that indicates the type of operation.</param>
+      <param name="auditObject">A modified object.</param>
+    </member>
+    <member name="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditObject">
+      <summary>
+        <para>A modified object.</para>
+      </summary>
+      <value>A modified object.</value>
+    </member>
+    <member name="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditOperationType">
+      <summary>
+        <para>The type of operation performed with <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditObject"/>.</para>
+      </summary>
+      <value>An AuditOperationType value that indicates the type of operation made on <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditObject"/>.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.SaveAuditOperation">
+      <summary>
+        <para>Indicates whether the Module logs the <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditOperationType"/> operation performed with <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditObject"/>.</para>
+      </summary>
+      <value>true if the Module logs the <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditOperationType"/> operation on <see cref="F:DevExpress.Persistent.AuditTrail.CustomAuditOperationTypeFilterEventArgs.AuditObject"/>; otherwise, false.</value>
+    </member>
+    <member name="N:DevExpress.Persistent.BaseImpl">
+      <summary>
+        <para>Contains ready-to-use XPO persistent classes that form the Business Class Library.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.BaseObject">
+      <summary>
+        <para>Represents a base persistent class from which business classes can be inherited.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.BaseObject.#ctor">
+      <summary>
+        <para>Creates a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.BaseObject"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.BaseObject.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.BaseObject"/> descendant, in a particular <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.BaseObject.AfterConstruction">
+      <summary>
+        <para>Invoked when the current object is about to be initialized after its creation.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.BaseObject.IsXpoProfiling">
+      <summary>
+        <para>Set this field to true before profiling the application via XPO Profiler.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.BaseObject.Oid">
+      <summary>
+        <para>Specifies the persistent object’s identifier.</para>
+      </summary>
+      <value>A globally unique identifier which represents the persistent object’s identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.BaseObject.OidInitializationMode">
+      <summary>
+        <para>Specifies when a new GUID value is assigned to the <see cref="P:DevExpress.Persistent.BaseImpl.BaseObject.Oid"/> property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Persistent.BaseImpl.OidInitializationMode"/> enumeration value specifying when a new GUID value is assigned to the Oid property.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.BaseObject.ToString">
+      <summary>
+        <para>Returns a human-readable string that represents the current business object.</para>
+      </summary>
+      <returns>A string representing the current business object.</returns>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.DashboardData">
+      <summary>
+        <para>An XPO persistent class used by the Dashboards Module to store dashboards in the application database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.DashboardData.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.DashboardData"/> descendant in a specific <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A <see cref="T:DevExpress.Xpo.Session"/> object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.DashboardData.Content">
+      <summary>
+        <para>Specifies the dashboard configuration defined in the Dashboard Designer.</para>
+      </summary>
+      <value>An XML-formatted string which specifies the dashboard configuration.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.DashboardData.SynchronizeTitle">
+      <summary>
+        <para>Specifies if it is required to update the <see cref="P:DevExpress.Persistent.Base.IDashboardData.Title"/> value with the dashboard title from the dashboard configuration (stored in the <see cref="P:DevExpress.Persistent.Base.IDashboardData.Content"/> property).</para>
+      </summary>
+      <value>true, if it is required to update the dashboard title; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.DashboardData.Title">
+      <summary>
+        <para>Specifies the dashboard title.</para>
+      </summary>
+      <value>A string specifying the dashboard title.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.MediaDataObject">
+      <summary>
+        <para>The XPO persistent class used to store media data in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.MediaDataObject.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.MediaDataObject"/> descendant in a specific <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.MediaDataObject.MediaData">
+      <summary>
+        <para>Specifies a byte array with media data that is loaded from a database on demand when required.</para>
+      </summary>
+      <value>A byte array object that is loaded from a database on demand when required.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.MediaDataObject.MediaDataKey">
+      <summary>
+        <para>Specifies a key value associated with the <see cref="P:DevExpress.Persistent.BaseImpl.MediaDataObject.MediaData"/> byte array.</para>
+      </summary>
+      <value>A string which is a key value.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.ModelDifference">
+      <summary>
+        <para>The XPO persistent class used to store model differences in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.ModelDifference.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> class.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifference.Aspects">
+      <summary>
+        <para>Gets a collection of model difference aspects associated with the <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpo.XPCollection"/>&lt;<see cref="T:DevExpress.ExpressApp.IModelDifferenceAspect"/>&gt; list of model difference aspects.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifference.ContextId">
+      <summary>
+        <para>Specifies the context identifier of the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object that allows distinguishing model differences designed for different applications using the same database.</para>
+      </summary>
+      <value>A string which is the context identifier.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifference.UserId">
+      <summary>
+        <para>Specifies the identifier of a user who owns the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object.</para>
+      </summary>
+      <value>A string which is the identifier of a user who owns the current model differences.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifference.UserName">
+      <summary>
+        <para>Gets the name of a user who owns the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object.</para>
+      </summary>
+      <value>A string which is the name of a user who owns the current model differences.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifference.Version">
+      <summary>
+        <para>Specifies the version of the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object.</para>
+      </summary>
+      <value>An integer value which is the version number of the model differences object.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect">
+      <summary>
+        <para>The XPO persistent class used to store model difference aspects in the database.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect"/> class.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect.DisplayName">
+      <summary>
+        <para>Gets the language code of the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect"/> object, or the “(Default language)” text.</para>
+      </summary>
+      <value>A string which specifies the name of the current model difference aspect, or “(Default language)” if the aspect name is empty (if the current aspect specifies culture-neutral model differences).</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect.Name">
+      <summary>
+        <para>Specifies the language code of the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect"/> object. The empty value means that the current aspect specifies culture-neutral model differences.</para>
+      </summary>
+      <value>A string which specifies the name of the current model difference aspect.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect.Owner">
+      <summary>
+        <para>Specifies the <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect"/> belongs to.</para>
+      </summary>
+      <value>A the <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifference"/> object specifying the model differences object that owns the current aspect.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect.Xml">
+      <summary>
+        <para>Specifies the XML code of the current <see cref="T:DevExpress.Persistent.BaseImpl.ModelDifferenceAspect"/> object.</para>
+      </summary>
+      <value>A string which is the XML code of the current model difference aspect.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.OidInitializationMode">
+      <summary>
+        <para>Contains values specifying when a new GUID value is assigned to the <see cref="P:DevExpress.Persistent.BaseImpl.BaseObject.Oid"/> property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.OidInitializationMode.AfterConstruction">
+      <summary>
+        <para>Specifies that a new GUID value is assigned to the <see cref="P:DevExpress.Persistent.BaseImpl.BaseObject.Oid"/> property in the AfterConstruction method override.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Persistent.BaseImpl.OidInitializationMode.OnSaving">
+      <summary>
+        <para>Specifies that a new GUID value is assigned to the <see cref="P:DevExpress.Persistent.BaseImpl.BaseObject.Oid"/> property in the OnSaving method override.</para>
+      </summary>
+    </member>
+    <member name="N:DevExpress.Persistent.BaseImpl.PermissionPolicy">
+      <summary>
+        <para>Contains XPO classes that implement the Security System objects for the Allow/Deny Permission Policy.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole">
+      <summary>
+        <para>A security role that supports the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole"/> class in a particular <see cref="T:DevExpress.Xpo.Session"/></para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object, which is a persistent objects cache where the role will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole.Users">
+      <summary>
+        <para>A list of users associated with the current role.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpo.XPCollection"/>&lt;<see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser"/>&gt; collection which is the list of users associated with the current role.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase">
+      <summary>
+        <para>The base class for a security role that supports the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase"/> class in a particular <see cref="T:DevExpress.Xpo.Session"/></para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object, which is a persistent objects cache where the role will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.ActionPermissions">
+      <summary>
+        <para>Gets the collection of objects that contain Action permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>A collection of objects that contain Action permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase"/>.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.CanEditModel">
+      <summary>
+        <para>Specifies whether users associated with the current role can use the Model Editor. A DevExpress.Xpo.Session object, which is a persistent objects cache where the user will be instantiated.</para>
+      </summary>
+      <value>true, if users associated with the current role can use the Model Editor; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.IsAdministrative">
+      <summary>
+        <para>Specifies whether users associated with the current role are administrators.</para>
+      </summary>
+      <value>true, if users associated with the current role are administrators; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.Name">
+      <summary>
+        <para>Specifies the name of the security role.</para>
+      </summary>
+      <value>A string which is the name of the security role.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.NavigationPermissions">
+      <summary>
+        <para>Gets the list of objects which contain navigation permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>An IList&lt;PermissionPolicyNavigationPermissionObject&lt;, which is the list of the PermissionPolicyNavigationPermissionObject objects which are navigation permissions associated with the current role.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.PermissionPolicy">
+      <summary>
+        <para>Specifies the Security System behavior when there are no explicitly specified permissions for a specific type, object or member.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Persistent.Base.SecurityPermissionPolicy"/> enumeration value specifying the behavior when there are no explicitly specified permissions.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase.TypePermissions">
+      <summary>
+        <para>Gets the list of objects which contain type permissions associated with the current <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRoleBase"/>.</para>
+      </summary>
+      <value>An IList&lt;PermissionPolicyTypePermissionObject&lt;, which is the list of the PermissionPolicyTypePermissionObject objects which are type permissions associated with the current role.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser">
+      <summary>
+        <para>An XAF user who has a list of associated security roles that support the Allow/Deny Permission Policies.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser"/> class in a particular <see cref="T:DevExpress.Xpo.Session"/></para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object, which is a persistent objects cache where the role will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.ChangePasswordOnFirstLogon">
+      <summary>
+        <para>Specifies whether the user must change password on the next logon.</para>
+      </summary>
+      <value>true, if the user must change password on the next logon; otherwise - false.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.ComparePassword(System.String)">
+      <summary>
+        <para>Compares the current user’s stored encrypted password with its plain-text representation.</para>
+      </summary>
+      <param name="password">A string which is the plain-text password for comparison.</param>
+      <returns>true if the passwords are identical, otherwise - false</returns>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.IsActive">
+      <summary>
+        <para>Specifies if a user is allowed to logon.</para>
+      </summary>
+      <value>true if a user is active; otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.Roles">
+      <summary>
+        <para>A list of roles associated with the current user.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpo.XPCollection"/>&lt;<see cref="T:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole"/>&gt; collection which is the list of roles associated with the current user.</value>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.SetPassword(System.String)">
+      <summary>
+        <para>Changes the user password.</para>
+      </summary>
+      <param name="password">A string which is a new password.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser.UserName">
+      <summary>
+        <para>Specifies the user’s login name.</para>
+      </summary>
+      <value>A string which is the user’s login name.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.ReportDataV2">
+      <summary>
+        <para>The persistent class used to store reports in the Reports V2 Module. Inherits <see cref="T:DevExpress.Persistent.BaseImpl.BaseObject"/> and thus has the Guid-type identifier.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.ReportDataV2.#ctor(DevExpress.Xpo.Session,System.Type)">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.ReportDataV2.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.ReportDataV2"/> descendant in a specific <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A <see cref="T:DevExpress.Xpo.Session"/> object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.Content">
+      <summary>
+        <para>Specifies the report content.</para>
+      </summary>
+      <value>A byte array that is the report content.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.DataTypeCaption">
+      <summary>
+        <para>Gets the type caption of persistent objects that are displayed within the report.</para>
+      </summary>
+      <value>A string that specifies the type caption of persistent objects that are displayed within the report.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.DataTypeName">
+      <summary>
+        <para>Gets the name of the report’s data type.</para>
+      </summary>
+      <value>A string which is the name of the report’s data type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.DisplayName">
+      <summary>
+        <para>Specifies the report’s display name.</para>
+      </summary>
+      <value>A string which is the report’s display name.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.IsInplaceReport">
+      <summary>
+        <para>Specifies whether or not the report is inplace.</para>
+      </summary>
+      <value>true, if the report is inplace; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.IsPredefined">
+      <summary>
+        <para>Gets a boolean value that indicates whether or not the report is predefined.</para>
+      </summary>
+      <value>true, if a report is predefined in code; false, if a report is created at runtime.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.ParametersObjectType">
+      <summary>
+        <para>Specifies the type of the reports parameter object.</para>
+      </summary>
+      <value>A System.Type of an object that specifies report parameters (typically, the <see cref="T:DevExpress.ExpressApp.ReportsV2.ReportParametersObjectBase"/> descendant).</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.ParametersObjectTypeName">
+      <summary>
+        <para>Specifies the name of the reports parameter object type.</para>
+      </summary>
+      <value>A string which is the name of the reports parameter object type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.ReportDataV2.PredefinedReportType">
+      <summary>
+        <para>Specifies the type of the predefined report.</para>
+      </summary>
+      <value>A System.Type object that specifies the type of the predefined report.</value>
+    </member>
+    <member name="T:DevExpress.Persistent.BaseImpl.XtraReportData">
+      <summary>
+        <para>The persistent class used to store reports in the Reports V2 Module. Inherits <see cref="T:DevExpress.Xpo.XPObject"/> and thus has the integer-type identifier.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.XtraReportData.#ctor(DevExpress.Xpo.Session,System.Type)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.XtraReportData"/> descendant intended to persist a report that targets a specified data type in a specific <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+      <param name="dataType">A <see cref="T:System.Type"/> object specifying the data type that the report data source is bound to.</param>
+    </member>
+    <member name="M:DevExpress.Persistent.BaseImpl.XtraReportData.#ctor(DevExpress.Xpo.Session)">
+      <summary>
+        <para>Used to initialize a new instance of a <see cref="T:DevExpress.Persistent.BaseImpl.XtraReportData"/> descendant in a specific <see cref="T:DevExpress.Xpo.Session"/>.</para>
+      </summary>
+      <param name="session">A DevExpress.Xpo.Session object which represents a persistent object’s cache where the business object will be instantiated.</param>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.Content">
+      <summary>
+        <para>Specifies the report content.</para>
+      </summary>
+      <value>A byte array that is the report content.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.DataTypeCaption">
+      <summary>
+        <para>Gets the type caption of persistent objects that are displayed within the report.</para>
+      </summary>
+      <value>A string that specifies the type caption of persistent objects that are displayed within the report.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.DataTypeName">
+      <summary>
+        <para>Gets the name of the report’s data type.</para>
+      </summary>
+      <value>A string which is the name of the report’s data type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.DisplayName">
+      <summary>
+        <para>Specifies the report’s display name.</para>
+      </summary>
+      <value>A string which is the report’s display name.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.IsInplaceReport">
+      <summary>
+        <para>Specifies whether or not the report is inplace.</para>
+      </summary>
+      <value>true, if the report is inplace; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.IsPredefined">
+      <summary>
+        <para>Gets a boolean value that indicates whether or not the report is predefined.</para>
+      </summary>
+      <value>true, if a report is predefined in code; false, if a report is created at runtime.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.ParametersObjectType">
+      <summary>
+        <para>Specifies the type of the reports parameter object.</para>
+      </summary>
+      <value>A System.Type of an object that specifies report parameters (typically, the <see cref="T:DevExpress.ExpressApp.ReportsV2.ReportParametersObjectBase"/> descendant).</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.ParametersObjectTypeName">
+      <summary>
+        <para>Specifies the name of the reports parameter object type.</para>
+      </summary>
+      <value>A string which is the name of the reports parameter object type.</value>
+    </member>
+    <member name="P:DevExpress.Persistent.BaseImpl.XtraReportData.PredefinedReportType">
+      <summary>
+        <para>Specifies the type of the predefined report.</para>
+      </summary>
+      <value>A System.Type object that specifies the type of the predefined report.</value>
+    </member>
+  </members>
+</doc>

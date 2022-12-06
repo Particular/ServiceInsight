@@ -4,50 +4,45 @@
              xmlns:ep="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ServiceInsight.Explorer.EndpointExplorer"
+             xmlns:tree="clr-namespace:ServiceInsight.Explorer"
              d:DataContext="{d:DesignInstance vm:EndpointExplorerViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <HierarchicalDataTemplate x:Key="TreeTemplate"
-                                  DataType="vm:AuditEndpointExplorerItem"
-                                  ItemsSource="{Binding Path=Children}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.ToolTip>
-                    <ToolTip Visibility="{Binding HostNames, FallbackValue=Collapsed, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
+        <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="vm:AuditEndpointExplorerItem" ItemsSource="{Binding Path=Children}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding Data.Name}"/>
+                    <Image Source="{Binding Data.Image, Converter={StaticResource DrawingNameToImageSourceConverter}}"
+                                RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Grid.ToolTip>
+                        <ToolTip Visibility="{Binding  RowData.Row.HostNames, FallbackValue=Collapsed, Converter={StaticResource StringEmptyOrNullToVisibilityConverter}}">
                         <TextBlock>
-                            <Run Text="Installed On: " />
-                            <Run Text="{Binding HostNames}" />
-                        </TextBlock>
-                    </ToolTip>
-                </Grid.ToolTip>
-                <Image Source="{Binding Image, Converter={StaticResource DrawingNameToImageSourceConverter}}"
-                       RenderOptions.BitmapScalingMode="HighQuality" />
-                <TextBlock Grid.Column="1"
-                           Margin="10,0,0,0"
-                           Text="{Binding Name}" />
-            </Grid>
+                                <Run Text="Installed On: " />
+                                <Run Text="{Binding  RowData.Row.HostNames}" />
+                            </TextBlock>
+                        </ToolTip>
+                    </Grid.ToolTip>
+                </Grid>
         </HierarchicalDataTemplate>
-
-        <Style x:Key="ExpandedStyle"
-               TargetType="{x:Type TreeViewItem}"
-               d:DataContext="{d:DesignInstance tree:ExplorerItem}">
-            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-        </Style>
     </UserControl.Resources>
 
-    <ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
-                         AutomationProperties.AutomationId="EndpointTree"
-                         ItemContainerStyle="{StaticResource ExpandedStyle}"
-                         ItemTemplate="{StaticResource TreeTemplate}"
+    <dxg:TreeViewControl x:Name="treeView" 
                          ItemsSource="{Binding Items}"
-                         SelectedItem="{Binding SelectedNode}"
-                         ScrollViewer.VerticalScrollBarVisibility="Visible">
-    </ep:EndpointTreeView>
+                         SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
+                         ExpandStateBinding="{Binding SelectedNode.IsExpanded, Mode=TwoWay}"
+                         AutomationProperties.AutomationId="EndpointTree"
+                         ChildNodesPath="Children"
+                         TreeDerivationMode="ChildNodesSelector"
+                         TreeViewFieldName="Name"
+                         NodeContentDisplayTemplate="{StaticResource TreeTemplate}">
+    </dxg:TreeViewControl>
+
 </UserControl>

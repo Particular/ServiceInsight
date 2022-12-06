@@ -1,0 +1,1768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.Accordion.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.Accordion">
+      <summary>
+        <para>Contains classes which implement the main functionality of the WPF Accordion control. To use these classes in XAML code, add the xmlns:dxa=”“ namespace reference.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionCommands">
+      <summary>
+        <para>Provides access to <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> commands.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionCommands.#ctor(DevExpress.Xpf.Accordion.AccordionControl)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionCommands"/> class.</para>
+      </summary>
+      <param name="accordion">An accordion control associated with the current <see cref="T:DevExpress.Xpf.Accordion.AccordionCommands"/>.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCommands.ChangeAccordionExpanded">
+      <summary>
+        <para>Toggles the collapsed display mode.</para>
+      </summary>
+      <value>An object implementing the System.Windows.Input.ICommand interface.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCommands.ChangeItemExpanded">
+      <summary>
+        <para>Gets the command that toggles the expansion state of the specified Selection.</para>
+      </summary>
+      <value>An object implementing the System.Windows.Input.ICommand interface.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionCommands.ClearHotKeys(System.Windows.Input.KeyGesture[])">
+      <summary>
+        <para>Unregisters the specified key gestures from the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <param name="gestures">A collection of keyboard combinations that need to be unregistered.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCommands.CollapseAllItems">
+      <summary>
+        <para>Gets the command that collapses all accordion items.</para>
+      </summary>
+      <value>An object implementing the System.Windows.Input.ICommand interface.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCommands.ExpandAllItems">
+      <summary>
+        <para>Gets the command that expands all accordion items.</para>
+      </summary>
+      <value>An object implementing the System.Windows.Input.ICommand interface.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionControl">
+      <summary>
+        <para>Represents the Accordion Control.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> class with default settings.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ActualShowHeader">
+      <summary>
+        <para>Gets whether the accordion’s header is actually displayed. This is a dependency property.</para>
+      </summary>
+      <value>true, if header is visible; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ActualShowHeaderProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ActualShowHeader"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ActualViewMode">
+      <summary>
+        <para>Gets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>‘s actual view mode. This is a dependency property.</para>
+      </summary>
+      <value>One of the <see cref="T:DevExpress.Xpf.Accordion.AccordionViewMode"/> enumeration values.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ActualViewModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ActualViewMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.AllowAnimation">
+      <summary>
+        <para>Gets or sets whether the expand/collapse animation is enabled for accordion items. This is a dependency property.</para>
+      </summary>
+      <value>true, to enable the expand/collapse animation for accordion items; otherwise, false. The default is true.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.AllowAnimationProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.AllowAnimation"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.AllowCollectionView">
+      <summary>
+        <para>Gets or sets whether to allow process collection views. This is a dependency property.</para>
+      </summary>
+      <value>true, to allow processing collection views; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.AllowCollectionViewProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.AllowCollectionView"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.AllowPopupMenu">
+      <summary>
+        <para>Gets or sets whether the accordion control popup menu is enabled. This is a dependency property.</para>
+      </summary>
+      <value>true if the popup menu is allowed; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.AllowPopupMenuProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.AllowPopupMenu"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.AllowVirtualization">
+      <summary>
+        <para>Gets or sets a value indicating whether virtualization is enabled for vertical scrolling. This is a dependency property.</para>
+      </summary>
+      <value>true, to enable virtualization; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.AllowVirtualizationProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.AllowVirtualization"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.AutoExpandAllItems">
+      <summary>
+        <para>Gets or sets whether all accordion items are expanded when the accordion control is initialized. This is a dependency property.</para>
+      </summary>
+      <value>true, to expand all accordion items when the accordion control is initialized; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.AutoExpandAllItemsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.AutoExpandAllItems"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.BringItemIntoView(System.Object)">
+      <summary>
+        <para>Expands the required accordion items and adjusts the scroll position making the specified item visible.</para>
+      </summary>
+      <param name="item">An object that is the accordion item to be made visible.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.BringSelectedItemIntoView">
+      <summary>
+        <para>Gets or sets whether the accordion item selected in code should be made visible by expanding its parent items and adjusting the scroll position. This is a dependency property.</para>
+      </summary>
+      <value>true, to make items selected in code visible; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.BringSelectedItemIntoViewProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.BringSelectedItemIntoView"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.CanSelectItem">
+      <summary>
+        <para>Occurs when an end user moves the mouse over an item or selects items with the keyboard and allows you to prevent particular accordion items from being selected.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ChildrenPath">
+      <summary>
+        <para>Gets or sets the path to the field in the bound data source that contains the accordion item‘s children items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that is the path to children items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ChildrenPathProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ChildrenPath"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ChildrenSelector">
+      <summary>
+        <para>Gets or sets an object that retrieves the accordion item‘s children from the data source based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>An object that implements the <see cref="T:DevExpress.Xpf.Accordion.IChildrenSelector"/> interface.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ChildrenSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ChildrenSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.ClosePopup">
+      <summary>
+        <para>Closes a control’s popup menu.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.CollapseAll">
+      <summary>
+        <para>Collapses all accordion items that can be collapsed.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemClickAction">
+      <summary>
+        <para>Gets or sets whether clicking a collapsed item selects it or invokes a popup with the child items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.CollapsedItemClickAction"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemClickActionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemClickAction"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemDisplayMode">
+      <summary>
+        <para>Gets or sets the display mode for accordion items in the collapsed AccordionControl. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.CollapsedItemDisplayMode"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemDisplayModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsedItemDisplayMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.CollapseItem(System.Object)">
+      <summary>
+        <para>Collapses an accordion item.</para>
+      </summary>
+      <param name="item">An object that is the item to be collapsed.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsePopupPlacement">
+      <summary>
+        <para>Gets or sets the position of the popup with Accordion items when the Accordion is in the Collapse Mode. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.CollapsePopupPlacement"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CollapsePopupPlacementProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.CollapsePopupPlacement"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.CollapseStoryboard">
+      <summary>
+        <para>Gets or sets the collapse animation storyboard. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.Animation.Storyboard"/> object that represents the collapse animation storyboard.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CollapseStoryboardProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.CollapseStoryboard"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.Commands">
+      <summary>
+        <para>Provides access to accordion commands.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.AccordionCommands"/> object that provides a set of accordion commands.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.CompactNavigation">
+      <summary>
+        <para>Gets or sets whether to display the linked <see cref="T:DevExpress.Xpf.Navigation.OfficeNavigationBar"/>‘s items within the Accordion’s overflow panel. This is a dependency property.</para>
+      </summary>
+      <value>true, to display the OfficeNavigationBar’s items within the Accordion’s overflow panel; otherwise, false. By default, true.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CompactNavigationProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.CompactNavigation"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.CustomItemFilter">
+      <summary>
+        <para>Occurs when the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> is about to be filtered.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.CustomItemFilterEvent">
+      <summary>
+        <para>Identifies the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.CustomItemFilter"/> routed event.</para>
+      </summary>
+      <value>A routed event identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.DefaultGlyph">
+      <summary>
+        <para>Gets or sets the glyph that is displayed within all the root items when the Accordion control functions in NavigationPane view mode. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:System.Windows.Media.ImageSource"/> object that specifies the image displayed within the accordion item.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.DefaultGlyphProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.DefaultGlyph"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.DisplayMemberPath">
+      <summary>
+        <para>Gets or sets a field name in the bound data source whose values are displayed by accordion items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the data source field whose values are displayed by accordion items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.DisplayMemberPathProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.DisplayMemberPath"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.EmptySourceText">
+      <summary>
+        <para>Specifies the text that is displayed when the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> does not contain any items. This is a dependency property.</para>
+      </summary>
+      <value>A text that notifies the user that the accordion does not contain any items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.EmptySourceTextProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.EmptySourceText"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.ExpandAll">
+      <summary>
+        <para>Expands all accordion items that can be expanded.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.ExpandItem(System.Object)">
+      <summary>
+        <para>Expands an accordion item.</para>
+      </summary>
+      <param name="item">An object that is the item to be expanded.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemOnHeaderClick">
+      <summary>
+        <para>Gets or sets whether clicking the accordion item expands that item. This is a dependency property.</para>
+      </summary>
+      <value>true, to expand items on header click; otherwise, false. The default is true.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemOnHeaderClickProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemOnHeaderClick"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemsOnFiltering">
+      <summary>
+        <para>Gets or sets whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> expands its  items to make a matching item visible when filtering. This is a dependency property.</para>
+      </summary>
+      <value>true, to expand all parents of the item that matches search criteria; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemsOnFilteringProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandItemsOnFiltering"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandMode">
+      <summary>
+        <para>Gets or sets a value that indicates whether an end-user can expand multiple items. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ExpandMode"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ExpandModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandStoryboard">
+      <summary>
+        <para>Gets or sets the expand animation storyboard. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.Animation.Storyboard"/> object that represents the expand animation storyboard.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ExpandStoryboardProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ExpandStoryboard"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.GetPeekFormHideDelay(DevExpress.Xpf.Accordion.AccordionControl)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelay"/> attached property for a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <param name="d">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelay"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.GetPeekFormShowDelay(DevExpress.Xpf.Accordion.AccordionControl)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelay"/> attached property for a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <param name="d">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelay"/> property value for the element.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HasItems">
+      <summary>
+        <para>Indicates whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> contains items. This is a dependency property.</para>
+      </summary>
+      <value>true if the accordion control contains items; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HasItemsProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HasItems"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContent">
+      <summary>
+        <para>Gets or sets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header‘s content. This is a dependency property.</para>
+      </summary>
+      <value>An object that represents the Accordion header‘s contents.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContent"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplate">
+      <summary>
+        <para>Gets or sets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header’s content template. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that defines the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header’s content presentation.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplateSelector">
+      <summary>
+        <para>Gets or sets an object that chooses an accordion header content template based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.DataTemplateSelector"/> descendant that chooses a template based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplateSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderContentTemplateSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyph">
+      <summary>
+        <para>Gets or sets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header‘s glyph. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:System.Windows.Media.ImageSource"/> object that represents the Accordion header‘s glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyph"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphSize">
+      <summary>
+        <para>Gets or sets the accordion header item’s glyph size. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Size"/> structure that is the size of the glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphSizeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphSize"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphStretch">
+      <summary>
+        <para>Gets or sets how an accordion header item’s glyph is stretched within the glyph region’s ImageControl. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.Stretch"/> value that specifies the current stretch mode.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphStretchProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphStretch"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplate">
+      <summary>
+        <para>Gets or sets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header‘s glyph template. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that defines the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> header‘s glyph presentation.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplateSelector">
+      <summary>
+        <para>Gets or sets an object that chooses an accordion header glyph template based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.DataTemplateSelector"/> descendant that chooses a template based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplateSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderGlyphTemplateSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderStyle">
+      <summary>
+        <para>Specifies the Accordion Header style. This is a dependency property.</para>
+      </summary>
+      <value>A System.Windows.Style object.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HeaderStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HeaderStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.HorizontalScrollBarVisibility">
+      <summary>
+        <para>Gets or sets whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> displays the horizontal scroll bar. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.ScrollBarVisibility"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.HorizontalScrollBarVisibilityProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.HorizontalScrollBarVisibility"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.IsCollapseButtonVisible">
+      <summary>
+        <para>Gets or sets whether to display the expand-collapse button that allows showing the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> in the expand or collapse mode. This is a dependency property.</para>
+      </summary>
+      <value>true, to display the expand-collapse button; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.IsCollapseButtonVisibleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.IsCollapseButtonVisible"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.IsExpanded">
+      <summary>
+        <para>Gets or sets whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> is expanded. This is a dependency property.</para>
+      </summary>
+      <value>true, if the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> is expanded; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.IsExpandedProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.IsExpanded"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.IsExpandedView">
+      <summary>
+        <para>For internal use only.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.IsExpandedViewProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.IsExpandedView"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.IsSynchronizedWithCurrentItem">
+      <summary>
+        <para>Gets or sets whether a <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> should keep the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedItem"/> synchronized with the current item in the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemsSource"/> property. This is a dependency property.</para>
+      </summary>
+      <value>true, to always synchronize the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedItem"/> with the current item in the <see cref="T:System.ComponentModel.ICollectionView"/> assigned to the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemsSource"/> property; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.IsSynchronizedWithCurrentItemProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.IsSynchronizedWithCurrentItem"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.ItemCollapsed">
+      <summary>
+        <para>Occurs when an accordion item collapses.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemCollapsedEvent">
+      <summary>
+        <para>Identifies the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.ItemCollapsed"/> routed event.</para>
+      </summary>
+      <value>A routed event identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyle">
+      <summary>
+        <para>Gets or sets the style applied to accordion item containers. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Style"/> object that represents the accordion item container style.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyleProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyle"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyleSelector">
+      <summary>
+        <para>Gets or sets an object that chooses a style applied to accordion item containers. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.StyleSelector"/> descendant that applies a style based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyleSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemContainerStyleSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.ItemExpanded">
+      <summary>
+        <para>Occurs when an accordion item expands.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemExpandedEvent">
+      <summary>
+        <para>Identifies the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.ItemExpanded"/> routed event.</para>
+      </summary>
+      <value>A routed event identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemGlyphPosition">
+      <summary>
+        <para>Specifies the position of the accordion item‘s glyph. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.GlyphPosition"/> enumeration value that is the position of the glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemGlyphPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemGlyphPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.Items">
+      <summary>
+        <para>Gets the collection of accordion items displayed by the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <value>A collection of accordion items.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemsSource">
+      <summary>
+        <para>Gets or sets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>‘s data source. This is a dependency property.</para>
+      </summary>
+      <value>An object that represents the data source from which the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> retrieves its items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemsSourceProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemsSource"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplate">
+      <summary>
+        <para>Gets or sets a template that defines the presentation of accordion items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.HierarchicalDataTemplate"/> object that defines the presentation of accordion items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplateSelector">
+      <summary>
+        <para>Gets or sets an object that chooses an accordion item template based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.DataTemplateSelector"/> descendant that chooses a template based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplateSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ItemTemplateSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.OnApplyTemplate">
+      <summary>
+        <para>Called after the template is completely generated and attached to the visual tree.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelayProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelay"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelayProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelay"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.PopupHideDelay">
+      <summary>
+        <para>Gets or sets the delay, in milliseconds, elapsed before the accordion item preview popup is automatically hidden. This is a dependency property.</para>
+      </summary>
+      <value>An integer value that specifies the delay, in milliseconds, elapsed before the accordion item preview popup is automatically hidden.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.PopupHideDelayProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PopupHideDelay"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.PopupMenuActions">
+      <summary>
+        <para>Provides access to the collection of actions used to customize the accordion’s popup menu.</para>
+      </summary>
+      <value>A collection of context menu customization actions.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.RootItemDisplayMode">
+      <summary>
+        <para>Gets or sets whether to enable a uniform style for root and subordinate items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.RootItemDisplayMode"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.RootItemDisplayModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.RootItemDisplayMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.RootItemExpandButtonPosition">
+      <summary>
+        <para>Gets or sets the position of the expand-collapse button within the root items. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ExpandButtonPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.RootItemExpandButtonPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.RootItemExpandButtonPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ScrollBarMode">
+      <summary>
+        <para>Gets or sets a value that specifies the scroll bar behavior.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Core.ScrollBarMode"/> enumeration value. The default is <see cref="F:DevExpress.Xpf.Core.ScrollBarMode.TouchOverlap"/>.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ScrollBarModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ScrollBarMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SearchControlFilterCondition">
+      <summary>
+        <para>Gets or sets the type of the comparison operator used to create filter conditions using the search field. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Data.Filtering.FilterCondition"/> enumeration value that specifies the type of the comparison operator.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SearchControlFilterConditionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SearchControlFilterCondition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SearchControlNullText">
+      <summary>
+        <para>Gets or sets the text displayed within the search box when the search text is null. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value that specifies the string displayed within the search box when the search text is null.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SearchControlNullTextProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SearchControlNullText"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SearchText">
+      <summary>
+        <para>Gets or sets a search string. This is a dependency property.</para>
+      </summary>
+      <value>A search string.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SearchTextProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SearchText"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedItem">
+      <summary>
+        <para>Gets or sets an object that is the currently selected accordion item. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Object"/> that is the currently selected accordion item.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.SelectedItemChanged">
+      <summary>
+        <para>Occurs when the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedItem"/> property value changes.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectedItemChangedEvent">
+      <summary>
+        <para>Identifies the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.SelectedItemChanged"/> routed event.</para>
+      </summary>
+      <value>A routed event identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectedItemProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedItem"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItem">
+      <summary>
+        <para>Gets or sets the currently selected root item. This is a dependency property.</para>
+      </summary>
+      <value>An object that represents the currently selected root item.</value>
+    </member>
+    <member name="E:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItemChanged">
+      <summary>
+        <para>Occurs when the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItem"/> property value changes.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItemChangedEvent">
+      <summary>
+        <para>Identifies the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItemChanged"/> routed event.</para>
+      </summary>
+      <value>A routed event identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItemProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItem"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SelectionMode">
+      <summary>
+        <para>Gets or sets whether an end-user can select accordion items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.SelectionMode"/> enumeration value that specifies whether an end-user can select accordion items.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectionModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectionMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SelectionUnit">
+      <summary>
+        <para>Gets or sets whether an end-user can select subitems or both subitems and root items. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.SelectionUnit"/> enumeration value. The default is <see cref="F:DevExpress.Xpf.Accordion.SelectionUnit.SubItemOrRootItem"/>.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SelectionUnitProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectionUnit"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.SetPeekFormHideDelay(DevExpress.Xpf.Accordion.AccordionControl,System.Int32)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelay"/> attached property to a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <param name="d">The element to which the attached property is written.</param>
+      <param name="value">The required <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormHideDelay"/> value.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionControl.SetPeekFormShowDelay(DevExpress.Xpf.Accordion.AccordionControl,System.Int32)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelay"/> attached property to a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>.</para>
+      </summary>
+      <param name="d">The element to which the attached property is written.</param>
+      <param name="value">The required <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.PeekFormShowDelay"/> value.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ShowHeader">
+      <summary>
+        <para>Gets or sets whether the Accordion’s header is displayed. This is a dependency property.</para>
+      </summary>
+      <value>true, to display the header; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ShowHeaderProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ShowHeader"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ShowPopupOnHover">
+      <summary>
+        <para>Gets or sets whether a popup is automatically shown when an item is hovered over with the mouse pointer. This is a dependency property.</para>
+      </summary>
+      <value>true, if a popup is automatically shown when an item is hovered over with the mouse pointer; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ShowPopupOnHoverProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ShowPopupOnHover"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ShowSearchControl">
+      <summary>
+        <para>Gets or sets whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> displays a search panel. This is a dependency property.</para>
+      </summary>
+      <value>true, to display the search field; otherwise, false. The default is false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ShowSearchControlProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ShowSearchControl"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SubItemExpandButtonPosition">
+      <summary>
+        <para>Gets or sets the position of the expand-collapse button within the accordion subitems. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ExpandButtonPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SubItemExpandButtonPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SubItemExpandButtonPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyph">
+      <summary>
+        <para>Gets or sets an image displayed within the Summary Item. This is a dependency property.</para>
+      </summary>
+      <value>An ImageSource object that specifies the image displayed within the Summary Item.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyph"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphSize">
+      <summary>
+        <para>Gets or sets the accordion summary item’s glyph size. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Size"/> structure that is the size of the glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphSizeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphSize"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphStretch">
+      <summary>
+        <para>Gets or sets how an accordion summary item’s glyph is stretched within the glyph region’s ImageControl. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.Stretch"/> value that specifies the current stretch mode.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphStretchProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemGlyphStretch"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemHeader">
+      <summary>
+        <para>Gets or sets the Summary Item header. This is a dependency property.</para>
+      </summary>
+      <value>The object that represents the Summary Item header.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemHeaderProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemHeader"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemPosition">
+      <summary>
+        <para>Gets or sets the Summary Item position. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.SummaryItemPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SummaryItemPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.VerticalScrollBarVisibility">
+      <summary>
+        <para>Gets or sets whether the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> displays the vertical scroll bar. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.ScrollBarVisibility"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.VerticalScrollBarVisibilityProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.VerticalScrollBarVisibility"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionControl.ViewMode">
+      <summary>
+        <para>Gets or sets how the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> displays its root items. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.AccordionViewMode"/> enumeration value. The default is <see cref="F:DevExpress.Xpf.Accordion.AccordionViewMode.Accordion"/>.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionControl.ViewModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.ViewMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs">
+      <summary>
+        <para>Provides data for the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.CustomItemFilter"/> event.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.#ctor(DevExpress.Xpf.Accordion.AccordionControl,System.Object,System.String)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs"/> class.</para>
+      </summary>
+      <param name="accordion">An <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> that has raised the event.</param>
+      <param name="item">A <see cref="T:System.Object"/> that is the currently processed accordion item.</param>
+      <param name="searchText">A <see cref="T:System.String"/> value that is the text entered in a search box.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.Accepted">
+      <summary>
+        <para>Gets or sets a value indicating whether the currently processed item is included in the results.</para>
+      </summary>
+      <value>true, if the item is considered a match; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.Accordion">
+      <summary>
+        <para>Gets the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> whose items are being filtered.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> object.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.Item">
+      <summary>
+        <para>Gets the currently processed Accordion item.</para>
+      </summary>
+      <value>An object that represents the currently processed Accordion item.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.PassesFilter(System.String)">
+      <summary>
+        <para>Checks whether the specified string meets filter criteria.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value.</param>
+      <returns>true, if the text value meets filter criteria; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionCustomItemFilterEventArgs.SearchText">
+      <summary>
+        <para>Gets the search criteria.</para>
+      </summary>
+      <value>A string value that represents the current search criteria.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionItem">
+      <summary>
+        <para>Represents the Accordion Item.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ActualExpandButtonPosition">
+      <summary>
+        <para>Gets the actual position of the expand-collapse button. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ExpandButtonPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ActualExpandButtonPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ActualExpandButtonPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ActualGlyphPosition">
+      <summary>
+        <para>Gets the actual position of the glyph within the accordion item’s header. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.GlyphPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ActualGlyphPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ActualGlyphPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnHover">
+      <summary>
+        <para>Gets whether the current accordion item is actually highlighted on mouse hover. This is a dependency property.</para>
+      </summary>
+      <value>true, if the current item is highlighted on mouse hover; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnHoverProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnHover"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnPress">
+      <summary>
+        <para>Gets whether the current accordion item is actually highlighted on a mouse press. This is a dependency property.</para>
+      </summary>
+      <value>true, if the current item is highlighted on a mouse press; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnPressProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ActualHighlightOnPress"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.AllowAnimation">
+      <summary>
+        <para>Gets whether the expand/collapse animation is enabled for the current accordion item. This is a dependency property.</para>
+      </summary>
+      <value>true, to enable the expand/collapse animation; otherwise, false. The default is true.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.AllowAnimationProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.AllowAnimation"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.AllowPeekFormProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.AllowPeekForm"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.CanSelect">
+      <summary>
+        <para>Specifies whether the current accordion item can be selected with mouse or keyboard. This is a dependency property.</para>
+      </summary>
+      <value>true, if the current accordion item can be selected; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.CanSelectProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.CanSelect"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.Command">
+      <summary>
+        <para>Gets or sets the command to invoke when the Accordion item is clicked. This is a dependency property.</para>
+      </summary>
+      <value>An ICommand object to invoke when the Accordion item is clicked.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.CommandParameter">
+      <summary>
+        <para>Gets or sets the parameter to pass to the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Command"/>. This is a dependency property.</para>
+      </summary>
+      <value>The Object specifying the parameter to pass to the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Command"/>.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.CommandParameterProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.CommandParameter"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.CommandProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Command"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.CommandTarget">
+      <summary>
+        <para>Gets or sets the element on which to raise the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Command"/>. This is a dependency property.</para>
+      </summary>
+      <value>The IInputElement on which to raise the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Command"/>.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.CommandTargetProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.CommandTarget"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ExpandButtonPosition">
+      <summary>
+        <para>Gets or sets the position of the expand-collapse button. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ExpandButtonPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ExpandButtonPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ExpandButtonPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.GetAllowPeekForm(DevExpress.Xpf.Accordion.AccordionItem)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.AllowPeekForm"/> attached property for a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.AllowPeekForm"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.GetPeekFormTemplate(DevExpress.Xpf.Accordion.AccordionItem)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplate"/> attached property for a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplate"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.GetPeekFormTemplateSelector(DevExpress.Xpf.Accordion.AccordionItem)">
+      <summary>
+        <para>Gets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateSelector"/> attached property for a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element from which the property value is read.</param>
+      <returns>The <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateSelector"/> property value for the element.</returns>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.GetSearchTag(System.Windows.DependencyObject)">
+      <summary>
+        <para>Gets the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag"/> property value from the specified object.</para>
+      </summary>
+      <param name="element">A <see cref="T:System.String"/> value.</param>
+      <returns>An object from which the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag"/> property is retrieved.</returns>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.Glyph">
+      <summary>
+        <para>Gets or sets an image displayed within the accordion item. This is a dependency property.</para>
+      </summary>
+      <value>An ImageSource object that specifies the image displayed within the accordion item.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphPosition">
+      <summary>
+        <para>Gets or sets the position of the glyph within the accordion item.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.Xpf.Accordion.GlyphPosition"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphPositionProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphPosition"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.Glyph"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphSize">
+      <summary>
+        <para>Gets or sets the accordion item’s glyph size. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Size"/> structure that is the size of the glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphSizeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphSize"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphStretch">
+      <summary>
+        <para>Gets or sets how an accordion item’s glyph is stretched within the glyph region’s ImageControl. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Media.Stretch"/> value that specifies the current stretch mode.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphStretchProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphStretch"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplate">
+      <summary>
+        <para>Gets or sets a template that defines the presentation of the glyph displayed within the current accordion item. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.DataTemplate"/> object that is the template which defines the presentation of the accordion item’s glyph.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplate"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplateSelector">
+      <summary>
+        <para>Gets or sets an object that chooses the current accordion item‘s glyph template based on custom logic. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.Windows.Controls.DataTemplateSelector"/> descendant that chooses a template based on custom logic.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplateSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.GlyphTemplateSelector"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnHover">
+      <summary>
+        <para>Gets or sets whether the current item is highlighted when an end-user moves the mouse cursor over it. This is a dependency property.</para>
+      </summary>
+      <value>true, to highlight the current item when an end-user moves the mouse cursor over it; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnHoverProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnHover"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnPress">
+      <summary>
+        <para>Gets or sets whether the current item is highlighted when an end-user clicks and holds the left mouse button. This is a dependency property.</para>
+      </summary>
+      <value>true, to highlight the current item; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnPressProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.HighlightOnPress"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.IsMouseOverHeader">
+      <summary>
+        <para>Gets whether the mouse pointer is over the current accordion item‘s header.</para>
+      </summary>
+      <value>true, if the mouse pointer is currently over the accordion item’s header; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.IsMouseOverHeaderProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.IsMouseOverHeader"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.IsPressed">
+      <summary>
+        <para>Gets whether the item is currently being pressed. This is a dependency property.</para>
+      </summary>
+      <value>true, if the item is currently pressed; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.IsPressedProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.IsPressed"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ItemDisplayMode">
+      <summary>
+        <para>Gets or sets the display mode of the current accordion item. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ItemDisplayMode"/> enumeration value that specifies the display mode of an accordion item.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ItemDisplayModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ItemDisplayMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ItemLevel">
+      <summary>
+        <para>Gets the current accordion item’s level of nesting. This is a dependency property.</para>
+      </summary>
+      <value>A zero-based integer value that is the current item’s level of nesting.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ItemLevelProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ItemLevel"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.Items">
+      <summary>
+        <para>Gets the collection of objects represented by accordion items.</para>
+      </summary>
+      <value>A collection of accordion items.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ItemType">
+      <summary>
+        <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ItemTypeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ItemType"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ItemVisibilityMode">
+      <summary>
+        <para>Gets the item’s visibility mode. This is a dependency property.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.ItemVisibilityMode"/> enumeration value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ItemVisibilityModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ItemVisibilityMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.OnApplyTemplate">
+      <summary>
+        <para>Called after the template is completely generated, and attached to the visual tree.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplate"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateSelectorProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateSelector"/> attached property.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag">
+      <summary>
+        <para>Gets or sets a string that is used by the <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/> while filtering. This is a dependency property.</para>
+      </summary>
+      <value>A <see cref="T:System.String"/> value.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.SearchTagProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag"/> dependency property.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.SetAllowPeekForm(DevExpress.Xpf.Accordion.AccordionItem,System.Boolean)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.AllowPeekForm"/> attached property to a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element to which the attached property is written.</param>
+      <param name="value">The required bool value.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.SetPeekFormTemplate(DevExpress.Xpf.Accordion.AccordionItem,System.Windows.DataTemplate)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplate"/> attached property to a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element to which the attached property is written.</param>
+      <param name="value">The required <see cref="T:System.Windows.DataTemplate"/> value.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.SetPeekFormTemplateSelector(DevExpress.Xpf.Accordion.AccordionItem,System.Windows.Controls.DataTemplateSelector)">
+      <summary>
+        <para>Sets the value of the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.PeekFormTemplateSelector"/> attached property to a specified <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>.</para>
+      </summary>
+      <param name="d">The element to which the attached property is written.</param>
+      <param name="value">The required <see cref="T:System.Windows.Controls.DataTemplateSelector"/> value.</param>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItem.SetSearchTag(System.Windows.DependencyObject,System.String)">
+      <summary>
+        <para>Sets the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag"/> property value for the specified object.</para>
+      </summary>
+      <param name="element">An object for which the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.SearchTag"/> property is set.</param>
+      <param name="value">A <see cref="T:System.String"/> value.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItem.ShowInCollapsedMode">
+      <summary>
+        <para>Gets or sets whether to show the item within the collapsed AccordionControl. This is a dependency property.</para>
+      </summary>
+      <value>true, to show the item within the collapsed <see cref="T:DevExpress.Xpf.Accordion.AccordionControl"/>; otherwise, false.</value>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionItem.ShowInCollapsedModeProperty">
+      <summary>
+        <para>Identifies the <see cref="P:DevExpress.Xpf.Accordion.AccordionItem.ShowInCollapsedMode"/> dependency property.</para>
+      </summary>
+      <value>A dependency property identifier.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionItemCollapsedEventArgs">
+      <summary>
+        <para>Provides data for the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.ItemCollapsed"/> event.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItemCollapsedEventArgs.#ctor(DevExpress.Xpf.Accordion.AccordionControl,System.Object)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionItemCollapsedEventArgs"/> class.</para>
+      </summary>
+      <param name="accordion">An accordion control that has raised the event.</param>
+      <param name="item">An item that has been collapsed</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItemCollapsedEventArgs.Item">
+      <summary>
+        <para>Returns the Accordion item that has been collapsed.</para>
+      </summary>
+      <value>An object that represents the collapsed Accordion item.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionItemExpandedEventArgs">
+      <summary>
+        <para>Provides data for the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.ItemExpanded"/> event.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionItemExpandedEventArgs.#ctor(DevExpress.Xpf.Accordion.AccordionControl,System.Object)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionItemExpandedEventArgs"/> class.</para>
+      </summary>
+      <param name="accordion">An accordion control that has raised the event.</param>
+      <param name="item">An item that has been expanded.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionItemExpandedEventArgs.Item">
+      <summary>
+        <para>Returns the Accordion item that has been expanded.</para>
+      </summary>
+      <value>An object that represents the expanded Accordion item.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs">
+      <summary>
+        <para>Provides data for the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.SelectedItemChanged"/> event.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs.#ctor(DevExpress.Xpf.Accordion.AccordionControl,System.Object,System.Object)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs"/> class.</para>
+      </summary>
+      <param name="accordion">An accordion control that has raised the event.</param>
+      <param name="oldItem">A previously selected item.</param>
+      <param name="newItem">A currently selected item.</param>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs.NewItem">
+      <summary>
+        <para>Gets the item that has been selected.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/> that has been selected.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs.OldItem">
+      <summary>
+        <para>Gets the previously selected item.</para>
+      </summary>
+      <value>An <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/> that was previously selected.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.AccordionViewMode">
+      <summary>
+        <para>Lists values that specify the Accordion’s view mode.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionViewMode.Accordion">
+      <summary>
+        <para>All root and children items are displayed.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.AccordionViewMode.NavigationPane">
+      <summary>
+        <para>Only child items of a single root item specified by the <see cref="P:DevExpress.Xpf.Accordion.AccordionControl.SelectedRootItem"/> property are displayed.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.CanSelectItemEventArgs">
+      <summary>
+        <para>Provides data for the <see cref="E:DevExpress.Xpf.Accordion.AccordionControl.CanSelectItem"/> event.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.CanSelectItemEventArgs.CanSelect">
+      <summary>
+        <para>Gets or sets whether the processed accordion item can be selected.</para>
+      </summary>
+      <value>true, if the processed accordion item can be selected; otherwise, false.</value>
+    </member>
+    <member name="P:DevExpress.Xpf.Accordion.CanSelectItemEventArgs.Item">
+      <summary>
+        <para>Gets the processed item.</para>
+      </summary>
+      <value>A processed item.</value>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.CollapsedItemClickAction">
+      <summary>
+        <para>Lists values that specify whether clicking a collapsed item selects it or invokes a popup with the child items.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsedItemClickAction.Select">
+      <summary>
+        <para>Clicking a collapsed item selects it.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsedItemClickAction.ShowItems">
+      <summary>
+        <para>Clicking a collapsed item invokes a popup with the child items.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.CollapsedItemDisplayMode">
+      <summary>
+        <para>Lists values that specify the display mode for accordion items in the collapsed AccordionControl.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsedItemDisplayMode.Content">
+      <summary>
+        <para>Only the item’s header is shown.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsedItemDisplayMode.ContentAndGlyph">
+      <summary>
+        <para>Both the item’s header and glyph are shown.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsedItemDisplayMode.Glyph">
+      <summary>
+        <para>Only the item’s glyph is shown.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.CollapsePopupPlacement">
+      <summary>
+        <para>Lists values that specify the position of the popup with Accordion items when the Accordion is in the Collapse Mode.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsePopupPlacement.Left">
+      <summary>
+        <para>The popup is placed to the left of the collapsed Accordion.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.CollapsePopupPlacement.Right">
+      <summary>
+        <para>The popup is placed to the right of the collapsed Accordion.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.ExpandButtonPosition">
+      <summary>
+        <para>Lists values that specify the position of the expand button within the accordion item’s header.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandButtonPosition.Left">
+      <summary>
+        <para>The expand button is displayed at the left side of the accordion item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandButtonPosition.None">
+      <summary>
+        <para>The expand button is not displayed.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandButtonPosition.Right">
+      <summary>
+        <para>The expand button is displayed at the right side of the accordion item.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.ExpandMode">
+      <summary>
+        <para>Lists values that specify the number of accordion items that can be expanded simultaneously.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandMode.Multiple">
+      <summary>
+        <para>At least one accordion item is always expanded.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandMode.MultipleOrNone">
+      <summary>
+        <para>Any number of accordion items can be expanded.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandMode.Single">
+      <summary>
+        <para>A single accordion item is always expanded.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ExpandMode.SingleOrNone">
+      <summary>
+        <para>A single accordion item can be expanded.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.GlyphPosition">
+      <summary>
+        <para>Lists values that specify the position and visibility of the glyph within the accordion item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.GlyphPosition.Left">
+      <summary>
+        <para>The glyph is displayed at the left side of the accordion item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.GlyphPosition.None">
+      <summary>
+        <para>The glyph is hidden.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.GlyphPosition.Right">
+      <summary>
+        <para>The glyph is displayed at the right side of the accordion item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.GlyphPosition.Top">
+      <summary>
+        <para>The glyph is displayed above the accordion item.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.IChildrenSelector">
+      <summary>
+        <para>Interface that should be implemented by a class that retrieves the <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>‘s children from the data source.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Accordion.IChildrenSelector.SelectChildren(System.Object)">
+      <summary>
+        <para>Retrieves the <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>‘s children from the data source.</para>
+      </summary>
+      <param name="item">The accordion item whose children are retrieved from the data source.</param>
+      <returns>A collection of objects that are the children of an accordion item.</returns>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.ItemDisplayMode">
+      <summary>
+        <para>Lists values that specify the display mode of the accordion item.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ItemDisplayMode.Default">
+      <summary>
+        <para>The accordion item‘s margins are calculated based on the hierarchy level. The item processes mouse input and keyboard navigation.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ItemDisplayMode.Header">
+      <summary>
+        <para>The accordion item directly renders the content of the header. Margin calculation and mouse processing are bypassed. The glyph and expand button are disabled.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.ItemVisibilityMode">
+      <summary>
+        <para>Lists values that indicate the item’s visibility mode.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ItemVisibilityMode.Collapsed">
+      <summary>
+        <para>The item is collapsed, the popup with the child items is hidden.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ItemVisibilityMode.ShowSubItems">
+      <summary>
+        <para>The item is collapsed, the popup with the child items is visible.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.ItemVisibilityMode.Visible">
+      <summary>
+        <para>The item is visible.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.RootItemDisplayMode">
+      <summary>
+        <para>Lists values that specify whether to enable a uniform style for root and subordinate items.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.RootItemDisplayMode.Group">
+      <summary>
+        <para>A special style is used for root items.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.RootItemDisplayMode.Item">
+      <summary>
+        <para>A uniform style is used for both root and subordinate items.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.SelectionMode">
+      <summary>
+        <para>Lists values that specify whether <see cref="T:DevExpress.Xpf.Accordion.AccordionItem"/>s can be selected.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SelectionMode.None">
+      <summary>
+        <para>accordion items cannot be selected.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SelectionMode.Single">
+      <summary>
+        <para>A single accordion item can be selected.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.SelectionUnit">
+      <summary>
+        <para>Lists values that specify whether an end-user can select items or both items and groups.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SelectionUnit.SubItem">
+      <summary>
+        <para>Only subitems can be selected.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SelectionUnit.SubItemOrRootItem">
+      <summary>
+        <para>Both the root items and subitems can be selected.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Accordion.SummaryItemPosition">
+      <summary>
+        <para>Lists values that specify the position of the Summary Item relative to regular items.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SummaryItemPosition.Bottom">
+      <summary>
+        <para>The Summary Item is shown under the regular items.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SummaryItemPosition.None">
+      <summary>
+        <para>The Summary Item is hidden.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Xpf.Accordion.SummaryItemPosition.Top">
+      <summary>
+        <para>The Summary Item is shown above the regular items.</para>
+      </summary>
+    </member>
+  </members>
+</doc>
