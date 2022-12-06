@@ -107,7 +107,6 @@
 
         static MessageChoice GetMessageChoice(MessageBoxButton button)
         {
-            //TODO: Use map to avoid switch/case
             MessageChoice choices;
             switch (button)
             {
