@@ -27,6 +27,7 @@
         readonly CommandLineArgParser commandLineParser;
         readonly ServiceControlClientRegistry clientRegistry;
         readonly MessageSelectionContext messageSelectionContext;
+        IEndpointExplorerView view;
         bool isStartingUp;
 
         public EndpointExplorerViewModel(
@@ -121,6 +122,12 @@
             }
         }
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            this.view = (IEndpointExplorerView)view;
+        }
+
         string GetConfiguredAddress()
         {
             if (commandLineParser.ParsedOptions.EndpointUri == null)
@@ -183,6 +190,8 @@
             {
                 SelectedNode = serviceControlNode;
             }
+
+            view?.ExpandSelectedNode();
         }
 
         ServiceControlExplorerItem SelectConnectedServiceControlNode(string url)
