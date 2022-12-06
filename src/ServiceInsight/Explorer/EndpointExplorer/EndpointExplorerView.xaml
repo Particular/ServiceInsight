@@ -13,8 +13,7 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
-
-        <HierarchicalDataTemplate   x:Key="TreeTemplate" DataType="vm:AuditEndpointExplorerItem" ItemsSource="{Binding Path=Children}">
+        <HierarchicalDataTemplate x:Key="TreeTemplate" DataType="vm:AuditEndpointExplorerItem" ItemsSource="{Binding Path=Children}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -33,32 +32,17 @@
                     </Grid.ToolTip>
                 </Grid>
         </HierarchicalDataTemplate>
-
-            <!--<Style x:Key="ExpandedStyle"
-               TargetType="{x:Type TreeViewItem}"
-               d:DataContext="{d:DesignInstance tree:ExplorerItem}">
-            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-        </Style>-->
-
-
     </UserControl.Resources>
 
-    <!--<ep:EndpointTreeView VirtualizingStackPanel.IsVirtualizing="False"
-                         AutomationProperties.AutomationId="EndpointTree"
-                         ItemContainerStyle="{StaticResource ExpandedStyle}"
-                         ItemTemplate="{StaticResource TreeTemplate}"
+    <dxg:TreeViewControl x:Name="treeView" 
                          ItemsSource="{Binding Items}"
-                         SelectedItem="{Binding SelectedNode}"
-                         ScrollViewer.VerticalScrollBarVisibility="Visible">
-    </ep:EndpointTreeView>-->
-
-    <dxg:TreeViewControl ItemsSource="{Binding Items}"
-                             SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
-                             AutomationProperties.AutomationId="EndpointTree"
-                             ChildNodesPath="Children"
-                             TreeDerivationMode="ChildNodesSelector"
-                             TreeViewFieldName="Name"
-                             NodeContentDisplayTemplate="{StaticResource TreeTemplate}">
+                         SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
+                         ExpandStateBinding="{Binding SelectedNode.IsExpanded, Mode=TwoWay}"
+                         AutomationProperties.AutomationId="EndpointTree"
+                         ChildNodesPath="Children"
+                         TreeDerivationMode="ChildNodesSelector"
+                         TreeViewFieldName="Name"
+                         NodeContentDisplayTemplate="{StaticResource TreeTemplate}">
     </dxg:TreeViewControl>
 
 </UserControl>

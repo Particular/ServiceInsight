@@ -147,6 +147,10 @@
 
         public void OnSelectedNodeChanged()
         {
+            if (SelectedNode != null)
+            {
+                SelectedNode.IsExpanded = true;
+            }
             eventAggregator.PublishOnUIThread(new SelectedExplorerItemChanged(SelectedNode));
         }
 
@@ -296,8 +300,6 @@
 
         void ExpandServiceControlNode(ServiceControlExplorerItem serviceControlNode)
         {
-            serviceControlNode.IsExpanded = true;
-            Application.Current.DoEvents();
             SelectedNode = serviceControlNode;
         }
 
