@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="DevExpress.Data.Desktop.v22.1">
+      <HintPath>..\..\lib\DevExpress.v22\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Windows.Forms" />
