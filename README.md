@@ -23,3 +23,5 @@ If using Visual Studio 2017, ensure that you have installed:
   - .NET desktop development
 
 You can check whether the prerequisites have been installed by running the Visual Studio Installer and clicking "Modify".
+
+### How to test
