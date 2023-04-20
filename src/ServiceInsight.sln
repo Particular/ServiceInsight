@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30225.117
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInsight.Tests", "ServiceInsight.Tests\ServiceInsight.Tests.csproj", "{61F87540-03E3-4E72-9647-FA2108AD66A2}"
 EndProject
@@ -35,9 +35,7 @@ Global
 		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7EB8BB8-813B-4CFD-83DF-7F38D8DD89EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA3D4052-9083-4A3F-B151-C2E1E909D00F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA3D4052-9083-4A3F-B151-C2E1E909D00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA3D4052-9083-4A3F-B151-C2E1E909D00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA3D4052-9083-4A3F-B151-C2E1E909D00F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EF919F1-B497-4478-8EB4-ECDB241F4A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EF919F1-B497-4478-8EB4-ECDB241F4A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EF919F1-B497-4478-8EB4-ECDB241F4A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
