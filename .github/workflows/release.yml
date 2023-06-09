@@ -52,6 +52,17 @@ jobs:
           name: assets
           path: assets/*
           retention-days: 1
+      - name : Verify release artifact counts
+        shell: pwsh
+        run: |
+          $assetsCount = (Get-ChildItem -Recurse -File assets).Count
+          $expectedAssetsCount = 1
+
+          if ($assetsCount -ne $expectedAssetsCount)
+          {
+              Write-Host Assets: Expected $expectedAssetsCount but found $assetsCount
+              exit -1
+          }
       - name: Deploy
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
         uses: Particular/push-octopus-package-action@v1.1.0
