@@ -1,15 +1,25 @@
 name: Release
 on:
   push:
+    branches:
+      - master
+      - release-*
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
       - '[0-9]+.[0-9]+.[0-9]+-*'
+  pull_request:
+  workflow_dispatch:
 env:
   DOTNET_NOLOGO: true
 jobs:
   release:
     runs-on: windows-2022
     steps:
+      - name: Check for secrets
+        env:
+          SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
+        shell: pwsh
+        run: exit $(If ($env:SECRETS_AVAILABLE -eq 'true') { 0 } Else { 1 })
       - name: Checkout
         uses: actions/checkout@v3.5.2
         with:
@@ -43,6 +53,7 @@ jobs:
           path: assets/*
           retention-days: 1
       - name: Deploy
+        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
         uses: Particular/push-octopus-package-action@v1.1.0
         with:
           octopus-deploy-api-key: ${{ secrets.OCTOPUS_DEPLOY_API_KEY }}
