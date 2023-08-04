@@ -20,7 +20,7 @@
     <!-- ApprovalTests.Wpf 4.x doesn't support the .NET Framework -->
     <PackageReference Include="ApprovalTests.Wpf" Version="[3.0.18, 4.0.0)" />
     <PackageReference Include="GitHubActionsTestLogger" Version="2.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.0" />
     <PackageReference Include="NSubstitute" Version="5.0.0" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
