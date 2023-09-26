@@ -447,7 +447,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             var response = await restClient.ExecuteAsync(request).ConfigureAwait(false);
 
-            RaiseConnectivityIssue(response);
+            await RaiseConnectivityIssue(response).ConfigureAwait(false);
 
             CleanResponse(response);
 
@@ -546,7 +546,7 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
 
             var response = await restClient.ExecuteAsync<T2>(request).ConfigureAwait(false);
 
-            RaiseConnectivityIssue(response);
+            await RaiseConnectivityIssue(response).ConfigureAwait(false);
 
             CleanResponse(response);
 
@@ -599,15 +599,11 @@ where T : class, new() => Execute<T, T>(request, response => response.Data, trun
             return data;
         }
 
-        void RaiseConnectivityIssue(IRestResponse response)
+        async Task RaiseConnectivityIssue(IRestResponse response)
         {
-            if (response?.ErrorException is WebException webException &&
-                webException.Status == WebExceptionStatus.ConnectFailure)
+            if ((response?.ErrorException is WebException webException && webException.Status == WebExceptionStatus.ConnectFailure) || response?.StatusCode == HttpStatusCode.InternalServerError)
             {
-                LogError(response);
-            }
-            else if (response?.StatusCode == HttpStatusCode.InternalServerError)
-            {
+                await Task.Delay(2500).ConfigureAwait(false);
                 LogError(response);
             }
         }
