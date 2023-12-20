@@ -1,21 +1,16 @@
-## ServiceInsight
+# ServiceInsight
 
-Essential insights for distributed solutions
+ServiceInsight provides essential insights for distributed solutions. Verifying that large distributed solutions function correctly is no easy task, especially with many asynchronous and loosely-coupled processes. ServiceInsight gives you visibility across queues, processes, and machines showing messages whose processing has failed (and for what reason) as well as their relation to other messages.
 
-Verifying that large distributed solutions function correctly is no easy
-task, especially with many asynchronous and loosely-coupled
-processes.
-ServiceInsight gives you visibility across queues, processes, and
-machines showing messages whose processing has failed (and for what reason) as well as their relation to other messages.
+It is part of the [Particular Service Platform](https://particular.net/service-platform), which includes [NServiceBus](https://particular.net/nservicebus) and tools to build, monitor, and debug distributed systems.
 
+See the [ServiceInsight documentation](http://docs.particular.net/serviceinsight/) to learn more.
 
-http://docs.particular.net/Serviceinsight/getting-started-overview
-
-### How to build
+## How to build
 
 You can build ServiceInsight using Visual Studio 2015 or later.
 
-#### Prerequisites
+### Prerequisites
 
 If using Visual Studio 2017, ensure that you have installed:
 
