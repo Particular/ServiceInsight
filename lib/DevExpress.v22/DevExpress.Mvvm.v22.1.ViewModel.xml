@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Mvvm.v22.1.ViewModel</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Mvvm.ViewModel">
+      <summary>
+        <para>Contains classes that define View Models for the MVVM pattern.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.CloseAllMessage">
+      <summary>
+        <para>A message notifying that all view models should close itself. Usually sent by <see cref="T:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2"/> when the CloseAll command is executed.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CloseAllMessage.#ctor(System.ComponentModel.CancelEventArgs,System.Func{System.Object,System.Boolean})">
+      <summary>
+        <para>Initializes a new instance of the CloseAllMessage class.</para>
+      </summary>
+      <param name="cancelEventArgs">An argument of the System.ComponentModel.CancelEventArgs type which can be used to cancel closing.</param>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.CloseAllMessage.Cancel">
+      <summary>
+        <para>Used to cancel closing and check whether the closing has already been cancelled.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4">
+      <summary>
+        <para>The base class for POCO view models exposing a collection of entities of a given type and CRUD operations against these entities.</para>
+        <para>It is not recommended to inherit directly from this class. Use the CollectionViewModel class instead.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.#ctor(DevExpress.Mvvm.DataModel.IUnitOfWorkFactory{`3},System.Func{`3,DevExpress.Mvvm.DataModel.IRepository{`0,`2}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{`0},System.Linq.IQueryable{`1}},System.Action{`0},System.Func{System.Boolean},System.Boolean,DevExpress.Mvvm.ViewModel.UnitOfWorkPolicy)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4"/> class with specified settings.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.CanDelete(`1)">
+      <summary>
+        <para>Determines whether an entity can be deleted.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, this method will be used as a CanExecute callback for DeleteCommand.</para>
+      </summary>
+      <param name="projectionEntity">An entity to edit.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.CanEdit(`1)">
+      <summary>
+        <para>Determines whether an entity can be edited.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, this method will be used as a CanExecute callback for EditCommand.</para>
+      </summary>
+      <param name="projectionEntity">An entity to edit.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.CanSave(`1)">
+      <summary>
+        <para>Determines whether entity local changes can be saved.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, this method will be used as a CanExecute callback for SaveCommand.</para>
+      </summary>
+      <param name="projectionEntity">An entity to save.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.Close">
+      <summary>
+        <para>Closes the corresponding view.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the CloseCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.Delete(`1)">
+      <summary>
+        <para>Deletes a given entity from the repository and saves changes if confirmed by the user.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the DeleteCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="projectionEntity">An entity to edit.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.Edit(`1)">
+      <summary>
+        <para>Creates and shows a document that contains a single object view model for the existing entity.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the EditCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.EntityDisplayName">
+      <summary>
+        <para>The display name of TEntity to be used when presenting messages to the user.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.New">
+      <summary>
+        <para>Creates and shows a document that contains a single object view model for new entity.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the NewCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.Save(`1)">
+      <summary>
+        <para>Saves the given entity.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, the instance of this class will also expose the SaveCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="projectionEntity">An entity to save.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.CollectionViewModelBase`4.UpdateSelectedEntity">
+      <summary>
+        <para>Notifies that SelectedEntity has been changed by raising the PropertyChanged event.</para>
+        <para>Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the UpdateSelectedEntityCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.DocumentManagerServiceExtensions">
+      <summary>
+        <para>Provides the extension methods that are used to implement the <see cref="T:DevExpress.Mvvm.IDocumentManagerService"/> interface.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentManagerServiceExtensions.FindEntityDocument``2(DevExpress.Mvvm.IDocumentManagerService,``1)">
+      <summary>
+        <para>Searches for a document that contains a single object view model editing entity with a specified primary key.</para>
+      </summary>
+      <param name="documentManagerService">An instance of the IDocumentManager interface used to find a document.</param>
+      <param name="primaryKey">An entity primary key.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2">
+      <summary>
+        <para>The base class for POCO view models that operate the collection of documents.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.ActiveModule">
+      <summary>
+        <para>A navigation list entry that corresponds to the currently active document. If the active document does not have the corresponding entry in the navigation list, the property value is null. This property is read-only.</para>
+        <para>Since DocumentsViewModel is a POCO view model, this property will raise INotifyPropertyChanged.PropertyEvent when modified so it can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.Modules">
+      <summary>
+        <para>Navigation list that represents a collection of module descriptions.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.NavigationPaneVisibility">
+      <summary>
+        <para>Contains a current state of the navigation pane.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.OnClosing(System.ComponentModel.CancelEventArgs)">
+      <summary>
+        <para>Used to close all opened documents and allows you to save unsaved results and to cancel closing.</para>
+        <para>Since DocumentsViewModel is a POCO view model, an instance of this class will also expose the OnClosingCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="cancelEventArgs">An argument of the System.ComponentModel.CancelEventArgs type which is used to cancel closing if needed.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.OnLoaded(`0)">
+      <summary>
+        <para>Finalizes the DocumentsViewModel initialization and opens the default document.</para>
+        <para>Since DocumentsViewModel is a POCO view model, an instance of this class will also expose the OnLoadedCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.PinPeekCollectionView(`0)">
+      <summary>
+        <para>Creates and shows a document which view is bound to PeekCollectionViewModel. The document is created and shown using a document manager service named “WorkspaceDocumentManagerService”.</para>
+        <para>Since DocumentsViewModel is a POCO view model, an instance of this class will also expose the PinPeekCollectionViewCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="module">A navigation list entry that is used as a PeekCollectionViewModel factory.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.SaveAll">
+      <summary>
+        <para>Saves changes in all opened documents.</para>
+        <para>Since DocumentsViewModel is a POCO view model, an instance of this class will also expose the SaveAllCommand property that can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.SelectedModule">
+      <summary>
+        <para>A currently selected navigation list entry. This property is writable. When this property is assigned a new value, it triggers the navigating to the corresponding document.</para>
+        <para>Since DocumentsViewModel is a POCO view model, this property will raise INotifyPropertyChanged.PropertyEvent when modified so it can be used as a binding source in views.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2.Show(`0)">
+      <summary>
+        <para>Navigates to a document.</para>
+        <para>Since DocumentsViewModel is a POCO view model, an instance of this class will also expose the ShowCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="module">A navigation list entry specifying a document what to be opened.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.EntitiesViewModelBase`3">
+      <summary>
+        <para>The base class for a POCO view models exposing a collection of entities of the given type.</para>
+        <para>It is not recommended to inherit directly from this class. Use the EntitiesViewModel class instead.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.EntitiesViewModelBase`3.Entities">
+      <summary>
+        <para>The collection of entities loaded from the unit of work.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.EntitiesViewModelBase`3.IsLoading">
+      <summary>
+        <para>Used to check whether entities are currently being loaded in the background. The property can be used to show the progress indicator.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.EntityMessage`2">
+      <summary>
+        <para>Provides the information about an entity state change notification that is shown when an entity has been added, removed or modified, and the <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> method has been called.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.EntityMessage`2.#ctor(`1,DevExpress.Mvvm.ViewModel.EntityMessageType,System.Object)">
+      <summary>
+        <para>Initializes a new instance of the EntityMessage class.</para>
+      </summary>
+      <param name="primaryKey">A primary key of an entity that has been added, removed or modified.</param>
+      <param name="messageType">An entity state change notification type.</param>
+      <param name="sender">The message sender.</param>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.EntityMessage`2.MessageType">
+      <summary>
+        <para>The entity state change notification type.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.EntityMessage`2.PrimaryKey">
+      <summary>
+        <para>The primary key of entity that has been added, deleted or modified.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.EntityMessage`2.Sender">
+      <summary>
+        <para>The message sender.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.EntityMessageType">
+      <summary>
+        <para>Represents the type of an entity state change notification that is shown when the <see cref="M:DevExpress.Mvvm.DataModel.IUnitOfWork.SaveChanges"/> method has been called.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.EntityMessageType.Added">
+      <summary>
+        <para>A new entity has been added to the unit of work.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.EntityMessageType.Changed">
+      <summary>
+        <para>One of the entity properties has been modified.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.EntityMessageType.Deleted">
+      <summary>
+        <para>An entity has been removed from the unit of work.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.IEntitiesViewModel`1">
+      <summary>
+        <para>The base interface for view models exposing a collection of entities of the given type.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.IEntitiesViewModel`1.Entities">
+      <summary>
+        <para>The loaded collection of entities.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.IEntitiesViewModel`1.IsLoading">
+      <summary>
+        <para>Used to check whether entities are currently being loaded in the background. The property can be used to show the progress indicator.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.ISingleObjectViewModel`2">
+      <summary>
+        <para>The base interface for view models representing a single entity.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ISingleObjectViewModel`2.Entity">
+      <summary>
+        <para>The entity represented by a view model.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ISingleObjectViewModel`2.PrimaryKey">
+      <summary>
+        <para>The entity primary key value.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.LookUpEntitiesViewModel`4">
+      <summary>
+        <para>Represents a POCO view models used by SingleObjectViewModel to exposing collections of related entities.</para>
+        <para>This is a partial class that provides an extension point to add custom properties, commands and override methods without modifying the auto&#0045;generated code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.LookUpEntitiesViewModel`4.Create(DevExpress.Mvvm.DataModel.IUnitOfWorkFactory{`3},System.Func{`3,DevExpress.Mvvm.DataModel.IReadOnlyRepository{`0}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{`0},System.Linq.IQueryable{`1}})">
+      <summary>
+        <para>Creates a new instance of LookUpEntitiesViewModel as a POCO view model.</para>
+      </summary>
+      <param name="unitOfWorkFactory">A factory used to create a unit of work instance.</param>
+      <param name="getRepositoryFunc">A function that returns a repository representing entities of the given type.</param>
+      <param name="projection">An optional parameter that provides a LINQ function used to customize a query for entities. The parameter, for example, can be used for sorting data and/or for projecting data to a custom type that does not match the repository entity type.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.ModuleDescription`1">
+      <summary>
+        <para>A base class representing a navigation list entry.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.ModuleDescription`1.#ctor(System.String,System.String,System.String,System.Func{`0,System.Object})">
+      <summary>
+        <para>Initializes a new instance of the ModuleDescription class.</para>
+      </summary>
+      <param name="title">A navigation list entry display text.</param>
+      <param name="documentType">A string value that specifies the view type of corresponding document.</param>
+      <param name="group">A navigation list entry group name.</param>
+      <param name="peekCollectionViewModelFactory">An optional parameter that provides a function used to create a PeekCollectionViewModel that provides quick navigation between collection views.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.ModuleDescription`1.CreatePeekCollectionViewModel">
+      <summary>
+        <para>Creates and returns a new instance of the corresponding PeekCollectionViewModel that provides quick navigation between collection views.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ModuleDescription`1.DocumentType">
+      <summary>
+        <para>Contains the corresponding document view type.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ModuleDescription`1.ModuleGroup">
+      <summary>
+        <para>The navigation list entry group name.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ModuleDescription`1.ModuleTitle">
+      <summary>
+        <para>The navigation list entry display text.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ModuleDescription`1.PeekCollectionViewModel">
+      <summary>
+        <para>A primary instance of corresponding PeekCollectionViewModel used to quick navigation between collection views.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.NavigateMessage`1">
+      <summary>
+        <para>Used by the <see cref="T:DevExpress.Mvvm.ViewModel.PeekCollectionViewModel`4"/> to notify that <see cref="T:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2"/> should navigate to the specified module.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.NavigateMessage`1.#ctor(`0)">
+      <summary>
+        <para>Initializes a new instance of the NavigateMessage class.</para>
+      </summary>
+      <param name="token">An object that is used to identify the module to which the DocumentsViewModel should navigate.</param>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.NavigateMessage`1.Token">
+      <summary>
+        <para>An object that is used to identify the module to which the DocumentsViewModel should navigate.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.NavigationPaneVisibility">
+      <summary>
+        <para>Represents a navigation pane state.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.NavigationPaneVisibility.Minimized">
+      <summary>
+        <para>Navigation pane is visible and minimized.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.NavigationPaneVisibility.Normal">
+      <summary>
+        <para>Navigation pane is visible and not minimized.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.Mvvm.ViewModel.NavigationPaneVisibility.Off">
+      <summary>
+        <para>Navigation pane is invisible.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.PeekCollectionViewModel`4">
+      <summary>
+        <para>A POCO view model exposing a read-only collection of entities of a given type. It is designed for quick navigation between collection views.</para>
+        <para>This is a partial class that provides an extension point to add custom properties, commands and override methods without modifying the auto&#0045;generated code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.PeekCollectionViewModel`4.CanNavigate(`1)">
+      <summary>
+        <para>Determines if a navigation to corresponding collection view can be performed.</para>
+        <para>Since PeekCollectionViewModel is a POCO view model, this method will be used as a CanExecute callback for NavigateCommand.</para>
+      </summary>
+      <param name="projectionEntity">An entity to select in the collection view.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.PeekCollectionViewModel`4.Create(`0,DevExpress.Mvvm.DataModel.IUnitOfWorkFactory{`3},System.Func{`3,DevExpress.Mvvm.DataModel.IRepository{`1,`2}},System.Func{DevExpress.Mvvm.DataModel.IRepositoryQuery{`1},System.Linq.IQueryable{`1}})">
+      <summary>
+        <para>Creates a new instance of PeekCollectionViewModel as a POCO view model.</para>
+      </summary>
+      <param name="navigationToken">Identifies the module that is the navigation target.</param>
+      <param name="unitOfWorkFactory">A factory that is used to create a unit of work instance.</param>
+      <param name="getRepositoryFunc">A function that returns a repository representing entities of a given type.</param>
+      <param name="projection">An optional parameter that provides a LINQ function used to customize a query for entities. The parameter, for example, can be used for sorting data.</param>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.PeekCollectionViewModel`4.Navigate(`1)">
+      <summary>
+        <para>Navigates to the corresponding collection view and selects the given entity.</para>
+        <para>Since PeekCollectionViewModel is a POCO view model, an instance of this class will also expose the NavigateCommand property that can be used as a binding source in views.</para>
+      </summary>
+      <param name="projectionEntity">An entity to select within the collection view.</param>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.ReadOnlyCollectionViewModelBase`3">
+      <summary>
+        <para>The base class for POCO view models exposing a read&#0045;only collection of entities of a given type.</para>
+        <para>It is not recommended to inherit directly from this class. Use the ReadOnlyCollectionViewModel class instead.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.ReadOnlyCollectionViewModelBase`3.CanRefresh">
+      <summary>
+        <para>Determines whether entities can be reloaded.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ReadOnlyCollectionViewModelBase`3.FilterExpression">
+      <summary>
+        <para>The lambda expression used to filter which entities will be loaded locally from the unit of work.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.ReadOnlyCollectionViewModelBase`3.Refresh">
+      <summary>
+        <para>Reloads entities.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.ReadOnlyCollectionViewModelBase`3.SelectedEntity">
+      <summary>
+        <para>The selected entity.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.SaveAllMessage">
+      <summary>
+        <para>A message notifying that all view models should save changes. Usually sent by <see cref="T:DevExpress.Mvvm.ViewModel.DocumentsViewModel`2"/> when the SaveAll command is executed.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3">
+      <summary>
+        <para>The base class for POCO view models exposing a single entity of a given type and CRUD operations against this entity.</para>
+        <para>It is not recommended to inherit directly from this class. Use the SingleObjectViewModel class instead.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.CanDelete">
+      <summary>
+        <para>Determines whether the entity can be deleted.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.CanReset">
+      <summary>
+        <para>Determines whether entity has local changes.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.CanSave">
+      <summary>
+        <para>Determines whether entity has local changes that can be saved.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Close">
+      <summary>
+        <para>Closes the corresponding view.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Delete">
+      <summary>
+        <para>Deletes the entity, save changes and closes the corresponding view if confirmed by a user.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Entity">
+      <summary>
+        <para>An entity represented by this view model.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.EntityDisplayName">
+      <summary>
+        <para>The display name of TEntity to be used when presenting messages to the user.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Reset">
+      <summary>
+        <para>Reset entity local changes.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Save">
+      <summary>
+        <para>Saves changes in the underlying unit of work.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.SaveAndClose">
+      <summary>
+        <para>Saves changes in the underlying unit of work and closes the corresponding view.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.SaveAndNew">
+      <summary>
+        <para>Saves changes in the underlying unit of work and create new entity.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Title">
+      <summary>
+        <para>The display text for a given entity used as a title in the corresponding view.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Mvvm.ViewModel.SingleObjectViewModelBase`3.Update">
+      <summary>
+        <para>Updates the Title property value and raises CanExecute changed for relevant commands.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,998 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.EasyTest.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.EasyTest.Framework">
+      <summary>
+        <para>Contains interfaces and classes that implement EasyTest functionality.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ApplicationContextExtensions">
+      <summary>
+        <para>Exposes extension methods for the <see cref="T:DevExpress.EasyTest.Framework.IApplicationContext"/>. Each extension method provides access to a particular functional testing feature.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetAction(DevExpress.EasyTest.Framework.IApplicationContext,System.String)">
+      <summary>
+        <para>Provides access to API that allows you to manipulate a specified Action.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <param name="actionName">An Action’s name.</param>
+      <returns>The API that allows you to manipulate a specified Action. Returns null if the Action was not found.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetDialog(DevExpress.EasyTest.Framework.IApplicationContext)">
+      <summary>
+        <para>Provides access to API that allows you to manipulate a currently displayed dialog.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <returns>An object that exposes API that allows you to manipulate a currently displayed dialog.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetForm(DevExpress.EasyTest.Framework.IApplicationContext)">
+      <summary>
+        <para>Provides access to API that allows you to manipulate a currently displayed form.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <returns>The API that allows you to manipulate a currently displayed form.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetGrid(DevExpress.EasyTest.Framework.IApplicationContext,System.String)">
+      <summary>
+        <para>Provides access to API that allows you to manipulate a currently displayed grid list editor.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <param name="gridName">A currently displayed grid list editor’s name.</param>
+      <returns>The API that allows you to manipulate a currently displayed grid list editor.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetScreen(DevExpress.EasyTest.Framework.IApplicationContext)">
+      <summary>
+        <para>Provides access to a screenshot testing functionality.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <returns>An object that implements a screenshot testing functionality.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.GetValidation(DevExpress.EasyTest.Framework.IApplicationContext)">
+      <summary>
+        <para>Provides access to API for handling validation messages.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <returns>An object that exposes API for handling validation messages.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ApplicationContextExtensions.Navigate(DevExpress.EasyTest.Framework.IApplicationContext,System.String)">
+      <summary>
+        <para>Opens a specified navigation item.</para>
+      </summary>
+      <param name="context">The application’s context.</param>
+      <param name="itemName">A navigation item name.</param>
+      <returns>true if a specified navigation item was opened successfully; otherwise, false.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.Command">
+      <summary>
+        <para>An abstract base class for classes that implement EasyTest commands.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.Command.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.Command"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.Command.CheckControlEnabled(DevExpress.EasyTest.Framework.ITestControl)">
+      <summary>
+        <para>Throws an exception if the specified test control is disabled.</para>
+      </summary>
+      <param name="testControl">An ITestContol object that specifies the test control.</param>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.EndLineIndex">
+      <summary>
+        <para>Gets the line number where the previous command is finished.</para>
+      </summary>
+      <value>An integer value that is the line number where the previous command is finished.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.EndPosition">
+      <summary>
+        <para>Gets the position in the script where the current command starts.</para>
+      </summary>
+      <value>The PositionInScript object specifying the position in the script where the current command ends.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.Command.Execute(DevExpress.EasyTest.Framework.ICommandAdapter)">
+      <summary>
+        <para>Executes an Functional Testing command implemented by the <see cref="T:DevExpress.EasyTest.Framework.Command"/> class.</para>
+      </summary>
+      <param name="adapter">An ICommandAdapter object that is the EasyTest command adapter.</param>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.ExpectException">
+      <summary>
+        <para>Gets if the current Functional Testing command is expected to fail.</para>
+      </summary>
+      <value>true, it the command is expected to fail, otherwise - false.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.Parameters">
+      <summary>
+        <para>Gets parameters, passed to the EasyTest command.</para>
+      </summary>
+      <value>A <see cref="T:DevExpress.EasyTest.Framework.ParameterList"/> object that exposes parameters of the EasyTest command.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.Command.ParseCommand(DevExpress.EasyTest.Framework.CommandCreationParam)">
+      <summary>
+        <para>Parses the current command.</para>
+      </summary>
+      <param name="commandCreationParam">The CommandCreationParam object .</param>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.StartPosition">
+      <summary>
+        <para>Gets the position in the script where the current command starts.</para>
+      </summary>
+      <value>The PositionInScript object specifying the position in the script where the current command starts.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.Command.Text">
+      <summary>
+        <para>Gets the command text, including all command parameters.</para>
+      </summary>
+      <value>A string containing the command text.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.CommandException">
+      <summary>
+        <para>Specifies an exception that occurs when executing an EasyTest command.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.CommandException.#ctor(System.String,DevExpress.EasyTest.Framework.PositionInScript)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.CommandException"/> class.</para>
+      </summary>
+      <param name="errorMessage">A string that describes an error that has occured.</param>
+      <param name="startPosition">The PositionInScript object that specifies the position of the command that is being executed.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.DatabaseOptions">
+      <summary>
+        <para>Stores database configuration options for a tested application.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.DatabaseOptions.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.DatabaseOptions"/> class with specified settings.</para>
+      </summary>
+      <param name="name">Specifies the configuration unique name.</param>
+      <param name="dbName">Specifies the database name.</param>
+      <param name="backupFileName">Specifies the fully qualified name of the database backup file.</param>
+      <param name="dbSourceLocation">Specifies the fully qualified database file name.</param>
+      <param name="server">Specifies the SQL server instance name.</param>
+      <param name="connectionString">Specifies a connection string.</param>
+      <param name="userID">Specifies the login that must be used when accessing the database.</param>
+      <param name="password">Specifies the password that must be used when accessing the database.</param>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.BackupFileName">
+      <summary>
+        <para>Returns the fully qualified name of the database backup file.</para>
+      </summary>
+      <value>The database backup file name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.ConnectionString">
+      <summary>
+        <para>Returns a connection string.</para>
+      </summary>
+      <value>A connection string.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.DBName">
+      <summary>
+        <para>Returns the database name.</para>
+      </summary>
+      <value>A database name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.DBSourceLocation">
+      <summary>
+        <para>Returns the fully qualified database file name.</para>
+      </summary>
+      <value>A database file name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.Name">
+      <summary>
+        <para>Returns the configuration unique name.</para>
+      </summary>
+      <value>The configuration name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.Password">
+      <summary>
+        <para>Returns the password that must be used when accessing the database.</para>
+      </summary>
+      <value>A password.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.Server">
+      <summary>
+        <para>Returns the SQL server instance name.</para>
+      </summary>
+      <value>An SQL server instance name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.DatabaseOptions.UserID">
+      <summary>
+        <para>Returns the login that must be used when accessing the database.</para>
+      </summary>
+      <value>A user ID.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.EasyTestFixtureContext">
+      <summary>
+        <para>A test fixture context.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.EasyTestFixtureContext"/> class.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.CloseRunningApplications">
+      <summary>
+        <para>Closes all the applications started before. Must be called after test execution.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.CreateApplicationContext(System.String)">
+      <summary>
+        <para>Creates a context for a new application.</para>
+      </summary>
+      <param name="applicationName">The application name</param>
+      <returns>The application context.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.DropDB(System.String)">
+      <summary>
+        <para>Deletes the specified database. This method can potentially destroy a lot of valuable data and should be used with caution.</para>
+      </summary>
+      <param name="dbName">A deleted database’s name.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.RegisterApplications(DevExpress.EasyTest.Framework.IEasyTestApplicationOptions[])">
+      <summary>
+        <para>Registers configurations for tested applications.</para>
+      </summary>
+      <param name="options">An array of the applications’ options.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.RegisterDatabases(DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions[])">
+      <summary>
+        <para>Registers a set of data sources used for the testing purposes.</para>
+      </summary>
+      <param name="options">An array of data sources used to test XAF applications.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.RestoreDB(System.String)">
+      <summary>
+        <para>Restores the specified database from a backup. The database name must be registered with the <see cref="M:DevExpress.EasyTest.Framework.EasyTestFixtureContext.RegisterDatabases(DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions[])"/> method.</para>
+      </summary>
+      <param name="dbName">A restored database’s name.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.EasyTestParameter.#ctor(System.String,System.String)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.EasyTestParameter"/> class with specified settings.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IApplicationContext">
+      <summary>
+        <para>Declares members for application contexts.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IApplicationContext.CloseApplication">
+      <summary>
+        <para>Closes the application.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IApplicationContext.CommandAdapter">
+      <summary>
+        <para>Provides access to the adapter that handles EasyTest commands.</para>
+      </summary>
+      <value>A command adapter.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IApplicationContext.RunApplication">
+      <summary>
+        <para>Runs the application.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ICommandAdapter">
+      <summary>
+        <para>Declares members exposed by EasyTest command adapters.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ICommandAdapter.CreateTestControl(System.String,System.String)">
+      <summary>
+        <para>Finds the specific control and creates the test control for it.</para>
+      </summary>
+      <param name="controlType">A string that specifies the test control types. Valid types can be obtained from the <see cref="T:DevExpress.EasyTest.Framework.TestControlType"/> class’ constants.</param>
+      <param name="name">A sting that is the control caption.</param>
+      <returns>An <see cref="T:DevExpress.EasyTest.Framework.ITestControl"/> object that is the created test control.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ICommandAdapter.IsControlExist(System.String,System.String)">
+      <summary>
+        <para>Checks if the specified control exists.</para>
+      </summary>
+      <param name="controlType">A string that specifies the test control types. Valid types can be obtained from the <see cref="T:DevExpress.EasyTest.Framework.TestControlType"/> class’ constants.</param>
+      <param name="name">A sting that is the control name.</param>
+      <returns>true, is the control exists; otherwise - false.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlAct">
+      <summary>
+        <para>Declares members of test controls that can be “executed” (e.g. Action, button, etc.).</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IControlAct.Act(System.String)">
+      <summary>
+        <para>Executes an Action.</para>
+      </summary>
+      <param name="value">A string that is the Action item’s caption.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlActionItems">
+      <summary>
+        <para>Declares members of test controls that have choice items.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IControlActionItems.IsEnabled(System.String)">
+      <summary>
+        <para>Checks if an Action’s item is enabled.</para>
+      </summary>
+      <param name="item">A string that is an item’s caption.</param>
+      <returns>true, if an item is enabled; otherwise - false.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IControlActionItems.IsVisible(System.String)">
+      <summary>
+        <para>Checks if an Action’s item is visible.</para>
+      </summary>
+      <param name="item">A string that is an item’s caption.</param>
+      <returns>true, if an item is visible; otherwise - false.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlEnabled">
+      <summary>
+        <para>Declares members of test controls that can be in an enabled or disabled state.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IControlEnabled.Enabled">
+      <summary>
+        <para>Checks if the test control is enabled.</para>
+      </summary>
+      <value>true, if the control is enabled; otherwise - false.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlHint">
+      <summary>
+        <para>Declares members of test controls that have a hint.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IControlHint.Hint">
+      <summary>
+        <para>Gets the test control’s hint.</para>
+      </summary>
+      <value>A string that is the test control’s hint.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlReadOnlyText">
+      <summary>
+        <para>Declares members of test controls providing a readonly text.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IControlReadOnlyText.Text">
+      <summary>
+        <para>Gets the text from the current test control.</para>
+      </summary>
+      <value>A string that is the text from the current test control.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IControlText">
+      <summary>
+        <para>Declares members of test controls that provides an editable text.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IControlText.Text">
+      <summary>
+        <para>Specifies the text of the current test control.</para>
+      </summary>
+      <value>A string that is the text from the current test control.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestAction">
+      <summary>
+        <para>Exposes the API that allows you to manipulate a specified Action in test code.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestAction.Enabled">
+      <summary>
+        <para>Checks whether the action is active.</para>
+      </summary>
+      <value>true if the action is active; otherwise, false.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestAction.Execute(System.String)">
+      <summary>
+        <para>Executes an Action.</para>
+      </summary>
+      <param name="parameter">Action execution parameter.</param>
+      <returns>true, if the Action was executed; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestAction.Hint">
+      <summary>
+        <para>Returns the Action’s hint text.</para>
+      </summary>
+      <value>The hint text.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestAction.IsItemEnabled(System.String)">
+      <summary>
+        <para>Checks whether a specified item within a single choice action is enabled.</para>
+      </summary>
+      <param name="item">The checked item.</param>
+      <returns>true, if the specified item is enabled; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestAction.IsItemVisible(System.String)">
+      <summary>
+        <para>Checks whether a specified item within a single choice action is visible.</para>
+      </summary>
+      <param name="item">The checked item.</param>
+      <returns>true, if the specified item is visible; otherwise, false.</returns>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestAction.Value">
+      <summary>
+        <para>Returns the Action’s value. Supported for parametrized and single choice actions.</para>
+      </summary>
+      <value>The Action’s value.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestApplicationOptions">
+      <summary>
+        <para>Declares members exposed by application options.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestApplicationOptions.CreateApplicationContext">
+      <summary>
+        <para>Creates an application context.</para>
+      </summary>
+      <returns>An application context.</returns>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestApplicationOptions.Name">
+      <summary>
+        <para>An application name.</para>
+      </summary>
+      <value>An application name.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions">
+      <summary>
+        <para>Declares members exposed in database configuration options.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.BackupFileName">
+      <summary>
+        <para>Specifies the fully qualified name of the database backup file.</para>
+      </summary>
+      <value>The database backup file name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.ConnectionString">
+      <summary>
+        <para>Specifies a connection string.</para>
+      </summary>
+      <value>A connection string.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.DBName">
+      <summary>
+        <para>Specifies the database name.</para>
+      </summary>
+      <value>A database name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.DBSourceLocation">
+      <summary>
+        <para>Specifies the fully qualified database file name.</para>
+      </summary>
+      <value>A database file name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.Name">
+      <summary>
+        <para>Specifies the configuration unique name.</para>
+      </summary>
+      <value>The configuration name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.Password">
+      <summary>
+        <para>Specifies the password that must be used when accessing the database.</para>
+      </summary>
+      <value>A password.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.Server">
+      <summary>
+        <para>Specifies the SQL server instance name.</para>
+      </summary>
+      <value>An SQL server instance name.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDatabaseOptions.UserID">
+      <summary>
+        <para>Specifies the login that must be used when accessing the database.</para>
+      </summary>
+      <value>A user ID.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestDialog">
+      <summary>
+        <para>Exposes the API that allows you to manipulate a dialog in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestDialog.Click(System.String)">
+      <summary>
+        <para>Clicks a specified dialog button.</para>
+      </summary>
+      <param name="buttonCaption">A clicked button caption.</param>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDialog.Message">
+      <summary>
+        <para>Gets the displayed dialog message.</para>
+      </summary>
+      <value>The displayed dialog message.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IEasyTestDialog.Title">
+      <summary>
+        <para>Gets the displayed dialog title. Supported only in WinForms applications.</para>
+      </summary>
+      <value>The displayed dialog title.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestForm">
+      <summary>
+        <para>Exposes the API that allows you to manipulate a form in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestForm.ExecuteEditorAction(System.String,System.String)">
+      <summary>
+        <para>Executes an Action supplied by a Lookup Property Editor or an Object Property Editor.</para>
+      </summary>
+      <param name="propertyName">The edited property name.</param>
+      <param name="extraParameter">Lookup property editor’s Action.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestForm.FillForm(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Fills fields with values.</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestForm.GetPropertyValue(System.String)">
+      <summary>
+        <para>Returns a string representation of the specified property’s value.</para>
+      </summary>
+      <param name="propertyName">A property name.</param>
+      <returns>A string representation of the property’s value.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestForm.GetPropertyValues(System.String[])">
+      <summary>
+        <para>Returns string representations of the specified properties’ values.</para>
+      </summary>
+      <param name="propertyNames">An array of property names</param>
+      <returns>An array of string representations of properties’ values.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestForm.IsFieldVisible(System.String)">
+      <summary>
+        <para>Checks whether the specified field is visible.</para>
+      </summary>
+      <param name="propertyName">The corresponding property’s name.</param>
+      <returns>true, if the specified field is visible; otherwise, false.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestGrid">
+      <summary>
+        <para>Exposes the API that provides access to a data grid in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.GetRow(System.Int32,System.String[])">
+      <summary>
+        <para>Returns a collection of strings that represent row values.</para>
+      </summary>
+      <param name="rowIndex">A row index.</param>
+      <param name="columnNames">Names of columns whose values are returned.</param>
+      <returns>A collection of strings that represent row values.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.GetRowCount">
+      <summary>
+        <para>Gets the row count.</para>
+      </summary>
+      <returns>The row count.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.GetRowIndex(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Gets a specified row’s index.</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+      <returns>The specified row index. null if the specified row was not found.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.GetRows(System.String[])">
+      <summary>
+        <para>Returns a dictionary that contains all visible grid records and their indexes.</para>
+      </summary>
+      <param name="columnNames">Names of columns whose values are returned.</param>
+      <returns>Row values across with their indexes.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.ProcessRow(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Opens Detail Views for specified records (imitates a click on a grid row).</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGrid.RowExists(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Checks whether the specified rows exist.</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+      <returns>true if the specified rows exist; otherwise, false.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestGridEditing">
+      <summary>
+        <para>Exposes the API that provides access to data grid editing features in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.FillRow(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Fills an edited row with new values.</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.FillRow(System.Int32,DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Fills the specified row with the new values.</para>
+      </summary>
+      <param name="rowIndex">An edited row’s zero-based index.</param>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.InlineCancel">
+      <summary>
+        <para>Cancels the edit action of a row.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.InlineEdit(DevExpress.EasyTest.Framework.EasyTestParameter[])">
+      <summary>
+        <para>Starts editing a specified row.</para>
+      </summary>
+      <param name="parameters">An array of objects that represent field names with the corresponding values.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.InlineNew">
+      <summary>
+        <para>Creates a new row and opens it for inline editing.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridEditing.InlineUpdate">
+      <summary>
+        <para>Commits changes and stops editing a row.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestGridGrouping">
+      <summary>
+        <para>Exposes the API that provides access to data grid grouping features in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridGrouping.ExpandGroup(System.String)">
+      <summary>
+        <para>Expands a specified group.</para>
+      </summary>
+      <param name="groupName">The name of a group to expand.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridGrouping.GroupBy(System.String)">
+      <summary>
+        <para>Groups grid rows by a specified column.</para>
+      </summary>
+      <param name="columnName">The column name.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridGrouping.UngroupAll">
+      <summary>
+        <para>Ungroups grid data.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestGridSelection">
+      <summary>
+        <para>Exposes the API that provides access to data grid selection features in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSelection.ClearSelection">
+      <summary>
+        <para>Unselects the previously selected rows.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSelection.GetSelectedRowIndices">
+      <summary>
+        <para>Returns the array of selected rows’ indexes.</para>
+      </summary>
+      <returns>An array of selected rows’ indexes.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSelection.GetSelectedRows(System.String[])">
+      <summary>
+        <para>Returns a dictionary that contains selected grid records and their indexes.</para>
+      </summary>
+      <param name="columnNames">Names of columns whose values are returned.</param>
+      <returns>Row values across with their indexes.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSelection.SelectRows(System.String,System.String[])">
+      <summary>
+        <para>Selects specified grid records.</para>
+      </summary>
+      <param name="columnName">A name of a column whose values are used to identify individual rows.</param>
+      <param name="rowValues">The specified column’s values that identify selected rows.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSelection.UnselectRows(System.String,System.String[])">
+      <summary>
+        <para>Unselects specified grid records.</para>
+      </summary>
+      <param name="columnName">A name of a column whose values are used to identify individual rows.</param>
+      <param name="rowValues">The specified column’s values that identify unselected rows.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestGridSorting">
+      <summary>
+        <para>Exposes the API that provides access to data grid sorting features in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestGridSorting.SortByColumn(System.String,DevExpress.EasyTest.Framework.SortOrder)">
+      <summary>
+        <para>Sorts grid values by a specified column.</para>
+      </summary>
+      <param name="columnName">The column against which the grid rows are sorted.</param>
+      <param name="sortOrder">The sort order.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestScreen.GetImagesDifferences(System.Drawing.Image,System.Drawing.Image,System.Drawing.Image)">
+      <summary>
+        <para>Returns an image that shows the difference between an actual and expected image.</para>
+      </summary>
+      <param name="actualImage">The actual screenshot.</param>
+      <param name="expectedImage">The expected screenshot.</param>
+      <param name="maskImage">A mask image.</param>
+      <returns>The image that shows the difference between an actual and expected image.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestScreen.GetScreenshot">
+      <summary>
+        <para>Makes a screenshot of an application window.</para>
+      </summary>
+      <returns>An application’s screenshot.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestScreen.SetActiveWindowSize(System.Drawing.Size)">
+      <summary>
+        <para>Resizes an active window.</para>
+      </summary>
+      <param name="size">The active window size.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IEasyTestValidation">
+      <summary>
+        <para>Exposes the API that provides access to validation messages in test code.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestValidation.GetValidationHeader">
+      <summary>
+        <para>Gets a header displayed within a validation message dialog. Supported only in WinForms and ASP.NET Web Forms applications.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IEasyTestValidation.GetValidationMessages">
+      <summary>
+        <para>Returns an array of the displayed validation messages.</para>
+      </summary>
+      <returns>The array of the displayed validation messages.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IGridAct">
+      <summary>
+        <para>Declares members of test controls that is a grid with actions in cells.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridAct.CheckGridAct(System.String,System.Int32,DevExpress.EasyTest.Framework.IGridColumn,System.Boolean)">
+      <summary>
+        <para>Throws an exception if a specified action located within a cell is disabled.</para>
+      </summary>
+      <param name="actionName">A string that is the Action’s name.</param>
+      <param name="rowIndex">An integer value that is the row number.</param>
+      <param name="column">An <see cref="T:DevExpress.EasyTest.Framework.IGridColumn"/> test control that specifies the column.</param>
+      <param name="isInlineOnly">true, to check only inline actions; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridAct.GridAct(System.String,System.Int32,DevExpress.EasyTest.Framework.IGridColumn)">
+      <summary>
+        <para>Executes an action located within a cell.</para>
+      </summary>
+      <param name="actionName">A string that is the Action’s name.</param>
+      <param name="rowIndex">An integer value that is the row number.</param>
+      <param name="column">An <see cref="T:DevExpress.EasyTest.Framework.IGridColumn"/> test control that specifies the column.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IGridBase">
+      <summary>
+        <para>Declares members of a test controls that are grids.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IGridBase.Columns">
+      <summary>
+        <para>Gets a list of columns.</para>
+      </summary>
+      <value>An IEnumerable&lt;<see cref="T:DevExpress.EasyTest.Framework.IGridColumn"/>&gt; object specifying a list of columns.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridBase.GetCellValue(System.Int32,DevExpress.EasyTest.Framework.IGridColumn)">
+      <summary>
+        <para>Returns a value from the specified cell.</para>
+      </summary>
+      <param name="row">An integer that is the row number.</param>
+      <param name="column">An <see cref="T:DevExpress.EasyTest.Framework.IGridColumn"/> object that specifies the column.</param>
+      <returns>A string that is a value from the specified cell.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridBase.GetRowCount">
+      <summary>
+        <para>Returns the number of rows in the current grid.</para>
+      </summary>
+      <returns>An integer that is the number of rows in the current grid.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IGridCellControlCreation">
+      <summary>
+        <para>Declares members of test controls that are grids with the inline editing feature.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridCellControlCreation.BeginEdit(System.Int32)">
+      <summary>
+        <para>Indicates that row editing has begun.</para>
+      </summary>
+      <param name="row">An integer value that is the row number.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridCellControlCreation.CreateCellControl(System.Int32,DevExpress.EasyTest.Framework.IGridColumn)">
+      <summary>
+        <para>Returns the test control for the specified cell in the editable grid.</para>
+      </summary>
+      <param name="row">An integer that is the row number.</param>
+      <param name="column">An <see cref="T:DevExpress.EasyTest.Framework.IGridColumn"/> object that specifies the column.</param>
+      <returns>An <see cref="T:DevExpress.EasyTest.Framework.ITestControl"/> object that is the test control for the specified cell in the editable grid.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridCellControlCreation.EndEdit">
+      <summary>
+        <para>Indicates that row editing has finished.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IGridColumn">
+      <summary>
+        <para>Declares members of test controls that are grid columns.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IGridColumn.Caption">
+      <summary>
+        <para>Gets the column caption.</para>
+      </summary>
+      <value>A string that is the column caption.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.IGridColumn.Visible">
+      <summary>
+        <para>Indicates the current column’s visibility.</para>
+      </summary>
+      <value>true, if the column is visible; otherwise - false.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.IGridRowsSelection">
+      <summary>
+        <para>Declares members of test controls that are grids with row selection capability.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridRowsSelection.ClearSelection">
+      <summary>
+        <para>Clears the selection from the grid.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridRowsSelection.IsRowSelected(System.Int32)">
+      <summary>
+        <para>Checks if the row is selected.</para>
+      </summary>
+      <param name="rowIndex">An integer that is a row number.</param>
+      <returns>true, if the row is selected; otherwise - false.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridRowsSelection.SelectRow(System.Int32)">
+      <summary>
+        <para>Selects the specified row.</para>
+      </summary>
+      <param name="rowIndex">An integer that is a row number.</param>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.IGridRowsSelection.UnselectRow(System.Int32)">
+      <summary>
+        <para>Removes selection from the specified row.</para>
+      </summary>
+      <param name="rowIndex">An integer that is a row number.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ITestControl">
+      <summary>
+        <para>Declares members of test controls.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ITestControl.ControlType">
+      <summary>
+        <para>For internal use.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ITestControl.FindInterface``1">
+      <summary>
+        <para>Returns the specified test control, or null when a test control is not found.</para>
+      </summary>
+      <returns>A test control of the specified type.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ITestControl.GetInterface``1">
+      <summary>
+        <para>Returns the specified test control, or throws an exception when test control is not found.</para>
+      </summary>
+      <returns>A test control of the specified type.</returns>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ITestControl.Name">
+      <summary>
+        <para>Specifies the name of the test control.</para>
+      </summary>
+      <value>A string that is the name of the test control.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ITestControlContainer">
+      <summary>
+        <para>Declares members of test controls that are containers for another control.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ITestControlContainer.TestControl">
+      <summary>
+        <para>Specifies the test control that is located inside the current container.</para>
+      </summary>
+      <value>An ITestControl object that is the test control.</value>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ITestWindow">
+      <summary>
+        <para>Declares members of test controls that are resizable windows with captions.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ITestWindow.Caption">
+      <summary>
+        <para>Gets the window caption.</para>
+      </summary>
+      <value>A string that is the window caption.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ITestWindow.Close">
+      <summary>
+        <para>Closes the window.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ITestWindow.GetActiveWindowHandle">
+      <summary>
+        <para>Returns a handle of the active window.</para>
+      </summary>
+      <returns>A System.IntPtr object that is the active window’s handle.</returns>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ITestWindow.SetWindowSize(System.Int32,System.Int32)">
+      <summary>
+        <para>Resizes the window to the specified width and height.</para>
+      </summary>
+      <param name="width">An integer, that is the window width.</param>
+      <param name="height">An integer, that is the window height.</param>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.ParameterList">
+      <summary>
+        <para>Specifies the EasyTest command’s parameters.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ParameterList.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.ParameterList"/> class.</para>
+      </summary>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ParameterList.ExtraParameter">
+      <summary>
+        <para>Specifies an argument passed to the Functional Testing command’s primary parameter.</para>
+      </summary>
+      <value>A MainParameter object that specifies an argument passed to the Functional Testing command’s primary parameter.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ParameterList.Item(System.String)">
+      <summary>
+        <para>Specifies the list of secondary parameters.</para>
+      </summary>
+      <param name="name">A string that is the parameter’s name.</param>
+      <value>The Parameter object that specifies the secondary parameter.</value>
+    </member>
+    <member name="P:DevExpress.EasyTest.Framework.ParameterList.MainParameter">
+      <summary>
+        <para>Specifies the command’s primary parameter.</para>
+      </summary>
+      <value>A MainParameter object that is the command’s primary parameter.</value>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.ParameterList.ToString">
+      <summary>
+        <para>Returns a string representation of the <see cref="T:DevExpress.EasyTest.Framework.ParameterList"/> object.</para>
+      </summary>
+      <returns>A string representation of the <see cref="T:DevExpress.EasyTest.Framework.ParameterList"/> object.</returns>
+    </member>
+    <member name="T:DevExpress.EasyTest.Framework.TestControlType">
+      <summary>
+        <para>Contains string constants that specify types of test controls.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.EasyTest.Framework.TestControlType.#ctor">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.EasyTest.Framework.TestControlType"/> class.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.EasyTest.Framework.TestControlType.Action">
+      <summary>
+        <para>Specifies that the test control is an Action.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.EasyTest.Framework.TestControlType.Dialog">
+      <summary>
+        <para>Specifies that the test control is a Dialog.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.EasyTest.Framework.TestControlType.Field">
+      <summary>
+        <para>Specifies that the test control is a text input.</para>
+      </summary>
+    </member>
+    <member name="F:DevExpress.EasyTest.Framework.TestControlType.Table">
+      <summary>
+        <para>Specifies that the test control is a grid.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

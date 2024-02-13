@@ -1,25 +1,26 @@
 ﻿namespace ServiceInsight.MessageFlow
 {
-    using ServiceInsight.Explorer;
-    using ServiceInsight.ExtensionMethods;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
+    using Anotar.Serilog;
     using Autofac;
     using Caliburn.Micro;
     using Mindscape.WpfDiagramming;
     using Mindscape.WpfDiagramming.FlowDiagrams;
-    using ServiceInsight.Models;
-    using ServiceInsight.ServiceControl;
+    using ServiceInsight.Explorer;
+    using ServiceInsight.ExtensionMethods;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Commands;
     using ServiceInsight.Framework.Events;
     using ServiceInsight.Framework.Settings;
     using ServiceInsight.Framework.UI.ScreenManager;
     using ServiceInsight.MessageList;
+    using ServiceInsight.Models;
+    using ServiceInsight.ServiceControl;
     using ServiceInsight.Settings;
 
     public class MessageFlowViewModel : Screen,
@@ -259,18 +260,44 @@
         {
             foreach (var msg in relatedMessagesTask)
             {
-                if (msg.Message.RelatedToMessageId == null &&
-                    msg.Message.RelatedToMessageId != msg.Message.MessageId)
+                if (string.IsNullOrEmpty(msg.Message.RelatedToMessageId) && msg.Message.RelatedToMessageId != msg.Message.MessageId)
                 {
                     continue;
                 }
 
-                // [CM] I don't know how it's happening, but a user reported an
-                // error where multiple results were returned from this query.
                 var parentMessages = nodeMap.Values.Where(m =>
-                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
-                    m.Message.MessageId == msg.Message.RelatedToMessageId &&
-                    m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name);
+                    m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null
+                    && m.Message.MessageId == msg.Message.RelatedToMessageId
+                    && m.Message.ReceivingEndpoint.Name == msg.Message.SendingEndpoint.Name // Needed with publishes as identical events can be consumed by multiple endpoints
+                    )
+                    .ToArray();
+
+                // Fallback, get "parent" when originating message is not an event (publish)
+                if (!parentMessages.Any())
+                {
+                    parentMessages = nodeMap.Values.Where(m =>
+                        m.Message != null && m.Message.ReceivingEndpoint != null && m.Message.SendingEndpoint != null &&
+                        m.Message.MessageId == msg.Message.RelatedToMessageId && m.Message.MessageIntent != MessageIntent.Publish
+                        ).ToArray();
+
+                    if (parentMessages.Any())
+                    {
+                        LogTo.Warning("Fall back to match only on RelatedToMessageId for message with Id '{MessageId}' matched but link could be invalid.", msg.Message.MessageId);
+                    }
+                }
+
+                switch (parentMessages.Length)
+                {
+                    case 0:
+                        LogTo.Information("No parent could be resolved for the message with Id '{MessageId}' which has RelatedToMessageId set. This can happen if the parent has been purged due to retention expiration, an ServiceControl node to be unavailable, or because the parent message not been stored (yet).", msg.Message.MessageId);
+                        break;
+                    case 1:
+                        // Log nothing, this is what it should be
+                        break;
+                    default:
+                        LogTo.Error("Multiple parents matched for message id '{MessageId}' possibly due to more-than-once processing, linking to all as it is unknown which processing attempt generated the message.", msg.Message.MessageId);
+                        break;
+                }
 
                 foreach (var parentMessage in parentMessages)
                 {
@@ -321,10 +348,7 @@
 
         void UpdateLayout()
         {
-            if (view != null)
-            {
-                view.ApplyLayout();
-            }
+            view?.ApplyLayout();
         }
     }
 }

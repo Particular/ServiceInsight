@@ -19,6 +19,8 @@
         {
             mutex = new Mutex(true, "Local\\ServiceInsight", out createNew);
 
+            ApplicationThemeHelper.UseLegacyDefaultTheme = true;
+
             if (createNew)
             {
                 LoggingConfig.SetupLogging();

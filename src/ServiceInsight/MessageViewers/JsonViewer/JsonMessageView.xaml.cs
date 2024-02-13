@@ -31,7 +31,7 @@
             var text = message;
             try
             {
-                var jObject = JObject.Parse(message);
+                var jObject = JsonConvert.DeserializeObject<JObject>(message, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
                 text = jObject.GetFormatted();
             }
             catch (JsonReaderException)

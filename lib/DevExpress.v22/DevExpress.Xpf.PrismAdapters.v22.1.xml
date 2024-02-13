@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>DevExpress.Xpf.PrismAdapters.v22.1</name>
+  </assembly>
+  <members>
+    <member name="N:DevExpress.Xpf.Prism">
+      <summary>
+        <para>Provides support for Prism 5 and Prism 6.</para>
+        <para>To learn more, see Prism Adapters.</para>
+      </summary>
+    </member>
+    <member name="T:DevExpress.Xpf.Prism.AdapterFactory">
+      <summary>
+        <para>Allows you to create adapter instances.</para>
+      </summary>
+    </member>
+    <member name="M:DevExpress.Xpf.Prism.AdapterFactory.Make``1(System.Object)">
+      <summary>
+        <para>Returns an adapter instance.</para>
+      </summary>
+      <param name="factory">An adapter factory.</param>
+      <returns>The adapter instance.</returns>
+    </member>
+  </members>
+</doc>

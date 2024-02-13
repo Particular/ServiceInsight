@@ -16,7 +16,7 @@
         [Description("Successful after retries")]
         ResolvedSuccessfully = 4,
 
-        [Description("Failure message archived")]
+        [Description("Failed message deleted")]
         ArchivedFailure = 5,
 
         [Description("Retry requested")]
