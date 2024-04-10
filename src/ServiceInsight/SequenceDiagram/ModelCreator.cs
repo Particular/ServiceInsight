@@ -112,7 +112,9 @@ namespace ServiceInsight.SequenceDiagram
         IEnumerable<MessageTreeNode> CreateMessageTrees(IEnumerable<StoredMessage> messages)
         {
             var nodes = messages.Select(x => new MessageTreeNode(x)).ToList();
+#pragma warning disable PS0025 // Dictionary keys should implement IEquatable<T> - Valid use of reference equality on the key type
             var resolved = new HashSet<MessageTreeNode>();
+#pragma warning restore PS0025 // Dictionary keys should implement IEquatable<T>
             var index = nodes.ToLookup(x => x.Id);
 
             foreach (var node in nodes)
