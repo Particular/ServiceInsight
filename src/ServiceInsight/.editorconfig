@@ -6,3 +6,6 @@ dotnet_diagnostic.CA2007.severity = none
 # may be enabled in future
 dotnet_diagnostic.PS0013.severity = none  # A Func used as a method parameter with a Task, ValueTask, or ValueTask<T> return type argument should have at least one CancellationToken parameter type argument unless it has a parameter type argument implementing ICancellableContext
 dotnet_diagnostic.PS0018.severity = none  # A task-returning method should have a CancellationToken parameter unless it has a parameter implementing ICancellableContext
+
+# Justification: WPF application, async void is necessary for event handlers
+dotnet_diagnostic.PS0027.severity = none # An `async void` method is almost always a mistake as nothing can be returned to await. Should only be used for event delegates, in which case this rule should be disabled in that instance.

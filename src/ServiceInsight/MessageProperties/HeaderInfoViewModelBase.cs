@@ -25,7 +25,9 @@
             MapHeaderKeys();
         }
 
+#pragma warning disable PS0025 // Dictionary keys should implement IEquatable<T> - Probably nobody expects a Func to be anything but reference-comparable anyway
         protected IDictionary<Func<HeaderInfo, bool>, Action<HeaderInfo>> ConditionsMap { get; }
+#pragma warning restore PS0025 // Dictionary keys should implement IEquatable<T>
 
         protected IEventAggregator EventAggregator { get; }
 
