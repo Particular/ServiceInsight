@@ -28,7 +28,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4.0.0
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
       - name: Build
@@ -66,6 +66,7 @@ jobs:
           }
       - name: Deploy
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
-        uses: Particular/push-octopus-package-action@v2.0.0
+        # Does not follow standard practice of targeting explicit versions because configuration is tightly coupled to Octopus Deploy configuration
+        uses: Particular/push-octopus-package-action@main
         with:
           octopus-deploy-api-key: ${{ secrets.OCTOPUS_DEPLOY_API_KEY }}
