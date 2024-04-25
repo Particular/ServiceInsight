@@ -10,6 +10,10 @@
     <MinVerAutoIncrement>minor</MinVerAutoIncrement>
   </PropertyGroup>
 
+  <PropertyGroup Label="Treat as warnings the transitive dependencies problems">
+    <NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="Particular.Packaging" Version="4.1.0" PrivateAssets="All" />
   </ItemGroup>
