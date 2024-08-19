@@ -25,6 +25,7 @@
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
+    <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Label="Pinned packages to prevent transitive dependencies issues">
