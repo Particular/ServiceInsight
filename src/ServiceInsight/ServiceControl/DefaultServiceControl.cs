@@ -371,9 +371,8 @@ namespace ServiceInsight.ServiceControl
 
                     if (pageSizeText != null)
                     {
-                        pageSize = int.Parse(pageSizeText)?.Value;
+                        pageSize = int.Parse(pageSizeText);
                     }
-
                     var currentPage = 1;
                     var queryPage = requestQueryParameters["page"];
                     if (queryPage != null) //Clicking a next/prev link
