@@ -121,7 +121,7 @@ namespace ServiceInsight.ServiceControl
                 }
             }
 
-            var header = response.Headers.SingleOrDefault(x => x.Name == ServiceControlHeaders.ParticularVersion);
+            var header = response.Headers.SingleOrDefault(x => string.Equals(x.Name, ServiceControlHeaders.ParticularVersion, StringComparison.OrdinalIgnoreCase));
 
             return (header?.Value?.ToString(), address);
         }
@@ -344,7 +344,8 @@ namespace ServiceInsight.ServiceControl
                 response =>
                 {
                     string first = null, prev = null, next = null, last = null;
-                    var links = (string)response.Headers.FirstOrDefault(header => header.Name == ServiceControlHeaders.Link)?.Value;
+                    var links = (string)response.Headers.FirstOrDefault(x => string.Equals(x.Name, ServiceControlHeaders.Link, StringComparison.OrdinalIgnoreCase))?.Value;
+
                     if (links != null)
                     {
                         var linksByRel = linkExpression.Matches(links)
@@ -366,12 +367,12 @@ namespace ServiceInsight.ServiceControl
                         pageSize = int.Parse(perPage);
                     }
 
-                    var pageSizeText = (string)response.Headers.FirstOrDefault(header => header.Name == ServiceControlHeaders.PageSize)?.Value;
+                    var pageSizeText = (string)response.Headers.FirstOrDefault(x => string.Equals(x.Name, ServiceControlHeaders.PageSize, StringComparison.OrdinalIgnoreCase))?.Value;
+
                     if (pageSizeText != null)
                     {
                         pageSize = int.Parse(pageSizeText);
                     }
-
                     var currentPage = 1;
                     var queryPage = requestQueryParameters["page"];
                     if (queryPage != null) //Clicking a next/prev link
@@ -399,7 +400,7 @@ namespace ServiceInsight.ServiceControl
                         PrevLink = prev,
                         LastLink = last,
                         FirstLink = first,
-                        TotalCount = int.Parse(response.Headers.Single(x => x.Name == ServiceControlHeaders.TotalCount).Value.ToString()),
+                        TotalCount = int.Parse(response.Headers.Single(x => string.Equals(x.Name, ServiceControlHeaders.TotalCount, StringComparison.OrdinalIgnoreCase)).Value.ToString()),
                         PageSize = pageSize
                     };
                 },
