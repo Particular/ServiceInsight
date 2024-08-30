@@ -88,7 +88,7 @@
             var items = xamlIcons.Values.Cast<object>()
                 .Where(i => !(i is ControlTemplate || i is DrawingImage || i is Geometry));
 
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         public static IEnumerable GetControlTemplates => GetTestCases<ControlTemplate>();
