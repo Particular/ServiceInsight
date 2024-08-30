@@ -15,8 +15,11 @@
         [Test]
         public void ShouldHaveStartOfConversationAsFirstHandler()
         {
-            Assert.AreEqual(SequenceDiagram.ModelCreator.ConversationStartHandlerName, ModelCreator.Handlers[0].ID);
-            Assert.AreEqual(null, ModelCreator.Handlers[0].Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ModelCreator.Handlers[0].ID, Is.EqualTo(SequenceDiagram.ModelCreator.ConversationStartHandlerName));
+                Assert.That(ModelCreator.Handlers[0].Name, Is.EqualTo(null));
+            });
         }
 
         [Test]
@@ -25,7 +28,7 @@
             var startHandler = ModelCreator.Handlers.Single(h => h.Name == "RelocationProcessStartedNotification");
             var endHandler = ModelCreator.Handlers.Single(h => h.Name == "RelocationProcessCompletedNotification");
 
-            Assert.Less(ModelCreator.Handlers.IndexOf(startHandler), ModelCreator.Handlers.IndexOf(endHandler));
+            Assert.That(ModelCreator.Handlers.IndexOf(startHandler), Is.LessThan(ModelCreator.Handlers.IndexOf(endHandler)));
         }
     }
 }

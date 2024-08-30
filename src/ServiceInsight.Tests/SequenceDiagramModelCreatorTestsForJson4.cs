@@ -14,35 +14,41 @@
         [Test]
         public void ShouldHaveFourEndpoints()
         {
-            Assert.AreEqual(4, result.Count);
-            Assert.AreEqual("Provisioning.CustomerPortal", result[0].Name);
-            Assert.AreEqual("Provisioning.UserService.Orchestrator", result[1].Name);
-            Assert.AreEqual("Provisioning.Audit.Orchestrator", result[2].Name);
-            Assert.AreEqual("Provisioning.Communication.Orchestrator", result[3].Name);
+            Assert.That(result, Has.Count.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("Provisioning.CustomerPortal"));
+                Assert.That(result[1].Name, Is.EqualTo("Provisioning.UserService.Orchestrator"));
+                Assert.That(result[2].Name, Is.EqualTo("Provisioning.Audit.Orchestrator"));
+                Assert.That(result[3].Name, Is.EqualTo("Provisioning.Communication.Orchestrator"));
+            });
         }
 
         [Test]
         public void ShouldHaveStartOfConversationAsFirstHandler()
         {
-            Assert.AreEqual(SequenceDiagram.ModelCreator.ConversationStartHandlerName, ModelCreator.Handlers[0].ID);
+            Assert.That(ModelCreator.Handlers[0].ID, Is.EqualTo(SequenceDiagram.ModelCreator.ConversationStartHandlerName));
         }
 
         [Test]
         public void ShouldHaveHandlersProperlyOrdered()
         {
-            Assert.AreEqual(null, ModelCreator.Handlers[0].Name);
-            Assert.AreEqual("LogCRMAudit", ModelCreator.Handlers[1].Name);
-            Assert.AreEqual("UserSignupRequestAccepted", ModelCreator.Handlers[2].Name);
-            Assert.AreEqual("CreateCRMAccountRequest", ModelCreator.Handlers[3].Name);
-            Assert.AreEqual("CreateCRMContactRequest", ModelCreator.Handlers[4].Name);
-            Assert.AreEqual("ADUserCreated", ModelCreator.Handlers[5].Name);
-            Assert.AreEqual("CreateCRMAccountResponse", ModelCreator.Handlers[6].Name);
-            Assert.AreEqual("CreateCRMContactCreatedResponse", ModelCreator.Handlers[7].Name);
-            Assert.AreEqual("StoreUserActivationKeyInCache", ModelCreator.Handlers[8].Name);
-            Assert.AreEqual("LinkCRMAccountAndContactRequest", ModelCreator.Handlers[9].Name);
-            Assert.AreEqual("LinkCRMAccountAndContactResponse", ModelCreator.Handlers[10].Name);
-            Assert.AreEqual("NewAccountCreated", ModelCreator.Handlers[11].Name);
-            Assert.AreEqual("SendAddAccountEmailRequestAccepted", ModelCreator.Handlers[12].Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ModelCreator.Handlers[0].Name, Is.EqualTo(null));
+                Assert.That(ModelCreator.Handlers[1].Name, Is.EqualTo("LogCRMAudit"));
+                Assert.That(ModelCreator.Handlers[2].Name, Is.EqualTo("UserSignupRequestAccepted"));
+                Assert.That(ModelCreator.Handlers[3].Name, Is.EqualTo("CreateCRMAccountRequest"));
+                Assert.That(ModelCreator.Handlers[4].Name, Is.EqualTo("CreateCRMContactRequest"));
+                Assert.That(ModelCreator.Handlers[5].Name, Is.EqualTo("ADUserCreated"));
+                Assert.That(ModelCreator.Handlers[6].Name, Is.EqualTo("CreateCRMAccountResponse"));
+                Assert.That(ModelCreator.Handlers[7].Name, Is.EqualTo("CreateCRMContactCreatedResponse"));
+                Assert.That(ModelCreator.Handlers[8].Name, Is.EqualTo("StoreUserActivationKeyInCache"));
+                Assert.That(ModelCreator.Handlers[9].Name, Is.EqualTo("LinkCRMAccountAndContactRequest"));
+                Assert.That(ModelCreator.Handlers[10].Name, Is.EqualTo("LinkCRMAccountAndContactResponse"));
+                Assert.That(ModelCreator.Handlers[11].Name, Is.EqualTo("NewAccountCreated"));
+                Assert.That(ModelCreator.Handlers[12].Name, Is.EqualTo("SendAddAccountEmailRequestAccepted"));
+            });
         }
     }
 }

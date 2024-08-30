@@ -31,7 +31,7 @@
 #pragma warning disable PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
             LogWindowViewModel.LogObserver.OnNext(new LogEvent(DateTimeOffset.Now, LogEventLevel.Information, null, new MessageTemplate("LOGME", new MessageTemplateToken[0]), new LogEventProperty[0]));
 #pragma warning restore PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
-            Assert.AreEqual(currentLogCount + 1, viewModel.Logs.Count);
+            Assert.That(viewModel.Logs, Has.Count.EqualTo(currentLogCount + 1));
         }
 
         [Test]
@@ -44,7 +44,7 @@
 
             viewModel.ClearCommand.Execute(null);
 
-            Assert.AreEqual(0, viewModel.Logs.Count);
+            Assert.That(viewModel.Logs.Count, Is.EqualTo(0));
         }
 
         [Test]
