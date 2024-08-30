@@ -17,7 +17,7 @@
 
             protected override void OnAttach()
             {
-                Assert.AreEqual(original, instance);
+                Assert.That(instance, Is.EqualTo(original));
             }
         }
 

@@ -14,14 +14,14 @@ namespace ServiceInsight.Tests
         [Test]
         public void EndpointShouldHave4Handler()
         {
-            Assert.AreEqual(7, result.Count);
-            Assert.AreEqual("System.Web", result[0].Name);
-            Assert.AreEqual("Particular.ApplicationProcessor.LoanProcessingSagaHandler", result[1].Name);
-            Assert.AreEqual("Particular.AnalyticsDatabase.AnalyticsDataHandler", result[2].Name);
-            Assert.AreEqual("Particular.ApplicationProcessor.LoanDecisionHandler", result[3].Name);
-            Assert.AreEqual("Particular.ApplicationProcessor.PartnerDecisionPostbackHandler", result[4].Name);
-            Assert.AreEqual("Particular.ApplicationProcessor.WebLoanDecisionUpdateHandler", result[5].Name);
-            Assert.AreEqual("Particular.ApplicationProcessor.EmailHandler", result[6].Name);
+            Assert.That(result.Count, Is.EqualTo(7));
+            Assert.That(result[0].Name, Is.EqualTo("System.Web"));
+            Assert.That(result[1].Name, Is.EqualTo("Particular.ApplicationProcessor.LoanProcessingSagaHandler"));
+            Assert.That(result[2].Name, Is.EqualTo("Particular.AnalyticsDatabase.AnalyticsDataHandler"));
+            Assert.That(result[3].Name, Is.EqualTo("Particular.ApplicationProcessor.LoanDecisionHandler"));
+            Assert.That(result[4].Name, Is.EqualTo("Particular.ApplicationProcessor.PartnerDecisionPostbackHandler"));
+            Assert.That(result[5].Name, Is.EqualTo("Particular.ApplicationProcessor.WebLoanDecisionUpdateHandler"));
+            Assert.That(result[6].Name, Is.EqualTo("Particular.ApplicationProcessor.EmailHandler"));
         }
     }
 }

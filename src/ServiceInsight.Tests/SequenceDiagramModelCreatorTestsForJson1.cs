@@ -14,22 +14,22 @@ namespace ServiceInsight.Tests
         [Test]
         public void FirstEndpointShouldHave1Handler()
         {
-            Assert.AreEqual(1, result[0].Handlers.Count);
+            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
         }
 
         [Test]
         public void EndpointsShouldBeVersionedCorrectly()
         {
-            Assert.AreEqual(1, result[0].Handlers.Count);
-            Assert.AreEqual("5.2.3", result[0].Version);
-            Assert.AreEqual("5.2.3", result[1].Version);
-            Assert.AreEqual(null, result[2].Version);
+            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+            Assert.That(result[0].Version, Is.EqualTo("5.2.3"));
+            Assert.That(result[1].Version, Is.EqualTo("5.2.3"));
+            Assert.That(result[2].Version, Is.EqualTo(null));
         }
 
         [Test]
         public void EndpointsAreDeDup()
         {
-            Assert.AreEqual(3, result.Count);
+            Assert.That(result.Count, Is.EqualTo(3));
         }
     }
 }

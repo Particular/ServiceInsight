@@ -17,7 +17,7 @@
         {
             var sagaEndpointCount = ModelCreator.Endpoints.Count(e => e.Name == "SagaEndpoint");
 
-            Assert.AreEqual(1, sagaEndpointCount);
+            Assert.That(sagaEndpointCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -26,7 +26,7 @@
             var sagaEndpoint = ModelCreator.Endpoints.First(e => e.Name == "SagaEndpoint");
             var hosts = sagaEndpoint.Hosts;
 
-            Assert.AreEqual(2, hosts.Count);
+            Assert.That(hosts.Count, Is.EqualTo(2));
         }
     }
 }

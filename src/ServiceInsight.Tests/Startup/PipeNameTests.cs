@@ -10,7 +10,7 @@
         [Test]
         public void Should_return_pipe_name_with_the_current_user_username()
         {
-            Assert.AreEqual($"ServiceInsight-{Environment.UserName}", PipeName.Value);
+            Assert.That(PipeName.Value, Is.EqualTo($"ServiceInsight-{Environment.UserName}"));
         }
     }
 }

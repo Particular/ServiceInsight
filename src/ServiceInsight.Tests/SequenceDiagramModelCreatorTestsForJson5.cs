@@ -15,8 +15,8 @@
         [Test]
         public void ShouldHaveStartOfConversationAsFirstHandler()
         {
-            Assert.AreEqual(SequenceDiagram.ModelCreator.ConversationStartHandlerName, ModelCreator.Handlers[0].ID);
-            Assert.AreEqual(null, ModelCreator.Handlers[0].Name);
+            Assert.That(ModelCreator.Handlers[0].ID, Is.EqualTo(SequenceDiagram.ModelCreator.ConversationStartHandlerName));
+            Assert.That(ModelCreator.Handlers[0].Name, Is.EqualTo(null));
         }
 
         [Test]
