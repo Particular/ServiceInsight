@@ -25,7 +25,7 @@
             var startHandler = ModelCreator.Handlers.Single(h => h.Name == "RelocationProcessStartedNotification");
             var endHandler = ModelCreator.Handlers.Single(h => h.Name == "RelocationProcessCompletedNotification");
 
-            Assert.Less(ModelCreator.Handlers.IndexOf(startHandler), ModelCreator.Handlers.IndexOf(endHandler));
+            Assert.That(ModelCreator.Handlers.IndexOf(startHandler), Is.LessThan(ModelCreator.Handlers.IndexOf(endHandler)));
         }
     }
 }
