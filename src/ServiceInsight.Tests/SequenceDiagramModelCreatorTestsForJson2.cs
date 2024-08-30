@@ -25,7 +25,7 @@ namespace ServiceInsight.Tests
         [Test]
         public void ArrowsHaveFromAndToPopulated()
         {
-            Assert.IsNull(result[0].Handlers[0].In);
+            Assert.That(result[0].Handlers[0].In, Is.Null);
             Assert.That(result[0].Handlers[0].Out.First().FromHandler, Is.EqualTo(result[0].Handlers[0]));
             Assert.That(result[0].Handlers[0].Out.First().ToHandler, Is.EqualTo(result[0].Handlers[1]));
 
