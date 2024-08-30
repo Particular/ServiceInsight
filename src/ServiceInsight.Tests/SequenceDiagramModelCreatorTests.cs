@@ -66,7 +66,7 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Name, Is.EqualTo("A"));
         }
 
@@ -169,15 +169,15 @@
             var creator = GetModelCreator(messages);
             var endpoints = creator.Endpoints;
 
-            Assert.That(endpoints.Count, Is.EqualTo(1));
+            Assert.That(endpoints, Has.Count.EqualTo(1));
             Assert.Multiple(() =>
             {
                 Assert.That(endpoints[0].Name, Is.EqualTo("A"));
                 Assert.That(endpoints[0].Host, Is.EqualTo(nameof(testHost)));
                 Assert.That(endpoints[0].HostId, Is.EqualTo(testHost));
-                Assert.That(endpoints[0].Hosts.Count, Is.EqualTo(1));
+                Assert.That(endpoints[0].Hosts, Has.Count.EqualTo(1));
             });
-            Assert.That(endpoints[0].Hosts[0].HostVersions.Count, Is.EqualTo(3));
+            Assert.That(endpoints[0].Hosts[0].HostVersions, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(endpoints[0].Hosts[0].HostVersions[0], Is.EqualTo("1.0.0"));
@@ -249,7 +249,7 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result.Count, Is.EqualTo(4));
+            Assert.That(result, Has.Count.EqualTo(4));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("A"));
@@ -289,7 +289,7 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result, Has.Count.EqualTo(2));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("A"));
@@ -363,7 +363,7 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result.Count, Is.EqualTo(4));
+            Assert.That(result, Has.Count.EqualTo(4));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("A"));
@@ -436,7 +436,7 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result.Count, Is.EqualTo(3));
+            Assert.That(result, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("A"));
@@ -536,8 +536,8 @@
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("A"));
-                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-                Assert.That(outArrows.Count, Is.EqualTo(3));
+                Assert.That(result[0].Handlers, Has.Count.EqualTo(1));
+                Assert.That(outArrows, Has.Count.EqualTo(3));
             });
             Assert.Multiple(() =>
             {
@@ -674,10 +674,10 @@
 
             Assert.Multiple(() =>
             {
-                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-                Assert.That(result[1].Handlers.Count, Is.EqualTo(2));
-                Assert.That(result[2].Handlers.Count, Is.EqualTo(2));
-                Assert.That(result[3].Handlers.Count, Is.EqualTo(1));
+                Assert.That(result[0].Handlers, Has.Count.EqualTo(1));
+                Assert.That(result[1].Handlers, Has.Count.EqualTo(2));
+                Assert.That(result[2].Handlers, Has.Count.EqualTo(2));
+                Assert.That(result[3].Handlers, Has.Count.EqualTo(1));
             });
 
             Assert.That(result[1].Handlers[0].Name, Is.EqualTo("Message1"));
@@ -794,8 +794,8 @@
 
             Assert.Multiple(() =>
             {
-                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-                Assert.That(result[1].Handlers.Count, Is.EqualTo(4));
+                Assert.That(result[0].Handlers, Has.Count.EqualTo(1));
+                Assert.That(result[1].Handlers, Has.Count.EqualTo(4));
                 Assert.That(result[0].Handlers[0].Out.Count(), Is.EqualTo(4));
             });
         }
@@ -818,7 +818,7 @@
 
             var result = creator.Handlers;
 
-            Assert.That(result.Count, Is.EqualTo(5), "There should by 5 handlers");
+            Assert.That(result, Has.Count.EqualTo(5), "There should by 5 handlers");
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].ID, Is.EqualTo("1"), "Earliest handler should be for message 1 (even though we don't know what that was)");

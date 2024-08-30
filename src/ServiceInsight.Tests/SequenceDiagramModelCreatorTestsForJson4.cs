@@ -14,7 +14,7 @@
         [Test]
         public void ShouldHaveFourEndpoints()
         {
-            Assert.That(result.Count, Is.EqualTo(4));
+            Assert.That(result, Has.Count.EqualTo(4));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("Provisioning.CustomerPortal"));

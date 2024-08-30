@@ -14,7 +14,7 @@ namespace ServiceInsight.Tests
         [Test]
         public void FirstEndpointShouldHave1Handler()
         {
-            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+            Assert.That(result[0].Handlers, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace ServiceInsight.Tests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+                Assert.That(result[0].Handlers, Has.Count.EqualTo(1));
                 Assert.That(result[0].Version, Is.EqualTo("5.2.3"));
                 Assert.That(result[1].Version, Is.EqualTo("5.2.3"));
                 Assert.That(result[2].Version, Is.EqualTo(null));
@@ -32,7 +32,7 @@ namespace ServiceInsight.Tests
         [Test]
         public void EndpointsAreDeDup()
         {
-            Assert.That(result.Count, Is.EqualTo(3));
+            Assert.That(result, Has.Count.EqualTo(3));
         }
     }
 }

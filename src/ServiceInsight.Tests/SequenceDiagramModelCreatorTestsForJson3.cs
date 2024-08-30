@@ -14,7 +14,7 @@ namespace ServiceInsight.Tests
         [Test]
         public void EndpointShouldHave4Handler()
         {
-            Assert.That(result.Count, Is.EqualTo(7));
+            Assert.That(result, Has.Count.EqualTo(7));
             Assert.Multiple(() =>
             {
                 Assert.That(result[0].Name, Is.EqualTo("System.Web"));
