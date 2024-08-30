@@ -57,6 +57,12 @@
                 Substitute.For<MessageSelectionContext>());
         }
 
+        [TearDown]
+        public void Teardown()
+        {
+            searchBar.Dispose();
+        }
+
         [Test]
         public async Task Should_load_the_messages_from_the_endpoint()
         {
