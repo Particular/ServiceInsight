@@ -170,14 +170,20 @@
             var endpoints = creator.Endpoints;
 
             Assert.That(endpoints.Count, Is.EqualTo(1));
-            Assert.That(endpoints[0].Name, Is.EqualTo("A"));
-            Assert.That(endpoints[0].Host, Is.EqualTo(nameof(testHost)));
-            Assert.That(endpoints[0].HostId, Is.EqualTo(testHost));
-            Assert.That(endpoints[0].Hosts.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpoints[0].Name, Is.EqualTo("A"));
+                Assert.That(endpoints[0].Host, Is.EqualTo(nameof(testHost)));
+                Assert.That(endpoints[0].HostId, Is.EqualTo(testHost));
+                Assert.That(endpoints[0].Hosts.Count, Is.EqualTo(1));
+            });
             Assert.That(endpoints[0].Hosts[0].HostVersions.Count, Is.EqualTo(3));
-            Assert.That(endpoints[0].Hosts[0].HostVersions[0], Is.EqualTo("1.0.0"));
-            Assert.That(endpoints[0].Hosts[0].HostVersions[1], Is.EqualTo("2.0.0"));
-            Assert.That(endpoints[0].Hosts[0].HostVersions[2], Is.EqualTo("3.0.0"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpoints[0].Hosts[0].HostVersions[0], Is.EqualTo("1.0.0"));
+                Assert.That(endpoints[0].Hosts[0].HostVersions[1], Is.EqualTo("2.0.0"));
+                Assert.That(endpoints[0].Hosts[0].HostVersions[2], Is.EqualTo("3.0.0"));
+            });
         }
 
         [Test]
@@ -244,10 +250,13 @@
             var result = creator.Endpoints;
 
             Assert.That(result.Count, Is.EqualTo(4));
-            Assert.That(result[0].Name, Is.EqualTo("A"));
-            Assert.That(result[1].Name, Is.EqualTo("B"));
-            Assert.That(result[2].Name, Is.EqualTo("C"));
-            Assert.That(result[3].Name, Is.EqualTo("D"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("A"));
+                Assert.That(result[1].Name, Is.EqualTo("B"));
+                Assert.That(result[2].Name, Is.EqualTo("C"));
+                Assert.That(result[3].Name, Is.EqualTo("D"));
+            });
         }
 
         [Test]
@@ -281,8 +290,11 @@
             var result = creator.Endpoints;
 
             Assert.That(result.Count, Is.EqualTo(2));
-            Assert.That(result[0].Name, Is.EqualTo("A"));
-            Assert.That(result[1].Name, Is.EqualTo("B"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("A"));
+                Assert.That(result[1].Name, Is.EqualTo("B"));
+            });
         }
 
         [Test]
@@ -352,10 +364,13 @@
             var result = creator.Endpoints;
 
             Assert.That(result.Count, Is.EqualTo(4));
-            Assert.That(result[0].Name, Is.EqualTo("A"));
-            Assert.That(result[1].Name, Is.EqualTo("B"));
-            Assert.That(result[2].Name, Is.EqualTo("C"));
-            Assert.That(result[3].Name, Is.EqualTo("D"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("A"));
+                Assert.That(result[1].Name, Is.EqualTo("B"));
+                Assert.That(result[2].Name, Is.EqualTo("C"));
+                Assert.That(result[3].Name, Is.EqualTo("D"));
+            });
         }
 
         [Test]
@@ -422,9 +437,12 @@
             var result = creator.Endpoints;
 
             Assert.That(result.Count, Is.EqualTo(3));
-            Assert.That(result[0].Name, Is.EqualTo("A"));
-            Assert.That(result[1].Name, Is.EqualTo("B"));
-            Assert.That(result[2].Name, Is.EqualTo("C"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("A"));
+                Assert.That(result[1].Name, Is.EqualTo("B"));
+                Assert.That(result[2].Name, Is.EqualTo("C"));
+            });
         }
 
         [Test]
@@ -515,12 +533,18 @@
             var result = creator.Endpoints.ToList();
             var outArrows = result[0].Handlers[0].Out.ToList();
 
-            Assert.That(result[0].Name, Is.EqualTo("A"));
-            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-            Assert.That(outArrows.Count, Is.EqualTo(3));
-            Assert.That(outArrows[0].MessageId, Is.EqualTo("2"));
-            Assert.That(outArrows[1].MessageId, Is.EqualTo("3"));
-            Assert.That(outArrows[2].MessageId, Is.EqualTo("4"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo("A"));
+                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+                Assert.That(outArrows.Count, Is.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(outArrows[0].MessageId, Is.EqualTo("2"));
+                Assert.That(outArrows[1].MessageId, Is.EqualTo("3"));
+                Assert.That(outArrows[2].MessageId, Is.EqualTo("4"));
+            });
         }
 
         [Test]
@@ -648,10 +672,13 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-            Assert.That(result[1].Handlers.Count, Is.EqualTo(2));
-            Assert.That(result[2].Handlers.Count, Is.EqualTo(2));
-            Assert.That(result[3].Handlers.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+                Assert.That(result[1].Handlers.Count, Is.EqualTo(2));
+                Assert.That(result[2].Handlers.Count, Is.EqualTo(2));
+                Assert.That(result[3].Handlers.Count, Is.EqualTo(1));
+            });
 
             Assert.That(result[1].Handlers[0].Name, Is.EqualTo("Message1"));
             Assert.That(result[1].Handlers[1].Name, Is.EqualTo("Message5"));
@@ -765,9 +792,12 @@
             var creator = GetModelCreator(messages);
             var result = creator.Endpoints;
 
-            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-            Assert.That(result[1].Handlers.Count, Is.EqualTo(4));
-            Assert.That(result[0].Handlers[0].Out.Count(), Is.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+                Assert.That(result[1].Handlers.Count, Is.EqualTo(4));
+                Assert.That(result[0].Handlers[0].Out.Count(), Is.EqualTo(4));
+            });
         }
 
         [Test]
@@ -789,11 +819,14 @@
             var result = creator.Handlers;
 
             Assert.That(result.Count, Is.EqualTo(5), "There should by 5 handlers");
-            Assert.That(result[0].ID, Is.EqualTo("1"), "Earliest handler should be for message 1 (even though we don't know what that was)");
-            Assert.That(result[1].Name, Is.EqualTo("ProductPurchaseTakingTooLong"), "Second handler should be for ProductPurchaseTakingTooLong");
-            Assert.That(result[2].ID, Is.EqualTo("2"), "Third handler is for message 2 (even though we don't know what that was)");
-            Assert.That(result[3].Name, Is.EqualTo("GpOrderSagaTimeout"), "Fourth handler should be for the GpOrderSagaTimeout");
-            Assert.That(result[4].Name, Is.EqualTo("CrmOrderSagaTimeout"), "Latest handler should be for CrmOrderSagaTimeout");
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].ID, Is.EqualTo("1"), "Earliest handler should be for message 1 (even though we don't know what that was)");
+                Assert.That(result[1].Name, Is.EqualTo("ProductPurchaseTakingTooLong"), "Second handler should be for ProductPurchaseTakingTooLong");
+                Assert.That(result[2].ID, Is.EqualTo("2"), "Third handler is for message 2 (even though we don't know what that was)");
+                Assert.That(result[3].Name, Is.EqualTo("GpOrderSagaTimeout"), "Fourth handler should be for the GpOrderSagaTimeout");
+                Assert.That(result[4].Name, Is.EqualTo("CrmOrderSagaTimeout"), "Latest handler should be for CrmOrderSagaTimeout");
+            });
         }
 
         static StoredMessage Msg(string id, string relatedTo, string messageType, DateTime sent, string from, DateTime processed, string to) => new StoredMessage

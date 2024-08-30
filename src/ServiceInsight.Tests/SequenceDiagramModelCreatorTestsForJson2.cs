@@ -16,23 +16,29 @@ namespace ServiceInsight.Tests
         public void EndpointShouldHave4Handler()
         {
             Assert.That(result[0].Handlers.Count, Is.EqualTo(4));
-            Assert.That(result[0].Handlers[0].Name, Is.EqualTo(null));
-            Assert.That(result[0].Handlers[1].Name, Is.EqualTo("StartOrder"));
-            Assert.That(result[0].Handlers[2].Name, Is.EqualTo("CoolingOff"));
-            Assert.That(result[0].Handlers[3].Name, Is.EqualTo("CompleteOrder"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Handlers[0].Name, Is.EqualTo(null));
+                Assert.That(result[0].Handlers[1].Name, Is.EqualTo("StartOrder"));
+                Assert.That(result[0].Handlers[2].Name, Is.EqualTo("CoolingOff"));
+                Assert.That(result[0].Handlers[3].Name, Is.EqualTo("CompleteOrder"));
+            });
         }
 
         [Test]
         public void ArrowsHaveFromAndToPopulated()
         {
-            Assert.That(result[0].Handlers[0].In, Is.Null);
-            Assert.That(result[0].Handlers[0].Out.First().FromHandler, Is.EqualTo(result[0].Handlers[0]));
-            Assert.That(result[0].Handlers[0].Out.First().ToHandler, Is.EqualTo(result[0].Handlers[1]));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Handlers[0].In, Is.Null);
+                Assert.That(result[0].Handlers[0].Out.First().FromHandler, Is.EqualTo(result[0].Handlers[0]));
+                Assert.That(result[0].Handlers[0].Out.First().ToHandler, Is.EqualTo(result[0].Handlers[1]));
 
-            Assert.That(result[0].Handlers[1].In.FromHandler, Is.EqualTo(result[0].Handlers[0]));
-            Assert.That(result[0].Handlers[1].In.ToHandler, Is.EqualTo(result[0].Handlers[1]));
-            Assert.That(result[0].Handlers[1].Out.First().FromHandler, Is.EqualTo(result[0].Handlers[1]));
-            Assert.That(result[0].Handlers[1].Out.First().ToHandler, Is.EqualTo(result[0].Handlers[2]));
+                Assert.That(result[0].Handlers[1].In.FromHandler, Is.EqualTo(result[0].Handlers[0]));
+                Assert.That(result[0].Handlers[1].In.ToHandler, Is.EqualTo(result[0].Handlers[1]));
+                Assert.That(result[0].Handlers[1].Out.First().FromHandler, Is.EqualTo(result[0].Handlers[1]));
+                Assert.That(result[0].Handlers[1].Out.First().ToHandler, Is.EqualTo(result[0].Handlers[2]));
+            });
         }
     }
 }

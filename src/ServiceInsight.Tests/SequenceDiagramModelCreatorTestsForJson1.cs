@@ -20,10 +20,13 @@ namespace ServiceInsight.Tests
         [Test]
         public void EndpointsShouldBeVersionedCorrectly()
         {
-            Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
-            Assert.That(result[0].Version, Is.EqualTo("5.2.3"));
-            Assert.That(result[1].Version, Is.EqualTo("5.2.3"));
-            Assert.That(result[2].Version, Is.EqualTo(null));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Handlers.Count, Is.EqualTo(1));
+                Assert.That(result[0].Version, Is.EqualTo("5.2.3"));
+                Assert.That(result[1].Version, Is.EqualTo("5.2.3"));
+                Assert.That(result[2].Version, Is.EqualTo(null));
+            });
         }
 
         [Test]
