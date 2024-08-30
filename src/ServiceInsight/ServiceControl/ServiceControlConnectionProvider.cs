@@ -1,7 +1,5 @@
 ﻿namespace ServiceInsight.ServiceControl
 {
-    using Caliburn.Micro;
-
     public class ServiceControlConnectionProvider
     {
         public ServiceControlConnectionProvider()

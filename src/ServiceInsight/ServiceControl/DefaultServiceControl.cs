@@ -9,12 +9,16 @@ namespace ServiceInsight.ServiceControl
     using System.Runtime.Caching;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web;
     using System.Xml;
     using System.Xml.Linq;
     using Anotar.Serilog;
     using Caliburn.Micro;
+    using IdentityModel.Jwk;
+    using IdentityModel.OidcClient;
+    using IdentityModel.OidcClient.Browser;
     using RestSharp;
     using RestSharp.Authenticators;
     using RestSharp.Deserializers;
@@ -50,6 +54,7 @@ namespace ServiceInsight.ServiceControl
         Dictionary<string, Task<List<StoredMessage>>> ongoingRestRequests;
         IEventAggregator eventAggregator;
         ProfilerSettings settings;
+        IAuthenticator authenticator = new NtlmAuthenticator();
 
         static DefaultServiceControl()
         {
@@ -120,10 +125,63 @@ namespace ServiceInsight.ServiceControl
                     response = await redirectedClient.ExecuteAsync(request);
                 }
             }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                var wwwAuthHeader = response.Headers.FirstOrDefault(h => h.Name.Equals("WWW-Authenticate", StringComparison.OrdinalIgnoreCase));
+                if (wwwAuthHeader != null && wwwAuthHeader.Value is string headerValue)
+                {
+                    var matches = Regex.Matches(headerValue, @"(?<Name>(realm|authorization_uri|resource_id))=""(?<Value>[^""]+)""", RegexOptions.IgnoreCase)
+                        .OfType<Match>()
+                        .ToArray();
+
+                    if (matches.Any())
+                    {
+                        var realm = matches.FirstOrDefault(m => m.Groups["Name"]?.Value == "realm")?.Groups["Value"]?.Value;
+                        var authUri = matches.FirstOrDefault(m => m.Groups["Name"]?.Value == "authorization_uri")?.Groups["Value"]?.Value;
+                        var resourceId = matches.FirstOrDefault(m => m.Groups["Name"]?.Value == "resource_id")?.Groups["Value"]?.Value;
+
+                        if (authUri != null && realm != null)
+                        {
+                            var redirectUrl = await SystemBrowser.GetLocalRedirectUrl();
+
+                            var options = new OidcClientOptions
+                            {
+                                Authority = "https://login.microsoftonline.com/7d9a1798-bf74-4c3a-9892-5ca91ab54c1b/",
+                                ProviderInformation = new ProviderInformation
+                                {
+                                    AuthorizeEndpoint = authUri,
+                                    TokenEndpoint = "https://login.microsoftonline.com/7d9a1798-bf74-4c3a-9892-5ca91ab54c1b/oauth2/token",
+                                    IssuerName = "https://sts.windows.net/7d9a1798-bf74-4c3a-9892-5ca91ab54c1b/",//realm,
+                                    KeySet = new JsonWebKeySet()
+                                },
+                                ClientId = resourceId,
+                                RedirectUri = redirectUrl,
+                                Scope = "openid",//"openid profile email",
+
+                                Browser = new SystemBrowser()
+                            };
+
+                            var client = new OidcClient(options);
+
+                            var result = await client.LoginAsync();
+
+                            if (!result.IsError)
+                            {
+                                authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(result.AccessToken, "Bearer");
+                            }
+                        }
+                    }
+                }
+            }
 
             var header = response.Headers.SingleOrDefault(x => string.Equals(x.Name, ServiceControlHeaders.ParticularVersion, StringComparison.OrdinalIgnoreCase));
 
             return (header?.Value?.ToString(), address);
+        }
+
+        class B : IBrowser
+        {
+            public Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         }
 
         Task<ServiceControlRootUrls> GetRootUrls()
@@ -313,7 +371,7 @@ namespace ServiceInsight.ServiceControl
         {
             var client = new RestClient(baseUrl ?? connection.Url)
             {
-                Authenticator = new NtlmAuthenticator()
+                Authenticator = authenticator
             };
 
             client.ClearHandlers();
