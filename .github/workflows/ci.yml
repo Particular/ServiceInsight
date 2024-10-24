@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4.0.1
+        uses: actions/setup-dotnet@v4.1.0
         with:
           dotnet-version: 8.0.200 # Locked until VS/MSBuild is compatible with 8.0.300
       - name: Add msbuild to PATH
