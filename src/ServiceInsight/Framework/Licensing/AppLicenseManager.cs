@@ -24,7 +24,7 @@
                     return LicenseInstallationResult.Expired;
                 }
 
-                new FilePathLicenseStore().StoreLicense(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.LocalApplicationData), licenseText);
+                FilePathLicenseStore.StoreLicense(LicenseFileLocationResolver.GetPathFor(Environment.SpecialFolder.LocalApplicationData), licenseText);
 
                 CurrentLicense = ValidationResult.License;
 
