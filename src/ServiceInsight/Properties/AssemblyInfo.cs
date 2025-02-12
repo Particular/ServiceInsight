@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
-
-[assembly: InternalsVisibleTo("ServiceInsight.Tests")]
+﻿using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None,

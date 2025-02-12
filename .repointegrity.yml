@@ -1,0 +1,4 @@
+ignore:
+  # Have to stay on a package that supports .NET Framework
+  - test: AbsoluteVersionsInTestProjects
+    path: src/ServiceInsight.Tests/ServiceInsight.Tests.csproj

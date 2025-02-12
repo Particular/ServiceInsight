@@ -90,4 +90,8 @@
     <Resource Include="ServiceInsight.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="ServiceInsight.Tests" />
+  </ItemGroup>
+
 </Project>
