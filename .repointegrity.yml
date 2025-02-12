@@ -2,3 +2,6 @@ ignore:
   # Have to stay on a package that supports .NET Framework
   - test: AbsoluteVersionsInTestProjects
     path: src/ServiceInsight.Tests/ServiceInsight.Tests.csproj
+  # Currently uses NSubstitute, see issue https://github.com/Particular/ServiceInsight/issues/1562
+  - test: DontUseMockingFrameworks
+    path: src/ServiceInsight.Tests/ServiceInsight.Tests.csproj
