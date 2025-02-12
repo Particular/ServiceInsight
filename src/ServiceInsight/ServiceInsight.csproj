@@ -56,10 +56,10 @@
     <PackageReference Include="Rx-Linq" Version="2.2.5" />
     <PackageReference Include="Rx-PlatformServices" Version="2.2.5" />
     <PackageReference Include="Rx-XAML" Version="2.2.5" />
-    <PackageReference Include="Serilog" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.Observable" Version="2.0.2" />
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
-    <PackageReference Include="Serilog.Sinks.Trace" Version="3.0.0" />
+    <PackageReference Include="Serilog" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.Observable" Version="3.0.0" />
+    <PackageReference Include="Serilog.Sinks.Trace" Version="4.0.0" />
     <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
   </ItemGroup>
@@ -88,6 +88,10 @@
     <Resource Include="Images\**\*.png" />
     <Resource Include="*.png" />
     <Resource Include="ServiceInsight.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ServiceInsight.Tests" />
   </ItemGroup>
 
 </Project>
