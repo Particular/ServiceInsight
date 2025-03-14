@@ -1,12 +1,14 @@
 ﻿namespace ServiceInsight.ServiceControl
 {
+    using System.Security;
+
     public class ServiceControlConnectionProvider
     {
         public ServiceControlConnectionProvider()
         {
         }
 
-        public void ConnectTo(string url, string username = null, string password = null)
+        public void ConnectTo(string url, string username = null, SecureString password = null)
         {
             Url = url;
             Username = username;
@@ -16,7 +18,7 @@
 
         public string Url { get; private set; }
         public string Username { get; private set; }
-        public string Password { get; private set; }
-        public bool UseWindowsAuthCustomUsernamePassword => !string.IsNullOrEmpty(Username) || !string.IsNullOrEmpty(Password);
+        public SecureString Password { get; private set; }
+        public bool UseWindowsAuthCustomUsernamePassword => !string.IsNullOrEmpty(Username) || Password.Length > 0;
     }
 }

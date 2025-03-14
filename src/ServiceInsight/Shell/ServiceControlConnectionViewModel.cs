@@ -10,6 +10,7 @@
     using Framework.Settings;
     using Settings;
     using System.Windows.Controls;
+    using System.Security;
 
     public class ServiceControlConnectionViewModel : Screen
     {
@@ -55,11 +56,11 @@
 
         public string Username { get; set; }
 
-        public string Password { get; set; }
+        public SecureString Password { get; set; }
 
         public void PasswordChanged(PasswordBox passwordBox)
         {
-            Password = passwordBox.Password;
+            Password = passwordBox.SecurePassword;
         }
 
         protected override void OnActivate()

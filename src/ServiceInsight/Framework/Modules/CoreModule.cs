@@ -11,6 +11,7 @@
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Startup;
+    using System.Security;
 
     public class CoreModule : Module
     {
@@ -26,7 +27,7 @@
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerDependency();
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerDependency();
             builder.RegisterType<ServiceControlClientRegistry>().AsSelf().SingleInstance();
-            builder.Register<Func<string, string, string, IServiceControl>>(c =>
+            builder.Register<Func<string, string, SecureString, IServiceControl>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
 
