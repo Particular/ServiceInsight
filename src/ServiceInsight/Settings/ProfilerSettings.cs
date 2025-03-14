@@ -63,6 +63,15 @@
 
         public string DefaultLastUsedServiceControl { get; set; }
 
+        [DefaultValue(false)]
+        [DisplayName("Use Windows Authentication with a Custom Username Password")]
+        [Description("Use Windows integrated authentication for ServiceControl with a Custom Username Password")]
+        public bool UseWindowsAuthWithCustomUsernamePassword { get; set; } = false;
+
+        [DisplayName("Windows Authentication Custom Username")]
+        [Description("Username for authentication Windows Authentication")]
+        public string WindowsAuthenticationCustomUsername { get; set; }
+
         [DisplayName("Usage Data Collection Approved")]
         [DefaultValue(false)]
         public bool DataCollectionApproved { get; set; }

@@ -9,6 +9,7 @@
     using ExtensionMethods;
     using Framework.Settings;
     using Settings;
+    using System.Windows.Controls;
 
     public class ServiceControlConnectionViewModel : Screen
     {
@@ -17,8 +18,10 @@
         const string CertValidationErrorMessage = "There was an error connecting to ServiceControl. SSL certificate is not valid.";
         const string AddressInvalid = "Entered address is invalid.";
         const string ConnectionExists = "You have already connected to this address.";
+        const string AuthenticationFailedMessage = "Authentication failed. Please check your credentials.";
 
         static bool certValidationFailed;
+        static bool authenticationFailed;
 
         readonly ISettingsProvider settingsProvider;
         readonly ServiceControlClientRegistry clientRegistry;
@@ -27,6 +30,7 @@
         static ServiceControlConnectionViewModel()
         {
             DefaultServiceControl.CertificateValidationFailed = () => { certValidationFailed = true; };
+            DefaultServiceControl.AuthenticationFailed = () => { authenticationFailed = true; };
         }
 
         public ServiceControlConnectionViewModel(
@@ -47,12 +51,25 @@
 
         public bool WorkInProgress { get; private set; }
 
+        public bool UseWindowsAuthWithCustomUsernamePassword { get; set; }
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
+        public void PasswordChanged(PasswordBox passwordBox)
+        {
+            Password = passwordBox.Password;
+        }
+
         protected override void OnActivate()
         {
             base.OnActivate();
 
             ShowError = false;
             ServiceUrl = appSettings.LastUsedServiceControl;
+            UseWindowsAuthWithCustomUsernamePassword = appSettings.UseWindowsAuthWithCustomUsernamePassword;
+            Username = appSettings.WindowsAuthenticationCustomUsername;
             RecentEntries = GetRecentServiceEntries();
         }
 
@@ -114,6 +131,8 @@
 
             appSettings.RecentServiceControlEntries.Add(ServiceUrl);
             appSettings.LastUsedServiceControl = ServiceUrl;
+            appSettings.UseWindowsAuthWithCustomUsernamePassword = UseWindowsAuthWithCustomUsernamePassword;
+            appSettings.WindowsAuthenticationCustomUsername = Username;
 
             settingsProvider.SaveSettings(appSettings);
         }
@@ -137,14 +156,25 @@
             if (valid)
             {
                 var address = serviceUrl;
-                var service = clientRegistry.Create(address);
+                var service = clientRegistry.Create(address, UseWindowsAuthWithCustomUsernamePassword ? Username : null, UseWindowsAuthWithCustomUsernamePassword ? Password : null);
 
                 (Version, address) = await service.GetVersion();
 
                 if (Version == null)
                 {
                     clientRegistry.RemoveServiceControlClient(address);
-                    ErrorMessage = certValidationFailed ? CertValidationErrorMessage : ConnectionErrorMessage;
+                    if (authenticationFailed)
+                    {
+                        ErrorMessage = AuthenticationFailedMessage;
+                    }
+                    else if (certValidationFailed)
+                    {
+                        ErrorMessage = CertValidationErrorMessage;
+                    }
+                    else
+                    {
+                        ErrorMessage = ConnectionErrorMessage;
+                    }
                     valid = false;
                 }
                 else

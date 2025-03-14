@@ -8,7 +8,7 @@
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:shell="clr-namespace:ServiceInsight.Shell"
               Width="380"
-              Height="180"
+              Height="260"
               AutomationProperties.AutomationId="ServiceControlConnectionDialog"
               FocusManager.FocusedElement="{Binding ElementName=name}"
               Icon="{StaticResource Shell_ToolbarConnect}"
@@ -22,7 +22,13 @@
               d:DesignWidth="300"
               mc:Ignorable="d">
     <Grid>
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -58,7 +64,66 @@
                                          Mode=TwoWay,
                                          UpdateSourceTrigger=PropertyChanged}" />
 
-        <Grid Grid.Row="1"
+        <CheckBox Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Margin="10,5,5,5"
+                  Content="Use Windows Authentication with username and password"
+                  IsChecked="{Binding UseWindowsAuthWithCustomUsernamePassword, Mode=TwoWay}" />
+
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="3"
+                    Orientation="Horizontal"
+                    Visibility="{Binding UseWindowsAuthWithCustomUsernamePassword, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Image Width="16"
+                   Height="16"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   Source="{StaticResource Shell_Information}">
+                <Image.ToolTip>
+                    <TextBlock Text="Please enter username." />
+                </Image.ToolTip>
+            </Image>
+            <TextBlock Margin="5"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Text="Username:" />
+        </StackPanel>
+        <dxe:TextEdit Grid.Row="2"
+                      Grid.Column="1"
+                      Margin="5"
+                      AutomationProperties.AutomationId="Username"
+                      Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Visibility="{Binding UseWindowsAuthWithCustomUsernamePassword, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <StackPanel Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="3"
+                    Orientation="Horizontal"
+                    Visibility="{Binding UseWindowsAuthWithCustomUsernamePassword, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Image Width="16"
+                   Height="16"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   Source="{StaticResource Shell_Information}">
+                <Image.ToolTip>
+                    <TextBlock Text="Please enter password." />
+                </Image.ToolTip>
+            </Image>
+            <TextBlock Margin="5"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Text="Password:" />
+        </StackPanel>
+        <PasswordBox Grid.Row="3"
+                     Grid.Column="1"
+                     Margin="5"
+                     AutomationProperties.AutomationId="Password"
+                     cal:Message.Attach="[Event PasswordChanged] = [Action PasswordChanged($source)]"
+                     Visibility="{Binding UseWindowsAuthWithCustomUsernamePassword, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <Grid Grid.Row="4"
               Grid.Column="0"
               Grid.ColumnSpan="2"
               Margin="3"
@@ -87,7 +152,7 @@
                        TextWrapping="Wrap" />
         </Grid>
 
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="5"

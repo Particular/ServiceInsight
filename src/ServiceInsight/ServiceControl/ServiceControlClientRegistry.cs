@@ -9,13 +9,15 @@ namespace ServiceInsight.ServiceControl
 
     public class ServiceControlClientRegistry
     {
-        readonly Func<string, IServiceControl> serviceControlFactory;
+        readonly Func<string, string, string, IServiceControl> serviceControlFactory;
         readonly ConcurrentDictionary<string, IServiceControl> serviceControlClientCache;
+        readonly ConcurrentDictionary<string, Tuple<string, string>> credentialsCache;
 
-        public ServiceControlClientRegistry(Func<string, IServiceControl> serviceControlFactory)
+        public ServiceControlClientRegistry(Func<string, string, string, IServiceControl> serviceControlFactory)
         {
             this.serviceControlFactory = serviceControlFactory;
             serviceControlClientCache = new ConcurrentDictionary<string, IServiceControl>(StringComparer.InvariantCultureIgnoreCase);
+            credentialsCache = new ConcurrentDictionary<string, Tuple<string, string>>(StringComparer.InvariantCultureIgnoreCase);
         }
 
         public void EnsureServiceControlClient(string serviceUrl)
@@ -29,14 +31,23 @@ namespace ServiceInsight.ServiceControl
 
             if (!serviceControlClientCache.ContainsKey(normalizeUrl))
             {
-                var serviceControl = Create(normalizeUrl);
+                var credentials = credentialsCache.TryGetValue(normalizeUrl, out var creds) ? creds : null;
+                var username = credentials?.Item1;
+                var password = credentials?.Item2;
+                var serviceControl = Create(normalizeUrl, username, password);
                 serviceControlClientCache.TryAdd(normalizeUrl, serviceControl);
             }
         }
 
-        public IServiceControl Create(string url)
+        public IServiceControl Create(string url, string username = null, string password = null)
         {
-            var serviceControl = serviceControlFactory(url);
+            var serviceControl = serviceControlFactory(url, username, password);
+            // Store credentials for future use
+            var normalizedUrl = GetNormalizedUrl(url);
+            if (!string.IsNullOrEmpty(username) || !string.IsNullOrEmpty(password))
+            {
+                credentialsCache[normalizedUrl] = Tuple.Create(username, password);
+            }
             return serviceControl;
         }
 
