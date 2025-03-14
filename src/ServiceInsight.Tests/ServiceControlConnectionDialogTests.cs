@@ -1,5 +1,6 @@
 ﻿namespace ServiceInsight.Tests
 {
+    using System.Security;
     using System.Threading.Tasks;
     using Autofac;
     using Caliburn.Micro;
@@ -62,6 +63,63 @@
             settingsProvider.Received().SaveSettings(Arg.Any<ProfilerSettings>());
             storedSetting.RecentServiceControlEntries.Count.ShouldBe(3);
             storedSetting.RecentServiceControlEntries.ShouldContain(url);
+        }
+
+        [Test]
+        public void Should_store_username_and_password()
+        {
+            // Arrange
+            var provider = new ServiceControlConnectionProvider();
+            var url = "http://localhost:8080/managementApi";
+            var username = "testUser";
+            var password = new SecureString();
+            foreach (char c in "testPassword")
+            {
+                password.AppendChar(c);
+            }
+
+            // Act
+            provider.ConnectTo(url, username, password);
+
+            // Assert
+            provider.Url.ShouldBe(url);
+            provider.Username.ShouldBe(username);
+            provider.Password.ShouldBe(password);
+        }
+
+        [Test]
+        public void Should_indicate_custom_username_password_usage()
+        {
+            // Arrange
+            var provider = new ServiceControlConnectionProvider();
+            var url = "http://localhost:8080/managementApi";
+            var username = "testUser";
+            var password = new SecureString();
+            foreach (char c in "testPassword")
+            {
+                password.AppendChar(c);
+            }
+
+            // Act
+            provider.ConnectTo(url, username, password);
+
+            // Assert
+            provider.UseWindowsAuthCustomUsernamePassword.ShouldBe(true);
+        }
+
+        [Test]
+        public void Should_not_indicate_custom_username_password_usage_when_empty()
+        {
+            // Arrange
+            var provider = new ServiceControlConnectionProvider();
+            var url = "http://localhost:8080/managementApi";
+            var password = new SecureString();
+
+            // Act
+            provider.ConnectTo(url, null, password);
+
+            // Assert
+            provider.UseWindowsAuthCustomUsernamePassword.ShouldBe(false);
         }
 
         ProfilerSettings GetReloadedSettings()
