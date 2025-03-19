@@ -12,13 +12,13 @@
         {
             Url = url;
             Username = username;
-            Password = password;
+            Password = password ?? new SecureString();
             //eventAggregator.PublishOnUIThread(new ServiceControlConnectionChanged());
         }
 
         public string Url { get; private set; }
         public string Username { get; private set; }
         public SecureString Password { get; private set; }
-        public bool UseWindowsAuthCustomUsernamePassword => !string.IsNullOrEmpty(Username) || Password.Length > 0;
+        public bool UseWindowsAuthCustomUsernamePassword => !string.IsNullOrEmpty(Username) || (Password != null && Password.Length > 0);
     }
 }

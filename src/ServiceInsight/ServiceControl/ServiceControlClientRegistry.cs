@@ -1,7 +1,6 @@
 namespace ServiceInsight.ServiceControl
 {
     using System;
-    using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Security;
@@ -45,7 +44,7 @@ namespace ServiceInsight.ServiceControl
             var serviceControl = serviceControlFactory(url, username, password);
             // Store credentials for future use
             var normalizedUrl = GetNormalizedUrl(url);
-            if (!string.IsNullOrEmpty(username) || password.Length > 0)
+            if (!string.IsNullOrEmpty(username) || (password != null && password.Length > 0))
             {
                 credentialsCache[normalizedUrl] = Tuple.Create(username, password);
             }

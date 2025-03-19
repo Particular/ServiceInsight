@@ -2,7 +2,6 @@
 {
     using System.Security;
     using System.Threading.Tasks;
-    using Autofac;
     using Caliburn.Micro;
     using NSubstitute;
     using NUnit.Framework;
