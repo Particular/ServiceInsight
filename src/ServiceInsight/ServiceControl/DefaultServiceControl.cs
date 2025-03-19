@@ -35,6 +35,7 @@ namespace ServiceInsight.ServiceControl
         static IDeserializer jsonDeserializer = CreateJsonDeserializer(truncateLargeLists: false);
 
         public static Action CertificateValidationFailed = () => { };
+        public static Action AuthenticationFailed = () => { };
 
         const string ConversationEndpoint = "conversations/{0}";
         const string DefaultEndpointsEndpoint = "endpoints";
@@ -119,6 +120,11 @@ namespace ServiceInsight.ServiceControl
                     var redirectedClient = CreateClient(address);
                     response = await redirectedClient.ExecuteAsync(request);
                 }
+            }
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                AuthenticationFailed();
             }
 
             var header = response.Headers.SingleOrDefault(x => string.Equals(x.Name, ServiceControlHeaders.ParticularVersion, StringComparison.OrdinalIgnoreCase));
@@ -320,6 +326,11 @@ namespace ServiceInsight.ServiceControl
             client.AddJsonDeserializer(truncateLargeLists ? jsonTruncatingDeserializer : jsonDeserializer);
             client.AddXmlDeserializer(new XmlDeserializer());
             client.AddDefaultHeader("Accept-Encoding", "gzip,deflate");
+
+            if (connection.UseWindowsAuthCustomUsernamePassword)
+            {
+                client.ConfigureWebRequest(wr => wr.Credentials = new NetworkCredential(connection.Username, connection.Password));
+            }
 
             return client;
         }

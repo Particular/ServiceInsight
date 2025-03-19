@@ -1,6 +1,6 @@
 ﻿namespace ServiceInsight.ServiceControl
 {
-    using Caliburn.Micro;
+    using System.Security;
 
     public class ServiceControlConnectionProvider
     {
@@ -8,12 +8,17 @@
         {
         }
 
-        public void ConnectTo(string url)
+        public void ConnectTo(string url, string username = null, SecureString password = null)
         {
             Url = url;
+            Username = username;
+            Password = password ?? new SecureString();
             //eventAggregator.PublishOnUIThread(new ServiceControlConnectionChanged());
         }
 
         public string Url { get; private set; }
+        public string Username { get; private set; }
+        public SecureString Password { get; private set; }
+        public bool UseWindowsAuthCustomUsernamePassword => !string.IsNullOrEmpty(Username) || (Password != null && Password.Length > 0);
     }
 }

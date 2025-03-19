@@ -11,6 +11,7 @@
     using ServiceInsight.Framework.Licensing;
     using ServiceInsight.Framework.MessageDecoders;
     using ServiceInsight.Startup;
+    using System.Security;
 
     public class CoreModule : Module
     {
@@ -26,14 +27,14 @@
             builder.RegisterType<ServiceControlConnectionProvider>().InstancePerDependency();
             builder.RegisterType<DefaultServiceControl>().As<IServiceControl>().InstancePerDependency();
             builder.RegisterType<ServiceControlClientRegistry>().AsSelf().SingleInstance();
-            builder.Register<Func<string, IServiceControl>>(c =>
+            builder.Register<Func<string, string, SecureString, IServiceControl>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
 
-                return url =>
+                return (url, username, password) =>
                 {
                     var connectionProvider = new ServiceControlConnectionProvider();
-                    connectionProvider.ConnectTo(url);
+                    connectionProvider.ConnectTo(url, username, password);
 
                     return context.Resolve<IServiceControl>(new TypedParameter(typeof(ServiceControlConnectionProvider), connectionProvider));
                 };

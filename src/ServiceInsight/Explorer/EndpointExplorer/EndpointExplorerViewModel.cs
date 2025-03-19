@@ -219,7 +219,15 @@
 
             using (workNotifier.NotifyOfWork($"Verifying ServiceControl availability at {address}"))
             {
-                var serviceControl = clientRegistry.Create(url);
+                IServiceControl serviceControl;
+                if (clientRegistry.IsRegistered(url))
+                {
+                    serviceControl = clientRegistry.GetServiceControl(url);
+                }
+                else
+                {
+                    serviceControl = clientRegistry.Create(url);
+                }
                 (available, address) = await serviceControl.IsAlive();
             }
 
