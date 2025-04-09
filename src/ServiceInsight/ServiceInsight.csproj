@@ -61,7 +61,7 @@
     <PackageReference Include="Serilog.Sinks.Observable" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.Trace" Version="4.0.0" />
     <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
