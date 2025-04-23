@@ -25,7 +25,7 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.3
+        uses: microsoft/setup-msbuild@v2
       - name: Build
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Upload assets
