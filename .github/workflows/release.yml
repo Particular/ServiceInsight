@@ -17,7 +17,7 @@ defaults:
 jobs:
   release:
     if: ${{ github.actor != 'dependabot[bot]' }}
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - name: Check for secrets
         env:
