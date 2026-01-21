@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="7.1.0" />
-    <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
+    <PackageReference Include="Autofac.Configuration" Version="7.0.0" />
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
   </ItemGroup>
 
