@@ -1,6 +1,8 @@
 ﻿namespace ServiceInsight.Shell
 {
+    using System.Diagnostics;
     using System.Windows;
+    using System.Windows.Navigation;
     using DevExpress.Xpf.Bars;
     using DevExpress.Xpf.Core;
     using DevExpress.Xpf.Core.Serialization;
@@ -18,6 +20,11 @@
             InitializeComponent();
             BarManager.CheckBarItemNames = false;
             Loaded += OnShellLoaded;
+        }
+        void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+            e.Handled = true;
         }
 
         void OnShellLoaded(object sender, RoutedEventArgs e)

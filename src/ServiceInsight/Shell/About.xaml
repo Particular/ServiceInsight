@@ -68,8 +68,19 @@
                     <Run Text="www.particular.net" />
                 </Hyperlink>
             </TextBlock>
-
-            <TextBlock Text="{Binding CopyrightText}" Canvas.Left="38" Canvas.Top="262" />
+            <TextBlock Canvas.Left="38"
+                       Canvas.Top="262"
+                       FontFamily="Tahoma"
+                       FontSize="10"
+                       FontWeight="Bold"
+                      >
+                   <Run Text="Serviceinsight will be" />
+                <Hyperlink Command="{Binding NavigateToServiceInsightSupportPolicyCommand}">
+                    <Run Text="deprecated" />
+                </Hyperlink>
+                 <Run Text="as of February 10 2027." />
+            </TextBlock>
+            <TextBlock Text="{Binding CopyrightText}" Canvas.Left="38" Canvas.Top="282" />
         </Canvas>
     </Grid>
 </Window>
