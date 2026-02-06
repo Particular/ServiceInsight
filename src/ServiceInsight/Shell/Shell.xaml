@@ -167,6 +167,30 @@
                                Command="{Binding ResetLayoutCommand}"
                                CustomizationContent="Reset Layout"
                                Content="Restore default layout" />
+            <dxb:BarStaticItem x:Name="SunsetBanner"
+    AutoSizeMode="Content"
+    CustomizationContent="Sunset Banner"
+    CategoryName="Status"
+    ShowBorder="False"
+    Content="{Binding}">
+                <dxb:BarStaticItem.ContentTemplate>
+                    <DataTemplate>
+                        <Border Background="#FFF9C400" BorderBrush="#FFDFA600" BorderThickness="1" Padding="4,0,4,0" Height="28">
+                            <Grid HorizontalAlignment="Center">
+                                <TextBlock FontWeight="Bold" FontSize="12" VerticalAlignment="Center">
+                        <Run Text="Serviceinsight will be" />
+                        <Hyperlink NavigateUri="https://docs.particular.net/serviceinsight/support-policy"
+                                   ToolTip="View support policy"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            <Run Text="deprecated" />
+                        </Hyperlink>
+                        <Run Text="as of February 10 2027" />
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </dxb:BarStaticItem.ContentTemplate>
+            </dxb:BarStaticItem>
             <dxb:BarButtonItem x:Name="ProvideFeedback"
                                AutomationProperties.AutomationId="ProvideFeedbackMenuItem"
                                CategoryName="Help"
@@ -195,6 +219,7 @@
                     </DataTemplate>
                 </dxb:BarButtonItem.ContentTemplate>
             </dxb:BarButtonItem>
+           
             <dxb:BarCheckItem Name="DataAutoRefresh"
                               AutomationProperties.AutomationId="DataAutoRefreshMenuItem"
                               CustomizationContent="Auto Data Refresh"
@@ -409,7 +434,9 @@
                 <dxb:BarItemLinkSeparator />
                 <dxb:BarCheckItemLink BarItemName="DataAutoRefresh" />
                 <dxb:BarCheckItemLink BarItemName="RetryMessage" />
+                <dxb:BarStaticItemLink BarItemName="SunsetBanner" Alignment="Far" />
                 <dxb:BarButtonItemLink BarItemName="ProvideFeedbackToolbar" Alignment="Far" />
+                
             </dxb:Bar>
             <dxb:Bar x:Name="StatusBar"
                      AllowCollapse="True"

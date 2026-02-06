@@ -1,14 +1,14 @@
 namespace ServiceInsight.Shell
 {
-    using System.Linq;
-    using ServiceInsight.ServiceControl;
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Caliburn.Micro;
     using ServiceInsight.Framework;
     using ServiceInsight.Framework.Licensing;
+    using ServiceInsight.ServiceControl;
 
     public class AboutViewModel : INotifyPropertyChanged, IActivate, IHaveDisplayName
     {
@@ -35,7 +35,7 @@ namespace ServiceInsight.Shell
         public string ServiceControlVersion { get; private set; }
 
         public string CopyrightText { get; private set; }
-
+        public ICommand NavigateToServiceInsightSupportPolicyCommand { get; }
         public string DisplayName { get; set; }
 
         public string CommitHash { get; private set; }
@@ -43,7 +43,7 @@ namespace ServiceInsight.Shell
         public bool IsActive { get; private set; }
 
         public ICommand NavigateToSiteCommand { get; }
-
+        public string SupportPolicyUrl => "https://docs.particular.net/serviceinsight/support-policy";
         public AboutViewModel(
             NetworkOperations networkOperations,
             IApplicationVersionService applicationVersionService,
@@ -57,6 +57,8 @@ namespace ServiceInsight.Shell
             DisplayName = "About";
 
             NavigateToSiteCommand = Command.Create(() => networkOperations.Browse("http://www.particular.net"));
+            NavigateToServiceInsightSupportPolicyCommand = Command.Create(() => networkOperations.Browse(SupportPolicyUrl));
+
         }
 
         AboutViewModel(IApplicationVersionService applicationVersionService)
