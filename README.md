@@ -4,7 +4,7 @@
 
 **ServiceInsight has been officially sunsetted and will be deprecated on February 10th, 2027.**  
 
-Its core features have been moved to **ServicePulse**, which is now the recommended tool for monitoring and debugging distributed systems. No further updates will be made and support will end after the deprecation date..
+Its core features have been moved to [**ServicePulse**](https://docs.particular.net/servicepulse/), which is now the recommended tool for monitoring and debugging distributed systems. No further updates will be made and support will end after the deprecation date..
 
 ## Overview
 
