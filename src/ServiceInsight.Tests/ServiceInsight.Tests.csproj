@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ApprovalTests" Version="6.0.0" />
+    <PackageReference Include="ApprovalTests" Version="7.0.0" />
     <!-- ApprovalTests.Wpf 4.x doesn't support the .NET Framework -->
     <PackageReference Include="ApprovalTests.Wpf" Version="[3.0.18,4.0.0]" />
     <PackageReference Include="GitHubActionsTestLogger" Version="3.0.1" />
