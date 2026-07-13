@@ -16,7 +16,7 @@ defaults:
     shell: pwsh
 jobs:
   release:
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor != 'dependencyupdates[bot]' }}
     runs-on: windows-latest
     steps:
       - name: Check for secrets
