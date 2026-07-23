@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Installer/">
+    <Project Path="Setup/Setup.csproj">
+      <Build Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Custom.Build.props" />
+  </Folder>
+  <Project Path="ServiceInsight.CustomViewer.Plugin/ServiceInsight.CustomViewer.Plugin.csproj" />
+  <Project Path="ServiceInsight.Sdk/ServiceInsight.Sdk.csproj" />
+  <Project Path="ServiceInsight.Tests/ServiceInsight.Tests.csproj" />
+  <Project Path="ServiceInsight/ServiceInsight.csproj" />
+</Solution>
