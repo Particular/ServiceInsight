@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Installer/">
+    <File Path="Setup/Setup.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Custom.Build.props" />
     <File Path="Setup/Setup.csproj" />
