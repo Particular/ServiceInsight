@@ -12,10 +12,6 @@
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ServiceInsight\ServiceInsight.csproj" />
-  </ItemGroup>
-
   <Target Name="CreateInstaller" AfterTargets="Build">
     <PropertyGroup>
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
