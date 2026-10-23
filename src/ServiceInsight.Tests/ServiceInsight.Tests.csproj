@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Pinned packages to prevent transitive dependencies issues">
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
   </ItemGroup>
 
 </Project>
