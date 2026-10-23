@@ -5,3 +5,6 @@ ignore:
   # Currently uses NSubstitute, see issue https://github.com/Particular/ServiceInsight/issues/1562
   - test: DontUseMockingFrameworks
     path: src/ServiceInsight.Tests/ServiceInsight.Tests.csproj
+   # Uses ApprovalTests.Wpf
+  - test: DontUseAlternateApprovalTestFrameworks
+    path: src/ServiceInsight.Tests/ServiceInsight.Tests.csproj
