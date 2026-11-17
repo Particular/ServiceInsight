@@ -1,0 +1,10 @@
+{{ if config.create.include_footer }}
+
+### Where to get it
+
+<!-- TODO change the link for the apps that don't go to NuGet -->
+You can download this release from our [website](http://particular.net/downloads).
+
+{{ end }}
+
+<!-- RELEASE NOTES GENERATED -->

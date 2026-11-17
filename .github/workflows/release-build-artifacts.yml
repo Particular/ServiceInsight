@@ -1,12 +1,10 @@
-name: Release
+name: Build Artifacts
 on:
   push:
     branches:
       - master
       - release-*
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
-      - '[0-9]+.[0-9]+.[0-9]+-*'
+  workflow_call:
   pull_request:
   workflow_dispatch:
 env:
@@ -15,7 +13,7 @@ defaults:
   run:
     shell: pwsh
 jobs:
-  release:
+  build-artifacts:
     runs-on: windows-latest
     steps:
       - name: Check for secrets
@@ -64,9 +62,8 @@ jobs:
               Write-Host Assets: Expected $expectedAssetsCount but found $assetsCount
               exit -1
           }
-      - name: Deploy
+      - name: Attach artifacts to release
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
-        # Does not follow standard practice of targeting explicit versions because configuration is tightly coupled to Octopus Deploy configuration
-        uses: Particular/push-octopus-package-action@main
+        uses: particular/deployment-workflows/.github/actions/create-draft-release-with-assets@1.0.0
         with:
-          octopus-deploy-api-key: ${{ secrets.OCTOPUS_DEPLOY_API_KEY }}
+          asset-paths: "assets/"

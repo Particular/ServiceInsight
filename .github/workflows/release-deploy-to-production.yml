@@ -1,0 +1,34 @@
+name: Deploy To Production
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+env:
+  DOTNET_NOLOGO: true
+jobs:
+  check-authorized-user:
+    uses: Particular/deployment-workflows/.github/workflows/verify-authorized-user.yml@1.0.0
+  publish-release-notes:
+    needs: check-authorized-user
+    uses: Particular/deployment-workflows/.github/workflows/publish-release-notes.yml@1.0.0
+    with:
+      version: ${{ inputs.version }}
+    secrets: inherit
+  virus-scan:
+    needs: publish-release-notes
+    permissions:
+      contents: write
+    uses: Particular/deployment-workflows/.github/workflows/virus-scan.yml@1.0.0
+    with:
+      version: ${{ inputs.version }}
+    secrets: inherit
+  push-release-info-to-aws-s3:
+    needs: publish-release-notes
+    uses: Particular/deployment-workflows/.github/workflows/push-release-info-to-aws-s3.yml@1.0.0
+    with:
+      version: ${{ inputs.version }}
+      product: "serviceinsight"
+      bucket: "platformupdate.particular.net"
+    secrets: inherit

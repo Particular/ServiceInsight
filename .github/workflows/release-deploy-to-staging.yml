@@ -1,0 +1,15 @@
+name: Deploy To Staging
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+env:
+  DOTNET_NOLOGO: true
+jobs:
+  generate-release-notes:
+    uses: Particular/deployment-workflows/.github/workflows/generate-release-notes.yml@1.0.0
+    with:
+      version: ${{ inputs.version }}
+    secrets: inherit
