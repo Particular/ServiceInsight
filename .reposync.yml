@@ -1,3 +1,4 @@
 exclusions:
 - src/NServiceBus.snk
 - Package-README.md
+- .release/.templates/default/create/footer.sbn
